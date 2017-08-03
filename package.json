@@ -31,6 +31,7 @@
     "component"
   ],
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "classnames": "^2.0.0",
     "draft-js": "^0.10.0",
     "draft-js-plugins-editor": "^2.0.0-beta1",

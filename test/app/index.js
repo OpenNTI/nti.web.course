@@ -1,5 +1,4 @@
 /*eslint no-console: 0*/
-import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -8,20 +7,18 @@ class Test extends React.Component {
 	state = {}
 
 	componentDidMount () {
-		
+
 	}
 
 	render () {
-		const {content, course} = this.state;
-
 		return (
-			<div/>
+			<div>Course widgets go here</div>
 		);
 	}
 }
 
 
 ReactDOM.render(
-	<Test/>,
+	React.createElement(Test, {}),
 	document.getElementById('content')
 );
