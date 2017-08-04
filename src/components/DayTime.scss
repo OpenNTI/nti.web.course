@@ -1,0 +1,98 @@
+@import "~nti-style-common";
+
+.course-panel-day-selection {
+	margin-bottom: 80px;
+	margin-left: 25%;
+}
+
+.course-panel-time-selection {
+	margin-bottom: 30px;
+	margin-left: 25%;
+}
+
+.course-panel-starttime {
+	position: absolute;
+	display: block;
+}
+
+.course-panel-endtime {
+	position: absolute;
+	display: block;
+	margin-left: 270px;
+}
+
+.course-panel-weekdays {
+	display: flex;
+	margin-top: 10px;
+}
+
+.course-panel-day {
+	width: 30px;
+	height: 35px;
+	padding-right: 10px;
+	padding-left: 10px;
+	border: solid 1px #eee;
+	padding-top: 15px;
+	margin-right: 15px;
+	font-size: 20px;
+	text-align: center;
+	cursor: pointer;
+	background-color: white;
+
+	&.selected {
+		color: white;
+		background-color: rgb(63, 179, 246);
+		-moz-box-shadow: inset 1px 1px 5px 2px #2b9fe2;
+		-webkit-box-shadow: inset 1px 1px 5px 2px #2b9fe2;
+		box-shadow: inset 1px 1px 5px 2px #2b9fe2;
+	}
+}
+
+.course-panel-time {
+	font-size: 40px;
+	display: flex;
+
+	.top-control {
+		font-size: 10px;
+		opacity: 0;
+		height: 12px;
+
+		&:hover {
+			opacity: 1;
+			cursor: pointer;
+		}
+	}
+
+	.bottom-control {
+		font-size: 10px;
+		opacity: 0;
+		height: 12px;
+
+		&:hover {
+			opacity: 1;
+			cursor: pointer;
+		}
+	}
+
+	.hour {
+		margin-right: 10px;
+		width: 40px;
+		text-align: center;
+	}
+
+	.minutes {
+		margin-left: 10px;
+		margin-right: 10px;
+		width: 50px;
+		text-align: center;
+	}
+
+	.colon {
+		margin-top: 10px;
+	}
+
+	.am-or-pm {
+		width: 50px;
+		text-align: center;
+	}
+}

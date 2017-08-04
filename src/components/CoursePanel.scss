@@ -1,0 +1,57 @@
+@import "~nti-style-common";
+
+.course-panel {
+	width: 900px;
+	background-color: #fafafa;
+	color: rgb(117, 116, 116);
+	font-family: "Open Sans", sans-serif;
+}
+
+.course-panel-header {
+	padding: 10px;
+	height: 100px;
+	text-align: center;
+
+	.course-panel-header-title {
+		font-size: 14px !important;
+		color: #999;
+	}
+
+	.course-panel-header-stepname {
+		font-size: 28px !important;
+		font-weight: 500;
+	}
+}
+
+.course-panel-label {
+	font-size: 18px;
+	color: #999;
+}
+
+.course-panel-content {
+	height: 300px;
+}
+
+.course-panel-controls {
+	height: 50px;
+	font-size: 14px;
+	text-align: center;
+}
+
+.course-panel-continue {
+	width: 100px;
+	float: right;
+	padding: 10px;
+	margin-right: 10px;
+	background-color: rgb(63, 179, 246);
+	border-radius: 5px;
+	color: white;
+	box-shadow: 0 2px 4px #4fc3ff;
+}
+
+.course-panel-cancel {
+	width: 100px;
+	float: right;
+	padding: 10px;
+	margin-right: 10px;
+}
