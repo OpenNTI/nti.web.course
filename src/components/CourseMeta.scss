@@ -20,9 +20,10 @@
 			color: $tertiary-grey;
 			font-weight: 300;
 		}
+	}
 
-		&.area {
-			height: 150px;
-		}
+	textarea {
+		width: 450px;
+		height: 180px;
 	}
 }

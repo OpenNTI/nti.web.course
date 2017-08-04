@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input} from 'nti-web-commons';
+import { Input } from 'nti-web-commons';
 
 export default class CourseMeta extends React.Component {
 	static propTypes = {
@@ -43,7 +43,7 @@ export default class CourseMeta extends React.Component {
 		return (<div className="course-panel-getstarted-form">
 			<Input.Text placeholder="Course Name" value={this.props.courseName} onChange={updateCourseName}/>
 			<Input.Text placeholder="Identification Number (i.e. UCOL-3224)" value={this.props.identifier} onChange={updateIDNumber}/>
-			<Input.Text placeholder="Description" className="area" value={this.props.description} onChange={updateDescription}/>
+			<Input.TextArea placeholder="Description" className="nti-text-input" value={this.props.description} onChange={updateDescription}/>
 		</div>
 		);
 	}

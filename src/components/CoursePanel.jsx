@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment-timezone';
 
 import CourseMeta from './CourseMeta';
 import DayTime from './DayTime';
@@ -25,10 +24,10 @@ export default class CoursePanel extends React.Component {
 		super(props);
 		this.state = {
 			stepName: STEP_ORDER[0],
-			startTime: moment('2017-08-04 09:00'),
-			endTime: moment('2017-08-04 10:15'),
-			startDate: moment(),
-			endDate: moment().add(1, 'd')
+			startTime: new Date('2017-08-04 09:00'),
+			endTime: new Date('2017-08-04 10:15'),
+			startDate: new Date(),
+			endDate: new Date()
 		};
 	}
 

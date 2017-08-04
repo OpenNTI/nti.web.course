@@ -2,42 +2,4 @@
 
 .course-panel-choosedates {
 	text-align: center;
-
-	.selected-dates {
-		display: flex;
-		margin-left: 28%;
-
-		.date {
-			width: 180px;
-			height: 65px;
-			position: relative;
-			overflow: hidden;
-			word-wrap: normal;
-			background: #fafafa;
-			-webkit-box-shadow: 0 0 0 0.0625rem #eaeaea;
-			box-shadow: 0 0 0 0.0625rem #eaeaea;
-			border: solid 2px #fafafa;
-			margin: 0.5rem;
-			text-align: left;
-			padding: 5px;
-			padding-left: 15px;
-			border-radius: 3px;
-
-			.label {
-				font-size: 10px;
-			}
-
-			.value {
-				font-size: 26px;
-			}
-
-			&.selected {
-				border: solid 2px rgb(63, 179, 246);
-			}
-		}
-	}
-
-	.DayPicker {
-		width: 400px;
-	}
 }

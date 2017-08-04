@@ -8,6 +8,32 @@
 .course-panel-time-selection {
 	margin-bottom: 30px;
 	margin-left: 25%;
+
+	.TimePicker .number-input-component {
+		height: 80px;
+		width: 50px;
+		font-size: 30px;
+		border: #eaeaea;
+		background-color: #fafafa;
+	}
+
+	.TimePicker .meridiem-select-box.select-box {
+		font-size: 30px;
+		border: none;
+		cursor: pointer;
+	}
+
+	.menu-label {
+		padding-top: 25px;
+
+		&::after {
+			opacity: 0;
+		}
+	}
+
+	.option-label {
+		font-size: 30px;
+	}
 }
 
 .course-panel-starttime {

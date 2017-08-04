@@ -32,7 +32,11 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
-    "prop-types": "^15.5.8"
+    "moment-timezone": "^0.5.13",
+    "nti-web-client": "^1.1.3",
+    "nti-web-commons": "^0.3.0",
+    "prop-types": "^15.5.8",
+    "react-day-picker": "^6.1.0"
   },
   "devDependencies": {
     "enzyme": "^2.8.0",
