@@ -7,6 +7,9 @@ import DatesEditor from '../../src/editor/dates';
 
 import {CoursePanel} from '../../src/components';
 
+import 'nti-style-common/all.scss';
+import 'nti-web-commons/lib/index.css';
+
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
 class Test extends React.Component {

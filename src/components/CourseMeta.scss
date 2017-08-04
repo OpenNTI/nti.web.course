@@ -1,0 +1,28 @@
+@import "~nti-style-common";
+
+.course-panel-getstarted-form {
+	text-align: center;
+
+	input[type=text] {
+		width: 450px;
+		height: 50px;
+		position: relative;
+		overflow: hidden;
+		word-wrap: normal;
+		background: #fafafa;
+		-webkit-box-shadow: 0 0 0 0.0625rem #eaeaea;
+		box-shadow: 0 0 0 0.0625rem #eaeaea;
+		margin: 0.5rem;
+		line-height: 2.375rem;
+
+		&::placeholder {
+			font-style: italic;
+			color: $tertiary-grey;
+			font-weight: 300;
+		}
+
+		&.area {
+			height: 150px;
+		}
+	}
+}

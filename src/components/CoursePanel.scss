@@ -4,13 +4,24 @@
 	width: 900px;
 	background-color: #fafafa;
 	color: rgb(117, 116, 116);
-	font-family: "Open Sans", sans-serif;
 }
 
 .course-panel-header {
 	padding: 10px;
 	height: 100px;
 	text-align: center;
+
+	.back {
+		position: absolute;
+		cursor: pointer;
+		font-size: 26px;
+	}
+
+	.close {
+		float: right;
+		font-size: 26px;
+		cursor: pointer;
+	}
 
 	.course-panel-header-title {
 		font-size: 14px !important;
@@ -29,7 +40,7 @@
 }
 
 .course-panel-content {
-	height: 300px;
+	height: 350px;
 }
 
 .course-panel-controls {
@@ -47,6 +58,7 @@
 	border-radius: 5px;
 	color: white;
 	box-shadow: 0 2px 4px #4fc3ff;
+	cursor: pointer;
 }
 
 .course-panel-cancel {
@@ -54,4 +66,5 @@
 	float: right;
 	padding: 10px;
 	margin-right: 10px;
+	cursor: pointer;
 }
