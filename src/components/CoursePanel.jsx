@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getService } from 'nti-web-client';
+import { Models } from 'nti-lib-interfaces';
 
 import CourseMeta from './CourseMeta';
 import DayTime from './DayTime';
@@ -17,17 +19,32 @@ const STEP_ORDER = [STEPS.GET_STARTED, STEPS.DAY_TIME, STEPS.CHOOSE_COURSE_DATES
 
 export default class CoursePanel extends React.Component {
 	static propTypes = {
-		title: PropTypes.string
+		title: PropTypes.string,
+		course: PropTypes.object
 	}
 
 	constructor (props) {
 		super(props);
+
+		const save = (data) => {
+			return getService().then((service) => {
+				return Models.courses.CatalogEntry.getFactory(service).create({key: data.identifier}).then((createdEntry) => {
+					this.setState({catalogEntry: createdEntry});
+					return createdEntry.save(data);
+				});
+			});
+		};
+
 		this.state = {
 			stepName: STEP_ORDER[0],
 			startTime: new Date('2017-08-04 09:00'),
 			endTime: new Date('2017-08-04 10:15'),
 			startDate: new Date(),
-			endDate: new Date()
+			endDate: new Date(),
+			catalogEntry: {
+				save: save,
+				delete: () => { }
+			}
 		};
 	}
 
@@ -166,7 +183,19 @@ export default class CoursePanel extends React.Component {
 				// this.state.courseName, this.state.identifier, this.state.description
 			}
 			else {
-				this.setState({stepName : STEP_ORDER[currIndex + 1]});
+				if(this.state.stepName === STEPS.GET_STARTED) {
+					this.state.catalogEntry.save({ ProviderUniqueID: this.state.identifier, title: this.state.courseName, identifier: this.state.identifier, description: this.state.description }).then(() => {
+						this.setState({stepName : STEP_ORDER[currIndex + 1]});
+					});
+				}
+				else if(this.state.stepName === STEPS.CHOOSE_COURSE_DATES) {
+					this.state.catalogEntry.save({ ProviderUniqueID: this.state.identifier, StartDate: this.state.startDate, EndDate: this.state.endDate }).then(() => {
+						this.setState({stepName : STEP_ORDER[currIndex + 1]});
+					});
+				}
+				else {
+					this.setState({stepName : STEP_ORDER[currIndex + 1]});
+				}
 			}
 		};
 
