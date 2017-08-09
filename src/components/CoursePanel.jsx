@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getService } from 'nti-web-client';
 import { Models } from 'nti-lib-interfaces';
+import { Prompt } from 'nti-web-commons';
 
 import CourseMeta from './CourseMeta';
 import DayTime from './DayTime';
@@ -20,7 +21,9 @@ const STEP_ORDER = [STEPS.GET_STARTED, STEPS.DAY_TIME, STEPS.CHOOSE_COURSE_DATES
 export default class CoursePanel extends React.Component {
 	static propTypes = {
 		title: PropTypes.string,
-		course: PropTypes.object
+		catalogEntry: PropTypes.object,
+		onCancel: PropTypes.func,
+		onFinish: PropTypes.func
 	}
 
 	constructor (props) {
@@ -35,16 +38,76 @@ export default class CoursePanel extends React.Component {
 			});
 		};
 
+		let catalogEntry = this.props.catalogEntry
+			? this.props.catalogEntry
+			: {
+				save: save,
+				delete: () => { return Promise.resolve(); }
+			};
+
+		const getWeekdaysFrom = (entry) => {
+			if(entry && entry.Schedule) {
+				const days = entry.Schedule.days && entry.Schedule.days[0];
+
+				let selectedWeekdays = [];
+
+				if(days.indexOf('M') >= 0) {
+					selectedWeekdays.push('monday');
+				}
+				if(days.indexOf('T') >= 0) {
+					selectedWeekdays.push('tuesday');
+				}
+				if(days.indexOf('W') >= 0) {
+					selectedWeekdays.push('wednesday');
+				}
+				if(days.indexOf('R') >= 0) {
+					selectedWeekdays.push('thursday');
+				}
+				if(days.indexOf('F') >= 0) {
+					selectedWeekdays.push('friday');
+				}
+				if(days.indexOf('S') >= 0) {
+					selectedWeekdays.push('saturday');
+				}
+				if(days.indexOf('N') >= 0) {
+					selectedWeekdays.push('sunday');
+				}
+
+				return selectedWeekdays;
+			}
+
+			return [];
+		};
+
+		const getDateStr = (dateStr) => {
+			if(!dateStr) {
+				let d = new Date();
+				d.setHours(9);
+				d.setMinutes(0);
+
+				return d;
+			}
+
+			let d = new Date();
+
+			const parts = dateStr.split(':');
+
+			d.setHours(parts[0]);
+			d.setMinutes(parts[1]);
+
+			return d;
+		};
+
 		this.state = {
 			stepName: STEP_ORDER[0],
-			startTime: new Date('2017-08-04 09:00'),
-			endTime: new Date('2017-08-04 10:15'),
-			startDate: new Date(),
-			endDate: new Date(),
-			catalogEntry: {
-				save: save,
-				delete: () => { }
-			}
+			courseName: this.props.catalogEntry ? this.props.catalogEntry.title : null,
+			description: this.props.catalogEntry ? this.props.catalogEntry.description : null,
+			startDate: this.props.catalogEntry ? new Date(this.props.catalogEntry.StartDate) : new Date('2017-08-04 09:00'),
+			endDate: this.props.catalogEntry ? new Date(this.props.catalogEntry.EndDate) : new Date('2017-08-04 10:15'),
+			startTime: getDateStr(this.props.catalogEntry && this.props.catalogEntry.Schedule && this.props.catalogEntry.Schedule.times[0]),
+			endTime: getDateStr(this.props.catalogEntry && this.props.catalogEntry.Schedule && this.props.catalogEntry.Schedule.times[1]),
+			selectedWeekdays: getWeekdaysFrom(this.props.catalogEntry),
+			catalogEntry
 		};
 	}
 
@@ -173,18 +236,59 @@ export default class CoursePanel extends React.Component {
 	}
 
 	renderBottomControls () {
-		const onContinue = () => {
+		const { onFinish } = this.props;
+
+		const doContinue = () => {
 			const currIndex = STEP_ORDER.indexOf(this.state.stepName);
 
-			if(currIndex === STEP_ORDER.length) {
-				// do save
-				// this.state.startDate, this.state.endDate
-				// this.state.selectedWeekdays, this.state.startTime, this.state.endTime
-				// this.state.courseName, this.state.identifier, this.state.description
+			if(currIndex === STEP_ORDER.length - 1) {
+				// finalize, dismiss
+				if(onFinish) {
+					onFinish(this.state.catalogEntry);
+				}
 			}
 			else {
 				if(this.state.stepName === STEPS.GET_STARTED) {
 					this.state.catalogEntry.save({ ProviderUniqueID: this.state.identifier, title: this.state.courseName, identifier: this.state.identifier, description: this.state.description }).then(() => {
+						this.setState({stepName : STEP_ORDER[currIndex + 1]});
+					});
+				}
+				else if(this.state.stepName === STEPS.DAY_TIME) {
+					let times = [];
+
+					const pad = (value) => {
+						if(value < 10) {
+							return '0' + value;
+						}
+
+						return value;
+					};
+
+					if(this.state.startTime) {
+						times.push(pad(this.state.startTime.getHours()) + ':' + this.state.startTime.getMinutes() + ':00-05:00');
+					}
+					if(this.state.endTime) {
+						times.push(pad(this.state.endTime.getHours()) + ':' + this.state.endTime.getMinutes() + ':00-05:00');
+					}
+
+					const schedule = {
+						days: [
+							this.state.selectedWeekdays.map((d) => {
+								if(d === 'thursday') {
+									return 'R';
+								}
+
+								if(d === 'sunday') {
+									return 'N';
+								}
+
+								return d.toUpperCase().charAt(0);
+							}).join('')
+						],
+						times: times
+					};
+
+					this.state.catalogEntry.save({ ProviderUniqueID: this.state.identifier, Schedule: schedule }).then(() => {
 						this.setState({stepName : STEP_ORDER[currIndex + 1]});
 					});
 				}
@@ -199,10 +303,29 @@ export default class CoursePanel extends React.Component {
 			}
 		};
 
+		const doCancel = () => {
+			if(this.state.catalogEntry) {
+				Prompt.areYouSure('Canceling will cause the new course to not be saved.').then(() => {
+					this.state.catalogEntry.delete().then(() => {
+						this.cancel();
+					});
+				});
+			}
+			else {
+				this.cancel();
+			}
+		};
+
 		return (<div className="course-panel-controls">
-			<div className="course-panel-continue" onClick={onContinue}>Continue</div>
-			<div className="course-panel-cancel">Cancel</div>
+			<div className="course-panel-continue" onClick={doContinue}>Continue</div>
+			<div className="course-panel-cancel" onClick={doCancel}>Cancel</div>
 		</div>);
+	}
+
+	cancel () {
+		if(this.props.onCancel) {
+			this.props.onCancel();
+		}
 	}
 
 	render () {
