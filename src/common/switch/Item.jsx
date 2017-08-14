@@ -1,25 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {getItemName} from './utils';
+
 export default class SwitchItem extends React.Component {
 	static propTypes = {
 		component: PropTypes.any.isRequired,
-		name: PropTypes.string
+		name: PropTypes.string,
+		active: PropTypes.string
 	}
 
 
 	get name () {
-		return this.props.name;
+		return getItemName(this);
 	}
 
 
 	render () {
-		const {component:Cmp, ...otherProps} = this.props;
+		const {component:Cmp, name, active, ...otherProps} = this.props;
 
-		delete otherProps.name;
-
-		return (
-			<Cmp {...otherProps} />
-		);
+		return name === active ?
+			(<Cmp {...otherProps} />) :
+			null;
 	}
 }

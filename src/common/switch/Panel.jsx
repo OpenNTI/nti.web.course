@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Logger from 'nti-util-logger';
 
+import {getAvailableItems, resolveKey} from './utils';
 import Container from './Container';
 import Controls from './Controls';
 
+const log = Logger.get('web:common:switch:Panel');
 
 export default class SwitchPanel extends React.Component {
 	static propTypes = {
@@ -20,7 +23,6 @@ export default class SwitchPanel extends React.Component {
 		})
 	}
 
-	attachContainerRef = x => this.container = x
 
 	constructor (props) {
 		super(props);
@@ -33,10 +35,31 @@ export default class SwitchPanel extends React.Component {
 	}
 
 
+	get container () {
+		const {children:childrenProp} = this.props;
+		const children = React.Children.toArray(childrenProp);
+
+		for (let child of children) {
+			if (child.type === Container) {
+				return child;
+			}
+		}
+	}
+
+
+	get items () {
+		const  {container} = this;
+
+		return container ? Container.getItems(container) : [];
+	}
+
+
 	getChildContext () {
 		return {
 			switchContext: {
-				setActiveItem: (active) => this.setActiveItem(active)
+				availableItems: this.getAvailableItems(),
+				activeItem: this.getActiveItem(),
+				setActiveItem: (key) => this.setActiveItem(key)
 			}
 		};
 	}
@@ -54,7 +77,26 @@ export default class SwitchPanel extends React.Component {
 	}
 
 
-	setActiveItem (active) {
+	getAvailableItems () {
+		const {items} = this;
+		const active = this.getActiveItem();
+
+		return getAvailableItems(items, active);
+	}
+
+
+	getActiveItem () {
+		const {active} = this.state;
+
+		return active;
+	}
+
+
+
+	setActiveItem (key) {
+		debugger;
+		const active = resolveKey(this.items, this.getActiveItem(), key);
+
 		this.setState({
 			active
 		});
@@ -77,8 +119,10 @@ export default class SwitchPanel extends React.Component {
 						}
 
 						if (child.type === Container) {
-							return React.cloneElement(child, {ref: this.attachContainerRef, active});
+							return React.cloneElement(child, {active});
 						}
+
+						log.warn('Unexpected child type given to Switcher.Panel. Dropping it on the floor');
 					})
 				}
 			</div>

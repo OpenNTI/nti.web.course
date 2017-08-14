@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
+
 export default class SwitchTrigger extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
@@ -12,7 +13,9 @@ export default class SwitchTrigger extends React.Component {
 
 	static contextTypes = {
 		switchContext: PropTypes.shape({
-			setActiveItem: PropTypes.func
+			setActiveItem: PropTypes.func,
+			activeItem: PropTypes.string,
+			availableItems: PropTypes.object
 		})
 	}
 
@@ -21,23 +24,42 @@ export default class SwitchTrigger extends React.Component {
 	}
 
 
-	onClick = () => {
+	get active () {
 		const {item} = this.props;
+		const {activeItem} = this.switchContext;
+
+		return activeItem === item;
+	}
+
+
+	get disabled () {
+		const {item} = this.props;
+		const {availableItems} = this.switchContext;
+
+		return !availableItems || !availableItems[item];
+	}
+
+
+	onClick = (e) => {
+		const {item, onClick} = this.props;
 		const {setActiveItem} = this.switchContext;
 
-		if (setActiveItem) {
+		if (setActiveItem && !this.disabled) {
 			setActiveItem(item);
+		}
+
+		if (onClick) {
+			onClick(e);
 		}
 	}
 
 
 
-
-
 	render () {
-		const {item, className, children, ...otherProps} = this.props;
-		const active = false;
-		const disabled = false;
+		const {active, disabled} = this;
+		const {className, children, ...otherProps} = this.props;
+
+		delete otherProps.item;
 
 		return (
 			<div {...otherProps} className={cx(className, {active, disabled})} onClick={this.onClick} >
