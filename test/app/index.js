@@ -2,8 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { getService } from 'nti-web-client';
+import { Prompt } from 'nti-web-commons';
 
-import {CoursePanel} from '../../src/components';
+import { CourseWizard, CourseEditor, CourseListing } from '../../src/components';
 
 import 'nti-style-common/all.scss';
 import 'nti-web-commons/lib/index.css';
@@ -14,40 +15,68 @@ class Test extends React.Component {
 
 	state = {}
 
+	loadExisting = false;
+
 	componentDidMount () {
 
 	}
 
+	onCancel = () => {
+		this.setState({active:false});
+
+		this.modalDialog && this.modalDialog.dismiss && this.modalDialog.dismiss();
+
+		delete this.modalDialog;
+	};
+
+	onFinish = () => {
+		this.setState({active:false});
+
+		this.modalDialog && this.modalDialog.dismiss && this.modalDialog.dismiss();
+
+		delete this.modalDialog;
+	};
+
+	launch = () => {
+		if(this.loadExisting) {
+			getService().then((service) => {
+				return service.getObject('tag:nextthought.com,2011-10:NTI-CourseInfo-8293662465847423606_4744090504705445615');
+			}).then((entry) => {
+				this.modalDialog = Prompt.modal(<CourseEditor catalogEntry={entry}  onCancel={this.onCancel} onFinish={this.onFinish}/>,
+					'course-panel-wizard');
+			});
+		}
+		else {
+			this.modalDialog = Prompt.modal(<CourseWizard title="Create a New Course" onCancel={this.onCancel} onFinish={this.onFinish}/>,
+				'course-panel-wizard');
+		}
+	};
+
 	render () {
 		//http://janux.dev:8082/dataserver2/++etc++hostsites/platform.ou.edu/++etc++site/Courses/Spring2016/BIOL%202124/CourseCatalogEntry
 		//tag:nextthought.com,2011-10:system-OID-0x09a6b9:5573657273:eJy72UE9U37
-		if(!this.state.catalogEntry) {
-			getService().then((service) => {
-				return service.getObject('tag:nextthought.com,2011-10:NTI-CourseInfo-DefaultAPICreated_ABEV_4444');
-			}).then((entry) => {
-				this.setState({catalogEntry: entry});
-			});
-		}
+		// if(!this.state.catalogEntry) {
+		// 	getService().then((service) => {
+		// 		return service.getObject('tag:nextthought.com,2011-10:NTI-CourseInfo-8293662465847423519_4744090447131872047');
+		// 	}).then((entry) => {
+		// 		this.setState({catalogEntry: entry});
+		// 	});
+		// }
 
 		if(this.state.active) {
-			const onCancel = () => {
-				this.setState({active:false});
-			};
-
-			const onFinish = () => {
-				this.setState({active:false});
-			};
+			//catalogEntry={this.state.catalogEntry}
+			//
+			//
 
 			return (
-				<CoursePanel title='Create a New Course' onCancel={onCancel} onFinish={onFinish}/>
+				<CourseWizard title="Create a New Course" catalogEntry={this.state.catalogEntry} onCancel={this.onCancel} onFinish={this.onFinish}/>
 			);
 		}
 		else {
-			const launch = () => {
-				this.setState({active:true});
-			};
-
-			return (<div onClick={launch}>Load Wizard</div>);
+			return (<div>
+				<div onClick={this.launch}>Load Wizard</div>
+				<CourseListing/>
+			</div>);
 		}
 	}
 }

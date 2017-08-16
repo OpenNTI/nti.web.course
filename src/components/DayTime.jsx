@@ -1,27 +1,111 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TimePicker } from 'nti-web-commons';
+import {scoped} from 'nti-lib-locale';
+
+import {saveCatalogEntry} from './Actions';
 
 const LABELS = {
-	WHICH_DAYS: 'What days do you meet?',
-	START_TIME: 'Start Time',
-	END_TIME: 'End Time'
+	cancel: 'Cancel',
+	whichDays: 'What days do you meet?',
+	startTime: 'Start Time',
+	endTime: 'End Time'
 };
+
+const t = scoped('COURSE_WIZARD', LABELS);
 
 export default class DayTime extends React.Component {
 	static propTypes = {
-		selectedWeekdays: PropTypes.arrayOf(PropTypes.string),
-		weekdayClicked: PropTypes.func,
-		startTime: PropTypes.object,
-		updateStartTime: PropTypes.func,
-		endTime: PropTypes.object,
-		updateEndTime: PropTypes.func
+		saveCmp: PropTypes.func,
+		onCancel: PropTypes.func,
+		catalogEntry: PropTypes.object,
+		buttonLabel: PropTypes.string
 	}
 
 	constructor (props) {
 		super(props);
-		this.state = {};
+
+		const getWeekdaysFrom = (entry) => {
+			if(entry && entry.Schedule) {
+				const days = entry.Schedule.days && entry.Schedule.days[0];
+
+				let selectedWeekdays = [];
+
+				if(days.indexOf('M') >= 0) {
+					selectedWeekdays.push('monday');
+				}
+				if(days.indexOf('T') >= 0) {
+					selectedWeekdays.push('tuesday');
+				}
+				if(days.indexOf('W') >= 0) {
+					selectedWeekdays.push('wednesday');
+				}
+				if(days.indexOf('R') >= 0) {
+					selectedWeekdays.push('thursday');
+				}
+				if(days.indexOf('F') >= 0) {
+					selectedWeekdays.push('friday');
+				}
+				if(days.indexOf('S') >= 0) {
+					selectedWeekdays.push('saturday');
+				}
+				if(days.indexOf('N') >= 0) {
+					selectedWeekdays.push('sunday');
+				}
+
+				return selectedWeekdays;
+			}
+
+			return [];
+		};
+
+		const getDateStr = (dateStr) => {
+			if(!dateStr) {
+				let d = new Date();
+				d.setHours(9);
+				d.setMinutes(0);
+
+				return d;
+			}
+
+			let d = new Date();
+
+			const parts = dateStr.split(':');
+
+			d.setHours(parts[0]);
+			d.setMinutes(parts[1]);
+
+			return d;
+		};
+
+		this.state = {
+			startTime: getDateStr(this.props.catalogEntry && this.props.catalogEntry.Schedule && this.props.catalogEntry.Schedule.times[0]),
+			endTime: getDateStr(this.props.catalogEntry && this.props.catalogEntry.Schedule && this.props.catalogEntry.Schedule.times[1]),
+			selectedWeekdays: getWeekdaysFrom(this.props.catalogEntry),
+		};
 	}
+
+	renderDay = (day, index) => {
+		const onClick = () => {
+			let selectedWeekdays = this.state.selectedWeekdays ? [...this.state.selectedWeekdays] : [];
+
+			if(selectedWeekdays.includes(day.name)) {
+				selectedWeekdays.splice(selectedWeekdays.indexOf(day.name), 1);
+			}
+			else {
+				selectedWeekdays.push(day.name);
+			}
+
+			this.setState({selectedWeekdays : selectedWeekdays});
+		};
+
+		let className = 'course-panel-day';
+		if(this.state.selectedWeekdays && this.state.selectedWeekdays.includes(day.name)) {
+			className += ' selected';
+		}
+
+		return (<div className={className} key={index} onClick={onClick}>{day.code}</div>);
+	};
 
 	renderWeekdays () {
 		const days = [{name: 'sunday', code: 'S'},
@@ -32,62 +116,105 @@ export default class DayTime extends React.Component {
 			{name: 'friday', code: 'F'},
 			{name: 'saturday', code: 'S'}];
 
-		const renderDay = (day) => {
-			const onClick = () => {
-				if(this.props.weekdayClicked) {
-					this.props.weekdayClicked(day.name);
-				}
-			};
-
-			let className = 'course-panel-day';
-			if(this.props.selectedWeekdays && this.props.selectedWeekdays.includes(day.name)) {
-				className += ' selected';
-			}
-
-			return (<div className={className} onClick={onClick}>{day.code}</div>);
-		};
-
 		return (<div className="course-panel-weekdays">
-			{days.map(renderDay)}
+			{days.map(this.renderDay)}
 		</div>);
 	}
 
 	renderDaySelection () {
 		return (<div className="course-panel-day-selection">
-			<div className="course-panel-label">{LABELS.WHICH_DAYS}</div>
+			<div className="course-panel-label">{t('whichDays')}</div>
 			{this.renderWeekdays()}
 		</div>);
 	}
 
+	updateStartTime = (newDate) => {
+		this.setState({ startTime: newDate });
+	};
+
+	updateEndTime = (newDate) => {
+		this.setState({ endTime: newDate });
+	};
+
 	renderTimeSelection () {
-		const updateStartTime = (newDate) => {
-			if(this.props.updateStartTime) {
-				this.props.updateStartTime(newDate);
-			}
-		};
-
-		const updateEndTime = (newDate) => {
-			if(this.props.updateEndTime) {
-				this.props.updateEndTime(newDate);
-			}
-		};
-
 		return (<div className="course-panel-time-selection">
 			<div className="course-panel-starttime">
-				<div className="course-panel-label">{LABELS.START_TIME}</div>
-				<TimePicker value={this.props.startTime} onChange={updateStartTime}/>
+				<div className="course-panel-label">{t('startTime')}</div>
+				<TimePicker value={this.state.startTime} onChange={this.updateStartTime}/>
 			</div>
 			<div className="course-panel-endtime">
-				<div className="course-panel-label">{LABELS.END_TIME}</div>
-				<TimePicker value={this.props.endTime} onChange={updateEndTime}/>
+				<div className="course-panel-label">{t('endTime')}</div>
+				<TimePicker value={this.state.endTime} onChange={this.updateEndTime}/>
 			</div>
 		</div>);
 	}
 
+	renderCancelCmp () {
+		if(this.props.onCancel) {
+			return (<div className="course-panel-cancel" onClick={this.props.onCancel}>{t('cancel')}</div>);
+		}
+	}
+
+	onSave = (done) => {
+		const { catalogEntry } = this.props;
+
+		let times = [];
+
+		const pad = (value) => {
+			if(value < 10) {
+				return '0' + value;
+			}
+
+			return value;
+		};
+
+		if(this.state.startTime) {
+			times.push(pad(this.state.startTime.getHours()) + ':' + pad(this.state.startTime.getMinutes()) + ':00-05:00');
+		}
+		if(this.state.endTime) {
+			times.push(pad(this.state.endTime.getHours()) + ':' + pad(this.state.endTime.getMinutes()) + ':00-05:00');
+		}
+
+		const schedule = {
+			days: [
+				this.state.selectedWeekdays.map((d) => {
+					if(d === 'thursday') {
+						return 'R';
+					}
+
+					if(d === 'sunday') {
+						return 'N';
+					}
+
+					return d.toUpperCase().charAt(0);
+				}).join('')
+			],
+			times: times
+		};
+
+		saveCatalogEntry(catalogEntry, { ProviderUniqueID: catalogEntry.ProviderUniqueID, Schedule: schedule }, done);
+	}
+
+	renderSaveCmp () {
+		const { buttonLabel, saveCmp: Cmp } = this.props;
+
+		if(Cmp) {
+			return (<Cmp onSave={this.onSave} label={buttonLabel}/>);
+		}
+
+		return null;
+	}
+
 	render () {
 		return (<div>
-			{this.renderDaySelection()}
-			{this.renderTimeSelection()}
+			<div className="course-panel-content">
+				{this.renderDaySelection()}
+				{this.renderTimeSelection()}
+			</div>
+			<div className="course-panel-controls">
+				{this.renderSaveCmp()}
+				{this.renderCancelCmp()}
+			</div>
 		</div>
 		);
 	}

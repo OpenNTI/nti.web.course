@@ -1,9 +1,11 @@
 @import "~nti-style-common";
 
-.course-panel {
-	width: 900px;
-	background-color: #fafafa;
-	color: rgb(117, 116, 116);
+.course-wizard-item {
+	.error {
+		color: red;
+		text-align: center;
+		margin: 10px;
+	}
 }
 
 .course-panel-header {
