@@ -59,11 +59,10 @@ export default class CourseListing extends React.Component {
 		return this.state.loading ? (<Loading.Mask/>) : null;
 	}
 
-	renderCourse (course, index) {
-		const showEditor = () => {
-			this.modalDialog = Prompt.modal(<CourseEditor catalogEntry={course}  onCancel={this.onCancel} onFinish={this.onFinish}/>,
-				'course-panel-wizard');
-		};
+	renderDelete (course) {
+		if(!course.hasLink('delete')) {
+			return null;
+		}
 
 		const deleteCourse = (e) => {
 			e.stopPropagation();
@@ -80,6 +79,15 @@ export default class CourseListing extends React.Component {
 			});
 		};
 
+		return (<div className="course-delete" onClick={deleteCourse}><i className="icon-trash"/></div>);
+	}
+
+	renderCourse (course, index) {
+		const showEditor = () => {
+			this.modalDialog = Prompt.modal(<CourseEditor catalogEntry={course}  onCancel={this.onCancel} onFinish={this.onFinish}/>,
+				'course-panel-wizard');
+		};
+
 		return (<div className="course-item" key={index} onClick={showEditor}>
 			<div className="cover">
 				<div className="course-image" style={{
@@ -87,7 +95,7 @@ export default class CourseListing extends React.Component {
 				}}/>
 			</div>
 			<div className="course-meta">
-				<div className="course-delete" onClick={deleteCourse}><i className="icon-trash"/></div>
+				{this.renderDelete(course)}
 				<div className="course-id">{course.ProviderUniqueID}</div>
 				<div className="course-title">{course.title}</div>
 			</div>
