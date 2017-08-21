@@ -36,9 +36,7 @@ export default class CourseEditor extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = {
-			catalogEntry: props.catalogEntry
-		};
+		this.state = {};
 	}
 
 	componentDidMount () {
@@ -95,21 +93,21 @@ export default class CourseEditor extends React.Component {
 						className="course-panel-content"
 						name="CourseMeta"
 						component={CourseMeta}
-						catalogEntry={this.state.catalogEntry}
+						catalogEntry={this.props.catalogEntry}
 						onCancel={this.cancel}
 						saveCmp={SaveButton}/>
 					<Switch.Item
 						className="course-panel-content"
 						name="DayTime"
 						component={DayTime}
-						catalogEntry={this.state.catalogEntry}
+						catalogEntry={this.props.catalogEntry}
 						onCancel={this.cancel}
 						saveCmp={SaveButton}/>
 					<Switch.Item
 						className="course-panel-content"
 						name="CourseDatesPicker"
 						component={CourseDatesPicker}
-						catalogEntry={this.state.catalogEntry}
+						catalogEntry={this.props.catalogEntry}
 						onCancel={this.cancel}
 						saveCmp={SaveButton}/>
 				</Switch.Container>
