@@ -71,7 +71,9 @@ export default class CourseListing extends React.Component {
 			Prompt.areYouSure(t('confirmDelete')).then(() => {
 				this.setState( { loading: true }, () => {
 					getService().then((service) => {
-						return service.delete(course.href);
+						return service.getObject(course.CourseNTIID).then((courseInstance) => {
+							return courseInstance.delete();
+						});
 					}).then(() => {
 						this.loadAllCourses();
 					});
@@ -103,6 +105,10 @@ export default class CourseListing extends React.Component {
 	}
 
 	renderCourses () {
+		if(this.state.loading) {
+			return null;
+		}
+
 		return (<div className="course-item-list">
 			{this.state.courses.map((course, index) => this.renderCourse(course, index))}
 		</div>);
