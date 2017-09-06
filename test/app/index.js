@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { getService } from 'nti-web-client';
 import { Prompt } from 'nti-web-commons';
 
-import { CourseWizard, CourseEditor, CourseListing } from '../../src/components';
+import { CourseWizard, CourseEditor, CourseListing, CourseCreateButton } from '../../src/components';
 
 import 'nti-style-common/all.scss';
 import 'nti-web-commons/lib/index.css';
@@ -74,8 +74,8 @@ class Test extends React.Component {
 		}
 		else {
 			return (<div>
-				<div onClick={this.launch}>Load Wizard</div>
-				<CourseListing/>
+				<CourseCreateButton/>
+				<CourseListing isAdministrative/>
 			</div>);
 		}
 	}

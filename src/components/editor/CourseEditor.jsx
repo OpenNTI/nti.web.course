@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Loading } from 'nti-web-commons';
+import { Switch, Prompt, Loading } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
 import CourseMeta from '../CourseMeta';
@@ -30,7 +30,21 @@ export default class CourseEditor extends React.Component {
 		title: PropTypes.string,
 		catalogEntry: PropTypes.object.isRequired,
 		onCancel: PropTypes.func,
-		onFinish: PropTypes.func
+		onFinish: PropTypes.func,
+		onSave: PropTypes.func
+	}
+
+	static showEditor (catalogEntry, onCancel, onSave) {
+		const doCancel = () => {
+			onCancel && onCancel();
+		};
+
+		const doOnSave = () => {
+			onSave && onSave();
+		};
+
+		return Prompt.modal(<CourseEditor catalogEntry={catalogEntry}  onCancel={doCancel} onSave={doOnSave}/>,
+			'course-panel-wizard');
 	}
 
 	constructor (props) {
@@ -74,16 +88,18 @@ export default class CourseEditor extends React.Component {
 	}
 
 	render () {
+		const { catalogEntry, onSave } = this.props;
+
 		return (<div className="course-editor">
 			{this.renderLoadingMask()}
 			{this.renderCloseButton()}
 			<Switch.Panel className="course-panel" active="CourseMeta">
 				<Switch.Controls className="course-editor-menu">
 					<div className="course-image" style={{
-						backgroundImage: 'url(' + getImageUrl(this.props.catalogEntry) + ')'
+						backgroundImage: 'url(' + getImageUrl(catalogEntry) + ')'
 					}}/>
-					<div className="course-id">{this.props.catalogEntry.ProviderUniqueID}</div>
-					<div className="course-title">{this.props.catalogEntry.title}</div>
+					<div className="course-id">{catalogEntry.ProviderUniqueID}</div>
+					<div className="course-title">{catalogEntry.title}</div>
 					<Switch.Trigger className="course-editor-menu-item" item="CourseMeta">Basic Information</Switch.Trigger>
 					<Switch.Trigger className="course-editor-menu-item" item="DayTime">Times</Switch.Trigger>
 					<Switch.Trigger className="course-editor-menu-item" item="CourseDatesPicker">Dates</Switch.Trigger>
@@ -93,22 +109,25 @@ export default class CourseEditor extends React.Component {
 						className="course-panel-content"
 						name="CourseMeta"
 						component={CourseMeta}
-						catalogEntry={this.props.catalogEntry}
+						catalogEntry={catalogEntry}
 						onCancel={this.cancel}
+						afterSave={onSave}
 						saveCmp={SaveButton}/>
 					<Switch.Item
 						className="course-panel-content"
 						name="DayTime"
 						component={DayTime}
-						catalogEntry={this.props.catalogEntry}
+						catalogEntry={catalogEntry}
 						onCancel={this.cancel}
+						afterSave={onSave}
 						saveCmp={SaveButton}/>
 					<Switch.Item
 						className="course-panel-content"
 						name="CourseDatesPicker"
 						component={CourseDatesPicker}
-						catalogEntry={this.props.catalogEntry}
+						catalogEntry={catalogEntry}
 						onCancel={this.cancel}
+						afterSave={onSave}
 						saveCmp={SaveButton}/>
 				</Switch.Container>
 			</Switch.Panel>

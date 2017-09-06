@@ -1,0 +1,24 @@
+@import "~nti-style-common";
+
+.create-course-options {
+	.option {
+		color: black;
+		padding: 15px;
+		cursor: pointer;
+		border-bottom: solid 1px #f7f7f7;
+		background-color: white;
+	}
+}
+
+.create-course-button {
+	background-color: #3fb3f6;
+	color: white;
+	width: 150px;
+	text-align: center;
+	padding: 10px;
+	border-radius: 3px;
+	font-size: 14px;
+	line-height: 22px;
+	cursor: pointer;
+	margin: 20px;
+}

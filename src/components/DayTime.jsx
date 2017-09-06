@@ -18,6 +18,7 @@ export default class DayTime extends React.Component {
 	static propTypes = {
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
+		afterSave: PropTypes.func,
 		catalogEntry: PropTypes.object,
 		buttonLabel: PropTypes.string
 	}
@@ -156,7 +157,7 @@ export default class DayTime extends React.Component {
 	}
 
 	onSave = (done) => {
-		const { catalogEntry } = this.props;
+		const { catalogEntry, afterSave } = this.props;
 
 		let times = [];
 
@@ -192,7 +193,14 @@ export default class DayTime extends React.Component {
 			times: times
 		};
 
-		saveCatalogEntry(catalogEntry, { ProviderUniqueID: catalogEntry.ProviderUniqueID, Schedule: schedule }, done);
+		saveCatalogEntry(catalogEntry, {
+			ProviderUniqueID: catalogEntry.ProviderUniqueID,
+			Schedule: schedule
+		}, () => {
+			afterSave && afterSave();
+
+			done();
+		});
 	}
 
 	renderSaveCmp () {
