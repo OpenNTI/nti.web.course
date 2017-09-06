@@ -1,0 +1,41 @@
+@import "~nti-style-common";
+
+.course-settings-menu {
+	.header {
+		background-color: white;
+		border-bottom: solid 1px #eaeaea;
+		padding: 15px;
+
+		.course-name {
+			color: #888;
+			font-size: 12px;
+		}
+
+		.course-status {
+			font-size: 22px;
+		}
+	}
+
+	.option {
+		padding: 15px;
+		cursor: pointer;
+		border-bottom: solid 1px #eaeaea;
+		background-color: #f7f7f7;
+
+		&.delete-course {
+			color: red;
+
+			i {
+				margin-right: 10px;
+			}
+		}
+	}
+
+	.support {
+		display: block;
+		cursor: pointer;
+		color: #3fb3f6;
+		font-size: 0.8em;
+		text-decoration: none;
+	}
+}

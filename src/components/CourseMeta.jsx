@@ -18,6 +18,7 @@ export default class CourseMeta extends React.Component {
 	static propTypes = {
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
+		afterSave: PropTypes.func,
 		catalogEntry: PropTypes.object,
 		buttonLabel: PropTypes.string
 	}
@@ -32,10 +33,18 @@ export default class CourseMeta extends React.Component {
 	}
 
 	onSave = (done) => {
-		const { catalogEntry } = this.props;
+		const { catalogEntry, afterSave } = this.props;
 
-		saveCatalogEntry(catalogEntry, { ProviderUniqueID: this.state.identifier, title: this.state.courseName,
-			identifier: this.state.identifier, description: this.state.description }, done);
+		saveCatalogEntry(catalogEntry, {
+			ProviderUniqueID: this.state.identifier,
+			title: this.state.courseName,
+			identifier: this.state.identifier,
+			description: this.state.description
+		}, () => {
+			afterSave && afterSave();
+
+			done();
+		});
 	};
 
 	renderSaveCmp () {

@@ -1,0 +1,111 @@
+@import "~nti-style-common";
+
+.admin-course-options {
+	color: black;
+
+	.flyout-inner {
+		width: 320px;
+	}
+}
+
+.course-item-list {
+	.course-item {
+		border: solid 1px #eaeaea;
+		color: #444;
+		width: 232px;
+		height: 290px;
+		box-shadow: 1px 1px 2px #eaeaea;
+		margin: 10px;
+		cursor: pointer;
+		position: relative;
+
+		.course-controls {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			display: flex;
+
+			.preview {
+				background-color: #ffa500;
+				color: #fff;
+				padding: 0 7px;
+				border-radius: 3px;
+				text-transform: uppercase;
+				font: normal 600 10px/27px "Open Sans", sans-serif;
+				display: inline-block;
+			}
+
+			.options {
+				background-color: #333;
+				color: white;
+				border-radius: 3px;
+				padding: 4px 6px 2px;
+				opacity: 0.8;
+				cursor: pointer;
+				position: absolute;
+				left: 182px;
+			}
+		}
+
+		.course-delete {
+			background-color: #ccc;
+			width: 24px;
+			text-align: center;
+			line-height: 14px;
+			font-size: 24px;
+			border-radius: 3px;
+			color: white;
+			float: right;
+
+			&:hover {
+				background-color: #e20d0d;
+			}
+		}
+
+		.course-title {
+			overflow: hidden;
+			line-height: 25px;
+			margin-top: 10px;
+			color: #757474;
+			font-weight: 700;
+			font-size: 1em/1.1em;
+			font-family: "Open Sans Condensed";
+			text-transform: uppercase;
+		}
+
+		.course-instructors {
+			text-transform: uppercase;
+			font: normal bold 0.6em/1.6em "Open Sans", sans-serif;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			color: #3fb3f6;
+		}
+
+		.course-id {
+			font-size: 12px;
+			color: #888;
+		}
+
+		.cover {
+			width: 220px;
+			height: 160px;
+			margin: 5px;
+			overflow: hidden;
+
+			.course-image {
+				height: 160px;
+
+				&:hover {
+					transform: scale(1.05, 1.05);
+					transition: all 0.5s;
+					opacity: 0.7;
+				}
+			}
+		}
+
+		.course-meta {
+			padding: 10px;
+		}
+	}
+}
