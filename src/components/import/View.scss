@@ -31,6 +31,16 @@
 		height: 410px;
 	}
 
+	.import-file {
+		margin: 30px 0 120px 226px;
+		text-align: left;
+
+		span.file-picker.button {
+			font-size: 16px;
+			line-height: 36px;
+		}
+	}
+
 	.footer {
 		height: 50px;
 		font-size: 14px;
