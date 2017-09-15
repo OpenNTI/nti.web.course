@@ -5,6 +5,14 @@
 		background-color: white;
 		border-bottom: solid 1px #eaeaea;
 		padding: 15px;
+		display: flex;
+
+		.registered-icon {
+			background-image: url(assets/circle-check.svg);
+			width: 30px;
+			height: 29px;
+			margin: 4px 10px 0 0;
+		}
 
 		.course-name {
 			color: #888;
@@ -12,11 +20,12 @@
 		}
 
 		.course-status {
-			font-size: 22px;
+			font-size: 18px;
 		}
 	}
 
 	.option {
+		font-size: 14px;
 		padding: 15px;
 		cursor: pointer;
 		border-bottom: solid 1px #eaeaea;
