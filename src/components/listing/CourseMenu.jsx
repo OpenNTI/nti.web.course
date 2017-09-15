@@ -59,7 +59,7 @@ export default class CourseMenu extends React.Component {
 		}
 	}
 
-	renderDelete () {
+	renderDrop () {
 		const { doDrop } = this.props;
 
 		if(doDrop) {
@@ -67,7 +67,7 @@ export default class CourseMenu extends React.Component {
 		}
 	}
 
-	renderDrop () {
+	renderDelete () {
 		const { doDelete } = this.props;
 
 		if(doDelete) {
