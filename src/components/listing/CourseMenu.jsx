@@ -23,13 +23,22 @@ export default class CourseMenu extends React.Component {
 		registered: PropTypes.string
 	}
 
+	renderRegisteredIcon () {
+		if(this.props.registered) {
+			return (<div className="registered-icon"/>);
+		}
+	}
+
 	renderOptionsHeader () {
 		const { course, registered } = this.props;
 
 		return (
 			<div className="header">
-				<div className="course-name">{course.title}</div>
-				<div className="course-status">{registered ? t('registered') : ''}</div>
+				{this.renderRegisteredIcon()}
+				<div className="header-info">
+					<div className="course-name">{course.title}</div>
+					<div className="course-status">{registered ? t('registered') : ''}</div>
+				</div>
 			</div>
 		);
 	}
