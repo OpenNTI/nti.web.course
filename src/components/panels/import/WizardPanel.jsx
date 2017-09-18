@@ -15,10 +15,15 @@ const LABELS = {
 const t = scoped('COURSE_IMPORT', LABELS);
 
 export default class CourseImport extends React.Component {
+	static tabName = 'Import'
+	static tabDescription = 'Import Course'
+
 	static propTypes = {
-		title: PropTypes.string,
+		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
-		onFinish: PropTypes.func
+		afterSave: PropTypes.func,
+		catalogEntry: PropTypes.object,
+		buttonLabel: PropTypes.string
 	}
 
 	constructor (props) {
@@ -31,29 +36,12 @@ export default class CourseImport extends React.Component {
 		this.props.onCancel && this.props.onCancel();
 	}
 
-	doImport = () => {
-
-	}
-
 	renderCloseButton () {
 		return (<div className="close" onClick={this.cancel}><i className="icon-light-x"/></div>);
 	}
 
 	renderTitle () {
-		return (<div className="course-import-header-title">{this.props.title || t('defaultTitle')}</div>);
-	}
-
-	renderHeader () {
-		return (<div className="course-import-header">
-			{this.renderCloseButton()}
-			<div className="header-text">
-				{this.renderTitle()}
-			</div>
-		</div>);
-	}
-
-	updateAdminLevel = (value) => {
-		this.setState({adminLevel : value});
+		return (<div className="course-import-header-title">{t('defaultTitle')}</div>);
 	}
 
 	updateIDNumber = (value) => {
@@ -62,10 +50,6 @@ export default class CourseImport extends React.Component {
 
 	updateImportFile = (file) => {
 		this.setState({file});
-	}
-
-	renderAdminLevel () {
-		return (<Input.Text placeholder={t('adminLevel')} value={this.state.adminLevel} onChange={this.updateAdminLevel}/>);
 	}
 
 	renderIDInput () {
@@ -78,27 +62,45 @@ export default class CourseImport extends React.Component {
 
 	renderBody () {
 		return (<div className="course-panel-getstarted-form">
-			{this.renderAdminLevel()}
 			{this.renderIDInput()}
 			{this.renderFileImport()}
 		</div>);
 	}
 
-	renderFooter () {
-		return (
-			<div className="footer">
-				<div onClick={this.doImport} className="course-import-button">{t('import')}</div>
-				<div onClick={this.cancel} className="course-import-cancel">{t('cancel')}</div>
-			</div>
-		);
+	onSave = (done) => {
+		const { afterSave } = this.props;
+
+		afterSave && afterSave();
+
+		done();
+	};
+
+	renderSaveCmp () {
+		const { buttonLabel, saveCmp: Cmp } = this.props;
+
+		if(Cmp) {
+			return (<Cmp onSave={this.onSave} label={buttonLabel}/>);
+		}
+
+		return null;
+	}
+
+	renderCancelCmp () {
+		if(this.props.onCancel) {
+			return (<div className="course-panel-cancel" onClick={this.props.onCancel}>{t('cancel')}</div>);
+		}
 	}
 
 	render () {
 		return (
 			<div className="course-import-panel">
-				{this.renderHeader()}
-				{this.renderBody()}
-				{this.renderFooter()}
+				<div className="course-panel-content">
+					{this.renderBody()}
+				</div>
+				<div className="course-panel-controls">
+					{this.renderSaveCmp()}
+					{this.renderCancelCmp()}
+				</div>
 			</div>
 		);
 	}

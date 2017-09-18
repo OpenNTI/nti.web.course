@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import { Input } from 'nti-web-commons';
 
-import {saveCatalogEntry} from './Actions';
+import {saveCatalogEntry} from '../../../editor/Actions';
 
 const LABELS = {
 	cancel: 'Cancel',
@@ -14,7 +14,10 @@ const LABELS = {
 
 const t = scoped('COURSE_WIZARD', LABELS);
 
-export default class CourseMeta extends React.Component {
+export default class CourseBasic extends React.Component {
+	static tabName = 'CourseBasic'
+	static tabDescription = 'Basic Information'
+
 	static propTypes = {
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,

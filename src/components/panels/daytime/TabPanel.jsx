@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TimePicker } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
-import {saveCatalogEntry} from './Actions';
+import {saveCatalogEntry} from '../../../editor/Actions';
 
 const LABELS = {
 	cancel: 'Cancel',
@@ -15,6 +15,9 @@ const LABELS = {
 const t = scoped('COURSE_WIZARD', LABELS);
 
 export default class DayTime extends React.Component {
+	static tabName = 'DayTime'
+	static tabDescription = 'Day & Time'
+
 	static propTypes = {
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
