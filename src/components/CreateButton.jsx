@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { scoped } from 'nti-lib-locale';
-import { Prompt } from 'nti-web-commons';
 
 import { Editor } from '../index';
 
@@ -45,9 +44,6 @@ export default class CreateButton extends React.Component {
 	}
 
 	launchWizard = () => {
-		// this.modalDialog = Prompt.modal(<CourseWizard title="Create a New Course" onCancel={this.onCancel} onFinish={this.onFinish}/>,
-		// 	'course-panel-wizard');
-		//
 		Editor.createCourse();
 	}
 

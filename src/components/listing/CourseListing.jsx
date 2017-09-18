@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getService } from 'nti-web-client';
-import { Prompt, Loading } from 'nti-web-commons';
+import { Loading } from 'nti-web-commons';
 
 import { Editor } from '../../';
 
@@ -35,29 +35,12 @@ export default class CourseListing extends React.Component {
 		});
 	}
 
-	onCancel = () => {
-		this.modalDialog && this.modalDialog.dismiss && this.modalDialog.dismiss();
-
-		delete this.modalDialog;
-	}
-
-	onFinish = () => {
-		this.setState({active:false});
-
-		this.modalDialog && this.modalDialog.dismiss && this.modalDialog.dismiss();
-
-		delete this.modalDialog;
-	}
-
 	renderLoading () {
 		return this.state.loading ? (<Loading.Mask/>) : null;
 	}
 
 	renderCourse (course, index) {
 		const showEditor = () => {
-			// this.modalDialog = Prompt.modal(<CourseEditor catalogEntry={course}  onCancel={this.onCancel} onFinish={this.onFinish}/>,
-			// 	'course-panel-wizard');
-
 			Editor.editCourse(course);
 		};
 
