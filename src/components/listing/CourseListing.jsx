@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getService } from 'nti-web-client';
 import { Prompt, Loading } from 'nti-web-commons';
 
-import CourseEditor from '../editor/CourseEditor';
+import { Editor } from '../../';
 
 import CourseCard from './CourseCard';
 
@@ -55,8 +55,10 @@ export default class CourseListing extends React.Component {
 
 	renderCourse (course, index) {
 		const showEditor = () => {
-			this.modalDialog = Prompt.modal(<CourseEditor catalogEntry={course}  onCancel={this.onCancel} onFinish={this.onFinish}/>,
-				'course-panel-wizard');
+			// this.modalDialog = Prompt.modal(<CourseEditor catalogEntry={course}  onCancel={this.onCancel} onFinish={this.onFinish}/>,
+			// 	'course-panel-wizard');
+
+			Editor.editCourse(course);
 		};
 
 		return (<div key={index}><CourseCard course={course} onClick={showEditor} onEdit={showEditor} isAdministrative={this.props.isAdministrative}/></div>);

@@ -1,0 +1,45 @@
+@import "~nti-style-common";
+
+.course-panel-templatechooser {
+	.course-panel-content {
+		text-align: center;
+
+		.options-container {
+			display: flex;
+			margin: auto;
+			padding-left: 200px;
+			padding-right: 200px;
+			padding-top: 100px;
+
+			.item {
+				color: #777;
+				cursor: pointer;
+				padding: 25px;
+				margin: auto;
+				margin-bottom: 20px;
+				border-radius: 3px;
+				width: 200px;
+				height: 200px;
+				box-shadow: 1px 1px 3px #ccc;
+				border: solid 1px #ccc;
+
+				.template-icon {
+					height: 80px;
+				}
+
+				.template-name {
+					font-size: 22px;
+				}
+
+				.template-description {
+					font-size: 12px;
+				}
+
+				&.selected {
+					color: #3fb3f6;
+					border: solid 1px #3fb3f6;
+				}
+			}
+		}
+	}
+}

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { DayPickerRange } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
-import {saveCatalogEntry} from './Actions';
+import {saveCatalogEntry} from '../../../editor/Actions';
 
 const LABELS = {
 	cancel: 'Cancel',
@@ -13,6 +13,9 @@ const LABELS = {
 const t = scoped('COURSE_WIZARD', LABELS);
 
 export default class CourseDatesPicker extends React.Component {
+	static tabName = 'CourseDatesPicker'
+	static tabDescription = 'Course Dates'
+
 	static propTypes = {
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,

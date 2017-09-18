@@ -1,0 +1,1 @@
+export WizardPanel from './WizardPanel';

@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import { Switch, Prompt, Loading } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
-import CourseMeta from '../CourseMeta';
-import DayTime from '../DayTime';
-import CourseDatesPicker from '../CourseDatesPicker';
-import {getImageUrl} from '../utils';
+import {getImageUrl} from '../../utils';
 import Store from '../Store';
+import { Blank } from '../../templates/Blank';
 import {
 	COURSE_SAVING,
 	COURSE_SAVED,
@@ -16,9 +14,6 @@ import {
 
 const LABELS = {
 	finish: 'Finish',
-	getStarted: 'Get Started',
-	dayAndTime: 'Day & Time',
-	chooseCourseDates: 'Choose Course Dates',
 	saving: 'Saving...',
 	save: 'Save',
 };
@@ -87,48 +82,51 @@ export default class CourseEditor extends React.Component {
 		return (<div className="close" onClick={this.cancel}><i className="icon-light-x"/></div>);
 	}
 
+	renderTrigger = (panel) => {
+		const tabPanel = panel.TabPanel;
+
+		return (<Switch.Trigger key={tabPanel.tabName} className="course-editor-menu-item" item={tabPanel.tabName}>{tabPanel.tabDescription}</Switch.Trigger>);
+	}
+
+	renderTriggers () {
+		return Blank.panels.map(this.renderTrigger);
+	}
+
+	renderPanel = (panel) => {
+		const tabPanel = panel.TabPanel;
+
+		return (<Switch.Item
+			className="course-panel-content"
+			key={tabPanel.tabName}
+			name={tabPanel.tabName}
+			component={tabPanel}
+			catalogEntry={this.props.catalogEntry}
+			onCancel={this.cancel}
+			afterSave={this.props.onSave}
+			saveCmp={SaveButton}/>);
+	}
+
+	renderItems () {
+		return Blank.panels.map(this.renderPanel);
+	}
+
 	render () {
-		const { catalogEntry, onSave } = this.props;
+		const { catalogEntry } = this.props;
 
 		return (<div className="course-editor">
 			{this.renderLoadingMask()}
 			{this.renderCloseButton()}
-			<Switch.Panel className="course-panel" active="CourseMeta">
+			<Switch.Panel className="course-panel" active={Blank.panels[0].TabPanel.tabName}>
 				<Switch.Controls className="course-editor-menu">
 					<div className="course-image" style={{
 						backgroundImage: 'url(' + getImageUrl(catalogEntry) + ')'
 					}}/>
 					<div className="course-id">{catalogEntry.ProviderUniqueID}</div>
 					<div className="course-title">{catalogEntry.title}</div>
-					<Switch.Trigger className="course-editor-menu-item" item="CourseMeta">Basic Information</Switch.Trigger>
-					<Switch.Trigger className="course-editor-menu-item" item="DayTime">Times</Switch.Trigger>
-					<Switch.Trigger className="course-editor-menu-item" item="CourseDatesPicker">Dates</Switch.Trigger>
+					{this.renderTriggers()}
 				</Switch.Controls>
 				<Switch.Container>
-					<Switch.Item
-						className="course-panel-content"
-						name="CourseMeta"
-						component={CourseMeta}
-						catalogEntry={catalogEntry}
-						onCancel={this.cancel}
-						afterSave={onSave}
-						saveCmp={SaveButton}/>
-					<Switch.Item
-						className="course-panel-content"
-						name="DayTime"
-						component={DayTime}
-						catalogEntry={catalogEntry}
-						onCancel={this.cancel}
-						afterSave={onSave}
-						saveCmp={SaveButton}/>
-					<Switch.Item
-						className="course-panel-content"
-						name="CourseDatesPicker"
-						component={CourseDatesPicker}
-						catalogEntry={catalogEntry}
-						onCancel={this.cancel}
-						afterSave={onSave}
-						saveCmp={SaveButton}/>
+					{this.renderItems()}
 				</Switch.Container>
 			</Switch.Panel>
 		</div>);
