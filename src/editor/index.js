@@ -4,22 +4,18 @@ import { Prompt } from 'nti-web-commons';
 import CourseWizard from './wizard/CourseWizard';
 import CourseEditor from './tab/CourseEditor';
 
-export const createCourse = (onCancel, onFinish) => {
+export const createCourse = () => {
 	return new Promise((fulfill, reject) => {
 		let dialog = null;
 
 		const finish = () => {
 			dialog && dialog.dismiss();
 
-			onFinish && onFinish();
-
 			fulfill();
 		};
 
 		const cancel = () => {
 			dialog && dialog.dismiss();
-
-			onCancel && onCancel();
 
 			reject();
 		};
@@ -28,22 +24,18 @@ export const createCourse = (onCancel, onFinish) => {
 	});
 };
 
-export const editCourse = (course, onCancel, onFinish) => {
+export const editCourse = (course) => {
 	return new Promise((fulfill, reject) => {
 		let dialog = null;
 
 		const finish = () => {
 			dialog && dialog.dismiss();
 
-			onFinish && onFinish();
-
 			fulfill();
 		};
 
 		const cancel = () => {
 			dialog && dialog.dismiss();
-
-			onCancel && onCancel();
 
 			reject();
 		};
