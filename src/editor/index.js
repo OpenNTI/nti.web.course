@@ -4,38 +4,50 @@ import { Prompt } from 'nti-web-commons';
 import CourseWizard from './wizard/CourseWizard';
 import CourseEditor from './tab/CourseEditor';
 
-export const createCourse = () => {
+export const createCourse = (onCancel, onFinish) => {
 	return new Promise((fulfill, reject) => {
-		const onFinish = () => {
-			this.dialog && this.dialog.dismiss();
+		let dialog = null;
+
+		const finish = () => {
+			dialog && dialog.dismiss();
+
+			onFinish && onFinish();
 
 			fulfill();
 		};
 
-		const onCancel = () => {
-			this.dialog && this.dialog.dismiss();
+		const cancel = () => {
+			dialog && dialog.dismiss();
+
+			onCancel && onCancel();
 
 			reject();
 		};
 
-		this.dialog = Prompt.modal(<CourseWizard onFinish={onFinish} onCancel={onCancel}/>);
+		dialog = Prompt.modal(<CourseWizard onFinish={finish} onCancel={cancel}/>);
 	});
 };
 
-export const editCourse = (course) => {
+export const editCourse = (course, onCancel, onFinish) => {
 	return new Promise((fulfill, reject) => {
-		const onFinish = () => {
-			this.dialog && this.dialog.dismiss();
+		let dialog = null;
+
+		const finish = () => {
+			dialog && dialog.dismiss();
+
+			onFinish && onFinish();
 
 			fulfill();
 		};
 
-		const onCancel = () => {
-			this.dialog && this.dialog.dismiss();
+		const cancel = () => {
+			dialog && dialog.dismiss();
+
+			onCancel && onCancel();
 
 			reject();
 		};
 
-		this.dialog = Prompt.modal(<CourseEditor catalogEntry={course}onFinish={onFinish} onCancel={onCancel}/>);
+		dialog = Prompt.modal(<CourseEditor catalogEntry={course} onFinish={finish} onCancel={cancel}/>);
 	});
 };

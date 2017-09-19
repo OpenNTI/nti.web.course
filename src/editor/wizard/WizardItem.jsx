@@ -27,7 +27,8 @@ export default class WizardItem extends React.Component {
 		onCancel: PropTypes.func,
 		afterSave: PropTypes.func,
 		catalogEntry: PropTypes.object,
-		buttonLabel: PropTypes.string
+		buttonLabel: PropTypes.string,
+		firstTab: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -68,6 +69,10 @@ export default class WizardItem extends React.Component {
 	}
 
 	renderBackButton () {
+		if(this.props.firstTab) {
+			return null;
+		}
+
 		return (
 			<Switch.Trigger item={Switch.PREVIOUS}>
 				<div className="back"><i className="icon-chevron-left"/></div>

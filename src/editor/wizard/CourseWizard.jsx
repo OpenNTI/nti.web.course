@@ -92,7 +92,8 @@ export default class CourseWizard extends React.Component {
 			wizardCmp={TemplateChooser}
 			stepName={t('chooseTemplate')}
 			onTemplateSelect={this.onTemplateSelect}
-			onCancel={this.cancel} />);
+			onCancel={this.cancel}
+			firstTab />);
 	}
 
 	render () {
