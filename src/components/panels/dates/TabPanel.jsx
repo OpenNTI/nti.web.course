@@ -28,8 +28,8 @@ export default class CourseDatesPicker extends React.Component {
 		super(props);
 		this.state = {
 			selectedType: 'Start',
-			startDate: this.props.catalogEntry && this.props.catalogEntry.StartDate ? new Date(props.catalogEntry.StartDate) : new Date(),
-			endDate: this.props.catalogEntry && this.props.catalogEntry.EndDate ? new Date(props.catalogEntry.EndDate) : new Date()
+			startDate: this.props.catalogEntry && this.props.catalogEntry.StartDate && new Date(props.catalogEntry.StartDate),
+			endDate: this.props.catalogEntry && this.props.catalogEntry.EndDate && new Date(props.catalogEntry.EndDate)
 		};
 	}
 
