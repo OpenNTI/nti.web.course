@@ -2,9 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-import { Blank } from '../../templates/Blank';
-import { Import } from '../../templates/Import';
-
 const LABELS = {
 	cancel: 'Cancel',
 	courseName: 'Course Name',
@@ -16,6 +13,7 @@ const t = scoped('COURSE_WIZARD', LABELS);
 
 export default class TemplateChooser extends React.Component {
 	static propTypes = {
+		availableTemplates: PropTypes.arrayOf(PropTypes.object),
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
 		onTemplateSelect: PropTypes.func,
@@ -53,7 +51,7 @@ export default class TemplateChooser extends React.Component {
 		}
 	}
 
-	renderItem (item) {
+	renderItem = (item, index) => {
 		const updateSelected = () => {
 			this.setState({selected: item});
 		};
@@ -61,7 +59,7 @@ export default class TemplateChooser extends React.Component {
 		const className = 'item' + (item.name === (this.state.selected && this.state.selected.name) ? ' selected' : '');
 
 		return (
-			<div className={className} onClick={updateSelected}>
+			<div className={className} key={index} onClick={updateSelected}>
 				<div className="template-icon"/>
 				<div className="template-name">{item.name}</div>
 				<div className="template-description">{item.description}</div>
@@ -70,11 +68,12 @@ export default class TemplateChooser extends React.Component {
 	}
 
 	render () {
+		const { availableTemplates } = this.props;
+
 		return (<div className="course-panel-templatechooser">
 			<div className="course-panel-content">
 				<div className="options-container">
-					{this.renderItem(Blank)}
-					{this.renderItem(Import)}
+					{(availableTemplates || []).map(this.renderItem)}
 				</div>
 			</div>
 			<div className="course-panel-controls">
