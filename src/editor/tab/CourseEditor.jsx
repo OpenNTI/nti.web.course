@@ -62,12 +62,17 @@ export default class CourseEditor extends React.Component {
 		} else if (data.type === COURSE_SAVE_ERROR) {
 			this.setState({loading: false, errorMsg: data.errorMsg});
 		} else if (data.type === COURSE_SAVED) {
-			this.setState({loading: false});
+			this.setState({loading: false, hasSaved: true});
 		}
 	}
 
 	cancel = () => {
-		this.props.onCancel && this.props.onCancel();
+		const { hasSaved } = this.state;
+		const { onCancel, onFinish, catalogEntry } = this.props;
+
+		hasSaved && onFinish && onFinish(catalogEntry);
+
+		onCancel && onCancel();
 	};
 
 	renderLoadingMask () {
@@ -139,7 +144,11 @@ SaveButton.propTypes = {
 };
 
 function SaveButton ({onSave, label}) {
+	const doSave = () => {
+		onSave();
+	};
+
 	return (
-		<div onClick={onSave} className="course-panel-continue">{label || t('save')}</div>
+		<div onClick={doSave} className="course-panel-continue">{label || t('save')}</div>
 	);
 }

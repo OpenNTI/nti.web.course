@@ -46,7 +46,7 @@ export default class CourseBasic extends React.Component {
 		}, () => {
 			afterSave && afterSave();
 
-			done();
+			done && done();
 		});
 	};
 
