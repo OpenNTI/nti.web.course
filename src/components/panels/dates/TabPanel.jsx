@@ -45,7 +45,7 @@ export default class CourseDatesPicker extends React.Component {
 		saveCatalogEntry(catalogEntry, { ProviderUniqueID: catalogEntry.ProviderUniqueID, StartDate: this.state.startDate, EndDate: this.state.endDate }, () => {
 			afterSave && afterSave();
 
-			done();
+			done && done();
 		});
 	};
 

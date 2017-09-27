@@ -202,7 +202,7 @@ export default class DayTime extends React.Component {
 		}, () => {
 			afterSave && afterSave();
 
-			done();
+			done && done();
 		});
 	}
 
