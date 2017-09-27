@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from 'nti-lib-locale';
-import {Input} from 'nti-web-commons';
+import { scoped } from 'nti-lib-locale';
+import { Input } from 'nti-web-commons';
+import { getService } from 'nti-web-client';
+import { Models } from 'nti-lib-interfaces';
 
 const LABELS = {
 	defaultTitle: 'Import Course',
@@ -60,6 +62,14 @@ export default class CourseImport extends React.Component {
 		return (<div className="import-file"><Input.File placeholder={t('importFile')} onFileChange={this.updateImportFile}/></div>);
 	}
 
+	renderError () {
+		const { error } = this.state;
+
+		if(error) {
+			return (<div className="course-import-error">{error}</div>);
+		}
+	}
+
 	renderBody () {
 		return (<div className="course-panel-getstarted-form">
 			{this.renderIDInput()}
@@ -67,12 +77,37 @@ export default class CourseImport extends React.Component {
 		</div>);
 	}
 
-	onSave = (done) => {
+	onSave = async (done) => {
 		const { afterSave } = this.props;
+		const { identifier, file } = this.state;
+
+		if(!file || !identifier) {
+			this.setState({ error: 'Must provide an import file and an identifier'});
+
+			done();
+
+			return;
+		}
+
+		const data = {
+			ProviderUniqueID: identifier,
+			title: '[Import in progress]',
+		};
+
+		const service = await getService();
+		const createdEntry = await Models.courses.CatalogEntry.getFactory(service).create(data);
+		await createdEntry.save(data);
+
+		const importLink = createdEntry.getLink('Import');
+		const formData = new FormData();
+
+		formData.append(file.name, file);
+
+		service.post(importLink, formData); // don't wait on this, could take a while
 
 		afterSave && afterSave();
 
-		done();
+		done && done();
 	};
 
 	renderSaveCmp () {
@@ -94,6 +129,7 @@ export default class CourseImport extends React.Component {
 	render () {
 		return (
 			<div className="course-import-panel">
+				{this.renderError()}
 				<div className="course-panel-content">
 					{this.renderBody()}
 				</div>
