@@ -67,6 +67,7 @@ export default class CourseWizard extends React.Component {
 			catalogEntry={this.state.catalogEntry}
 			stepName={panel.tabDescription}
 			onCancel={this.cancel}
+			hideHeaderControls={panel.WizardPanel.hideHeaderControls}
 			afterSave={index === arr.length - 1 ? this.props.onFinish : () => {}}/>);
 	}
 

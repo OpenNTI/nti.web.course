@@ -11,7 +11,8 @@ const LABELS = {
 	import: 'Import',
 	identifier: 'Identifier',
 	adminLevel: 'Admin Level',
-	importFile: 'Import File'
+	importFile: 'Import File',
+	missingInputs: 'Must provide an import file and an identifier'
 };
 
 const t = scoped('COURSE_IMPORT', LABELS);
@@ -24,7 +25,6 @@ export default class CourseImport extends React.Component {
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
 		afterSave: PropTypes.func,
-		catalogEntry: PropTypes.object,
 		buttonLabel: PropTypes.string
 	}
 
@@ -59,7 +59,7 @@ export default class CourseImport extends React.Component {
 	}
 
 	renderFileImport () {
-		return (<div className="import-file"><Input.File placeholder={t('importFile')} onFileChange={this.updateImportFile}/></div>);
+		return (<div className="import-file"><Input.File placeholder={t('importFile')} accept=".zip" onFileChange={this.updateImportFile}/></div>);
 	}
 
 	renderError () {
@@ -82,9 +82,7 @@ export default class CourseImport extends React.Component {
 		const { identifier, file } = this.state;
 
 		if(!file || !identifier) {
-			this.setState({ error: 'Must provide an import file and an identifier'});
-
-			done();
+			this.setState({ error: t('missingInputs')});
 
 			return;
 		}
@@ -104,6 +102,8 @@ export default class CourseImport extends React.Component {
 		formData.append(file.name, file);
 
 		service.post(importLink, formData); // don't wait on this, could take a while
+
+		this.setState({ error: null });
 
 		afterSave && afterSave();
 
