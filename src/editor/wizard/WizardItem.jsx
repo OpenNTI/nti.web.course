@@ -28,7 +28,8 @@ export default class WizardItem extends React.Component {
 		afterSave: PropTypes.func,
 		catalogEntry: PropTypes.object,
 		buttonLabel: PropTypes.string,
-		firstTab: PropTypes.bool
+		firstTab: PropTypes.bool,
+		hideHeaderControls: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -69,7 +70,7 @@ export default class WizardItem extends React.Component {
 	}
 
 	renderBackButton () {
-		if(this.props.firstTab) {
+		if(this.props.hideHeaderControls || this.props.firstTab) {
 			return null;
 		}
 
@@ -81,6 +82,10 @@ export default class WizardItem extends React.Component {
 	}
 
 	renderCloseButton () {
+		if(this.props.hideHeaderControls) {
+			return null;
+		}
+
 		return (<div className="close" onClick={this.doCancel}><i className="icon-light-x"/></div>);
 	}
 
