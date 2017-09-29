@@ -1,4 +1,4 @@
-import { Basic, DayTime, Dates } from '../components/panels';
+import { Basic, DayTime, Dates } from '../panels';
 
 export const Blank = {
 	name: 'Blank',

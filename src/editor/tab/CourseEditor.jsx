@@ -5,7 +5,7 @@ import {scoped} from 'nti-lib-locale';
 
 import {getImageUrl} from '../../utils';
 import Store from '../Store';
-import { Blank } from '../../templates/Blank';
+import { Blank } from '../templates/Blank';
 import {
 	COURSE_SAVING,
 	COURSE_SAVED,
