@@ -1,4 +1,4 @@
-import { ImportPanel, ImportConfirmation } from '../components/panels';
+import { ImportPanel, ImportConfirmation } from '../panels';
 
 export const Import = {
 	name: 'Import',

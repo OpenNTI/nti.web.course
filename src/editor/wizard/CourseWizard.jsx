@@ -5,8 +5,8 @@ import { Models } from 'nti-lib-interfaces';
 import { Switch } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
-import { Blank } from '../../templates/Blank';
-import { Import } from '../../templates/Import';
+import { Blank } from '../templates/Blank';
+import { Import } from '../templates/Import';
 
 import TemplateChooser from './TemplateChooser';
 import WizardItem from './WizardItem';
