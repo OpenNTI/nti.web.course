@@ -93,7 +93,8 @@ export default class CourseImport extends React.Component {
 		};
 
 		const service = await getService();
-		const createdEntry = await Models.courses.CatalogEntry.getFactory(service).create(data);
+		const catalogEntryFactory = await Models.courses.CatalogEntry.getFactory(service);
+		const createdEntry = await catalogEntryFactory.create(data, catalogEntryFactory.IMPORTED_LEVEL_KEY);
 		await createdEntry.save(data);
 
 		const importLink = createdEntry.getLink('Import');
