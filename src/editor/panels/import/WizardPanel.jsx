@@ -9,10 +9,9 @@ const LABELS = {
 	defaultTitle: 'Import Course',
 	cancel: 'Cancel',
 	import: 'Import',
-	identifier: 'Identifier',
 	adminLevel: 'Admin Level',
 	importFile: 'Import File',
-	missingInputs: 'Must provide an import file and an identifier'
+	missingInputs: 'Must provide an import file'
 };
 
 const t = scoped('COURSE_IMPORT', LABELS);
@@ -46,16 +45,8 @@ export default class CourseImport extends React.Component {
 		return (<div className="course-import-header-title">{t('defaultTitle')}</div>);
 	}
 
-	updateIDNumber = (value) => {
-		this.setState({identifier : value});
-	}
-
 	updateImportFile = (file) => {
 		this.setState({file});
-	}
-
-	renderIDInput () {
-		return (<Input.Text placeholder={t('identifier')} value={this.state.identifier} onChange={this.updateIDNumber}/>);
 	}
 
 	renderFileImport () {
@@ -72,23 +63,22 @@ export default class CourseImport extends React.Component {
 
 	renderBody () {
 		return (<div className="course-panel-getstarted-form">
-			{this.renderIDInput()}
 			{this.renderFileImport()}
 		</div>);
 	}
 
 	onSave = async (done) => {
 		const { afterSave } = this.props;
-		const { identifier, file } = this.state;
+		const { file } = this.state;
 
-		if(!file || !identifier) {
+		if(!file) {
 			this.setState({ error: t('missingInputs')});
 
 			return;
 		}
 
 		const data = {
-			ProviderUniqueID: identifier,
+			ProviderUniqueID: file.name.replace('.zip', ''),
 			title: '[Import in progress]',
 		};
 
