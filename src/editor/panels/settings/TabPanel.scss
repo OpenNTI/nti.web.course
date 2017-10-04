@@ -1,0 +1,17 @@
+@import "~nti-style-common";
+
+.course-panel-settings {
+	.course-option {
+		display: flex;
+
+		.course-option-label {
+			line-height: 40px;
+			min-width: 300px;
+			margin-left: 50px;
+		}
+
+		.nti-input-toggle {
+			float: right;
+		}
+	}
+}

@@ -5,7 +5,7 @@ import {scoped} from 'nti-lib-locale';
 
 import {getImageUrl} from '../../utils';
 import Store from '../Store';
-import { Blank } from '../templates/Blank';
+import { Edit } from '../templates/Edit';
 import {
 	COURSE_SAVING,
 	COURSE_SAVED,
@@ -94,7 +94,7 @@ export default class CourseEditor extends React.Component {
 	}
 
 	renderTriggers () {
-		return Blank.panels.map(this.renderTrigger);
+		return Edit.panels.map(this.renderTrigger);
 	}
 
 	renderPanel = (panel) => {
@@ -112,7 +112,7 @@ export default class CourseEditor extends React.Component {
 	}
 
 	renderItems () {
-		return Blank.panels.map(this.renderPanel);
+		return Edit.panels.map(this.renderPanel);
 	}
 
 	render () {
@@ -121,7 +121,7 @@ export default class CourseEditor extends React.Component {
 		return (<div className="course-editor">
 			{this.renderLoadingMask()}
 			{this.renderCloseButton()}
-			<Switch.Panel className="course-panel" active={Blank.panels[0].TabPanel.tabName}>
+			<Switch.Panel className="course-panel" active={Edit.panels[0].TabPanel.tabName}>
 				<Switch.Controls className="course-editor-menu">
 					<div className="course-image" style={{
 						backgroundImage: 'url(' + getImageUrl(catalogEntry) + ')'
