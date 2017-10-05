@@ -56,9 +56,7 @@ export default class CourseImport extends React.Component {
 	renderError () {
 		const { error } = this.state;
 
-		if(error) {
-			return (<div className="course-import-error">{error}</div>);
-		}
+		return (<div className="course-import-error">{error}</div>);
 	}
 
 	renderBody () {
@@ -120,8 +118,8 @@ export default class CourseImport extends React.Component {
 	render () {
 		return (
 			<div className="course-import-panel">
-				{this.renderError()}
-				<div className="course-panel-content">
+				<div className="course-panel-import-content">
+					{this.renderError()}
 					{this.renderBody()}
 				</div>
 				<div className="course-panel-controls">

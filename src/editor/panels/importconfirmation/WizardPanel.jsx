@@ -51,7 +51,7 @@ export default class CourseImportConfirmation extends React.Component {
 	render () {
 		return (
 			<div className="course-import-panel">
-				<div className="course-panel-content">
+				<div className="course-import-confirmation-content">
 					<div className="import-in-progress">{t('importInProgress')}</div>
 				</div>
 				<div className="course-panel-controls">
