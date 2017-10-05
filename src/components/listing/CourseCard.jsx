@@ -50,7 +50,13 @@ export default class CourseCard extends React.Component {
 	}
 
 	doExport = () => {
-		// TODO: Add server hook to export course data
+		const { course } = this.props;
+
+		if(course.hasLink('Export')) {
+			this.optionsFlyout && this.optionsFlyout.dismiss();
+
+			window.location.href = course.getLink('Export');
+		}
 	}
 
 	renderDelete () {

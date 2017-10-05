@@ -19,11 +19,16 @@
 		cursor: pointer;
 		position: relative;
 
+		.course-controls:hover, .cover:hover + .course-controls {
+			opacity: 1;
+		}
+
 		.course-controls {
 			position: absolute;
 			top: 10px;
 			left: 10px;
 			display: flex;
+			opacity: 0;
 
 			.preview {
 				background-color: #ffa500;
