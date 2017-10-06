@@ -31,7 +31,7 @@ export default class CourseListing extends React.Component {
 				service.get(collection.href).then((results) => {
 					return service.getObject(results.Items);
 				}).then((parsed) => {
-					this.setState({loading: false, courses: parsed});
+					this.setState({loading: false, courses: parsed.filter(x => x.Title === 'code2')});
 				});
 			}
 		});
