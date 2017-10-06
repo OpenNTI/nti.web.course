@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import { Input } from 'nti-web-commons';
+import cx from 'classnames';
 
 import {saveCatalogEntry} from '../../../editor/Actions';
 
@@ -120,20 +121,24 @@ export default class CourseBasic extends React.Component {
 
 	renderAccessCodeContent () {
 		const { courseInstance } = this.props;
+		const { showConfirmation } = this.state;
 
 		if(courseInstance && courseInstance.hasLink('CourseAccessTokens')) {
 			if(this.state.accessToken) {
-				// draw token
+				const copyCls = cx('access-code-copy', {show: !showConfirmation, hide: showConfirmation});
+				const confirmationCls = cx('access-code-copy-confirmation', {show: showConfirmation, hide: !showConfirmation});
+
 				return (
 					<div className="access-code-content">
 						<Input.TextArea ref={this.attachCodeRef} onMouseUp={this.selectCode} value={this.state.accessToken.Code} className="access-code"/>
-						<div onClick={this.copyCode} className="access-code-copy">{t('copy')}</div>
-						<div className="access-code-copy-confirmation">{t('copiedToClipboard')}</div>
+						<div className="copy-controls">
+							<div onClick={this.copyCode} className={copyCls}>{showConfirmation ? '' : t('copy')}</div>
+							<div className={confirmationCls}>{t('copiedToClipboard')}</div>
+						</div>
 					</div>
 				);
 			}
 			else {
-				// draw loading
 				return (<div className="token-loading">{t('loadingAccessCode')}</div>);
 			}
 		}

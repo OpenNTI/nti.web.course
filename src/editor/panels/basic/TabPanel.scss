@@ -16,7 +16,7 @@
 		text-align: left;
 
 		.access-code-content {
-			margin: 6px 0 0 160px;
+			margin: 6px 0 0 128px;
 			display: flex;
 
 			.access-code {
@@ -28,6 +28,7 @@
 				border: none;
 				outline: none;
 				box-shadow: none;
+				text-align: center;
 			}
 
 			.access-code-copy {
@@ -35,6 +36,35 @@
 				cursor: pointer;
 				color: $primary-blue;
 				font-size: 12px;
+				position: absolute;
+				z-index: 9999;
+
+				&.hide {
+					opacity: 0;
+				}
+
+				&.show {
+					transition: 1s;
+					transition-delay: 0.5s;
+					opacity: 1;
+				}
+			}
+
+			.access-code-copy-confirmation {
+				padding-top: 10px;
+				position: absolute;
+				font-size: 12px;
+				color: #6c8;
+
+				&.hide {
+					transition: 1s;
+					opacity: 0;
+				}
+
+				&.show {
+					transition: 1s;
+					opacity: 1;
+				}
 			}
 		}
 
