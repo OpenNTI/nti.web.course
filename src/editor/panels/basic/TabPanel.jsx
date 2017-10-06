@@ -9,7 +9,11 @@ const LABELS = {
 	cancel: 'Cancel',
 	courseName: 'Course Name',
 	identifier: 'Identification Number (i.e. UCOL-3224)',
-	description: 'Description'
+	description: 'Description',
+	loadingAccessCode: 'Loading...',
+	accessCode: 'Course Code',
+	copy: 'Copy',
+	copiedToClipboard: 'Copied to clipboard'
 };
 
 const t = scoped('COURSE_WIZARD', LABELS);
@@ -23,8 +27,11 @@ export default class CourseBasic extends React.Component {
 		onCancel: PropTypes.func,
 		afterSave: PropTypes.func,
 		catalogEntry: PropTypes.object,
+		courseInstance: PropTypes.object,
 		buttonLabel: PropTypes.string
 	}
+
+	attachCodeRef = x => this.codeRef = x
 
 	constructor (props) {
 		super(props);
@@ -33,6 +40,24 @@ export default class CourseBasic extends React.Component {
 			identifier: props.catalogEntry && props.catalogEntry.ProviderUniqueID,
 			description: props.catalogEntry && props.catalogEntry.description
 		};
+
+		this.loadAccessCode(props);
+	}
+
+	componentWillReceiveProps (nextProps) {
+		this.loadAccessCode(nextProps);
+	}
+
+	loadAccessCode (props) {
+		const { courseInstance } = props;
+
+		if(courseInstance && !this.state.accessToken) {
+			courseInstance.getAccessTokens().then((tokens) => {
+				if(tokens && tokens[0]) {
+					this.setState({accessToken: tokens[0]});
+				}
+			});
+		}
 	}
 
 	onSave = (done) => {
@@ -66,6 +91,54 @@ export default class CourseBasic extends React.Component {
 		}
 	}
 
+	renderAccessCode () {
+		const { courseInstance } = this.props;
+
+		if(courseInstance && courseInstance.hasLink('CourseAccessTokens')) {
+			return (
+				<div className="access-code-container">
+					<div className="basic-label">{t('accessCode')}</div>
+					{this.renderAccessCodeContent()}
+				</div>
+			);
+		}
+	}
+
+	selectCode = () => {
+		this.codeRef && this.codeRef.input.select();
+	}
+
+	copyCode = () => {
+		this.selectCode();
+
+		document.execCommand('copy');
+
+		this.setState({showConfirmation: true});
+
+		setTimeout(() => { this.setState({showConfirmation: false}); }, 2000);
+	}
+
+	renderAccessCodeContent () {
+		const { courseInstance } = this.props;
+
+		if(courseInstance && courseInstance.hasLink('CourseAccessTokens')) {
+			if(this.state.accessToken) {
+				// draw token
+				return (
+					<div className="access-code-content">
+						<Input.TextArea ref={this.attachCodeRef} onMouseUp={this.selectCode} value={this.state.accessToken.Code} className="access-code"/>
+						<div onClick={this.copyCode} className="access-code-copy">{t('copy')}</div>
+						<div className="access-code-copy-confirmation">{t('copiedToClipboard')}</div>
+					</div>
+				);
+			}
+			else {
+				// draw loading
+				return (<div className="token-loading">{t('loadingAccessCode')}</div>);
+			}
+		}
+	}
+
 	updateCourseName = (value) => {
 		this.setState({courseName : value});
 	};
@@ -81,9 +154,13 @@ export default class CourseBasic extends React.Component {
 	render () {
 		return (<div className="course-panel-getstarted-form">
 			<div className="course-panel-content">
+				<div className="basic-label">Name</div>
 				<Input.Text placeholder={t('courseName')} value={this.state.courseName} onChange={this.updateCourseName}/>
+				<div className="basic-label">Identifier</div>
 				<Input.Text placeholder={t('identifier')} value={this.state.identifier} onChange={this.updateIDNumber}/>
+				<div className="basic-label">Description</div>
 				<Input.TextArea placeholder={t('description')} className="nti-text-input" value={this.state.description} onChange={this.updateDescription}/>
+				{this.renderAccessCode()}
 			</div>
 			<div className="course-panel-controls">
 				{this.renderSaveCmp()}

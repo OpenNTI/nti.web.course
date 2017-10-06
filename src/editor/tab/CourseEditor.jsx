@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Prompt, Loading } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
+import {getService} from 'nti-web-client';
 
 import {getImageUrl} from '../../utils';
 import Store from '../Store';
@@ -46,6 +47,14 @@ export default class CourseEditor extends React.Component {
 		super(props);
 
 		this.state = {};
+
+		const catalogEntry = props.catalogEntry;
+
+		getService().then((service) => {
+			return service.getObject(catalogEntry.CourseNTIID).then((courseInstance) => {
+				this.setState({courseInstance});
+			});
+		});
 	}
 
 	componentDidMount () {
@@ -106,6 +115,7 @@ export default class CourseEditor extends React.Component {
 			name={tabPanel.tabName}
 			component={tabPanel}
 			catalogEntry={this.props.catalogEntry}
+			courseInstance={this.state.courseInstance}
 			onCancel={this.cancel}
 			afterSave={this.props.onSave}
 			saveCmp={SaveButton}/>);

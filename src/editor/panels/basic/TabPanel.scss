@@ -1,1 +1,45 @@
 @import "~nti-style-common";
+
+.course-editor .course-panel .course-panel-getstarted-form {
+	.course-panel-content {
+		padding-top: 120px;
+	}
+
+	.basic-label {
+		text-align: left;
+		margin-left: 159px;
+		font-size: 12px;
+		margin-top: 20px;
+	}
+
+	.access-code-container {
+		text-align: left;
+
+		.access-code-content {
+			margin: 6px 0 0 160px;
+			display: flex;
+
+			.access-code {
+				height: 40px;
+				margin: 0;
+				display: inline-block;
+				width: auto;
+				padding: 0;
+				border: none;
+				outline: none;
+				box-shadow: none;
+			}
+
+			.access-code-copy {
+				padding-top: 10px;
+				cursor: pointer;
+				color: $primary-blue;
+				font-size: 12px;
+			}
+		}
+
+		.token-loading {
+			margin-left: 160px;
+		}
+	}
+}
