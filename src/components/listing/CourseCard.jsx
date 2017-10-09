@@ -19,13 +19,14 @@ export default class CourseCard extends React.Component {
 		course: PropTypes.object.isRequired,
 		onClick: PropTypes.func,
 		onEdit: PropTypes.func,
+		onModification: PropTypes.func,
 		isAdministrative: PropTypes.bool
 	}
 
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
 
 	deleteCourse = (e) => {
-		const { course } = this.props;
+		const { course, onModification } = this.props;
 
 		e.stopPropagation();
 		e.preventDefault();
@@ -37,7 +38,7 @@ export default class CourseCard extends React.Component {
 						return courseInstance.delete();
 					});
 				}).then(() => {
-					this.loadAllCourses();
+					onModification && onModification();
 				});
 			});
 		});
