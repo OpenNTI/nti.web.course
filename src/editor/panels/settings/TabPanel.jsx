@@ -9,7 +9,7 @@ const LABELS = {
 	publiclyAvailable: 'Publicly Available'
 };
 
-const t = scoped('COURSE_SETTINGS', LABELS);
+const t = scoped('components.course.editor.panels.settings.tabpanel', LABELS);
 
 export default class CourseSettings extends React.Component {
 	static tabName = 'Settings'
