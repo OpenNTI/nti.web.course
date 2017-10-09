@@ -10,7 +10,7 @@ const LABELS = {
 	registered: 'You\'re Registered'
 };
 
-const t = scoped('COURSE_MENU', LABELS);
+const t = scoped('components.course.components.listing.coursemenu', LABELS);
 
 export default class CourseMenu extends React.Component {
 	static propTypes = {

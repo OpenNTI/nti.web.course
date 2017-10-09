@@ -9,7 +9,7 @@ const LABELS = {
 	description: 'Description'
 };
 
-const t = scoped('COURSE_WIZARD', LABELS);
+const t = scoped('components.course.wizard.templatechooser', LABELS);
 
 export default class TemplateChooser extends React.Component {
 	static propTypes = {

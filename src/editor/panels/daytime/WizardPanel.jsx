@@ -12,7 +12,7 @@ const LABELS = {
 	endTime: 'End Time'
 };
 
-const t = scoped('COURSE_WIZARD', LABELS);
+const t = scoped('components.course.editor.panels.daytime.wizardpanel', LABELS);
 
 export default class DayTime extends React.Component {
 	static tabName = 'DayTime'

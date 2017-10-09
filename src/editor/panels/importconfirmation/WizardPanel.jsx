@@ -8,7 +8,7 @@ const LABELS = {
 	confirm: 'OK'
 };
 
-const t = scoped('COURSE_IMPORT', LABELS);
+const t = scoped('components.course.editor.panels.importconfirmation.wizardpanel', LABELS);
 
 export default class CourseImportConfirmation extends React.Component {
 	static tabName = 'Import'
