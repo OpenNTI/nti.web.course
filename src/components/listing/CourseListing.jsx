@@ -21,7 +21,9 @@ export default class CourseListing extends React.Component {
 		this.loadAllCourses();
 	}
 
-	loadAllCourses () {
+	loadAllCourses = () => {
+		this.setState({loading: true});
+
 		getService().then((service) => {
 			const collection = service.getCollection('AllCourses', 'Courses');
 
@@ -44,7 +46,16 @@ export default class CourseListing extends React.Component {
 			Editor.editCourse(course);
 		};
 
-		return (<div key={index}><CourseCard course={course} onClick={showEditor} onEdit={showEditor} isAdministrative={this.props.isAdministrative}/></div>);
+		return (
+			<div key={index}>
+				<CourseCard
+					course={course}
+					onClick={showEditor}
+					onEdit={showEditor}
+					onModification={this.loadAllCourses}
+					isAdministrative={this.props.isAdministrative}/>
+			</div>
+		);
 	}
 
 	renderCourses () {
