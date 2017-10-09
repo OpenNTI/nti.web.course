@@ -8,10 +8,10 @@ export const createCourse = () => {
 	return new Promise((fulfill, reject) => {
 		let dialog = null;
 
-		const finish = () => {
+		const finish = (savedEntry) => {
 			dialog && dialog.dismiss();
 
-			fulfill();
+			fulfill(savedEntry);
 		};
 
 		const cancel = () => {
@@ -28,10 +28,10 @@ export const editCourse = (course) => {
 	return new Promise((fulfill, reject) => {
 		let dialog = null;
 
-		const finish = () => {
+		const finish = (savedEntry) => {
 			dialog && dialog.dismiss();
 
-			fulfill();
+			fulfill(savedEntry);
 		};
 
 		const cancel = () => {
