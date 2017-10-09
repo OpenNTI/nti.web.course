@@ -12,7 +12,7 @@ const LABELS = {
 	confirmDelete: 'Do you want to delete this course?'
 };
 
-const t = scoped('COURSE_LISTING', LABELS);
+const t = scoped('components.course.components.listing.coursecard', LABELS);
 
 export default class CourseCard extends React.Component {
 	static propTypes = {

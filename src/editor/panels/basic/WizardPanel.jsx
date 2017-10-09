@@ -12,7 +12,7 @@ const LABELS = {
 	description: 'Description'
 };
 
-const t = scoped('COURSE_WIZARD', LABELS);
+const t = scoped('components.course.editor.panels.basic.wizardpanel', LABELS);
 
 export default class CourseBasic extends React.Component {
 	static tabName = 'CourseBasic'

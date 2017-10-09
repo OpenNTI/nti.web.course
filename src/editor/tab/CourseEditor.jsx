@@ -18,7 +18,7 @@ const LABELS = {
 	save: 'Save',
 };
 
-const t = scoped('COURSE_EDITOR', LABELS);
+const t = scoped('components.course.editor.tab.courseeditor', LABELS);
 
 export default class CourseEditor extends React.Component {
 	static propTypes = {

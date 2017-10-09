@@ -17,7 +17,7 @@ const LABELS = {
 	defaultTitle: 'Create a New Course'
 };
 
-const t = scoped('COURSE_WIZARD', LABELS);
+const t = scoped('components.course.wizard.wizarditem', LABELS);
 
 export default class WizardItem extends React.Component {
 	static propTypes = {

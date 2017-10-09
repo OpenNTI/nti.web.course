@@ -8,7 +8,7 @@ const LABELS = {
 	launchWizard: 'New'
 };
 
-const t = scoped('COURSE_CREATE_BUTTON', LABELS);
+const t = scoped('components.course.components.createbutton', LABELS);
 
 export default class CreateButton extends React.Component {
 	constructor (props) {

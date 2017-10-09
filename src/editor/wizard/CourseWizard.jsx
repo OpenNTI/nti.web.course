@@ -16,7 +16,7 @@ const LABELS = {
 	chooseTemplate: 'Choose creation type'
 };
 
-const t = scoped('COURSE_WIZARD', LABELS);
+const t = scoped('components.course.wizard.coursewizard', LABELS);
 
 export default class CourseWizard extends React.Component {
 	static propTypes = {

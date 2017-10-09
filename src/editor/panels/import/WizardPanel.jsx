@@ -14,7 +14,7 @@ const LABELS = {
 	missingInputs: 'Must provide an import file'
 };
 
-const t = scoped('COURSE_IMPORT', LABELS);
+const t = scoped('components.course.editor.import.wizardpanel', LABELS);
 
 export default class CourseImport extends React.Component {
 	static tabName = 'Import'

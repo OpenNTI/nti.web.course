@@ -10,7 +10,7 @@ const LABELS = {
 	finish: 'Finish'
 };
 
-const t = scoped('COURSE_WIZARD', LABELS);
+const t = scoped('components.course.editor.panels.dates.tabpanel', LABELS);
 
 export default class CourseDatesPicker extends React.Component {
 	static tabName = 'CourseDatesPicker'
