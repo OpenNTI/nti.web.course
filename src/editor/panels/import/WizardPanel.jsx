@@ -88,6 +88,7 @@ export default class CourseImport extends React.Component {
 		const importLink = createdEntry.getLink('Import');
 		const formData = new FormData();
 
+		formData.append('writeout', true);
 		formData.append(file.name, file);
 
 		service.post(importLink, formData); // don't wait on this, could take a while
