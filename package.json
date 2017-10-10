@@ -32,7 +32,6 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
-    "moment-timezone": "^0.5.13",
     "nti-lib-dispatcher": "^1.0.0",
     "nti-lib-interfaces": "^1.59.0",
     "nti-lib-locale": "^1.0.9",
