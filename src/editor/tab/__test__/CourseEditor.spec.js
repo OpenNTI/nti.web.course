@@ -4,6 +4,27 @@ import { mount } from 'enzyme';
 
 import CourseEditor from '../CourseEditor';
 
+const mockService = () => ({
+	getObject: (o) => Promise.resolve(o)
+});
+
+const onBefore = () => {
+	global.$AppConfig = {
+		...(global.$AppConfig || {}),
+		nodeService: mockService(),
+		nodeInterface: {
+			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
+		}
+	};
+};
+
+const onAfter = () => {
+	//unmock getService()
+	const {$AppConfig} = global;
+	delete $AppConfig.nodeInterface;
+	delete $AppConfig.nodeService;
+};
+
 /* eslint-env jest */
 describe('CourseEditor test', () => {
 	const onCancelMock = jest.fn();
@@ -24,7 +45,7 @@ describe('CourseEditor test', () => {
 		description: mockDescription
 	};
 
-	const cmp = mount(
+	const getCmp = () => mount(
 		<CourseEditor
 			title={mockTitle}
 			catalogEntry={catalogEntry}
@@ -48,12 +69,19 @@ describe('CourseEditor test', () => {
 		);
 	}
 
+	beforeEach(onBefore);
+	afterEach(onAfter);
+
 	test('Test labels', () => {
+		const cmp = getCmp();
+
 		expect(cmp.find('.course-id').first().text()).toEqual(mockID);
 		expect(cmp.find('.course-title').first().text()).toEqual(mockTitle);
 	});
 
 	test('Test save', (done) => {
+		const cmp = getCmp();
+
 		const saveButton = cmp.find('.course-panel-continue').first();
 
 		saveButton.simulate('click');
@@ -68,6 +96,8 @@ describe('CourseEditor test', () => {
 	});
 
 	test('Test close', (done) => {
+		const cmp = getCmp();
+
 		const closeButton = cmp.find('.close').first();
 
 		closeButton.simulate('click');
@@ -82,6 +112,8 @@ describe('CourseEditor test', () => {
 	});
 
 	test('Test cancel', (done) => {
+		const cmp = getCmp();
+
 		const cancelButton = cmp.find('.course-panel-cancel').first();
 
 		cancelButton.simulate('click');
