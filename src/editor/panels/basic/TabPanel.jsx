@@ -157,21 +157,22 @@ export default class CourseBasic extends React.Component {
 	};
 
 	render () {
-		return (<div className="course-panel-getstarted-form">
-			<div className="course-panel-content">
-				<div className="basic-label">Name</div>
-				<Input.Text placeholder={t('courseName')} value={this.state.courseName} onChange={this.updateCourseName}/>
-				<div className="basic-label">Identifier</div>
-				<Input.Text placeholder={t('identifier')} value={this.state.identifier} onChange={this.updateIDNumber}/>
-				<div className="basic-label">Description</div>
-				<Input.TextArea placeholder={t('description')} className="nti-text-input" value={this.state.description} onChange={this.updateDescription}/>
-				{this.renderAccessCode()}
+		return (
+			<div className="course-panel-getstarted-form">
+				<div className="course-panel-content">
+					<div className="basic-label">Name</div>
+					<Input.Text placeholder={t('courseName')} value={this.state.courseName} onChange={this.updateCourseName}/>
+					<div className="basic-label">Identifier</div>
+					<Input.Text placeholder={t('identifier')} value={this.state.identifier} onChange={this.updateIDNumber}/>
+					<div className="basic-label">Description</div>
+					<Input.TextArea placeholder={t('description')} className="nti-text-input" value={this.state.description} onChange={this.updateDescription}/>
+					{this.renderAccessCode()}
+				</div>
+				<div className="course-panel-controls">
+					{this.renderSaveCmp()}
+					{this.renderCancelCmp()}
+				</div>
 			</div>
-			<div className="course-panel-controls">
-				{this.renderSaveCmp()}
-				{this.renderCancelCmp()}
-			</div>
-		</div>
 		);
 	}
 }
