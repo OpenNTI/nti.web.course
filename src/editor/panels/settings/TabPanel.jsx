@@ -6,7 +6,8 @@ import { Input } from 'nti-web-commons';
 import {saveCatalogEntry} from '../../../editor/Actions';
 
 const LABELS = {
-	publiclyAvailable: 'Publicly Available'
+	publiclyAvailable: 'Publicly Available',
+	previewMode: 'Preview Mode'
 };
 
 const t = scoped('components.course.editor.panels.settings.tabpanel', LABELS);
@@ -27,7 +28,8 @@ export default class CourseSettings extends React.Component {
 		super(props);
 
 		this.state = {
-			isNonPublic: props.catalogEntry.is_non_public
+			isNonPublic: props.catalogEntry.is_non_public,
+			isPreviewMode: props.catalogEntry.Preview
 		};
 	}
 
@@ -36,7 +38,8 @@ export default class CourseSettings extends React.Component {
 
 		saveCatalogEntry(catalogEntry, {
 			ProviderUniqueID: catalogEntry.ProviderUniqueID,
-			['is_non_public']: this.state.isNonPublic
+			['is_non_public']: this.state.isNonPublic,
+			Preview: this.state.isPreviewMode
 		}, () => {
 			afterSave && afterSave();
 
@@ -50,20 +53,27 @@ export default class CourseSettings extends React.Component {
 		});
 	}
 
-	renderPublicSetting () {
+	onPreviewChange = (value) => {
+		this.setState({isPreviewMode: value}, () => {
+			this.onSave();
+		});
+	}
+
+	renderOptions () {
 		return (<div className="course-options">
-			{this.renderOption(t('publiclyAvailable'), null, this.state.isNonPublic, this.onPublicChange)}
+			{this.renderOption(t('publiclyAvailable'), null, !this.state.isNonPublic, this.onPublicChange)}
+			{this.renderOption(t('previewMode'), null, this.state.isPreviewMode, this.onPreviewChange)}
 		</div>);
 	}
 
 	renderOption (label, description, value, onChange) {
-		return (<div className="course-option"><div className="course-option-label">{label}</div><Input.Toggle value={!value} onChange={onChange}/></div>);
+		return (<div className="course-option"><div className="course-option-label">{label}</div><Input.Toggle value={value} onChange={onChange}/></div>);
 	}
 
 	render () {
 		return (<div className="course-panel-settings">
 			<div className="course-panel-content">
-				{this.renderPublicSetting()}
+				{this.renderOptions()}
 			</div>
 		</div>
 		);
