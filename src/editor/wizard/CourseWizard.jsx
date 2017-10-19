@@ -5,6 +5,7 @@ import { Models } from 'nti-lib-interfaces';
 import { Switch } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
+import { editCourse } from '../index';
 import { Blank } from '../templates/Blank';
 import { Import } from '../templates/Import';
 
@@ -55,6 +56,12 @@ export default class CourseWizard extends React.Component {
 		this.props.onCancel && this.props.onCancel();
 	}
 
+	creationCompleted = () => {
+		this.props.onFinish && this.props.onFinish();
+
+		editCourse(this.state.catalogEntry);
+	}
+
 	renderItem = (panel, index, arr) => {
 		const stepName = 'step' + (index + 2);
 
@@ -68,7 +75,7 @@ export default class CourseWizard extends React.Component {
 			stepName={panel.tabDescription}
 			onCancel={this.cancel}
 			hideHeaderControls={panel.WizardPanel.hideHeaderControls}
-			afterSave={index === arr.length - 1 ? this.props.onFinish : () => {}}/>);
+			afterSave={index === arr.length - 1 ? this.creationCompleted : () => {}}/>);
 	}
 
 
