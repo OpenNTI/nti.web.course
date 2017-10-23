@@ -14,6 +14,7 @@ export default class CourseImportConfirmation extends React.Component {
 	static tabName = 'Import'
 	static tabDescription = 'Import Course'
 	static hideHeaderControls = true;
+	static disallowEditorRedirect = true;
 
 	static propTypes = {
 		saveCmp: PropTypes.func,
