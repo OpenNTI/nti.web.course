@@ -39,6 +39,13 @@ export default class CourseCard extends React.Component {
 					});
 				}).then(() => {
 					onModification && onModification();
+				}).catch(() => {
+					// timeout here because there is a 500 ms delay on the areYouSure dialog being dismissed
+					// so if the deletion fails too fast, we risk automatically dismissing this alert dialog
+					// when the areYouSure dialog is dismissed
+					setTimeout(() => {
+						Prompt.alert('You don\'t have permission to delete this course');
+					}, 505);
 				});
 			});
 		});
