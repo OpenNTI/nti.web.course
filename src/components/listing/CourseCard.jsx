@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import { getService } from 'nti-web-client';
-import { Prompt, Flyout } from 'nti-web-commons';
+import { Prompt, Flyout, Presentation } from 'nti-web-commons';
 
 import {getImageUrl} from '../../utils';
 
@@ -161,9 +161,7 @@ export default class CourseCard extends React.Component {
 
 		return (<div className="course-item" onClick={onClick}>
 			<div className="cover">
-				<div className="course-image" style={{
-					backgroundImage: 'url(' + getImageUrl(course) + ')'
-				}}/>
+				<Presentation.AssetBackground className="course-image" contentPackage={course} type="landing"/>
 			</div>
 			{this.renderControls()}
 			<div className="course-meta">

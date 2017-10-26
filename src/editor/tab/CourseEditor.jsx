@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Prompt, Loading } from 'nti-web-commons';
+import { Switch, Prompt, Loading, Presentation } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 import {getService} from 'nti-web-client';
 
-import {getImageUrl} from '../../utils';
 import Store from '../Store';
 import { Edit } from '../templates/Edit';
 import {
@@ -133,9 +132,7 @@ export default class CourseEditor extends React.Component {
 			{this.renderCloseButton()}
 			<Switch.Panel className="course-panel" active={Edit.panels[0].TabPanel.tabName}>
 				<Switch.Controls className="course-editor-menu">
-					<div className="course-image" style={{
-						backgroundImage: 'url(' + getImageUrl(catalogEntry) + ')'
-					}}/>
+					<Presentation.AssetBackground className="course-image" contentPackage={catalogEntry} type="landing"/>
 					<div className="course-id">{catalogEntry.ProviderUniqueID}</div>
 					<div className="course-title">{catalogEntry.title}</div>
 					{this.renderTriggers()}
