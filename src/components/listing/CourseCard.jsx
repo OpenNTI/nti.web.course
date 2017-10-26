@@ -4,8 +4,6 @@ import {scoped} from 'nti-lib-locale';
 import { getService } from 'nti-web-client';
 import { Prompt, Flyout, Presentation } from 'nti-web-commons';
 
-import {getImageUrl} from '../../utils';
-
 import CourseMenu from './CourseMenu';
 
 const LABELS = {
