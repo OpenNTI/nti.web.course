@@ -1,0 +1,40 @@
+@import "~nti-style-common";
+
+.add-facilitator {
+	float: right;
+	color: $primary-blue;
+	display: flex;
+	cursor: pointer;
+
+	.add-icon {
+		margin-right: 10px;
+		border-radius: 30px;
+		width: 24px;
+		height: 24px;
+		border: solid 2px;
+		padding-left: 2px;
+	}
+
+	.add-label {
+		font-size: 14px;
+		padding-top: 2px;
+	}
+}
+
+.course-info-editor-section.edit {
+	.title-with-edit {
+		.field-label {
+			display: none;
+		}
+	}
+
+	.facilitators-header {
+		.field-label {
+			position: absolute;
+		}
+	}
+
+	.facilitators {
+		padding-top: 22px;
+	}
+}

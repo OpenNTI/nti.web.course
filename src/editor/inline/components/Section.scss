@@ -1,0 +1,137 @@
+@import "~nti-style-common";
+
+.basic-info-section {
+	.course-info-editor-section {
+		.contents {
+			border-top: solid 1px #eaeaea;
+			padding-bottom: 45px;
+		}
+	}
+}
+
+.facilitators-section {
+	.course-info-editor-section.edit {
+		.contents {
+			padding-bottom: 40px;
+		}
+
+		.title-with-edit {
+			position: absolute;
+		}
+	}
+}
+
+.course-info-editor-section {
+	text-align: left;
+	background-color: #fff;
+
+	&.edit {
+		.contents {
+			background-color: #fbfbfb;
+		}
+	}
+
+	.contents {
+		border-top: solid 1px #eaeaea;
+		padding: 18px 35px;
+
+		.field-label {
+			color: #494949;
+		}
+
+		.field-description {
+			font-size: 14px;
+			color: #757474;
+		}
+
+		.columned {
+			display: flex;
+
+			.field-info {
+				margin-bottom: 20px;
+				position: absolute;
+			}
+
+			.content-column {
+				margin-left: 455px;
+				font-size: 14px;
+				font-weight: 300;
+			}
+		}
+	}
+
+	.label {
+		font-size: 11px;
+		font-weight: 600;
+		color: #b8b8b8;
+		padding: 15px 0 10px;
+		text-transform: uppercase;
+	}
+
+	.title-with-edit {
+		display: flex;
+
+		.edit-course-info {
+			padding-top: 2px;
+			margin-left: 10px;
+		}
+	}
+
+	.edit-course-info {
+		font-size: 14px;
+		cursor: pointer;
+		color: $primary-blue;
+		padding-top: 20px;
+		display: inline-block;
+
+		&.indented {
+			margin-left: 455px;
+			padding-top: 5px;
+			margin-bottom: 0;
+		}
+	}
+
+	.section-controls {
+		height: 40px;
+		border-top: solid 1px #eaeaea;
+		background-color: white;
+
+		.delete-block {
+			float: left;
+			padding-top: 10px;
+			padding-left: 20px;
+			display: flex;
+			cursor: pointer;
+			font-size: 14px;
+
+			i {
+				font-size: 20px;
+				margin-right: 5px;
+			}
+		}
+
+		.buttons {
+			float: right;
+			display: flex;
+			height: 100%;
+
+			.save {
+				background-color: $primary-blue;
+				width: 100px;
+				text-align: center;
+				height: 100%;
+				color: white;
+				padding-top: 8px;
+				cursor: pointer;
+			}
+
+			.cancel {
+				padding-top: 10px;
+				margin-right: 15px;
+				font-weight: 500;
+				font-size: 14px;
+				cursor: pointer;
+			}
+		}
+	}
+}

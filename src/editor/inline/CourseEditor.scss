@@ -1,0 +1,29 @@
+@import "~nti-style-common";
+
+.course-inline-editor {
+	background-color: white;
+	color: #494949;
+	height: 100%;
+	width: 768px;
+	text-align: center;
+
+	&.view-only {
+		.course-tags .tag {
+			background-color: $primary-blue;
+		}
+
+		.course-info-editor-section {
+			padding: 0 35px;
+
+			.contents {
+				padding: 27px 0 31px;
+			}
+		}
+	}
+
+	.course-video-placeholder {
+		height: 432px;
+		width: 768px;
+		background-color: #333;
+	}
+}

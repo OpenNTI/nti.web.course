@@ -1,0 +1,70 @@
+@import "~nti-style-common";
+
+.meet-times-edit-widget {
+	display: flex;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.26);
+	border-radius: 3px;
+	padding: 10px 20px;
+	margin-top: 20px;
+	background-color: white;
+
+	.course-editor-weekdays {
+		display: flex;
+		border: 1px solid #e2e2e2;
+		border-radius: 3px;
+		margin-right: 132px;
+
+		.course-editor-day {
+			font-size: 14px;
+			width: 30px;
+			height: 30px;
+			padding-top: 5px;
+			cursor: pointer;
+			text-align: center;
+
+			&.selected {
+				background-color: $primary-blue;
+				color: white;
+			}
+		}
+	}
+
+	.course-editor-time-selection {
+		display: flex;
+
+		.time {
+			border: 1px solid #e2e2e2;
+			border-radius: 3px;
+			padding: 0 5px;
+		}
+
+		.TimePicker {
+			.meridiem-select-box.select-box {
+				border: 1px solid #e2e2e2;
+				border-radius: 3px;
+				margin-left: 5px;
+				padding-left: 5px;
+			}
+		}
+
+		.spacer {
+			margin: 0 10px;
+			padding-top: 2px;
+			font-size: 20;
+			color: #757474;
+		}
+
+		.number-input-component {
+			border: none;
+			width: 20px;
+
+			&[name='hours'] {
+				text-align: right;
+			}
+
+			&[name='minutes'] {
+				text-align: left;
+			}
+		}
+	}
+}
