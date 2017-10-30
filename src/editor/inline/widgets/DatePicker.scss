@@ -1,0 +1,75 @@
+@import "~nti-style-common";
+
+.course-date-picker-flyout {
+	// why do we need to set the width on the calendar..?
+	.DayPicker-wrapper {
+		width: 90%;
+	}
+}
+
+.date-picker {
+	border: solid 1px #eaeaea;
+	border-radius: 5px;
+	width: 244px;
+	height: 50px;
+	background-color: white;
+	display: flex;
+	padding: 8px;
+	cursor: pointer;
+
+	.icon {
+		min-width: 43px;
+		border-right: solid 1px #eaeaea;
+		padding: 7px 0 0 9px;
+
+		.calendar-hanger {
+			border-left: solid 2px #b8b8b8;
+			border-right: solid 2px #b8b8b8;
+			margin-left: 3px;
+			height: 2px;
+			width: 10px;
+		}
+
+		.calendar-top {
+			background-color: #b8b8b8;
+			width: 16px;
+			height: 4px;
+			border-radius: 2px 2px 0 0;
+		}
+
+		.calendar-bottom {
+			border: solid 2px #b8b8b8;
+			width: 16px;
+			height: 11px;
+		}
+	}
+
+	.date {
+		padding-left: 15px;
+		font-size: 14px;
+		min-width: 170px;
+		color: #757474;
+
+		&.no-date {
+			color: $primary-blue;
+			padding-top: 6px;
+			font-weight: 300;
+		}
+
+		.date-info {
+			font-size: 10px;
+			text-transform: uppercase;
+			font-weight: 600;
+			color: #b8b8b8;
+		}
+	}
+
+	.trigger {
+		margin-top: 5px;
+		color: #b8b8b8;
+
+		i[class^="icon-"].small {
+			font-size: 12px !important;
+		}
+	}
+}

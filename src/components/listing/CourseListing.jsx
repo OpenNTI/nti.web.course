@@ -10,6 +10,7 @@ import CourseCard from './CourseCard';
 export default class CourseListing extends React.Component {
 	static propTypes = {
 		courses: PropTypes.arrayOf(PropTypes.object),
+		onCourseClick: PropTypes.func,
 		isAdministrative: PropTypes.bool
 	}
 
@@ -42,15 +43,21 @@ export default class CourseListing extends React.Component {
 	}
 
 	renderCourse (course, index) {
+		const { onCourseClick } = this.props;
+
 		const showEditor = () => {
 			Editor.editCourse(course);
+		};
+
+		const doOnCourseClick = () => {
+			onCourseClick && onCourseClick(course);
 		};
 
 		return (
 			<div key={index}>
 				<CourseCard
 					course={course}
-					onClick={showEditor}
+					onClick={onCourseClick ? doOnCourseClick : showEditor}
 					onEdit={showEditor}
 					onModification={this.loadAllCourses}
 					isAdministrative={this.props.isAdministrative}/>

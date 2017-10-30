@@ -1,0 +1,19 @@
+@import "~nti-style-common";
+
+.day-row {
+	display: flex;
+
+	.day {
+		position: absolute;
+		text-transform: capitalize;
+	}
+
+	.time-separator {
+		margin: 0 5px;
+	}
+
+	.times {
+		display: flex;
+		margin-left: 100px;
+	}
+}
