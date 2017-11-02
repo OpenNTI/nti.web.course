@@ -23,5 +23,17 @@
 			margin-left: 5px;
 			padding: 1px;
 		}
+
+		.suggestions-container {
+			.suggestion {
+				padding: 10px 20px;
+				font-size: 14px;
+				font-weight: 300;
+
+				&.selected {
+					background-color: #eaeaea;
+				}
+			}
+		}
 	}
 }
