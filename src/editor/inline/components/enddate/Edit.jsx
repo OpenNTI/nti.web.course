@@ -34,6 +34,16 @@ export default class EndDateEdit extends React.Component {
 		onValueChange && onValueChange(EndDateEdit.FIELD_NAME, newDate);
 	}
 
+	disabledDays = (value) => {
+		const { StartDate } = this.props.catalogEntry;
+
+		if(!StartDate) {
+			return false;
+		}
+
+		return value.getTime() < new Date(StartDate).getTime();
+	}
+
 	render () {
 		const { EndDate } = this.state;
 
@@ -44,7 +54,7 @@ export default class EndDateEdit extends React.Component {
 					<div className="field-description">When class is officially over.</div>
 				</div>
 				<div className="content-column">
-					<DatePicker date={EndDate} onChange={this.onChange}/>
+					<DatePicker date={EndDate} disabledDays={this.disabledDays} onChange={this.onChange}/>
 				</div>
 			</div>
 		);

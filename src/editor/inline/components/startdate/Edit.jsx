@@ -35,6 +35,16 @@ export default class StartDateEdit extends React.Component {
 		onValueChange && onValueChange(StartDateEdit.FIELD_NAME, newDate);
 	}
 
+	disabledDays = (value) => {
+		const { EndDate } = this.props.catalogEntry;
+
+		if(!EndDate) {
+			return false;
+		}
+
+		return value.getTime() > new Date(EndDate).getTime();
+	}
+
 	render () {
 		const { StartDate } = this.state;
 
@@ -45,7 +55,7 @@ export default class StartDateEdit extends React.Component {
 					<div className="field-description">{t('description')}</div>
 				</div>
 				<div className="content-column">
-					<DatePicker date={StartDate} onChange={this.onChange}/>
+					<DatePicker date={StartDate} disabledDays={this.disabledDays} onChange={this.onChange}/>
 				</div>
 			</div>
 		);

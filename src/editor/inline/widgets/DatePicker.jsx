@@ -5,7 +5,8 @@ import { DateTime, DayPicker, Flyout } from 'nti-web-commons';
 export default class DatePicker extends React.Component {
 	static propTypes = {
 		date: PropTypes.object,
-		onChange: PropTypes.func
+		onChange: PropTypes.func,
+		disabledDays: PropTypes.func
 	}
 
 	attachFlyoutRef = x => this.flyout = x
@@ -68,7 +69,7 @@ export default class DatePicker extends React.Component {
 			ref={this.attachFlyoutRef}
 		>
 			<div>
-				<DayPicker value={this.props.date} onChange={this.onDateSelect}/>
+				<DayPicker value={this.props.date} disabledDays={this.props.disabledDays} onChange={this.onDateSelect}/>
 			</div>
 		</Flyout.Triggered>);
 	}
