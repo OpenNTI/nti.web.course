@@ -14,7 +14,7 @@ import {
 
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
-	RedemptionCodes, Prerequisites, Department, Facilitators, Assets } from './components';
+	RedemptionCodes, Prerequisites, Department, Facilitators } from './components';
 
 const EDITORS = {
 	COURSE_INFO: 'CourseInfo',
