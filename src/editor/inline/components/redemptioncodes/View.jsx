@@ -13,7 +13,7 @@ export default class RedemptionCodesView extends React.Component {
 		redemptionCodes: PropTypes.arrayOf(PropTypes.object)
 	}
 
-	static FIELD_NAME = 'AccessTokens';
+	// no static FIELD_NAME, codes are pulled through the API, not off the object directly
 
 	constructor (props) {
 		super(props);

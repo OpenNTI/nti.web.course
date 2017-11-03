@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Loading} from 'nti-web-commons';
 import {getService} from 'nti-web-client';
-import Video from 'nti-web-video';
+import Video, { EmbedInput, getCanonicalUrlFrom } from 'nti-web-video';
 import cx from 'classnames';
 
 import Store from '../Store';
@@ -14,7 +14,7 @@ import {
 
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
-	RedemptionCodes, Prerequisites, Department, Facilitators } from './components';
+	RedemptionCodes, Prerequisites, Department, Facilitators, Assets } from './components';
 
 const EDITORS = {
 	COURSE_INFO: 'CourseInfo',
@@ -121,25 +121,50 @@ export default class CourseEditor extends React.Component {
 	}
 
 	renderAssetUploadWidget () {
-		// TODO: Figure out how to properly PUT assets on a catalog entry
+		const { editable } = this.props;
+		const { catalogEntry } = this.state;
 
-		// const { editable } = this.props;
-		// const { catalogEntry } = this.state;
-		//
-		// if(!editable) {
-		// 	return null;
-		// }
-		//
-		// return (
-		// 	<Section
-		// 		className="course-assets"
-		// 		components={[Assets]}
-		// 		catalogEntry={catalogEntry}/>
-		// );
+		if(!editable) {
+			return null;
+		}
+
+		return (
+			<Section
+				className="course-assets"
+				components={[Assets]}
+				catalogEntry={catalogEntry}/>
+		);
+	}
+
+	launchVideoInput = () => {
+		EmbedInput.show().then((value) => {
+			const src = getCanonicalUrlFrom(value);
+
+			this.props.catalogEntry.save({
+				Video: src
+			}).then(() => {
+				this.endEditing();
+			});
+		});
+	}
+
+	renderVideoEditor () {
+		return (
+			<div className="course-video-editor">
+				<div className="video-button" onClick={this.launchVideoInput}>
+					<div className="icon"/>
+					<div className="label">Cover Video</div>
+				</div>
+			</div>
+		);
 	}
 
 	renderCourseVideo () {
 		const { catalogEntry } = this.props;
+
+		if(this.state.activeEditor === EDITORS.COURSE_INFO) {
+			return this.renderVideoEditor();
+		}
 
 		if(catalogEntry.Video) {
 			return <Video src={catalogEntry.Video}/>;

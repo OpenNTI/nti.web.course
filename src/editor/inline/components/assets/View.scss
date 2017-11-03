@@ -1,1 +1,39 @@
 @import "~nti-style-common";
+
+.large-asset-preview {
+	img {
+		max-width: 698px;
+	}
+}
+
+.assets-preview {
+	display: flex;
+	margin-top: 20px;
+
+	.asset {
+		margin-right: 15px;
+
+		img {
+			cursor: pointer;
+		}
+
+		.asset-label {
+			font-size: 10px;
+			text-transform: uppercase;
+			color: #b8b8b8;
+			font-weight: 600;
+		}
+
+		&.landing img {
+			width: 72px;
+		}
+
+		&.background img {
+			width: 80px;
+		}
+
+		&.thumb img {
+			width: 52px;
+		}
+	}
+}

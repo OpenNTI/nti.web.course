@@ -17,6 +17,12 @@ export default class MeetTimesView extends React.Component {
 
 	static FIELD_NAME = 'Schedule';
 
+	static hasData (catalogEntry) {
+		const schedule = catalogEntry[MeetTimesView.FIELD_NAME];
+
+		return schedule && schedule.days && schedule.days.length !== 0 && schedule.days[0] !== '';
+	}
+
 	constructor (props) {
 		super(props);
 

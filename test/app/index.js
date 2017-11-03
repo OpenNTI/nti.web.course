@@ -8,6 +8,7 @@ import CourseEditor from '../../src/editor/inline/CourseEditor';
 
 import 'nti-style-common/all.scss';
 import 'nti-web-commons/lib/index.css';
+import 'nti-web-video/lib/index.css';
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
@@ -24,7 +25,7 @@ class Test extends React.Component {
 		getService().then((service) => {
 			// tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x28386e:5573657273:wJfn4wvwyXY  - datesA - NODA333
 			// tag:nextthought.com,2011-10:system-OID-0x09ac6b:5573657273:eJy72UE9Tre - Physiology
-			return service.getObject('tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x28386e:5573657273:wJfn4wvwyXY').then((courseInstance) => {
+			return service.getObject('tag:nextthought.com,2011-10:system-OID-0x09ac6b:5573657273:eJy72UE9Tre').then((courseInstance) => {
 				this.setState({loading: false, selectedCatalogEntry: courseInstance.CatalogEntry});
 			});
 		});
@@ -41,7 +42,9 @@ class Test extends React.Component {
 	render () {
 		if(this.state.selectedCatalogEntry) {
 			return (
-				<div>
+				<div style={{
+					margin: '0 auto'
+				}}>
 					<div style={{marginTop: '10px', marginBottom: '10px'}} onClick={this.onCancel}>Back</div>
 					<CourseEditor catalogEntry={this.state.selectedCatalogEntry} editable/>
 					<div style={{'height': '50px'}}/>
