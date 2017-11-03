@@ -15,15 +15,29 @@ export default class FacilitatorsEdit extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = {};
+		this.state = {
+			facilitatorList: props.catalogEntry.Instructors
+		};
 	}
 
 	renderFacilitator = (facilitator) => {
 		return <Facilitator key={facilitator.username} facilitator={facilitator} editable/>;
 	}
 
-	launchAddDialog () {
-		Prompt.modal(<AddFacilitators/>);
+	updateFacilitatorList = (users) => {
+		const transformed = users.map(u => {
+			return {
+				Name: u.alias
+			};
+		});
+
+		this.setState({
+			facilitatorList: [...this.state.facilitatorList, ...transformed]
+		});
+	}
+
+	launchAddDialog = () => {
+		Prompt.modal(<AddFacilitators onConfirm={this.updateFacilitatorList}/>);
 	}
 
 	renderAddFacilitator () {
@@ -38,8 +52,6 @@ export default class FacilitatorsEdit extends React.Component {
 	}
 
 	render () {
-		const { catalogEntry } = this.props;
-
 		return (
 			<div>
 				<div className="facilitators-header">
@@ -47,7 +59,7 @@ export default class FacilitatorsEdit extends React.Component {
 					{this.renderAddFacilitator()}
 				</div>
 				<div className="facilitators">
-					{(catalogEntry.Instructors || []).map(this.renderFacilitator)}
+					{(this.state.facilitatorList || []).map(this.renderFacilitator)}
 				</div>
 			</div>
 		);
