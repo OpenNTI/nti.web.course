@@ -231,6 +231,7 @@ export default class CourseEditor extends React.Component {
 						components={[Facilitators]}
 						catalogEntry={catalogEntry}
 						title="Facilitators"
+						editable={editable}
 						isEditing={activeEditor === EDITORS.FACILITATORS}
 						onBeginEditing={this.activateFacilitatorsEditor}
 						onEndEditing={this.endEditing}/>

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {TokenEditor} from 'nti-web-commons';
 import {getService} from 'nti-web-client';
 
+const DELIMITER_KEYS = ['Enter', 'Tab', ','];
+
 export default class TagInput extends React.Component {
 	static propTypes = {
 		value: PropTypes.array,
@@ -44,6 +46,7 @@ export default class TagInput extends React.Component {
 					value={value}
 					onChange={this.onChange}
 					placeholder={value && value.length > 0 ? 'Add more categories' : 'Add categories'}
+					tokenDelimiterKeys={DELIMITER_KEYS}
 					suggestionProvider={this.suggestionProvider}/>
 			</div>
 		);
