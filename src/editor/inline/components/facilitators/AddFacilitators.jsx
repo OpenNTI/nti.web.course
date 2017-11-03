@@ -23,8 +23,6 @@ export default class AddFacilitators extends React.Component {
 	}
 
 	render () {
-		const { catalogEntry } = this.props;
-
 		return (
 			<div className="add-facilitators">
 				<div className="header">

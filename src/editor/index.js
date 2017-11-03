@@ -4,8 +4,6 @@ import { Prompt } from 'nti-web-commons';
 import CourseWizard from './wizard/CourseWizard';
 import CourseEditor from './tab/CourseEditor';
 
-export Inline from './inline/CourseEditor';
-
 export const createCourse = () => {
 	return new Promise((fulfill, reject) => {
 		let dialog = null;

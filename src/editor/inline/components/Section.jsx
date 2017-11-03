@@ -42,7 +42,20 @@ export default class Section extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = {};
+		const { components, catalogEntry, editable } = props;
+
+		let hasData = false || editable;
+
+		(components || []).forEach((cmp) => {
+			const value = catalogEntry && catalogEntry[cmp.View.FIELD_NAME];
+			if(value && value !== {} && value !== []) {
+				hasData = true;
+			}
+		});
+
+		this.state = {
+			hasData
+		};
 	}
 
 	beginEditing = () => {
@@ -173,9 +186,14 @@ export default class Section extends React.Component {
 	}
 
 	render () {
+		const { hasData } = this.state;
 		const { components, className, title, isEditing } = this.props;
 
 		const containerCls = cx('course-info-editor-section', { 'edit' : isEditing });
+
+		if(!hasData) {
+			return null;
+		}
 
 		return (
 			<div className={className}>
