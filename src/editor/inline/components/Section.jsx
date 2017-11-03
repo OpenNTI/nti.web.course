@@ -48,7 +48,15 @@ export default class Section extends React.Component {
 
 		(components || []).forEach((cmp) => {
 			const value = catalogEntry && catalogEntry[cmp.View.FIELD_NAME];
-			if(value && value !== {} && value !== []) {
+
+			if(cmp.View.hasData) {
+				// for special fields (like meeting times), it's not sufficient to just check
+				// a single field value, so allow them to define a hasData to determine that
+				hasData = hasData || cmp.View.hasData(catalogEntry);
+			}
+			else if(!cmp.View.FIELD_NAME || (value && value !== {} && value !== [])) {
+				// if no FIELD_NAME is defined, don't assume it's no data, it may be pulled
+				// from an API call rather than an object property
 				hasData = true;
 			}
 		});

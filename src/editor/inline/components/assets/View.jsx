@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
-import {Input} from 'nti-web-commons';
+import {Input, Presentation, Prompt} from 'nti-web-commons';
 import {getService} from 'nti-web-client';
+import cx from 'classnames';
 
 const LABELS = {
 	label: 'Assets'
@@ -20,7 +21,7 @@ export default class AssetsView extends React.Component {
 		catalogEntry: PropTypes.object.isRequired
 	}
 
-	static FIELD_NAME = 'presentation-assets';
+	//  No static FIELD_NAME
 
 	attachRef = x => this.fileInput = x
 
@@ -33,26 +34,32 @@ export default class AssetsView extends React.Component {
 	uploadAssets = (file) => {
 		const { catalogEntry } = this.props;
 
-		// TODO: How to save this, maybe build up FormData?  What field to save to?
 		if(file && file.name) {
 			this.setState({ uploadInProgress: true});
 
 			getService().then(service => {
 				const formData = new FormData();
 				formData.append(file.name, file);
-				service.put(catalogEntry.getLink('edit'), formData);
+				return service.put(catalogEntry.getLink('edit'), formData);
 			}).then(() => {
 				this.setState({ uploadInProgress: false, uploadSuccess: true });
 				setTimeout(() => { this.setState({ uploadSuccess: undefined}); }, 1500);
+			}).catch((resp) => {
+				this.setState({ uploadInProgress: false, uploadSuccess: false, errorMsg: resp.Message || 'Upload failed' });
+				setTimeout(() => { this.setState({ uploadSuccess: undefined, errorMsg: undefined}); }, 1500);
 			});
 		}
 	}
 
 	renderInput () {
-		const { uploadInProgress, uploadSuccess } = this.state;
+		const { uploadInProgress, uploadSuccess, errorMsg } = this.state;
 
 		if(uploadInProgress) {
 			return (<div>Uploading...</div>);
+		}
+
+		if(errorMsg) {
+			return (<div className="error">{errorMsg}</div>);
 		}
 
 		if(uploadSuccess) {
@@ -60,6 +67,45 @@ export default class AssetsView extends React.Component {
 		}
 
 		return (<Input.File className="asset-file" accept=".zip" ref={this.attachRef} onFileChange={this.uploadAssets}/>);
+	}
+
+	launchImgDialog = (type) => {
+		Prompt.modal(
+			<div className="large-asset-preview">
+				<Presentation.Asset contentPackage={this.props.catalogEntry} propName="src" type={type}>
+					<img/>
+				</Presentation.Asset>
+			</div>
+		);
+	}
+
+	renderAsset (type) {
+		const className = cx('asset', type);
+
+		const showImg = () => {
+			this.launchImgDialog(type);
+		};
+
+		return (<div className={className}>
+			<div className="asset-label">{type}</div>
+			<Presentation.Asset contentPackage={this.props.catalogEntry} propName="src" type={type}>
+				<img onClick={showImg}/>
+			</Presentation.Asset>
+		</div>);
+	}
+
+	renderPreview () {
+		const { catalogEntry } = this.props;
+
+		if(catalogEntry.PlatformPresentationResources) {
+			return (
+				<div className="assets-preview">
+					{this.renderAsset('thumb')}
+					{this.renderAsset('landing')}
+					{this.renderAsset('background')}
+				</div>
+			);
+		}
 	}
 
 	render () {
@@ -70,6 +116,7 @@ export default class AssetsView extends React.Component {
 				</div>
 				<div className="content-column">
 					{this.renderInput()}
+					{this.renderPreview()}
 				</div>
 			</div>
 		);

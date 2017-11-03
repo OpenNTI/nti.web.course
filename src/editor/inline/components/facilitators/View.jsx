@@ -8,7 +8,7 @@ export default class FacilitatorsView extends React.Component {
 		catalogEntry: PropTypes.object.isRequired
 	}
 
-	static FIELD_NAME = ''; // what field?
+	static FIELD_NAME = 'Instructors';
 
 	constructor (props) {
 		super(props);
