@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
+import {Prompt} from 'nti-web-commons';
 import cx from 'classnames';
 
 const LABELS = {
@@ -27,6 +28,7 @@ const t = scoped('components.course.editor.inline.components.courseinfo', LABELS
 export default class Section extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object,
+		courseInstance: PropTypes.object,
 		components: PropTypes.arrayOf(PropTypes.object),
 		onBeginEditing: PropTypes.func,
 		onEndEditing: PropTypes.func,
@@ -99,48 +101,64 @@ export default class Section extends React.Component {
 		this.setState({ pendingChanges: updated });
 	}
 
+	setSaveCallback = (saveCallback) => {
+		this.setState({saveCallback});
+	}
+
 	savePendingChanges = () => {
 		const { catalogEntry, onEndEditing } = this.props;
-		const { pendingChanges } = this.state;
+		const { pendingChanges, saveCallback } = this.state;
 
-		if(pendingChanges) {
-			catalogEntry.save(pendingChanges).then(() => {
+		const callback = saveCallback ? saveCallback : () => Promise.resolve();
+
+		callback().then(() => {
+			if(pendingChanges) {
+				catalogEntry.save(pendingChanges).then(() => {
+					this.setState({ pendingChanges: {} });
+
+					onEndEditing && onEndEditing();
+				});
+			}
+			else {
 				this.setState({ pendingChanges: {} });
 
 				onEndEditing && onEndEditing();
-			});
-		}
-		else {
-			this.setState({ pendingChanges: {} });
-
-			onEndEditing && onEndEditing();
-		}
+			}
+		});
 	}
 
 	deleteBlock = () => {
-		const { components } = this.props;
+		Prompt.areYouSure('This will remove selected field values').then(() => {
+			const { components } = this.props;
+			const valueToSave = {};
 
-		const valueToSave = {};
+			(components || []).forEach((cmp) => {
+				if(cmp.Edit.FIELD_NAME) {
+					valueToSave[cmp.Edit.FIELD_NAME] = null;
+				}
+			});
 
-		(components || []).forEach((cmp) => {
-			if(cmp.Edit.FIELD_NAME) {
-				valueToSave[cmp.Edit.FIELD_NAME] = null;
+			if(Object.keys(valueToSave).length > 0) {
+				this.setState({ pendingChanges: valueToSave }, () => {
+					this.savePendingChanges();
+				});
 			}
 		});
-
-		if(Object.keys(valueToSave).length > 0) {
-			this.setState({ pendingChanges: valueToSave }, () => {
-				this.savePendingChanges();
-			});
-		}
 	}
 
 	renderCmp = (cmp) => {
-		const { isEditing, catalogEntry, redemptionCodes } = this.props;
+		const { isEditing, catalogEntry, courseInstance, redemptionCodes } = this.props;
 
 		const Cmp = isEditing ? cmp.Edit : cmp.View;
 
-		return <Cmp key={cmp.View.FIELD_NAME} catalogEntry={catalogEntry} redemptionCodes={redemptionCodes} onValueChange={this.aggregateChanges}/>;
+		return (
+			<Cmp key={cmp.View.FIELD_NAME}
+				catalogEntry={catalogEntry}
+				courseInstance={courseInstance}
+				redemptionCodes={redemptionCodes}
+				setSaveCallback={this.setSaveCallback}
+				onValueChange={this.aggregateChanges}/>
+		);
 	}
 
 	renderEditButton () {
