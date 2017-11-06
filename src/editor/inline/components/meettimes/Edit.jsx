@@ -64,7 +64,7 @@ export default class MeetTimesEdit extends React.Component {
 			times: times
 		};
 
-		this.props.onValueChange && this.props.onValueChange([MeetTimesEdit.FIELD_NAME], schedule);
+		this.props.onValueChange && this.props.onValueChange(MeetTimesEdit.FIELD_NAME, schedule);
 	}
 
 	renderDay = (day, index) => {

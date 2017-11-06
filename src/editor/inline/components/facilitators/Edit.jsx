@@ -11,7 +11,7 @@ const LABELS = {
 	addFacilitators: 'Add a Facilitator'
 };
 
-const t = scoped('components.course.editor.inline.components.facilitators.addfacilitators', LABELS);
+const t = scoped('components.course.editor.inline.components.facilitators.edit', LABELS);
 
 export default class FacilitatorsEdit extends React.Component {
 	static propTypes = {
@@ -88,11 +88,11 @@ export default class FacilitatorsEdit extends React.Component {
 		// set the appropriate roles
 		const { courseInstance } = this.props;
 
-		this.state.facilitatorList;
+		//this.state.facilitatorList;
 
 		if(courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors')) {
 			return getService().then(service => {
-				// PUT/DELETE to Instructors?  Editors?
+				// TODO: PUT/DELETE to Instructors?  Editors?
 			});
 		}
 	}
@@ -105,6 +105,7 @@ export default class FacilitatorsEdit extends React.Component {
 		// not appear in catalogEntry Instructors list
 		onValueChange && onValueChange('Instructors', this.state.facilitatorList.filter(x => x.visible));
 
+		// since data has changed, we should set the callback so it gets invoked on editor save
 		setSaveCallback && setSaveCallback(this.saveInstructorData);
 	}
 

@@ -112,7 +112,7 @@ export default class Section extends React.Component {
 		const callback = saveCallback ? saveCallback : () => Promise.resolve();
 
 		callback().then(() => {
-			if(pendingChanges) {
+			if(pendingChanges && Object.keys(pendingChanges).length > 0) {
 				catalogEntry.save(pendingChanges).then(() => {
 					this.setState({ pendingChanges: {} });
 
@@ -152,7 +152,7 @@ export default class Section extends React.Component {
 		const Cmp = isEditing ? cmp.Edit : cmp.View;
 
 		return (
-			<Cmp key={cmp.View.FIELD_NAME}
+			<Cmp key={cmp.ID}
 				catalogEntry={catalogEntry}
 				courseInstance={courseInstance}
 				redemptionCodes={redemptionCodes}

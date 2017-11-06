@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 
 export default class RedemptionCodesEdit extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired,
+		catalogEntry: PropTypes.object,
+		redemptionCodes: PropTypes.arrayOf(PropTypes.object),
 		onValueChange: PropTypes.func
 	}
 
@@ -12,7 +13,7 @@ export default class RedemptionCodesEdit extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = { value: props.catalogEntry.Title };
+		this.state = {};
 	}
 
 	onChange = (val) => {

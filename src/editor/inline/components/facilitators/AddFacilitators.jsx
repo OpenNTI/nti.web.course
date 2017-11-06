@@ -19,7 +19,6 @@ const t = scoped('components.course.editor.inline.components.facilitators.addfac
 
 export default class AddFacilitators extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired,
 		onDismiss: PropTypes.func,
 		onConfirm: PropTypes.func
 	}
@@ -44,7 +43,6 @@ export default class AddFacilitators extends React.Component {
 	}
 
 	suggestionProvider = (value) => {
-
 		return getService()
 			.then(s => s.getContacts())
 			.then((contacts) => {
