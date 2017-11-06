@@ -175,7 +175,7 @@ export default class CourseEditor extends React.Component {
 
 	render () {
 		const { catalogEntry, editable } = this.props;
-		const { activeEditor, loading } = this.state;
+		const { activeEditor, courseInstance, loading } = this.state;
 
 		if(loading) {
 			return (<Loading.Mask/>);
@@ -230,6 +230,7 @@ export default class CourseEditor extends React.Component {
 						className="facilitators-section"
 						components={[Facilitators]}
 						catalogEntry={catalogEntry}
+						courseInstance={courseInstance}
 						title="Facilitators"
 						editable={editable}
 						isEditing={activeEditor === EDITORS.FACILITATORS}

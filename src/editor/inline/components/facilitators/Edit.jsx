@@ -1,39 +1,72 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Prompt} from 'nti-web-commons';
+import {getService} from 'nti-web-client';
+import {scoped} from 'nti-lib-locale';
 
 import Facilitator from './Facilitator';
 import AddFacilitators from './AddFacilitators';
 
+const LABELS = {
+	addFacilitators: 'Add a Facilitator'
+};
+
+const t = scoped('components.course.editor.inline.components.facilitators.addfacilitators', LABELS);
+
 export default class FacilitatorsEdit extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired
+		catalogEntry: PropTypes.object.isRequired,
+		courseInstance: PropTypes.object.isRequired,
+		setSaveCallback: PropTypes.func,
+		onValueChange: PropTypes.func
 	}
 
-	static FIELD_NAME = ''; // not sure what field this corresponds to
+	// no static FIELD_NAME, facilitators come from a couple different sources
 
 	constructor (props) {
 		super(props);
 
 		this.state = {
-			facilitatorList: props.catalogEntry.Instructors
+			facilitatorList: props.catalogEntry.Instructors.map(x => {
+				return {
+					...x,
+					visible: true,
+					role: 'instructor',
+					key: x.username
+				};
+			})
 		};
 	}
 
 	renderFacilitator = (facilitator) => {
-		return <Facilitator key={facilitator.username} facilitator={facilitator} editable/>;
+		return (
+			<Facilitator
+				key={facilitator.username}
+				facilitator={facilitator}
+				onChange={this.updateFacilitator}
+				onRemove={this.removeFacilitator}
+				editable/>
+		);
 	}
 
 	updateFacilitatorList = (users) => {
 		const transformed = users.map(u => {
 			return {
-				Name: u.alias
+				...u,
+				visible: u.visible,
+				role: u.role
 			};
 		});
 
 		this.setState({
 			facilitatorList: [...this.state.facilitatorList, ...transformed]
+		}, () => {
+			this.updateValues();
 		});
+	}
+
+	updateFacilitator = (facilitator) => {
+		this.replaceFacilitator(facilitator);
 	}
 
 	launchAddDialog = () => {
@@ -46,9 +79,53 @@ export default class FacilitatorsEdit extends React.Component {
 				<div className="add-icon">
 					<i className="icon-add"/>
 				</div>
-				<div className="add-label" onClick={this.launchAddDialog}>Add a Facilitator</div>
+				<div className="add-label" onClick={this.launchAddDialog}>{t('addFacilitators')}</div>
 			</div>
 		);
+	}
+
+	saveInstructorData = () => {
+		// set the appropriate roles
+		const { courseInstance } = this.props;
+
+		this.state.facilitatorList;
+
+		if(courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors')) {
+			return getService().then(service => {
+				// PUT/DELETE to Instructors?  Editors?
+			});
+		}
+	}
+
+	updateValues () {
+		const { onValueChange, setSaveCallback } = this.props;
+
+		// for visibility, we'll use the Instructors field of the catalogEntry.  If a facilitator is marked
+		// visible, they should appear in the Instructors list for a catalogEntry.  If marked hidden, they should
+		// not appear in catalogEntry Instructors list
+		onValueChange && onValueChange('Instructors', this.state.facilitatorList.filter(x => x.visible));
+
+		setSaveCallback && setSaveCallback(this.saveInstructorData);
+	}
+
+	removeFacilitator = (facilitator) => {
+		const { key } = facilitator;
+
+		this.setState({
+			facilitatorList: this.state.facilitatorList.filter(x => x.key !== key)
+		}, () => {
+			this.updateValues();
+		});
+	}
+
+	replaceFacilitator (facilitator) {
+		const { key } = facilitator;
+
+		this.setState({
+			facilitatorList: this.state.facilitatorList.map(x => x.key === key ? facilitator : x)
+		}, () => {
+			this.updateValues();
+		});
 	}
 
 	render () {
