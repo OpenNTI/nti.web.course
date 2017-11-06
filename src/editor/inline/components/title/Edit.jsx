@@ -20,7 +20,7 @@ export default class TitleEdit extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = { value: props.catalogEntry.Title };
+		this.state = { value: props.catalogEntry[TitleEdit.FIELD_NAME] };
 	}
 
 	onChange = (val) => {

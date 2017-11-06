@@ -46,19 +46,20 @@ export default class CourseEditor extends React.Component {
 
 		this.state = {catalogEntry, loading: true};
 
-		getService().then((service) => {
-			return service.getObject(catalogEntry.CourseNTIID).then((courseInstance) => {
-				courseInstance.getAccessTokens().then((tokens) => {
-					let newState = {};
+		this.initializeCourseData(catalogEntry);
+	}
 
-					newState.courseInstance = courseInstance;
-					newState.redemptionCodes = tokens;
+	async initializeCourseData (catalogEntry) {
+		const service = await getService();
+		const courseInstance = await service.getObject(catalogEntry.CourseNTIID);
+		const redemptionCodes = await courseInstance.getAccessTokens();
 
-					newState.loading = false;
+		// load instructors/editors?
 
-					this.setState(newState);
-				});
-			});
+		this.setState({
+			courseInstance,
+			redemptionCodes,
+			loading: false
 		});
 	}
 
@@ -199,10 +200,12 @@ export default class CourseEditor extends React.Component {
 						hideDeleteBlock/>
 					{this.renderAssetUploadWidget()}
 					<Section
+						className="prerequisites-section"
 						components={[Prerequisites]}
 						catalogEntry={catalogEntry}/>
 					{this.renderRedemptionWidget()}
 					<Section
+						className="start-date-section"
 						components={[StartDate]}
 						catalogEntry={catalogEntry}
 						isEditing={activeEditor === EDITORS.START_DATE}
@@ -210,6 +213,7 @@ export default class CourseEditor extends React.Component {
 						onBeginEditing={this.activateStartDateEditor}
 						onEndEditing={this.endEditing}/>
 					<Section
+						className="end-date-section"
 						components={[EndDate]}
 						catalogEntry={catalogEntry}
 						isEditing={activeEditor === EDITORS.END_DATE}
@@ -217,9 +221,11 @@ export default class CourseEditor extends React.Component {
 						onBeginEditing={this.activateEndDateEditor}
 						onEndEditing={this.endEditing}/>
 					<Section
+						className="department-section"
 						components={[Department]}
 						catalogEntry={catalogEntry}/>
 					<Section
+						className="meet-times-section"
 						components={[MeetTimes]}
 						catalogEntry={catalogEntry}
 						isEditing={activeEditor === EDITORS.MEET_TIMES}

@@ -1,11 +1,14 @@
 export function getWeekdaysFrom (entry) {
-	if(entry && entry.Schedule) {
+	if(entry && entry.Schedule ) {
 		// days could either be old format (["MWF"]) or new format (["M", "W", "F"])
 		// so just join entries together to make the old format and treat it that way
-		const days = entry.Schedule.days && entry.Schedule.days.join('');
+		const days = (entry.Schedule.days && entry.Schedule.days.join('')) || '';
 
 		let selectedWeekdays = [];
 
+		if(days.indexOf('N') >= 0) {
+			selectedWeekdays.push('sunday');
+		}
 		if(days.indexOf('M') >= 0) {
 			selectedWeekdays.push('monday');
 		}
@@ -23,9 +26,6 @@ export function getWeekdaysFrom (entry) {
 		}
 		if(days.indexOf('S') >= 0) {
 			selectedWeekdays.push('saturday');
-		}
-		if(days.indexOf('N') >= 0) {
-			selectedWeekdays.push('sunday');
 		}
 
 		return selectedWeekdays;

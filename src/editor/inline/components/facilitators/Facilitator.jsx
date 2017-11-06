@@ -143,7 +143,7 @@ export default class FacilitatorsView extends React.Component {
 	}
 
 	renderType () {
-		const { editable } = this.props;
+		const { editable, facilitator } = this.props;
 
 		if(editable) {
 			return (<div className="type">
@@ -151,7 +151,7 @@ export default class FacilitatorsView extends React.Component {
 			</div>);
 		}
 
-		return (<div className="type">Instructor</div>);
+		return (<div className="type">{facilitator.role && t(facilitator.role)}</div>);
 	}
 
 	render () {
