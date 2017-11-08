@@ -58,8 +58,8 @@ export default class CourseEditor extends React.Component {
 		const instructorsLink = courseInstance.getLink('Instructors');
 		const editorsLink = courseInstance.getLink('Editors');
 
-		const instructorsRaw = await service.get(instructorsLink);
-		const editorsRaw = await service.get(editorsLink);
+		const instructorsRaw = instructorsLink ? await service.get(instructorsLink) : [];
+		const editorsRaw = editorsLink ? await service.get(editorsLink) : [];
 
 		this.setState({
 			courseInstance,
