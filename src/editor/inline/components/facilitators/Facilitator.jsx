@@ -7,8 +7,9 @@ import {scoped} from 'nti-lib-locale';
 const LABELS = {
 	visible: 'Visible',
 	hidden: 'Hidden',
-	facilitator: 'Facilitator',
-	instructor: 'Instructor'
+	editor: 'Editor',
+	instructor: 'Instructor',
+	assistant: 'Assistant'
 };
 
 const t = scoped('components.course.editor.inline.components.facilitators.facilitator', LABELS);
@@ -104,7 +105,8 @@ export default class FacilitatorsView extends React.Component {
 		>
 			<div>
 				{this.renderTypeOption('instructor')}
-				{this.renderTypeOption('facilitator')}
+				{this.renderTypeOption('editor')}
+				{this.renderTypeOption('assistant')}
 			</div>
 		</Flyout.Triggered>);
 	}

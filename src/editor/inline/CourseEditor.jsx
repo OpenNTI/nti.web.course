@@ -12,6 +12,7 @@ import {
 	COURSE_SAVE_ERROR
 } from '../Constants';
 
+import { mergeAllFacilitators } from './utils';
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
 	RedemptionCodes, Prerequisites, Department, Facilitators, Assets } from './components';
@@ -54,13 +55,27 @@ export default class CourseEditor extends React.Component {
 		const courseInstance = await service.getObject(catalogEntry.CourseNTIID);
 		const redemptionCodes = await courseInstance.getAccessTokens();
 
-		// load instructors/editors?
+		const instructorsLink = courseInstance.getLink('Instructors');
+		const editorsLink = courseInstance.getLink('Editors');
+
+		const instructorsRaw = await service.get(instructorsLink);
+		const editorsRaw = await service.get(editorsLink);
 
 		this.setState({
 			courseInstance,
 			redemptionCodes,
+			facilitators: mergeAllFacilitators(
+				catalogEntry.Instructors,
+				instructorsRaw && instructorsRaw.Items,
+				editorsRaw && editorsRaw.Items),
 			loading: false
 		});
+	}
+
+	updateFacilitators = () => {
+		this.initializeCourseData(this.state.catalogEntry);
+
+		return Promise.resolve();
 	}
 
 	componentDidMount () {
@@ -176,7 +191,7 @@ export default class CourseEditor extends React.Component {
 
 	render () {
 		const { catalogEntry, editable } = this.props;
-		const { activeEditor, courseInstance, loading } = this.state;
+		const { activeEditor, courseInstance, facilitators, loading } = this.state;
 
 		if(loading) {
 			return (<Loading.Mask/>);
@@ -237,11 +252,12 @@ export default class CourseEditor extends React.Component {
 						components={[Facilitators]}
 						catalogEntry={catalogEntry}
 						courseInstance={courseInstance}
+						facilitators={facilitators}
 						title="Facilitators"
-						editable={editable}
 						isEditing={activeEditor === EDITORS.FACILITATORS}
 						onBeginEditing={this.activateFacilitatorsEditor}
-						onEndEditing={this.endEditing}/>
+						onEndEditing={this.endEditing}
+						onDataSaved={this.updateFacilitators}/>
 				</div>
 			</div>
 		);

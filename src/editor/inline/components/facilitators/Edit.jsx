@@ -17,6 +17,7 @@ export default class FacilitatorsEdit extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
 		courseInstance: PropTypes.object.isRequired,
+		facilitators: PropTypes.arrayOf(PropTypes.object),
 		setSaveCallback: PropTypes.func,
 		onValueChange: PropTypes.func
 	}
@@ -27,11 +28,9 @@ export default class FacilitatorsEdit extends React.Component {
 		super(props);
 
 		this.state = {
-			facilitatorList: props.catalogEntry.Instructors.map(x => {
+			facilitatorList: props.facilitators.map(x => {
 				return {
 					...x,
-					visible: true,
-					role: 'instructor',
 					key: x.username
 				};
 			})
@@ -87,14 +86,48 @@ export default class FacilitatorsEdit extends React.Component {
 	saveInstructorData = () => {
 		// set the appropriate roles
 		const { courseInstance } = this.props;
-
-		//this.state.facilitatorList;
+		const { facilitatorList } = this.state;
 
 		if(courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors')) {
 			return getService().then(service => {
-				// TODO: PUT/DELETE to Instructors?  Editors?
+				// sort the facilitator list into instructors and editors to save (there can be overlap in those lists)
+				//
+				// assistant => Instructors
+				// editor => Editors
+				// instructor => Instructors + Editors
+
+				const instructorsLink = courseInstance.getLink('Instructors');
+				const editorsLink = courseInstance.getLink('Editors');
+
+				const editorsToSave = (facilitatorList || []).filter(x => x.role === 'editor' || x.role === 'instructor');
+				const instructorsToSave = (facilitatorList || []).filter(x => x.role === 'assistant' || x.role === 'instructor');
+
+				const editorsToRemove = (facilitatorList || []).filter(x => x.role !== 'editor' && x.role !== 'instructor');
+				const instructorsToRemove = (facilitatorList || []).filter(x => x.role !== 'assistant' && x.role !== 'instructor');
+
+				instructorsToSave.forEach(x => {
+					service.post(instructorsLink, {
+						user: x.username
+					});
+				});
+
+				instructorsToRemove.forEach(x => {
+					service.delete(instructorsLink + '/' + x.username);
+				});
+
+				editorsToSave.forEach(x => {
+					service.post(editorsLink, {
+						user: x.username
+					});
+				});
+
+				editorsToRemove.forEach(x => {
+					service.delete(editorsLink + '/' + x.username);
+				});
 			});
 		}
+
+		return Promise.resolve();
 	}
 
 	updateValues () {
