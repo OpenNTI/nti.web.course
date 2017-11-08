@@ -29,9 +29,11 @@ export default class Section extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object,
 		courseInstance: PropTypes.object,
+		facilitators: PropTypes.arrayOf(PropTypes.object),
 		components: PropTypes.arrayOf(PropTypes.object),
 		onBeginEditing: PropTypes.func,
 		onEndEditing: PropTypes.func,
+		onDataSaved: PropTypes.func,
 		isEditing: PropTypes.bool,
 		editable: PropTypes.bool,
 		inlinePlacement: PropTypes.bool,
@@ -106,23 +108,34 @@ export default class Section extends React.Component {
 	}
 
 	savePendingChanges = () => {
-		const { catalogEntry, onEndEditing } = this.props;
+		const { catalogEntry, onEndEditing, onDataSaved } = this.props;
 		const { pendingChanges, saveCallback } = this.state;
 
 		const callback = saveCallback ? saveCallback : () => Promise.resolve();
 
 		callback().then(() => {
+			const onSave = onDataSaved ? onDataSaved : () => Promise.resolve();
+
 			if(pendingChanges && Object.keys(pendingChanges).length > 0) {
 				catalogEntry.save(pendingChanges).then(() => {
 					this.setState({ pendingChanges: {} });
 
-					onEndEditing && onEndEditing();
+					onSave(pendingChanges).then(() => {
+						onEndEditing && onEndEditing();
+					});
 				});
 			}
 			else {
 				this.setState({ pendingChanges: {} });
 
-				onEndEditing && onEndEditing();
+				if(saveCallback) {
+					onSave(pendingChanges).then(() => {
+						onEndEditing && onEndEditing();
+					});
+				}
+				else {
+					onEndEditing && onEndEditing();
+				}
 			}
 		});
 	}
@@ -147,7 +160,7 @@ export default class Section extends React.Component {
 	}
 
 	renderCmp = (cmp) => {
-		const { isEditing, catalogEntry, courseInstance, redemptionCodes } = this.props;
+		const { isEditing, catalogEntry, courseInstance, redemptionCodes, facilitators, editable } = this.props;
 
 		const Cmp = isEditing ? cmp.Edit : cmp.View;
 
@@ -156,6 +169,8 @@ export default class Section extends React.Component {
 				catalogEntry={catalogEntry}
 				courseInstance={courseInstance}
 				redemptionCodes={redemptionCodes}
+				facilitators={facilitators}
+				editable={editable}
 				setSaveCallback={this.setSaveCallback}
 				onValueChange={this.aggregateChanges}/>
 		);

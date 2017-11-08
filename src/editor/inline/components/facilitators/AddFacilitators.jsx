@@ -10,7 +10,8 @@ const LABELS = {
 	cancel: 'Cancel',
 	add: 'Add',
 	role: 'Role',
-	facilitator: 'Facilitator',
+	assistant: 'Assistant',
+	editor: 'Editor',
 	instructor: 'Instructor',
 	visible: 'Visible to Learners'
 };
@@ -29,7 +30,7 @@ export default class AddFacilitators extends React.Component {
 		super(props);
 
 		this.state = {
-			selectedRole: 'facilitator',
+			selectedRole: 'instructor',
 			isVisible: false
 		};
 	}
@@ -126,8 +127,9 @@ export default class AddFacilitators extends React.Component {
 			ref={this.attachRoleFlyoutRef}
 		>
 			<div>
-				{this.renderRoleOption('facilitator')}
 				{this.renderRoleOption('instructor')}
+				{this.renderRoleOption('editor')}
+				{this.renderRoleOption('assistant')}
 			</div>
 		</Flyout.Triggered>);
 	}

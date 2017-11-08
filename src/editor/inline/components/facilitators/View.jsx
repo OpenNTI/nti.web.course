@@ -5,7 +5,9 @@ import Facilitator from './Facilitator';
 
 export default class FacilitatorsView extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired
+		catalogEntry: PropTypes.object.isRequired,
+		facilitators: PropTypes.arrayOf(PropTypes.object),
+		editable: PropTypes.bool
 	}
 
 	static FIELD_NAME = 'Instructors';
@@ -21,11 +23,17 @@ export default class FacilitatorsView extends React.Component {
 	}
 
 	render () {
-		const { catalogEntry } = this.props;
+		const { facilitators, editable } = this.props;
 
 		return (
 			<div className="facilitators">
-				{(catalogEntry.Instructors || []).map(this.renderFacilitator)}
+				{(facilitators || []).filter(x => {
+					if(editable) {
+						return true;
+					}
+
+					return x.visible;
+				}).map(this.renderFacilitator)}
 			</div>
 		);
 	}
