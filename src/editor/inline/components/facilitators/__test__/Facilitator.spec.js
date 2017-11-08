@@ -30,7 +30,7 @@ const title = 'Professor of bird law';
 
 const facilitator = {
 	visible: true,
-	role: 'facilitator',
+	role: 'assistant',
 	key: userName,
 	Name: display,
 	MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
@@ -48,7 +48,7 @@ describe('Facilitator component test', () => {
 		const cmp = mount(<Facilitator facilitator={facilitator}/>);
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.type').first().text()).toEqual('Facilitator');
+		expect(cmp.find('.type').first().text()).toEqual('Assistant');
 		expect(cmp.find('.title').first().text()).toEqual(title);
 	});
 
@@ -58,7 +58,7 @@ describe('Facilitator component test', () => {
 		const cmp = mount(<Facilitator facilitator={facilitator} onRemove={onRemove} editable/>);
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.type').first().text()).toEqual('Facilitator');
+		expect(cmp.find('.type').first().text()).toEqual('Assistant');
 		expect(cmp.find('.title').first().text()).toEqual(title);
 
 		cmp.find('.delete-facilitator').first().simulate('click');
