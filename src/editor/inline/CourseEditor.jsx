@@ -211,7 +211,7 @@ export default class CourseEditor extends React.Component {
 		const { activeEditor, catalogEntry, courseInstance, facilitators, loading } = this.state;
 
 		if(loading || !catalogEntry) {
-			return (<Loading.Mask/>);
+			return (<div className="course-inline-editor"><Loading.Mask/></div>);
 		}
 
 		const classname = cx('course-inline-editor', { 'view-only' : !editable });
