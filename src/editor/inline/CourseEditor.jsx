@@ -47,23 +47,22 @@ export default class CourseEditor extends React.Component {
 
 		this.state = {loading: true};
 
-		this.initializeCourseData(catalogEntry);
+		if(typeof catalogEntry === 'string') {
+			getService().then(service => {
+				service.getObject(catalogEntry).then((courseInstance) => {
+					this.initializeCourseData(courseInstance.CatalogEntry, courseInstance);
+				});
+			});
+		}
+		else {
+			this.initializeCourseData(catalogEntry);
+		}
 	}
 
-	async initializeCourseData (catalogEntry) {
+	async initializeCourseData (catalogEntry, instance) {
 		const service = await getService();
 
-		// if we received catalogEntry as an ID, load by ID (this will give us a CourseInstance),
-		// otherwise load by Course ID on the existing catalogEntry object
-		const courseInstance = typeof catalogEntry === 'string'
-			? await service.getObject(catalogEntry)
-			: await service.getObject(catalogEntry.CourseNTIID);
-
-		// if we received catalogEntry as an ID, pull the catalogEntry off the loaded CourseInstance,
-		// otherwise take the provided catalogEntry object
-		const catalogEntryObject = typeof catalogEntry === 'string'
-			? courseInstance.CatalogEntry
-			: catalogEntry;
+		const courseInstance = instance ? instance : await service.getObject(catalogEntry.CourseNTIID);
 
 		const redemptionCodes = await courseInstance.getAccessTokens();
 
@@ -74,11 +73,11 @@ export default class CourseEditor extends React.Component {
 		const editorsRaw = editorsLink ? await service.get(editorsLink) : [];
 
 		this.setState({
-			catalogEntry: catalogEntryObject,
+			catalogEntry,
 			courseInstance,
 			redemptionCodes,
 			facilitators: mergeAllFacilitators(
-				catalogEntryObject.Instructors,
+				catalogEntry.Instructors,
 				instructorsRaw && instructorsRaw.Items,
 				editorsRaw && editorsRaw.Items),
 			loading: false
@@ -210,7 +209,7 @@ export default class CourseEditor extends React.Component {
 		const { editable } = this.props;
 		const { activeEditor, catalogEntry, courseInstance, facilitators, loading } = this.state;
 
-		if(loading) {
+		if(loading || !catalogEntry) {
 			return (<Loading.Mask/>);
 		}
 

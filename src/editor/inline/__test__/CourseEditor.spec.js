@@ -8,11 +8,13 @@ const redemptionCodes = [{Code: 'abc-def'}];
 const courseInstance = {
 	getAccessTokens: () => {
 		return Promise.resolve(redemptionCodes);
-	}
+	},
+	getLink: (l) => l
 };
 
 const mockService = () => ({
-	getObject: (o) => Promise.resolve(courseInstance)
+	getObject: (o) => Promise.resolve(courseInstance),
+	get: (o) => Promise.resolve(courseInstance)
 });
 
 const onBefore = () => {
@@ -50,6 +52,7 @@ describe('CourseEditor test', () => {
 
 		// manually initialize the data to get out of the loading state
 		cmp.setState({
+			catalogEntry,
 			courseInstance,
 			redemptionCodes,
 			loading: false
