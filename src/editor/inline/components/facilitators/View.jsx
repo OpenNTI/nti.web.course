@@ -5,7 +5,6 @@ import Facilitator from './Facilitator';
 
 export default class FacilitatorsView extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired,
 		facilitators: PropTypes.arrayOf(PropTypes.object),
 		editable: PropTypes.bool
 	}
