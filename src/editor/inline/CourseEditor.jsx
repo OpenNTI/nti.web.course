@@ -271,7 +271,7 @@ export default class CourseEditor extends React.Component {
 						courseInstance={courseInstance}
 						facilitators={facilitators}
 						title="Facilitators"
-						editable
+						editable={editable}
 						isEditing={activeEditor === EDITORS.FACILITATORS}
 						onBeginEditing={this.activateFacilitatorsEditor}
 						onEndEditing={this.endEditing}
