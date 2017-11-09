@@ -12,7 +12,7 @@ import {
 	COURSE_SAVE_ERROR
 } from '../Constants';
 
-import { mergeAllFacilitators } from './utils';
+import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
 	RedemptionCodes, Prerequisites, Department, Facilitators, Assets } from './components';
@@ -72,10 +72,14 @@ export default class CourseEditor extends React.Component {
 		});
 	}
 
-	updateFacilitators = () => {
-		this.initializeCourseData(this.state.catalogEntry);
+	saveFacilitators = (pending) => {
+		const facilitators = (pending || {}).facilitators;
 
-		return Promise.resolve();
+		return saveFacilitators(this.state.catalogEntry, this.state.courseInstance, facilitators).then((saved) => {
+			this.setState({ facilitators: saved });
+
+			return saved;
+		});
 	}
 
 	componentDidMount () {
@@ -254,10 +258,11 @@ export default class CourseEditor extends React.Component {
 						courseInstance={courseInstance}
 						facilitators={facilitators}
 						title="Facilitators"
+						editable
 						isEditing={activeEditor === EDITORS.FACILITATORS}
 						onBeginEditing={this.activateFacilitatorsEditor}
 						onEndEditing={this.endEditing}
-						onDataSaved={this.updateFacilitators}/>
+						doSave={this.saveFacilitators}/>
 				</div>
 			</div>
 		);

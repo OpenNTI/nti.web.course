@@ -33,7 +33,7 @@ export default class Section extends React.Component {
 		components: PropTypes.arrayOf(PropTypes.object),
 		onBeginEditing: PropTypes.func,
 		onEndEditing: PropTypes.func,
-		onDataSaved: PropTypes.func,
+		doSave: PropTypes.func,
 		isEditing: PropTypes.bool,
 		editable: PropTypes.bool,
 		inlinePlacement: PropTypes.bool,
@@ -103,41 +103,29 @@ export default class Section extends React.Component {
 		this.setState({ pendingChanges: updated });
 	}
 
-	setSaveCallback = (saveCallback) => {
-		this.setState({saveCallback});
-	}
-
 	savePendingChanges = () => {
-		const { catalogEntry, onEndEditing, onDataSaved } = this.props;
-		const { pendingChanges, saveCallback } = this.state;
+		const { catalogEntry, onEndEditing, doSave } = this.props;
+		const { pendingChanges } = this.state;
 
-		const callback = saveCallback ? saveCallback : () => Promise.resolve();
-
-		callback().then(() => {
-			const onSave = onDataSaved ? onDataSaved : () => Promise.resolve();
-
-			if(pendingChanges && Object.keys(pendingChanges).length > 0) {
-				catalogEntry.save(pendingChanges).then(() => {
-					this.setState({ pendingChanges: {} });
-
-					onSave(pendingChanges).then(() => {
-						onEndEditing && onEndEditing();
-					});
-				});
-			}
-			else {
+		if(doSave) {
+			// instead of doing the default key-value save, do custom logic if specified
+			doSave(pendingChanges).then((value) => {
+				onEndEditing && onEndEditing();
+			});
+		}
+		else if(pendingChanges && Object.keys(pendingChanges).length > 0) {
+			// do a standard key-value PUT on the catalogEntry.  this covers 90%
+			// of save scenarios (title, description, StartDate/EndDate, etc)
+			catalogEntry.save(pendingChanges).then(() => {
 				this.setState({ pendingChanges: {} });
 
-				if(saveCallback) {
-					onSave(pendingChanges).then(() => {
-						onEndEditing && onEndEditing();
-					});
-				}
-				else {
-					onEndEditing && onEndEditing();
-				}
-			}
-		});
+				onEndEditing && onEndEditing();
+			});
+		}
+		else {
+			// nothing to save, end editing
+			onEndEditing && onEndEditing();
+		}
 	}
 
 	deleteBlock = () => {
@@ -171,7 +159,6 @@ export default class Section extends React.Component {
 				redemptionCodes={redemptionCodes}
 				facilitators={facilitators}
 				editable={editable}
-				setSaveCallback={this.setSaveCallback}
 				onValueChange={this.aggregateChanges}/>
 		);
 	}
