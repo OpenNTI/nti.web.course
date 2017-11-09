@@ -32,9 +32,14 @@ export default class AddFacilitators extends React.Component {
 	constructor (props) {
 		super(props);
 
+		const {courseInstance} = props;
+
+		const options = getAvailableRoles(courseInstance);
+
 		this.state = {
 			selectedRole: 'instructor',
-			isVisible: false
+			isVisible: false,
+			options
 		};
 	}
 
@@ -103,7 +108,7 @@ export default class AddFacilitators extends React.Component {
 	renderRoleTrigger () {
 		return (
 			<div className="trigger">
-				<div className="role-value">{t(this.state.selectedRole)}</div>
+				<div className="role-value">{t(this.state.options[0])}</div>
 				<div className="dropdown"><i className="icon-chevron-down"/></div>
 			</div>
 		);
@@ -122,10 +127,6 @@ export default class AddFacilitators extends React.Component {
 	}
 
 	renderRoleSelect () {
-		const {courseInstance} = this.props;
-
-		const options = getAvailableRoles(courseInstance);
-
 		return (<Flyout.Triggered
 			className="course-facilitator-role-flyout"
 			trigger={this.renderRoleTrigger()}
@@ -134,7 +135,7 @@ export default class AddFacilitators extends React.Component {
 			ref={this.attachRoleFlyoutRef}
 		>
 			<div>
-				{options.map(this.renderRoleOption)}
+				{this.state.options.map(this.renderRoleOption)}
 			</div>
 		</Flyout.Triggered>);
 	}
