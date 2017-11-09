@@ -72,11 +72,11 @@ export default class FacilitatorsEdit extends React.Component {
 
 	renderAddFacilitator () {
 		return (
-			<div className="add-facilitator">
+			<div className="add-facilitator" onClick={this.launchAddDialog}>
 				<div className="add-icon">
 					<i className="icon-add"/>
 				</div>
-				<div className="add-label" onClick={this.launchAddDialog}>{t('addFacilitators')}</div>
+				<div className="add-label">{t('addFacilitators')}</div>
 			</div>
 		);
 	}
