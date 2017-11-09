@@ -20,15 +20,15 @@ class Test extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = { loading: true };
+		this.state = { selectedCatalogEntry: 'tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x28386e:5573657273:wJfn4wvwyXY' };
 
-		getService().then((service) => {
-			// tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x28386e:5573657273:wJfn4wvwyXY  - datesA - NODA333
-			// tag:nextthought.com,2011-10:system-OID-0x09ac6b:5573657273:eJy72UE9Tre - Physiology
-			return service.getObject('tag:nextthought.com,2011-10:system-OID-0x09ac6b:5573657273:eJy72UE9Tre').then((courseInstance) => {
-				this.setState({loading: false, selectedCatalogEntry: courseInstance.CatalogEntry});
-			});
-		});
+		// getService().then((service) => {
+		// 	// tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x28386e:5573657273:wJfn4wvwyXY  - datesA - NODA333
+		// 	// tag:nextthought.com,2011-10:system-OID-0x09ac6b:5573657273:eJy72UE9Tre - Physiology
+		// 	return service.getObject('tag:nextthought.com,2011-10:system-OID-0x09ac6b:5573657273:eJy72UE9Tre').then((courseInstance) => {
+		// 		this.setState({loading: false, selectedCatalogEntry: courseInstance.CatalogEntry});
+		// 	});
+		// });
 	}
 
 	onCourseClick = (entry) => {

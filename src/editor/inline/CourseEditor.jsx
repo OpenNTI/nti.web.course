@@ -33,7 +33,7 @@ const EDITORS = {
 export default class CourseEditor extends React.Component {
 	static propTypes = {
 		title: PropTypes.string,
-		catalogEntry: PropTypes.object.isRequired,
+		catalogEntry: PropTypes.any.isRequired,
 		editable: PropTypes.bool,
 		onCancel: PropTypes.func,
 		onFinish: PropTypes.func,
@@ -45,14 +45,26 @@ export default class CourseEditor extends React.Component {
 
 		const catalogEntry = props.catalogEntry;
 
-		this.state = {catalogEntry, loading: true};
+		this.state = {loading: true};
 
 		this.initializeCourseData(catalogEntry);
 	}
 
 	async initializeCourseData (catalogEntry) {
 		const service = await getService();
-		const courseInstance = await service.getObject(catalogEntry.CourseNTIID);
+
+		// if we received catalogEntry as an ID, load by ID (this will give us a CourseInstance),
+		// otherwise load by Course ID on the existing catalogEntry object
+		const courseInstance = typeof catalogEntry === 'string'
+			? await service.getObject(catalogEntry)
+			: await service.getObject(catalogEntry.CourseNTIID);
+
+		// if we received catalogEntry as an ID, pull the catalogEntry off the loaded CourseInstance,
+		// otherwise take the provided catalogEntry object
+		const catalogEntryObject = typeof catalogEntry === 'string'
+			? courseInstance.CatalogEntry
+			: catalogEntry;
+
 		const redemptionCodes = await courseInstance.getAccessTokens();
 
 		const instructorsLink = courseInstance.getLink('Instructors');
@@ -62,10 +74,11 @@ export default class CourseEditor extends React.Component {
 		const editorsRaw = editorsLink ? await service.get(editorsLink) : [];
 
 		this.setState({
+			catalogEntry: catalogEntryObject,
 			courseInstance,
 			redemptionCodes,
 			facilitators: mergeAllFacilitators(
-				catalogEntry.Instructors,
+				catalogEntryObject.Instructors,
 				instructorsRaw && instructorsRaw.Items,
 				editorsRaw && editorsRaw.Items),
 			loading: false
@@ -180,7 +193,7 @@ export default class CourseEditor extends React.Component {
 	}
 
 	renderCourseVideo () {
-		const { catalogEntry } = this.props;
+		const { catalogEntry } = this.state;
 
 		if(this.state.activeEditor === EDITORS.COURSE_INFO) {
 			return this.renderVideoEditor();
@@ -194,8 +207,8 @@ export default class CourseEditor extends React.Component {
 	}
 
 	render () {
-		const { catalogEntry, editable } = this.props;
-		const { activeEditor, courseInstance, facilitators, loading } = this.state;
+		const { editable } = this.props;
+		const { activeEditor, catalogEntry, courseInstance, facilitators, loading } = this.state;
 
 		if(loading) {
 			return (<Loading.Mask/>);
