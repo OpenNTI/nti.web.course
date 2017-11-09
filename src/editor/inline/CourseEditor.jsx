@@ -49,8 +49,9 @@ export default class CourseEditor extends React.Component {
 
 		if(typeof catalogEntry === 'string') {
 			getService().then(service => {
-				service.getObject(catalogEntry).then((courseInstance) => {
-					this.initializeCourseData(courseInstance.CatalogEntry, courseInstance);
+				service.getObject(catalogEntry).then((value) => {
+					// be flexible on the kind of data we're given
+					this.initializeCourseData(value.CatalogEntry || value.CourseCatalogEntry || value);
 				});
 			});
 		}
@@ -59,10 +60,10 @@ export default class CourseEditor extends React.Component {
 		}
 	}
 
-	async initializeCourseData (catalogEntry, instance) {
+	async initializeCourseData (catalogEntry) {
 		const service = await getService();
 
-		const courseInstance = instance ? instance : await service.getObject(catalogEntry.CourseNTIID);
+		const courseInstance = await service.getObject(catalogEntry.CourseNTIID);
 
 		const redemptionCodes = await courseInstance.getAccessTokens();
 

@@ -4,6 +4,8 @@ import { TokenEditor, Avatar, Flyout } from 'nti-web-commons';
 import { getService } from 'nti-web-client';
 import {scoped} from 'nti-lib-locale';
 
+import {getAvailableRoles} from './utils';
+
 const LABELS = {
 	addFacilitators: 'Add Facilitators',
 	addUsers: 'Add users',
@@ -20,6 +22,7 @@ const t = scoped('components.course.editor.inline.components.facilitators.addfac
 
 export default class AddFacilitators extends React.Component {
 	static propTypes = {
+		courseInstance: PropTypes.object.isRequired,
 		onDismiss: PropTypes.func,
 		onConfirm: PropTypes.func
 	}
@@ -106,7 +109,7 @@ export default class AddFacilitators extends React.Component {
 		);
 	}
 
-	renderRoleOption (role) {
+	renderRoleOption = (role) => {
 		const onClick = () => {
 			this.setState({selectedRole: role});
 
@@ -115,10 +118,14 @@ export default class AddFacilitators extends React.Component {
 
 		const text = t(role);
 
-		return (<div className="role-option" onClick={onClick}>{text}</div>);
+		return (<div key={role} className="role-option" onClick={onClick}>{text}</div>);
 	}
 
 	renderRoleSelect () {
+		const {courseInstance} = this.props;
+
+		const options = getAvailableRoles(courseInstance);
+
 		return (<Flyout.Triggered
 			className="course-facilitator-role-flyout"
 			trigger={this.renderRoleTrigger()}
@@ -127,9 +134,7 @@ export default class AddFacilitators extends React.Component {
 			ref={this.attachRoleFlyoutRef}
 		>
 			<div>
-				{this.renderRoleOption('instructor')}
-				{this.renderRoleOption('editor')}
-				{this.renderRoleOption('assistant')}
+				{options.map(this.renderRoleOption)}
 			</div>
 		</Flyout.Triggered>);
 	}

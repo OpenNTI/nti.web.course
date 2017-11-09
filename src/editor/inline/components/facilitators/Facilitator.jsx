@@ -4,6 +4,8 @@ import {Flyout, Avatar} from 'nti-web-commons';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 
+import {getAvailableRoles} from './utils';
+
 const LABELS = {
 	visible: 'Visible',
 	hidden: 'Hidden',
@@ -17,6 +19,7 @@ const t = scoped('components.course.editor.inline.components.facilitators.facili
 export default class FacilitatorsView extends React.Component {
 	static propTypes = {
 		facilitator: PropTypes.object.isRequired,
+		courseInstance: PropTypes.object.isRequired,
 		onChange: PropTypes.func,
 		onRemove: PropTypes.func,
 		editable: PropTypes.bool
@@ -80,7 +83,7 @@ export default class FacilitatorsView extends React.Component {
 		return <div className="trigger">{t(role)}<i className="icon-chevron-down"/></div>;
 	}
 
-	renderTypeOption (type) {
+	renderTypeOption = (type) => {
 		const onClick = () => {
 			const {onChange, facilitator} = this.props;
 
@@ -92,10 +95,14 @@ export default class FacilitatorsView extends React.Component {
 			this.typeFlyout && this.typeFlyout.dismiss();
 		};
 
-		return (<div className="type-option" onClick={onClick}>{t(type)}</div>);
+		return (<div key={type} className="type-option" onClick={onClick}>{t(type)}</div>);
 	}
 
 	renderTypeSelect () {
+		const {courseInstance} = this.props;
+
+		const options = getAvailableRoles(courseInstance);
+
 		return (<Flyout.Triggered
 			className="course-facilitator-type-flyout"
 			trigger={this.renderTypeTrigger()}
@@ -104,9 +111,7 @@ export default class FacilitatorsView extends React.Component {
 			ref={this.attachTypeFlyoutRef}
 		>
 			<div>
-				{this.renderTypeOption('instructor')}
-				{this.renderTypeOption('editor')}
-				{this.renderTypeOption('assistant')}
+				{options.map(this.renderTypeOption)}
 			</div>
 		</Flyout.Triggered>);
 	}

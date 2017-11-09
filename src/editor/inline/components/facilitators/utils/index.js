@@ -1,5 +1,23 @@
 import { getService } from 'nti-web-client';
 
+export function getAvailableRoles (courseInstance) {
+	let options = [];
+
+	if(courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors')) {
+		options.push('instructor');
+	}
+
+	if(courseInstance.hasLink('Editors')) {
+		options.push('editor');
+	}
+
+	if(courseInstance.hasLink('Instructors')) {
+		options.push('assistant');
+	}
+
+	return options;
+}
+
 async function saveItem (service, link, type, user) {
 	if(type === 'delete') {
 		await service.delete(link);

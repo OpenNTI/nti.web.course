@@ -20,7 +20,7 @@ class Test extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = { selectedCatalogEntry: 'tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x28386e:5573657273:wJfn4wvwyXY' };
+		this.state = { selectedCatalogEntry: 'tag:nextthought.com,2011-10:system-OID-0x08b427:5573657273:eJy72UE9dg9' };
 
 		// getService().then((service) => {
 		// 	// tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x28386e:5573657273:wJfn4wvwyXY  - datesA - NODA333

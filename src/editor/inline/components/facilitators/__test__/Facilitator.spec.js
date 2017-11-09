@@ -39,13 +39,17 @@ const facilitator = {
 	JobTitle: title
 };
 
+const courseInstance = {
+	hasLink: () => true
+};
+
 /* eslint-env jest */
 describe('Facilitator component test', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
 	test('Test view', () => {
-		const cmp = mount(<Facilitator facilitator={facilitator}/>);
+		const cmp = mount(<Facilitator facilitator={facilitator} courseInstance={courseInstance}/>);
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
 		expect(cmp.find('.type').first().text()).toEqual('Assistant');
@@ -55,7 +59,7 @@ describe('Facilitator component test', () => {
 	test('Test edit', () => {
 		const onRemove = jest.fn();
 
-		const cmp = mount(<Facilitator facilitator={facilitator} onRemove={onRemove} editable/>);
+		const cmp = mount(<Facilitator facilitator={facilitator} courseInstance={courseInstance} onRemove={onRemove} editable/>);
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
 		expect(cmp.find('.type').first().text()).toEqual('Assistant');

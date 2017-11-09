@@ -40,6 +40,7 @@ export default class FacilitatorsEdit extends React.Component {
 			<Facilitator
 				key={facilitator.username}
 				facilitator={facilitator}
+				courseInstance={this.props.courseInstance}
 				onChange={this.updateFacilitator}
 				onRemove={this.removeFacilitator}
 				editable/>
@@ -67,7 +68,7 @@ export default class FacilitatorsEdit extends React.Component {
 	}
 
 	launchAddDialog = () => {
-		Prompt.modal(<AddFacilitators onConfirm={this.updateFacilitatorList}/>);
+		Prompt.modal(<AddFacilitators onConfirm={this.updateFacilitatorList} courseInstance={this.props.courseInstance}/>);
 	}
 
 	renderAddFacilitator () {

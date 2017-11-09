@@ -1,4 +1,4 @@
-import { saveFacilitators, mergeAllFacilitators } from '../';
+import { saveFacilitators, mergeAllFacilitators, getAvailableRoles } from '../';
 
 let savedData = null;
 
@@ -224,5 +224,64 @@ describe('Test mergeAllFacilitators', () => {
 		verifyUser('hiddenInstructor', false, 'assistant', 'Hidden Instructor');
 		verifyUser('hiddenEditor', false, 'editor', 'Hidden Editor');
 		verifyUser('hiddenBoth', false, 'instructor', 'Hidden Both');
+	});
+});
+
+
+describe('Test getAvailableRoles', () => {
+	test('Test all options', () => {
+		const courseInstance = {
+			hasLink: (link) => {
+				return link === 'Instructors' || link === 'Editors';
+			}
+		};
+
+		const available = getAvailableRoles(courseInstance);
+
+		expect(available.length).toBe(3);
+
+		expect(available.includes('assistant')).toBe(true);
+		expect(available.includes('editor')).toBe(true);
+		expect(available.includes('instructor')).toBe(true);
+	});
+
+	test('Test only instructor', () => {
+		const courseInstance = {
+			hasLink: (link) => {
+				return link === 'Instructors';
+			}
+		};
+
+		const available = getAvailableRoles(courseInstance);
+
+		expect(available.length).toBe(1);
+
+		expect(available.includes('assistant')).toBe(true);
+	});
+
+	test('Test only editor', () => {
+		const courseInstance = {
+			hasLink: (link) => {
+				return link === 'Editors';
+			}
+		};
+
+		const available = getAvailableRoles(courseInstance);
+
+		expect(available.length).toBe(1);
+
+		expect(available.includes('editor')).toBe(true);
+	});
+
+	test('Test none', () => {
+		const courseInstance = {
+			hasLink: (link) => {
+				return false;
+			}
+		};
+
+		const available = getAvailableRoles(courseInstance);
+
+		expect(available.length).toBe(0);
 	});
 });

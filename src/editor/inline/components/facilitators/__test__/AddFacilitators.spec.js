@@ -20,6 +20,10 @@ const facilitator = {
 	JobTitle: title
 };
 
+const courseInstance = {
+	hasLink: () => true
+};
+
 /* eslint-env jest */
 describe('AddFacilitators component test', () => {
 	test('Test view', () => {
@@ -35,7 +39,7 @@ describe('AddFacilitators component test', () => {
 		};
 		const onDismiss = jest.fn();
 
-		const cmp = mount(<AddFacilitators onDismiss={onDismiss} onConfirm={onConfirm}/>);
+		const cmp = mount(<AddFacilitators courseInstance={courseInstance} onDismiss={onDismiss} onConfirm={onConfirm}/>);
 
 		cmp.setState({
 			values: [
