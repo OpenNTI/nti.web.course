@@ -170,18 +170,18 @@ export default class CourseEditor extends React.Component {
 	}
 
 	onSetVideo = (src) => {
-		this.props.catalogEntry.save({
+		this.state.catalogEntry.save({
 			Video: src
 		}).then(() => {
-			this.setState({catalogEntry: this.props.catalogEntry});
+			this.endEditing();
 		});
 	}
 
 	onRemoveVideo = () => {
-		this.props.catalogEntry.save({
+		this.state.catalogEntry.save({
 			Video: null
 		}).then(() => {
-			this.setState({catalogEntry: this.props.catalogEntry});
+			this.endEditing();
 		});
 	}
 
