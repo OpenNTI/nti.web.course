@@ -60,7 +60,7 @@ export default class CourseVideo extends React.Component {
 		if(editable) {
 			return (
 				<div className="controls">
-					<div className="change" onClick={this.launchVideoInput}><i className="icon-folder"/>{t('change')}</div>
+					<div className="change" onClick={this.launchVideoInput}><i className="icon-add"/>{t('change')}</div>
 					<div className="remove" onClick={this.removeVideo}><i className="icon-remove"/>{t('remove')}</div>
 				</div>
 			);
