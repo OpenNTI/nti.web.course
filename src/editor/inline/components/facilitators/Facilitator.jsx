@@ -98,11 +98,7 @@ export default class FacilitatorsView extends React.Component {
 		return (<div key={type} className="type-option" onClick={onClick}>{t(type)}</div>);
 	}
 
-	renderTypeSelect () {
-		const {courseInstance} = this.props;
-
-		const options = getAvailableRoles(courseInstance);
-
+	renderTypeSelect (options) {
 		return (<Flyout.Triggered
 			className="course-facilitator-type-flyout"
 			trigger={this.renderTypeTrigger()}
@@ -150,11 +146,15 @@ export default class FacilitatorsView extends React.Component {
 	}
 
 	renderType () {
-		const { editable, facilitator } = this.props;
+		const { editable, courseInstance, facilitator } = this.props;
 
-		if(editable) {
+		const options = getAvailableRoles(courseInstance);
+
+		// only allow selecting roles if there editable and there is more than one
+		// option available to choose
+		if(editable && options && options.length > 1) {
 			return (<div className="type">
-				{this.renderTypeSelect()}
+				{this.renderTypeSelect(options)}
 			</div>);
 		}
 

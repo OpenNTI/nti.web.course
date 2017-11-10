@@ -6,6 +6,7 @@ import Facilitator from './Facilitator';
 export default class FacilitatorsView extends React.Component {
 	static propTypes = {
 		facilitators: PropTypes.arrayOf(PropTypes.object),
+		courseInstance: PropTypes.object.isRequired,
 		editable: PropTypes.bool
 	}
 
@@ -18,7 +19,7 @@ export default class FacilitatorsView extends React.Component {
 	}
 
 	renderFacilitator = (facilitator) => {
-		return <Facilitator key={facilitator.username} facilitator={facilitator}/>;
+		return <Facilitator key={facilitator.username} courseInstance={this.props.courseInstance} facilitator={facilitator}/>;
 	}
 
 	render () {

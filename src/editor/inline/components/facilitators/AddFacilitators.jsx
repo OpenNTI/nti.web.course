@@ -108,7 +108,7 @@ export default class AddFacilitators extends React.Component {
 	renderRoleTrigger () {
 		return (
 			<div className="trigger">
-				<div className="role-value">{t(this.state.options[0])}</div>
+				<div className="role-value">{t(this.state.selectedRole)}</div>
 				<div className="dropdown"><i className="icon-chevron-down"/></div>
 			</div>
 		);
@@ -127,6 +127,12 @@ export default class AddFacilitators extends React.Component {
 	}
 
 	renderRoleSelect () {
+		const { options } = this.state;
+
+		if(!options || options.length <= 1) {
+			return (<div className="role-value">{this.state.options[0] && t(this.state.options[0])}</div>);
+		}
+
 		return (<Flyout.Triggered
 			className="course-facilitator-role-flyout"
 			trigger={this.renderRoleTrigger()}
@@ -135,7 +141,7 @@ export default class AddFacilitators extends React.Component {
 			ref={this.attachRoleFlyoutRef}
 		>
 			<div>
-				{this.state.options.map(this.renderRoleOption)}
+				{options.map(this.renderRoleOption)}
 			</div>
 		</Flyout.Triggered>);
 	}

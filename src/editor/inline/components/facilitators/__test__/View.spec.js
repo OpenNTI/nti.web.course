@@ -45,13 +45,17 @@ const facilitators = [
 	}
 ];
 
+const courseInstance = {
+	hasLink: () => false
+};
+
 /* eslint-env jest */
 describe('Facilitators view test', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
 	test('Test non-editor view', () => {
-		const cmp = mount(<View facilitators={facilitators}/>);
+		const cmp = mount(<View facilitators={facilitators} courseInstance={courseInstance}/>);
 
 		const facilitatorInfos = cmp.find('.facilitator-info');
 
@@ -62,7 +66,7 @@ describe('Facilitators view test', () => {
 	});
 
 	test('Test editor view', () => {
-		const cmp = mount(<View facilitators={facilitators} editable/>);
+		const cmp = mount(<View facilitators={facilitators} courseInstance={courseInstance} editable/>);
 
 		const facilitatorInfos = cmp.find('.facilitator-info');
 
