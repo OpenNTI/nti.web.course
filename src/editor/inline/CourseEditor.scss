@@ -21,38 +21,4 @@
 			}
 		}
 	}
-
-	video {
-		max-width: 768px;
-	}
-
-	.course-video-editor {
-		height: 432px;
-		width: 768px;
-		background-color: #333;
-		padding-top: 131px;
-
-		.video-button {
-			height: 170px;
-			width: 170px;
-			background-color: #444;
-			border-radius: 5px;
-			margin: 0 auto;
-			padding-top: 50px;
-			cursor: pointer;
-
-			.icon {
-				width: 90px;
-				height: 60px;
-				border: solid 2px #979797;
-				margin: 0 auto;
-				border-radius: 4px;
-			}
-
-			.label {
-				margin-top: 20px;
-				color: #b8b8b8;
-			}
-		}
-	}
 }

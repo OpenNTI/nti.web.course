@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Loading} from 'nti-web-commons';
 import {getService} from 'nti-web-client';
-import Video, { EmbedInput, getCanonicalUrlFrom } from 'nti-web-video';
 import cx from 'classnames';
 
 import Store from '../Store';
@@ -12,6 +11,7 @@ import {
 	COURSE_SAVE_ERROR
 } from '../Constants';
 
+import CourseVideo from './widgets/CourseVideo';
 import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
@@ -169,41 +169,20 @@ export default class CourseEditor extends React.Component {
 		);
 	}
 
-	launchVideoInput = () => {
-		EmbedInput.show().then((value) => {
-			const src = getCanonicalUrlFrom(value);
-
-			this.props.catalogEntry.save({
-				Video: src
-			}).then(() => {
-				this.endEditing();
-			});
+	onSetVideo = (src) => {
+		this.props.catalogEntry.save({
+			Video: src
+		}).then(() => {
+			this.setState({catalogEntry: this.props.catalogEntry});
 		});
 	}
 
-	renderVideoEditor () {
-		return (
-			<div className="course-video-editor">
-				<div className="video-button" onClick={this.launchVideoInput}>
-					<div className="icon"/>
-					<div className="label">Cover Video</div>
-				</div>
-			</div>
-		);
-	}
-
-	renderCourseVideo () {
-		const { catalogEntry } = this.state;
-
-		if(this.state.activeEditor === EDITORS.COURSE_INFO) {
-			return this.renderVideoEditor();
-		}
-
-		if(catalogEntry.Video) {
-			return <Video src={catalogEntry.Video}/>;
-		}
-
-		return <div className="course-video-placeholder"/>;
+	onRemoveVideo = () => {
+		this.props.catalogEntry.save({
+			Video: null
+		}).then(() => {
+			this.setState({catalogEntry: this.props.catalogEntry});
+		});
 	}
 
 	render () {
@@ -218,7 +197,11 @@ export default class CourseEditor extends React.Component {
 
 		return (
 			<div className={classname}>
-				{this.renderCourseVideo()}
+				<CourseVideo
+					catalogEntry={catalogEntry}
+					editable={editable}
+					onSetVideo={this.onSetVideo}
+					onRemoveVideo={this.onRemoveVideo}/>
 				<div className="sections">
 					<Section
 						className="basic-info-section"
