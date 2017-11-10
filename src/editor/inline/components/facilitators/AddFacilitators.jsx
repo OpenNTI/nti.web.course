@@ -157,7 +157,8 @@ export default class AddFacilitators extends React.Component {
 					value={this.state.values}
 					placeholder={t('addUsers')}
 					suggestionProvider={this.suggestionProvider}
-					onChange={this.onChange}/>
+					onChange={this.onChange}
+					onlyAllowSuggestions/>
 				<div className="role">
 					<div className="field-label">{t('role')}</div>
 					<div className="role-select">{this.renderRoleSelect()}</div>
