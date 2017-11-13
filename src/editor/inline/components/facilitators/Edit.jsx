@@ -35,7 +35,35 @@ export default class FacilitatorsEdit extends React.Component {
 		};
 	}
 
+	getPermissionsForActingUser = () => {
+		const { courseInstance } = this.props;
+
+		return [
+			courseInstance.hasLink('Instructors') ? 1 : 0,
+			courseInstance.hasLink('Editors') ? 1 : 0
+		];
+	}
+
+	getPermissionsForFacilitator = (facilitator) => {
+		return [
+			facilitator.role === 'assistant' || facilitator.role === 'instructor' ? 1 : 0,
+			facilitator.role === 'editor' || facilitator.role === 'instructor' ? 1 : 0
+		];
+	}
+
 	renderFacilitator = (facilitator) => {
+		// get facilitator role and compare to acting user's role.
+		// instructors can edit unconditionally
+		// editors can only edit if the facilitator is an editor
+		// assistants can only edit if the facilitator is an assistant
+		//
+		// instructor:  [1, 1]   full permissions
+		// assistant:   [1, 0]
+		// editor:      [0, 1]
+		const userPerms = this.getPermissionsForActingUser();
+		const facilitatorPerms = this.getPermissionsForFacilitator(facilitator);
+		const canEdit = userPerms[0] >= facilitatorPerms[0] && userPerms[1] >= facilitatorPerms[1];
+
 		return (
 			<Facilitator
 				key={facilitator.username}
@@ -43,7 +71,7 @@ export default class FacilitatorsEdit extends React.Component {
 				courseInstance={this.props.courseInstance}
 				onChange={this.updateFacilitator}
 				onRemove={this.removeFacilitator}
-				editable/>
+				editable={canEdit}/>
 		);
 	}
 
