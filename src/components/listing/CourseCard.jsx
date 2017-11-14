@@ -108,7 +108,7 @@ export default class CourseCard extends React.Component {
 		return (<div className="course-controls">
 			{this.renderPreview()}
 			{this.renderBadge()}
-			{this.renderOptions()}
+			{this.renderDefaultOptions()}
 		</div>);
 	}
 
@@ -141,6 +141,22 @@ export default class CourseCard extends React.Component {
 		);
 	}
 
+	renderDefaultOptions () {
+		if(this.props.isAdministrative) {
+			return null;
+		}
+
+		return this.renderOptions();
+	}
+
+	renderAdminOptions () {
+		if(!this.props.isAdministrative) {
+			return null;
+		}
+
+		return (<div className="admin-controls">{this.renderOptions()}</div>);
+	}
+
 	renderOptions () {
 		return (<Flyout.Triggered
 			className="admin-course-options"
@@ -167,6 +183,7 @@ export default class CourseCard extends React.Component {
 				<div className="course-title">{course.title}</div>
 				{this.renderInstructors()}
 			</div>
+			{this.renderAdminOptions()}
 		</div>);
 	}
 }

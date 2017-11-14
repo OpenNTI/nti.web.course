@@ -9,6 +9,10 @@
 }
 
 .course-item-list {
+	.admin-controls:hover, .course-item:hover + .admin-controls {
+		opacity: 1;
+	}
+
 	.course-item {
 		border: solid 1px #eaeaea;
 		color: #444;
@@ -18,6 +22,12 @@
 		margin: 10px;
 		cursor: pointer;
 		position: relative;
+
+		.admin-controls {
+			opacity: 1;
+			font-size: 20px;
+			margin-top: 4px;
+		}
 
 		.course-controls:hover, .cover:hover + .course-controls {
 			opacity: 1;
