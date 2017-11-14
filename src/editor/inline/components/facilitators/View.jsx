@@ -32,6 +32,10 @@ export default class FacilitatorsView extends React.Component {
 						return true;
 					}
 
+					if(!x.role || x.role === '') {
+						return false;
+					}
+
 					return x.visible;
 				}).map(this.renderFacilitator)}
 			</div>

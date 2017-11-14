@@ -125,7 +125,13 @@ export default class FacilitatorsEdit extends React.Component {
 		const { key } = facilitator;
 
 		this.setState({
-			facilitatorList: this.state.facilitatorList.filter(x => x.key !== key)
+			facilitatorList: this.state.facilitatorList.map(x => {
+				if(x.key === key) {
+					return {...x, role: ''};
+				}
+
+				return x;
+			})
 		}, () => {
 			this.updateValues();
 		});
@@ -149,7 +155,7 @@ export default class FacilitatorsEdit extends React.Component {
 					{this.renderAddFacilitator()}
 				</div>
 				<div className="facilitators">
-					{(this.state.facilitatorList || []).map(this.renderFacilitator)}
+					{(this.state.facilitatorList || []).filter(x => x.role && x.role !== '').map(this.renderFacilitator)}
 				</div>
 			</div>
 		);

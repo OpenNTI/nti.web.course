@@ -112,6 +112,15 @@ describe('Test saveFacilitators', () => {
 				username: 'hiddenEditor',
 				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
 				Class: 'CourseCatalogInstructorLegacyInfo'
+			},
+			{
+				role: '',
+				visible: false,
+				Name: 'To Remove',
+				JobTitle: '-',
+				username: 'toRemove',
+				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+				Class: 'CourseCatalogInstructorLegacyInfo'
 			}
 		];
 
@@ -135,9 +144,9 @@ describe('Test saveFacilitators', () => {
 			};
 
 			verifyList(savedData['post-Instructors'], ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth']);
-			verifyList(savedData['delete-Instructors'], ['eonly', 'hiddenEditor']);
+			verifyList(savedData['delete-Instructors'], ['eonly', 'hiddenEditor', 'toRemove']);
 			verifyList(savedData['post-Editors'], ['eonly', 'both', 'hiddenEditor', 'hiddenBoth']);
-			verifyList(savedData['delete-Editors'], ['ionly', 'hiddenInstructor']);
+			verifyList(savedData['delete-Editors'], ['ionly', 'hiddenInstructor', 'toRemove']);
 
 			done();
 		});

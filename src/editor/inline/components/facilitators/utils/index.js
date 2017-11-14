@@ -47,7 +47,7 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 
 	// visible facilitators go in the catalogEntry Instructors field, hidden facilitators
 	// will only be tracked through the Instructors/Editors links
-	await catalogEntry.save({Instructors: facilitators.filter(x => x.visible)});
+	await catalogEntry.save({Instructors: facilitators.filter(x => x.visible && x.role && x.role !== '')});
 
 	const service = await getService();
 
@@ -86,7 +86,7 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 		saveItem(service, editorsLink + '/' + x.username, 'delete', x.username);
 	});
 
-	return facilitators;
+	return facilitators.filter(x => x.role && x.role !== '');
 }
 
 function containsUser (list, userName) {
