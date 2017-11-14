@@ -61,7 +61,7 @@ describe('Facilitators view test', () => {
 
 		expect(facilitatorInfos.length).toBe(1); // only one visible, hidden should not show on non-editor view
 		expect(facilitatorInfos.first().find('.name').first().text()).toEqual('Visible Assistant');
-		expect(facilitatorInfos.first().find('.type').first().text()).toEqual('Assistant');
+		expect(facilitatorInfos.first().find('.type').exists()).toBe(false); // view-only should not see role
 		expect(facilitatorInfos.first().find('.title').first().text()).toEqual('visible');
 	});
 

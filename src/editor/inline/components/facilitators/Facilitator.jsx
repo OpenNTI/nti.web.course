@@ -22,7 +22,8 @@ export default class FacilitatorsView extends React.Component {
 		courseInstance: PropTypes.object.isRequired,
 		onChange: PropTypes.func,
 		onRemove: PropTypes.func,
-		editable: PropTypes.bool
+		editable: PropTypes.bool,
+		adminView: PropTypes.bool
 	}
 
 	attachTypeFlyoutRef = x => this.typeFlyout = x
@@ -145,8 +146,14 @@ export default class FacilitatorsView extends React.Component {
 		return null;
 	}
 
+	canEdit () {
+		const { courseInstance } = this.props;
+
+		return courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors');
+	}
+
 	renderType () {
-		const { editable, courseInstance, facilitator } = this.props;
+		const { editable, courseInstance, facilitator, adminView } = this.props;
 
 		const options = getAvailableRoles(courseInstance);
 
@@ -158,7 +165,12 @@ export default class FacilitatorsView extends React.Component {
 			</div>);
 		}
 
-		return (<div className="type">{facilitator.role && t(facilitator.role)}</div>);
+		if(editable || adminView) {
+			return (<div className="type">{facilitator.role && t(facilitator.role)}</div>);
+		}
+
+		// if not editable, don't show role
+		return null;
 	}
 
 	render () {
