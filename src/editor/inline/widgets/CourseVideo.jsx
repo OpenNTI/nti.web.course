@@ -34,7 +34,7 @@ export default class CourseVideo extends React.Component {
 
 		if(editable) {
 			return (
-				<div className="course-video-editor">
+				<div className="course-info-video-editor">
 					<div className="video-button" onClick={this.launchVideoInput}>
 						<div className="icon">+</div>
 						<div className="label">Cover Video</div>
