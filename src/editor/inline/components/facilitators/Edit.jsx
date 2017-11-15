@@ -51,7 +51,7 @@ export default class FacilitatorsEdit extends React.Component {
 				courseInstance={this.props.courseInstance}
 				onChange={this.updateFacilitator}
 				onRemove={this.removeFacilitator}
-				editable={canEdit}/>
+				editable={!facilitator.locked && canEdit}/>
 		);
 	}
 

@@ -59,9 +59,11 @@ export default class CourseVideo extends React.Component {
 
 		if(editable) {
 			return (
-				<div className="controls">
-					<div className="change" onClick={this.launchVideoInput}><i className="icon-add"/>{t('change')}</div>
-					<div className="remove" onClick={this.removeVideo}><i className="icon-remove"/>{t('remove')}</div>
+				<div className="admin-controls">
+					<div className="buttons">
+						<div className="change" onClick={this.launchVideoInput}><i className="icon-add"/>{t('change')}</div>
+						<div className="remove" onClick={this.removeVideo}><i className="icon-remove"/>{t('remove')}</div>
+					</div>
 				</div>
 			);
 		}
@@ -75,8 +77,8 @@ export default class CourseVideo extends React.Component {
 		if(catalogEntry.Video) {
 			return (
 				<div className="course-video-container">
-					{this.renderVideoControls()}
 					<Video src={catalogEntry.Video}/>
+					{this.renderVideoControls()}
 				</div>
 			);
 		}

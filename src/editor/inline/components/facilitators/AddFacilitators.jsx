@@ -19,6 +19,7 @@ const LABELS = {
 };
 
 const t = scoped('components.course.editor.inline.components.facilitators.addfacilitators', LABELS);
+const DELIMITER_KEYS = ['Enter', 'Tab', ','];
 
 export default class AddFacilitators extends React.Component {
 	static propTypes = {
@@ -158,6 +159,7 @@ export default class AddFacilitators extends React.Component {
 					placeholder={t('addUsers')}
 					suggestionProvider={this.suggestionProvider}
 					onChange={this.onChange}
+					tokenDelimiterKeys={DELIMITER_KEYS}
 					onlyAllowSuggestions/>
 				<div className="role">
 					<div className="field-label">{t('role')}</div>

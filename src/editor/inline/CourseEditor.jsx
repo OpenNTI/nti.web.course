@@ -80,7 +80,8 @@ export default class CourseEditor extends React.Component {
 			facilitators: mergeAllFacilitators(
 				catalogEntry.Instructors,
 				instructorsRaw && instructorsRaw.Items,
-				editorsRaw && editorsRaw.Items),
+				editorsRaw && editorsRaw.Items,
+				courseInstance),
 			loading: false
 		});
 	}
@@ -258,7 +259,8 @@ export default class CourseEditor extends React.Component {
 						isEditing={activeEditor === EDITORS.FACILITATORS}
 						onBeginEditing={this.activateFacilitatorsEditor}
 						onEndEditing={this.endEditing}
-						doSave={this.saveFacilitators}/>
+						doSave={this.saveFacilitators}
+						hideDeleteBlock/>
 				</div>
 			</div>
 		);

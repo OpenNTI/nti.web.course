@@ -3,55 +3,55 @@
 .course-video-container {
 	position: relative;
 
-	.controls {
-		position: absolute;
-		z-index: 10;
-		right: 0;
-		display: flex;
+	.admin-controls {
+		position: relative;
+		height: 50px;
 		color: white;
-		padding-top: 22px;
-		padding-right: 22px;
+		padding: 10px;
 
-		.change {
-			margin-right: 12px;
-		}
+		.buttons {
+			right: 0;
+			padding-right: 10px;
+			position: absolute;
+			display: flex;
 
-		.remove {
-			i {
-				color: #333;
-				background-color: white;
-				border-radius: 10px;
-				padding: 2px;
-				font-size: 10px;
-				font-weight: 600;
-				margin-right: 6px;
+			.remove {
+				i {
+					color: #333;
+					background-color: white;
+					border-radius: 10px;
+					padding: 2px;
+					font-size: 10px;
+					font-weight: 600;
+					margin-right: 6px;
+				}
 			}
-		}
 
-		.change {
-			i {
-				color: #333;
-				background-color: white;
-				border-radius: 10px;
-				padding: 2px;
-				font-size: 10px;
-				font-weight: 600;
-				margin-right: 6px;
+			.change {
+				margin-right: 12px;
+
+				i {
+					color: #333;
+					background-color: white;
+					border-radius: 10px;
+					padding: 2px;
+					font-size: 10px;
+					font-weight: 600;
+					margin-right: 6px;
+				}
 			}
-		}
 
-		.remove, .change {
-			background-color: #333;
-			border-radius: 16px;
-			padding: 7px 15px 7px 10px;
-			font-size: 12px;
-			cursor: pointer;
+			.remove, .change {
+				background-color: #333;
+				border-radius: 16px;
+				padding: 7px 15px 7px 10px;
+				font-size: 12px;
+				cursor: pointer;
+			}
 		}
 	}
 
 	.nti-video {
-		z-index: 0;
-
 		video {
 			max-width: 768px;
 		}

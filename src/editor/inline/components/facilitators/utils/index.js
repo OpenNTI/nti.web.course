@@ -113,13 +113,22 @@ function containsUser (list, userName) {
  * @param  {Array} catalogInstructors  Instructors pulled from the catalogEntry
  * @param  {Array} instructors         Instructors pulled from the courseInstance's Instructors link
  * @param  {Array} editors             Editors pulled from the courseInstance's Editors link
+ * @param  {Object} courseInstance     Course these instructors are applied to
  * @return {Array}                     Facilitator list with role/visibility properties
  */
-export function mergeAllFacilitators (catalogInstructors, instructors, editors) {
+export function mergeAllFacilitators (catalogInstructors, instructors, editors, courseInstance) {
 	let aggregated = [];
 
-	(catalogInstructors || []).forEach(x => {
+	(catalogInstructors || []).forEach((x, index) => {
 		let role = 'assistant';
+
+		const assetRoot = courseInstance && courseInstance.ContentPackageBundle && courseInstance.ContentPackageBundle.getAssetRoot();
+
+		let imageUrl;
+
+		if(assetRoot) {
+			imageUrl = assetRoot + '/instructor-photos/0' + (index + 1) + '.png';
+		}
 
 		if(containsUser(instructors, x.username)) {
 			if(containsUser(editors, x.username)) {
@@ -132,15 +141,21 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors) 
 
 		const visible = true;
 
-		aggregated.push({
+		let newObject = {
 			role,
 			visible,
-			JobTitle: x.JobTitle,
-			Name: x.Name,
-			username: x.username,
-			MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-			Class: 'CourseCatalogInstructorLegacyInfo'
-		});
+			...x
+		};
+
+		if(imageUrl) {
+			newObject.imageUrl = imageUrl;
+		}
+
+		if(!x.username || x.username === '') {
+			newObject.locked = true;
+		}
+
+		aggregated.push(newObject);
 	});
 
 	(instructors || []).forEach(x => {

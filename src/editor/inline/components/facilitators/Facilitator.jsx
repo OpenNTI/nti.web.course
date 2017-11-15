@@ -173,6 +173,22 @@ export default class FacilitatorsView extends React.Component {
 		return null;
 	}
 
+	renderImage () {
+		const { facilitator } = this.props;
+
+		if(facilitator.imageUrl) {
+			return (
+				<div className="image" style={
+					{
+						backgroundImage: 'url(' + facilitator.imageUrl + ')'
+					}
+				}/>
+			);
+		}
+
+		return <Avatar className="image" entityId={facilitator.username}/>;
+	}
+
 	render () {
 		const { facilitator, editable } = this.props;
 
@@ -180,7 +196,7 @@ export default class FacilitatorsView extends React.Component {
 
 		return (
 			<div className={className}>
-				<Avatar className="image" entityId={facilitator.username}/>
+				{this.renderImage()}
 				<div className="facilitator-info">
 					{this.renderName()}
 					{this.renderType()}
