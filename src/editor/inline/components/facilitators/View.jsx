@@ -19,7 +19,8 @@ export default class FacilitatorsView extends React.Component {
 	}
 
 	renderFacilitator = (facilitator) => {
-		return <Facilitator key={facilitator.username} courseInstance={this.props.courseInstance} facilitator={facilitator}/>;
+		// username can be blank, but a combination of username + Name is hopefully unique
+		return <Facilitator key={facilitator.username + facilitator.Name} courseInstance={this.props.courseInstance} facilitator={facilitator}/>;
 	}
 
 	render () {

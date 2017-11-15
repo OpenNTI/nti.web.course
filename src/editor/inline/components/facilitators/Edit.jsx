@@ -46,7 +46,7 @@ export default class FacilitatorsEdit extends React.Component {
 
 		return (
 			<Facilitator
-				key={facilitator.username}
+				key={facilitator.username + facilitator.Name}
 				facilitator={facilitator}
 				courseInstance={this.props.courseInstance}
 				onChange={this.updateFacilitator}
