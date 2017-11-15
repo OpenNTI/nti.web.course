@@ -15,8 +15,10 @@ export default class DescriptionView extends React.Component {
 	}
 
 	render () {
+		const content = this.props.catalogEntry[DescriptionView.FIELD_NAME];
+
 		return (
-			<div className="course-view-description">{this.props.catalogEntry[DescriptionView.FIELD_NAME]}</div>
+			<div className="course-view-description" dangerouslySetInnerHTML={{ __html: content }}/>
 		);
 	}
 }
