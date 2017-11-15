@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Flyout, Avatar} from 'nti-web-commons';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
+import {getService} from 'nti-web-client';
 
 import {getAvailableRoles} from './utils';
 
@@ -33,6 +34,38 @@ export default class FacilitatorsView extends React.Component {
 		super(props);
 
 		this.state = {};
+	}
+
+	validateImage (props) {
+		const { facilitator } = props;
+
+		if(facilitator.imageUrl) {
+			getService().then(service => {
+				service.get(facilitator.imageUrl).then(() => {
+					this.setState({validImage: true});
+				}).catch(() => {
+					this.setState({validImage: false});
+				});
+			});
+		}
+	}
+
+	componentDidMount () {
+		const { facilitator } = this.props;
+
+		if(facilitator.imageUrl) {
+			this.validateImage(this.props);
+		}
+	}
+
+	componentWillReceiveProps (nextProps) {
+		if(this.props.facilitator !== nextProps.facilitator) {
+			this.setState({
+				validImage: false
+			}, () => {
+				this.validateImage(nextProps);
+			});
+		}
 	}
 
 	renderVisibilityTrigger () {
@@ -176,13 +209,13 @@ export default class FacilitatorsView extends React.Component {
 	renderImage () {
 		const { facilitator } = this.props;
 
-		if(facilitator.imageUrl) {
+		if(facilitator.imageUrl && this.state.validImage) {
+			const style = {
+				backgroundImage: 'url(' + facilitator.imageUrl + ')'
+			};
+
 			return (
-				<div className="image" style={
-					{
-						backgroundImage: 'url(' + facilitator.imageUrl + ')'
-					}
-				}/>
+				<div className="image" style={style}/>
 			);
 		}
 
