@@ -19,19 +19,15 @@ export default class FacilitatorsView extends React.Component {
 	}
 
 	renderFacilitator = (facilitator) => {
-		return <Facilitator key={facilitator.username} courseInstance={this.props.courseInstance} facilitator={facilitator} adminView={this.props.editable}/>;
+		return <Facilitator key={facilitator.username} courseInstance={this.props.courseInstance} facilitator={facilitator}/>;
 	}
 
 	render () {
-		const { facilitators, editable } = this.props;
+		const { facilitators } = this.props;
 
 		return (
 			<div className="facilitators">
 				{(facilitators || []).filter(x => {
-					if(editable) {
-						return true;
-					}
-
 					if(!x.role || x.role === '') {
 						return false;
 					}
