@@ -38,8 +38,9 @@ describe('AddFacilitators component test', () => {
 			addedValue.username = values[0].username;
 		};
 		const onDismiss = jest.fn();
+		const existing = [];
 
-		const cmp = mount(<AddFacilitators courseInstance={courseInstance} onDismiss={onDismiss} onConfirm={onConfirm}/>);
+		const cmp = mount(<AddFacilitators courseInstance={courseInstance} onDismiss={onDismiss} facilitatorList={existing} onConfirm={onConfirm}/>);
 
 		cmp.setState({
 			values: [
