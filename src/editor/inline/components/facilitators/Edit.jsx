@@ -56,6 +56,8 @@ export default class FacilitatorsEdit extends React.Component {
 	}
 
 	updateFacilitatorList = (users) => {
+		const { facilitatorList } = this.state;
+
 		const transformed = users.map(u => {
 			return {
 				...u,
@@ -65,7 +67,7 @@ export default class FacilitatorsEdit extends React.Component {
 		});
 
 		this.setState({
-			facilitatorList: [...this.state.facilitatorList, ...transformed]
+			facilitatorList: [...facilitatorList, ...transformed]
 		}, () => {
 			this.updateValues();
 		});
@@ -76,7 +78,7 @@ export default class FacilitatorsEdit extends React.Component {
 	}
 
 	launchAddDialog = () => {
-		Prompt.modal(<AddFacilitators onConfirm={this.updateFacilitatorList} courseInstance={this.props.courseInstance}/>);
+		Prompt.modal(<AddFacilitators onConfirm={this.updateFacilitatorList} courseInstance={this.props.courseInstance} facilitatorList={this.state.facilitatorList}/>);
 	}
 
 	renderAddFacilitator () {

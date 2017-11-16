@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TokenEditor, Avatar, Flyout } from 'nti-web-commons';
+import { TokenEditor, Avatar, Flyout, Prompt } from 'nti-web-commons';
 import { getService } from 'nti-web-client';
 import {scoped} from 'nti-lib-locale';
 
@@ -24,6 +24,7 @@ const DELIMITER_KEYS = ['Enter', 'Tab', ','];
 export default class AddFacilitators extends React.Component {
 	static propTypes = {
 		courseInstance: PropTypes.object.isRequired,
+		facilitatorList: PropTypes.arrayOf(PropTypes.object),
 		onDismiss: PropTypes.func,
 		onConfirm: PropTypes.func
 	}
@@ -75,11 +76,11 @@ export default class AddFacilitators extends React.Component {
 		this.setState({values});
 	}
 
-	addFacilitators = () => {
+	doConfirm (values) {
 		const { onConfirm } = this.props;
 
 		// for now, filter down to actual users via suggestions, we'll handle non-user entities later
-		onConfirm && onConfirm(this.state.values.filter(x => x.value).map(x => {
+		onConfirm && onConfirm(values.filter(x => x.value).map(x => {
 			return {
 				...x.value,
 				visible: this.state.isVisible,
@@ -95,6 +96,38 @@ export default class AddFacilitators extends React.Component {
 		}));
 
 		this.onClose();
+	}
+
+	addFacilitators = () => {
+		const { facilitatorList } = this.props;
+		const { values } = this.state;
+
+		let conflicts = [];
+
+		const filtered = values.filter(u => {
+			if(facilitatorList.some(f => f.username === u.value.Username)) {
+				conflicts.push(u.value);
+
+				return false;
+			}
+
+			return true;
+		});
+
+		if(conflicts.length > 0) {
+			let userStr = '<br/><br/>';
+
+			conflicts.forEach(c => {
+				userStr += '<div>' + c.alias + '</div>';
+			});
+
+			Prompt.areYouSure('These users already exist as facilitators and will not be added: ' + userStr).then(() => {
+				this.doConfirm(filtered);
+			});
+		}
+		else {
+			this.doConfirm(filtered);
+		}
 	}
 
 	renderHeader () {
