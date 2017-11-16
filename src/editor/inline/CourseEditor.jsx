@@ -89,6 +89,10 @@ export default class CourseEditor extends React.Component {
 	saveFacilitators = (pending) => {
 		const facilitators = (pending || {}).facilitators;
 
+		if(!pending || !facilitators) {
+			return Promise.resolve();
+		}
+
 		return saveFacilitators(this.state.catalogEntry, this.state.courseInstance, facilitators).then((saved) => {
 			this.setState({ facilitators: saved });
 

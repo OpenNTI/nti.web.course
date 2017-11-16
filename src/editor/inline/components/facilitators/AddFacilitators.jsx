@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { TokenEditor, Avatar, Flyout, Prompt } from 'nti-web-commons';
 import { getService } from 'nti-web-client';
 import {scoped} from 'nti-lib-locale';
+import cx from 'classnames';
 
 import {getAvailableRoles} from './utils';
 
@@ -103,6 +104,10 @@ export default class AddFacilitators extends React.Component {
 		const { values } = this.state;
 
 		let conflicts = [];
+
+		if(!values || values.length === 0) {
+			return;
+		}
 
 		const filtered = values.filter(u => {
 			if(facilitatorList.some(f => f.username === u.value.Username)) {
@@ -207,11 +212,13 @@ export default class AddFacilitators extends React.Component {
 	}
 
 	renderControls () {
+		const confirmCls = cx('confirm', this.state.values && this.state.values.length > 0 ? '' : 'disabled');
+
 		return (
 			<div className="controls">
 				<div className="buttons">
 					<div className="cancel" onClick={this.onClose}>{t('cancel')}</div>
-					<div className="confirm" onClick={this.addFacilitators}>{t('add')}</div>
+					<div className={confirmCls} onClick={this.addFacilitators}>{t('add')}</div>
 				</div>
 			</div>
 		);
