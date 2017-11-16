@@ -11,7 +11,7 @@ describe('Description edit test', () => {
 		const desc = 'DESC123';
 
 		const catalogEntry = {
-			'description': desc
+			'RichDescription': desc
 		};
 
 		const cmp = mount(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
@@ -22,6 +22,6 @@ describe('Description edit test', () => {
 
 		input.simulate('change');
 
-		expect(onChange).toHaveBeenCalledWith('description', desc);
+		expect(onChange).toHaveBeenCalledWith('RichDescription', desc);
 	});
 });

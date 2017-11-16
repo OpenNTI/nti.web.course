@@ -7,10 +7,15 @@ import Facilitator from './Facilitator';
 import AddFacilitators from './AddFacilitators';
 
 const LABELS = {
-	addFacilitators: 'Add a Facilitator'
+	addFacilitators: 'Add a Facilitator',
+	assistant: 'Assistant',
+	editor: 'Editor',
+	instructor: 'Instructor'
 };
 
 const t = scoped('components.course.editor.inline.components.facilitators.edit', LABELS);
+
+const DEFAULT_JOB_TITLES = ['Assistant', 'Instructor', 'Editor'];
 
 export default class FacilitatorsEdit extends React.Component {
 	static propTypes = {
@@ -59,11 +64,19 @@ export default class FacilitatorsEdit extends React.Component {
 		const { facilitatorList } = this.state;
 
 		const transformed = users.map(u => {
-			return {
+			let newUser = {
 				...u,
 				visible: u.visible,
 				role: u.role
 			};
+
+			if(DEFAULT_JOB_TITLES.includes(newUser.JobTitle)) {
+				// we assigned a default job title, meaning we didn't have one initially, so just reflect
+				// the role
+				newUser.JobTitle = t(newUser.role);
+			}
+
+			return newUser;
 		});
 
 		this.setState({
@@ -123,7 +136,21 @@ export default class FacilitatorsEdit extends React.Component {
 		const { key } = facilitator;
 
 		this.setState({
-			facilitatorList: this.state.facilitatorList.map(x => x.key === key ? facilitator : x)
+			facilitatorList: this.state.facilitatorList.map(x => {
+				if(x.key === key) {
+					let newUser = {...facilitator};
+
+					if(DEFAULT_JOB_TITLES.includes(newUser.JobTitle)) {
+						// we assigned a default job title, meaning we didn't have one initially, so just reflect
+						// the role
+						newUser.JobTitle = t(newUser.role);
+					}
+
+					return newUser;
+				}
+
+				return x;
+			})
 		}, () => {
 			this.updateValues();
 		});

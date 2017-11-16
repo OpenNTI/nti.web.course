@@ -15,7 +15,12 @@ export default class DescriptionView extends React.Component {
 	}
 
 	render () {
-		const content = this.props.catalogEntry[DescriptionView.FIELD_NAME];
+		// prefer RichDescription if we have it, otherwise fallback to description
+		let content = this.props.catalogEntry['RichDescription'];
+
+		if(!content || content === '') {
+			content = this.props.catalogEntry[DescriptionView.FIELD_NAME];
+		}
 
 		return (
 			<div className="course-view-description" dangerouslySetInnerHTML={{ __html: content }}/>

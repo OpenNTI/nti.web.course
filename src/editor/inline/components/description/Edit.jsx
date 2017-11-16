@@ -15,12 +15,12 @@ export default class DescriptionEdit extends React.Component {
 		onValueChange: PropTypes.func
 	}
 
-	static FIELD_NAME = 'description';
+	static FIELD_NAME = 'RichDescription';
 
 	constructor (props) {
 		super(props);
 
-		this.state = { value: props.catalogEntry.description };
+		this.state = { value: props.catalogEntry[DescriptionEdit.FIELD_NAME] };
 	}
 
 	onChange = (val) => {
