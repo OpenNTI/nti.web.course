@@ -39,7 +39,7 @@
     "nti-lib-store": "^1.0.1",
     "nti-util-logger": "^1.1.2",
     "nti-web-client": "^1.1.3",
-    "nti-web-commons": "0.x.x",
+    "nti-web-commons": "^0.17.0",
     "nti-web-video": "^1.8.1",
     "prop-types": "^15.5.8",
     "react-day-picker": "^6.1.0"
