@@ -3,15 +3,15 @@ import { getService } from 'nti-web-client';
 export function getAvailableRoles (courseInstance) {
 	let options = [];
 
-	if(courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors')) {
+	if(courseInstance && courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors')) {
 		options.push('instructor');
 	}
 
-	if(courseInstance.hasLink('Editors')) {
+	if(courseInstance && courseInstance.hasLink('Editors')) {
 		options.push('editor');
 	}
 
-	if(courseInstance.hasLink('Instructors')) {
+	if(courseInstance && courseInstance.hasLink('Instructors')) {
 		options.push('assistant');
 	}
 
@@ -51,8 +51,8 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 
 	const service = await getService();
 
-	const instructorsLink = courseInstance.getLink('Instructors');
-	const editorsLink = courseInstance.getLink('Editors');
+	const instructorsLink = courseInstance && courseInstance.getLink('Instructors');
+	const editorsLink = courseInstance && courseInstance.getLink('Editors');
 
 	if(!instructorsLink || !editorsLink) {
 		return;
@@ -113,16 +113,16 @@ function containsUser (list, userName) {
  * @param  {Array} catalogInstructors  Instructors pulled from the catalogEntry
  * @param  {Array} instructors         Instructors pulled from the courseInstance's Instructors link
  * @param  {Array} editors             Editors pulled from the courseInstance's Editors link
- * @param  {Object} courseInstance     Course these instructors are applied to
+ * @param  {Object} catalogEntry       Course these instructors are applied to
  * @return {Array}                     Facilitator list with role/visibility properties
  */
-export function mergeAllFacilitators (catalogInstructors, instructors, editors, courseInstance) {
+export function mergeAllFacilitators (catalogInstructors, instructors, editors, catalogEntry) {
 	let aggregated = [];
 
 	(catalogInstructors || []).forEach((x, index) => {
 		let role = 'assistant';
 
-		const assetRoot = courseInstance && courseInstance.ContentPackageBundle && courseInstance.ContentPackageBundle.getAssetRoot();
+		const assetRoot = catalogEntry && catalogEntry.getAssetRoot();
 
 		let imageUrl;
 

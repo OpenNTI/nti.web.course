@@ -60,15 +60,23 @@ export default class CourseInfo extends React.Component {
 		}
 	}
 
+	getCourseInstance (service, catalogEntry) {
+		return service.getObject(catalogEntry.CourseNTIID).then((courseInstance) => {
+			return courseInstance;
+		}).catch(() => {
+			return null;
+		});
+	}
+
 	async initializeCourseData (catalogEntry) {
 		const service = await getService();
 
-		const courseInstance = await service.getObject(catalogEntry.CourseNTIID);
+		const courseInstance = await this.getCourseInstance(service, catalogEntry);
 
-		const redemptionCodes = await courseInstance.getAccessTokens();
+		const redemptionCodes = courseInstance ? await courseInstance.getAccessTokens() : null;
 
-		const instructorsLink = courseInstance.getLink('Instructors');
-		const editorsLink = courseInstance.getLink('Editors');
+		const instructorsLink = courseInstance ? courseInstance.getLink('Instructors') : null;
+		const editorsLink = courseInstance ? courseInstance.getLink('Editors') : null;
 
 		const instructorsRaw = instructorsLink ? await service.get(instructorsLink) : [];
 		const editorsRaw = editorsLink ? await service.get(editorsLink) : [];
@@ -81,7 +89,7 @@ export default class CourseInfo extends React.Component {
 				catalogEntry.Instructors,
 				instructorsRaw && instructorsRaw.Items,
 				editorsRaw && editorsRaw.Items,
-				courseInstance),
+				catalogEntry),
 			loading: false
 		});
 	}
