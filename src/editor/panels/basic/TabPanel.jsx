@@ -36,10 +36,17 @@ export default class CourseBasic extends React.Component {
 
 	constructor (props) {
 		super(props);
+
+		let description = props.catalogEntry && props.catalogEntry.RichDescription;
+
+		if(!description || description === '') {
+			description = props.catalogEntry && props.catalogEntry.description;
+		}
+
 		this.state = {
 			courseName: props.catalogEntry && props.catalogEntry.title,
 			identifier: props.catalogEntry && props.catalogEntry.ProviderUniqueID,
-			description: props.catalogEntry && props.catalogEntry.description
+			description
 		};
 
 		this.loadAccessCode(props);
@@ -68,7 +75,7 @@ export default class CourseBasic extends React.Component {
 			ProviderUniqueID: this.state.identifier,
 			title: this.state.courseName,
 			identifier: this.state.identifier,
-			description: this.state.description
+			RichDescription: this.state.description
 		}, () => {
 			afterSave && afterSave();
 

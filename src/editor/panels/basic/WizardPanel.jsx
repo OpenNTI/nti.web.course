@@ -42,7 +42,7 @@ export default class CourseBasic extends React.Component {
 			ProviderUniqueID: this.state.identifier,
 			title: this.state.courseName,
 			identifier: this.state.identifier,
-			description: this.state.description
+			RichDescription: this.state.description
 		}, () => {
 			afterSave && afterSave();
 
