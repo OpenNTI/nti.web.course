@@ -46,16 +46,17 @@
 
 		.columned {
 			display: flex;
+			flex-wrap: wrap;
 
 			.field-info {
 				margin-bottom: 20px;
-				position: absolute;
+				width: 455px;
 			}
 
 			.content-column {
-				margin-left: 455px;
 				font-size: 14px;
 				font-weight: 300;
+				max-width: 240px;
 			}
 		}
 	}

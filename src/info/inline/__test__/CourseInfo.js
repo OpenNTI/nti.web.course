@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import CourseEditor from '../CourseEditor';
+import CourseInfo from '../CourseInfo';
 
 const redemptionCodes = [{Code: 'abc-def'}];
 
@@ -35,7 +35,7 @@ const onAfter = () => {
 };
 
 /* eslint-env jest */
-describe('CourseEditor test', () => {
+describe('CourseInfo test', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
@@ -46,7 +46,7 @@ describe('CourseEditor test', () => {
 			StartDate: '2016-06-13T05:00:00Z'
 		};
 
-		const cmp = mount(<CourseEditor catalogEntry={catalogEntry} editable/>);
+		const cmp = mount(<CourseInfo catalogEntry={catalogEntry} editable/>);
 
 		expect(cmp.find('.loading').exists()).toBe(true);
 

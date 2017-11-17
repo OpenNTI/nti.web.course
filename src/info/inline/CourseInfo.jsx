@@ -4,12 +4,12 @@ import {Loading} from 'nti-web-commons';
 import {getService} from 'nti-web-client';
 import cx from 'classnames';
 
-import Store from '../Store';
+import Store from '../../editor/Store';
 import {
 	COURSE_SAVING,
 	COURSE_SAVED,
 	COURSE_SAVE_ERROR
-} from '../Constants';
+} from '../../editor/Constants';
 
 import CourseVideo from './widgets/CourseVideo';
 import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
@@ -30,7 +30,7 @@ const EDITORS = {
  * Currently, only one component can be in active editing mode at a time.
  */
 
-export default class CourseEditor extends React.Component {
+export default class CourseInfo extends React.Component {
 	static propTypes = {
 		title: PropTypes.string,
 		catalogEntry: PropTypes.any.isRequired,

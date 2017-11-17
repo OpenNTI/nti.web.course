@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import {getService} from 'nti-web-client';
 
 import { CourseListing, CourseCreateButton } from '../../src/components';
-import CourseEditor from '../../src/editor/inline/CourseEditor';
+import CourseInfo from '../../src/info/inline/CourseInfo';
 
 import 'nti-style-common/all.scss';
 import 'nti-web-commons/lib/index.css';
@@ -46,9 +46,9 @@ class Test extends React.Component {
 					margin: '0 auto'
 				}}>
 					<div style={{marginTop: '10px', marginBottom: '10px'}} onClick={this.onCancel}>Back</div>
-					<CourseEditor catalogEntry={this.state.selectedCatalogEntry} editable/>
+					<CourseInfo catalogEntry={this.state.selectedCatalogEntry} editable/>
 					<div style={{'height': '50px'}}/>
-					<CourseEditor catalogEntry={this.state.selectedCatalogEntry}/>
+					<CourseInfo catalogEntry={this.state.selectedCatalogEntry}/>
 				</div>
 			);
 		}
