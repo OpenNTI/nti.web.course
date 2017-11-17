@@ -63,9 +63,24 @@ export default class FacilitatorsEdit extends React.Component {
 	updateFacilitatorList = (users) => {
 		const { facilitatorList } = this.state;
 
+		let replacedUsers = [];
+
 		const transformed = users.map(u => {
+			// check if there is an existing facilitator for this username
+			// a scenario where this could happen is the user was 'removed' (flagged for removal so still in the list)
+			// but re-added via the AddFacilitators dialog.  In that case, we want to just replace the existing facilitator
+			// with the re-added user
+			const existingFacilitator = facilitatorList.filter(f => f.username === u.username);
+
+			const user = existingFacilitator[0] || u;
+
+			if(existingFacilitator[0]) {
+				// track users we are replacing
+				replacedUsers.push(existingFacilitator[0].username);
+			}
+
 			let newUser = {
-				...u,
+				...user,
 				visible: u.visible,
 				role: u.role
 			};
@@ -80,7 +95,8 @@ export default class FacilitatorsEdit extends React.Component {
 		});
 
 		this.setState({
-			facilitatorList: [...facilitatorList, ...transformed]
+			// remove replaced users, which will now come from the transformed list
+			facilitatorList: [...(facilitatorList.filter(x => !replacedUsers.includes(x.username))), ...transformed]
 		}, () => {
 			this.updateValues();
 		});

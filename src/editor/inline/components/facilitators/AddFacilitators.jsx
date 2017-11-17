@@ -110,7 +110,7 @@ export default class AddFacilitators extends React.Component {
 		}
 
 		const filtered = values.filter(u => {
-			if(facilitatorList.some(f => f.username === u.value.Username)) {
+			if(facilitatorList.some(f => f.username === u.value.Username && f.role !== '')) {
 				conflicts.push(u.value);
 
 				return false;
