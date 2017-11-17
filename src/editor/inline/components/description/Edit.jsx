@@ -20,7 +20,14 @@ export default class DescriptionEdit extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = { value: props.catalogEntry[DescriptionEdit.FIELD_NAME] };
+		// prefer RichDescription if we have it, otherwise fallback to description
+		let content = props.catalogEntry[DescriptionEdit.FIELD_NAME];
+
+		if(!content || content === '') {
+			content = props.catalogEntry['description'];
+		}
+
+		this.state = { value: content };
 	}
 
 	onChange = (val) => {
