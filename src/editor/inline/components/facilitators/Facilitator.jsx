@@ -190,7 +190,7 @@ export default class FacilitatorsView extends React.Component {
 	canEdit () {
 		const { courseInstance } = this.props;
 
-		return courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors');
+		return courseInstance && courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors');
 	}
 
 	renderType () {
