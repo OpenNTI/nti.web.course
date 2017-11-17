@@ -146,8 +146,14 @@ export default class CourseInfo extends React.Component {
 		this.setState({activeEditor: EDITORS.FACILITATORS});
 	}
 
-	endEditing = () => {
+	endEditing = (savedCatalogEntry) => {
+		const { onSave } = this.props;
+
 		this.setState({activeEditor: undefined});
+
+		if(savedCatalogEntry) {
+			onSave && onSave(savedCatalogEntry);
+		}
 	}
 
 	renderRedemptionWidget () {

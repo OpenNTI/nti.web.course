@@ -119,7 +119,7 @@ export default class Section extends React.Component {
 			catalogEntry.save(pendingChanges).then(() => {
 				this.setState({ pendingChanges: {} });
 
-				onEndEditing && onEndEditing();
+				onEndEditing && onEndEditing(catalogEntry);
 			});
 		}
 		else {
