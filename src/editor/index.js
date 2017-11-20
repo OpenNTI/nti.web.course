@@ -5,41 +5,33 @@ import CourseWizard from './wizard/CourseWizard';
 import CourseEditor from './tab/CourseEditor';
 
 export const createCourse = () => {
+	let dialog = null;
+
 	return new Promise((fulfill, reject) => {
-		let dialog = null;
+		dialog = Prompt.modal(<CourseWizard onFinish={fulfill} onCancel={reject}/>);
+	}).then((savedEntry) => {
+		dialog && dialog.dismiss();
 
-		const finish = (savedEntry) => {
-			dialog && dialog.dismiss();
+		return savedEntry;
+	}).catch(() => {
+		dialog && dialog.dismiss();
 
-			fulfill(savedEntry);
-		};
-
-		const cancel = () => {
-			dialog && dialog.dismiss();
-
-			reject();
-		};
-
-		dialog = Prompt.modal(<CourseWizard onFinish={finish} onCancel={cancel}/>);
+		Promise.reject();
 	});
 };
 
 export const editCourse = (course) => {
+	let dialog = null;
+
 	return new Promise((fulfill, reject) => {
-		let dialog = null;
+		dialog = Prompt.modal(<CourseEditor catalogEntry={course} onFinish={fulfill} onCancel={reject}/>);
+	}).then((savedEntry) => {
+		dialog && dialog.dismiss();
 
-		const finish = (savedEntry) => {
-			dialog && dialog.dismiss();
+		return savedEntry;
+	}).catch(() => {
+		dialog && dialog.dismiss();
 
-			fulfill(savedEntry);
-		};
-
-		const cancel = () => {
-			dialog && dialog.dismiss();
-
-			reject();
-		};
-
-		dialog = Prompt.modal(<CourseEditor catalogEntry={course} onFinish={finish} onCancel={cancel}/>);
+		Promise.reject();
 	});
 };

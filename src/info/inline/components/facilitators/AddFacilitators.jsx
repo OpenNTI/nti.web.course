@@ -5,6 +5,7 @@ import { getService } from 'nti-web-client';
 import {scoped} from 'nti-lib-locale';
 import cx from 'classnames';
 
+import Role from './Role';
 import {getAvailableRoles} from './utils';
 
 const LABELS = {
@@ -153,16 +154,14 @@ export default class AddFacilitators extends React.Component {
 		);
 	}
 
+	onRoleSelect = (role) => {
+		this.setState({selectedRole: role});
+
+		this.roleFlyout && this.roleFlyout.dismiss();
+	}
+
 	renderRoleOption = (role) => {
-		const onClick = () => {
-			this.setState({selectedRole: role});
-
-			this.roleFlyout && this.roleFlyout.dismiss();
-		};
-
-		const text = t(role);
-
-		return (<div key={role} className="role-option" onClick={onClick}>{text}</div>);
+		return <Role role={role} key={role} onClick={this.onRoleSelect}/>;
 	}
 
 	renderRoleSelect () {

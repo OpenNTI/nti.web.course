@@ -42,23 +42,19 @@ export default class CourseListing extends React.Component {
 		return this.state.loading ? (<Loading.Mask/>) : null;
 	}
 
+	showEditor = (course) => {
+		Editor.editCourse(course);
+	}
+
 	renderCourse (course, index) {
 		const { onCourseClick } = this.props;
-
-		const showEditor = () => {
-			Editor.editCourse(course);
-		};
-
-		const doOnCourseClick = () => {
-			onCourseClick && onCourseClick(course);
-		};
 
 		return (
 			<div key={index}>
 				<CourseCard
 					course={course}
-					onClick={onCourseClick ? doOnCourseClick : showEditor}
-					onEdit={showEditor}
+					onClick={onCourseClick ? onCourseClick : this.showEditor}
+					onEdit={this.showEditor}
 					onModification={this.loadAllCourses}
 					isAdministrative={this.props.isAdministrative}/>
 			</div>

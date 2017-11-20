@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {TimePicker} from 'nti-web-commons';
 
+import Day from '../../../../editor/panels/daytime/Day';
+
 import { getWeekdaysFrom, getDateStr } from './utils';
 
 const LABELS = {
@@ -67,26 +69,28 @@ export default class MeetTimesEdit extends React.Component {
 		this.props.onValueChange && this.props.onValueChange(MeetTimesEdit.FIELD_NAME, schedule);
 	}
 
-	renderDay = (day, index) => {
-		const onClick = () => {
-			let selectedWeekdays = this.state.selectedWeekdays ? [...this.state.selectedWeekdays] : [];
+	onDayClick = (day) => {
+		let selectedWeekdays = this.state.selectedWeekdays ? [...this.state.selectedWeekdays] : [];
 
-			if(selectedWeekdays.includes(day.name)) {
-				selectedWeekdays.splice(selectedWeekdays.indexOf(day.name), 1);
-			}
-			else {
-				selectedWeekdays.push(day.name);
-			}
-
-			this.setState({selectedWeekdays : selectedWeekdays}, this.buildSaveableValue);
-		};
-
-		let className = 'course-editor-day';
-		if(this.state.selectedWeekdays && this.state.selectedWeekdays.includes(day.name)) {
-			className += ' selected';
+		if(selectedWeekdays.includes(day.name)) {
+			selectedWeekdays.splice(selectedWeekdays.indexOf(day.name), 1);
+		}
+		else {
+			selectedWeekdays.push(day.name);
 		}
 
-		return (<div className={className} key={index} onClick={onClick}>{day.code}</div>);
+		this.setState({selectedWeekdays : selectedWeekdays}, this.buildSaveableValue);
+	}
+
+	renderDay = (day, index) => {
+		return (
+			<Day key={day.name}
+				day={day}
+				className="course-editor-day"
+				onClick={this.onDayClick}
+				selected={this.state.selectedWeekdays && this.state.selectedWeekdays.includes(day.name)}
+			/>
+		);
 	};
 
 	renderWeekdays () {

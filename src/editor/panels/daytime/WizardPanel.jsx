@@ -5,6 +5,8 @@ import {scoped} from 'nti-lib-locale';
 
 import {saveCatalogEntry} from '../../../editor/Actions';
 
+import Day from './Day';
+
 const LABELS = {
 	cancel: 'Cancel',
 	whichDays: 'What days do you meet?',
@@ -89,27 +91,28 @@ export default class DayTime extends React.Component {
 		};
 	}
 
-	renderDay = (day, index) => {
-		const onClick = () => {
-			let selectedWeekdays = this.state.selectedWeekdays ? [...this.state.selectedWeekdays] : [];
+	onDayClick = (day) => {
+		let selectedWeekdays = this.state.selectedWeekdays ? [...this.state.selectedWeekdays] : [];
 
-			if(selectedWeekdays.includes(day.name)) {
-				selectedWeekdays.splice(selectedWeekdays.indexOf(day.name), 1);
-			}
-			else {
-				selectedWeekdays.push(day.name);
-			}
-
-			this.setState({selectedWeekdays : selectedWeekdays});
-		};
-
-		let className = 'course-panel-day';
-		if(this.state.selectedWeekdays && this.state.selectedWeekdays.includes(day.name)) {
-			className += ' selected';
+		if(selectedWeekdays.includes(day.name)) {
+			selectedWeekdays.splice(selectedWeekdays.indexOf(day.name), 1);
+		}
+		else {
+			selectedWeekdays.push(day.name);
 		}
 
-		return (<div className={className} key={index} onClick={onClick}>{day.code}</div>);
-	};
+		this.setState({selectedWeekdays : selectedWeekdays});
+	}
+
+	renderDay = (day, index) => {
+		return (
+			<Day key={day.name}
+				day={day}
+				onClick={this.onDayClick}
+				selected={this.state.selectedWeekdays && this.state.selectedWeekdays.includes(day.name)}
+			/>
+		);
+	}
 
 	renderWeekdays () {
 		const days = [{name: 'sunday', code: 'S'},

@@ -30,15 +30,19 @@ export default class CourseEditor extends React.Component {
 	}
 
 	static showEditor (catalogEntry, onCancel, onSave) {
-		const doCancel = () => {
-			onCancel && onCancel();
+		let props = {
+			catalogEntry
 		};
 
-		const doOnSave = () => {
-			onSave && onSave();
-		};
+		if(onCancel) {
+			props.onCancel = onCancel;
+		}
 
-		return Prompt.modal(<CourseEditor catalogEntry={catalogEntry}  onCancel={doCancel} onSave={doOnSave}/>,
+		if(onSave) {
+			props.onSave = onSave;
+		}
+
+		return Prompt.modal(<CourseEditor {...props}/>,
 			'course-panel-wizard');
 	}
 
@@ -151,11 +155,7 @@ SaveButton.propTypes = {
 };
 
 function SaveButton ({onSave, label}) {
-	const doSave = () => {
-		onSave();
-	};
-
 	return (
-		<div onClick={doSave} className="course-panel-continue">{label || t('save')}</div>
+		<div onClick={onSave} className="course-panel-continue">{label || t('save')}</div>
 	);
 }

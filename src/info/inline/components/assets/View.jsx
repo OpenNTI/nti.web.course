@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
-import {Input, Presentation, Prompt} from 'nti-web-commons';
+import {Input} from 'nti-web-commons';
 import {getService} from 'nti-web-client';
-import cx from 'classnames';
+
+import AssetType from './AssetType';
 
 const LABELS = {
 	label: 'Assets'
@@ -69,29 +70,8 @@ export default class AssetsView extends React.Component {
 		return (<Input.File className="asset-file" accept=".zip" ref={this.attachRef} onFileChange={this.uploadAssets}/>);
 	}
 
-	launchImgDialog = (type) => {
-		Prompt.modal(
-			<div className="large-asset-preview">
-				<Presentation.Asset contentPackage={this.props.catalogEntry} propName="src" type={type}>
-					<img/>
-				</Presentation.Asset>
-			</div>
-		);
-	}
-
 	renderAsset (type) {
-		const className = cx('asset', type);
-
-		const showImg = () => {
-			this.launchImgDialog(type);
-		};
-
-		return (<div className={className}>
-			<div className="asset-label">{type}</div>
-			<Presentation.Asset contentPackage={this.props.catalogEntry} propName="src" type={type}>
-				<img onClick={showImg}/>
-			</Presentation.Asset>
-		</div>);
+		return (<AssetType catalogEntry={this.props.catalogEntry} type={type}/>);
 	}
 
 	renderPreview () {

@@ -50,9 +50,9 @@ export default class CourseCard extends React.Component {
 	};
 
 	doEdit = () => {
-		const { onEdit } = this.props;
+		const { onEdit, course } = this.props;
 
-		onEdit && onEdit();
+		onEdit && onEdit(course);
 	}
 
 	doExport = () => {
@@ -65,6 +65,25 @@ export default class CourseCard extends React.Component {
 		}
 	}
 
+	deleteCourse = (e) => {
+		const { course } = this.props;
+
+		e.stopPropagation();
+		e.preventDefault();
+
+		Prompt.areYouSure(t('confirmDelete')).then(() => {
+			this.setState( { loading: true }, () => {
+				getService().then((service) => {
+					return service.getObject(course.CourseNTIID).then((courseInstance) => {
+						return courseInstance.delete();
+					});
+				}).then(() => {
+					this.loadAllCourses();
+				});
+			});
+		});
+	}
+
 	renderDelete () {
 		const { course } = this.props;
 
@@ -72,24 +91,7 @@ export default class CourseCard extends React.Component {
 			return null;
 		}
 
-		const deleteCourse = (e) => {
-			e.stopPropagation();
-			e.preventDefault();
-
-			Prompt.areYouSure(t('confirmDelete')).then(() => {
-				this.setState( { loading: true }, () => {
-					getService().then((service) => {
-						return service.getObject(course.CourseNTIID).then((courseInstance) => {
-							return courseInstance.delete();
-						});
-					}).then(() => {
-						this.loadAllCourses();
-					});
-				});
-			});
-		};
-
-		return (<div className="course-delete" onClick={deleteCourse}><i className="icon-trash"/></div>);
+		return (<div className="course-delete" onClick={this.deleteCourse}><i className="icon-trash"/></div>);
 	}
 
 	renderInstructors () {
@@ -170,10 +172,16 @@ export default class CourseCard extends React.Component {
 		</Flyout.Triggered>);
 	}
 
-	render () {
+	onCourseClick = () => {
 		const { course, onClick } = this.props;
 
-		return (<div className="course-item" onClick={onClick}>
+		onClick && onClick(course);
+	}
+
+	render () {
+		const { course } = this.props;
+
+		return (<div className="course-item" onClick={this.onCourseClick}>
 			<div className="cover">
 				<Presentation.AssetBackground className="course-image" contentPackage={course} type="landing"/>
 			</div>

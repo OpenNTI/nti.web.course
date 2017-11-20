@@ -63,7 +63,7 @@ describe('Facilitator component test', () => {
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
 		expect(cmp.find('.type').first().text()).toEqual('Assistant');
-		expect(cmp.find('.title').first().text()).toEqual(title);
+		expect(cmp.find('.title').first().find('input').first().props().value).toEqual(title);
 
 		cmp.find('.delete-facilitator').first().simulate('click');
 

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
+import Template from './Template';
+
 const LABELS = {
 	cancel: 'Cancel',
 	courseName: 'Course Name',
@@ -51,20 +53,12 @@ export default class TemplateChooser extends React.Component {
 		}
 	}
 
+	updateSelected = (template) => {
+		this.setState({selected: template});
+	}
+
 	renderItem = (item, index) => {
-		const updateSelected = () => {
-			this.setState({selected: item});
-		};
-
-		const className = 'item' + (item.name === (this.state.selected && this.state.selected.name) ? ' selected' : '');
-
-		return (
-			<div className={className} key={index} onClick={updateSelected}>
-				<div className="template-icon"/>
-				<div className="template-name">{item.name}</div>
-				<div className="template-description">{item.description}</div>
-			</div>
-		);
+		return (<Template key={item.name} template={item} onClick={this.updateSelected} selected={item.name === (this.state.selected && this.state.selected.name)}/>);
 	}
 
 	render () {

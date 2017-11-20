@@ -4,6 +4,25 @@ import { mount } from 'enzyme';
 
 import TemplateChooser from '../TemplateChooser';
 
+class SaveButton extends React.Component {
+	static propTypes = {
+		onSave: PropTypes.func,
+		label: PropTypes.string
+	}
+
+	doSave = () => {
+		this.props.onSave(() => {});
+	}
+
+	render () {
+		return (
+			<div onClick={this.doSave}>
+				<div className="course-panel-continue">{this.props.label}</div>
+			</div>
+		);
+	}
+}
+
 /* eslint-env jest */
 describe('TemplateChooser test', () => {
 	const onCancelMock = jest.fn();
@@ -22,21 +41,6 @@ describe('TemplateChooser test', () => {
 			saveCmp={SaveButton}
 		/>
 	);
-
-	SaveButton.propTypes = {
-		onSave: PropTypes.func,
-		label: PropTypes.string
-	};
-
-	function SaveButton ({onSave, label}) {
-		const doSave = () => { onSave(() => {}); };
-
-		return (
-			<div onClick={doSave}>
-				<div className="course-panel-continue">{label}</div>
-			</div>
-		);
-	}
 
 	test('Test save', (done) => {
 		const saveButton = cmp.find('.course-panel-continue').first();
