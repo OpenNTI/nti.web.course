@@ -52,7 +52,7 @@ describe('Facilitator component test', () => {
 		const cmp = mount(<Facilitator facilitator={facilitator} courseInstance={courseInstance}/>);
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.type').exists()).toBe(false); // view-only should not see roles
+		expect(cmp.find('.role').exists()).toBe(false); // view-only should not see roles
 		expect(cmp.find('.title').first().text()).toEqual(title);
 	});
 
@@ -62,7 +62,7 @@ describe('Facilitator component test', () => {
 		const cmp = mount(<Facilitator facilitator={facilitator} courseInstance={courseInstance} onRemove={onRemove} editable/>);
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.type').first().text()).toEqual('Assistant');
+		expect(cmp.find('.role').first().text()).toEqual('Assistant');
 		expect(cmp.find('.title').first().find('input').first().props().value).toEqual(title);
 
 		cmp.find('.delete-facilitator').first().simulate('click');
