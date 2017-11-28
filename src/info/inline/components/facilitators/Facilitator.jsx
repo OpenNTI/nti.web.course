@@ -318,8 +318,6 @@ export default class FacilitatorsView extends React.Component {
 					{this.renderName()}
 					{this.renderRole()}
 					{this.renderTitle()}
-					{this.renderSuffix()}
-					{this.renderBio()}
 				</div>
 				{this.renderControls()}
 			</div>
