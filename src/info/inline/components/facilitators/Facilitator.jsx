@@ -244,16 +244,16 @@ export default class FacilitatorsView extends React.Component {
 	}
 
 	renderTitle () {
-		const { facilitator, editable } = this.props;
+		const { facilitator } = this.props;
 
-		if(facilitator.visible && editable) {
-			return (
-				<div className="title">
-					<div className="label">Title</div>
-					<Input.Text className="job-title-input" onChange={this.onTitleChange} value={facilitator.JobTitle}/>
-				</div>
-			);
-		}
+		// if(facilitator.visible && editable) {
+		// 	return (
+		// 		<div className="title">
+		// 			<div className="label">Title</div>
+		// 			<Input.Text className="job-title-input" onChange={this.onTitleChange} value={facilitator.JobTitle}/>
+		// 		</div>
+		// 	);
+		// }
 
 		return (<div className="title">{facilitator.JobTitle}</div>);
 	}
