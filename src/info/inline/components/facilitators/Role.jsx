@@ -10,7 +10,7 @@ const LABELS = {
 
 const t = scoped('components.course.editor.inline.components.facilitators.role', LABELS);
 
-export default class AddFacilitators extends React.Component {
+export default class Role extends React.Component {
 	static propTypes = {
 		role: PropTypes.string.isRequired,
 		onClick: PropTypes.func
