@@ -30,6 +30,7 @@ export default class Section extends React.Component {
 		catalogEntry: PropTypes.object,
 		courseInstance: PropTypes.object,
 		facilitators: PropTypes.arrayOf(PropTypes.object),
+		enrollmentAccess: PropTypes.object,
 		components: PropTypes.arrayOf(PropTypes.object),
 		onBeginEditing: PropTypes.func,
 		onEndEditing: PropTypes.func,
@@ -148,7 +149,7 @@ export default class Section extends React.Component {
 	}
 
 	renderCmp = (cmp) => {
-		const { isEditing, catalogEntry, courseInstance, redemptionCodes, facilitators, editable } = this.props;
+		const { isEditing, catalogEntry, courseInstance, redemptionCodes, facilitators, enrollmentAccess, editable } = this.props;
 
 		const Cmp = isEditing ? cmp.Edit : cmp.View;
 
@@ -157,6 +158,7 @@ export default class Section extends React.Component {
 				catalogEntry={catalogEntry}
 				courseInstance={courseInstance}
 				redemptionCodes={redemptionCodes}
+				enrollmentAccess={enrollmentAccess}
 				facilitators={facilitators}
 				editable={editable}
 				onValueChange={this.aggregateChanges}/>

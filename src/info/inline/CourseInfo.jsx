@@ -15,7 +15,7 @@ import CourseVideo from './widgets/CourseVideo';
 import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
-	RedemptionCodes, Prerequisites, Department, Facilitators, Assets } from './components';
+	RedemptionCodes, Prerequisites, Department, Facilitators, Assets, Credit } from './components';
 
 const EDITORS = {
 	COURSE_INFO: 'CourseInfo',
@@ -75,6 +75,10 @@ export default class CourseInfo extends React.Component {
 
 		const redemptionCodes = courseInstance ? await courseInstance.getAccessTokens() : null;
 
+		const accessLink = catalogEntry.getLink('UserCoursePreferredAccess');
+
+		const enrollmentAccess = await service.get(accessLink);
+
 		const instructorsLink = courseInstance ? courseInstance.getLink('Instructors') : null;
 		const editorsLink = courseInstance ? courseInstance.getLink('Editors') : null;
 
@@ -85,6 +89,7 @@ export default class CourseInfo extends React.Component {
 			catalogEntry,
 			courseInstance,
 			redemptionCodes,
+			enrollmentAccess,
 			facilitators: mergeAllFacilitators(
 				catalogEntry.Instructors,
 				instructorsRaw && instructorsRaw.Items,
@@ -206,7 +211,7 @@ export default class CourseInfo extends React.Component {
 
 	render () {
 		const { editable } = this.props;
-		const { activeEditor, catalogEntry, courseInstance, facilitators, loading } = this.state;
+		const { activeEditor, catalogEntry, courseInstance, enrollmentAccess, facilitators, loading } = this.state;
 
 		if(loading || !catalogEntry) {
 			return (<div className="course-inline-editor"><Loading.Mask/></div>);
@@ -233,6 +238,11 @@ export default class CourseInfo extends React.Component {
 						inlinePlacement
 						hideDeleteBlock/>
 					{this.renderAssetUploadWidget()}
+					<Section
+						className="credits-section"
+						components={[Credit]}
+						catalogEntry={catalogEntry}
+						enrollmentAccess={enrollmentAccess}/>
 					<Section
 						className="prerequisites-section"
 						components={[Prerequisites]}

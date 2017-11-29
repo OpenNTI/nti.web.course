@@ -10,3 +10,4 @@ export * as Prerequisites from './prerequisites';
 export * as Department from './department';
 export * as Facilitators from './facilitators';
 export * as Assets from './assets';
+export * as Credit from './credit';
