@@ -19,9 +19,9 @@ describe('Meeting times view test', () => {
 
 		const dayRows = cmp.find('.day-row');
 
-		expect(dayRows.at(0).text()).toEqual('monday\'s10:30 AM-12:20 PM');
-		expect(dayRows.at(1).text()).toEqual('wednesday\'s10:30 AM-12:20 PM');
-		expect(dayRows.at(2).text()).toEqual('friday\'s10:30 AM-12:20 PM');
+		expect(dayRows.at(0).text()).toEqual('monday10:30 AM-12:20 PM');
+		expect(dayRows.at(1).text()).toEqual('wednesday10:30 AM-12:20 PM');
+		expect(dayRows.at(2).text()).toEqual('friday10:30 AM-12:20 PM');
 
 		expect(dayRows.length).toBe(3);
 	});
