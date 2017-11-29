@@ -1,28 +1,21 @@
 import {getService} from 'nti-web-client';
 import {Stores} from 'nti-lib-store';
 
-const DEFAULT_SIZE = 10;
+const DEFAULT_SIZE = 3;
 
+function transformBatch (batch) {
+	batch.Items = batch.Items.map(item => ({ ...item, MimeType: 'application/vnd.nextthought.com.courses.rosterenrollmentsummary'}));
 
-function convertBatch (batch) {
-	const link = batch.getLink('batch-next');
-	const loadNext = !link ?
-		null :
-		async () => {
-			const service = await getService();
-			const nextBatch = await service.getBatch(link);
-
-			return convertBatch(nextBatch);
-		};
-
-	return {
-		items: batch.Items,
-		loadNext
-	};
+	return batch;
 }
 
+export default class CourseRosterStore extends Stores.PagedBatchStore {
+	constructor () {
+		super();
 
-export default class CourseRosterStore extends Stores.SearchablePagedStore {
+		this.set('searchTerm', null);
+	}
+
 	get hasCourse () {
 		return !!this.get('course');
 	}
@@ -32,30 +25,58 @@ export default class CourseRosterStore extends Stores.SearchablePagedStore {
 
 		this.set('course', course);
 
+		this.setHref(course.getLink('CourseEnrollmentRoster'));
+		this.addOptions({batchSize: DEFAULT_SIZE, batchStart: 0});
+
 		this.load();
 	}
 
-	async loadInitial () {
-		const course = this.get('course');
+	async loadBatch (href, options) {
 		const service = await getService();
-		const roster = await service.getBatch(course.getLink('CourseEnrollmentRoster'), {batchSize: DEFAULT_SIZE, batchStart: 0});
 
-		return convertBatch(roster);
+		return service.getBatch(href, options, transformBatch);
 	}
 
 
-	async loadSearchTerm (term) {
-		const course = this.get('course');
-		const service = await getService();
-		const roster = await service.getBatch(
-			course.getLink('CourseEnrollmentRoster'),
-			{
-				batchSize: DEFAULT_SIZE,
-				batchStart: 0,
-				usernameSearchTerm: encodeURIComponent(term)
-			}
-		);
+	updateSearchTerm (term) {
+		this.set('searchTerm', term);
+		this.set('loading', true);
+		this.emitChange('loading', 'searchTerm');
 
-		return convertBatch(roster);
+		clearTimeout(this.doSearchTimeout);
+
+		if (!term) {
+			this.removeOption('usernameSearchTerm');
+		} else {
+			this.doSearchTimeout = setTimeout(() => {
+				this.addOptions({
+					usernameSearchTerm: encodeURIComponent(term)
+				});
+			}, 300);
+		}
 	}
+
+	// async loadInitial () {
+	// 	const course = this.get('course');
+	// 	const service = await getService();
+	// 	const roster = await service.getBatch(course.getLink('CourseEnrollmentRoster'), {batchSize: DEFAULT_SIZE, batchStart: 0});
+
+	// 	return convertBatch(roster);
+	// }
+
+
+	// async loadSearchTerm (term) {
+	// 	const course = this.get('course');
+	// 	const service = await getService();
+	// 	const roster = await service.getBatch(
+	// 		course.getLink('CourseEnrollmentRoster'),
+	// 		{
+	// 			batchSize: DEFAULT_SIZE,
+	// 			batchStart: 0,
+	// 			usernameSearchTerm: encodeURIComponent(term)
+	// 		}
+	// 	);
+
+	// 	return convertBatch(roster);
+	// }
 }

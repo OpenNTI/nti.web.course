@@ -34,8 +34,7 @@ class Test extends React.Component {
 				<Input />
 				<Roster
 					course={course}
-					renderItems={this.renderItems}
-					renderFooter={this.renderFooter}
+					renderRoster={this.renderRoster}
 				/>
 			</div>
 
@@ -43,9 +42,12 @@ class Test extends React.Component {
 	}
 
 
-	renderItems = ({items, error}) => {
+	renderRoster = ({items, error, loading, loadNextPage, loadPrevPage}) => {
+		if (loading) {
+			return (<span>Loading</span>);
+		}
+
 		if (error) {
-			debugger;
 			return (<span>Error</span>);
 		}
 
@@ -54,33 +56,20 @@ class Test extends React.Component {
 		}
 
 		return (
-			<ul>
-				{items.map((item, index) => {
-					return (
-						<li key={index}>
-							{item.Username}
-						</li>
-					);
-				})}
-			</ul>
+			<div>
+				<ul>
+					{items.map((item, index) => {
+						return (
+							<li key={index}>
+								{item.Username}
+							</li>
+						);
+					})}
+				</ul>
+				{loadPrevPage && (<span onClick={loadPrevPage}>Prev</span>)}
+				{loadNextPage && (<span onClick={loadNextPage}>Next</span>)}
+			</div>
 		);
-	}
-
-
-	renderFooter = ({loadingNextPage, loadNextPage}) => {
-		if (!loadNextPage && !loadingNextPage) { return; }
-
-		if (loadingNextPage) {
-			return (
-				<span>Loading Next Page</span>
-			);
-		}
-
-		if (loadNextPage) {
-			return (
-				<span onClick={loadNextPage}>Load Next Page</span>
-			);
-		}
 	}
 }
 

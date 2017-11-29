@@ -20,6 +20,7 @@ const propMap = {
 	error: 'error',
 	loadingNextPage: 'loadingNextPage',
 	hasNextPage: 'hasNextPage',
+	hasPrevPage: 'hasPrevPage',
 	hasCourse: 'hasCourse'
 };
 
@@ -27,22 +28,16 @@ const propMap = {
 @searchable(store, propMap)
 export default class CourseRosterView extends React.Component {
 	static propTypes = {
-		className: PropTypes.string,
 		course: PropTypes.object,
-		renderItems: PropTypes.func.isRequired,
-		renderHeader: PropTypes.func,
-		renderFooter: PropTypes.func,
+		renderRoster: PropTypes.func.isRequired,
 
-		store: PropTypes.object,
+		//store props
 		searchTerm: PropTypes.string,
-
 		items: PropTypes.array,
 		loading: PropTypes.bool,
 		error: PropTypes.any,
-
-		loadingNextPage: PropTypes.bool,
 		hasNextPage: PropTypes.bool,
-
+		hasPrevPage: PropTypes.bool,
 		hasCourse: PropTypes.bool
 	}
 
@@ -65,58 +60,42 @@ export default class CourseRosterView extends React.Component {
 
 
 	loadNextPage = () => {
-		const {loadingNextPage, hasNextPage} = this.props;
+		const {hasNextPage} = this.props;
 
-		if (!loadingNextPage && hasNextPage) {
+		if (hasNextPage) {
 			store.loadNextPage();
 		}
 	}
 
 
+	loadPrevPage = () => {
+		const {hasPrevPage} = this.props;
+
+		if (hasPrevPage) {
+			store.loadPrevPage();
+		}
+	}
+
+
 	getComponentProps () {
-		const {items, loading, error, searchTerm, loadingNextPage, hasNextPage} = this.props;
+		const {items, loading, error, searchTerm, hasNextPage, hasPrevPage} = this.props;
 
 		return {
 			loading,
 			items,
 			error,
 			searchTerm,
-			loadingNextPage,
-			loadNextPage: hasNextPage && this.loadNextPage
+			hasNextPage,
+			hasPrevPage,
+			loadNextPage: hasNextPage && this.loadNextPage,
+			loadPrevPage: hasPrevPage && this.loadPrevPage
 		};
 	}
 
 
 	render () {
-		const {className, hasCourse} = this.props;
+		const {hasCourse, renderRoster} = this.props;
 
-		return (
-			<div className={className}>
-				{hasCourse && this.renderHeader()}
-				{hasCourse && this.renderItems()}
-				{hasCourse && this.renderFooter()}
-			</div>
-		);
-	}
-
-
-	renderHeader () {
-		const {renderHeader} = this.props;
-
-		return renderHeader ? renderHeader(this.getComponentProps()) : null;
-	}
-
-
-	renderItems () {
-		const {renderItems} = this.props;
-
-		return renderItems(this.getComponentProps());
-	}
-
-
-	renderFooter () {
-		const {renderFooter} = this.props;
-
-		return renderFooter ? renderFooter(this.getComponentProps()) : null;
+		return hasCourse && renderRoster(this.getComponentProps());
 	}
 }
