@@ -1,7 +1,7 @@
 import {getService} from 'nti-web-client';
 import {Stores} from 'nti-lib-store';
 
-const DEFAULT_SIZE = 3;
+const DEFAULT_SIZE = 20;
 
 function transformBatch (batch) {
 	batch.Items = batch.Items.map(item => ({ ...item, MimeType: 'application/vnd.nextthought.com.courses.rosterenrollmentsummary'}));
