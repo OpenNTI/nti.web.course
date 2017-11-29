@@ -44,7 +44,7 @@ export default class MeetTimesView extends React.Component {
 	renderDayRow = (day, startTime, endTime) => {
 		return (
 			<div key={day} className="day-row">
-				<div className="day">{day + '\'s'}</div>
+				<div className="day">{day}</div>
 				<div className="times">
 					{this.renderDate(startTime)}
 					<div className="time-separator">-</div>
