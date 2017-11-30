@@ -219,20 +219,21 @@ describe('Test mergeAllFacilitators', () => {
 			return merged.filter(x => x.username === name)[0];
 		};
 
-		const verifyUser = (name, isVisible, role, displayName) => {
+		const verifyUser = (name, isVisible, role, displayName, jobTitle) => {
 			const user = findUser(name);
 
 			expect(user.role).toEqual(role);
 			expect(user.visible).toEqual(isVisible);
 			expect(user.Name).toEqual(displayName);
+			expect(user.JobTitle).toEqual(jobTitle);
 		};
 
-		verifyUser('ionly', true, 'assistant', 'I Only');
-		verifyUser('eonly', true, 'editor', 'E Only');
-		verifyUser('both', true, 'instructor', 'Both');
-		verifyUser('hiddenInstructor', false, 'assistant', 'Hidden Instructor');
-		verifyUser('hiddenEditor', false, 'editor', 'Hidden Editor');
-		verifyUser('hiddenBoth', false, 'instructor', 'Hidden Both');
+		verifyUser('ionly', true, 'assistant', 'I Only', 'exists only in instructors');
+		verifyUser('eonly', true, 'editor', 'E Only', 'exists only in editors');
+		verifyUser('both', true, 'instructor', 'Both', 'exists in both instructors and editors');
+		verifyUser('hiddenInstructor', false, 'assistant', 'Hidden Instructor', 'Assistant');
+		verifyUser('hiddenEditor', false, 'editor', 'Hidden Editor', 'Editor');
+		verifyUser('hiddenBoth', false, 'instructor', 'Hidden Both', 'Instructor');
 	});
 });
 
