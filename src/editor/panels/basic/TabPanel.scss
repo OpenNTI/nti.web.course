@@ -12,23 +12,40 @@
 		margin-top: 20px;
 	}
 
+	.textarea-container {
+		width: 450px;
+		margin: 0 auto;
+		margin-top: 10px;
+	}
+
 	.access-code-container {
 		text-align: left;
+
+		.textarea-container {
+			box-shadow: none;
+			border: none;
+			margin: 10px;
+			height: 40px;
+			width: auto;
+		}
 
 		.access-code-content {
 			margin: 6px 0 0 128px;
 			display: flex;
+
+			.copy-controls {
+				margin-top: 7px;
+			}
 
 			.access-code {
 				height: 40px;
 				margin: 0;
 				display: inline-block;
 				width: auto;
-				padding: 0;
+				padding: 0 0 0 21px;
 				border: none;
 				outline: none;
 				box-shadow: none;
-				text-align: center;
 			}
 
 			.access-code-copy {

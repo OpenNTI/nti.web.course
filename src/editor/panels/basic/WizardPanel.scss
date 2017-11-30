@@ -22,8 +22,14 @@
 		}
 	}
 
-	textarea {
+	.textarea-container {
+		margin: 0 auto;
 		width: 450px;
-		height: 180px;
+		margin-top: 10px;
+
+		textarea {
+			width: 450px;
+			height: 180px;
+		}
 	}
 }
