@@ -34,7 +34,7 @@ export default class CourseWizard extends React.Component {
 			return getService().then((service) => {
 				return Models.courses.CatalogEntry.getFactory(service).create({...data, key: data.identifier}).then((createdEntry) => {
 					this.setState({catalogEntry: createdEntry});
-					return createdEntry;
+					return createdEntry.save(data);
 				});
 			});
 		};
