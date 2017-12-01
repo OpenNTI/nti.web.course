@@ -77,7 +77,14 @@ export default class CourseInfo extends React.Component {
 
 		const accessLink = catalogEntry.getLink('UserCoursePreferredAccess');
 
-		const enrollmentAccess = await service.get(accessLink);
+		let enrollmentAccess;
+
+		try {
+			enrollmentAccess = accessLink ? await service.get(accessLink) : null;
+		} catch (e) {
+			// may not have access at all
+			enrollmentAccess = null;
+		}
 
 		const instructorsLink = courseInstance ? courseInstance.getLink('Instructors') : null;
 		const editorsLink = courseInstance ? courseInstance.getLink('Editors') : null;
