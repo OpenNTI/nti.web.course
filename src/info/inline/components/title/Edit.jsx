@@ -35,7 +35,7 @@ export default class TitleEdit extends React.Component {
 		return (
 			<div className="title-editor">
 				<div className="label">{t('label')}</div>
-				<Input.Text className="title-input" onChange={this.onChange} value={this.state.value}/>
+				<Input.Text className="title-input" onChange={this.onChange} value={this.state.value} maxLength="140"/>
 			</div>
 		);
 	}

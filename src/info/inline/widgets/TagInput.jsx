@@ -47,7 +47,8 @@ export default class TagInput extends React.Component {
 					onChange={this.onChange}
 					placeholder={value && value.length > 0 ? 'Add more categories' : 'Add categories'}
 					tokenDelimiterKeys={DELIMITER_KEYS}
-					suggestionProvider={this.suggestionProvider}/>
+					suggestionProvider={this.suggestionProvider}
+					maxTokenLength="64"/>
 			</div>
 		);
 	}
