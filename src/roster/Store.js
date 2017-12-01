@@ -4,7 +4,7 @@ import {Stores} from 'nti-lib-store';
 const DEFAULT_SIZE = 20;
 
 function transformBatch (batch) {
-	batch.Items = batch.Items.map(item => ({ ...item, MimeType: 'application/vnd.nextthought.com.courses.rosterenrollmentsummary'}));
+	batch.Items = batch.Items.map(item => ({ ...item, MimeType: 'application/vnd.nextthought.courses.rosterenrollmentsummary'}));
 
 	return batch;
 }
