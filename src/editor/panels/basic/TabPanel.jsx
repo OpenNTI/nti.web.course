@@ -168,7 +168,7 @@ export default class CourseBasic extends React.Component {
 			<div className="course-panel-getstarted-form">
 				<div className="course-panel-content">
 					<div className="basic-label">Name</div>
-					<Input.Text placeholder={t('courseName')} value={this.state.courseName} onChange={this.updateCourseName}/>
+					<Input.Text placeholder={t('courseName')} value={this.state.courseName} onChange={this.updateCourseName} maxLength="140"/>
 					<div className="basic-label">Identifier</div>
 					<Input.Text placeholder={t('identifier')} value={this.state.identifier} onChange={this.updateIDNumber}/>
 					<div className="basic-label">Description</div>
