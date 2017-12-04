@@ -10,6 +10,7 @@
 		.registered-icon {
 			background-image: url(assets/circle-check.svg);
 			width: 30px;
+			min-width: 30px;
 			height: 29px;
 			margin: 4px 10px 0 0;
 		}
@@ -17,6 +18,9 @@
 		.course-name {
 			color: #888;
 			font-size: 12px;
+			max-width: 240px;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		.course-status {
