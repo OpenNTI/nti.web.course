@@ -28,7 +28,7 @@ export default class TagInput extends React.Component {
 			const links = service.getCollection('Courses', 'Catalog').Links.filter(x => x.rel === 'SuggestedTags');
 
 			if(links.length === 0) {
-				Promise.reject('No SuggestedTags link');
+				return Promise.reject('No SuggestedTags link');
 			}
 
 			return service.get(links[0].href + '?filter=' + val).then((resp) => {
