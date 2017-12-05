@@ -170,7 +170,7 @@ export default class CourseBasic extends React.Component {
 					<div className="basic-label">Name</div>
 					<Input.Text placeholder={t('courseName')} value={this.state.courseName} onChange={this.updateCourseName} maxLength="140"/>
 					<div className="basic-label">Identifier</div>
-					<Input.Text placeholder={t('identifier')} value={this.state.identifier} onChange={this.updateIDNumber}/>
+					<Input.Text placeholder={t('identifier')} value={this.state.identifier} onChange={this.updateIDNumber} maxLength="32"/>
 					<div className="basic-label">Description</div>
 					<Input.TextArea placeholder={t('description')} className="nti-text-input" value={this.state.description} onChange={this.updateDescription}/>
 					{this.renderAccessCode()}
