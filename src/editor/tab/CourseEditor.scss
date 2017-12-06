@@ -37,6 +37,10 @@
 }
 
 .course-editor {
+	figure.loading {
+		z-index: 19000;
+	}
+
 	.course-panel {
 		width: 1000px;
 		height: 750px;
