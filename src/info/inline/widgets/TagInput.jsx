@@ -37,6 +37,34 @@ export default class TagInput extends React.Component {
 		});
 	}
 
+	validator = (value) => {
+		let errors = new Set();
+
+		if(!value) {
+			return Array.from(errors); // should this count as invalid?
+		}
+
+		const parts = value.trim().split('/');
+
+		const regex = /\.$|\.{2,}/;
+
+		if(parts.length > 1) {
+			errors.add('\'/\' characters are not allowed');
+		}
+
+		const areAllValid = parts.every(x => {
+			const remaining = x.replace(/(^[.\s]+)|([.\s]+$)/g, '');
+
+			return !regex.test(x) && remaining.length > 0;
+		});
+
+		if(!areAllValid) {
+			errors.add('Invalid tag name');
+		}
+
+		return Array.from(errors);
+	}
+
 	render () {
 		const { value } = this.props;
 
@@ -48,6 +76,7 @@ export default class TagInput extends React.Component {
 					placeholder={value && value.length > 0 ? 'Add more categories' : 'Add categories'}
 					tokenDelimiterKeys={DELIMITER_KEYS}
 					suggestionProvider={this.suggestionProvider}
+					validator={this.validator}
 					maxTokenLength="64"/>
 			</div>
 		);
