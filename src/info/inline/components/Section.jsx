@@ -80,7 +80,7 @@ export default class Section extends React.Component {
 	endEditing = () => {
 		const { onEndEditing } = this.props;
 
-		this.setState({ pendingChanges: {} });
+		this.setState({ pendingChanges: {}, error: null });
 
 		onEndEditing && onEndEditing();
 	}
@@ -121,6 +121,10 @@ export default class Section extends React.Component {
 				this.setState({ pendingChanges: {} });
 
 				onEndEditing && onEndEditing(catalogEntry);
+			}).catch(e => {
+				this.setState({
+					error: e
+				});
 			});
 		}
 		else {
@@ -149,6 +153,7 @@ export default class Section extends React.Component {
 	}
 
 	renderCmp = (cmp) => {
+		const { error } = this.state;
 		const { isEditing, catalogEntry, courseInstance, redemptionCodes, facilitators, enrollmentAccess, editable } = this.props;
 
 		const Cmp = isEditing ? cmp.Edit : cmp.View;
@@ -161,6 +166,7 @@ export default class Section extends React.Component {
 				enrollmentAccess={enrollmentAccess}
 				facilitators={facilitators}
 				editable={editable}
+				error={error && error.field === cmp.View.FIELD_NAME && error}
 				onValueChange={this.aggregateChanges}/>
 		);
 	}

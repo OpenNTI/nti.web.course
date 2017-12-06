@@ -25,6 +25,10 @@
 	text-align: left;
 	background-color: #fff;
 
+	.error {
+		color: red;
+	}
+
 	&.edit {
 		.contents {
 			background-color: #fbfbfb;
