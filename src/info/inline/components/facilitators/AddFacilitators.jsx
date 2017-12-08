@@ -65,9 +65,10 @@ export default class AddFacilitators extends React.Component {
 
 						return users.map(x => {
 							return {
+								key: x.Username,
 								display: x.alias,
 								value: x,
-								view: (<Suggestion user={x}/>)
+								view: (<Suggestion user={x} showUsername={users.filter(y => y.alias === x.alias).length > 1}/>)
 							};
 						});
 					});
@@ -235,15 +236,19 @@ export default class AddFacilitators extends React.Component {
 }
 
 Suggestion.propTypes = {
-	user: PropTypes.object.isRequired
+	user: PropTypes.object.isRequired,
+	showUsername: PropTypes.bool
 };
 
-function Suggestion ({user}) {
+function Suggestion ({user, showUsername}) {
 	return (
 		<div className="user-suggestion">
 			<Avatar className="image" entity={user}/>
 			<div className="user-info">
-				<div className="alias">{user.alias}</div>
+				<div className="alias">
+					<span>{user.alias}</span>
+					{showUsername ? (<span className="user-name">({user.Username})</span>) : null}
+				</div>
 				<div className="email">{user.email}</div>
 			</div>
 		</div>
