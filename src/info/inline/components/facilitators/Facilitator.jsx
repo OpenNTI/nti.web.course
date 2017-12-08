@@ -18,7 +18,7 @@ const LABELS = {
 
 const t = scoped('components.course.editor.inline.components.facilitators.facilitator', LABELS);
 
-export default class FacilitatorsView extends React.Component {
+export default class Facilitator extends React.Component {
 	static propTypes = {
 		facilitator: PropTypes.object.isRequired,
 		courseInstance: PropTypes.object.isRequired,
@@ -137,7 +137,7 @@ export default class FacilitatorsView extends React.Component {
 	};
 
 	renderRoleOption = (role) => {
-		return <Role role={role} onClick={this.onRoleSelect}/>;
+		return <Role key={role} role={role} onClick={this.onRoleSelect}/>;
 	}
 
 	renderRoleSelect (options) {
