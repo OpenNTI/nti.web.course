@@ -57,7 +57,7 @@ export default class CourseWizard extends React.Component {
 	}
 
 	creationCompleted = (allowRedirect) => {
-		this.props.onFinish && this.props.onFinish();
+		this.props.onFinish && this.props.onFinish(this.state.catalogEntry);
 
 		if(allowRedirect) {
 			editCourse(this.state.catalogEntry);
