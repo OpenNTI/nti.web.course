@@ -4,11 +4,11 @@ import { Prompt } from 'nti-web-commons';
 import CourseWizard from './wizard/CourseWizard';
 import CourseEditor from './tab/CourseEditor';
 
-export const createCourse = () => {
+export const createCourse = (onCourseModified) => {
 	let dialog = null;
 
 	return new Promise((fulfill, reject) => {
-		dialog = Prompt.modal(<CourseWizard onFinish={fulfill} onCancel={reject}/>);
+		dialog = Prompt.modal(<CourseWizard onFinish={fulfill} onCancel={reject} onCourseModified={onCourseModified}/>);
 	}).then((savedEntry) => {
 		dialog && dialog.dismiss();
 

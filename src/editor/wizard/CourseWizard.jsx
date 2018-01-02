@@ -24,7 +24,8 @@ export default class CourseWizard extends React.Component {
 		title: PropTypes.string,
 		catalogEntry: PropTypes.object,
 		onCancel: PropTypes.func,
-		onFinish: PropTypes.func
+		onFinish: PropTypes.func,
+		onCourseModified: PropTypes.func
 	}
 
 	constructor (props) {
@@ -57,10 +58,14 @@ export default class CourseWizard extends React.Component {
 	}
 
 	creationCompleted = (allowRedirect) => {
-		this.props.onFinish && this.props.onFinish(this.state.catalogEntry);
+		const { onCourseModified, onFinish } = this.props;
+
+		onFinish && onFinish(this.state.catalogEntry);
 
 		if(allowRedirect) {
-			editCourse(this.state.catalogEntry);
+			editCourse(this.state.catalogEntry).then((modifiedCourse) => {
+				onCourseModified && onCourseModified(modifiedCourse);
+			});
 		}
 	}
 
