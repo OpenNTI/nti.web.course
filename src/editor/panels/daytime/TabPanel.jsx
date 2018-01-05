@@ -25,7 +25,8 @@ export default class DayTime extends React.Component {
 		onCancel: PropTypes.func,
 		afterSave: PropTypes.func,
 		catalogEntry: PropTypes.object,
-		buttonLabel: PropTypes.string
+		buttonLabel: PropTypes.string,
+		errorMsg: PropTypes.string
 	}
 
 	constructor (props) {
@@ -218,9 +219,20 @@ export default class DayTime extends React.Component {
 		return null;
 	}
 
+	renderError () {
+		const { errorMsg } = this.props;
+
+		if(errorMsg) {
+			return (<div className="error">{errorMsg}</div>);
+		}
+
+		return null;
+	}
+
 	render () {
 		return (<div>
 			<div className="course-panel-content">
+				{this.renderError()}
 				{this.renderDaySelection()}
 				{this.renderTimeSelection()}
 			</div>

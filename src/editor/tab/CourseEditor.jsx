@@ -12,6 +12,8 @@ import {
 	COURSE_SAVE_ERROR
 } from '../Constants';
 
+import PanelItem from './PanelItem';
+
 const LABELS = {
 	finish: 'Finish',
 	saving: 'Saving...',
@@ -116,7 +118,8 @@ export default class CourseEditor extends React.Component {
 			className="course-panel-content"
 			key={tabPanel.tabName}
 			name={tabPanel.tabName}
-			component={tabPanel}
+			component={PanelItem}
+			panelCmp={tabPanel}
 			catalogEntry={this.props.catalogEntry}
 			courseInstance={this.state.courseInstance}
 			onCancel={this.cancel}

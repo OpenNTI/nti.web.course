@@ -29,7 +29,8 @@ export default class CourseBasic extends React.Component {
 		afterSave: PropTypes.func,
 		catalogEntry: PropTypes.object,
 		courseInstance: PropTypes.object,
-		buttonLabel: PropTypes.string
+		buttonLabel: PropTypes.string,
+		errorMsg: PropTypes.string
 	}
 
 	attachCodeRef = x => this.codeRef = x
@@ -163,10 +164,21 @@ export default class CourseBasic extends React.Component {
 		this.setState({description : value});
 	};
 
+	renderError () {
+		const { errorMsg } = this.props;
+
+		if(errorMsg) {
+			return (<div className="error">{errorMsg}</div>);
+		}
+
+		return null;
+	}
+
 	render () {
 		return (
 			<div className="course-panel-getstarted-form">
 				<div className="course-panel-content">
+					{this.renderError()}
 					<div className="basic-label">Name</div>
 					<Input.Text placeholder={t('courseName')} value={this.state.courseName} onChange={this.updateCourseName} maxLength="140"/>
 					<div className="basic-label">Identifier</div>

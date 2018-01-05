@@ -21,7 +21,8 @@ export default class CourseDatesPicker extends React.Component {
 		onCancel: PropTypes.func,
 		catalogEntry: PropTypes.object,
 		afterSave: PropTypes.func,
-		buttonLabel: PropTypes.string
+		buttonLabel: PropTypes.string,
+		errorMsg: PropTypes.string
 	}
 
 	constructor (props) {
@@ -67,9 +68,20 @@ export default class CourseDatesPicker extends React.Component {
 		this.setState({endDate: newDate});
 	};
 
+	renderError () {
+		const { errorMsg } = this.props;
+
+		if(errorMsg) {
+			return (<div className="error">{errorMsg}</div>);
+		}
+
+		return null;
+	}
+
 	render () {
 		return (<div className="course-panel-choosedates">
 			<div className="course-panel-content">
+				{this.renderError()}
 				<DayPickerRange
 					startDate={this.state.startDate} endDate={this.state.endDate}
 					updateStartDate={this.updateStartDate}
