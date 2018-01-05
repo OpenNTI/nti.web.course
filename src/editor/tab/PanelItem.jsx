@@ -8,7 +8,7 @@ import {
 	COURSE_SAVE_ERROR
 } from '../Constants';
 
-export default class WizardItem extends React.Component {
+export default class PanelItem extends React.Component {
 	static propTypes = {
 		panelCmp: PropTypes.func.isRequired
 	}
@@ -38,8 +38,6 @@ export default class WizardItem extends React.Component {
 
 	render () {
 		const { panelCmp: Cmp, ...otherProps } = this.props;
-
-		delete otherProps.onCancel;
 
 		return (<div className="course-panel-item">
 			<div className="course-panel-content-container">
