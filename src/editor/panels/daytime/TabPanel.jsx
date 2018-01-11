@@ -162,7 +162,7 @@ export default class DayTime extends React.Component {
 		}
 	}
 
-	onSave = (done) => {
+	onSave = () => {
 		const { catalogEntry, afterSave } = this.props;
 
 		let times = [];
@@ -204,8 +204,6 @@ export default class DayTime extends React.Component {
 			Schedule: schedule
 		}, () => {
 			afterSave && afterSave();
-
-			done && done();
 		});
 	}
 

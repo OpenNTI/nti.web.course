@@ -33,7 +33,7 @@ export default class CourseSettings extends React.Component {
 		};
 	}
 
-	onSave = (done) => {
+	onSave = () => {
 		const { catalogEntry, afterSave } = this.props;
 
 		saveCatalogEntry(catalogEntry, {
@@ -42,8 +42,6 @@ export default class CourseSettings extends React.Component {
 			Preview: this.state.isPreviewMode
 		}, () => {
 			afterSave && afterSave();
-
-			done && done();
 		});
 	};
 
