@@ -35,7 +35,7 @@ export default class CourseBasic extends React.Component {
 		};
 	}
 
-	onSave = (done) => {
+	onSave = () => {
 		const { catalogEntry, afterSave } = this.props;
 
 		saveCatalogEntry(catalogEntry, {
@@ -45,8 +45,6 @@ export default class CourseBasic extends React.Component {
 			RichDescription: this.state.description
 		}, () => {
 			afterSave && afterSave();
-
-			done && done();
 		});
 	};
 
