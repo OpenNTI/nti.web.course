@@ -27,6 +27,7 @@ export default class CourseBasic extends React.Component {
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
 		afterSave: PropTypes.func,
+		onInputChange: PropTypes.func,
 		catalogEntry: PropTypes.object,
 		courseInstance: PropTypes.object,
 		buttonLabel: PropTypes.string,
@@ -71,12 +72,19 @@ export default class CourseBasic extends React.Component {
 
 	onSave = () => {
 		const { catalogEntry, afterSave } = this.props;
+		const { identifier, courseName, description } = this.state;
+
+		let nullIdentifierIfBlank = identifier;
+
+		if(identifier != null && identifier.trim() === '') {
+			nullIdentifierIfBlank = null;
+		}
 
 		saveCatalogEntry(catalogEntry, {
-			ProviderUniqueID: this.state.identifier,
-			title: this.state.courseName,
-			identifier: this.state.identifier,
-			RichDescription: this.state.description
+			ProviderUniqueID: nullIdentifierIfBlank,
+			title: courseName,
+			identifier: nullIdentifierIfBlank,
+			RichDescription: description
 		}, () => {
 			afterSave && afterSave();
 		});
@@ -150,16 +158,28 @@ export default class CourseBasic extends React.Component {
 		}
 	}
 
+	inputChanged (value) {
+		const { onInputChange } = this.props;
+
+		onInputChange && onInputChange(value);
+	}
+
 	updateCourseName = (value) => {
 		this.setState({courseName : value});
+
+		this.inputChanged(value);
 	};
 
 	updateIDNumber = (value) => {
 		this.setState({identifier : value});
+
+		this.inputChanged(value);
 	};
 
 	updateDescription = (value) => {
 		this.setState({description : value});
+
+		this.inputChanged(value);
 	};
 
 	renderError () {
