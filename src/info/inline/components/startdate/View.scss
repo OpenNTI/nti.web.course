@@ -1,1 +1,12 @@
 @import "~nti-style-common";
+
+.columned {
+	.content-column {
+		.date-info {
+			font-size: 10px;
+			text-transform: uppercase;
+			font-weight: 600;
+			color: #b8b8b8;
+		}
+	}
+}

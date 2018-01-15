@@ -5,6 +5,14 @@
 	.DayPicker-wrapper {
 		width: 90%;
 	}
+
+	.TimePicker {
+		height: 70px;
+
+		.meridiem-select-box {
+			height: 32px;
+		}
+	}
 }
 
 .date-picker {

@@ -6,7 +6,7 @@ import View from '../View';
 /* eslint-env jest */
 describe('Start date view test', () => {
 	test('Test start date text', () => {
-		const date = '2015-08-17T05:00:00Z';
+		const date = '2015-08-17T19:00:00Z';
 
 		const catalogEntry = {
 			'StartDate': date
@@ -14,6 +14,6 @@ describe('Start date view test', () => {
 
 		const cmp = mount(<View catalogEntry={catalogEntry}/>);
 
-		expect(cmp.find('.content-column').text()).toEqual('August 17, 2015');
+		expect(cmp.find('.content-column').text()).toEqual('August 17, 2015Monday at 02:00 pm CDT');
 	});
 });

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DateTime } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
+
+import DateView from '../../widgets/DateView';
 
 const LABELS = {
 	label: 'Start Date'
@@ -18,20 +19,13 @@ export default class StartDateView extends React.Component {
 
 	constructor (props) {
 		super(props);
-
-		this.state = {};
 	}
 
 	render () {
 		const { StartDate } = this.props.catalogEntry;
 
 		return (
-			<div className="columned">
-				<div className="field-info">
-					<div className="date-label">{t('label')}</div>
-				</div>
-				<div className="content-column">{(StartDate && DateTime.format(StartDate)) || '-'}</div>
-			</div>
+			<DateView date={StartDate} label={t('label')}/>
 		);
 	}
 }

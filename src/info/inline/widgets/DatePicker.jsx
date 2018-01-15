@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DateTime, DayPicker, Flyout } from 'nti-web-commons';
+import { DateTime, DayTimePicker, Flyout } from 'nti-web-commons';
 
 export default class DatePicker extends React.Component {
 	static propTypes = {
@@ -52,10 +52,13 @@ export default class DatePicker extends React.Component {
 		);
 	}
 
-	onDateSelect = (value) => {
+	onDateSelect = (value, timeChanged) => {
 		const { onChange } = this.props;
 
-		this.flyout && this.flyout.dismiss();
+		// never dismiss, only dismiss on date change (not time change)?
+		if(!timeChanged) {
+			this.flyout && this.flyout.dismiss();
+		}
 
 		onChange && onChange(value);
 	}
@@ -69,7 +72,7 @@ export default class DatePicker extends React.Component {
 			ref={this.attachFlyoutRef}
 		>
 			<div>
-				<DayPicker value={this.props.date} disabledDays={this.props.disabledDays} onChange={this.onDateSelect}/>
+				<DayTimePicker value={this.props.date} disabledDays={this.props.disabledDays} onChange={this.onDateSelect}/>
 			</div>
 		</Flyout.Triggered>);
 	}
