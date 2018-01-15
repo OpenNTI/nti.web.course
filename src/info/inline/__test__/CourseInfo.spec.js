@@ -43,7 +43,10 @@ describe('CourseInfo test', () => {
 		const title = 'a title';
 		const catalogEntry = {
 			title,
-			StartDate: '2016-06-13T05:00:00Z'
+			StartDate: new Date('2016-06-13T05:00:00Z'),
+			getLink: function () {
+				return null;
+			}
 		};
 
 		const cmp = mount(<CourseInfo catalogEntry={catalogEntry} editable/>);
