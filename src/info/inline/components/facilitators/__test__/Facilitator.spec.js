@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import {getAppUsername} from 'nti-web-client';
 
 import Facilitator from '../Facilitator';
 
