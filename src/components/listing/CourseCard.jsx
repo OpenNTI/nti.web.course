@@ -65,25 +65,6 @@ export default class CourseCard extends React.Component {
 		}
 	}
 
-	deleteCourse = (e) => {
-		const { course } = this.props;
-
-		e.stopPropagation();
-		e.preventDefault();
-
-		Prompt.areYouSure(t('confirmDelete')).then(() => {
-			this.setState( { loading: true }, () => {
-				getService().then((service) => {
-					return service.getObject(course.CourseNTIID).then((courseInstance) => {
-						return courseInstance.delete();
-					});
-				}).then(() => {
-					this.loadAllCourses();
-				});
-			});
-		});
-	}
-
 	renderDelete () {
 		const { course } = this.props;
 

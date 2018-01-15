@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Flyout, Avatar, Input} from 'nti-web-commons';
+import {Flyout, Avatar} from 'nti-web-commons';
 import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 import {getService, getAppUsername} from 'nti-web-client';
@@ -258,53 +258,56 @@ export default class Facilitator extends React.Component {
 		return (<div className="title">{facilitator.JobTitle}</div>);
 	}
 
-	onSuffixChange = (e) => {
-		const {onChange, facilitator} = this.props;
+	// Are we going to support suffix editing/displaying?
+	// onSuffixChange = (e) => {
+	// 	const {onChange, facilitator} = this.props;
+	//
+	// 	onChange && onChange({
+	// 		...facilitator,
+	// 		Suffix: e
+	// 	});
+	// }
+	//
+	// renderSuffix () {
+	// 	const { facilitator, editable } = this.props;
+	//
+	// 	if(facilitator.visible && editable) {
+	// 		return (
+	// 			<div className="suffix">
+	// 				<div className="label">Suffix</div>
+	// 				<Input.Text className="suffix-input" onChange={this.onSuffixChange} value={facilitator.Suffix}/>
+	// 			</div>
+	// 		);
+	// 	}
+	//
+	// 	return null;
+	// }
 
-		onChange && onChange({
-			...facilitator,
-			Suffix: e
-		});
-	}
-
-	renderSuffix () {
-		const { facilitator, editable } = this.props;
-
-		if(facilitator.visible && editable) {
-			return (
-				<div className="suffix">
-					<div className="label">Suffix</div>
-					<Input.Text className="suffix-input" onChange={this.onSuffixChange} value={facilitator.Suffix}/>
-				</div>
-			);
-		}
-
-		return null;
-	}
-
-	onBioChange = (e) => {
-		const {onChange, facilitator} = this.props;
-
-		onChange && onChange({
-			...facilitator,
-			Biography: e
-		});
-	}
-
-	renderBio () {
-		const { facilitator, editable } = this.props;
-
-		if(facilitator.visible && editable) {
-			return (
-				<div className="bio">
-					<div className="label">Bio</div>
-					<Input.TextArea className="bio-input" onChange={this.onBioChange} value={facilitator.Biography}/>
-				</div>
-			);
-		}
-
-		return null;
-	}
+	// Are we going to support biography editing/displaying?
+	// onBioChange = (e) => {
+	// 	const {onChange, facilitator} = this.props;
+	//
+	// 	onChange && onChange({
+	// 		...facilitator,
+	// 		Biography: e
+	// 	});
+	// }
+	//
+	//
+	// renderBio () {
+	// 	const { facilitator, editable } = this.props;
+	//
+	// 	if(facilitator.visible && editable) {
+	// 		return (
+	// 			<div className="bio">
+	// 				<div className="label">Bio</div>
+	// 				<Input.TextArea className="bio-input" onChange={this.onBioChange} value={facilitator.Biography}/>
+	// 			</div>
+	// 		);
+	// 	}
+	//
+	// 	return null;
+	// }
 
 	render () {
 		const { editable } = this.props;
