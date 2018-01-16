@@ -9,7 +9,6 @@ import CourseCard from './CourseCard';
 
 export default class CourseListing extends React.Component {
 	static propTypes = {
-		courses: PropTypes.arrayOf(PropTypes.object),
 		onCourseClick: PropTypes.func,
 		isAdministrative: PropTypes.bool
 	}

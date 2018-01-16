@@ -55,11 +55,24 @@ describe('Facilitators edit test', () => {
 			hasLink: (l) => l === 'Instructors' || l === 'Editors'
 		};
 
-		const cmp = mount(<Edit facilitators={facilitators} courseInstance={courseInstance}/>);
+		let newValues;
+
+		function onValueChange (key, value) {
+			newValues = value;
+		}
+
+		const cmp = mount(<Edit facilitators={facilitators} courseInstance={courseInstance} onValueChange={onValueChange}/>);
 
 		const facilitatorItems = cmp.find('.facilitator.edit');
 
 		expect(facilitatorItems.length).toBe(2);
+
+		const deleteBtn = cmp.find('.delete-facilitator').first();
+
+		deleteBtn.simulate('click');
+		const visibleAssistant = newValues.filter(x => x.key === 'visibleAssistant')[0];
+
+		expect(visibleAssistant.role).toEqual(''); // empty role flags for removal
 	});
 
 	test('Test non-editable (assistant role)', () => {
