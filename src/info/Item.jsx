@@ -8,7 +8,7 @@ const DEFAULT_TEXT = {
 	start: 'Starts:',
 	end: 'Ends:'
 };
-const t = scoped('nti-web-site-admin.courses.CourseInfo', DEFAULT_TEXT);
+const t = scoped('nti-web-course.info.Info', DEFAULT_TEXT);
 
 SiteAdminCourseInfo.propTypes = {
 	className: PropTypes.string,
