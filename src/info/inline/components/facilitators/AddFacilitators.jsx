@@ -85,7 +85,6 @@ export default class AddFacilitators extends React.Component {
 		// for now, filter down to actual users via suggestions, we'll handle non-user entities later
 		onConfirm && onConfirm(values.filter(x => x.value).map(x => {
 			return {
-				...x.value,
 				visible: this.state.isVisible,
 				role: this.state.selectedRole,
 				key: x.value.Username,
