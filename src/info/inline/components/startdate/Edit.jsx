@@ -6,7 +6,8 @@ import DatePicker from '../../widgets/DatePicker';
 
 const LABELS = {
 	label: 'Start Date',
-	description: 'Delay when people can start.'
+	description: 'Delay when people can start.',
+	invalid: 'Start date cannot be after end date'
 };
 
 const t = scoped('components.course.editor.inline.components.startdate.edit', LABELS);
@@ -14,7 +15,8 @@ const t = scoped('components.course.editor.inline.components.startdate.edit', LA
 export default class StartDateEdit extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
-		onValueChange: PropTypes.func
+		onValueChange: PropTypes.func,
+		toggleSaveable: PropTypes.func
 	}
 
 	static FIELD_NAME = 'StartDate';
@@ -24,15 +26,28 @@ export default class StartDateEdit extends React.Component {
 
 		const { StartDate } = this.props.catalogEntry;
 
-		this.state = { StartDate: StartDate && new Date(StartDate)};
+		this.state = { StartDate: StartDate && new Date(StartDate), invalid: false};
 	}
 
 	onChange = (newDate) => {
-		const { onValueChange } = this.props;
+		const { onValueChange, toggleSaveable } = this.props;
 
 		this.setState({ StartDate : newDate });
 
-		onValueChange && onValueChange(StartDateEdit.FIELD_NAME, newDate);
+		const isValid = !this.disabledDays(newDate);
+
+		if(isValid) {
+			this.setState({invalid: false});
+
+			toggleSaveable && toggleSaveable(true);
+
+			onValueChange && onValueChange(StartDateEdit.FIELD_NAME, newDate);
+		}
+		else {
+			toggleSaveable && toggleSaveable(false);
+
+			this.setState({invalid: true});
+		}
 	}
 
 	disabledDays = (value) => {
@@ -56,6 +71,7 @@ export default class StartDateEdit extends React.Component {
 				</div>
 				<div className="content-column">
 					<DatePicker date={StartDate} disabledDays={this.disabledDays} onChange={this.onChange}/>
+					{this.state.invalid ? (<div className="error-message">{t('invalid')}</div>) : null}
 				</div>
 			</div>
 		);

@@ -67,7 +67,8 @@ export default class Section extends React.Component {
 		});
 
 		this.state = {
-			hasData
+			hasData,
+			saveable: true
 		};
 	}
 
@@ -80,9 +81,16 @@ export default class Section extends React.Component {
 	endEditing = () => {
 		const { onEndEditing } = this.props;
 
-		this.setState({ pendingChanges: {}, error: null });
+		this.setState({ pendingChanges: {}, error: null, saveable: true });
 
 		onEndEditing && onEndEditing();
+	}
+
+	componentWillReceiveProps (oldProps, newProps) {
+		if(!newProps.isEditing && oldProps.isEditing) {
+			// reset saveable state if we're leaving editing mode
+			this.setState({saveable: true});
+		}
 	}
 
 	/**
@@ -106,7 +114,11 @@ export default class Section extends React.Component {
 
 	savePendingChanges = () => {
 		const { catalogEntry, onEndEditing, doSave } = this.props;
-		const { pendingChanges } = this.state;
+		const { pendingChanges, saveable } = this.state;
+
+		if(!saveable) {
+			return;
+		}
 
 		if(doSave) {
 			// instead of doing the default key-value save, do custom logic if specified
@@ -167,8 +179,13 @@ export default class Section extends React.Component {
 				facilitators={facilitators}
 				editable={editable}
 				error={error && error.field === cmp.View.FIELD_NAME && error}
-				onValueChange={this.aggregateChanges}/>
+				onValueChange={this.aggregateChanges}
+				toggleSaveable={this.toggleSaveable}/>
 		);
+	}
+
+	toggleSaveable = (enabled) => {
+		this.setState({saveable : enabled});
 	}
 
 	renderEditButton () {
@@ -206,6 +223,14 @@ export default class Section extends React.Component {
 		return null;
 	}
 
+	renderSave () {
+		const {saveable} = this.state;
+
+		const className = cx('save', { disabled: !saveable });
+
+		return <div className={className} onClick={this.savePendingChanges}>{t('save')}</div>;
+	}
+
 	renderControls () {
 		if(this.props.isEditing) {
 			return (
@@ -213,7 +238,7 @@ export default class Section extends React.Component {
 					{this.renderDelete()}
 					<div className="buttons">
 						<div className="cancel" onClick={this.endEditing}>{t('cancel')}</div>
-						<div className="save" onClick={this.savePendingChanges}>{t('save')}</div>
+						{this.renderSave()}
 					</div>
 				</div>);
 		}

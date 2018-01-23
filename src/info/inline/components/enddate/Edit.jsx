@@ -5,7 +5,9 @@ import {scoped} from 'nti-lib-locale';
 import DatePicker from '../../widgets/DatePicker';
 
 const LABELS = {
-	label: 'End Date'
+	label: 'End Date',
+	description: 'When class is officially over.',
+	invalid: 'End date cannot be before start date'
 };
 
 const t = scoped('components.course.editor.inline.components.enddate.edit', LABELS);
@@ -13,7 +15,8 @@ const t = scoped('components.course.editor.inline.components.enddate.edit', LABE
 export default class EndDateEdit extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
-		onValueChange: PropTypes.func
+		onValueChange: PropTypes.func,
+		toggleSaveable: PropTypes.func
 	}
 
 	static FIELD_NAME = 'EndDate';
@@ -23,15 +26,28 @@ export default class EndDateEdit extends React.Component {
 
 		const { EndDate } = this.props.catalogEntry;
 
-		this.state = { EndDate: EndDate && new Date(EndDate)};
+		this.state = { EndDate: EndDate && new Date(EndDate), invalid: false};
 	}
 
 	onChange = (newDate) => {
-		const { onValueChange } = this.props;
+		const { onValueChange, toggleSaveable } = this.props;
 
 		this.setState({ EndDate : newDate });
 
-		onValueChange && onValueChange(EndDateEdit.FIELD_NAME, newDate);
+		const isValid = !this.disabledDays(newDate);
+
+		if(isValid) {
+			this.setState({invalid: false});
+
+			toggleSaveable && toggleSaveable(true);
+
+			onValueChange && onValueChange(EndDateEdit.FIELD_NAME, newDate);
+		}
+		else {
+			toggleSaveable && toggleSaveable(false);
+
+			this.setState({invalid: true});
+		}
 	}
 
 	disabledDays = (value) => {
@@ -51,10 +67,11 @@ export default class EndDateEdit extends React.Component {
 			<div className="columned">
 				<div className="field-info">
 					<div className="field-label">{t('label')}</div>
-					<div className="field-description">When class is officially over.</div>
+					<div className="field-description">{t('description')}</div>
 				</div>
 				<div className="content-column">
 					<DatePicker date={EndDate} disabledDays={this.disabledDays} onChange={this.onChange}/>
+					{this.state.invalid ? (<div className="error-message">{t('invalid')}</div>) : null}
 				</div>
 			</div>
 		);
