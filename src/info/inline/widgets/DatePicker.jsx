@@ -55,10 +55,11 @@ export default class DatePicker extends React.Component {
 	onDateSelect = (value, timeChanged) => {
 		const { onChange } = this.props;
 
-		// never dismiss, only dismiss on date change (not time change)?
-		if(!timeChanged) {
-			this.flyout && this.flyout.dismiss();
-		}
+		// never dismiss automatically?  uncomment to auto-dismiss after selection
+
+		// if(!timeChanged) {
+		// 	this.flyout && this.flyout.dismiss();
+		// }
 
 		onChange && onChange(value);
 	}
