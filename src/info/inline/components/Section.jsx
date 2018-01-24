@@ -123,7 +123,7 @@ export default class Section extends React.Component {
 		if(doSave) {
 			// instead of doing the default key-value save, do custom logic if specified
 			doSave(pendingChanges).then((value) => {
-				onEndEditing && onEndEditing();
+				onEndEditing && onEndEditing(value);
 			});
 		}
 		else if(pendingChanges && Object.keys(pendingChanges).length > 0) {
