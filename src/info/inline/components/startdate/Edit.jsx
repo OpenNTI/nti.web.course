@@ -26,28 +26,47 @@ export default class StartDateEdit extends React.Component {
 
 		const { StartDate } = this.props.catalogEntry;
 
-		this.state = { StartDate: StartDate && new Date(StartDate), invalid: false};
+		const initialDate = this.startOfEndDay() || this.startOfToday();
+
+		const state = { StartDate: (StartDate && new Date(StartDate)) || initialDate };
+
+		if(StartDate) {
+			state.invalid = false;
+			this.state = state;
+		}
+		else {
+			const validationState = this.validateDate(initialDate);
+			this.state = { StartDate: initialDate, ...validationState };
+		}
 	}
 
-	onChange = (newDate) => {
+	validateDate (date) {
 		const { onValueChange, toggleSaveable } = this.props;
 
-		this.setState({ StartDate : newDate });
+		const isValid = !this.disabledDays(date);
 
-		const isValid = !this.disabledDays(newDate);
+		const newState = {};
 
 		if(isValid) {
-			this.setState({invalid: false});
+			newState.invalid = false;
 
 			toggleSaveable && toggleSaveable(true);
 
-			onValueChange && onValueChange(StartDateEdit.FIELD_NAME, newDate);
+			onValueChange && onValueChange(StartDateEdit.FIELD_NAME, date);
 		}
 		else {
 			toggleSaveable && toggleSaveable(false);
 
-			this.setState({invalid: true});
+			newState.invalid = true;
 		}
+
+		return newState;
+	}
+
+	onChange = (newDate) => {
+		const validationState = this.validateDate(newDate);
+
+		this.setState({ StartDate: newDate, ...validationState});
 	}
 
 	disabledDays = (value) => {
@@ -59,6 +78,25 @@ export default class StartDateEdit extends React.Component {
 
 		return value.getTime() > new Date(EndDate).getTime();
 	}
+
+	startOfDay (date) {
+		return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
+	}
+
+	startOfEndDay () {
+		const { EndDate } = this.props.catalogEntry;
+
+		if(!EndDate) {
+			return null;
+		}
+
+		return this.startOfDay(new Date(EndDate));
+	}
+
+	startOfToday () {
+		return this.startOfDay(new Date());
+	}
+
 
 	render () {
 		const { StartDate } = this.state;

@@ -26,28 +26,47 @@ export default class EndDateEdit extends React.Component {
 
 		const { EndDate } = this.props.catalogEntry;
 
-		this.state = { EndDate: EndDate && new Date(EndDate), invalid: false};
+		const initialDate = this.endOfStartDay() || this.endOfToday();
+
+		const state = { EndDate: (EndDate && new Date(EndDate)) || initialDate };
+
+		if(EndDate) {
+			state.invalid = false;
+			this.state = state;
+		}
+		else {
+			const validationState = this.validateDate(initialDate);
+			this.state = { EndDate: initialDate, ...validationState };
+		}
 	}
 
-	onChange = (newDate) => {
+	validateDate (date) {
 		const { onValueChange, toggleSaveable } = this.props;
 
-		this.setState({ EndDate : newDate });
+		const isValid = !this.disabledDays(date);
 
-		const isValid = !this.disabledDays(newDate);
+		const newState = {};
 
 		if(isValid) {
-			this.setState({invalid: false});
+			newState.invalid = false;
 
 			toggleSaveable && toggleSaveable(true);
 
-			onValueChange && onValueChange(EndDateEdit.FIELD_NAME, newDate);
+			onValueChange && onValueChange(EndDateEdit.FIELD_NAME, date);
 		}
 		else {
 			toggleSaveable && toggleSaveable(false);
 
-			this.setState({invalid: true});
+			newState.invalid = true;
 		}
+
+		return newState;
+	}
+
+	onChange = (newDate) => {
+		const validationState = this.validateDate(newDate);
+
+		this.setState({ EndDate: newDate, ...validationState});
 	}
 
 	disabledDays = (value) => {
@@ -58,6 +77,24 @@ export default class EndDateEdit extends React.Component {
 		}
 
 		return value.getTime() < new Date(StartDate).getTime();
+	}
+
+	endOfDay (date) {
+		return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 0);
+	}
+
+	endOfStartDay () {
+		const { StartDate } = this.props.catalogEntry;
+
+		if(!StartDate) {
+			return null;
+		}
+
+		return this.endOfDay(new Date(StartDate));
+	}
+
+	endOfToday () {
+		return this.endOfDay(new Date());
 	}
 
 	render () {

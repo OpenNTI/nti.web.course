@@ -73,7 +73,7 @@ export default class DatePicker extends React.Component {
 			ref={this.attachFlyoutRef}
 		>
 			<div>
-				<DayTimePicker value={this.props.date} disabledDays={this.props.disabledDays} onChange={this.onDateSelect}/>
+				<DayTimePicker value={this.props.date} disabledDays={this.props.disabledDays} onChange={this.onDateSelect} retainTime/>
 			</div>
 		</Flyout.Triggered>);
 	}

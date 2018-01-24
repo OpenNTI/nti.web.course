@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { DateTime } from 'nti-web-commons';
 
 import Edit from '../Edit';
 
@@ -30,6 +31,9 @@ describe('End date edit test', () => {
 
 		const dateEl = cmp.find('.date').first();
 
-		expect(dateEl.text()).toMatch('Set a Date');
+		const now = new Date();
+		const expectedDateStr = DateTime.format(now) + DateTime.format(now, 'dddd [at] 11:59 [pm] z');
+
+		expect(dateEl.text()).toMatch(expectedDateStr);
 	});
 });
