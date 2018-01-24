@@ -74,7 +74,7 @@ describe('Test roster view', () => {
 
 		const cmp = mount(<View hasCourse course={course} renderRoster={Renderer}/>);
 
-		expect(cmp.html()).toEqual('<div>Nothing to show</div>');
+		expect(cmp.html()).toEqual('<div>Loading...</div>');
 
 		setTimeout(function () {
 			expect(cmp.html()).toEqual('<div>Number of items: 2</div>');
