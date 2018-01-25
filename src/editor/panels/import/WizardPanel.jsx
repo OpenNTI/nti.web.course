@@ -65,7 +65,7 @@ export default class CourseImport extends React.Component {
 		</div>);
 	}
 
-	onSave = async () => {
+	onSave = async (done) => {
 		const { afterSave } = this.props;
 		const { file } = this.state;
 
@@ -96,6 +96,8 @@ export default class CourseImport extends React.Component {
 		this.setState({ error: null });
 
 		afterSave && afterSave();
+
+		done && done();
 	};
 
 	renderSaveCmp () {
