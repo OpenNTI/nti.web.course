@@ -28,11 +28,17 @@ export default class PanelItem extends React.Component {
 
 	onStoreChange = (data) => {
 		if (data.type === COURSE_SAVING) {
-			this.setState({loading: true});
+			this.setState({loading: true, errorMsg: null});
 		} else if (data.type === COURSE_SAVE_ERROR) {
 			this.setState({loading: false, errorMsg: data.errorMsg});
 		} else if (data.type === COURSE_SAVED) {
-			this.setState({loading: false});
+			this.setState({loading: false, errorMsg: null});
+		}
+	}
+
+	onInputChange = (value) => {
+		if(value) {
+			this.setState({errorMsg: null});
 		}
 	}
 
@@ -41,7 +47,7 @@ export default class PanelItem extends React.Component {
 
 		return (<div className="course-panel-item">
 			<div className="course-panel-content-container">
-				<Cmp errorMsg={this.state.errorMsg} {...otherProps}/>
+				<Cmp errorMsg={this.state.errorMsg}onInputChange={this.onInputChange} {...otherProps}/>
 			</div>
 		</div>);
 	}
