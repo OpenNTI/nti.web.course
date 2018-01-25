@@ -104,8 +104,12 @@ describe('Import panel test', () => {
 	};
 
 	function SaveButton ({onSave, label}) {
+		function save () {
+			onSave();
+		}
+
 		return (
-			<div onClick={onSave}>
+			<div onClick={save}>
 				<div className="course-panel-continue">{label}</div>
 			</div>
 		);
