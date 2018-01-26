@@ -29,7 +29,11 @@ export default class WizardItem extends React.Component {
 		catalogEntry: PropTypes.object,
 		buttonLabel: PropTypes.string,
 		firstTab: PropTypes.bool,
-		hideHeaderControls: PropTypes.bool
+		hideHeaderControls: PropTypes.bool,
+		// by default, a wizard item cancel means to delete the temp course,
+		// but sometimes we may want to cancel and keep the course
+		// TODO: Maybe separate the delete on cancel logic out and have a more generic underlying component?
+		keepCourseOnCancel: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -117,7 +121,7 @@ export default class WizardItem extends React.Component {
 	}
 
 	doCancel = () => {
-		if(this.props.catalogEntry) {
+		if(this.props.catalogEntry && !this.props.keepCourseOnCancel) {
 			Prompt.areYouSure(t('confirmCancel')).then(() => {
 				this.props.catalogEntry.delete().then(() => {
 					this.cancel();
