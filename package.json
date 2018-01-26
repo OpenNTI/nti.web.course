@@ -44,6 +44,7 @@
     "nti-web-routing": "0.x.x",
     "nti-web-search": "0.x.x",
     "nti-web-video": "^1.8.1",
+    "nti-web-whiteboard": "0.0.3",
     "prop-types": "^15.5.8",
     "react-day-picker": "^6.1.0"
   },
