@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
-import {Input} from 'nti-web-commons';
+import {Prompt} from 'nti-web-commons';
 import {getService} from 'nti-web-client';
 
 import AssetType from './AssetType';
+import AddImage from './AddImage';
 
 const LABELS = {
-	label: 'Assets'
+	label: 'Assets',
+	update: 'Edit'
 };
 
 const t = scoped('components.course.editor.inline.components.assets.view', LABELS);
@@ -52,6 +54,16 @@ export default class AssetsView extends React.Component {
 		}
 	}
 
+	onFinish = () => {
+		this.dialog && this.dialog.dismiss();
+	}
+
+	launch = () => {
+		this.dialog = Prompt.modal(
+			<AddImage catalogEntry={this.props.catalogEntry} onFinish={this.onFinish}/>
+		);
+	}
+
 	renderInput () {
 		const { uploadInProgress, uploadSuccess, errorMsg } = this.state;
 
@@ -67,7 +79,7 @@ export default class AssetsView extends React.Component {
 			return (<div className="upload-success">Upload successful</div>);
 		}
 
-		return (<Input.File className="asset-file" accept=".zip" ref={this.attachRef} onFileChange={this.uploadAssets}/>);
+		return (<div className="add-course-assets-button" onClick={this.launch}>{t('update')}</div>);
 	}
 
 	renderAsset (type) {
