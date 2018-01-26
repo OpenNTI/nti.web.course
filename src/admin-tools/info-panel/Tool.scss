@@ -1,0 +1,48 @@
+.admin-info-tool {
+    display: flex;
+	margin-bottom: 15px;
+	
+	.tool-icon-wrapper {
+		height: 100px;
+		width: 100px;
+		border: 1px solid #E2E2E2;
+		padding: 15px;
+
+		.tool-icon {
+			width: 100%;
+			height: 100%;
+		}
+	}
+
+	.tool-content {
+		padding-left: 18px;
+	}
+	
+	.tool-title {
+		color: #494949;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 22px;
+	}
+
+	.tool-subtitle {
+		color: #B8B8B8;
+		font-size: 14px;
+		line-height: 19px;
+	}
+	
+	.tool-link {
+		color: #3FB3F6;
+		font-family: "Open Sans";
+		font-size: 14px;
+		line-height: 19px;
+		margin-top: 15px;
+		text-decoration: none;
+		display: block;
+	}
+}
+
+
+
+
+
