@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {getService} from 'nti-web-client';
+import {ImageEditor} from 'nti-web-whiteboard';
+
+import Preview from './Preview';
 
 const LABELS = {
 	cancel: 'Cancel'
@@ -9,6 +12,41 @@ const LABELS = {
 
 const t = scoped('components.course.info.inline.assets.courseimageeditor', LABELS);
 
+// temp mock data
+const PREVIEWS = [
+	{
+		imageSrc: 'https://coavacoffee.com/uploads/producer_mancia_full_161114_090824.jpg',
+		label: '1:1'
+	},
+	{
+		imageSrc: 'https://coavacoffee.com/uploads/producer_mancia_full_161114_090824.jpg',
+		label: '2:3'
+	},
+	{
+		imageSrc: 'https://coavacoffee.com/uploads/producer_mancia_full_161114_090824.jpg',
+		label: '5:6'
+	},
+	{
+		imageSrc: 'https://coavacoffee.com/uploads/producer_mancia_full_161114_090824.jpg',
+		label: '3:4'
+	},
+	{
+		imageSrc: 'https://coavacoffee.com/uploads/producer_mancia_full_161114_090824.jpg',
+		label: '11:14'
+	},
+	{
+		imageSrc: 'https://coavacoffee.com/uploads/producer_mancia_full_161114_090824.jpg',
+		label: '4:3'
+	},
+	{
+		imageSrc: 'https://coavacoffee.com/uploads/producer_mancia_full_161114_090824.jpg',
+		label: '5:3'
+	},
+	{
+		imageSrc: 'https://coavacoffee.com/uploads/producer_mancia_full_161114_090824.jpg',
+		label: 'BLUR BG'
+	}
+];
 
 export default class CourseImageEditor extends React.Component {
 	static propTypes = {
@@ -46,10 +84,24 @@ export default class CourseImageEditor extends React.Component {
 		}
 	}
 
+	renderPreview = (preview) => {
+		// TODO add image
+		return <Preview key={preview.label} label={preview.label} imageSrc={preview.imageSrc}/>;
+	}
+
+	renderPreviewBar () {
+		return (
+			<div className="preview-bar">
+				{PREVIEWS.map(this.renderPreview)}
+			</div>
+		);
+	}
+
 	render () {
 		return (
 			<div>
-				<div className="editor-content">Image editor and previews go here</div>
+				{this.renderPreviewBar()}
+				<div className="editor-content"><ImageEditor/></div>
 				<div className="course-panel-controls">
 					{this.renderSaveCmp()}
 					{this.renderCancelCmp()}
