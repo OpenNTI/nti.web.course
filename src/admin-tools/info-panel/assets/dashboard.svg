@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="70px" height="70px" viewBox="0 0 70 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Dashboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M25,55 C38.8071187,55 50,43.8071187 50,30 L25,30 L25,5 C11.1928813,5 0,16.1928813 0,30 C0,43.8071187 11.1928813,55 25,55 Z" id="path-1"></path>
+    </defs>
+    <g id="Final" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard">
+            <g id="Group" transform="translate(10.000000, 5.000000)">
+                <g id="Oval-7">
+                    <use fill="#D6EFD9" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <path stroke="#3FB34F" stroke-width="1" d="M49.4949995,30.5 L24.5,30.5 L24.5,5.50500054 C11.1998339,5.77125235 0.5,16.6360861 0.5,30 C0.5,43.5309764 11.4690236,54.5 25,54.5 C38.3639139,54.5 49.2287476,43.8001661 49.4949995,30.5 Z"></path>
+                </g>
+                <path d="M40.9592976,47.9977592 C45.3094035,43.6476532 49,37.6380379 49,31 L24,31 L40.9592976,47.9977592 Z" id="Oval-7" fill="#FFFFFF"></path>
+                <path d="M55,25 L55,0 C41.1928813,0 30,11.1928813 30,25 L55,25 Z" id="Oval-7" fill="#3FB34F" transform="translate(42.500000, 12.500000) scale(-1, 1) translate(-42.500000, -12.500000) "></path>
+                <polygon id="Rectangle-34" fill="#3FB34F" transform="translate(33.103553, 39.399994) rotate(-45.000000) translate(-33.103553, -39.399994) " points="32.6010451 27.0281335 33.6010451 27.0281335 33.6060617 51.7718543 32.6060617 51.7718543"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
