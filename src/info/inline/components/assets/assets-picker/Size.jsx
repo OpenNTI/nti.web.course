@@ -13,6 +13,38 @@ export default class AssetPickerSize extends React.Component {
 		onSelect: PropTypes.func
 	}
 
+	state = {}
+
+	componentWillReceiveProps (newProps) {
+		const {asset:newAsset, formatting: newFormatting} = newProps;
+		const {asset:oldAsset, formatting: oldFormatting} = this.props;
+
+		if (newAsset !== oldAsset || newFormatting !== oldFormatting) {
+			this.loadSrcFor(newProps);
+		}
+	}
+
+
+	componentDidMount () {
+		this.loadSrcFor();
+	}
+
+
+	async loadSrcFor (props = this.props) {
+		const {asset, formatting} = props;
+		const editorState = ImageEditor.getEditorState(asset, formatting);
+
+		try {
+			const img = await ImageEditor.getImageForEditorState(editorState);
+
+			this.setState({
+				src: img.src
+			});
+		} catch (e) {
+			//handle error
+		}
+	}
+
 
 	onClick = () => {
 		const {onSelect, selectID} = this.props;
@@ -24,13 +56,13 @@ export default class AssetPickerSize extends React.Component {
 
 
 	render () {
-		const {asset, formatting, name, active, selectID} = this.props;
-		const editorState = ImageEditor.getEditorState(asset, formatting);
+		const {name, active, selectID} = this.props;
+		const {src} = this.state;
 
 		return (
 			<div className={cx('course-info-asset-picker-size', {active}, selectID)} onClick={this.onClick}>
 				<div className="preview">
-					<ImageEditor.Display editorState={editorState} />
+					{src && <img src={src} style={{width: '100%'}}/>}
 				</div>
 				<div className="name">{name}</div>
 			</div>
