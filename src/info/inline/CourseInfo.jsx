@@ -16,6 +16,7 @@ import { saveFacilitators, mergeAllFacilitators } from './components/facilitator
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
 	RedemptionCodes, Prerequisites, Department, Facilitators, Assets, Credit } from './components';
+import {TechSupport} from './components/techsupport';
 
 const EDITORS = {
 	COURSE_INFO: 'CourseInfo',
@@ -297,6 +298,7 @@ export default class CourseInfo extends React.Component {
 						doSave={this.saveFacilitators}
 						hideDeleteBlock/>
 				</div>
+				<TechSupport />
 			</div>
 		);
 	}

@@ -1,0 +1,46 @@
+.techsupport {
+    border-top: solid 1px #eaeaea;
+    padding: 1.125em 2.188em;
+	text-align: left;
+	
+	.techsupport-header {
+		font-size: 1em;
+		font-weight: 600;
+		margin-top: 0;
+		margin-bottom: 0.625em;
+	}
+
+	.techsupport-info {
+		display: flex;
+
+		.techsupport-image {
+			width: 100px;
+			height: 100px;
+			background-image: url('./assets/tech_support.png');
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+
+		.techsupport-links {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+			margin-left: 1.250em;
+
+			.techsupport-link a {
+				text-decoration: none;
+				color: #3FB3F6;
+				font-size: 0.875em;
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
