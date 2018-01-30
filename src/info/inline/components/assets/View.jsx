@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
-import {Prompt} from 'nti-web-commons';
-import {getService} from 'nti-web-client';
 
 import AssetType from './AssetType';
-import AddImage from './AddImage';
+import CourseAssetEditor from './CourseAssetEditor';
 
 const LABELS = {
 	label: 'Assets',
@@ -28,56 +26,13 @@ export default class AssetsView extends React.Component {
 
 	attachRef = x => this.fileInput = x
 
-	constructor (props) {
-		super(props);
-
-		this.state = {};
-	}
-
-	uploadAssets = (file) => {
-		const { catalogEntry } = this.props;
-
-		if(file && file.name) {
-			this.setState({ uploadInProgress: true});
-
-			getService().then(service => {
-				const formData = new FormData();
-				formData.append(file.name, file);
-				return service.put(catalogEntry.getLink('edit'), formData);
-			}).then(() => {
-				this.setState({ uploadInProgress: false, uploadSuccess: true });
-				setTimeout(() => { this.setState({ uploadSuccess: undefined}); }, 1500);
-			}).catch((resp) => {
-				this.setState({ uploadInProgress: false, uploadSuccess: false, errorMsg: resp.Message || 'Upload failed' });
-				setTimeout(() => { this.setState({ uploadSuccess: undefined, errorMsg: undefined}); }, 1500);
-			});
-		}
-	}
-
-	onFinish = () => {
-		this.dialog && this.dialog.dismiss();
-	}
+	state = {}
 
 	launch = () => {
-		this.dialog = Prompt.modal(
-			<AddImage catalogEntry={this.props.catalogEntry} onFinish={this.onFinish}/>
-		);
+		CourseAssetEditor.show(this.props.catalogEntry);
 	}
 
 	renderInput () {
-		const { uploadInProgress, uploadSuccess, errorMsg } = this.state;
-
-		if(uploadInProgress) {
-			return (<div>Uploading...</div>);
-		}
-
-		if(errorMsg) {
-			return (<div className="error">{errorMsg}</div>);
-		}
-
-		if(uploadSuccess) {
-			return (<div className="upload-success">Upload successful</div>);
-		}
 
 		return (<div className="add-course-assets-button" onClick={this.launch}>{t('update')}</div>);
 	}

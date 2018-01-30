@@ -2,13 +2,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {getService} from 'nti-web-client';
-import {Input} from 'nti-web-search';
 
-import {Roster} from '../../src';
+import {Info} from '../../src';
 
 import 'nti-style-common/all.scss';
 import 'nti-web-commons/lib/index.css';
 import 'nti-web-video/lib/index.css';
+import 'nti-web-whiteboard/lib/index.css';
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
@@ -17,7 +17,7 @@ class Test extends React.Component {
 
 	async componentDidMount () {
 		const service = await getService();
-		const course = await service.getObject('tag:nextthought.com,2011-10:system-OID-0x53ec:5573657273:krsMx9Uw2d7');
+		const course = await service.getObject('tag:nextthought.com,2011-10:OU-CourseInfo-3454567758524855502_4744116312431011150');
 
 		this.setState({
 			course
@@ -31,11 +31,7 @@ class Test extends React.Component {
 
 		return (
 			<div>
-				<Input />
-				<Roster
-					course={course}
-					renderRoster={this.renderRoster}
-				/>
+				<Info catalogEntry={course} editable />
 			</div>
 
 		);
