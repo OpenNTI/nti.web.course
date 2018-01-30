@@ -13,7 +13,7 @@ const TECHSUPPORT_LABELS = {
 const t = scoped('components.course.editor.inline.components.techsupport.View', TECHSUPPORT_LABELS);
 
 const TechSupport = () => (
-	<div className="techsupport">
+	<div className="course-info-support">
 		<h3 className="techsupport-header">Tech Support</h3>
 		<div className="techsupport-info">
 			<div className="techsupport-image" />
