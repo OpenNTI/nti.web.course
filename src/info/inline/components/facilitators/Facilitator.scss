@@ -108,6 +108,8 @@
 
 		.name {
 			margin-bottom: 6px;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 
 		.role {
