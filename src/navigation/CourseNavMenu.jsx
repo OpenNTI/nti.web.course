@@ -145,7 +145,13 @@ export default class CourseNavMenu extends React.Component {
 				<div className="course-info">
 					<div className="course-header">
 						<div className="title">{activeCourse.title}</div>
-						<div className="delete-course" onClick={this.delete}><i className="icon-delete"/></div>
+						{isAdministrator ?
+							(
+								<div className="delete-course" onClick={this.delete}>
+									<i className="icon-delete"/>
+								</div>
+							)
+							: null}
 					</div>
 					{isAdministrator ? (<div className="edit" onClick={this.onEditClick}>{t('edit')}</div>) : null}
 					{isAdministrator ? (<div className="publish" onClick={this.launchPublishDialog}>{t('publish')}</div>) : null}
