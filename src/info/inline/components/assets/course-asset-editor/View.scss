@@ -1,0 +1,11 @@
+.course-asset-editor {
+	background: white;
+
+	width: 95vh;
+}
+
+.course-asset-editor-prompt {
+	& > i.icon-close {
+		display: none;
+	}
+}

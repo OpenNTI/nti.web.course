@@ -1,0 +1,10 @@
+.course-info-asset-picker {
+	.sizes {
+		display: flex;
+		justify-content: center;
+
+		.course-info-asset-picker-size {
+			flex: 0 0 auto;
+		}
+	}
+}

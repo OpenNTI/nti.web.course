@@ -1,0 +1,27 @@
+@import '~nti-style-common';
+
+.course-info-asset-picker-size {
+	margin: 0 1rem;
+	padding: rem-calc(10px 14px);
+
+	&.active {
+		background-color: rgba(0, 0, 0, 0.04);
+	}
+
+	.preview {
+		margin-bottom: rem-calc(10px);
+		img {
+			height: 60px;
+			margin: 0 auto;
+			display: block;
+			box-shadow: 0 5px 10px 0 rgba(0,0,0,0.23);
+		}
+	}
+
+	.name {
+		text-align: center;
+		text-transform: uppercase;
+		font: normal 600 0.625rem/1.5 $body-font-family;
+		color: $tertiary-grey;
+	}
+}
