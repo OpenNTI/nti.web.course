@@ -23,7 +23,8 @@ export default class CourseAssetEditor extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
 		onSave: PropTypes.func,
-		onCancel: PropTypes.func
+		onCancel: PropTypes.func,
+		onDismiss: PropTypes.func
 	}
 
 
@@ -31,7 +32,15 @@ export default class CourseAssetEditor extends React.Component {
 
 
 	onCancel = () => {
+		const {onCancel, onDismiss} = this.props;
 
+		if (onCancel) {
+			onCancel();
+		}
+
+		if (onDismiss) {
+			onDismiss();
+		}
 	}
 
 	onBaseAssetSave = (baseAsset) => {
@@ -50,7 +59,29 @@ export default class CourseAssetEditor extends React.Component {
 	}
 
 
-	onAssetsPicked = () => {
+	onAssetCroppingBack = () => {
+		this.setState({
+			croppedAsset: null,
+			active: 'base'
+		});
+	}
+
+
+	onAssetsPicked = (images) => {
+		const {catalogEntry} = this.props;
+		const formData = new FormData();
+
+		for (let image of images) {
+			formData.append(image.fileName, image.blob);
+		}
+
+		debugger;
+	}
+
+	onPickerBack = () => {
+		this.setState({
+			active: 'crop'
+		});
 	}
 
 
@@ -59,7 +90,7 @@ export default class CourseAssetEditor extends React.Component {
 		const {catalogEntry} = this.props;
 
 		return (
-			<Switch.Container active={active}>
+			<Switch.Container active={active} className="course-asset-editor">
 				<Switch.Item
 					name="base"
 					component={BaseAssetPicker}
@@ -72,6 +103,7 @@ export default class CourseAssetEditor extends React.Component {
 					component={AssetCropping}
 					onCancel={this.onCancel}
 					onSave={this.onAssetCroppingSave}
+					onBack={this.onAssetCroppingBack}
 					catalogEntry={catalogEntry}
 					asset={baseAsset}
 				/>

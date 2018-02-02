@@ -62,7 +62,7 @@ export default class AssetPickerSize extends React.Component {
 		return (
 			<div className={cx('course-info-asset-picker-size', {active}, selectID)} onClick={this.onClick}>
 				<div className="preview">
-					{src && <img src={src} style={{width: '100%'}}/>}
+					{src && <img src={src}/>}
 				</div>
 				<div className="name">{name}</div>
 			</div>

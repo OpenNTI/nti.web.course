@@ -1,0 +1,30 @@
+@import '~nti-style-common';
+
+.course-asset-editor-footer {
+	overflow: hidden;
+	padding: 0 20px 20px;
+	margin-top: rem-calc(25px);
+
+	.nti-button {
+		float: right;
+
+		&.cancel {
+			background: none;
+			padding-left: 0.5rem;
+			padding-right: 0.5rem;
+			margin-right: 1rem;
+		}
+
+		&.continue {
+			padding-left: 2rem;
+			padding-right: 2rem;
+		}
+
+		&.disabled {
+			background-color: $tertiary-grey;
+			color: $primary-grey;
+			opacity: 0.5;
+			pointer-events: none;
+		}
+	}
+}

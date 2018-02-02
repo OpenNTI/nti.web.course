@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
 import AssetType from './AssetType';
-import CourseAssetEditor from './CourseAssetEditor';
+import CourseAssetEditor from './course-asset-editor';
 
 const LABELS = {
 	label: 'Assets',
@@ -33,7 +33,6 @@ export default class AssetsView extends React.Component {
 	}
 
 	renderInput () {
-
 		return (<div className="add-course-assets-button" onClick={this.launch}>{t('update')}</div>);
 	}
 
