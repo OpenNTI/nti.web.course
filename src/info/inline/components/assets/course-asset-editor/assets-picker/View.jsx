@@ -27,25 +27,25 @@ const getSizes = () => {
 		{
 			name: t('icon'),
 			id: 'icon',
-			formatting: {crop: {aspectRatio: 1}},
+			formatting: { crop: { aspectRatio: 1} },
 			fileName: 'catalog-entry-thumbnail'
 		},
 		{
 			name: t('promo'),
 			id: 'promo',
-			formatting: {crop: {aspectRatio: 16 / 9}},
+			formatting: { crop: { aspectRatio: 16 / 9} },
 			fileName: 'catalog-promo-large'
 		},
 		{
 			name: t('cover'),
 			id: 'cover',
-			formatting: {crop: {aspectRatio: 232 / 170}},
+			formatting: { crop: { aspectRatio: 232 / 170} },
 			fileName: 'catalog-entry-cover',
 		},
 		{
 			name: t('background'),
 			id: 'background',
-			formatting: {crop: {aspectRatio: 3 / 2}},
+			formatting: { crop: { aspectRatio: 3 / 2 }, blur: { radius: 50 } },
 			fileName: 'catalog-background'
 		}
 	];
