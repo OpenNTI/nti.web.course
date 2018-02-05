@@ -11,7 +11,7 @@ const LABELS = {
 	courses: 'Courses',
 	sections: 'Sections',
 	edit: 'Edit Course Information',
-	publish: 'Course Visilbity'
+	publish: 'Course Visibility'
 };
 
 const t = scoped('nti-web-course.navigation.CourseNavMenu', LABELS);
