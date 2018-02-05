@@ -49,7 +49,7 @@ export default class BaseAssetPicker extends React.Component {
 
 	render () {
 		return (
-			<div>
+			<div className="course-asset-editor-base-asset-picker">
 				<Header onCancel={this.onCancel}/>
 				<ImageEditorWrapper onChange={this.onImageChange}/>
 				<Footer

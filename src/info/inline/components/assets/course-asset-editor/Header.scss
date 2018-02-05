@@ -6,10 +6,16 @@
 	padding: rem-calc(13px 20px 0);
 	margin-bottom: rem-calc(25px);
 
+	i.disabled {
+		opacity: 0.5;
+		pointer-events: none
+	}
+
 	i.icon-chevronup-25 {
 		color: $tertiary-grey;
 		transform: rotate(-90deg);
 		font-size: 2rem;
+
 	}
 
 	.meta {

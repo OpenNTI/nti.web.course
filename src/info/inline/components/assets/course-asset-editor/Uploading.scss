@@ -1,0 +1,46 @@
+@import '~nti-style-common';
+
+.course-asset-editor-uploading {
+
+	.progress-container {
+		min-height: 350px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+
+	.progress {
+		width: 80%;
+
+		.message {
+			color: $secondary-grey;
+			font-size: 1.25rem;
+			margin-bottom: 1rem;
+			text-align: center;
+		}
+
+		.bar {
+			width: 100%;
+			height: rem-calc(10px);
+			background-color: rgba($primary-blue, 0.2);
+
+			&.uploaded {
+				background-color: rgba($primary-green, 0.2);
+
+				.indicator {
+					width: 100%;
+					transition: none;
+					background-color: $primary-green;
+				}
+			}
+
+			.indicator {
+				height: 100%;
+				background-color: $primary-blue;
+				transition: width 1s ease;
+			}
+		}
+	}
+}
