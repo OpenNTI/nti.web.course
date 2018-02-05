@@ -9,7 +9,8 @@ export default class CourseAssetEditorFooter extends React.Component {
 		onCancel: PropTypes.func,
 		continueDisabled: PropTypes.bool,
 		continueLabel: PropTypes.string,
-		cancelLabel: PropTypes.string
+		cancelLabel: PropTypes.string,
+		noCancel: PropTypes.bool
 	}
 
 	onContinue = () => {
@@ -29,16 +30,18 @@ export default class CourseAssetEditorFooter extends React.Component {
 	}
 
 	render () {
-		const {continueDisabled, continueLabel, cancelLabel} = this.props;
+		const {continueDisabled, continueLabel, cancelLabel, noCancel} = this.props;
 
 		return (
 			<div className="course-asset-editor-footer">
 				<Button className="continue" onClick={this.onContinue} rounded disabled={continueDisabled}>
 					{continueLabel}
 				</Button>
-				<Button className="cancel" onClick={this.onCancel} secondary>
-					{cancelLabel}
-				</Button>
+				{!noCancel && (
+					<Button className="cancel" onClick={this.onCancel} secondary>
+						{cancelLabel}
+					</Button>
+				)}
 			</div>
 		);
 	}

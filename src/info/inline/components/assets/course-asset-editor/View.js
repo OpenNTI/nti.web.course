@@ -5,6 +5,8 @@ import {Prompt, Switch} from 'nti-web-commons';
 import BaseAssetPicker from './BaseAssetPicker';
 import AssetCropping from './AssetCropping';
 import AssetsPicker from './assets-picker';
+import Uploading from './Uploading';
+import {Upload} from './tasks';
 
 
 export default class CourseAssetEditor extends React.Component {
@@ -43,10 +45,24 @@ export default class CourseAssetEditor extends React.Component {
 		}
 	}
 
+
+	onSave = () => {
+		const {onSave, onDismiss} = this.props;
+
+		if (onSave) {
+			onSave();
+		}
+
+		if (onDismiss) {
+			onDismiss();
+		}
+	}
+
 	onBaseAssetSave = (baseAsset) => {
 		this.setState({
 			baseAsset,
-			active: 'crop'
+			active: 'crop',
+			error: null
 		});
 	}
 
@@ -54,7 +70,8 @@ export default class CourseAssetEditor extends React.Component {
 	onAssetCroppingSave = (croppedAsset) => {
 		this.setState({
 			croppedAsset,
-			active: 'picker'
+			active: 'picker',
+
 		});
 	}
 
@@ -69,13 +86,29 @@ export default class CourseAssetEditor extends React.Component {
 
 	onAssetsPicked = (images) => {
 		const {catalogEntry} = this.props;
-		const formData = new FormData();
+		const onProgress = (e) => {
+			this.setState({
+				uploadProgress: e
+			});
+		};
 
-		for (let image of images) {
-			formData.append(image.fileName, image.blob);
-		}
+		this.setState({
+			active: 'uploading',
+			error: null
+		}, async () => {
+			try {
+				const resp = await Upload(catalogEntry, images, onProgress);
 
-		debugger;
+				this.setState({
+					uploaded: resp
+				});
+			} catch (e) {
+				this.setState({
+					uploadError: e
+				});
+			}
+		});
+
 	}
 
 	onPickerBack = () => {
@@ -86,7 +119,7 @@ export default class CourseAssetEditor extends React.Component {
 
 
 	render () {
-		const {active, baseAsset, croppedAsset} = this.state;
+		const {active, baseAsset, croppedAsset, uploaded, uploadProgress, uploadError} = this.state;
 		const {catalogEntry} = this.props;
 
 		return (
@@ -115,6 +148,16 @@ export default class CourseAssetEditor extends React.Component {
 					onBack={this.onPickerBack}
 					catalogEntry={catalogEntry}
 					asset={croppedAsset}
+				/>
+				<Switch.Item
+					name="uploading"
+					component={Uploading}
+					uploaded={uploaded}
+					uploadProgress={uploadProgress}
+					uploadError={uploadError}
+					onCancel={this.onCancel}
+					onSave={this.onSave}
+					onBack={this.onUploadingBack}
 				/>
 			</Switch.Container>
 		);

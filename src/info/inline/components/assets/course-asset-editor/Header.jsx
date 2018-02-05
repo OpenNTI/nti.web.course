@@ -1,12 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 export default class CourseAssetEditorHeader extends React.Component {
 	static propTypes = {
 		onBack: PropTypes.func,
 		title: PropTypes.string,
 		subTitle: PropTypes.string,
-		onCancel: PropTypes.func
+		onCancel: PropTypes.func,
+		backDisabled: PropTypes.bool,
+		cancelDisabled: PropTypes.bool
 	}
 
 
@@ -29,16 +32,16 @@ export default class CourseAssetEditorHeader extends React.Component {
 
 
 	render () {
-		const {title, subTitle, onBack, onCancel} = this.props;
+		const {title, subTitle, onBack, onCancel, backDisabled, cancelDisabled} = this.props;
 
 		return (
 			<div className="course-asset-editor-header">
-				{onBack && (<i className="icon-chevronup-25" onClick={this.onBack} />)}
+				{onBack && (<i className={cx('icon-chevronup-25', {disabled: backDisabled})} onClick={this.onBack} />)}
 				<div className="meta">
 					{subTitle && (<span className="sub-title">{subTitle}</span>)}
 					{title && (<span className="title">{title}</span>)}
 				</div>
-				{onCancel && (<i className="icon-light-x" onClick={this.onCancel} />)}
+				{onCancel && (<i className={cx('icon-light-x', {disabled: cancelDisabled})} onClick={this.onCancel} />)}
 			</div>
 		);
 	}
