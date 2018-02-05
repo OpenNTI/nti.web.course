@@ -55,7 +55,7 @@ export default class CourseVisibility extends React.Component {
 			return this.renderLabeledContent(
 				t('inPreview'),
 				'preview',
-				catalogEntry.StartDate ? DateTime.format(new Date(catalogEntry.StartDate), '[Starts ] MMM. D, YYYY') : t('noStartDate')
+				catalogEntry.StartDate ? DateTime.format(new Date(catalogEntry.StartDate), '[Starts] MMM. D, YYYY') : t('noStartDate')
 			);
 		}
 		else {
@@ -68,9 +68,9 @@ export default class CourseVisibility extends React.Component {
 
 		const items = (options && options.Items) || {};
 
-		const { OpenEnrollment, IMSEnrollment, FiveMinuteEnrollment, StoreEnrollment } = items;
+		const { OpenEnrollment, IMSEnrollment, FiveminuteEnrollment, StoreEnrollment } = items;
 
-		const isForCredit = (IMSEnrollment && IMSEnrollment.SourcedID) || FiveMinuteEnrollment;
+		const isForCredit = (IMSEnrollment && IMSEnrollment.SourcedID) || FiveminuteEnrollment;
 		const isPublic = StoreEnrollment || OpenEnrollment;
 
 		let label = t('invitationOnly');

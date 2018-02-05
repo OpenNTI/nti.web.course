@@ -70,6 +70,7 @@ describe('CourseInfo test', () => {
 
 		const basicInfoView = cmp.find('.basic-info-section');
 
+		expect(cmp.find('.course-visibility').first().exists()).toBe(true);
 		expect(basicInfoView.find('.section-controls').exists()).toBe(false);
 		expect(cmp.find('.course-view-title').first().text()).toEqual(title);
 
@@ -100,5 +101,33 @@ describe('CourseInfo test', () => {
 		testEditorActivation('StartDate', '.start-date-section');
 		testEditorActivation('EndDate', '.end-date-section');
 		testEditorActivation('MeetTimes', '.meet-times-section');
+	});
+
+	test('Test non-editable', () => {
+		const title = 'a title';
+		const catalogEntry = {
+			title,
+			StartDate: new Date('2016-06-13T05:00:00Z'),
+			getLink: function () {
+				return null;
+			},
+			getEnrollmentOptions: function () {
+				return {};
+			}
+		};
+
+		const cmp = mount(<CourseInfo catalogEntry={catalogEntry}/>);
+
+		cmp.setState({
+			catalogEntry,
+			courseInstance,
+			redemptionCodes,
+			loading: false
+		});
+
+		cmp.update();
+
+		// course visibility widget should not appear when info is not editable
+		expect(cmp.find('.course-visibility').exists()).toBe(false);
 	});
 });
