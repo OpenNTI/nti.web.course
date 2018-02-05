@@ -11,6 +11,7 @@ import {
 	COURSE_SAVE_ERROR
 } from '../../editor/Constants';
 
+import CourseVisibility from './widgets/CourseVisibility';
 import CourseVideo from './widgets/CourseVideo';
 import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';
@@ -217,6 +218,15 @@ export default class CourseInfo extends React.Component {
 		});
 	}
 
+	renderCourseVisibilityWidget () {
+		const { editable } = this.props;
+		const { catalogEntry } = this.state;
+
+		if(editable) {
+			return <CourseVisibility catalogEntry={catalogEntry} onVisibilityChanged={this.endEditing}/>;
+		}
+	}
+
 	render () {
 		const { editable } = this.props;
 		const { activeEditor, catalogEntry, courseInstance, enrollmentAccess, facilitators, loading } = this.state;
@@ -229,6 +239,7 @@ export default class CourseInfo extends React.Component {
 
 		return (
 			<div className={classname}>
+				{this.renderCourseVisibilityWidget()}
 				<CourseVideo
 					catalogEntry={catalogEntry}
 					editable={editable}

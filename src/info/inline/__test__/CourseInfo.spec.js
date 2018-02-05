@@ -46,6 +46,9 @@ describe('CourseInfo test', () => {
 			StartDate: new Date('2016-06-13T05:00:00Z'),
 			getLink: function () {
 				return null;
+			},
+			getEnrollmentOptions: function () {
+				return {};
 			}
 		};
 

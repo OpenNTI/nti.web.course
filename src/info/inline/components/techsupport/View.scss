@@ -1,8 +1,9 @@
 .course-info-support {
-    border-top: solid 1px #eaeaea;
-    padding: 1.125em 2.188em;
+	border-top: solid 1px #eaeaea;
+	padding: 1.125em 2.188em;
 	text-align: left;
-	
+	background-color: white;
+
 	.techsupport-header {
 		font-size: 1em;
 		font-weight: 600;
@@ -25,22 +26,13 @@
 			list-style-type: none;
 			padding: 0;
 			margin: 0;
-			margin-left: 1.250em;
+			margin-left: 1.25em;
 
 			.techsupport-link a {
 				text-decoration: none;
-				color: #3FB3F6;
+				color: #3fb3f6;
 				font-size: 0.875em;
 			}
 		}
 	}
 }
-
-
-
-
-
-
-
-
-

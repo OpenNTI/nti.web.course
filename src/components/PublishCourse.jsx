@@ -7,12 +7,14 @@ import cx from 'classnames';
 
 import {saveCatalogEntry} from '../editor/Actions';
 
+import EnrollmentOptions from './EnrollmentOptions';
+
 const LABELS = {
 	ready: 'Ready to Launch?',
 	headerSubText: 'That\'s exciting!  Review a couple settings before the big moment.',
 	cancel: 'Cancel',
 	publish: 'Update Visibility',
-	publiclyAvailable: 'Publicly Available',
+	publiclyAvailable: 'Visible in Catalog',
 	previewMode: 'Preview Mode',
 	nullPreview: 'Based on start date',
 	previewOn: 'On',
@@ -26,7 +28,10 @@ const t = scoped('nti-web-course.navigation.CourseNavMenu', LABELS);
 
 export default class PublishCourse extends React.Component {
 	static propTypes = {
-		courseId: PropTypes.string,
+		course: PropTypes.oneOfType([
+			PropTypes.object,
+			PropTypes.string
+		]),
 		onFinish: PropTypes.func,
 		onCancel: PropTypes.func
 	}
@@ -35,16 +40,27 @@ export default class PublishCourse extends React.Component {
 		super(props);
 		this.state = {};
 
-		this.loadCourse();
+		const { course } = props;
+
+		if(typeof course === 'string') {
+			this.loadCourse();
+		}
+		else {
+			this.state = {
+				course,
+				isNonPublic: course.is_non_public,
+				previewMode: course.PreviewRawValue
+			};
+		}
 	}
 
 	attachFlyoutRef = x => this.flyout = x
 
-	static show (courseId) {
+	static show (course) {
 		let dialog = null;
 
 		return new Promise((fulfill, reject) => {
-			dialog = Prompt.modal(<PublishCourse onFinish={fulfill} onCancel={reject} courseId={courseId}/>);
+			dialog = Prompt.modal(<PublishCourse onFinish={fulfill} onCancel={reject} course={course}/>);
 		}).then((savedEntry) => {
 			dialog && dialog.dismiss();
 
@@ -57,15 +73,15 @@ export default class PublishCourse extends React.Component {
 	}
 
 	async loadCourse () {
-		const { courseId } = this.props;
+		const { course } = this.props;
 
 		const service = await getService();
-		const courseObject = await service.getObject(courseId);
+		const courseObject = await service.getObject(course);
 
-		const course = courseObject.CatalogEntry || courseObject; // will handle CatalogEntry IDs and CourseInstance IDs as courseId prop
+		const catalogEntry = courseObject.CatalogEntry || courseObject; // will handle CatalogEntry IDs and CourseInstance IDs as course prop
 
 		this.setState({
-			course,
+			course: catalogEntry,
 			isNonPublic: course.is_non_public,
 			previewMode: course.PreviewRawValue
 		});
@@ -189,6 +205,7 @@ export default class PublishCourse extends React.Component {
 		return (<div className="course-options">
 			<div className="publicly-available-option">{this.renderOption(t('publiclyAvailable'), null, !this.state.isNonPublic, this.onPublicChange)}</div>
 			<div className="preview-mode-option"><div className="course-option"><div className="course-option-label">{t('previewMode')}</div>{this.renderPreviewWidget()}</div></div>
+			<EnrollmentOptions catalogEntry={this.state.course}/>
 		</div>);
 	}
 

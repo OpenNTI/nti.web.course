@@ -42,7 +42,10 @@ describe('Settings TabPanel test', () => {
 			PreviewRawValue,
 			StartDate,
 			['is_non_public']: isNonPublic,
-			Preview: PreviewRawValue ? true : false
+			Preview: PreviewRawValue ? true : false,
+			getEnrollmentOptions: function () {
+				return {};
+			}
 		};
 	}
 
@@ -51,7 +54,7 @@ describe('Settings TabPanel test', () => {
 
 		let cmp = mount(
 			<PublishCourse
-				courseId="someID"
+				course={catalogEntry}
 			/>
 		);
 
@@ -75,7 +78,7 @@ describe('Settings TabPanel test', () => {
 
 		let cmp = mount(
 			<PublishCourse
-				courseId="someID"
+				course={catalogEntry}
 			/>
 		);
 
@@ -94,7 +97,7 @@ describe('Settings TabPanel test', () => {
 
 		let cmp = mount(
 			<PublishCourse
-				courseId="someID"
+				course={catalogEntry}
 			/>
 		);
 
@@ -114,7 +117,7 @@ describe('Settings TabPanel test', () => {
 
 		let cmp = mount(
 			<PublishCourse
-				courseId="someID"
+				course={catalogEntry}
 			/>
 		);
 
