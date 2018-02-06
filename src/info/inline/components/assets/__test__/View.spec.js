@@ -1,8 +1,3 @@
-import React from 'react';
-import { mount } from 'enzyme';
-
-import View from '../View';
-
 const mockService = () => ({
 	getObject: (o) => Promise.resolve(o),
 	put: (url) => {
