@@ -198,7 +198,8 @@ export default class CourseInfo extends React.Component {
 			<Section
 				className="course-assets"
 				components={[Assets]}
-				catalogEntry={catalogEntry}/>
+				catalogEntry={catalogEntry}
+				onEndEditing={this.endEditing}/>
 		);
 	}
 

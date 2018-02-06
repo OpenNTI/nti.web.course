@@ -166,7 +166,7 @@ export default class Section extends React.Component {
 
 	renderCmp = (cmp) => {
 		const { error } = this.state;
-		const { isEditing, catalogEntry, courseInstance, redemptionCodes, facilitators, enrollmentAccess, editable } = this.props;
+		const { isEditing, onEndEditing, catalogEntry, courseInstance, redemptionCodes, facilitators, enrollmentAccess, editable } = this.props;
 
 		const Cmp = isEditing ? cmp.Edit : cmp.View;
 
@@ -180,6 +180,7 @@ export default class Section extends React.Component {
 				editable={editable}
 				error={error && error.field === cmp.View.FIELD_NAME && error}
 				onValueChange={this.aggregateChanges}
+				onEndEditing={onEndEditing}
 				toggleSaveable={this.toggleSaveable}/>
 		);
 	}

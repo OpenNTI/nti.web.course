@@ -19,7 +19,8 @@ const t = scoped('components.course.editor.inline.components.assets.view', LABEL
 
 export default class AssetsView extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired
+		catalogEntry: PropTypes.object.isRequired,
+		onEndEditing: PropTypes.func
 	}
 
 	//  No static FIELD_NAME
@@ -29,7 +30,15 @@ export default class AssetsView extends React.Component {
 	state = {}
 
 	launch = () => {
-		CourseAssetEditor.show(this.props.catalogEntry);
+		CourseAssetEditor.show(this.props.catalogEntry).then(() => {
+			const { onEndEditing } = this.props;
+
+			onEndEditing && onEndEditing(this.props.catalogEntry);
+		}).catch(() => {
+			const { onEndEditing } = this.props;
+
+			onEndEditing && onEndEditing();
+		});
 	}
 
 	renderInput () {
