@@ -82,8 +82,8 @@ export default class PublishCourse extends React.Component {
 
 		this.setState({
 			course: catalogEntry,
-			isNonPublic: course.is_non_public,
-			previewMode: course.PreviewRawValue
+			isNonPublic: catalogEntry.is_non_public,
+			previewMode: catalogEntry.PreviewRawValue
 		});
 	}
 
