@@ -4,12 +4,13 @@
 	position: relative;
 	display: flex;
 	background: rgba(0, 0, 0, 0.2);
-	margin-bottom: 10px;
+	height: 61px;
+	margin-bottom: 20px;
 
 	.labeled-content {
 		width: 170px;
 		text-align: left;
-		margin: 16px;
+		margin: 14px;
 
 		.label {
 			text-transform: uppercase;
@@ -38,7 +39,7 @@
 		color: white;
 		position: absolute;
 		right: 12px;
-		top: 14px;
+		top: 12px;
 		font-size: 14px;
 		font-weight: 100;
 		padding: 10px 30px;
