@@ -46,6 +46,6 @@ describe('AssetType test', () => {
 
 		const img = cmp.find('img').first();
 
-		expect(img.prop('src')).toEqual('/root/background.png');
+		expect(img.prop('src').indexOf('/root/background.png')).toEqual(0);
 	});
 });
