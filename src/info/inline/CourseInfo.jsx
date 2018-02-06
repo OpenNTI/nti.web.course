@@ -186,12 +186,24 @@ export default class CourseInfo extends React.Component {
 		);
 	}
 
+	endAssetEditing = (catalogEntry) => {
+		this.endEditing(catalogEntry);
+
+		this.setState({ uploadCompleting: true }, () => {
+			this.setState({ uploadCompleting: false });
+		});
+	}
+
 	renderAssetUploadWidget () {
 		const { editable } = this.props;
-		const { catalogEntry } = this.state;
+		const { catalogEntry, uploadCompleting } = this.state;
 
 		if(!editable) {
 			return null;
+		}
+
+		if(uploadCompleting) {
+			return <Loading.Mask/>;
 		}
 
 		return (
@@ -199,7 +211,7 @@ export default class CourseInfo extends React.Component {
 				className="course-assets"
 				components={[Assets]}
 				catalogEntry={catalogEntry}
-				onEndEditing={this.endEditing}/>
+				onEndEditing={this.endAssetEditing}/>
 		);
 	}
 
