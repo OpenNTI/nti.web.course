@@ -5,10 +5,10 @@ import cx from 'classnames';
 
 const LABELS = {
 	enrollmentOptions: 'Enrollment Options',
-	OpenEnrollment: 'Open Enrollment',
-	IMSEnrollment: 'IMS Enrollment',
-	StoreEnrollment: 'Store Enrollment',
-	FiveminuteEnrollment: 'Five-Minute Enrollment',
+	OpenEnrollment: 'Open',
+	IMSEnrollment: 'IMS',
+	StoreEnrollment: 'Purchase',
+	FiveminuteEnrollment: 'Five-Minute',
 	yes: 'Yes',
 	no: 'No',
 	enabled: 'Enabled',
@@ -116,9 +116,39 @@ export default class EnrollmentOptions extends React.Component {
 		}
 	}
 
-	renderOpenAndStoreEnrollment () {
-		const storeEnrollment = this.getOption('StoreEnrollment');
+	renderOpenEnrollment () {
 		const openEnrollment = this.getOption('OpenEnrollment');
+
+		if(!openEnrollment) {
+			return null;
+		}
+
+		const className = cx('enrollment-option', 'open-enrollment');
+
+		const keyValuePairs = [
+			{
+				label: 'Amount',
+				value: 'Free'
+			}
+		];
+
+		return (
+			<div className={className}>
+				<div className="title">{t('OpenEnrollment')}</div>
+				<div className="values">
+					{keyValuePairs.map(this.renderValue)}
+				</div>
+			</div>
+		);
+
+	}
+
+	renderStoreEnrollment () {
+		const storeEnrollment = this.getOption('StoreEnrollment');
+
+		if(!storeEnrollment) {
+			return null;
+		}
 
 		const { Purchasables } = (storeEnrollment || {});
 
@@ -128,21 +158,18 @@ export default class EnrollmentOptions extends React.Component {
 			amount = Purchasables.Items[0].Amount;
 		}
 
-		const className = cx('enrollment-option', openEnrollment && storeEnrollment ? 'store-open-enrollment' : 'general-enrollment');
+		const className = cx('enrollment-option', 'store-enrollment');
 
 		const keyValuePairs = [
 			{
 				label: 'Amount',
-				value: amount === 0 ? 'Free' : amount
+				value:amount
 			}
 		];
 
 		return (
 			<div className={className}>
-				<div className="title">
-					<div>{t('StoreEnrollment')}</div>
-					{openEnrollment && storeEnrollment ? (<div className="informational">{t('alsoFree')}</div>) : null}
-				</div>
+				<div className="title">{t('StoreEnrollment')}</div>
 				<div className="values">
 					{keyValuePairs.map(this.renderValue)}
 				</div>
@@ -154,7 +181,8 @@ export default class EnrollmentOptions extends React.Component {
 		return (
 			<div className="enrollment-options">
 				<div className="course-option-label">{t('enrollmentOptions')}</div>
-				{this.renderOpenAndStoreEnrollment()}
+				{this.renderOpenEnrollment()}
+				{this.renderStoreEnrollment()}
 				{this.renderEnrollmentOption('IMSEnrollment')}
 				{this.renderEnrollmentOption('FiveminuteEnrollment')}
 			</div>
