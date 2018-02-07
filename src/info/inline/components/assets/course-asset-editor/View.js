@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt, Switch} from 'nti-web-commons';
+import {Prompt, Switch, Loading, Presentation} from 'nti-web-commons';
 
 import BaseAssetPicker from './BaseAssetPicker';
 import AssetCropping from './AssetCropping';
@@ -30,7 +30,50 @@ export default class CourseAssetEditor extends React.Component {
 	}
 
 
-	state = {active: 'base'}
+	state = {active: 'loading'}
+
+
+	componentDidMount () {
+		this.setupFor(this.props);
+	}
+
+
+	componentWillReceiveProps (nextProps) {
+		const {catalogEntry:newEntry} = nextProps;
+		const {catalogEntry:oldEntry} = this.props;
+
+		if (newEntry !== oldEntry) {
+			this.setupFor(nextProps);
+		}
+	}
+
+
+	setupFor (props) {
+		const {catalogEntry} = this.props;
+		const sourceAsset = Presentation.getAssetSrc(catalogEntry, 'source');
+
+		this.setState({
+			active: 'loading'
+		}, () => {
+			const img = new Image();
+
+			img.onload = () => {
+				this.setState({
+					active: 'crop',
+					baseAsset: img
+				});
+			};
+
+			img.onerror = () => {
+				this.setState({
+					active: 'base'
+				});
+			};
+
+			img.src = sourceAsset;
+		});
+
+	}
 
 
 	onCancel = () => {
@@ -125,6 +168,10 @@ export default class CourseAssetEditor extends React.Component {
 		return (
 			<Switch.Container active={active} className="course-asset-editor">
 				<Switch.Item
+					name="loading"
+					component={Loading.Mask}
+				/>
+				<Switch.Item
 					name="base"
 					component={BaseAssetPicker}
 					onCancel={this.onCancel}
@@ -148,6 +195,7 @@ export default class CourseAssetEditor extends React.Component {
 					onBack={this.onPickerBack}
 					catalogEntry={catalogEntry}
 					asset={croppedAsset}
+					baseAsset={baseAsset}
 				/>
 				<Switch.Item
 					name="uploading"

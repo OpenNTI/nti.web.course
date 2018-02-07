@@ -93,7 +93,7 @@ export default class AssetsPicker extends React.Component {
 
 
 	onSave = async () => {
-		const {asset, onSave} = this.props;
+		const {asset, onSave, baseAsset} = this.props;
 		const {sizes} = this.state;
 
 		try {
@@ -106,9 +106,10 @@ export default class AssetsPicker extends React.Component {
 					return {blob, fileName: size.fileName};
 				})
 			);
+			const baseBlob = await ImageEditor.getBlobForEditorState(ImageEditor.getEditorState(baseAsset, {}));
 
 
-			onSave(images);
+			onSave([...images, {fileName: 'catalog-source', blob: baseBlob}]);
 		} catch (e) {
 			//TODO: handle error
 		}
