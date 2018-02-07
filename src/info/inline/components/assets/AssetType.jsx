@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Presentation, Prompt} from 'nti-web-commons';
+import {scoped} from 'nti-lib-locale';
 import cx from 'classnames';
+
+const DEFAULT_TEXT = {
+	thumb: 'Icon',
+	landing: 'Cover',
+	promo: 'Promo',
+	background: 'Background'
+};
+
+const t = scoped('nti-web-course.info.inline.components.assets.assettype', DEFAULT_TEXT);
 
 export default class AssetType extends React.Component {
 	static propTypes = {
@@ -27,7 +37,7 @@ export default class AssetType extends React.Component {
 		const className = cx('asset', type);
 
 		return (<div className={className}>
-			<div className="asset-label">{type}</div>
+			<div className="asset-label">{t(type)}</div>
 			<Presentation.Asset contentPackage={catalogEntry} propName="src" type={type}>
 				<img onClick={this.launchImgDialog}/>
 			</Presentation.Asset>

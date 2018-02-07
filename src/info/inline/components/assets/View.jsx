@@ -56,6 +56,7 @@ export default class AssetsView extends React.Component {
 			return (
 				<div className="assets-preview">
 					{this.renderAsset('thumb')}
+					{this.renderAsset('promo')}
 					{this.renderAsset('landing')}
 					{this.renderAsset('background')}
 				</div>
@@ -65,12 +66,12 @@ export default class AssetsView extends React.Component {
 
 	render () {
 		return (
-			<div className="columned">
-				<div className="field-info">
+			<div className="assets-section">
+				<div className="header-section">
 					<div className="date-label">{t('label')}</div>
-				</div>
-				<div className="content-column">
 					{this.renderInput()}
+				</div>
+				<div className="content-row">
 					{this.renderPreview()}
 				</div>
 			</div>

@@ -10,6 +10,12 @@
 	color: $primary-blue;
 	cursor: pointer;
 	font-weight: 400;
+	font-size: 14px;
+	margin: 2px 0 0 14px;
+}
+
+.header-section {
+	display: flex;
 }
 
 .assets-preview {
@@ -17,7 +23,7 @@
 	margin-top: 20px;
 
 	.asset {
-		margin-right: 15px;
+		margin-right: 25px;
 
 		img {
 			cursor: pointer;
@@ -28,10 +34,15 @@
 			text-transform: uppercase;
 			color: #b8b8b8;
 			font-weight: 600;
+			text-align: center;
 		}
 
 		&.landing img {
 			width: 72px;
+		}
+
+		&.promo img {
+			width: 92px;
 		}
 
 		&.background img {
