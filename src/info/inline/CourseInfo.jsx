@@ -118,7 +118,7 @@ export default class CourseInfo extends React.Component {
 		return saveFacilitators(this.state.catalogEntry, this.state.courseInstance, facilitators).then((saved) => {
 			this.setState({ facilitators: saved });
 
-			return saved;
+			return this.state.catalogEntry;
 		});
 	}
 
