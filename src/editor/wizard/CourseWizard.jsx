@@ -5,7 +5,6 @@ import { Models } from 'nti-lib-interfaces';
 import { Switch } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
-import { editCourse } from '../index';
 import { Blank } from '../templates/Blank';
 import { Import } from '../templates/Import';
 
@@ -58,15 +57,9 @@ export default class CourseWizard extends React.Component {
 	}
 
 	creationCompleted = (allowRedirect) => {
-		const { onCourseModified, onFinish } = this.props;
+		const { onFinish } = this.props;
 
 		onFinish && onFinish(this.state.catalogEntry);
-
-		if(allowRedirect) {
-			editCourse(this.state.catalogEntry).then((modifiedCourse) => {
-				onCourseModified && onCourseModified(modifiedCourse);
-			});
-		}
 	}
 
 	renderItem = (panel, index, arr) => {
