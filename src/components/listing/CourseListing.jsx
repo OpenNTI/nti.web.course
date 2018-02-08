@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getService } from 'nti-web-client';
-import { Loading } from 'nti-web-commons';
+import { Loading, Prompt } from 'nti-web-commons';
 
 import { Editor } from '../../';
 
@@ -16,7 +16,7 @@ export default class CourseListing extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = { loading: true, courses: [] };
+		this.state = { selectedItems: [], loading: true, courses: [] };
 
 		this.loadAllCourses();
 	}
@@ -45,6 +45,31 @@ export default class CourseListing extends React.Component {
 		Editor.editCourse(course);
 	}
 
+	isSelected (course) {
+		const id = course && course.NTIID;
+
+		const {selectedItems} = this.state;
+
+		return selectedItems.some(x => x.NTIID === id);
+	}
+
+	onToggle = (course, value) => {
+		let {selectedItems} = this.state;
+
+		if(value) {
+			if(!this.isSelected(course)) {
+				selectedItems.push(course);
+			}
+		}
+		else {
+			if(this.isSelected(course)) {
+				selectedItems = selectedItems.filter(x => x.NTIID !== course.NTIID);
+			}
+		}
+
+		this.setState({selectedItems});
+	}
+
 	renderCourse (course, index) {
 		const { onCourseClick } = this.props;
 
@@ -55,7 +80,39 @@ export default class CourseListing extends React.Component {
 					onClick={onCourseClick ? onCourseClick : this.showEditor}
 					onEdit={this.showEditor}
 					onModification={this.loadAllCourses}
-					isAdministrative={this.props.isAdministrative}/>
+					isAdministrative={this.props.isAdministrative}
+					onToggle={this.onToggle}
+					selected={this.isSelected(course)}/>
+			</div>
+		);
+	}
+
+	onDelete = () => {
+		Prompt.areYouSure('').then(() => {
+			this.deleteAllSelected();
+		});
+	}
+
+	async deleteAllSelected () {
+		const { selectedItems } = this.state;
+
+		const service = await getService();
+
+		const courses = await Promise.all(selectedItems.map(x => service.getObject(x.CourseNTIID)));
+
+		await Promise.all(courses.map(x => x.delete()));
+
+		alert('Deleted ' + courses.length + ' courses');
+	}
+
+	renderToolbar () {
+		if(this.state.loading) {
+			return null;
+		}
+
+		return (
+			<div className="course-list-toolbar">
+				<div className="delete-button" onClick={this.onDelete}>Delete</div>
 			</div>
 		);
 	}
@@ -73,6 +130,7 @@ export default class CourseListing extends React.Component {
 	render () {
 		return (<div className="course-listing">
 			{this.renderLoading()}
+			{this.renderToolbar()}
 			{this.renderCourses()}
 		</div>
 		);

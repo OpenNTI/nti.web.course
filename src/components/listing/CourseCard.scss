@@ -18,10 +18,36 @@
 	cursor: pointer;
 	position: relative;
 
+	.toggler-container {
+		width: 40px;
+		height: 40px;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+
+		.toggler {
+			width: 12px;
+			height: 12px;
+			box-shadow: 1px 1px 1px 1px #ccc;
+			cursor: pointer;
+			border-radius: 2px;
+			margin-left: 10px;
+			margin-top: 20px;
+
+			&.selected {
+				background-color: $primary-blue;
+				box-shadow: 1px 1px 2px 1px $primary-blue;
+			}
+		}
+	}
+
 	.admin-controls {
 		opacity: 1;
 		font-size: 20px;
 		margin-top: 4px;
+		position: absolute;
+		top: 6px;
+		right: 10px;
 	}
 
 	.course-controls:hover, .cover:hover + .course-controls {

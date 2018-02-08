@@ -1,5 +1,24 @@
 @import "~nti-style-common";
 
+.course-list-toolbar {
+	width: 1030px;
+	background-color: rgba(0, 0, 0, 0.2);
+	color: #474747;
+	margin-bottom: 10px;
+	display: flex;
+
+	.delete-button {
+		background-color: #ea3525;
+		color: white;
+		padding: 10px;
+		margin: 10px;
+		border-radius: 3px;
+		cursor: pointer;
+		width: 100px;
+		text-align: center;
+	}
+}
+
 .course-item-list {
 	background-color: white;
 	display: flex;

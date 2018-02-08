@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import { getService } from 'nti-web-client';
 import { Prompt, Flyout, Presentation } from 'nti-web-commons';
+import cx from 'classnames';
 
 import CourseMenu from './CourseMenu';
 
@@ -18,7 +19,9 @@ export default class CourseCard extends React.Component {
 		onClick: PropTypes.func,
 		onEdit: PropTypes.func,
 		onModification: PropTypes.func,
-		isAdministrative: PropTypes.bool
+		isAdministrative: PropTypes.bool,
+		onToggle: PropTypes.func,
+		selected: PropTypes.bool
 	}
 
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
@@ -159,6 +162,26 @@ export default class CourseCard extends React.Component {
 		onClick && onClick(course);
 	}
 
+	onCheckClick = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		const { course, selected, onToggle } = this.props;
+
+		onToggle && onToggle(course, !selected);
+	}
+
+	renderCheckbox () {
+		const {selected} = this.props;
+		const clsName = cx('toggler', {selected});
+
+		return (
+			<div className="toggler-container" onClick={this.onCheckClick}>
+				<div className={clsName}/>
+			</div>
+		);
+	}
+
 	render () {
 		const { course } = this.props;
 
@@ -173,6 +196,7 @@ export default class CourseCard extends React.Component {
 				{this.renderInstructors()}
 			</div>
 			{this.renderAdminOptions()}
+			{this.renderCheckbox()}
 		</div>);
 	}
 }
