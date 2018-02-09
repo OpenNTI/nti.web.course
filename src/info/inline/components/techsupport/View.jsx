@@ -3,6 +3,8 @@ import { scoped } from 'nti-lib-locale';
 
 import TechsupportLink from './TechsupportLink';
 
+const MISSING = '~~missing~~';
+
 //This locale scope does not match its location yet because it was moved from the mobile app.
 const t = scoped('course.contactInfo', {
 	label: 'Tech Support',
@@ -25,24 +27,31 @@ const t = scoped('course.contactInfo', {
 });
 
 const renderLink = index => {
-	const label = t(`link${index}.label`);
+	const label = t(`link${index}.label`, {fallback: MISSING});
 	const link = t(`link${index}.link`);
-	return (
-		<TechsupportLink href={link} label={label} />
+
+	return label === MISSING ? null : (
+		<TechsupportLink key={index} href={link} label={label} />
 	);
 };
 
-const TechSupport = () => (
-	<div className="course-info-support">
-		<h3 className="techsupport-header">{t('label')}</h3>
-		<div className="techsupport-info">
-			<div className="techsupport-image" />
-			<ul className="techsupport-links">
-				{[0,1,2,3].map(x => renderLink(x))}
-			</ul>
+const TechSupport = () => {
+	const list = [0,1,2,3]
+		.map(x => renderLink(x))
+		.filter(Boolean);
+
+	return list.length === 0 ? null : (
+		<div className="course-info-support">
+			<h3 className="techsupport-header">{t('label')}</h3>
+			<div className="techsupport-info">
+				<div className="techsupport-image" />
+				<ul className="techsupport-links">
+					{list}
+				</ul>
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 
 export default TechSupport;
