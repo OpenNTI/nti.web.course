@@ -4,14 +4,13 @@ import {scoped} from 'nti-lib-locale';
 import {Prompt} from 'nti-web-commons';
 import cx from 'classnames';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.Section', {
 	edit: 'Edit',
 	cancel: 'Cancel',
 	save: 'Save',
 	deleteBlock: 'Delete Block'
-};
-
-const t = scoped('components.course.editor.inline.components.courseinfo', LABELS);
+});
 
 /**
  * Wrapper for an editable section of a course.  The components provided via props

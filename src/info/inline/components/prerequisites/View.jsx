@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.prerequisites.View', {
 	label: 'Prerequisites',
 	none: 'None'
-};
-
-const t = scoped('components.course.editor.inline.components.prerequisites.view', LABELS);
+});
 
 export default class PrerequisitesView extends React.Component {
 	static propTypes = {

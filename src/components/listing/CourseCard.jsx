@@ -7,11 +7,10 @@ import cx from 'classnames';
 
 import CourseMenu from './CourseMenu';
 
-const LABELS = {
-	confirmDelete: 'Do you want to delete this course?'
-};
 
-const t = scoped('components.course.components.listing.coursecard', LABELS);
+const t = scoped('course.components.listing.CourseCard', {
+	confirmDelete: 'Do you want to delete this course?'
+});
 
 export default class CourseCard extends React.Component {
 	static propTypes = {

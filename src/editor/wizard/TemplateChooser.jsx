@@ -4,14 +4,13 @@ import {scoped} from 'nti-lib-locale';
 
 import Template from './Template';
 
-const LABELS = {
+
+const t = scoped('course.wizard.TemplateChooser', {
 	cancel: 'Cancel',
 	courseName: 'Course Name',
 	identifier: 'Identification Number (i.e. UCOL-3224)',
 	description: 'Description'
-};
-
-const t = scoped('components.course.wizard.templatechooser', LABELS);
+});
 
 export default class TemplateChooser extends React.Component {
 	static propTypes = {

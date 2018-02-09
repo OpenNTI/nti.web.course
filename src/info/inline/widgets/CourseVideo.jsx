@@ -4,12 +4,11 @@ import Video, { EmbedInput, getCanonicalUrlFrom } from 'nti-web-video';
 import { Prompt } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.widgets.CourseVideo', {
 	change: 'Change',
 	remove: 'Remove'
-};
-
-const t = scoped('components.course.editor.inline.widgets.coursevideo', LABELS);
+});
 
 export default class CourseVideo extends React.Component {
 	static propTypes = {

@@ -7,14 +7,13 @@ import Tool from './Tool';
 import ReportsIcon from './assets/reports.svg';
 import RosterIcon from './RosterIcon';
 
-const TOOLS = {
+
+const t = scoped('course.admin-tools.info-panel.InfoPanel', {
 	reportsTitle: 'Reports',
 	reportsSubtitle: 'Access a variety of downloadable reports to share with peers.',
 	rosterTitle: 'Roster',
 	rosterSubtitle: 'Manage and communicate with groups of learners.'
-};
-
-const t = scoped('nti-web-compontent-course.admin-tools.info-panel.InfoPanel', TOOLS);
+});
 
 const InfoPanel = ({ totalLearners, showRoster, showReports }) => (
 	<div className="course-admin-panel">

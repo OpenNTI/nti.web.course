@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-const LABELS = {
+
+const t = scoped('course.components.listing.CourseMenu', {
 	edit: 'Edit Course Information',
 	export: 'Export',
 	delete: 'Delete Course',
 	drop: 'Drop Course',
 	registered: 'You\'re Registered'
-};
-
-const t = scoped('components.course.components.listing.coursemenu', LABELS);
+});
 
 export default class CourseMenu extends React.Component {
 	static propTypes = {

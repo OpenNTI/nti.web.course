@@ -8,12 +8,12 @@ import Footer from './Footer';
 
 const MIN_TIME = 5000;
 
-const DEFAULT_TEXT = {
+
+const t = scoped('course.info.inline.assets.course-asset-editor.Uploading', {
 	uploading: 'Uploading the course assets. This may take a few moments.',
 	uploaded: 'Course assets uploaded',
 	done: 'Done'
-};
-const t = scoped('nti-web-course.info.inline.assets.course-asset-editor.Uploading', DEFAULT_TEXT);
+});
 
 function getPercentage (progress, uploaded) {
 	if (uploaded) { return 100; }

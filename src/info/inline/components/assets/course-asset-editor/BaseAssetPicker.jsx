@@ -8,11 +8,10 @@ import Footer from './Footer';
 import ImageEditorWrapper from './ImageEditorWrapper';
 
 
-const DEFAULT_TEXT = {
+const t = scoped('course.info.inline.asets.course-asset-editor.BaseAssetPicker', {
 	continue: 'Continue',
 	cancel: 'Cancel'
-};
-const t = scoped('nti-web-course.info.inline.asets.course-asset-editor.BaseAssetPicker', DEFAULT_TEXT);
+});
 
 export default class BaseAssetPicker extends React.Component {
 	static propTypes = {

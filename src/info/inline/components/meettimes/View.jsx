@@ -4,11 +4,10 @@ import {scoped} from 'nti-lib-locale';
 
 import { getWeekdaysFrom, convertToTimeStr } from './utils';
 
-const LABELS = {
-	label: 'Meet Times'
-};
 
-const t = scoped('components.course.editor.inline.components.meettimes.view', LABELS);
+const t = scoped('course.info.inline.components.meettimes.View', {
+	label: 'Meet Times'
+});
 
 export default class MeetTimesView extends React.Component {
 	static propTypes = {

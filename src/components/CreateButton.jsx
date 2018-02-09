@@ -3,12 +3,9 @@ import { scoped } from 'nti-lib-locale';
 
 import { Editor } from '../index';
 
-const LABELS = {
-	create: 'Create New Course',
-	launchWizard: 'New'
-};
-
-const t = scoped('components.course.components.createbutton', LABELS);
+const t = scoped('course.components.CreateButton', {
+	label: 'Create New Course',
+});
 
 export default class CreateButton extends React.Component {
 	constructor (props) {
@@ -20,6 +17,6 @@ export default class CreateButton extends React.Component {
 	}
 
 	render () {
-		return (<div onClick={this.launchWizard} className="create-course-button">{t('create')}</div>);
+		return (<div onClick={this.launchWizard} className="create-course-button">{t('label')}</div>);
 	}
 }

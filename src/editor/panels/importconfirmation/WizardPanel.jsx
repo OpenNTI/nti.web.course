@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { scoped } from 'nti-lib-locale';
 
-const LABELS = {
+
+const t = scoped('course.editor.panels.importconfirmation.WizardPanel', {
 	defaultTitle: 'Import Course',
 	importInProgress: 'Import process started.  The course will automatically be updated when the process completes.',
 	confirm: 'OK'
-};
-
-const t = scoped('components.course.editor.panels.importconfirmation.wizardpanel', LABELS);
+});
 
 export default class CourseImportConfirmation extends React.Component {
 	static tabName = 'Import'

@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import { Widgets } from 'nti-web-reports';
 
-const DEFAULT_TEXT = {
+const t = scoped('course.admin.dashboard', {
 	totalEnrollments: 'Total Enrollments',
 	somethingElse: 'Something Else'
-};
-const t = scoped('nti-web-compontent-course.admin.dashboard', DEFAULT_TEXT);
+});
 const { ActiveDays, ActiveUsers, ActiveTimes, LabeledValue } = Widgets;
 
 CourseOverview.propTypes = {

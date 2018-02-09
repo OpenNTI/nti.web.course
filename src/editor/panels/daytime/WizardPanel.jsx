@@ -7,14 +7,13 @@ import {saveCatalogEntry} from '../../../editor/Actions';
 
 import Day from './Day';
 
-const LABELS = {
+
+const t = scoped('course.editor.panels.daytime.WizardPanel', {
 	cancel: 'Cancel',
 	whichDays: 'What days do you meet?',
 	startTime: 'Start Time',
 	endTime: 'End Time'
-};
-
-const t = scoped('components.course.editor.panels.daytime.wizardpanel', LABELS);
+});
 
 export default class DayTime extends React.Component {
 	static tabName = 'DayTime'

@@ -7,14 +7,13 @@ import {
 	COURSE_SAVE_ERROR
 } from './Constants';
 
-const Errors = {
+
+const t = scoped('course.editor.Actions', {
 	RequiredMissing: {
 		title: 'Title is required',
 		ProviderUniqueID: 'Identifier is required'
 	}
-};
-
-const t = scoped('components.course.editor.actions', Errors);
+});
 
 export function saveCatalogEntry (catalogEntry, data, onSaveSuccess) {
 	dispatch(COURSE_SAVING);

@@ -5,16 +5,15 @@ import { Input } from 'nti-web-commons';
 import { getService } from 'nti-web-client';
 import { Models } from 'nti-lib-interfaces';
 
-const LABELS = {
+
+const t = scoped('course.editor.import.WizardPanel', {
 	defaultTitle: 'Import Course',
 	cancel: 'Cancel',
 	import: 'Import',
 	adminLevel: 'Admin Level',
 	importFile: 'Import File',
 	missingInputs: 'Must provide an import file'
-};
-
-const t = scoped('components.course.editor.import.wizardpanel', LABELS);
+});
 
 export default class CourseImport extends React.Component {
 	static tabName = 'Import'

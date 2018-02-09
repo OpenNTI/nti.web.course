@@ -8,15 +8,14 @@ import {getService, getAppUsername} from 'nti-web-client';
 import Role from './Role';
 import {getAvailableRoles} from './utils';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.facilitators.Facilitator', {
 	visible: 'Visible',
 	hidden: 'Hidden',
 	editor: 'Editor',
 	instructor: 'Instructor',
 	assistant: 'Assistant'
-};
-
-const t = scoped('components.course.editor.inline.components.facilitators.facilitator', LABELS);
+});
 
 export default class Facilitator extends React.Component {
 	static propTypes = {

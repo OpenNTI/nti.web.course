@@ -4,11 +4,10 @@ import {scoped} from 'nti-lib-locale';
 
 import DateView from '../../widgets/DateView';
 
-const LABELS = {
-	label: 'Start Date'
-};
 
-const t = scoped('components.course.editor.inline.components.startdate.view', LABELS);
+const t = scoped('course.info.inline.components.startdate.View', {
+	label: 'Start Date'
+});
 
 export default class StartDateView extends React.Component {
 	static propTypes = {

@@ -8,7 +8,8 @@ import cx from 'classnames';
 import Role from './Role';
 import {getAvailableRoles} from './utils';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.facilitators.AddFacilitators', {
 	addFacilitators: 'Add Facilitators',
 	addUsers: 'Add users',
 	cancel: 'Cancel',
@@ -18,9 +19,8 @@ const LABELS = {
 	editor: 'Editor',
 	instructor: 'Instructor',
 	visible: 'Visible to Learners'
-};
+});
 
-const t = scoped('components.course.editor.inline.components.facilitators.addfacilitators', LABELS);
 const DELIMITER_KEYS = ['Enter', 'Tab', ','];
 
 export default class AddFacilitators extends React.Component {

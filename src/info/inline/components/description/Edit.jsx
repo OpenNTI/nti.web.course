@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {Input} from 'nti-web-commons';
 
-const LABELS = {
-	label: 'About This Course'
-};
 
-const t = scoped('components.course.editor.inline.components.description.edit', LABELS);
+const t = scoped('course.info.inline.components.description.Edit', {
+	label: 'About This Course'
+});
 
 export default class DescriptionEdit extends React.Component {
 	static propTypes = {

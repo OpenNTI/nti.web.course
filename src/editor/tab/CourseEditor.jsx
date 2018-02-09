@@ -14,13 +14,12 @@ import {
 
 import PanelItem from './PanelItem';
 
-const LABELS = {
+
+const t = scoped('course.editor.tab.CourseEditor', {
 	finish: 'Finish',
 	saving: 'Saving...',
 	save: 'Save',
-};
-
-const t = scoped('components.course.editor.tab.courseeditor', LABELS);
+});
 
 export default class CourseEditor extends React.Component {
 	static propTypes = {

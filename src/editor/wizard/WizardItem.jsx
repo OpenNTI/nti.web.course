@@ -10,14 +10,13 @@ import {
 	COURSE_SAVE_ERROR
 } from '../Constants';
 
-const LABELS = {
+
+const t = scoped('course.wizard.WizardItem', {
 	saving: 'Saving...',
 	continue: 'Continue',
 	confirmCancel: 'Canceling will cause the new course to not be saved.',
 	defaultTitle: 'Create a New Course'
-};
-
-const t = scoped('components.course.wizard.wizarditem', LABELS);
+});
 
 export default class WizardItem extends React.Component {
 	static propTypes = {

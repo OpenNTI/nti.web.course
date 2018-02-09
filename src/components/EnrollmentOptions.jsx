@@ -3,7 +3,22 @@ import PropTypes from 'prop-types';
 import { scoped } from 'nti-lib-locale';
 import cx from 'classnames';
 
-const LABELS = {
+const FIELDS = {
+	OpenEnrollment: [
+
+	],
+	IMSEnrollment: [
+		'SourcedID'
+	],
+	StoreEnrollment: [
+
+	],
+	FiveminuteEnrollment: [
+		'Price', 'CRN', 'Term'
+	]
+};
+
+const t = scoped('course.components.EnrollmentOptions', {
 	enrollmentOptions: 'Enrollment Options',
 	OpenEnrollment: 'Open',
 	IMSEnrollment: 'IMS',
@@ -20,24 +35,7 @@ const LABELS = {
 	Term: 'Term',
 	Amount: 'Cost',
 	alsoFree: 'This class is also available for free'
-};
-
-const FIELDS = {
-	OpenEnrollment: [
-
-	],
-	IMSEnrollment: [
-		'SourcedID'
-	],
-	StoreEnrollment: [
-
-	],
-	FiveminuteEnrollment: [
-		'Price', 'CRN', 'Term'
-	]
-};
-
-const t = scoped('components.course.components.enrollmentoptions', LABELS);
+});
 
 const DISPLAY_MAPPING = {
 	'true': t('yes'),

@@ -5,12 +5,11 @@ import {scoped} from 'nti-lib-locale';
 
 import {saveCatalogEntry} from '../../../editor/Actions';
 
-const LABELS = {
+
+const t = scoped('course.editor.panels.dates.WizardPanel', {
 	cancel: 'Cancel',
 	finish: 'Finish'
-};
-
-const t = scoped('components.course.editor.panels.dates.wizardpanel', LABELS);
+});
 
 export default class CourseDatesPicker extends React.Component {
 	static tabName = 'CourseDatesPicker'

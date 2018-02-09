@@ -4,14 +4,13 @@ import {Presentation, Prompt} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 import cx from 'classnames';
 
-const DEFAULT_TEXT = {
+
+const t = scoped('course.info.inline.components.assets.AssetType', {
 	thumb: 'Icon',
 	landing: 'Cover',
 	promo: 'Promo',
 	background: 'Background'
-};
-
-const t = scoped('nti-web-course.info.inline.components.assets.assettype', DEFAULT_TEXT);
+});
 
 export default class AssetType extends React.Component {
 	static propTypes = {

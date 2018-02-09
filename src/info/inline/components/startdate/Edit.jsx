@@ -4,13 +4,12 @@ import {scoped} from 'nti-lib-locale';
 
 import DatePicker from '../../widgets/DatePicker';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.startdate.Edit', {
 	label: 'Start Date',
 	description: 'Delay when people can start.',
 	invalid: 'Start date cannot be after end date'
-};
-
-const t = scoped('components.course.editor.inline.components.startdate.edit', LABELS);
+});
 
 export default class StartDateEdit extends React.Component {
 	static propTypes = {

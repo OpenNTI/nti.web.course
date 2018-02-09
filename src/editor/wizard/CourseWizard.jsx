@@ -11,12 +11,11 @@ import { Import } from '../templates/Import';
 import TemplateChooser from './TemplateChooser';
 import WizardItem from './WizardItem';
 
-const LABELS = {
+
+const t = scoped('course.wizard.CourseWizard', {
 	finish: 'Finish',
 	chooseTemplate: 'Choose creation type'
-};
-
-const t = scoped('components.course.wizard.coursewizard', LABELS);
+});
 
 export default class CourseWizard extends React.Component {
 	static propTypes = {

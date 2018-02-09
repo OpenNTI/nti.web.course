@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-const LABELS = {
-	label: 'Redemption Code'
-};
 
-const t = scoped('components.course.editor.inline.components.redemptioncodes.view', LABELS);
+const t = scoped('course.info.inline.components.redemptioncodes.View', {
+	label: 'Redemption Code'
+});
 
 export default class RedemptionCodesView extends React.Component {
 	static propTypes = {

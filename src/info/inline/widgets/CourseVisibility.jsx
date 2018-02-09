@@ -6,7 +6,8 @@ import cx from 'classnames';
 
 import PublishCourse from '../../../components/PublishCourse';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.widgets.CourseVisibility', {
 	makeChanges: 'Make Changes',
 	inPreview: 'In Preview',
 	yes: 'Yes',
@@ -17,9 +18,7 @@ const LABELS = {
 	public: 'Public',
 	invitationOnly: 'Invitation Only',
 	noStartDate: 'No Start Date'
-};
-
-const t = scoped('components.course.editor.inline.widgets.coursevisibility', LABELS);
+});
 
 export default class CourseVisibility extends React.Component {
 	static propTypes = {

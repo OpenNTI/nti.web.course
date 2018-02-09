@@ -5,14 +5,13 @@ import { Input } from 'nti-web-commons';
 
 import {saveCatalogEntry} from '../../../editor/Actions';
 
-const LABELS = {
+
+const t = scoped('course.editor.panels.basic.WizardPanel', {
 	cancel: 'Cancel',
 	courseName: 'Course Name',
 	identifier: 'Identification Number (i.e. UCOL-3224)',
 	description: 'Description'
-};
-
-const t = scoped('components.course.editor.panels.basic.wizardpanel', LABELS);
+});
 
 export default class CourseBasic extends React.Component {
 	static tabName = 'CourseBasic'

@@ -2,15 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.credit.view', {
 	label: 'Credit Hours',
 	available: ' Credits Available',
 	availableSingular: ' Credit Available',
-	openEnrolled: 'You\'re registered for the open course.',
+	openEnrolled: 'You’re registered for the open course.',
 	noCredit: '(No Credit)'
-};
-
-const t = scoped('components.course.editor.inline.components.credit.view', LABELS);
+});
 
 export default class CreditView extends React.Component {
 	static propTypes = {

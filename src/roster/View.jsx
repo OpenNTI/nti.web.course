@@ -5,13 +5,13 @@ import {scoped} from 'nti-lib-locale';
 
 import Store from './Store';
 
-const DEFAULT_TEXT = {
+
+const t = scoped('course.roster.View', {
 	roster: 'Roster',
 	empty: 'No Students',
 	emptySearch: 'No Students found. Please refine your search.',
 	error: 'Unable to load students.'
-};
-const t = scoped('nti-web-course.roster', DEFAULT_TEXT);
+});
 
 const store = Store.getInstance();
 const propMap = {

@@ -7,12 +7,11 @@ import Day from '../../../../editor/panels/daytime/Day';
 
 import { getWeekdaysFrom, getDateStr } from './utils';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.meettimes.Edit', {
 	label: 'Meet Times',
 	description: 'When to be online together (local time).'
-};
-
-const t = scoped('components.course.editor.inline.components.meettimes.edit', LABELS);
+});
 
 export default class MeetTimesEdit extends React.Component {
 	static propTypes = {

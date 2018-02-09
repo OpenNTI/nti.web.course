@@ -7,13 +7,13 @@ import Header from './Header';
 import Footer from './Footer';
 import ImageEditorWrapper from './ImageEditorWrapper';
 
-const DEFAULT_TEXT = {
+
+const t = scoped('course.info.inline.assets.course-asset-editor.AssetCropping', {
 	title: 'Crop Your Image',
 	subTitle: 'Upload a New Course Image',
 	continue: 'Continue',
 	cancel: 'Cancel'
-};
-const t = scoped('nti-web-course.info.inline.assets.course-asset-editor.Footer', DEFAULT_TEXT);
+});
 
 export default class AssetCropping extends React.Component {
 	static propTypes = {

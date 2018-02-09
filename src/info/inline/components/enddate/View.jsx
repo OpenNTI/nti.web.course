@@ -4,11 +4,10 @@ import {scoped} from 'nti-lib-locale';
 
 import DateView from '../../widgets/DateView';
 
-const LABELS = {
-	label: 'End Date'
-};
 
-const t = scoped('components.course.editor.inline.components.enddate.view', LABELS);
+const t = scoped('course.info.inline.components.enddate.View', {
+	label: 'End Date'
+});
 
 export default class EndDateView extends React.Component {
 	static propTypes = {

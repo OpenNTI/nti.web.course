@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.facilitators.Role', {
 	assistant: 'Assistant',
 	editor: 'Editor',
 	instructor: 'Instructor'
-};
-
-const t = scoped('components.course.editor.inline.components.facilitators.role', LABELS);
+});
 
 export default class Role extends React.Component {
 	static propTypes = {

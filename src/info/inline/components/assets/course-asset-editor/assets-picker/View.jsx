@@ -9,7 +9,8 @@ import ImageEditorWrapper from '../ImageEditorWrapper';
 
 import Size from './Size';
 
-const DEFAULT_TEXT = {
+
+const t = scoped('course.info.inline.assets.course-asset-editor.AssetsPicker', {
 	icon: 'icon',
 	promo: 'promo',
 	cover: 'cover',
@@ -18,9 +19,7 @@ const DEFAULT_TEXT = {
 	subTitle: 'Upload a New Course Image',
 	apply: 'Apply Image',
 	cancel: 'Cancel'
-
-};
-const t = scoped('nti-web-course.info.inline.assets.course-asset-editor.AssetsPicker', DEFAULT_TEXT);
+});
 
 const getSizes = () => {
 	return [
@@ -206,4 +205,3 @@ export default class AssetsPicker extends React.Component {
 		return editorState ? (<ImageEditorWrapper editorState={editorState} onChange={this.onActiveSizeChange}/>) : null;
 	}
 }
-

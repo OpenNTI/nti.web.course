@@ -6,7 +6,8 @@ import cx from 'classnames';
 
 import {saveCatalogEntry} from '../../../editor/Actions';
 
-const LABELS = {
+
+const t = scoped('course.editor.panels.basic.TabPanel', {
 	cancel: 'Cancel',
 	courseName: 'Course Name',
 	identifier: 'Identification Number (i.e. UCOL-3224)',
@@ -15,9 +16,7 @@ const LABELS = {
 	accessCode: 'Course Code',
 	copy: 'Copy',
 	copiedToClipboard: 'Copied to clipboard'
-};
-
-const t = scoped('components.course.editor.panels.basic.tabpanel', LABELS);
+});
 
 export default class CourseBasic extends React.Component {
 	static tabName = 'CourseBasic'

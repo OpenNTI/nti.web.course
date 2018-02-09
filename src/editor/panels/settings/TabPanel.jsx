@@ -6,7 +6,8 @@ import cx from 'classnames';
 
 import {saveCatalogEntry} from '../../../editor/Actions';
 
-const LABELS = {
+
+const t = scoped('course.editor.panels.settings.TabPanel', {
 	publiclyAvailable: 'Publicly Available',
 	previewMode: 'Preview Mode',
 	nullPreview: 'Based on start date',
@@ -15,9 +16,7 @@ const LABELS = {
 	previewOff: 'Off',
 	previewOffDesc: 'Course is visible',
 	noDateFound: 'No start date found'
-};
-
-const t = scoped('components.course.editor.panels.settings.tabpanel', LABELS);
+});
 
 export default class CourseSettings extends React.Component {
 	static tabName = 'Settings'

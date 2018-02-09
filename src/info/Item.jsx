@@ -4,11 +4,11 @@ import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
 import {Presentation, DateTime} from 'nti-web-commons';
 
-const DEFAULT_TEXT = {
+
+const t = scoped('course.info.Item', {
 	start: 'Starts:',
 	end: 'Ends:'
-};
-const t = scoped('nti-web-course.info.Info', DEFAULT_TEXT);
+});
 
 SiteAdminCourseInfo.propTypes = {
 	className: PropTypes.string,

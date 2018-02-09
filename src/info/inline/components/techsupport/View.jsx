@@ -3,6 +3,7 @@ import { scoped } from 'nti-lib-locale';
 
 import TechsupportLink from './TechsupportLink';
 
+//This locale scope does not match its location yet because it was moved from the mobile app.
 const t = scoped('course.contactinfo', {
 	label: 'Tech Support',
 	link0: {

@@ -6,14 +6,13 @@ import {scoped} from 'nti-lib-locale';
 import Facilitator from './Facilitator';
 import AddFacilitators from './AddFacilitators';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.facilitators.Edit', {
 	addFacilitators: 'Add a Facilitator',
 	assistant: 'Assistant',
 	editor: 'Editor',
 	instructor: 'Instructor'
-};
-
-const t = scoped('components.course.editor.inline.components.facilitators.edit', LABELS);
+});
 
 const DEFAULT_JOB_TITLES = ['Assistant', 'Instructor', 'Editor'];
 

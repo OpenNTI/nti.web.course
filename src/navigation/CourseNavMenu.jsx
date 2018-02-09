@@ -7,14 +7,13 @@ import {getService} from 'nti-web-client';
 
 import {PublishCourse} from '../components';
 
-const LABELS = {
+
+const t = scoped('course.navigation.CourseNavMenu', {
 	courses: 'Courses',
 	sections: 'Sections',
 	edit: 'Edit Course Information',
 	publish: 'Course Visibility'
-};
-
-const t = scoped('nti-web-course.navigation.CourseNavMenu', LABELS);
+});
 
 class SectionItem extends React.Component {
 	static propTypes = {

@@ -4,11 +4,10 @@ import {scoped} from 'nti-lib-locale';
 
 import TagInput from '../../widgets/TagInput';
 
-const LABELS = {
-	label: 'Categories'
-};
 
-const t = scoped('components.course.editor.inline.components.tags.edit', LABELS);
+const t = scoped('course.info.inline.components.tags.Edit', {
+	label: 'Categories'
+});
 
 export default class TagsEdit extends React.Component {
 	static propTypes = {

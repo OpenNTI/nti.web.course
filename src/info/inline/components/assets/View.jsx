@@ -5,12 +5,11 @@ import {scoped} from 'nti-lib-locale';
 import AssetType from './AssetType';
 import CourseAssetEditor from './course-asset-editor';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.assets.View', {
 	label: 'Assets',
 	update: 'Edit'
-};
-
-const t = scoped('components.course.editor.inline.components.assets.view', LABELS);
+});
 
 /**
  * For now, there isn't really an "edit" mode for assets.  This is how we'll

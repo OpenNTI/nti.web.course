@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 
-const LABELS = {
+
+const t = scoped('course.info.inline.components.department.View', {
 	label: 'Department Name',
 	none: 'None'
-};
-
-const t = scoped('components.course.editor.inline.components.department.view', LABELS);
+});
 
 export default class DepartmentView extends React.Component {
 	static propTypes = {

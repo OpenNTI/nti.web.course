@@ -9,7 +9,8 @@ import {saveCatalogEntry} from '../editor/Actions';
 
 import EnrollmentOptions from './EnrollmentOptions';
 
-const LABELS = {
+
+const t = scoped('course.components.PublishCourse', {
 	ready: 'Ready to Launch?',
 	headerSubText: 'That\'s exciting!  Review a couple settings before the big moment.',
 	cancel: 'Cancel',
@@ -22,9 +23,7 @@ const LABELS = {
 	previewOff: 'Off',
 	previewOffDesc: 'Course is visible',
 	noDateFound: 'No start date found'
-};
-
-const t = scoped('nti-web-course.navigation.CourseNavMenu', LABELS);
+});
 
 export default class PublishCourse extends React.Component {
 	static propTypes = {
