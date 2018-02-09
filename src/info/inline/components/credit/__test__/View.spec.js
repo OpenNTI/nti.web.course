@@ -34,7 +34,7 @@ describe('Credit view test', () => {
 
 		const openEnrollment = cmp.find('.open-enrollment').first();
 
-		expect(openEnrollment.text()).toMatch(/You're registered for the open course./);
+		expect(openEnrollment.text()).toMatch(/You’re registered for the open course./);
 		expect(openEnrollment.text()).toMatch(/(No Credit)/);
 	});
 
