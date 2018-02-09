@@ -3,30 +3,29 @@ import { scoped } from 'nti-lib-locale';
 
 import TechsupportLink from './TechsupportLink';
 
-const DEFAULT_TEXT = {
+const t = scoped('course.contactinfo', {
 	label: 'Tech Support',
-	LINK0: {
+	link0: {
 		label: 'Support',
 		link: 'mailto:support@nextthought.com'
 	},
-	LINK1: {
+	link1: {
 		label: 'Info',
 		link: 'mailto:info@nextthought.com'
 	},
-	LINK2: {
+	link2: {
 		label: 'NextThought Website',
 		link: 'http://nextthought.com'
 	},
-	LINK3: {
+	link3: {
 		label: 'Help Site',
 		link: 'https://help.nextthought.com/'
 	}
-};
-const t = scoped('COURSE.CONTACTINFO', DEFAULT_TEXT);
+});
 
 const renderLink = index => {
-	const label = t(`LINK${index}.label`);
-	const link = t(`LINK${index}.link`);
+	const label = t(`link${index}.label`);
+	const link = t(`link${index}.link`);
 	return (
 		<TechsupportLink href={link} label={label} />
 	);
