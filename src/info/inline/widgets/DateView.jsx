@@ -4,7 +4,7 @@ import { DateTime } from 'nti-web-commons';
 
 export default class DateView extends React.Component {
 	static propTypes = {
-		date: PropTypes.object,
+		date: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 		label: PropTypes.string.isRequired
 	}
 

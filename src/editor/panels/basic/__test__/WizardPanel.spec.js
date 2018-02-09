@@ -1,10 +1,12 @@
+/* eslint-env jest */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
 
 import WizardPanel from '../WizardPanel';
 
-/* eslint-env jest */
+const wait = x => new Promise(f => setTimeout(f, x));
+
 describe('Basic WizardPanel test', () => {
 	const mockSave = jest.fn();
 	const catalogEntry = {
@@ -40,43 +42,36 @@ describe('Basic WizardPanel test', () => {
 		);
 	}
 
-	test('Test save button', (done) => {
+	test('Test save button', async () => {
 		const node = cmp.find('.course-panel-continue').first();
 
 		expect(node.text()).toBe(buttonLabel);
 
 		node.simulate('click');
 
-		const verifySaveCalled = () => {
-			expect(mockSave).toHaveBeenCalled();
-			expect(afterSave).toHaveBeenCalled();
+		await wait(1);
 
-			done();
-		};
-
-		setTimeout(verifySaveCalled, 300);
+		expect(mockSave).toHaveBeenCalled();
+		expect(afterSave).toHaveBeenCalled();
 	});
 
-	test('Test cancel button', (done) => {
+	test('Test cancel button', async () => {
 		const node = cmp.find('.course-panel-cancel').first();
 
 		expect(node.text()).toBe('Cancel');
 
 		node.simulate('click');
 
-		const verifyCancelCalled = () => {
-			expect(onCancel).toHaveBeenCalled();
+		await wait(1);
 
-			done();
-		};
-
-		setTimeout(verifyCancelCalled, 300);
+		expect(onCancel).toHaveBeenCalled();
 	});
 
 	const verifyInput = (placeholder, stateField, value) => {
-		const node = cmp.find('[placeholder="' + placeholder + '"]').first();
-
 		cmp.setState({[stateField]: value});
+		cmp.update();
+
+		const node = cmp.find('[placeholder="' + placeholder + '"]').first();
 
 		expect(node.prop('value')).toEqual(value);
 	};

@@ -16,25 +16,30 @@ export default class CourseListing extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = { selectedItems: [], loading: true, courses: [] };
+		this.state = { selectedItems: [], loading: false, courses: [] };
+	}
 
+	componentDidMount () {
 		this.loadAllCourses();
 	}
 
-	loadAllCourses = () => {
+	loadAllCourses = async () => {
+		if (this.state.loading) {
+			return;
+		}
+
 		this.setState({loading: true});
 
-		getService().then((service) => {
-			const collection = service.getCollection('AllCourses', 'Courses');
+		const service = await getService();
 
-			if(collection) {
-				service.get(collection.href).then((results) => {
-					return service.getObject(results.Items);
-				}).then((parsed) => {
-					this.setState({loading: false, courses: parsed});
-				});
-			}
-		});
+		const collection = service.getCollection('AllCourses', 'Courses');
+
+		if(collection) {
+			const {Items} = await service.get(collection.href);
+			const courses = await service.getObject(Items);
+
+			this.setState({loading: false, courses});
+		}
 	}
 
 	renderLoading () {

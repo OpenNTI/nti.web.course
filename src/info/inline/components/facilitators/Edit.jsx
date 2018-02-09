@@ -18,7 +18,6 @@ const DEFAULT_JOB_TITLES = ['Assistant', 'Instructor', 'Editor'];
 
 export default class FacilitatorsEdit extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired,
 		courseInstance: PropTypes.object.isRequired,
 		facilitators: PropTypes.arrayOf(PropTypes.object),
 		onValueChange: PropTypes.func
@@ -122,11 +121,6 @@ export default class FacilitatorsEdit extends React.Component {
 
 	updateValues () {
 		const { onValueChange } = this.props;
-
-		// for visibility, we'll use the Instructors field of the catalogEntry.  If a facilitator is marked
-		// visible, they should appear in the Instructors list for a catalogEntry.  If marked hidden, they should
-		// not appear in catalogEntry Instructors list
-		//onValueChange && onValueChange('Instructors', this.state.facilitatorList.filter(x => x.visible));
 
 		onValueChange && onValueChange('facilitators', this.state.facilitatorList);
 	}

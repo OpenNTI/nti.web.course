@@ -3,6 +3,8 @@ import { mount } from 'enzyme';
 
 import Facilitator from '../Facilitator';
 
+const wait = x => new Promise(f => setTimeout(f, x));
+
 const mockService = () => ({
 	getObject: (o) => Promise.resolve(o),
 	get: (url) => {
@@ -58,20 +60,21 @@ describe('Facilitator component test', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
-	test('Test view', (done) => {
+	test('Test view', async () => {
 		const cmp = mount(<Facilitator facilitator={facilitator} courseInstance={courseInstance}/>);
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
 		expect(cmp.find('.role').exists()).toBe(false); // view-only should not see roles
 		expect(cmp.find('.title').first().text()).toEqual(title);
 
-		setTimeout(() => {
-			expect(cmp.state().validImage).toBe(true);
+		await wait(100);
 
-			expect(cmp.find('.image').first().prop('style').backgroundImage).toEqual('url(goodURL)');
+		cmp.update();
 
-			done();
-		}, 200);
+		expect(cmp.state().validImage).toBe(true);
+
+		expect(cmp.find('.image').first().prop('style').backgroundImage).toEqual('url(goodURL)');
+
 	});
 
 	test('Test edit', () => {

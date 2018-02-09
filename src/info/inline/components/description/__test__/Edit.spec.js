@@ -16,7 +16,7 @@ describe('Description edit test', () => {
 
 		const cmp = mount(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
 
-		const input = cmp.find('.description-input').first();
+		const input = cmp.find('textarea.description-input').first();
 
 		expect(input.props().value).toEqual(desc);
 

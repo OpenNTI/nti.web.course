@@ -17,9 +17,10 @@ describe('Meeting times editor test', () => {
 	test('Test view', () => {
 		const cmp = mount(<Edit catalogEntry={catalogEntry}/>);
 
-		const days = cmp.find('.course-editor-day');
+		const days = cmp.find('div.course-editor-day');
 		const selectedIndexList = [1,3,5];
 
+		// console.log(days.debug());
 		expect(days.length).toBe(7);
 
 		for(let i = 0; i < 7; i++) {
@@ -36,17 +37,17 @@ describe('Meeting times editor test', () => {
 		const startTime = cmp.find('.course-editor-starttime');
 		const endTime = cmp.find('.course-editor-endtime');
 
-		const verifyDate = (dateCmp, hourStr, minuteStr, amPm) => {
+		const verifyDate = (dateCmp, hour, minute, amPm) => {
 			const hours = dateCmp.find('[name="hours"]').first();
 			const minutes = dateCmp.find('[name="minutes"]').first();
 
-			expect(hours.props().value).toEqual(hourStr);
-			expect(minutes.props().value).toEqual(minuteStr);
+			expect(hours.props().value).toEqual(hour);
+			expect(minutes.props().value).toEqual(minute);
 			expect(dateCmp.find('.option-label').first().text()).toEqual(amPm);
 		};
 
-		verifyDate(startTime, '10', '30', 'AM');
-		verifyDate(endTime, '12', '20', 'PM');
+		verifyDate(startTime, 10, 30, 'AM');
+		verifyDate(endTime, 12, 20, 'PM');
 	});
 
 	test('Test interactivity', () => {
@@ -54,13 +55,19 @@ describe('Meeting times editor test', () => {
 
 		const cmp = mount(<Edit catalogEntry={catalogEntry} onValueChange={onChange}/>);
 
-		const days = cmp.find('.course-editor-day');
+		let days = cmp.find('div.course-editor-day');
 
 		days.at(3).simulate('click');
+
+		cmp.update();
+		days = cmp.find('div.course-editor-day');
 
 		expect(onChange).toHaveBeenCalledWith('Schedule', { days: ['M', 'F'], times: ['10:30:00-05:00', '12:20:00-05:00']});
 
 		days.at(4).simulate('click');
+
+		cmp.update();
+		days = cmp.find('div.course-editor-day');
 
 		expect(onChange).toHaveBeenCalledWith('Schedule', { days: ['M', 'F', 'R'], times: ['10:30:00-05:00', '12:20:00-05:00']});
 

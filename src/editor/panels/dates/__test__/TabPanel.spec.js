@@ -4,6 +4,9 @@ import { mount } from 'enzyme';
 
 import TabPanel from '../TabPanel';
 
+
+const wait = x => new Promise(f => setTimeout(f, x));
+
 /* eslint-env jest */
 describe('Dates TabPanel test', () => {
 	const mockSave = jest.fn();
@@ -42,42 +45,34 @@ describe('Dates TabPanel test', () => {
 		);
 	}
 
-	test('Test save button', (done) => {
+	test('Test save button', async () => {
 		const node = cmp.find('.course-panel-continue').first();
 
 		expect(node.text()).toBe(buttonLabel);
 
 		node.simulate('click');
 
-		const verifySaveCalled = () => {
-			expect(mockSave).toHaveBeenCalled();
-			expect(afterSave).toHaveBeenCalled();
+		await wait(100);
 
-			done();
-		};
-
-		setTimeout(verifySaveCalled, 300);
+		expect(mockSave).toHaveBeenCalled();
+		expect(afterSave).toHaveBeenCalled();
 	});
 
-	test('Test cancel button', (done) => {
+	test('Test cancel button', async () => {
 		const node = cmp.find('.course-panel-cancel').first();
 
 		expect(node.text()).toBe('Cancel');
 
 		node.simulate('click');
 
-		const verifyCancelCalled = () => {
-			expect(onCancel).toHaveBeenCalled();
+		await wait(100);
 
-			done();
-		};
-
-		setTimeout(verifyCancelCalled, 300);
+		expect(onCancel).toHaveBeenCalled();
 	});
 
 	test('Test date fields', () => {
-		const startDate = cmp.find('.date').first();
-		const endDate = cmp.find('.date').last();
+		let startDate = cmp.find('.date').first();
+		let endDate = cmp.find('.date').last();
 
 		// since there were provided values, initial state should show these dates
 		expect(startDate.find('.value').first().text()).toBe('Sep. 22');
@@ -88,6 +83,10 @@ describe('Dates TabPanel test', () => {
 		expect(endDate.prop('className')).not.toMatch(/selected/);
 
 		endDate.simulate('click');
+
+		cmp.update();
+		startDate = cmp.find('.date').first();
+		endDate = cmp.find('.date').last();
 
 		// after clicking end date, states should swap: now startDate not selected, endDate selected
 		expect(startDate.prop('className')).not.toMatch(/selected/);

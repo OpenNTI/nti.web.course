@@ -4,6 +4,10 @@ import { mount } from 'enzyme';
 
 import TabPanel from '../TabPanel';
 
+
+const wait = x => new Promise(f => setTimeout(f, x));
+
+
 /* eslint-env jest */
 describe('DayTime TabPanel test', () => {
 	const mockSave = jest.fn();
@@ -49,46 +53,39 @@ describe('DayTime TabPanel test', () => {
 		);
 	}
 
-	test('Test save button', (done) => {
+	test('Test save button', async () => {
 		const node = cmp.find('.course-panel-continue').first();
 
 		expect(node.text()).toBe(buttonLabel);
 
 		node.simulate('click');
 
-		const verifySaveCalled = () => {
-			expect(mockSave).toHaveBeenCalled();
-			expect(afterSave).toHaveBeenCalled();
+		await wait(1);
 
-			done();
-		};
-
-		setTimeout(verifySaveCalled, 300);
+		expect(mockSave).toHaveBeenCalled();
+		expect(afterSave).toHaveBeenCalled();
 	});
 
-	test('Test cancel button', (done) => {
+	test('Test cancel button', async () => {
 		const node = cmp.find('.course-panel-cancel').first();
 
 		expect(node.text()).toBe('Cancel');
 
 		node.simulate('click');
 
-		const verifyCancelCalled = () => {
-			expect(onCancel).toHaveBeenCalled();
+		await wait(1);
 
-			done();
-		};
-
-		setTimeout(verifyCancelCalled, 300);
+		expect(onCancel).toHaveBeenCalled();
 	});
 
-	test('Test weekday fields', () => {
-		const dayNodes = cmp.find('.course-panel-day');
 
-		const monday = dayNodes.at(1);
-		const wednesday = dayNodes.at(3);
-		const thursday = dayNodes.at(4);
-		const friday = dayNodes.at(5);
+	test('Test weekday fields', () => {
+		let dayNodes = cmp.find('.course-panel-day');
+
+		let monday = dayNodes.at(1);
+		let wednesday = dayNodes.at(3);
+		let thursday = dayNodes.at(4);
+		let friday = dayNodes.at(5);
 
 		// initial state (mon, thurs, fri should be selected)
 		expect(monday.prop('className')).toMatch(/selected/);
@@ -98,6 +95,13 @@ describe('DayTime TabPanel test', () => {
 
 		monday.simulate('click');
 		wednesday.simulate('click');
+
+		cmp.update();
+		dayNodes = cmp.find('.course-panel-day');
+		monday = dayNodes.at(1);
+		wednesday = dayNodes.at(3);
+		thursday = dayNodes.at(4);
+		friday = dayNodes.at(5);
 
 		// after clicking, wed, thurs and fri should be selected
 		expect(monday.prop('className')).not.toMatch(/selected/);

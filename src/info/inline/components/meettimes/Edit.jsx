@@ -93,13 +93,15 @@ export default class MeetTimesEdit extends React.Component {
 	};
 
 	renderWeekdays () {
-		const days = [{name: 'sunday', code: 'S'},
+		const days = [
+			{name: 'sunday', code: 'S'},
 			{name: 'monday', code: 'M'},
 			{name: 'tuesday', code: 'T'},
 			{name: 'wednesday', code: 'W'},
 			{name: 'thursday', code: 'T'},
 			{name: 'friday', code: 'F'},
-			{name: 'saturday', code: 'S'}];
+			{name: 'saturday', code: 'S'}
+		];
 
 		return (<div className="course-editor-weekdays">
 			{days.map(this.renderDay)}

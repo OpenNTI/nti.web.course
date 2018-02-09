@@ -40,6 +40,7 @@ describe('CourseEditor test', () => {
 			mockSave();
 			return Promise.resolve();
 		},
+		getDefaultAssetRoot () {},
 		title: mockTitle,
 		ProviderUniqueID: mockID,
 		description: mockDescription

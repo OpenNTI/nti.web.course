@@ -67,18 +67,20 @@ class RecentCourseItem extends React.Component {
 	render () {
 		const { recentCourse } = this.props;
 
-		return (<Flyout.Triggered
-			className="recent-course-trigger"
-			trigger={this.renderCourse()}
-			verticalAlign={Flyout.ALIGNMENTS.TOP}
-			ref={this.attachFlyoutRef}
-			hover
-			arrow
-		>
-			<div>
-				<div className="recent-course-info">{recentCourse.title}</div>
-			</div>
-		</Flyout.Triggered>);
+		return (
+			<Flyout.Triggered
+				className="recent-course-trigger"
+				trigger={this.renderCourse()}
+				verticalAlign={Flyout.ALIGNMENTS.TOP}
+				ref={this.attachFlyoutRef}
+				hover
+				arrow
+			>
+				<div>
+					<div className="recent-course-info">{recentCourse.title}</div>
+				</div>
+			</Flyout.Triggered>
+		);
 	}
 }
 
@@ -159,8 +161,8 @@ export default class CourseNavMenu extends React.Component {
 		);
 	}
 
-	renderSection = (section) => {
-		return <SectionItem key={section.id} section={section} onClick={this.props.onItemClick}/>;
+	renderSection = (section, i) => {
+		return <SectionItem key={section.id || i} section={section} onClick={this.props.onItemClick}/>;
 	}
 
 	renderSections () {
@@ -204,8 +206,8 @@ export default class CourseNavMenu extends React.Component {
 		});
 	}
 
-	renderRecentCourse = (course) => {
-		return <RecentCourseItem key={course.id} recentCourse={course} onClick={this.props.onItemClick}/>;
+	renderRecentCourse = (course, i) => {
+		return <RecentCourseItem key={course.id || i} recentCourse={course} onClick={this.props.onItemClick}/>;
 	}
 
 	renderRecentCourses () {

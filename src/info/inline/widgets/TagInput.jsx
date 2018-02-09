@@ -55,7 +55,7 @@ export default class TagInput extends React.Component {
 					tokenDelimiterKeys={DELIMITER_KEYS}
 					suggestionProvider={this.suggestionProvider}
 					validator={this.validator}
-					maxTokenLength="64"/>
+					maxTokenLength={64}/>
 			</div>
 		);
 	}
