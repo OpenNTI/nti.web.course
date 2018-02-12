@@ -4,7 +4,7 @@
   "author": "nextthought",
   "description": "ReactJS components for course management",
   "license": "UNLICENSED",
-  "main": "./lib/cjs-index.js",
+  "main": "./lib/index-cjs.js",
   "module": "./lib/index.js",
   "style": "./lib/index.css",
   "files": [
