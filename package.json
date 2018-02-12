@@ -32,7 +32,6 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
-    "fbjs": "^0.8.3",
     "nti-lib-dispatcher": "^1.0.0",
     "nti-lib-interfaces": "^1.59.0",
     "nti-lib-locale": "^1.0.9",
@@ -44,7 +43,7 @@
     "nti-web-routing": "0.x.x",
     "nti-web-search": "0.x.x",
     "nti-web-video": "^1.8.1",
-    "nti-web-whiteboard": "0.0.3",
+    "nti-web-whiteboard": "0.x.x",
     "prop-types": "^15.5.8",
     "react-day-picker": "^6.1.0"
   },
