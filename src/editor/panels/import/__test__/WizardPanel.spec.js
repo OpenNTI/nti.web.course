@@ -4,8 +4,6 @@ import { mount } from 'enzyme';
 
 import WizardPanel from '../WizardPanel';
 
-let didImportData = false;
-
 const mockService = () => ({
 	getObject: function (ntiid) {
 		if(ntiid === 'someNTIID') {
@@ -33,9 +31,6 @@ const mockService = () => ({
 			return Promise.resolve({
 				NTIID: 'someNTIID'
 			});
-		}
-		else if(url === 'importLink') {
-			didImportData = true;
 		}
 	},
 	get: function (url) {
