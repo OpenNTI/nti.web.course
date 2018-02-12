@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {getService} from 'nti-web-client';
 
-import {PackageWizard} from '../../src/scorm/package-wizard';
+import {Progress} from '../../src';
 
 import 'nti-style-common/all.scss';
 import 'nti-web-commons/lib/index.css';
@@ -15,11 +15,19 @@ window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 class Test extends React.Component {
 	state = {}
 
+	async componentDidMount () {
+		const service = await getService();
+		const course = await service.getObject('tag:nextthought.com,2011-10:system-OID-0x107195:5573657273:ZGxhE9p5JgY');
+
+		this.setState({
+			course
+		});
+	}
+
 	render () {
 		return (
 			<div>
-				<h2>HELLO</h2>
-				<PackageWizard />
+				<Progress course={course} />
 			</div>
 
 		);
