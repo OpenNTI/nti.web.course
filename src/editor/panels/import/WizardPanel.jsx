@@ -16,7 +16,8 @@ const t = scoped('course.editor.import.WizardPanel',
 		importFile: 'Import File',
 		missingInputs: 'Must provide an import file',
 		courseSuccessfullyImported: 'Course successfully imported',
-		importSuccess: 'Import Success'
+		importSuccess: 'Import Success',
+		unknownError: 'Unknown import error'
 	});
 
 const NUM_CHECKS = 10;
@@ -98,8 +99,18 @@ export default class CourseImport extends React.Component {
 	}
 
 	onFailure = (error) => {
-		// TODO: Need to cleanup temp course that was created prior to import call
-		this.setState({error: JSON.parse(error.responseText).message});
+		const { createdEntry } = this.state;
+
+		if(createdEntry) {
+			createdEntry.delete().then(() => {
+				this.setState({error: JSON.parse(error.responseText).message});
+			}).catch(() => {
+				this.setState({error: t('unknownError')});
+			});
+		}
+		else {
+			this.setState({error: JSON.parse(error.responseText).message});
+		}
 	}
 
 	onProgress = (e) => {
@@ -170,7 +181,7 @@ export default class CourseImport extends React.Component {
 		const createdEntry = await catalogEntryFactory.create(data, catalogEntryFactory.IMPORTED_LEVEL_KEY);
 		await createdEntry.save(data);
 
-		this.setState({loading: true, completed: false, error: null, pctComplete: 0});
+		this.setState({loading: true, createdEntry, completed: false, error: null, pctComplete: 0});
 
 		const {enterProgressState} = this.props;
 
