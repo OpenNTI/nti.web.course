@@ -23,11 +23,7 @@ export function saveCatalogEntry (catalogEntry, data, onSaveSuccess) {
 
 		onSaveSuccess && onSaveSuccess();
 	}).catch((resp) => {
-		const msg = t(
-			`${resp.code}.${resp.field}`,
-			{
-				fallback: resp.message
-			});
+		const msg = t(`${resp.code}.${resp.field}`, { fallback: resp.message || resp });
 
 		dispatch(COURSE_SAVE_ERROR, {
 			errorMsg: msg || 'Error saving course'
