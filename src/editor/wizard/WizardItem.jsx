@@ -73,7 +73,9 @@ export default class WizardItem extends React.Component {
 	}
 
 	renderBackButton () {
-		if(this.props.hideHeaderControls || this.props.firstTab) {
+		const { inProgress } = this.state;
+
+		if(this.props.hideHeaderControls || this.props.firstTab || inProgress) {
 			return null;
 		}
 
@@ -85,7 +87,9 @@ export default class WizardItem extends React.Component {
 	}
 
 	renderCloseButton () {
-		if(this.props.hideHeaderControls) {
+		const { inProgress } = this.state;
+
+		if(this.props.hideHeaderControls || inProgress) {
 			return null;
 		}
 
@@ -119,18 +123,31 @@ export default class WizardItem extends React.Component {
 		return null;
 	}
 
-	doCancel = () => {
-		if(this.props.catalogEntry && !this.props.keepCourseOnCancel) {
-			Prompt.areYouSure(t('confirmCancel')).then(() => {
-				this.props.catalogEntry.delete().then(() => {
-					this.cancel();
-				});
-			});
-		}
-		else {
+	doCancel = (closeWithoutDelete) => {
+		if(closeWithoutDelete) {
 			this.cancel();
 		}
+		else {
+			if(this.props.catalogEntry && !this.props.keepCourseOnCancel) {
+				Prompt.areYouSure(t('confirmCancel')).then(() => {
+					this.props.catalogEntry.delete().then(() => {
+						this.cancel();
+					});
+				});
+			}
+			else {
+				this.cancel();
+			}
+		}
 	};
+
+	enterProgressState = () => {
+		this.setState({inProgress: true});
+	}
+
+	exitProgressState = () => {
+		this.setState({inProgress: false});
+	}
 
 	render () {
 		const { wizardCmp: Cmp, ...otherProps } = this.props;
@@ -142,7 +159,12 @@ export default class WizardItem extends React.Component {
 			{this.renderError()}
 			{this.renderLoading()}
 			<div className="course-panel-content-container">
-				<Cmp onCancel={this.doCancel} saveCmp={SaveButton} {...otherProps}/>
+				<Cmp
+					onCancel={this.doCancel}
+					saveCmp={SaveButton}
+					enterProgressState={this.enterProgressState}
+					exitProgressState={this.exitProgressState}
+					{...otherProps}/>
 			</div>
 		</div>);
 	}

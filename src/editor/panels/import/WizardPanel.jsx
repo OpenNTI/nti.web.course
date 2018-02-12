@@ -1,19 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { scoped } from 'nti-lib-locale';
-import { Input } from 'nti-web-commons';
+import { Input, Prompt } from 'nti-web-commons';
 import { getService } from 'nti-web-client';
 import { Models } from 'nti-lib-interfaces';
 
+import { Upload } from './tasks';
 
-const t = scoped('course.editor.import.WizardPanel', {
-	defaultTitle: 'Import Course',
-	cancel: 'Cancel',
-	import: 'Import',
-	adminLevel: 'Admin Level',
-	importFile: 'Import File',
-	missingInputs: 'Must provide an import file'
-});
+const t = scoped('course.editor.import.WizardPanel',
+	{
+		defaultTitle: 'Import Course',
+		cancel: 'Cancel',
+		import: 'Import',
+		adminLevel: 'Admin Level',
+		importFile: 'Import File',
+		missingInputs: 'Must provide an import file',
+		courseSuccessfullyImported: 'Course successfully imported',
+		importSuccess: 'Import Success'
+	});
+
+const NUM_CHECKS = 10;
+const TRANSFER_PCT = 25.0;
+const REMAINING_PCT = 100.0 - TRANSFER_PCT;
+const PROGRESS_TICK = 400;
 
 export default class CourseImport extends React.Component {
 	static tabName = 'Import'
@@ -23,7 +32,9 @@ export default class CourseImport extends React.Component {
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
 		afterSave: PropTypes.func,
-		buttonLabel: PropTypes.string
+		buttonLabel: PropTypes.string,
+		enterProgressState: PropTypes.func,
+		exitProgressState: PropTypes.func
 	}
 
 	constructor (props) {
@@ -45,7 +56,7 @@ export default class CourseImport extends React.Component {
 	}
 
 	updateImportFile = (file) => {
-		this.setState({file});
+		this.setState({error: null, file});
 	}
 
 	renderFileImport () {
@@ -53,19 +64,94 @@ export default class CourseImport extends React.Component {
 	}
 
 	renderError () {
-		const { error } = this.state;
+		const { error, loading } = this.state;
+
+		if(loading) {
+			return null;
+		}
 
 		return (<div className="course-import-error">{error}</div>);
 	}
 
+	renderProgress () {
+		const { pctComplete } = this.state;
+
+		return (
+			<div className="progress">
+				<div className="bar">
+					<div className="indicator" style={{width: `${pctComplete}%`}} />
+				</div>
+			</div>
+		);
+	}
+
 	renderBody () {
+		const { loading } = this.state;
+
 		return (<div className="course-panel-getstarted-form">
-			{this.renderFileImport()}
+			{loading ? this.renderProgress() : this.renderFileImport()}
 		</div>);
 	}
 
+	onComplete = (response) => {
+		this.setState({completed: true});
+	}
+
+	onFailure = (error) => {
+		// TODO: Need to cleanup temp course that was created prior to import call
+		this.setState({error: JSON.parse(error.responseText).message});
+	}
+
+	onProgress = (e) => {
+		this.setState({
+			pctComplete: TRANSFER_PCT * (e.loaded / (e.total || 1)),
+			uploadDone: e.loaded === e.total
+		});
+	}
+
+	checkProgress = (done) => {
+		const { completed, error, uploadDone } = this.state;
+
+		if(error) {
+			clearInterval(this.progressChecker);
+
+			this.setState({loading: false});
+
+			const {exitProgressState} = this.props;
+
+			exitProgressState && exitProgressState();
+		}
+
+		if(uploadDone) {
+			this.checkCounter++;
+
+			if(this.checkCounter >= NUM_CHECKS) {
+				clearInterval(this.progressChecker);
+
+				const { afterSave } = this.props;
+
+				if(completed) {
+					// close this modal and show success message
+					this.props.onCancel(true);
+
+					Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'));
+				}
+				else {
+					// show 'taking longer than expected' message
+					afterSave && afterSave();
+
+					done();
+				}
+			}
+			else {
+				const newPct = TRANSFER_PCT + (REMAINING_PCT * this.checkCounter / NUM_CHECKS);
+
+				this.setState({pctComplete : newPct});
+			}
+		}
+	}
+
 	onSave = async (done) => {
-		const { afterSave } = this.props;
 		const { file } = this.state;
 
 		if(!file) {
@@ -84,25 +170,23 @@ export default class CourseImport extends React.Component {
 		const createdEntry = await catalogEntryFactory.create(data, catalogEntryFactory.IMPORTED_LEVEL_KEY);
 		await createdEntry.save(data);
 
-		const importLink = createdEntry.getLink('Import');
-		const formData = new FormData();
+		this.setState({loading: true, completed: false, error: null, pctComplete: 0});
 
-		formData.append('writeout', true);
-		formData.append(file.name, file);
+		const {enterProgressState} = this.props;
 
-		service.post(importLink, formData); // don't wait on this, could take a while
+		enterProgressState && enterProgressState();
 
-		this.setState({ error: null });
+		this.checkCounter = 0;
+		Upload(createdEntry, file, this.onComplete, this.onFailure, this.onProgress);
 
-		afterSave && afterSave();
-
-		done && done();
+		this.progressChecker = setInterval(() => { this.checkProgress(done); }, PROGRESS_TICK);
 	};
 
 	renderSaveCmp () {
 		const { buttonLabel, saveCmp: Cmp } = this.props;
+		const { loading } = this.state;
 
-		if(Cmp) {
+		if(Cmp && !loading) {
 			return (<Cmp onSave={this.onSave} label={buttonLabel}/>);
 		}
 
@@ -110,7 +194,9 @@ export default class CourseImport extends React.Component {
 	}
 
 	renderCancelCmp () {
-		if(this.props.onCancel) {
+		const { loading } = this.state;
+
+		if(this.props.onCancel && !loading) {
 			return (<div className="course-panel-cancel" onClick={this.props.onCancel}>{t('cancel')}</div>);
 		}
 	}

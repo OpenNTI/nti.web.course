@@ -5,7 +5,7 @@ import { scoped } from 'nti-lib-locale';
 
 const t = scoped('course.editor.panels.importconfirmation.WizardPanel', {
 	defaultTitle: 'Import Course',
-	importInProgress: 'Import process started.  The course will automatically be updated when the process completes.',
+	importInProgress: 'Import process is taking longer than expected.  The course will automatically be updated when the process completes.',
 	confirm: 'OK'
 });
 
