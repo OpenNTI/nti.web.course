@@ -183,10 +183,12 @@ export default class CourseNavMenu extends React.Component {
 	}
 
 	delete = () => {
+		const { activeCourse } = this.props;
+
 		Prompt.areYouSure('Do you want to delete this course?').then(() => {
 			return getService();
 		}).then((service) => {
-			return service.getObject(this.props.activeCourse.id);
+			return service.getObject(activeCourse.id);
 		}).then((courseInstance) => {
 			return courseInstance.delete('delete').then(() => {
 				return true;
@@ -202,7 +204,7 @@ export default class CourseNavMenu extends React.Component {
 		}).then((success) => {
 			const { onDelete } = this.props;
 
-			onDelete && onDelete();
+			onDelete && onDelete(activeCourse.id);
 		});
 	}
 
