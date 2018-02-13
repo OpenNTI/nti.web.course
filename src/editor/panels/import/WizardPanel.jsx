@@ -57,11 +57,11 @@ export default class CourseImport extends React.Component {
 	}
 
 	updateImportFile = (file) => {
-		this.setState({error: null, file});
+		this.setState({error: null, saveDisabled: false, file});
 	}
 
 	renderFileImport () {
-		return (<div className="import-file"><Input.File placeholder={t('importFile')} accept=".zip" onFileChange={this.updateImportFile}/></div>);
+		return (<div className="import-file"><Input.File placeholder={t('importFile')} value={this.state.file} accept=".zip" onFileChange={this.updateImportFile}/></div>);
 	}
 
 	renderError () {
@@ -103,13 +103,13 @@ export default class CourseImport extends React.Component {
 
 		if(createdEntry) {
 			createdEntry.delete().then(() => {
-				this.setState({error: JSON.parse(error.responseText).message});
+				this.setState({error: JSON.parse(error.responseText).message, saveDisabled: true});
 			}).catch(() => {
-				this.setState({error: t('unknownError')});
+				this.setState({error: t('unknownError'), saveDisabled: true});
 			});
 		}
 		else {
-			this.setState({error: JSON.parse(error.responseText).message});
+			this.setState({error: JSON.parse(error.responseText).message, saveDisabled: true});
 		}
 	}
 
@@ -181,7 +181,7 @@ export default class CourseImport extends React.Component {
 		const createdEntry = await catalogEntryFactory.create(data, catalogEntryFactory.IMPORTED_LEVEL_KEY);
 		await createdEntry.save(data);
 
-		this.setState({loading: true, createdEntry, completed: false, error: null, pctComplete: 0});
+		this.setState({loading: true, createdEntry, completed: false, saveDisabled: false, error: null, pctComplete: 0});
 
 		const {enterProgressState} = this.props;
 
@@ -195,7 +195,13 @@ export default class CourseImport extends React.Component {
 
 	renderSaveCmp () {
 		const { buttonLabel, saveCmp: Cmp } = this.props;
-		const { loading } = this.state;
+		const { loading, saveDisabled } = this.state;
+
+		// TODO: if error, disable until file change?
+		if(saveDisabled) {
+			return null;
+		}
+
 
 		if(Cmp && !loading) {
 			return (<Cmp onSave={this.onSave} label={buttonLabel}/>);
