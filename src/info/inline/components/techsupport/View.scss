@@ -28,10 +28,13 @@
 			margin: 0;
 			margin-left: 1.25em;
 
-			.techsupport-link a {
-				text-decoration: none;
-				color: #3fb3f6;
+			.techsupport-link {
 				font-size: 0.875em;
+
+				a {
+					text-decoration: none;
+					color: #3fb3f6;
+				}
 			}
 		}
 	}
