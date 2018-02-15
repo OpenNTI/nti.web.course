@@ -1,8 +1,14 @@
+@import '~nti-style-common';
+
 .course-info-support {
 	border-top: solid 1px #eaeaea;
 	padding: 1.125em 2.188em;
 	text-align: left;
 	background-color: white;
+
+	&.mobile {
+		padding: rem-calc(14px 15px);
+	}
 
 	.techsupport-header {
 		font-size: 1em;

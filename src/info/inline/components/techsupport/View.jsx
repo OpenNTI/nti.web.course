@@ -1,8 +1,11 @@
 import React from 'react';
 import { scoped } from 'nti-lib-locale';
+import { Layouts } from 'nti-web-commons';
+import cx from 'classnames';
 
 import TechsupportLink from './TechsupportLink';
 
+const { Responsive } = Layouts;
 const MISSING = '~~missing~~';
 const nullIfMissing = v => v === MISSING ? null : v;
 
@@ -40,9 +43,10 @@ const TechSupport = () => {
 	const list = [0,1,2,3]
 		.map(x => renderLink(x))
 		.filter(Boolean);
+	const mobile = Responsive.isMobileContext();
 
 	return list.length === 0 ? null : (
-		<div className="course-info-support">
+		<div className={cx('course-info-support', { mobile })}>
 			<h3 className="techsupport-header">{t('label')}</h3>
 			<div className="techsupport-info">
 				<div className="techsupport-image" />
