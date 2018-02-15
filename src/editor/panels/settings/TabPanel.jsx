@@ -18,7 +18,7 @@ const t = scoped('course.editor.panels.settings.TabPanel', {
 	noDateFound: 'No start date found'
 });
 
-export default class CourseSettings extends React.Component {
+export default class SettingsTabPanel extends React.Component {
 	static tabName = 'Settings'
 	static tabDescription = 'Course Settings'
 

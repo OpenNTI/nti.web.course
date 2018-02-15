@@ -9,7 +9,7 @@ const t = scoped('course.editor.panels.importconfirmation.WizardPanel', {
 	confirm: 'OK'
 });
 
-export default class CourseImportConfirmation extends React.Component {
+export default class ImportConfirmationWizardPanel extends React.Component {
 	static tabName = 'Import'
 	static tabDescription = 'Import Course'
 	static hideHeaderControls = true;

@@ -25,7 +25,7 @@ const TRANSFER_PCT = 25.0;
 const REMAINING_PCT = 100.0 - TRANSFER_PCT;
 const PROGRESS_TICK = 400;
 
-export default class CourseImport extends React.Component {
+export default class ImportWizardPanel extends React.Component {
 	static tabName = 'Import'
 	static tabDescription = 'Import Course'
 

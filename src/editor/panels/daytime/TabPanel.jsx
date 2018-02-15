@@ -15,7 +15,7 @@ const t = scoped('course.editor.panels.daytime.TabPanel', {
 	endTime: 'End Time'
 });
 
-export default class DayTime extends React.Component {
+export default class DayTimeTabPanel extends React.Component {
 	static tabName = 'DayTime'
 	static tabDescription = 'Day & Time'
 

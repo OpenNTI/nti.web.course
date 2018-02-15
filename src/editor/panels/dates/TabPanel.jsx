@@ -10,7 +10,7 @@ const t = scoped('course.editor.panels.dates.TabPanel', {
 	finish: 'Finish'
 });
 
-export default class CourseDatesPicker extends React.Component {
+export default class DatePickerTabPanel extends React.Component {
 	static tabName = 'CourseDatesPicker'
 	static tabDescription = 'Course Dates'
 

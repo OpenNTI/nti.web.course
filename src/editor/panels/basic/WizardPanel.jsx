@@ -13,7 +13,7 @@ const t = scoped('course.editor.panels.basic.WizardPanel', {
 	description: 'Description'
 });
 
-export default class CourseBasic extends React.Component {
+export default class BasicWizardPanel extends React.Component {
 	static tabName = 'CourseBasic'
 	static tabDescription = 'Get Started'
 

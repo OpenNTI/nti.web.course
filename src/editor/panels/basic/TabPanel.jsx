@@ -18,7 +18,7 @@ const t = scoped('course.editor.panels.basic.TabPanel', {
 	copiedToClipboard: 'Copied to clipboard'
 });
 
-export default class CourseBasic extends React.Component {
+export default class BasicTabPanel extends React.Component {
 	static tabName = 'CourseBasic'
 	static tabDescription = 'Basic Information'
 

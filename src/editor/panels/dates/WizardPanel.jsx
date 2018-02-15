@@ -11,7 +11,7 @@ const t = scoped('course.editor.panels.dates.WizardPanel', {
 	finish: 'Finish'
 });
 
-export default class CourseDatesPicker extends React.Component {
+export default class DatePickerWizardPanel extends React.Component {
 	static tabName = 'CourseDatesPicker'
 	static tabDescription = 'Choose Course Dates'
 
