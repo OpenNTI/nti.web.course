@@ -4,6 +4,7 @@ import { scoped } from 'nti-lib-locale';
 import TechsupportLink from './TechsupportLink';
 
 const MISSING = '~~missing~~';
+const nullIfMissing = v => v === MISSING ? null : v;
 
 //This locale scope does not match its location yet because it was moved from the mobile app.
 const t = scoped('course.contactInfo', {
@@ -27,10 +28,10 @@ const t = scoped('course.contactInfo', {
 });
 
 const renderLink = index => {
-	const label = t(`link${index}.label`, {fallback: MISSING});
-	const link = t(`link${index}.link`);
+	const label = nullIfMissing(t(`link${index}.label`, {fallback: MISSING}));
+	const link = nullIfMissing(t(`link${index}.link`, {fallback: MISSING}));
 
-	return label === MISSING ? null : (
+	return label && (
 		<TechsupportLink key={index} href={link} label={label} />
 	);
 };
