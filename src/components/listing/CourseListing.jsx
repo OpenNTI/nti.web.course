@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getService } from 'nti-web-client';
 import { Loading, Prompt } from 'nti-web-commons';
 
-import { Editor } from '../../';
+import * as Editor from '../../editor';
 
 import CourseCard from './CourseCard';
 

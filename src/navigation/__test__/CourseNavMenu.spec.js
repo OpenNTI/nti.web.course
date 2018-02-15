@@ -31,7 +31,7 @@ describe('CourseNavMenu test', () => {
 	];
 
 	const verifyContents = (cmp) => {
-		const activeCourseEl = cmp.find('.active-course').first();
+		const activeCourseEl = cmp.find('.active-content').first();
 
 		const activeTitle = activeCourseEl.find('.title').first();
 
@@ -47,7 +47,7 @@ describe('CourseNavMenu test', () => {
 		expect(sections.at(1).text()).toEqual('Section 2');
 		expect(sections.at(1).prop('className')).toMatch(/current/);
 
-		const recentCoursesList = cmp.find('.recent-courses-list').first().find('.recent-course');
+		const recentCoursesList = cmp.find('.recent-content-items-list').first().find('.recent-content');
 
 		expect(recentCoursesList.at(0).find('img').first().prop('src')).toEqual('/some/url1');
 		expect(recentCoursesList.at(1).find('img').first().prop('src')).toEqual('/some/url2');
@@ -62,7 +62,7 @@ describe('CourseNavMenu test', () => {
 
 		verifyContents(cmp);
 
-		expect(cmp.find('.delete-course').exists()).toBe(false);
+		expect(cmp.find('.delete-content').exists()).toBe(false);
 		expect(cmp.find('.edit').exists()).toBe(false);
 		expect(cmp.find('.publish').exists()).toBe(false);
 	});
@@ -82,15 +82,13 @@ describe('CourseNavMenu test', () => {
 
 		verifyContents(cmp);
 
-		expect(cmp.find('.delete-course').exists()).toBe(true);
+		expect(cmp.find('.delete-content').exists()).toBe(true);
 
 		const edit = cmp.find('.edit').first();
-
 		edit.simulate('click');
-
 		expect(goToEditor).toHaveBeenCalled();
 
-		const recentCourse1 = cmp.find('.recent-course').first();
+		const recentCourse1 = cmp.find('.recent-content').first();
 
 		recentCourse1.simulate('click');
 
