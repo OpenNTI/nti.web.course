@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 
 const TechsupportLink = ({ href, label }) => (
 	<li className="techsupport-link">
-		<a href={href} target="_blank">{label}</a>
+		{href ? (
+			<a href={href} target="_blank">{label}</a>
+		) : (
+			<span>{label}</span>
+		)}
 	</li>
 );
 
 TechsupportLink.propTypes = {
-	href: PropTypes.string.isRequired,
+	href: PropTypes.string,
 	label: PropTypes.string.isRequired
 };
 
