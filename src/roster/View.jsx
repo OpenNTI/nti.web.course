@@ -24,9 +24,10 @@ const propMap = {
 	hasCourse: 'hasCourse'
 };
 
+export default
 @contextual(t('roster'))
 @searchable(store, propMap)
-export default class CourseRosterView extends React.Component {
+class CourseRosterView extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
 		renderRoster: PropTypes.func.isRequired,
