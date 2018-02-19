@@ -3,6 +3,7 @@ export default class Store {
 		this.dataSource = dataSource;
 
 		this.cache = {};
+		this.queue = [];
 	}
 
 
@@ -18,13 +19,51 @@ export default class Store {
 			return this.cache[page];
 		}
 
-		const batch = await this.dataSource.loadPage(page, {sort: 'by-lesson'});
+		return this.queueCall(page, async () => {
+			const batch = await this.dataSource.loadPage(page, {sort: 'by-lesson'});
 
-		this.cache[page] = batch;
+			this.cache[page] = batch;
 
-		return batch;
+			return batch;
+		});
 	}
 
 
-	cancelLoadPage () {}
+	async queueCall (page, fn) {
+		const popQueue = async () => {
+			this.running = true;
+			const next = this.queue[0];
+
+			this.queue = this.queue.slice(1);
+
+			if (next) {
+				try {
+					await next.fn();
+				} finally {
+					popQueue();
+				}
+			} else {
+				this.running = false;
+			}
+		};
+
+		return new Promise((fulfill) => {
+			this.queue.push({page, fn: () => {
+				const resp = fn();
+				fulfill(resp);
+
+				return resp;
+			}});
+
+
+			if (!this.running) {
+				popQueue();
+			}
+		});
+	}
+
+
+	cancelLoadPage (page) {
+		this.queue = this.queue.filter(item => item.page !== page);
+	}
 }

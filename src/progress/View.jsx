@@ -31,7 +31,7 @@ export default class CourseProgress extends React.Component {
 		const {course} = props;
 
 		this.state = {
-			store: new Store (course.getContentDataSource())
+			store: new Store(course.getContentDataSource())
 		};
 	}
 
