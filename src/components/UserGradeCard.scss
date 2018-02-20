@@ -1,0 +1,56 @@
+@import "~nti-style-common";
+
+.user-grade-card {
+	width: 252px;
+	height: 251px;
+	background-color: #fbfbfb;
+	text-align: center;
+
+	.avatar-container {
+		position: relative;
+
+		.avatar {
+			width: 100px;
+			height: 100px;
+			border-radius: 50px;
+			margin-top: 40px;
+		}
+
+		.grade-container {
+			color: #3fb3f6;
+			position: absolute;
+			right: 78px;
+			bottom: 6px;
+			border: solid 2px #fbfbfb;
+			border-radius: 20px;
+			width: 34px;
+			font-size: 14px;
+			height: 34px;
+			background-color: #fbfbfb;
+			padding-top: 2px;
+			padding-left: 2px;
+
+			.grade {
+				border: solid 2px #3fb3f6;
+				border-radius: 25px;
+				width: 27px;
+				height: 27px;
+				padding-top: 2px;
+			}
+		}
+	}
+
+	.user-name {
+		color: $primary-grey;
+		font-size: 17px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		margin: 19px 19px 5px;
+	}
+
+	.assign-grade {
+		color: $primary-blue;
+		font-size: 14px;
+		cursor: pointer;
+	}
+}
