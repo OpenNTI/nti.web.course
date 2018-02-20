@@ -1,0 +1,82 @@
+@import "~nti-style-common";
+
+.assignment-control-option {
+	color: $primary-grey;
+	font-size: 10px;
+	padding: 4px;
+	cursor: pointer;
+}
+
+.assignment-header {
+	height: 170px;
+	background-color: #fbfbfb;
+	text-align: center;
+	color: $primary-grey;
+	padding: 24px 29px 15px;
+
+	.controls {
+		display: flex;
+
+		.header-info {
+			margin-left: 15px;
+
+			.title {
+				font-size: 24px;
+			}
+
+			.publish-controls {
+				font-size: 10px;
+				display: flex;
+				text-transform: uppercase;
+				font-weight: 600;
+
+				.trigger {
+					margin-right: 15px;
+					cursor: pointer;
+
+					.value {
+						margin-right: 5px;
+					}
+
+					i {
+						color: $tertiary-grey;
+					}
+				}
+			}
+		}
+
+		.button-secondary {
+			height: 40px;
+			width: 120px;
+			border: 1px solid #e2e2e2;
+			border-radius: 4px;
+			background-color: #fff;
+			color: #757474;
+			cursor: pointer;
+			padding-top: 8px;
+			position: absolute;
+			right: 45px;
+			top: 32px;
+		}
+	}
+
+	.statistics {
+		display: flex;
+		margin-top: 39px;
+
+		.statistic {
+			text-align: left;
+			margin-right: 30px;
+
+			.stat-label {
+				font-size: 10px;
+				text-transform: uppercase;
+				color: $tertiary-grey;
+			}
+
+			.stat-value {
+				font-size: 18px;
+			}
+		}
+	}
+}
