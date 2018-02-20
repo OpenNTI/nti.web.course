@@ -1,0 +1,30 @@
+@import "~nti-style-common";
+
+.progress-card {
+	width: 252px;
+	height: 251px;
+	background-color: #fbfbfb;
+	text-align: center;
+	color: $primary-grey;
+	padding: 20px;
+
+	.header-label {
+		font-size: 10px;
+		text-transform: uppercase;
+		font-weight: bold;
+		color: $tertiary-grey;
+		margin-bottom: 20px;
+	}
+
+	.status {
+		font-size: 17px;
+		font-weight: 500;
+		margin-top: 20px;
+	}
+
+	.remaining {
+		margin-top: 5px;
+		font-size: 10px;
+		font-weight: 500;
+	}
+}
