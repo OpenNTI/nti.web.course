@@ -1,6 +1,10 @@
 @import "~nti-style-common";
 
 .title-editor {
+	.error {
+		margin-top: 15px;
+	}
+
 	.title-input {
 		margin: 0;
 		width: 100%;
