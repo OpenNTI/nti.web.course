@@ -16,6 +16,7 @@
 
 	.controls {
 		display: flex;
+		position: relative;
 
 		.header-info {
 			margin-left: 15px;
@@ -56,7 +57,7 @@
 			padding-top: 8px;
 			position: absolute;
 			right: 45px;
-			top: 32px;
+			top: 10px;
 		}
 	}
 
