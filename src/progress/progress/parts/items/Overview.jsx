@@ -27,7 +27,7 @@ export default class Overview extends React.Component {
 	}
 
 	render () {
-		const {item} = this.props;
+		const {item, ...otherProps} = this.props;
 		const items = flatten(item);
 
 		return (
@@ -37,7 +37,7 @@ export default class Overview extends React.Component {
 						{item.title}
 					</div>
 				</Container>
-				<ItemsView items={items} />
+				<ItemsView items={items} {...otherProps} />
 			</div>
 		);
 	}

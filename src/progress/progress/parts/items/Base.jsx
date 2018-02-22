@@ -11,8 +11,8 @@ export default class BaseProgressItem extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		item: PropTypes.object,
-		title: PropTypes.func,
-		labels: PropTypes.func,
+		title: PropTypes.string,
+		labels: PropTypes.array,
 		renderIcon: PropTypes.func
 	}
 
@@ -55,6 +55,18 @@ export default class BaseProgressItem extends React.Component {
 
 
 	renderLabels () {
-		return null;
+		const {labels} = this.props;
+
+		if (!labels) {
+			return null;
+		}
+
+		return (
+			<React.Fragment>
+				{labels.map((label, index) => {
+					return (<span className="label" key={index}>{label}</span>);
+				})}
+			</React.Fragment>
+		);
 	}
 }

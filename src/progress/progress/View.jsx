@@ -37,7 +37,7 @@ export default class CourseProgress extends React.Component {
 
 	renderPage = (props) => {
 		return (
-			<Page {...props} />
+			<Page {...props} course={this.props.course} />
 		);
 	}
 }
