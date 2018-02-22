@@ -17,7 +17,7 @@ class Test extends React.Component {
 
 	async componentDidMount () {
 		const service = await getService();
-		const course = await service.getObject('tag:nextthought.com,2011-10:system-OID-0x107195:5573657273:ZGxhE9p5JgY');
+		const course = await service.getObject('tag:nextthought.com,2011-10:system-OID-0x1072c0:5573657273:ZGxhE9p5JbW');
 
 		this.setState({
 			course
