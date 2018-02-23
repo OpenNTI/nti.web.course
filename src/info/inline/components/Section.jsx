@@ -12,6 +12,10 @@ const t = scoped('course.info.inline.components.Section', {
 	deleteBlock: 'Delete Block'
 });
 
+function isEmpty (value) {
+	return !value || (Array.isArray(value) && value.length === 0) || (Object.keys(value).length === 0);
+}
+
 /**
  * Wrapper for an editable section of a course.  The components provided via props
  * will be rendered in either View mode or Edit mode, depending on the isEditing prop.
@@ -22,6 +26,7 @@ const t = scoped('course.info.inline.components.Section', {
  * to provide values to this component that are to be saved to the catalogEntry.  In order for "Delete Block"
  * to work on a section, the underlying components should have a static FIELD_NAME defined on the
  * Edit version of the component.
+ * @extends React.Component
  */
 
 export default class Section extends React.Component {
@@ -58,7 +63,7 @@ export default class Section extends React.Component {
 				// a single field value, so allow them to define a hasData to determine that
 				hasData = hasData || cmp.View.hasData(catalogEntry);
 			}
-			else if(!cmp.View.FIELD_NAME || (value && value !== {} && value !== [])) {
+			else if(!cmp.View.FIELD_NAME || !isEmpty(value)) {
 				// if no FIELD_NAME is defined, don't assume it's no data, it may be pulled
 				// from an API call rather than an object property
 				hasData = true;

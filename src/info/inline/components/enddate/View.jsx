@@ -21,7 +21,7 @@ export default class EndDateView extends React.Component {
 	}
 
 	render () {
-		const { EndDate } = this.props.catalogEntry;
+		const EndDate = this.props.catalogEntry.getEndDate();
 
 		return (
 			<DateView date={EndDate} label={t('label')}/>

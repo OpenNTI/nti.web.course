@@ -21,7 +21,7 @@ export default class StartDateView extends React.Component {
 	}
 
 	render () {
-		const { StartDate } = this.props.catalogEntry;
+		const StartDate = this.props.catalogEntry.getStartDate();
 
 		return (
 			<DateView date={StartDate} label={t('label')}/>

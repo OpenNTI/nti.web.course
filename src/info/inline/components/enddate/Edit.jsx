@@ -23,11 +23,11 @@ export default class EndDateEdit extends React.Component {
 	constructor (props) {
 		super(props);
 
-		const { EndDate } = this.props.catalogEntry;
+		const EndDate = this.props.catalogEntry.getEndDate();
 
 		const initialDate = this.endOfStartDay() || this.endOfToday();
 
-		const state = { EndDate: (EndDate && new Date(EndDate)) || initialDate };
+		const state = { EndDate: EndDate || initialDate };
 
 		if(EndDate) {
 			state.invalid = false;
@@ -69,13 +69,13 @@ export default class EndDateEdit extends React.Component {
 	}
 
 	disabledDays = (value) => {
-		const { StartDate } = this.props.catalogEntry;
+		const StartDate = this.props.catalogEntry.getStartDate();
 
 		if(!StartDate) {
 			return false;
 		}
 
-		return value.getTime() < new Date(StartDate).getTime();
+		return value.getTime() < StartDate.getTime();
 	}
 
 	endOfDay (date) {
@@ -83,13 +83,13 @@ export default class EndDateEdit extends React.Component {
 	}
 
 	endOfStartDay () {
-		const { StartDate } = this.props.catalogEntry;
+		const StartDate = this.props.catalogEntry.getStartDate();
 
 		if(!StartDate) {
 			return null;
 		}
 
-		return this.endOfDay(new Date(StartDate));
+		return this.endOfDay(StartDate);
 	}
 
 	endOfToday () {
