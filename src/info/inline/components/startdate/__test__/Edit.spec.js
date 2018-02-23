@@ -10,7 +10,13 @@ describe('Start date edit test', () => {
 		const date = '2015-08-17T05:00:00Z';
 
 		const catalogEntry = {
-			'StartDate': date
+			'StartDate': date,
+			getStartDate: function () {
+				return date;
+			},
+			getEndDate: function () {
+				return null;
+			}
 		};
 
 		const cmp = mount(<Edit catalogEntry={catalogEntry}/>);
@@ -25,7 +31,14 @@ describe('Start date edit test', () => {
 	});
 
 	test('Test no date', () => {
-		const catalogEntry = {};
+		const catalogEntry = {
+			getStartDate: function () {
+				return null;
+			},
+			getEndDate: function () {
+				return null;
+			}
+		};
 
 		const cmp = mount(<Edit catalogEntry={catalogEntry}/>);
 

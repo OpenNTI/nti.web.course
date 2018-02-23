@@ -9,7 +9,13 @@ describe('Start date view test', () => {
 		const date = '2015-08-17T19:00:00Z';
 
 		const catalogEntry = {
-			'StartDate': date
+			'StartDate': date,
+			getStartDate: function () {
+				return date;
+			},
+			getEndDate: function () {
+				return null;
+			}
 		};
 
 		const cmp = mount(<View catalogEntry={catalogEntry}/>);

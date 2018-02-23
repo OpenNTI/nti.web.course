@@ -39,11 +39,19 @@ describe('CourseInfo test', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
+	const startDate = new Date('2016-06-13T05:00:00Z');
+
 	test('Test editable', () => {
 		const title = 'a title';
 		const catalogEntry = {
 			title,
-			StartDate: new Date('2016-06-13T05:00:00Z'),
+			StartDate: startDate,
+			getStartDate: function () {
+				return startDate;
+			},
+			getEndDate: function () {
+				return null;
+			},
 			getLink: function () {
 				return null;
 			},
@@ -107,7 +115,13 @@ describe('CourseInfo test', () => {
 		const title = 'a title';
 		const catalogEntry = {
 			title,
-			StartDate: new Date('2016-06-13T05:00:00Z'),
+			StartDate: startDate,
+			getStartDate: function () {
+				return startDate;
+			},
+			getEndDate: function () {
+				return null;
+			},
 			getLink: function () {
 				return null;
 			},
