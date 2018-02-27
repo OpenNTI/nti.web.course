@@ -32,6 +32,7 @@
   ],
   "dependencies": {
     "classnames": "^2.0.0",
+    "nti-commons": "^2.11.0",
     "nti-content": "^1.17.1",
     "nti-lib-dispatcher": "^1.0.0",
     "nti-lib-interfaces": "^1.59.0",
