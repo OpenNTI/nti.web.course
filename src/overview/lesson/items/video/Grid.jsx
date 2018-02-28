@@ -133,11 +133,8 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		}
 
 
-		let viewed = false;
 		const progress = item[Progress];
-		if (progress && progress.hasProgress()) {
-			viewed = true;
-		}
+		const viewed = (progress && progress.hasProgress());
 
 		const link = '#';//path.join('videos', encodeForURI(this.getID())) + '/';
 
