@@ -1,0 +1,9 @@
+.scorm-editor {
+	.scorm-editor-controls {
+		display: flex;
+		.scorm-editor-import, .scorm-editor-cancel {
+			flex: 1;
+			text-align: center;
+		}
+	}
+}

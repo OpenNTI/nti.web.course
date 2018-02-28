@@ -20,6 +20,7 @@ export default class BasicWizardPanel extends React.Component {
 	static propTypes = {
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
+		onSave: PropTypes.func,
 		afterSave: PropTypes.func,
 		catalogEntry: PropTypes.object,
 		buttonLabel: PropTypes.string
@@ -35,7 +36,12 @@ export default class BasicWizardPanel extends React.Component {
 	}
 
 	onSave = (done) => {
-		const { catalogEntry, afterSave } = this.props;
+		const { catalogEntry, afterSave, onSave } = this.props;
+
+		if (onSave) {
+			onSave({ done, ...this.state });
+			return;
+		} 
 
 		saveCatalogEntry(catalogEntry, {
 			ProviderUniqueID: this.state.identifier,

@@ -7,6 +7,7 @@ import {scoped} from 'nti-lib-locale';
 
 import { Blank } from '../templates/Blank';
 import { Import } from '../templates/Import';
+import { Scorm } from '../templates/Scorm';
 
 import TemplateChooser from './TemplateChooser';
 import WizardItem from './WizardItem';
@@ -47,7 +48,7 @@ export default class CourseWizard extends React.Component {
 
 		this.state = {
 			catalogEntry,
-			availableTemplates: [Blank, Import]
+			availableTemplates: [Blank, Import, Scorm]
 		};
 	}
 

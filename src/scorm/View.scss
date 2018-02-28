@@ -1,0 +1,17 @@
+@import '~nti-style-common';
+
+.scorm-overview-body {
+	width: 764px;
+    padding: rem-calc(20px);
+	min-height: calc(100vh - 110px);
+
+	.scorm-content {
+		background: white;
+		min-height: calc(100vh - 110px);		
+		.scorm-container {
+			display: block;
+			width: 100%;
+			border: none;
+		}
+	}
+}

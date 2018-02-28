@@ -7,15 +7,13 @@
 		.options-container {
 			display: flex;
 			margin: auto;
-			padding-left: 200px;
-			padding-right: 200px;
+			justify-content: space-evenly;
 			padding-top: 100px;
 
 			.item {
 				color: #777;
 				cursor: pointer;
 				padding: 25px;
-				margin: auto;
 				margin-bottom: 20px;
 				border-radius: 3px;
 				width: 200px;

@@ -4,3 +4,5 @@ export * as Dates from './dates';
 export * as ImportPanel from './import';
 export * as ImportConfirmation from './importconfirmation';
 export * as Settings from './settings';
+export * as ScormBasic from './scorm-basic';
+export * as ScormImport from './scorm-import';

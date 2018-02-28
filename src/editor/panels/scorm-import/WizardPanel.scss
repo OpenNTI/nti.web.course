@@ -1,0 +1,22 @@
+@import "~nti-style-common";
+
+.scorm-import-panel {
+	.course-panel-import-content {
+		min-height: 120px;
+
+		.course-import-error {
+			text-align: center;
+			color: red;
+			margin: 10px;
+			min-height: 22px;
+		}
+	}
+
+	.import-file {
+    	margin: 1rem 2rem;
+		span.file-picker.button {
+			font-size: 16px;
+			line-height: 36px;
+		}
+	}
+}
