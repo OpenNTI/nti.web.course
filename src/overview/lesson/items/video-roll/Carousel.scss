@@ -1,0 +1,87 @@
+@import "~nti-style-common";
+// @import "utils/variables";
+// @import "utils/placeholders";
+
+.videos-carousel-container {
+	position: relative;
+	overflow: hidden;
+	min-height: 50vw;
+
+	.prev, .next {
+		border: 0;
+		background: rgba(0, 0, 0, 0);
+		position: absolute;
+		overflow: hidden;
+		line-height: 2;
+		height: 2rem;
+		width: 50%;
+		bottom: 0;
+		margin: 0;
+		padding: 0;
+
+		&:focus {
+			outline: 0;
+
+			&::before {
+				outline: 5px auto $primary-blue;
+			}
+		}
+
+		&::before {
+			content: ' ';//override the icon
+			width: 50%;
+			width: 50vw;
+		}
+	}
+	.prev { left: 0; }
+	.next { right: 0; }
+
+	.videos-carousel, .videos-carousel-dots {
+		margin: 0;
+		list-style-type: none;
+
+		li {
+			display: inline-block;
+		}
+	}
+
+	.videos-carousel {
+		@extend %hardware-render;
+		//overflow: hidden;
+		position: relative;
+		white-space: nowrap;
+		width: 100%;
+
+		&:focus {
+			outline: 0;
+		}
+
+		.flex-video {
+			margin: 0;
+			display: inline-block;
+			width: 100%;
+		}
+	}
+
+	.videos-carousel-dots {
+		text-align: center;
+		// white-space: nowrap;
+		max-width: 100vw;
+
+		a {
+			display: block;
+			width: 0.75rem;
+			height: 0.75rem;
+			background: $quad-grey;
+			border-radius: 100%;
+
+			&.active {
+				background: $primary-blue;
+			}
+		}
+
+		li {
+			margin: 0 0.5rem;
+		}
+	}
+}

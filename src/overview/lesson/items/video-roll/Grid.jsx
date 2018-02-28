@@ -1,9 +1,14 @@
 import React from 'react';
+import {Layouts} from 'nti-web-commons';
 
-export default function LessonOverviewVideoRollGrid () {
+import Carousel from './Carousel';
+
+const {Responsive} = Layouts;
+
+export default function LessonOverviewVideoRollGrid (props) {
+	const View = Responsive.isMobileContext() ? Carousel : Carousel; //desktop will have a different version
+
 	return (
-		<div>
-			Video Roll Grid Item
-		</div>
+		<View {...props}/>
 	);
 }

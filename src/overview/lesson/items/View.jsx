@@ -8,13 +8,20 @@ const registry = Registry.getInstance();
 
 LessonOverviewItems.propTypes = {
 	className: PropTypes.string,
-	items: PropTypes.array
+	containerProps: PropTypes.object,
+	items: PropTypes.array,
+	itemRef: PropTypes.func
 };
-export default function LessonOverviewItems ({className, items, ...otherProps}) {
+export default function LessonOverviewItems ({className, containerProps = {}, items, itemRef, ...otherProps}) {
+
 	return (
-		<ul className={cx('lesson-overview-items', className)}>
+		<ul {...containerProps} className={cx('lesson-overview-items', className)}>
 			{items.map((item, key) => {
 				const Cmp = registry.getItemFor(item.MimeType);
+
+				if (itemRef) {
+					otherProps.ref = (x) => itemRef(key, x);
+				}
 
 				return (
 					<li key={key}>
