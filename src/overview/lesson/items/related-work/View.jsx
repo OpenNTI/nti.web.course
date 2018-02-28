@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Grid, List} from '../../Constants';
+import {List, Grid} from '../../Constants';
 import Registry from '../Registry';
 
 import ListCmp from './List';
 import GridCmp from './Grid';
 
 export default
-@Registry.register('application/vnd.nextthought.videoroll')
-class LessonOverviewVideoRoll extends React.Component {
+@Registry.register('application/vnd.nextthought.relatedworkref')
+class LessonOverviewRelatedWork extends React.Component {
 	static propTypes = {
-		layout: PropTypes.oneOf([Grid, List])
+		layout: PropTypes.oneOf([List, Grid])
 	}
 
 	render () {
