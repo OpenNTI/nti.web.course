@@ -1,9 +1,9 @@
 @import '~nti-style-common';
 
-.video-progress-item {
-	.video-progress-item-icon {
-		width: rem-calc(80px);
-		height: rem-calc(45px);
+.lesson-overview-video-list-item {
+	.lesson-overview-video-list-item-icon {
+		width: 100%;
+		min-height: 45px;
 		background-color: $tertiary-grey;
 		position: relative;
 		box-shadow: 0 0 1px 0 $border-grey;
@@ -23,7 +23,7 @@
 			height: 2rem;
 
 			background-size: contain;
-			background-image: url('./assets/play.svg');
+			background-image: url('../assets/play.svg');
 		}
 	}
 }
