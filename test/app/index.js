@@ -24,7 +24,7 @@ class Test extends React.Component {
 		const items = outline.getFlattenedList();
 		const contentItems = items.filter(item => item.hasLink('overview-content'));
 		const outlineNode = contentItems[0];
-		const overview = await outlineNode.getContentRaw();
+		const overview = await outlineNode.getContent({decorateProgress: false});
 
 		this.setState({
 			course,
