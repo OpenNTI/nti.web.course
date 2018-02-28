@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import {getService} from 'nti-web-client';
+import {Layouts} from 'nti-web-commons';
 
 import Overview from '../../src/overview/lesson/Overview';
 
@@ -12,6 +13,8 @@ import 'nti-style-common/all.scss';
 import 'nti-web-commons/lib/index.css';
 import 'nti-web-video/lib/index.css';
 import 'nti-web-whiteboard/lib/index.css';
+
+Layouts.Responsive.setMobileContext();
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
