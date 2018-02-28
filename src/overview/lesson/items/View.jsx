@@ -16,17 +16,17 @@ export default function LessonOverviewItems ({className, containerProps = {}, it
 
 	return (
 		<ul {...containerProps} className={cx('lesson-overview-items', className)}>
-			{items.map((item, key) => {
+			{items.map((item, index) => {
 				const Cmp = registry.getItemFor(item.MimeType);
 
 				if (itemRef) {
-					otherProps.ref = (x) => itemRef(key, x);
+					otherProps.ref = (x) => itemRef(index, x);
 				}
 
 				return (
-					<li key={key}>
+					<li key={index}>
 						{!Cmp && (<span>Missing Item: {item.MimeType}</span>)}
-						{Cmp && (<Cmp item={item} {...otherProps} />)}
+						{Cmp && (<Cmp {...otherProps} index={index} item={item}/>)}
 					</li>
 				);
 			})}

@@ -304,6 +304,7 @@ export default class VideoRollCarousel extends React.Component {
 			...this.props,
 
 			touching,
+			className: 'videos-carousel ' + animateChanges,
 			items: this.getVideoList(),
 			activeIndex: this.state.active,
 			itemRef: this.attachItemRef,
@@ -316,7 +317,6 @@ export default class VideoRollCarousel extends React.Component {
 					msTransform: translation,
 					transform: translation
 				},
-				className: 'videos-carousel ' + animateChanges,
 				onTouchStart: this.onTouchStart,
 				onTouchMove: this.onTouchMove,
 				onTouchEnd: this.onTouchEnd,
