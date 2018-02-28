@@ -1,9 +1,12 @@
 /*eslint no-console: 0*/
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import {getService} from 'nti-web-client';
 
 import Overview from '../../src/overview/lesson/Overview';
+
+import Picker from './PickCourse';
 
 import 'nti-style-common/all.scss';
 import 'nti-web-commons/lib/index.css';
@@ -13,13 +16,18 @@ import 'nti-web-whiteboard/lib/index.css';
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
 class Test extends React.Component {
+	static propTypes = {
+		courseId: PropTypes.string
+	}
+
 	state = {
 		layout: Overview.Grid
 	}
 
 	async componentDidMount () {
+		const {courseId} = this.props;
 		const service = await getService();
-		const course = await service.getObject('tag:nextthought.com,2011-10:system-OID-0x1072c0:5573657273:ZGxhE9p5JbW');
+		const course = await service.getObject(courseId);
 		const outline = await course.getOutline();
 		const items = outline.getFlattenedList();
 		const contentItems = items.filter(item => item.hasLink('overview-content'));
@@ -66,6 +74,8 @@ class Test extends React.Component {
 
 
 ReactDOM.render(
-	React.createElement(Test, {}),
+	<Picker>
+		<Test/>
+	</Picker>,
 	document.getElementById('content')
 );
