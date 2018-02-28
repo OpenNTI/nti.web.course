@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import Registry from './Registry';
 import Base from './Base';
 
+export default
 @Registry.register('application/vnd.nextthought.ntivideo')
-export default class VideoProgressItem extends React.Component {
+class VideoProgressItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object
 	}

@@ -7,8 +7,9 @@ import Registry from '../Registry';
 import ListCmp from './List';
 import GridCmp from './Grid';
 
+export default
 @Registry.register('application/vnd.nextthought.ntivideo')
-export default class LessonOverviewGroup extends React.Component {
+class LessonOverviewGroup extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([Grid, List])
 	}

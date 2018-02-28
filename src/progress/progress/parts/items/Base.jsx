@@ -6,8 +6,9 @@ import Container from '../../../common/Container';
 
 import Registry from './Registry';
 
+export default
 @Registry.register(Registry.DEFAULT)
-export default class BaseProgressItem extends React.Component {
+class BaseProgressItem extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		item: PropTypes.object,

@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import Base from './Base';
 import Registry from './Registry';
 
+export default
 @Registry.register('application/vnd.nextthought.relatedworkref')
-export default class RelatedWorkRefProgressItem extends React.Component {
+class RelatedWorkRefProgressItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object
 	}

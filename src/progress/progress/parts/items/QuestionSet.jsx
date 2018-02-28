@@ -13,8 +13,9 @@ const DEFAULT_TEXT = {
 };
 const t = scoped('nti-web-course.progress.QuestionSetItem', DEFAULT_TEXT);
 
+export default
 @Registry.register('application/vnd.nextthought.questionsetref')
-export default class QuestionSetProgressItem extends React.Component {
+class QuestionSetProgressItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		course: PropTypes.object
