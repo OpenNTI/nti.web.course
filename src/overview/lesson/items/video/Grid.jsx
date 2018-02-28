@@ -145,7 +145,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const label = item.title || item.label;
 
 		return (
-			<div className="overview-video">
+			<div className="lesson-overview-video-container">
 				{error && (
 					<ErrorWidget error={error}/>
 				)}
@@ -164,7 +164,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 					<Loading.Mask loading={loading}
 						style={style}
 						tag="a"
-						className="overview-tap-area" href={link}>
+						className="overview-video-tap-area" href={link}>
 						{viewed && <div className="viewed">Viewed</div>}
 						<div className="wrapper">
 							<div className="buttons">

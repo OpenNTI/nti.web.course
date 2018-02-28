@@ -261,7 +261,7 @@ export default class VideoRollCarousel extends React.Component {
 	render () {
 		const {loading, error} = this.state;
 		return (
-			<div className="videos-carousel-container" ref={this.attachRef}>
+			<div className="lesson-overview-video-roll-carousel-container" ref={this.attachRef}>
 				{loading ? (
 					<Loading.Mask/>
 				) : error ? (
