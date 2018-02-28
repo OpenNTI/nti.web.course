@@ -25,7 +25,9 @@ export default class LessonOverviewBaseListItem extends React.Component {
 		return (
 			<PaddedContainer className={cx('lesson-overview-base-list-item', className)}>
 				<div className="icon-container">
-					{this.renderIcon()}
+					<div className="icon">
+						{this.renderIcon()}
+					</div>
 				</div>
 				<div className="right">
 					<div className="title">
