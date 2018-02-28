@@ -14,7 +14,7 @@ import 'nti-web-commons/lib/index.css';
 import 'nti-web-video/lib/index.css';
 import 'nti-web-whiteboard/lib/index.css';
 
-Layouts.Responsive.setMobileContext();
+Layouts.Responsive.setWebappContext();
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
