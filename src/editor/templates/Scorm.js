@@ -1,4 +1,4 @@
-import { ScormBasic, ScormImport } from '../panels';
+import { ScormBasic, ScormImport, ImportConfirmation } from '../panels';
 
 export const Scorm = {
 	name: 'Scorm',
@@ -6,6 +6,7 @@ export const Scorm = {
 
 	panels: [
 		ScormBasic,
-		ScormImport
+		ScormImport,
+		ImportConfirmation
 	]
 };
