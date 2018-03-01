@@ -13,9 +13,18 @@ $text-color: #ebebeb;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	min-height: rem-calc(54px);
+	cursor: pointer;
+
+	&:hover {
+		background: rgba($selected, 0.8);
+	}
 
 	&.selected {
 		background: $selected;
+
+		&, a {
+			cursor: default;
+		}
 	}
 
 	a {
