@@ -1,0 +1,43 @@
+@import "~nti-style-common";
+
+.mode-options-container {
+	display: flex;
+	margin: auto;
+	justify-content: space-evenly;
+
+	.mode-option {
+		width: 220px;
+		height: 250px;
+		box-shadow: 1px 1px 3px #ccc;
+		border-radius: 3px;
+		border: solid 1px #ccc;
+		position: relative;
+		cursor: pointer;
+		padding: 10px;
+
+		&.selected {
+			border-color: $primary-blue;
+		}
+
+		.name {
+			font-size: 20px;
+			margin-bottom: 40px;
+		}
+
+		.description {
+			font-size: 14px;
+			font-weight: 300;
+			margin-bottom: 40px;
+		}
+
+		.hint {
+			color: $tertiary-grey;
+			font-style: italic;
+			font-size: 14px;
+			position: absolute;
+			bottom: 10px;
+			width: 100%;
+		}
+	}
+
+}
