@@ -37,6 +37,7 @@
     "nti-lib-dispatcher": "^1.0.0",
     "nti-lib-interfaces": "^1.59.0",
     "nti-lib-locale": "^1.0.9",
+    "nti-lib-ntiids": "^1.1.0",
     "nti-lib-store": "^1.0.1",
     "nti-util-logger": "^1.1.2",
     "nti-web-charts": "^0.2.0",
