@@ -1,0 +1,57 @@
+@import "~nti-style-common";
+
+%circle-white-check { background-image: url(../assets/circle-check-white-20.png); }
+
+$selected: #4699b0;
+$text-color: #ebebeb;
+
+.lesson-overview-video-roll-playlist-item {
+	position: relative;
+	padding: rem-calc(8px 10px 8px 35px);
+	color: $text-color;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	min-height: rem-calc(54px);
+
+	&.selected {
+		background: $selected;
+	}
+
+	a {
+		color: $text-color;
+		text-decoration: none;
+	}
+
+	&.viewed {
+		&::after {
+			@extend %circle-white-check;
+
+			content: '';
+			overflow: hidden;
+			position: absolute;
+			top: 10px;
+			left: 12px;
+			right: auto;
+			width: 20px;
+			height: 20px;
+		}
+	}
+
+	.label {
+		font-family: $header-font-family;
+		font-size: rem-calc(18px);
+		font-weight: 400;
+		line-height: normal;
+	}
+
+	.meta {
+		display: block;
+		font-family: $body-font-family;
+		font-size: rem-calc(10px);
+		font-weight: 700;
+		line-height: 1.3;
+		color: $secondary-grey;
+		text-transform: uppercase;
+	}
+}

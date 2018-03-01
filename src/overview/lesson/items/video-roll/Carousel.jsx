@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Error as ErrorWidget, Loading} from 'nti-web-commons';
 import Logger from 'nti-util-logger';
 
+import {block, stop} from '../../../../utils';
 import View from '../View';
 
 const initialState = {
@@ -12,9 +13,6 @@ const initialState = {
 	pixelOffset: 0
 };
 
-
-const stop = e => e && e.stopPropagation();
-const block = e => e && (stop(e), e.preventDefault());
 
 const logger = Logger.get('course:overview:lesson:items:VideoRollCarousel');
 

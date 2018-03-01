@@ -4,12 +4,13 @@ import {Progress} from 'nti-lib-interfaces';
 import {Component as Video} from 'nti-web-video';
 import {Error as ErrorWidget, Loading} from 'nti-web-commons';
 
-const stop = e => e && e.stopPropagation();
-const block = e => e && (stop(e), e.preventDefault());
+import {block} from '../../../../utils';
 
 const initialState = {
 	loading: false,
 	error: false,
+	poster: null,
+	playing: false,
 	video: false
 };
 
@@ -59,28 +60,33 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	}
 
 
-	async fillInVideo (props) {
-		try {
-			const {/*course,*/ item} = props;
-			const {video} = this.state;
-			const id = this.getID();
+	fillInVideo ({item/*, course*/} = this.props) {
+		const task = {};
+		this.activeTask = task;
 
-			if (video && id === video.getID()) {
+		this.setState({...initialState, loading: true}, async () => {
+			if (this.activeTask !== task) {
 				return;
 			}
 
-			this.setState({loading: true});
 			// The "item" is now going to be a full Video object, we no longer have to look it up.
 			// Simply Parse/Present the video w/o looking it up in the VideoIndex
 			const v = item; //(await course.getVideoIndex()).get(id);
 
-			const poster = await (v ? v.getPoster() : Promise.resolve(null));
+			try {
+				const poster = await (v ? v.getPoster() : Promise.resolve(null));
 
-			this.setState({loading: false, poster, video: v});
+				if (this.activeTask !== task) {
+					return;
+				}
 
-		} catch (e) {
-			this.onError(e);
-		}
+				this.setState({loading: false, poster, video: v});
+			} catch (e) {
+				this.onError(e);
+			}
+
+			delete this.activeTask;
+		});
 	}
 
 
