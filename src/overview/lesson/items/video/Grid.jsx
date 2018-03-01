@@ -113,8 +113,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	}
 
 
-	stop = (e) => {
-		block(e);
+	stop = () => {
 		const {video} = this;
 		if (video) {
 			video.stop();
@@ -122,15 +121,18 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	}
 
 
-	onStop = (e) => {
-		block(e);
+	onStop = () => {
 		this.setState({playing: false});
 	}
 
 
-	onPlay = (e) => {
-		block(e);
+	onPlay = () => {
 		this.setState({playing: true});
+	}
+
+
+	onTouchMove = () => {
+		this.setState({playing: false});
 	}
 
 
@@ -162,12 +164,12 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const label = item.title || item.label;
 
 		return (
-			<div className="lesson-overview-video-container">
+			<div className="lesson-overview-video-container" onTouchMove={this.onTouchMove}>
 				{error && (
 					<ErrorWidget error={error}/>
 				)}
 				{(error || !video || !renderVideoFully) ? null : (
-					<Video deferred={activeIndex != null}
+					<Video
 						ref={this.attachVideoRef}
 						src={video}
 						onEnded={this.onStop}
