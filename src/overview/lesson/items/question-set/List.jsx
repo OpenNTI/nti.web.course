@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import Base from '../../common/BaseListItem';
 
-import {getAssignmentTitle, getAssignmentPoints} from './utils';
+import AssignmentTitle from './AssignmentTitle';
+import AssignmentIcon from './AssignmentIcon';
 
 export default class LessonOverviewQuestionSetListItem extends React.Component {
 	static propTypes = {
@@ -34,13 +34,26 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 
 		if (assignment) {
 			return (
-				<React.Fragment>
-					<span className="assignment-title">{getAssignmentTitle(assignment)}</span>
-					<span className="assignment-points">{getAssignmentPoints(assignment)}</span>
-				</React.Fragment>
+				<AssignmentTitle assignment={assignment} />
 			);
 		}
 
 		return (item.title || item.label);
+	}
+
+
+	renderIcon = () => {
+		const {assignment, assignmentHistory} = this.props;
+
+		if (assignment) {
+			return (
+				<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory} />
+			);
+		}
+	}
+
+
+	renderLabels = () => {
+
 	}
 }

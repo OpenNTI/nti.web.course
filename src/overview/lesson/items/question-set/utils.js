@@ -17,3 +17,14 @@ export function getAssignmentPoints (assignment) {
 
 	return isNaN(points) || points < 1 ? '' : t('assignmentTitle.points', {points});
 }
+
+export function getAssignmentIconClass (assignment, history) {
+	const now = new Date();
+	const due = assignment.getDueDate();
+	const noSubmit = assignment.isNonSubmit();
+	const completed = history && history.Submission && history.Submission.getCreatedTime();
+
+	if (noSubmit) { return 'no-submit'; }
+	if (completed) { return completed > due ? 'late' : 'on-time'; }
+	if (due && due < now) { return 'late'; }
+}

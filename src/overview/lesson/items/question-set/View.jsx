@@ -53,27 +53,32 @@ class LessonOverviewQuestionSet extends React.Component {
 	}
 
 
-	setupAssignment (id, collection) {
-		const assignment = collection.getAssignment(id);
+	async setupAssignment (id, collection) {
+		try {
+			const assignment = await collection.fetchAssignment(id);
 
-		this.setState({
-			assignment,
-			networkError: false
-		}, async () => {
-			try {
-				const history = await assignment.loadHistory();
+			this.setState({
+				assignment,
+				networkError: false
+			}, async () => {
+				try {
+					const history = await assignment.loadHistory();
 
-				this.setState({
-					assignmentHistory: history
-				});
-			} catch (e) {
-				if (e && (e.statusCode === 0 || e.statusCode >= 500)) {
-					this.setNetworkError();
+					this.setState({
+						assignmentHistory: history
+					});
+				} catch (e) {
+					if (e && (e.statusCode === 0 || e.statusCode >= 500)) {
+						this.setNetworkError();
+					}
+
+					//its fine if we can't load the history
 				}
+			});
+		} catch (e) {
+			//TODO: figure out if/how we need to handle this case
+		}
 
-				//its fine if we can't load the history
-			}
-		});
 	}
 
 
