@@ -5,6 +5,8 @@ import {scoped} from 'nti-lib-locale';
 import {Card} from 'nti-web-commons';
 import {encodeForURI} from 'nti-lib-ntiids';
 
+import PaddedContainer from '../../common/PaddedContainer';
+
 /*
 Internal Links:
 	NTIID:			"tag:nextthought.com,2011-10:OU-RelatedWorkRef...:digestion_and_metabolism_textbook1"
@@ -62,11 +64,13 @@ export default class LessonOverviewRelatedWorkGridItem extends React.Component {
 		}
 
 		return (
-			<Card {...props}
-				getRoute={this.getHref}
-				commentCount={commentCount}
-				contentPackage={props.course}
-			/>
+			<PaddedContainer>
+				<Card {...props}
+					getRoute={this.getHref}
+					commentCount={commentCount}
+					contentPackage={props.course}
+				/>
+			</PaddedContainer>
 		);
 	}
 }
