@@ -18,7 +18,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired,
 		course: PropTypes.object.isRequired,
-		outlineNode: PropTypes.object.isRequired,
+		// outlineNode: PropTypes.object.isRequired,
 		overview: PropTypes.object.isRequired,
 
 		activeIndex: PropTypes.number,
@@ -62,7 +62,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	}
 
 
-	fillInVideo ({item, course, outlineNode, overview} = this.props) {
+	fillInVideo ({item, course, overview} = this.props) {
 		const task = {};
 		this.activeTask = task;
 
@@ -88,7 +88,6 @@ export default class LessonOverviewVideoGrid extends React.Component {
 					video: v,
 					context: [
 						course.getID(),
-						outlineNode && outlineNode.getID(),
 						overview && overview.getID(),
 						v.getID()
 					].filter(x => x)
@@ -174,6 +173,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 						onEnded={this.onStop}
 						onPlaying={this.onPlay}
 						analyticsData={{
+							resourceId: video.getID(),
 							context
 						}}
 					/>
