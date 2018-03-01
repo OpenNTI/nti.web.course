@@ -18,6 +18,8 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired,
 		course: PropTypes.object.isRequired,
+		outlineNode: PropTypes.object.isRequired,
+		overview: PropTypes.object.isRequired,
 
 		activeIndex: PropTypes.number,
 		index: PropTypes.number,
@@ -60,11 +62,11 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	}
 
 
-	fillInVideo ({item/*, course*/} = this.props) {
+	fillInVideo ({item, course, outlineNode, overview} = this.props) {
 		const task = {};
 		this.activeTask = task;
 
-		this.setState({...initialState, loading: true}, async () => {
+		const load = async () => {
 			if (this.activeTask !== task) {
 				return;
 			}
@@ -80,13 +82,26 @@ export default class LessonOverviewVideoGrid extends React.Component {
 					return;
 				}
 
-				this.setState({loading: false, poster, video: v});
+				this.setState({
+					poster,
+					loading: false,
+					video: v,
+					context: [
+						course.getID(),
+						outlineNode && outlineNode.getID(),
+						overview && overview.getID(),
+						v.getID()
+					].filter(x => x)
+				});
 			} catch (e) {
 				this.onError(e);
 			}
 
 			delete this.activeTask;
-		});
+		};
+
+		this.setState({...initialState, loading: true});
+		load();
 	}
 
 
@@ -153,7 +168,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 					<ErrorWidget error={error}/>
 				)}
 				{(error || !video || !renderVideoFully) ? null : (
-					<Video deferred
+					<Video deferred={activeIndex != null}
 						ref={this.attachVideoRef}
 						src={video}
 						onEnded={this.onStop}
