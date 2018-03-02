@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getService } from 'nti-web-client';
 import { Models } from 'nti-lib-interfaces';
-import { Switch } from 'nti-web-commons';
+import { Switch, Loading } from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
 import { Blank } from '../templates/Blank';
 import { Import } from '../templates/Import';
+import { Scorm } from '../templates/Scorm';
 
 import TemplateChooser from './TemplateChooser';
 import WizardItem from './WizardItem';
-import Scorm from '../../scorm/View';
 
 
 const t = scoped('course.wizard.CourseWizard', {
@@ -48,7 +48,7 @@ export default class CourseWizard extends React.Component {
 
 		this.state = {
 			catalogEntry,
-			availableTemplates: [Blank, Import]
+			loadingTemplates: true
 		};
 	}
 
@@ -56,9 +56,14 @@ export default class CourseWizard extends React.Component {
 		const service = await getService();
 		const courseWorkspace = service.getWorkspace('Courses');
 		const allCoursesCollection = courseWorkspace && service.getCollection('AllCourses', courseWorkspace.Title);
-		if (allCoursesCollection && allCoursesCollection.accepts[Models.courses.scorm]) {
-			this.setState({ availableTemplates: [...this.state.availableTemplates, Scorm] });
+
+		let availableTemplates = [Blank, Import];
+
+		if (allCoursesCollection && allCoursesCollection.accepts.includes('application/vnd.nextthought.courses.scormcourseinstance')) {
+			availableTemplates.push(Scorm);
 		}
+
+		this.setState({ availableTemplates, loadingTemplates: false });
 	}
 
 	cancel = () => {
@@ -121,6 +126,10 @@ export default class CourseWizard extends React.Component {
 	}
 
 	render () {
+		if(this.state.loadingTemplates) {
+			return <div className="course-panel"><div className="course-wizard-item"><Loading.Mask/></div></div>;
+		}
+
 		return (<Switch.Panel className="course-panel" active="TemplateChooser">
 			<Switch.Container>
 				{this.renderTemplateChooser()}
