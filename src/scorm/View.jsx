@@ -59,7 +59,7 @@ class Scorm extends Component {
 				</div>
 				{!courseLaunched && <Button className="scorm-launch-button" onClick={this.launchCourse}>Open</Button>}
 				{courseLaunched && <Button className="scorm-post-launch-button" disabled>Already Open</Button>}
-				{showEditor && <Editor onDismiss={this.onDismiss} importLink={this.props.bundle.getLink(IMPORT_SCORM)} />}
+				{showEditor && <Editor onDismiss={this.onDismiss} bundle={this.props.bundle} />}
 			</div>
 		);
 	}

@@ -40,7 +40,9 @@ export default class ScormImport extends React.Component {
 		afterSave: PropTypes.func,
 		buttonLabel: PropTypes.string,
 		exitProgressState: PropTypes.func,
-		type: PropTypes.string
+		type: PropTypes.string,
+		catalogEntry: PropTypes.object,
+		bundle: PropTypes.object
 	}
 
 	static defaultProps = {
@@ -145,9 +147,9 @@ export default class ScormImport extends React.Component {
 		}
 
 		try {
-			const { catalogEntry, type } = this.props;
+			const { catalogEntry, type, bundle } = this.props;
 			const service = await getService();
-			const courseInstance = await service.getObject(catalogEntry && catalogEntry.CourseNTIID);
+			const courseInstance = bundle || await service.getObject(catalogEntry && catalogEntry.CourseNTIID);
 			const link = courseInstance.getLink(type);
 
 			this.setState({loading: true, completed: false, saveDisabled: false, error: null, pctComplete: 0});
