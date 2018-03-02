@@ -18,7 +18,7 @@ class Editor extends Component {
 
 		return(
 			<Dialog>
-				<PackageWizard onDismiss={onDismiss} bundle={this.props.bundle} />
+				<PackageWizard onDismiss={onDismiss} onCancel={onDismiss} bundle={this.props.bundle} />
 			</Dialog>
 		);
 	}
