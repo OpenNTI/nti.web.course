@@ -54,35 +54,53 @@ describe('CourseWizard test', () => {
 		tearDownTestClient();
 	});
 
-	test('Test available templates', () => {
-		cmp.update();
+	test('Test available templates', (done) => {
+		const verify = () => {
+			cmp.update();
 
-		const templateNames = cmp.find('.template-name');
+			const templateNames = cmp.find('.template-name');
 
-		expect(templateNames.length).toEqual(3);
+			expect(templateNames.length).toEqual(3);
 
-		expect(templateNames.at(0).text()).toEqual('Blank');
-		expect(templateNames.at(1).text()).toEqual('Import');
-		expect(templateNames.at(2).text()).toEqual('Scorm');
+			expect(templateNames.at(0).text()).toEqual('Blank');
+			expect(templateNames.at(1).text()).toEqual('Import');
+			expect(templateNames.at(2).text()).toEqual('Scorm');
+
+			done();
+		};
+
+		setTimeout(verify, 300);
 	});
 
-	test('Test close', () => {
-		cmp.update();
+	test('Test close', (done) => {
+		const verify = () => {
+			cmp.update();
 
-		const closeButton = cmp.find('.close');
+			const closeButton = cmp.find('.close');
 
-		closeButton.simulate('click');
+			closeButton.simulate('click');
 
-		expect(onCancelMock).toHaveBeenCalled();
+			expect(onCancelMock).toHaveBeenCalled();
+
+			done();
+		};
+
+		setTimeout(verify, 300);
 	});
 
-	test('Test cancel', () => {
-		cmp.update();
+	test('Test cancel', (done) => {
+		const verify = () => {
+			cmp.update();
 
-		const cancelButton = cmp.find('.course-panel-cancel').first();
+			const cancelButton = cmp.find('.course-panel-cancel').first();
 
-		cancelButton.simulate('click');
+			cancelButton.simulate('click');
 
-		expect(onCancelMock).toHaveBeenCalled();
+			expect(onCancelMock).toHaveBeenCalled();
+
+			done();
+		};
+
+		setTimeout(verify, 300);
 	});
 });
