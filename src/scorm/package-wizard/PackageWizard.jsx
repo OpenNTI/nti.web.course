@@ -16,13 +16,15 @@ const t = scoped('course.wizard.CourseWizard', {
 	replaceTitle: 'Replace Package'
 });
 
-export default class PackageWizard extends React.Component {
+class PackageWizard extends React.Component {
 	static propTypes = {
 		title: PropTypes.string,
 		catalogEntry: PropTypes.object,
 		onCancel: PropTypes.func,
 		onFinish: PropTypes.func,
-		onCourseModified: PropTypes.func
+		onCourseModified: PropTypes.func,
+		onDismiss: PropTypes.func,
+		bundle: PropTypes.obj
 	}
 
 
@@ -58,6 +60,8 @@ export default class PackageWizard extends React.Component {
 
 	afterSave () {
 		// TODO: What should happen after save?
+		const { onDismiss } = this.props;
+		onDismiss();
 	}
 
 
@@ -70,9 +74,10 @@ export default class PackageWizard extends React.Component {
 				name="scormUpload"
 				component={WizardItem}
 				wizardCmp={ScormImport}
-				catalogEntry={this.state.catalogEntry}
+				bundle={this.props.bundle}
 				title="Change Package"
 				stepName={UPDATE_KEY === this.state.mode ? t('updateTitle') : t('replaceTitle')}
+				type={this.state.mode}
 				onCancel={this.cancel}
 				afterSave={this.afterSave} />
 		);
@@ -87,7 +92,7 @@ export default class PackageWizard extends React.Component {
 				name="scormUploadConfirmation"
 				component={WizardItem}
 				wizardCmp={ImportConfirmation}
-				catalogEntry={this.state.catalogEntry}
+				catalogEntry={this.props.catalogEntry}
 				title="Change Package"
 				stepName="Confirmation"
 				onCancel={this.cancel}
@@ -109,3 +114,5 @@ export default class PackageWizard extends React.Component {
 		);
 	}
 }
+
+export default PackageWizard;
