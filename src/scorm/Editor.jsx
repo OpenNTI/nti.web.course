@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Prompt, Input, Button } from 'nti-web-commons';
+import { Prompt, Input, Button, Panels } from 'nti-web-commons';
 import { scoped } from 'nti-lib-locale';
 import { getService } from 'nti-web-client';
 
 const { Dialog } = Prompt;
+const { Header } = Panels;
 
 const LABELS = {
 	cancel: 'Cancel',
@@ -74,6 +75,11 @@ class Editor extends Component {
 		return(
 			<Dialog>
 				<Fragment>
+					<Header onClose={onDismiss}>
+						<div className="scorm-header">
+							Import a Scorm Package
+						</div>
+					</Header>
 					<div className="scorm-editor">
 						{error && <div className="scorm-import-error">{error}</div>}
 						<div className="scorm-editor-import">
@@ -81,10 +87,10 @@ class Editor extends Component {
 								<Input.FileDrop getString={t} placeholder={t('importFile')} accept=".zip" onChange={this.updateImportFile} onError={this.onError} />
 							</div>
 						</div>
-					</div>
-					<div className="scorm-editor-controls">
-						<Button className="scorm-editor-import" onClick={this.onSave}>{t('import')}</Button>
-						<div className="scorm-editor-cancel" onClick={onDismiss}>{t('cancel')}</div>
+						<div className="scorm-editor-controls">
+							<div className="scorm-editor-cancel" onClick={onDismiss}>{t('cancel')}</div>
+							<Button className="scorm-editor-save" onClick={this.onSave}>{t('import')}</Button>
+						</div>
 					</div>
 				</Fragment>
 			</Dialog>

@@ -7,10 +7,10 @@ import {scoped} from 'nti-lib-locale';
 
 import { Blank } from '../templates/Blank';
 import { Import } from '../templates/Import';
-import { Scorm } from '../templates/Scorm';
 
 import TemplateChooser from './TemplateChooser';
 import WizardItem from './WizardItem';
+import Scorm from '../../scorm/View';
 
 
 const t = scoped('course.wizard.CourseWizard', {
@@ -48,8 +48,17 @@ export default class CourseWizard extends React.Component {
 
 		this.state = {
 			catalogEntry,
-			availableTemplates: [Blank, Import, Scorm]
+			availableTemplates: [Blank, Import]
 		};
+	}
+
+	async componentDidMount () {
+		const service = await getService();
+		const courseWorkspace = service.getWorkspace('Courses');
+		const allCoursesCollection = courseWorkspace && service.getCollection('AllCourses', courseWorkspace.Title);
+		if (allCoursesCollection && allCoursesCollection.accepts[Models.courses.scorm]) {
+			this.setState({ availableTemplates: [...this.state.availableTemplates, Scorm] });
+		}
 	}
 
 	cancel = () => {

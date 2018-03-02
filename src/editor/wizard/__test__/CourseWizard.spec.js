@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
+import { TestUtils } from 'nti-web-client';
 
 import CourseWizard from '../CourseWizard';
+
+const { setupTestClient, tearDownTestClient } = TestUtils;
 
 /* eslint-env jest */
 describe('CourseWizard test', () => {
@@ -10,14 +13,7 @@ describe('CourseWizard test', () => {
 	const onSaveMock = jest.fn();
 	const mockTitle = 'Course for editing';
 
-	const cmp = mount(
-		<CourseWizard
-			title={mockTitle}
-			onCancel={onCancelMock}
-			onSave={onSaveMock}
-			saveCmp={SaveButton}
-		/>
-	);
+	let cmp;
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
@@ -31,6 +27,26 @@ describe('CourseWizard test', () => {
 			</div>
 		);
 	}
+
+	beforeAll(() => {
+		setupTestClient({
+			getWorkspace: () => {},
+			getCollection: () => {}
+		});
+
+		cmp = mount(
+			<CourseWizard
+				title={mockTitle}
+				onCancel={onCancelMock}
+				onSave={onSaveMock}
+				saveCmp={SaveButton}
+			/>
+		);
+	});
+
+	afterAll(() => {
+		tearDownTestClient();
+	}); 
 
 	test('Test close', (done) => {
 		const closeButton = cmp.find('.close').first();

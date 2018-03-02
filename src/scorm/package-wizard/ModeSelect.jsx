@@ -7,12 +7,12 @@ import cx from 'classnames';
 // Also, need to style based on design
 const t = scoped('course.scorm.package-wizard.ModeSelect', {
 	cancel: 'Cancel',
-	updateTitle: 'Update',
-	updateDescription: 'Update package',
-	updateHint: 'Better for small updates',
-	replaceTitle: 'Replace',
-	replaceDescription: 'Replace package',
-	replaceHint: 'Better for big updates'
+	updateTitle: 'Update Package',
+	updateDescription: 'Learner progress will be kept, but it will adjust if content was added or removed.',
+	updateHint: 'Better for Small Changes',
+	replaceTitle: 'Replace Package',
+	replaceDescription: 'Replacing a course package will reset learner progress. All progress will be lost.',
+	replaceHint: 'Better for Larger Changes'
 });
 
 // TODO: Match the update key to match the server API.  Replace key should already

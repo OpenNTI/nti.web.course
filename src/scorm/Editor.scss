@@ -1,9 +1,37 @@
+.scorm-header {
+	color: #494949;
+	font: normal 400 1.2em "Open Sans", sans-serif;
+	-webkit-font-smoothing: antialiased;
+	height: 50px;
+	margin-left: 10px;
+	line-height: 50px;
+}
+
 .scorm-editor {
+    width: 600px;
+	background: rgb(237, 237, 237);
+
+	.scorm-editor-import {
+		padding: 10px;
+	}
+
 	.scorm-editor-controls {
 		display: flex;
-		.scorm-editor-import, .scorm-editor-cancel {
-			flex: 1;
-			text-align: center;
+		text-align: right;
+		background: white;
+		border-top: 1px solid #d9d9d9;
+
+		.scorm-editor-save {
+			width: 15%;
+		}
+
+		.scorm-editor-cancel {
+			line-height: 40px;
+			width: 85%;
+			line-height: 45px;
+			font-size: 0.875em;
+			padding: 0 1.5em;
+			cursor: pointer
 		}
 	}
 }
