@@ -59,7 +59,7 @@ export default class CourseWizard extends React.Component {
 
 		let availableTemplates = [Blank, Import];
 
-		if (allCoursesCollection && allCoursesCollection.accepts.includes('application/vnd.nextthought.courses.scormcourseinstance')) {
+		if (allCoursesCollection && allCoursesCollection.accepts.includes(Models.courses.ScormInstance.MimeType)) {
 			availableTemplates.push(Scorm);
 		}
 
