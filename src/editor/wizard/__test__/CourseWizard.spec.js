@@ -30,8 +30,14 @@ describe('CourseWizard test', () => {
 
 	beforeAll(() => {
 		setupTestClient({
-			getWorkspace: () => {},
-			getCollection: () => {}
+			getWorkspace: () => {
+				return {};
+			},
+			getCollection: () => {
+				return {
+					accepts: ['application/vnd.nextthought.courses.scormcourseinstance']
+				};
+			}
 		});
 
 		cmp = mount(
@@ -46,33 +52,37 @@ describe('CourseWizard test', () => {
 
 	afterAll(() => {
 		tearDownTestClient();
-	}); 
+	});
 
-	test('Test close', (done) => {
-		const closeButton = cmp.find('.close').first();
+	test('Test available templates', () => {
+		cmp.update();
+
+		const templateNames = cmp.find('.template-name');
+
+		expect(templateNames.length).toEqual(3);
+
+		expect(templateNames.at(0).text()).toEqual('Blank');
+		expect(templateNames.at(1).text()).toEqual('Import');
+		expect(templateNames.at(2).text()).toEqual('Scorm');
+	});
+
+	test('Test close', () => {
+		cmp.update();
+
+		const closeButton = cmp.find('.close');
 
 		closeButton.simulate('click');
 
-		const verifyCalled = () => {
-			expect(onCancelMock).toHaveBeenCalled();
-
-			done();
-		};
-
-		setTimeout(verifyCalled, 300);
+		expect(onCancelMock).toHaveBeenCalled();
 	});
 
-	test('Test cancel', (done) => {
+	test('Test cancel', () => {
+		cmp.update();
+
 		const cancelButton = cmp.find('.course-panel-cancel').first();
 
 		cancelButton.simulate('click');
 
-		const verifyCalled = () => {
-			expect(onCancelMock).toHaveBeenCalled();
-
-			done();
-		};
-
-		setTimeout(verifyCalled, 300);
+		expect(onCancelMock).toHaveBeenCalled();
 	});
 });
