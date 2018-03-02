@@ -30,6 +30,18 @@ const PROGRESS_TICK = 1000;
 
 const t = scoped('components.course.editor.scorm-import.wizardpanel', LABELS);
 
+const handleError = (error) => {
+	if (!error) { return t('unknownError'); }
+
+	try {
+		const parsedError = JSON.parse((error && error.responseText) || error);
+		return parsedError.message || t('unknownError');
+	} 
+	catch (e) {
+		return t('unknownError');
+	}
+};
+
 export default class ScormImport extends React.Component {
 	static tabName = 'Import Scorm'
 	static tabDescription = 'Import Scorm Package'
@@ -76,13 +88,13 @@ export default class ScormImport extends React.Component {
 
 		if(createdEntry) {
 			createdEntry.delete().then(() => {
-				this.setState({error: JSON.parse(error.responseText).message, saveDisabled: true});
+				this.setState({error: handleError(error), saveDisabled: true});
 			}).catch(() => {
 				this.setState({error: t('unknownError'), saveDisabled: true});
 			});
 		}
 		else {
-			this.setState({error: JSON.parse(error.responseText).message, saveDisabled: true});
+			this.setState({error: handleError(error), saveDisabled: true});
 		}
 	}
 
