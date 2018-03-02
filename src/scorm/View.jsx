@@ -9,17 +9,22 @@ const IMPORT_SCORM = 'ImportScorm';
 class Scorm extends Component {
 	static propTypes = {
 		bundle: PropTypes.shape({
-			getScormCourse: PropTypes.func.isRequired
+			getScormCourse: PropTypes.func.isRequired,
+			getID: PropTypes.func.isRequired,
+			getLink: PropTypes.func.isRequired
 		})
 	}
 
 	state = {
 		scormLink: '',
-		showEditor: false
+		showEditor: false,
+		courseLaunched: false
 	}
 
-	componentWillMount () {
-		this.setState({ scormLink: '', showEditor: false });
+	componentDidUpdate (prevProps) {
+		if (prevProps.bundle.getID() !== this.props.bundle.getID()) {
+			this.setState({ scormLink: '', showEditor: false });
+		}
 	}
 
 	launchCourse = async (e) => {
@@ -28,7 +33,7 @@ class Scorm extends Component {
 		const { bundle } = this.props;
 		const scormLink = await bundle.getScormCourse();
 
-		this.setState({ scormLink });
+		this.setState({ scormLink, courseLaunched: true });
 	}
 
 	editScorm = () => {
@@ -39,26 +44,56 @@ class Scorm extends Component {
 		this.setState({ showEditor: false });
 	}
 
-	renderEditing = () => {
-		const { showEditor } = this.state;
+	renderInstructor = () => {
+		const { showEditor, courseLaunched } = this.state;
 		const { bundle } = this.props;
-		const canEdit = bundle.hasLink(IMPORT_SCORM);
 
 		return (
-			<div>
-				{canEdit && <Button className="scorm-edit-button" onClick={this.editScorm}>Import Scorm Package</Button>}
-				{showEditor && <Editor onDismiss={this.onDismiss} importLink={bundle.getLink(IMPORT_SCORM)} />}
+			<div className="scorm-card scorm-instructor-card">
+				<div className="scorm-title">{bundle.title}</div >
+				<a className="scorm-edit-link" onClick={this.editScorm}>Change Content Package</a>
+				<div className="scorm-desc">
+					This course uses an external website for displaying content.
+					Follow the link below to access your course content.
+					{courseLaunched && 'If you do not see it after, a popup blocker may be preventing it from opening. Please disable popup blockers for this site.'}
+				</div>
+				{!courseLaunched && <Button className="scorm-launch-button" onClick={this.launchCourse}>Open</Button>}
+				{courseLaunched && <Button className="scorm-post-launch-button" disabled>Already Open</Button>}
+				{showEditor && <Editor onDismiss={this.onDismiss} importLink={this.props.bundle.getLink(IMPORT_SCORM)} />}
+			</div>
+		);
+	}
+
+	renderStudent = () => {
+		const { bundle } = this.props;
+		const { courseLaunched } = this.state;
+
+		return (
+			<div className="scorm-card scorm-student-card">
+				<div className="scorm-student-progress">
+					<div className="scorm-title">{ bundle.title }</div>
+					<div className="scorm-desc">
+						This course uses an external website for displaying content.
+						Follow the link below to access your course content. 
+						{courseLaunched && 'If you do not see it after, a popup blocker may be preventing it from opening. Please disable popup blockers for this site.'}
+					</div>
+					{!courseLaunched && <Button className="scorm-launch-button" onClick={this.launchCourse}>Open</Button>}
+					{courseLaunched && <Button className="scorm-post-launch-button" disabled>Already Open</Button>}
+				</div>
 			</div>
 		);
 	}
 
 	render () {
+		const { bundle } = this.props;
+		const isInstructor = bundle.hasLink(IMPORT_SCORM);
+
 		return (
 			<div className="scorm-overview-body">
 				<div className="scorm-content">
 					{this.state.scormLink !== '' && <iframe className="scorm-container" src={this.state.scormLink} />}
-					<Button className="scorm-launch-button" onClick={this.launchCourse}>Launch Course</Button>
-					{this.renderEditing()}
+					{!isInstructor && this.renderStudent()}
+					{isInstructor && this.renderInstructor()}
 				</div>
 			</div>
 		);

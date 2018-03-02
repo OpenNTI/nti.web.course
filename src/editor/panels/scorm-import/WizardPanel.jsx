@@ -39,7 +39,12 @@ export default class ScormImport extends React.Component {
 		onCancel: PropTypes.func,
 		afterSave: PropTypes.func,
 		buttonLabel: PropTypes.string,
-		exitProgressState: PropTypes.func
+		exitProgressState: PropTypes.func,
+		type: PropTypes.string
+	}
+
+	static defaultProps = {
+		type: 'ImportSCORM'
 	}
 
 	state = {
@@ -140,9 +145,10 @@ export default class ScormImport extends React.Component {
 		}
 
 		try {
-			const { catalogEntry } = this.props;
+			const { catalogEntry, type } = this.props;
 			const service = await getService();
 			const courseInstance = await service.getObject(catalogEntry && catalogEntry.CourseNTIID);
+			const link = courseInstance.getLink(type);
 
 			this.setState({loading: true, completed: false, saveDisabled: false, error: null, pctComplete: 0});
 
@@ -151,7 +157,8 @@ export default class ScormImport extends React.Component {
 			enterProgressState && enterProgressState();
 
 			this.checkCounter = 0;
-			Upload(courseInstance, file, this.onComplete, this.onFailure, this.onProgress);
+
+			Upload(link, file, this.onComplete, this.onFailure, this.onProgress);
 
 			this.progressChecker = setInterval(() => { this.checkProgress(done); }, PROGRESS_TICK);
 		} catch (error) {

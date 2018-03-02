@@ -1,6 +1,4 @@
-export default function uploadCourseData (courseInstance, zipFile, onComplete, onFailure, onProgress) {
-	const link = courseInstance && courseInstance.getLink('ImportSCORM');
-
+export default function uploadCourseData (link, zipFile, onComplete, onFailure, onProgress) {
 	if (!link) {
 		onFailure(new Error('No Link'));
 	}

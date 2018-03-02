@@ -9,15 +9,14 @@ import ImportConfirmation from '../../editor/panels/importconfirmation/WizardPan
 
 import ModeSelect, {UPDATE_KEY} from './ModeSelect';
 
-// TODO: Update labels to match design
 const t = scoped('course.wizard.CourseWizard', {
 	finish: 'Finish',
-	chooseMode: 'Change SCORM Package',
-	updateTitle: 'Update SCORM Package',
-	replaceTitle: 'Replace SCORM Package'
+	chooseMode: 'Pick Mode',
+	updateTitle: 'Update Package',
+	replaceTitle: 'Replace Package'
 });
 
-export default class CourseWizard extends React.Component {
+export default class PackageWizard extends React.Component {
 	static propTypes = {
 		title: PropTypes.string,
 		catalogEntry: PropTypes.object,
@@ -43,10 +42,11 @@ export default class CourseWizard extends React.Component {
 	renderMode () {
 		return (
 			<Switch.Item
-				className="course-panel-content"
+				className="scorm-package-content"
 				name="TemplateChooser"
 				component={WizardItem}
 				wizardCmp={ModeSelect}
+				title="Scorm Package"
 				stepName={t('chooseMode')}
 				onModeSelect={this.onModeSelect}
 				onCancel={this.cancel}
@@ -63,16 +63,15 @@ export default class CourseWizard extends React.Component {
 
 	renderUpload () {
 		// TODO: provide the appropriate link to the import panel based on the current mode
-		// TODO: fix the step name and title based on design
 		return (
 			<Switch.Item
-				className="course-panel-content"
+				className="scorm-package-content"
 				key="scormUpload"
 				name="scormUpload"
 				component={WizardItem}
 				wizardCmp={ScormImport}
 				catalogEntry={this.state.catalogEntry}
-				title="Change SCORM Package"
+				title="Change Package"
 				stepName={UPDATE_KEY === this.state.mode ? t('updateTitle') : t('replaceTitle')}
 				onCancel={this.cancel}
 				afterSave={this.afterSave} />
@@ -81,30 +80,32 @@ export default class CourseWizard extends React.Component {
 
 
 	renderConfirmation () {
-		// TODO: fix the step name and title based on design
 		return (
 			<Switch.Item
-				className="course-panel-content"
+				className="scorm-package-content"
 				key="scormUploadConfirmation"
 				name="scormUploadConfirmation"
 				component={WizardItem}
 				wizardCmp={ImportConfirmation}
 				catalogEntry={this.state.catalogEntry}
-				title="Change SCORM Package"
+				title="Change Package"
 				stepName="Confirmation"
 				onCancel={this.cancel}
-				afterSave={this.afterSave} />
+				afterSave={this.afterSave}
+			/>
 		);
 	}
 
 
 	render () {
-		return (<Switch.Panel className="course-panel" active="TemplateChooser">
-			<Switch.Container>
-				{this.renderMode()}
-				{this.renderUpload()}
-				{this.renderConfirmation()}
-			</Switch.Container>
-		</Switch.Panel>);
+		return (
+			<Switch.Panel className="scorm-package" active="TemplateChooser">
+				<Switch.Container>
+					{this.renderMode()}
+					{this.renderUpload()}
+					{this.renderConfirmation()}
+				</Switch.Container>
+			</Switch.Panel>
+		);
 	}
 }

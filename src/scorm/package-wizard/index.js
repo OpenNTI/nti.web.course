@@ -1,1 +1,1 @@
-export default from './PackageWizard';
+export {default as PackageWizard} from './PackageWizard';

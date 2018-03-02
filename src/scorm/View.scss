@@ -1,17 +1,71 @@
 @import '~nti-style-common';
-
 .scorm-overview-body {
-	width: 764px;
-    padding: rem-calc(20px);
-	min-height: calc(100vh - 110px);
-
-	.scorm-content {
-		background: white;
-		min-height: calc(100vh - 110px);		
-		.scorm-container {
-			display: block;
-			width: 100%;
-			border: none;
-		}
-	}
+    width: 100%;
+    min-height: calc(100vh - 110px);
+    .scorm-content {
+        background: white;
+        min-height: calc(100vh - 110px);
+        margin-top: 20px;
+        .scorm-container {
+            display: none;
+        }
+    }
+    .scorm-card {
+        border: 1px solid #E2E2E2;
+        background-color: #FFFFFF;
+        box-shadow: 0 4px 10px -5px rgba(0, 0, 0, 0.1);
+        margin-left: 128px;
+        margin-right: 128px;
+        top: 120px;
+        position: relative;
+        height: 300px;
+        max-width: 768px;
+        padding: 35px 45px;
+        .scorm-title {
+            color: #494949;
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 33px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .scorm-desc {
+            color: #757474;
+            font-size: 14px;
+            margin-top: 10px;
+            line-height: 24px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .scorm-launch-button {
+            margin-top: 87px;
+            border-radius: 3px;
+            height: 40px;
+            width: 120px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            text-align: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .nti-button.primary.scorm-post-launch-button {
+            background-color: #B8B8B8;
+            border-radius: 3px;
+            margin-top: 97px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-weight: 600;
+            font-size: 16px;
+        }
+    }
+    .scorm-instructor-card {
+        .scorm-edit-link {
+            color: #3FB3F6;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            cursor: pointer;
+        }
+    }
 }
