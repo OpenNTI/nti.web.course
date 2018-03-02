@@ -5,6 +5,7 @@ import Base from '../../common/BaseListItem';
 
 import AssignmentTitle from './AssignmentTitle';
 import AssignmentIcon from './AssignmentIcon';
+import AssignmentLabel from './AssignmentLabel';
 
 export default class LessonOverviewQuestionSetListItem extends React.Component {
 	static propTypes = {
@@ -54,6 +55,12 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 
 
 	renderLabels = () => {
+		const {assignment, assignmentHistory} = this.props;
 
+		if (assignment) {
+			return (
+				<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} />
+			);
+		}
 	}
 }

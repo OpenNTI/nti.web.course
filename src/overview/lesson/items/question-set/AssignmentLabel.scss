@@ -1,0 +1,27 @@
+@import '~nti-style-common';
+
+.lesson-overview-assignment-status {
+	.completed {
+		&.ontime .label {
+			color: $secondary-green;
+		}
+
+		.errors {
+			color: $primary-red;
+		}
+	}
+
+	.due {
+		&.today {
+			color: $primary-orange;
+		}
+
+		&.late {
+			color: $primary-red;
+		}
+	}
+
+	.excused {
+		color: $primary-red;
+	}
+}
