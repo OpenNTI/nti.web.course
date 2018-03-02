@@ -32,7 +32,8 @@
         .scorm-desc {
             color: #757474;
             font-size: 14px;
-            margin-top: 10px;
+			position: absolute;
+			bottom: 10px;
             line-height: 24px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
