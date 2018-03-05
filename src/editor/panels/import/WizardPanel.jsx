@@ -145,7 +145,7 @@ export default class ImportWizardPanel extends React.Component {
 					// close this modal and show success message
 					this.props.onCancel(true);
 
-					Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'));
+					Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'), { promptType: 'info' });
 				}
 				else {
 					// show 'taking longer than expected' message

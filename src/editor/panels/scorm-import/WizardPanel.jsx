@@ -36,7 +36,7 @@ const handleError = (error) => {
 	try {
 		const parsedError = JSON.parse((error && error.responseText) || error);
 		return parsedError.message || t('unknownError');
-	} 
+	}
 	catch (e) {
 		return t('unknownError');
 	}
@@ -131,7 +131,7 @@ export default class ScormImport extends React.Component {
 					// close this modal and show success message
 					this.props.onCancel(true);
 
-					Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'));
+					Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'), { promptType: 'info' });
 				}
 				else {
 					// show 'taking longer than expected' message
