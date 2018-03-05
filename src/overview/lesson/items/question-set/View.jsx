@@ -7,8 +7,17 @@ import Registry from '../Registry';
 import ListCmp from './List';
 import GridCmp from './Grid';
 
+const HANDLES = [
+	'application/vnd.nextthought.naquestionref',
+	'application/vnd.nextthought.questionsetref',
+	'application/vnd.nextthought.nanosubmitassignment',
+	'application/vnd.nextthought.naassignment',
+	'application/vnd.nextthought.assignment',
+	'application/vnd.nextthought.assignmentref'
+];
+
 export default
-@Registry.register('application/vnd.nextthought.questionsetref')
+@Registry.register(HANDLES)
 class LessonOverviewQuestionSet extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
