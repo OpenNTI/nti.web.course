@@ -1,3 +1,4 @@
+import './discussion';
 import './group';
 import './question-set';
 import './related-work';
