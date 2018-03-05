@@ -41,6 +41,15 @@ class Scorm extends Component {
 
 	componentDidMount () {
 		window.addEventListener('message', this.onClose, false);
+
+		this.initLink();
+	}
+
+	async initLink () {
+		const { bundle } = this.props;
+		const scormLink = await bundle.getScormCourse();
+
+		this.setState({ scormLink });
 	}
 
 	attachRef = (x) => {
@@ -59,7 +68,9 @@ class Scorm extends Component {
 			}
 
 			if('scorm-exit' === data.message) {
-				this.setState({courseLaunched: false, scormLink: ''});
+				this.setState({courseLaunched: false, scormLink: ''}, () => {
+					this.initLink();
+				});
 				return;
 			}
 		}
@@ -71,7 +82,9 @@ class Scorm extends Component {
 
 	componentDidUpdate (prevProps) {
 		if (prevProps.bundle.getID() !== this.props.bundle.getID()) {
-			this.setState({ scormLink: '', showEditor: false });
+			this.setState({ scormLink: '', showEditor: false }, () => {
+				this.initLink();
+			});
 		}
 	}
 
@@ -115,9 +128,8 @@ class Scorm extends Component {
 					Follow the link below to access your course content.
 					{courseLaunched && 'If you do not see it after, a popup blocker may be preventing it from opening. Please disable popup blockers for this site.'}
 				</div>
-				{!courseLaunched && <Button className="scorm-launch-button" onClick={this.launchCourse}>Open</Button>}
-				{scormLink !== '' && this.renderFrame()}
-				{courseLaunched && !scormLink && <Button className="scorm-post-launch-button" disabled>Already Open</Button>}
+				{scormLink && scormLink !== '' && !courseLaunched && <Button className="scorm-launch-button" onClick={this.launchCourse}>Open</Button>}
+				{scormLink && scormLink !== '' && courseLaunched && this.renderFrame()}
 				{showEditor && <Editor onDismiss={this.onDismiss} bundle={this.props.bundle} />}
 			</div>
 		);
@@ -136,9 +148,8 @@ class Scorm extends Component {
 						Follow the link below to access your course content.
 						{courseLaunched && 'If you do not see it after, a popup blocker may be preventing it from opening. Please disable popup blockers for this site.'}
 					</div>
-					{!courseLaunched && <Button className="scorm-launch-button" onClick={this.launchCourse}>Open</Button>}
-					{scormLink !== '' && this.renderFrame()}
-					{courseLaunched && !scormLink && <Button className="scorm-post-launch-button" disabled>Already Open</Button>}
+					{scormLink && scormLink !== '' && !courseLaunched && <Button className="scorm-launch-button" onClick={this.launchCourse}>Open</Button>}
+					{scormLink && scormLink !== '' && courseLaunched && this.renderFrame()}
 				</div>
 			</div>
 		);
