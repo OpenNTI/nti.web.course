@@ -20,6 +20,7 @@ export default class LessonOverviewBaseListItem extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		item: PropTypes.object,
+		disabled: PropTypes.bool,
 
 		title: PropTypes.string,
 		labels: PropTypes.array,
@@ -31,10 +32,10 @@ export default class LessonOverviewBaseListItem extends React.Component {
 
 
 	render () {
-		const {className} = this.props;
+		const {className, disabled} = this.props;
 
 		return (
-			<PaddedContainer className={cx('lesson-overview-base-list-item', className)}>
+			<PaddedContainer className={cx('lesson-overview-base-list-item', className, {disabled})}>
 				<div className="icon-container">
 					<div className="icon">
 						{this.renderIcon()}

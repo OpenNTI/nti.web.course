@@ -1,0 +1,17 @@
+@import '~nti-style-common';
+
+.lesson-overview-discussion-list-item {
+	.lesson-overview-discussion-list-item-icon {
+		width: 80px;
+		min-height: 45px;
+		position: relative;
+		box-shadow: 0 0 1px 0 $border-grey;
+
+		padding-bottom: 56.25%;
+
+		background-image: url('../assets/discussion-icon.png');
+		background-size: cover;
+		background-position: center center;
+		background-repeat: no-repeat;
+	}
+}
