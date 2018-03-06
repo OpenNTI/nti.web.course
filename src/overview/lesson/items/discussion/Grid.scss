@@ -1,0 +1,75 @@
+@import "~nti-style-common";
+
+.lesson-overview-discussion-grid-item {
+	$width: 230px;
+
+	text-decoration: none;
+	background: #f5f5f5;
+	width: $width;
+	height: $width;
+	// min-height: $width;
+	margin: 0.5rem 0.5rem 0.5rem 0;
+	display: inline-block;
+	vertical-align: top;
+
+	.wrap {
+		color: $primary-grey;
+		padding: rem-calc(8px 10px);
+
+		.title {
+			@include limit-lines($line-height: 1.2);
+
+			line-height: 1.2;
+			font-size: rem-calc(26px);
+			font-style: normal;
+			font-weight: 300;
+			font-family: $header-font-family;
+			min-height: 60px;
+			margin-bottom: 6px;
+		}
+
+		.comments {
+			font-family: $body-font-family;
+			font-style: normal;
+			font-weight: 600;
+			font-size: rem-calc(10px);
+			line-height: 1.5;
+			color: $tertiary-grey;
+		}
+	}
+
+	.icon {
+		background-size: cover;
+		background-position: center center;
+		width: 230px;
+		height: 115px;
+
+		&.default {
+			background-image: url('./assets/discussion-icon.png');
+		}
+	}
+
+	&.unavailable {
+		opacity: 0.4;
+		position: relative;
+
+		&::after {
+			$width: 192px;
+
+			content: 'Not available.';
+			position: absolute;
+			width: $width;
+			margin: 0 1rem;
+			font-size: 0.6875rem;
+			color: white;
+			background: rgba(0, 0, 0, 0.8);
+			top: 50%;
+			left: 50%;
+			margin-left: -($width/2);
+			margin-top: -0.75em;
+			text-align: center;
+			border-radius: 2px;
+			height: auto;
+		}
+	}
+}

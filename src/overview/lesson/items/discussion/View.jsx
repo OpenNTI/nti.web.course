@@ -148,8 +148,10 @@ class LessonOverviewGroup extends React.Component {
 	render () {
 		const {layout, ...otherProps} = this.props;
 
-		return layout === List ?
-			(<ListCmp layout={layout} {...otherProps} {...this.state} />) :
-			(<GridCmp layout={layout} {...otherProps} {...this.state} />);
+		const Cmp = layout === List ? ListCmp : GridCmp;
+
+		return (
+			<Cmp layout={layout} {...otherProps} {...this.state} />
+		);
 	}
 }
