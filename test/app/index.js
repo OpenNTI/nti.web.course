@@ -97,6 +97,7 @@ class Test extends React.Component {
 
 	render () {
 		const {course, nodes, layout} = this.state;
+		const limit = localStorage.limit || 1;
 
 		if (!course) { return null; }
 
@@ -105,7 +106,7 @@ class Test extends React.Component {
 				<label><input type="radio" checked={layout === Overview.Grid} onChange={this.selectGrid}/>Grid</label>
 				<label><input type="radio" checked={layout === Overview.List} onChange={this.selectList}/>List</label>
 
-				{nodes.map(node => (
+				{nodes.slice(0, limit).map(node => (
 					<Unit key={node.NTIID} course={course} node={node} layout={layout}/>
 				))}
 			</div>
