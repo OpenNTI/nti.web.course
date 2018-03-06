@@ -54,7 +54,8 @@ export default class ScormImport extends React.Component {
 		exitProgressState: PropTypes.func,
 		type: PropTypes.string,
 		catalogEntry: PropTypes.object,
-		bundle: PropTypes.object
+		bundle: PropTypes.object,
+		onFinish: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -108,6 +109,7 @@ export default class ScormImport extends React.Component {
 
 	checkProgress = (done) => {
 		const { completed, error, uploadDone } = this.state;
+		const { onFinish } = this.props;
 
 		if(error) {
 			clearInterval(this.progressChecker);
@@ -129,7 +131,7 @@ export default class ScormImport extends React.Component {
 
 				if(completed) {
 					// close this modal and show success message
-					this.props.onCancel(true);
+					onFinish && onFinish(false, this.state.createdEntry);
 
 					Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'), { promptType: 'info' });
 				}

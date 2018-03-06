@@ -70,10 +70,10 @@ export default class CourseWizard extends React.Component {
 		this.props.onCancel && this.props.onCancel();
 	}
 
-	creationCompleted = (allowRedirect) => {
+	creationCompleted = (allowRedirect, entry) => {
 		const { onFinish } = this.props;
 
-		onFinish && onFinish(this.state.catalogEntry);
+		onFinish && onFinish(entry || this.state.catalogEntry);
 	}
 
 	renderItem = (panel, index, arr) => {
@@ -88,6 +88,7 @@ export default class CourseWizard extends React.Component {
 			catalogEntry={this.state.catalogEntry}
 			stepName={panel.tabDescription}
 			onCancel={this.cancel}
+			onFinish={this.creationCompleted}
 			hideHeaderControls={panel.WizardPanel.hideHeaderControls}
 			afterSave={index === arr.length - 1
 				? () => this.creationCompleted(!panel.WizardPanel.disallowEditorRedirect)

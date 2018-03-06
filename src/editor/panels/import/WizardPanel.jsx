@@ -35,7 +35,8 @@ export default class ImportWizardPanel extends React.Component {
 		afterSave: PropTypes.func,
 		buttonLabel: PropTypes.string,
 		enterProgressState: PropTypes.func,
-		exitProgressState: PropTypes.func
+		exitProgressState: PropTypes.func,
+		onFinish: PropTypes.func
 	}
 
 	constructor (props) {
@@ -122,6 +123,7 @@ export default class ImportWizardPanel extends React.Component {
 
 	checkProgress = (done) => {
 		const { completed, error, uploadDone } = this.state;
+		const { onFinish } = this.props;
 
 		if(error) {
 			clearInterval(this.progressChecker);
@@ -143,7 +145,7 @@ export default class ImportWizardPanel extends React.Component {
 
 				if(completed) {
 					// close this modal and show success message
-					this.props.onCancel(true);
+					onFinish && onFinish(false, this.state.createdEntry);
 
 					Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'), { promptType: 'info' });
 				}

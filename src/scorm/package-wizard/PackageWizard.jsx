@@ -59,9 +59,9 @@ class PackageWizard extends React.Component {
 
 
 	afterSave () {
-		// TODO: What should happen after save?
-		const { onDismiss } = this.props;
-		onDismiss();
+		const { onFinish } = this.props;
+
+		onFinish && onFinish(this.state.catalogEntry);
 	}
 
 
