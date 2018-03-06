@@ -108,8 +108,10 @@ class LessonOverviewQuestionSet extends React.Component {
 		const {assignment, assignmentHistory} = this.state;
 		const extraProps = {assignment, assignmentHistory};
 
-		return layout === List ?
-			(<ListCmp layout={layout} {...otherProps} {...extraProps} />) :
-			(<GridCmp layout={layout} {...otherProps} {...extraProps} />);
+		const Cmp = layout === List ? ListCmp : GridCmp;
+
+		return (
+			<Cmp layout={layout} {...otherProps} {...extraProps} />
+		);
 	}
 }
