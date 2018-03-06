@@ -13,11 +13,11 @@ const DEFAULT_TEXT = {
 };
 const t = scoped('course.overview.lesson.items.question-set.List', DEFAULT_TEXT);
 
-LessonOverviewQuestionSetListItemAssessmentLabel.propTypes = {
+LessonOverviewQuestionSetAssessmentLabel.propTypes = {
 	assessment: PropTypes.object,
 	assessmentSubmission: PropTypes.object
 };
-export default function LessonOverviewQuestionSetListItemAssessmentLabel ({assessment, assessmentSubmission}) {
+export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, assessmentSubmission}) {
 	const count = assessment ? parseInt(assessment['question-count'], 10) : 0;
 	const correct = assessmentSubmission && assessmentSubmission.getCorrect();
 	const incorrect = assessmentSubmission && assessmentSubmission.getIncorrect();

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Base from '../../common/BaseListItem';
 
 import AssessmentLabel from './AssessmentLabel';
+import AssessmentIcon from './AssessmentIcon';
 import AssignmentTitle from './AssignmentTitle';
 import AssignmentIcon from './AssignmentIcon';
 import AssignmentLabel from './AssignmentLabel';
@@ -49,11 +50,18 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 
 
 	renderIcon = () => {
-		const {assignment, assignmentHistory, assessmentSubmission} = this.props;
+		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
 
 		if (assignment) {
 			return (
 				<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory} />
+			);
+		}
+
+
+		if (assessment) {
+			return (
+				<AssessmentIcon assessment={assessment} assessmentSubmission={assessmentSubmission} />
 			);
 		}
 
