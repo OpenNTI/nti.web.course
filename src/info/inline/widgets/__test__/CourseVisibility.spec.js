@@ -9,7 +9,9 @@ describe('CourseVisibility test', () => {
 		let Items = {};
 
 		(optionNames || []).forEach(o => {
-			Items[o] = {};
+			Items[o] = {
+				enabled: true
+			};
 		});
 
 		return {
@@ -116,7 +118,7 @@ describe('CourseVisibility test', () => {
 		});
 
 		test('Test StoreEnrollment', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['StoreEnrollment'])}/>);
+			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['StoreEnrollment'])}/>);
 
 			const labeledContentItems = cmp.find('.labeled-content');
 			const enrollmentContent = labeledContentItems.at(1).find('.content').first();
@@ -125,7 +127,7 @@ describe('CourseVisibility test', () => {
 		});
 
 		test('Test OpenEnrollment', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['OpenEnrollment'])}/>);
+			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment'])}/>);
 
 			const labeledContentItems = cmp.find('.labeled-content');
 			const enrollmentContent = labeledContentItems.at(1).find('.content').first();
@@ -134,7 +136,7 @@ describe('CourseVisibility test', () => {
 		});
 
 		test('Test OpenEnrollment and FiveminuteEnrollment', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['OpenEnrollment', 'FiveminuteEnrollment'])}/>);
+			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment', 'FiveminuteEnrollment'])}/>);
 
 			const labeledContentItems = cmp.find('.labeled-content');
 			const enrollmentContent = labeledContentItems.at(1).find('.content').first();

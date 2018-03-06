@@ -63,14 +63,15 @@ export default class CourseVisibility extends React.Component {
 	}
 
 	renderAllowingEnrollment () {
-		const options = this.props.catalogEntry.getEnrollmentOptions();
+		const {catalogEntry} = this.props;
+		const options = catalogEntry.getEnrollmentOptions();
 
 		const items = (options && options.Items) || {};
 
 		const { OpenEnrollment, IMSEnrollment, FiveminuteEnrollment, StoreEnrollment } = items;
 
 		const isForCredit = (IMSEnrollment && IMSEnrollment.SourcedID) || FiveminuteEnrollment;
-		const isPublic = StoreEnrollment || OpenEnrollment;
+		const isPublic = (StoreEnrollment || (OpenEnrollment && OpenEnrollment.enabled)) && !catalogEntry.is_non_public;
 
 		let label = t('invitationOnly');
 

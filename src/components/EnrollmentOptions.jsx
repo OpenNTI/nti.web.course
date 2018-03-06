@@ -117,7 +117,7 @@ export default class EnrollmentOptions extends React.Component {
 	renderOpenEnrollment () {
 		const openEnrollment = this.getOption('OpenEnrollment');
 
-		if(!openEnrollment) {
+		if(!openEnrollment || !openEnrollment.enabled) {
 			return null;
 		}
 
