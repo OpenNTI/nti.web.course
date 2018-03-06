@@ -8,7 +8,7 @@
 	width: $width;
 	height: $width;
 	// min-height: $width;
-	margin: 0.5rem 0.5rem 0.5rem 0;
+	margin: rem-calc(5px 5px 5px 0);
 	display: inline-block;
 	vertical-align: top;
 
@@ -41,7 +41,6 @@
 	.icon {
 		background-size: cover;
 		background-position: center center;
-		width: 230px;
 		height: 115px;
 
 		&.default {
