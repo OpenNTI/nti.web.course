@@ -1,0 +1,26 @@
+@import '~nti-style-common';
+
+.lesson-overview-questionset-assessment-label {
+	.submitted {
+		.correct, .incorrect {
+			i, span {
+				display: inline-block;
+				vertical-align: middle;
+			}
+
+			i {
+				font-size: 1.125rem;
+				margin-right: rem-calc(2px);
+			}
+		}
+
+		.correct {
+			color: $primary-green;
+			margin-right: 1rem;
+		}
+
+		.incorrect {
+			color: $primary-red;
+		}
+	}
+}

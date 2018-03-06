@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Base from '../../common/BaseListItem';
 
+import AssessmentLabel from './AssessmentLabel';
 import AssignmentTitle from './AssignmentTitle';
 import AssignmentIcon from './AssignmentIcon';
 import AssignmentLabel from './AssignmentLabel';
@@ -12,7 +13,10 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 		item: PropTypes.object,
 
 		assignment: PropTypes.object,
-		assignmentHistory: PropTypes.object
+		assignmentHistory: PropTypes.object,
+
+		assessment: PropTypes.object,
+		assessmentSubmission: PropTypes.object
 	}
 
 	render () {
@@ -22,6 +26,7 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 			<Base
 				className="lesson-overview-question-set-list-item"
 				item={item}
+
 				renderTitle={this.renderTitle}
 				renderIcon={this.renderIcon}
 				renderLabels={this.renderLabels}
@@ -44,22 +49,33 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 
 
 	renderIcon = () => {
-		const {assignment, assignmentHistory} = this.props;
+		const {assignment, assignmentHistory, assessmentSubmission} = this.props;
 
 		if (assignment) {
 			return (
 				<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory} />
 			);
 		}
+
+
+		return (
+			<div className="fallback-questionset-icon" />
+		);
 	}
 
 
 	renderLabels = () => {
-		const {assignment, assignmentHistory} = this.props;
+		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
 
 		if (assignment) {
 			return (
 				<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} />
+			);
+		}
+
+		if (assessment) {
+			return (
+				<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission} />
 			);
 		}
 	}

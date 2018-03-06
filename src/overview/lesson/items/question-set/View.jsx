@@ -1,11 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {getService} from 'nti-web-client';
 
 import {List, Grid} from '../../Constants';
 import Registry from '../Registry';
 
 import ListCmp from './List';
 import GridCmp from './Grid';
+
+function isNetworkError (e) {
+	return e && (e.statusCode === 0 || e.statusCode >= 500);
+}
+
+const SUBMITTED_QUIZ = 'application/vnd.nextthought.assessment.assessedquestionset';
 
 const HANDLES = [
 	'application/vnd.nextthought.naquestionref',
@@ -46,7 +53,7 @@ class LessonOverviewQuestionSet extends React.Component {
 
 	async setupFor (props) {
 		const {item, course} = this.props;
-		const target = item['Target-NTIID'];
+		const target = item['Target-NTIID'] || (item.getID ? item.getID() : item.NTIID);
 
 		try {
 			const collection = await course.getAssignments();
@@ -77,7 +84,7 @@ class LessonOverviewQuestionSet extends React.Component {
 						assignmentHistory: history
 					});
 				} catch (e) {
-					if (e && (e.statusCode === 0 || e.statusCode >= 500)) {
+					if (isNetworkError(e)) {
 						this.setNetworkError();
 					}
 
@@ -92,7 +99,28 @@ class LessonOverviewQuestionSet extends React.Component {
 
 
 	setupAssessment (id, collection) {
-		//TODO: fill this out
+		const assessment = collection.getAssessment(id);
+
+		this.setState({
+			assessment,
+			networkError: false
+		}, async () => {
+			try {
+				const service = await getService();
+				const pageInfo = await service.getPageInfo(id);
+				const submission = await pageInfo.getUserDataLastOfType(SUBMITTED_QUIZ);
+
+				this.setState({
+					assessmentSubmission: submission
+				});
+			} catch (e) {
+				if (isNetworkError(e)) {
+					this.setNetworkError();
+				}
+
+				//its fine if we can't load a submission
+			}
+		});
 	}
 
 
@@ -105,8 +133,8 @@ class LessonOverviewQuestionSet extends React.Component {
 
 	render () {
 		const {layout, ...otherProps} = this.props;
-		const {assignment, assignmentHistory} = this.state;
-		const extraProps = {assignment, assignmentHistory};
+		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.state;
+		const extraProps = {assignment, assignmentHistory, assessment, assessmentSubmission};
 
 		const Cmp = layout === List ? ListCmp : GridCmp;
 

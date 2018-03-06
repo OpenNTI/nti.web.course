@@ -169,7 +169,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		const format = date => formatDate(date, 'dddd, MMMM D h:mm A z');
 
 		const dueToday = dueDate > now && isToday(dueDate);
-		const late = !isNoSubmit && dueDate <= now;
+		const late = !isNoSubmit && dueDate && dueDate <= now;
 
 		let text = '';
 
