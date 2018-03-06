@@ -1,6 +1,7 @@
 .lesson-overview-video-roll-playlist-container {
 	display: flex;
 	flex-direction: row;
+	position: relative;
 
 	.stage {
 		width: max-content;
@@ -9,12 +10,17 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		margin-right: 250px;
 	}
 
 	.playlist {
+		position: absolute;
 		background: #04232c;
-		flex: 0 0 250px;
 		width: 250px;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		flex: 0 0 auto;
 		overflow-x: hidden;
 		overflow-y: auto;
 		display: block;
