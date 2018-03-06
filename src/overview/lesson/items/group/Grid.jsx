@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {collateDiscussions} from '../discussion/Collator';
 import Items from '../View';
+
 
 LessonOverviewGroupGrid.propTypes = {
 	item: PropTypes.object
@@ -12,7 +14,7 @@ export default function LessonOverviewGroupGrid ({item, ...otherProps}) {
 	return (
 		<div className="lesson-overview-group-grid">
 			<h2 style={{backgroundColor: `#${accentColor}`}}>{title}</h2>
-			<Items items={items} {...otherProps} />
+			<Items items={collateDiscussions(items)} {...otherProps} />
 		</div>
 	);
 }
