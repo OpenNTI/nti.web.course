@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
+import {AssetIcon} from 'nti-web-commons';
+import {isNTIID} from 'nti-lib-ntiids';
 
 import Base from '../../common/BaseListItem';
+
+const isExternal = (item) => /external/i.test(item.type) || !isNTIID(item.href);
 
 const DEFAULT_TEXT = {
 	byline: 'By %(name)s'
@@ -26,7 +30,7 @@ export default class LessonOverviewRelatedWorkListItem extends React.Component {
 				item={item}
 				renderIcon={this.renderIcon}
 				labels={[
-					t('byline', {name: byline})
+					byline ? t('byline', {name: byline}) : null
 				]}
 			/>
 		);
@@ -35,12 +39,17 @@ export default class LessonOverviewRelatedWorkListItem extends React.Component {
 
 	renderIcon = () => {
 		const {item} = this.props;
-		const {icon} = item;
+		const type = [item.type, item.targetMimeType].filter(x => x);
 
 		return (
-			<div className="lesson-overview-related-work-list-item-icon">
-				<img src={icon} />
-			</div>
+			<AssetIcon
+				className="lesson-overview-related-work-list-item-icon"
+				src={item.icon}
+				mimeType={type}
+				href={item.href}
+			>
+				{isExternal(item) && (<div className="external" />)}
+			</AssetIcon>
 		);
 	}
 }

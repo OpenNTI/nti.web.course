@@ -1,12 +1,9 @@
 @import '~nti-style-common';
 
 .lesson-overview-related-work-list-item {
-	.lesson-overview-related-work-list-item-icon {
+	.lesson-overview-related-work-list-item-icon.icon.file-type {
 		width: rem-calc(48px);
+		height: rem-calc(60px);
 		box-shadow: 0 0 1px 0 $border-grey;
-
-		img {
-			width: 100%;
-		}
 	}
 }
