@@ -58,7 +58,7 @@ class PackageWizard extends React.Component {
 	}
 
 
-	afterSave () {
+	afterSave = () => {
 		const { onFinish } = this.props;
 
 		onFinish && onFinish(this.state.catalogEntry);
@@ -79,6 +79,7 @@ class PackageWizard extends React.Component {
 				stepName={UPDATE_KEY === this.state.mode ? t('updateTitle') : t('replaceTitle')}
 				type={this.state.mode}
 				onCancel={this.cancel}
+				onFinish={this.afterSave}
 				afterSave={this.afterSave} />
 		);
 	}
