@@ -1,15 +1,11 @@
-import URL from 'url';
-import {join} from 'path';
 
 import React, { Component } from 'react';
 import { Button } from 'nti-web-commons';
 import PropTypes from 'prop-types';
-import {resolveBasePath} from 'nti-web-client';
 
 import Editor from './Editor';
 
 const IMPORT_SCORM = 'ImportScorm';
-const STATIC_REDIRECT = 'scormredirect.html';
 
 class Scorm extends Component {
 	static propTypes = {
@@ -23,78 +19,10 @@ class Scorm extends Component {
 	state = {
 		scormLink: '',
 		showEditor: false,
-		courseLaunched: false
 	}
 
-	constructor (props) {
-		super(props);
-
-		const url = URL.parse(global.location.href);
-
-		url.search = null;
-		url.hash = null;
-		url.query = null;
-		url.pathname = join(resolveBasePath(), STATIC_REDIRECT);
-
-		this.redirecturl = url.format();
-	}
-
-	componentDidMount () {
-		window.addEventListener('message', this.onClose, false);
-
-		this.initLink();
-	}
-
-	async initLink () {
-		const { bundle } = this.props;
-		const scormLink = await bundle.getScormCourse();
-
-		this.setState({ scormLink });
-	}
-
-	attachRef = (x) => {
-		this.iframe = x;
-	}
-
-	onClose = (message) => {
-		if(message) {
-			let data;
-
-			try {
-				data = JSON.parse(message.data) || {};
-			}
-			catch (e) {
-				data = {};
-			}
-
-			if('scorm-exit' === data.message) {
-				this.setState({courseLaunched: false, scormLink: ''}, () => {
-					this.initLink();
-				});
-				return;
-			}
-		}
-	}
-
-	componentWillUnmount () {
-		window.removeEventListener('message', this.onClose);
-	}
-
-	componentDidUpdate (prevProps) {
-		if (prevProps.bundle.getID() !== this.props.bundle.getID()) {
-			this.setState({ scormLink: '', showEditor: false }, () => {
-				this.initLink();
-			});
-		}
-	}
-
-	launchCourse = async (e) => {
-		e.preventDefault();
-
-		const { bundle } = this.props;
-		const scormLink = await bundle.getScormCourse();
-
-		this.setState({ scormLink, courseLaunched: true });
+	getLaunchLink = () => {
+		return this.props.bundle.getScormCourse() + '?redirecturl=' + encodeURIComponent(global.location.href);
 	}
 
 	editScorm = () => {
@@ -105,18 +33,8 @@ class Scorm extends Component {
 		this.setState({ showEditor: false });
 	}
 
-	renderFrame () {
-		return (
-			<iframe
-				ref={this.attachRef}
-				seamless="true"
-				frameBorder="0"
-				src={this.state.scormLink + '?redirecturl=' + encodeURIComponent(this.redirecturl)} />
-		);
-	}
-
 	renderInstructor = () => {
-		const { showEditor, courseLaunched, scormLink } = this.state;
+		const { showEditor, courseLaunched } = this.state;
 		const { bundle } = this.props;
 
 		return (
@@ -128,8 +46,7 @@ class Scorm extends Component {
 					Follow the link below to access your course content.
 					{courseLaunched && 'If you do not see it after, a popup blocker may be preventing it from opening. Please disable popup blockers for this site.'}
 				</div>
-				{scormLink && scormLink !== '' && !courseLaunched && <Button className="scorm-launch-button" onClick={this.launchCourse}>Open</Button>}
-				{scormLink && scormLink !== '' && courseLaunched && this.renderFrame()}
+				{bundle.Metadata.hasLink('LaunchSCORM') && !courseLaunched && <Button className="scorm-launch-button" href={this.getLaunchLink()}>Open</Button>}
 				{showEditor && <Editor onDismiss={this.onDismiss} bundle={this.props.bundle} />}
 			</div>
 		);
@@ -137,7 +54,7 @@ class Scorm extends Component {
 
 	renderStudent = () => {
 		const { bundle } = this.props;
-		const { courseLaunched, scormLink } = this.state;
+		const { courseLaunched } = this.state;
 
 		return (
 			<div className="scorm-card scorm-student-card">
@@ -148,8 +65,7 @@ class Scorm extends Component {
 						Follow the link below to access your course content.
 						{courseLaunched && 'If you do not see it after, a popup blocker may be preventing it from opening. Please disable popup blockers for this site.'}
 					</div>
-					{scormLink && scormLink !== '' && !courseLaunched && <Button className="scorm-launch-button" onClick={this.launchCourse}>Open</Button>}
-					{scormLink && scormLink !== '' && courseLaunched && this.renderFrame()}
+					{bundle.Metadata.hasLink('LaunchSCORM') && !courseLaunched && <Button className="scorm-launch-button" onClick={this.getLaunchLink()}>Open</Button>}
 				</div>
 			</div>
 		);
