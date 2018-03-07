@@ -20,7 +20,8 @@ const LABELS = {
 	tooLarge: 'File is too large.',
 	unknownError: 'Unable to upload file.',
 	courseSuccessfullyImported: 'Scorm package successfully uploaded',
-	importSuccess: 'Upload Success'
+	importSuccess: 'Upload Success',
+	importPermissionError: 'You do not have permission to upload a Scorm package'
 };
 
 const NUM_CHECKS = 10;
@@ -165,6 +166,11 @@ export default class ScormImport extends React.Component {
 			const service = await getService();
 			const courseInstance = bundle || await service.getObject(catalogEntry && catalogEntry.CourseNTIID);
 			const link = courseInstance.getLink(type);
+
+			if(!link) {
+				this.setState({error: t('importPermissionError')});
+				return;
+			}
 
 			this.setState({loading: true, completed: false, saveDisabled: false, error: null, pctComplete: 0});
 
