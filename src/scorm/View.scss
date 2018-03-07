@@ -1,4 +1,5 @@
 @import '~nti-style-common';
+
 .scorm-overview-body {
     width: 100%;
     min-height: calc(100vh - 110px);
@@ -9,24 +10,36 @@
 	}
 
     .scorm-content {
-        background: white;
+        @include responsive-range(desktop) {
+            background: white;
+        }
+        
         min-height: calc(100vh - 110px);
         margin-top: 20px;
         .scorm-container {
             display: none;
         }
     }
+
     .scorm-card {
+        @include responsive-range(desktop) {
+            margin-left: 128px;
+            margin-right: 128px;
+        }
+
+        @include responsive-range(mobile) {
+            margin: auto;
+        }
+
         border: 1px solid #E2E2E2;
         background-color: #FFFFFF;
         box-shadow: 0 4px 10px -5px rgba(0, 0, 0, 0.1);
-        margin-left: 128px;
-        margin-right: 128px;
         top: 120px;
         position: relative;
         min-height: 300px;
         max-width: 768px;
         padding: 35px 45px;
+
         .scorm-title {
             color: #494949;
             font-size: 24px;

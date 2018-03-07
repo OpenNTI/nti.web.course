@@ -1,11 +1,12 @@
 
 import React, { Component } from 'react';
-import { Button } from 'nti-web-commons';
+import { Button, Layouts } from 'nti-web-commons';
 import PropTypes from 'prop-types';
 
 import Editor from './Editor';
 
 const IMPORT_SCORM = 'ImportScorm';
+const { Responsive } = Layouts;
 
 class Scorm extends Component {
 	static propTypes = {
@@ -34,7 +35,7 @@ class Scorm extends Component {
 	}
 
 	renderInstructor = () => {
-		const { showEditor, courseLaunched } = this.state;
+		const { showEditor } = this.state;
 		const { bundle } = this.props;
 
 		return (
@@ -44,17 +45,15 @@ class Scorm extends Component {
 				<div className="scorm-desc">
 					This course uses an external website for displaying content.
 					Follow the link below to access your course content.
-					{courseLaunched && 'If you do not see it after, a popup blocker may be preventing it from opening. Please disable popup blockers for this site.'}
 				</div>
-				{bundle.Metadata.hasLink('LaunchSCORM') && !courseLaunched && <Button className="scorm-launch-button" href={this.getLaunchLink()}>Open</Button>}
-				{showEditor && <Editor onDismiss={this.onDismiss} bundle={this.props.bundle} />}
+				{bundle.Metadata.hasLink('LaunchSCORM') && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">Open</Button>}
+				{showEditor && !Responsive.isMobile() && <Editor onDismiss={this.onDismiss} bundle={this.props.bundle} />}
 			</div>
 		);
 	}
 
 	renderStudent = () => {
 		const { bundle } = this.props;
-		const { courseLaunched } = this.state;
 
 		return (
 			<div className="scorm-card scorm-student-card">
@@ -63,9 +62,8 @@ class Scorm extends Component {
 					<div className="scorm-desc">
 						This course uses an external website for displaying content.
 						Follow the link below to access your course content.
-						{courseLaunched && 'If you do not see it after, a popup blocker may be preventing it from opening. Please disable popup blockers for this site.'}
 					</div>
-					{bundle.Metadata.hasLink('LaunchSCORM') && !courseLaunched && <Button className="scorm-launch-button" href={this.getLaunchLink()}>Open</Button>}
+					{bundle.Metadata.hasLink('LaunchSCORM') && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">Open</Button>}
 				</div>
 			</div>
 		);
