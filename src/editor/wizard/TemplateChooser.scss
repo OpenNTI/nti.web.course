@@ -5,16 +5,15 @@
 		text-align: center;
 
 		.options-container {
-			display: flex;
+			display: inline-flex;
 			margin: auto;
-			justify-content: space-evenly;
 			padding-top: 100px;
 
 			.item {
 				color: #777;
 				cursor: pointer;
 				padding: 25px;
-				margin-bottom: 20px;
+				margin: 0 25px 20px;
 				border-radius: 3px;
 				width: 200px;
 				height: 200px;
