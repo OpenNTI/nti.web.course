@@ -128,10 +128,10 @@ export default class CourseWizard extends React.Component {
 
 	render () {
 		if(this.state.loadingTemplates) {
-			return <div className="course-panel"><div className="course-wizard-item"><Loading.Mask/></div></div>;
+			return <div className="course-panel wizard"><div className="course-wizard-item"><Loading.Mask/></div></div>;
 		}
 
-		return (<Switch.Panel className="course-panel" active="TemplateChooser">
+		return (<Switch.Panel className="course-panel wizard" active="TemplateChooser">
 			<Switch.Container>
 				{this.renderTemplateChooser()}
 				{this.renderItems()}

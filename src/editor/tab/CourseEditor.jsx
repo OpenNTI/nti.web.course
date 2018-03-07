@@ -136,7 +136,7 @@ export default class CourseEditor extends React.Component {
 		return (<div className="course-editor">
 			{this.renderLoadingMask()}
 			{this.renderCloseButton()}
-			<Switch.Panel className="course-panel" active={Edit.panels[0].TabPanel.tabName}>
+			<Switch.Panel className="course-panel editor" active={Edit.panels[0].TabPanel.tabName}>
 				<Switch.Controls className="course-editor-menu">
 					<Presentation.AssetBackground className="course-image" contentPackage={catalogEntry} type="landing"/>
 					<div className="course-id">{catalogEntry.ProviderUniqueID}</div>
