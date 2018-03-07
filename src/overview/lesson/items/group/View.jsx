@@ -1,26 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 
 import {Grid, List} from '../../Constants';
+import {collateDiscussions} from '../discussion/Collator';
 import Registry from '../Registry';
-
-import ListCmp from './List';
-import GridCmp from './Grid';
+import Items from '../View';
 
 export default
 @Registry.register('application/vnd.nextthought.nticourseoverviewgroup')
 class LessonOverviewGroup extends React.Component {
 	static propTypes = {
+		item: PropTypes.object,
 		layout: PropTypes.oneOf([Grid, List])
 	}
 
 	render () {
-		const {layout, ...otherProps} = this.props;
+		const {item, layout, ...otherProps} = this.props;
+		const {title, accentColor, Items:items} = item;
+		const isGrid = layout === Grid;
 
-		const Cmp = layout === List ? ListCmp : GridCmp;
+		const subItems = isGrid ? collateDiscussions(items) : items;
 
 		return (
-			<Cmp layout={layout} {...otherProps} />
+			<div className={cx('lesson-overview-group', {list: !isGrid, grid: isGrid})}>
+				{isGrid && (<h2 style={{backgroundColor: `#${accentColor}`}}>{title}</h2>)}
+				<Items items={subItems} layout={layout} {...otherProps} />
+			</div>
 		);
 	}
 }
