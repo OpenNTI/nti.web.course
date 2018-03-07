@@ -1,9 +1,8 @@
 @import "~nti-style-common";
 .mode-options-container {
-    display: flex;
+    display: inline-flex;
     margin: auto;
-    justify-content: space-evenly;
-    
+
     .mode-option {
         position: relative;
         cursor: pointer;
@@ -13,6 +12,7 @@
         border: 1px solid $border-grey-light;
         background-color: #FFFFFF;
         box-shadow: 0 4px 10px -5px rgba(0, 0, 0, 0.1);
+		margin: 0 30px;
 
         &.selected {
             border-color: $primary-blue;
@@ -43,8 +43,8 @@
             color: $tertiary-grey;
             text-align: center;
             font-size: 14px;
-            font-style: italic;	
-            line-height: 20px;	
+            font-style: italic;
+            line-height: 20px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
