@@ -2,6 +2,7 @@ import './discussion';
 import './group';
 import './question-set';
 import './related-work';
+import './timeline';
 import './topic';
 import './video';
 import './video-roll';
