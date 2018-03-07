@@ -19,8 +19,6 @@ export default function LessonOverviewItems ({className, containerProps = {}, it
 			{items.map((item, index) => {
 				const Cmp = registry.getItemFor(item.MimeType);
 
-				if (!Cmp) { debugger; }
-
 				if (itemRef) {
 					otherProps.ref = (x) => itemRef(index, x);
 				}
