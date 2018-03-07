@@ -10,11 +10,6 @@ import Overview from '../../src/overview/lesson/Overview';
 
 import Picker from './PickCourse';
 
-import 'nti-style-common/all.scss';
-import 'nti-web-commons/lib/index.css';
-import 'nti-web-video/lib/index.css';
-import 'nti-web-whiteboard/lib/index.css';
-
 Layouts.Responsive.setWebappContext();
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
