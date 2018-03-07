@@ -45,4 +45,10 @@
 			text-transform: uppercase;
 		}
 	}
+
+	.lesson-overview-base-list-item-icon.icon.file-type {
+		width: rem-calc(48px);
+		height: rem-calc(60px);
+		box-shadow: 0 0 1px 0 $border-grey;
+	}
 }

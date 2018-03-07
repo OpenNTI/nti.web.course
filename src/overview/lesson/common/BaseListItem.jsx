@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {rawContent} from 'nti-commons';
-import {List} from 'nti-web-commons';
+import {List, AssetIcon} from 'nti-web-commons';
+import {isNTIID} from 'nti-lib-ntiids';
 
 import PaddedContainer from './PaddedContainer';
+
+const isExternal = (item) => /external/i.test(item.type) || !isNTIID(item.href);
 
 TextPart.propTypes = { children: PropTypes.node };
 function TextPart ({children, ...props}) {
@@ -54,9 +57,21 @@ export default class LessonOverviewBaseListItem extends React.Component {
 	}
 
 	renderIcon () {
-		const {renderIcon} = this.props;
+		const {renderIcon, item} = this.props;
+		const type = [item.type, item.targetMimeType].filter(x => x);
 
-		return renderIcon ? renderIcon() : null;
+		if (renderIcon) { return renderIcon(); }
+
+		return (
+			<AssetIcon
+				className="lesson-overview-base-list-item-icon"
+				src={item.icon}
+				mimeType={type}
+				href={item.href}
+			>
+				{isExternal(item) && (<div className="external" />)}
+			</AssetIcon>
+		);
 	}
 
 
