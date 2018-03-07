@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function LessonOverviewTimelineListItem () {
+import Base from '../../common/BaseListItem';
+
+export default function LessonOverviewTimelineListItem (props) {
 	return (
-		<div>
-			Timeline List Item
-		</div>
+		<Base {...props} />
 	);
 }
