@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Base from '../../common/BaseListItem';
 
+import Icon from './Icon';
 import Label from './Label';
 
 export default class LessonOverviewSurveyListItem extends React.Component {
@@ -25,7 +26,7 @@ export default class LessonOverviewSurveyListItem extends React.Component {
 
 	renderIcon = () => {
 		return (
-			<div className="lesson-overview-survey-list-item-icon" />
+			<Icon />
 		);
 	}
 

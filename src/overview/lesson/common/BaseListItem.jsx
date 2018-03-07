@@ -1,23 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {rawContent} from 'nti-commons';
 import {List, AssetIcon} from 'nti-web-commons';
 import {isNTIID} from 'nti-lib-ntiids';
 
 import PaddedContainer from './PaddedContainer';
+import TextPart from './TextPart';
 
 const isExternal = (item) => /external/i.test(item.type) || !isNTIID(item.href);
 
-TextPart.propTypes = { children: PropTypes.node };
-function TextPart ({children, ...props}) {
-	const [child = null] = React.Children.toArray(children);
-	return typeof child !== 'string' ? (
-		<div {...props}>{child}</div>
-	) : (
-		<div {...props} {...rawContent(child)}/>
-	);
-}
 
 export default class LessonOverviewBaseListItem extends React.Component {
 	static propTypes = {
