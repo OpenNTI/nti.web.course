@@ -49,18 +49,14 @@ export default class AssetsView extends React.Component {
 	}
 
 	renderPreview () {
-		const { catalogEntry } = this.props;
-
-		if(catalogEntry.PlatformPresentationResources) {
-			return (
-				<div className="assets-preview">
-					{this.renderAsset('thumb')}
-					{this.renderAsset('promo')}
-					{this.renderAsset('landing')}
-					{this.renderAsset('background')}
-				</div>
-			);
-		}
+		return (
+			<div className="assets-preview">
+				{this.renderAsset('thumb')}
+				{this.renderAsset('promo')}
+				{this.renderAsset('landing')}
+				{this.renderAsset('background')}
+			</div>
+		);
 	}
 
 	render () {
