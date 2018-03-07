@@ -1,5 +1,6 @@
 import './discussion';
 import './group';
+import './poll';
 import './question-set';
 import './related-work';
 import './timeline';
