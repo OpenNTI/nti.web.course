@@ -65,7 +65,7 @@ class Scorm extends Component {
 						Follow the link below to access your course content.
 						{courseLaunched && 'If you do not see it after, a popup blocker may be preventing it from opening. Please disable popup blockers for this site.'}
 					</div>
-					{bundle.Metadata.hasLink('LaunchSCORM') && !courseLaunched && <Button className="scorm-launch-button" onClick={this.getLaunchLink()}>Open</Button>}
+					{bundle.Metadata.hasLink('LaunchSCORM') && !courseLaunched && <Button className="scorm-launch-button" href={this.getLaunchLink()}>Open</Button>}
 				</div>
 			</div>
 		);
