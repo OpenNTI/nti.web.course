@@ -52,7 +52,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 		if (assignment) {
 			return (
-				<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory} />
+				<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory} large />
 			);
 		}
 

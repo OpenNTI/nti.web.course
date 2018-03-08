@@ -4,8 +4,16 @@
 	width: rem-calc(40px);
 	height: rem-calc(40px);
 
-	background-size: contain;
+	background-size: cover;
 	background-image: url('../assets/assignment_due.png');
+	background-repeat: no-repeat;
+	background-position: center;
+
+	&.large {
+		background-size: auto;
+		width: rem-calc(60px);
+		height: rem-calc(60px);
+	}
 
 	&.ontime {
 		background-image: url('../assets/assignment_ontime.png');

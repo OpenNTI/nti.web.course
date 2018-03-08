@@ -4,9 +4,10 @@ import cx from 'classnames';
 
 LessonOverviewAssignmentIcon.propTypes = {
 	assignment: PropTypes.object,
-	assignmentHistory: PropTypes.object
+	assignmentHistory: PropTypes.object,
+	large: PropTypes.bool
 };
-export default function LessonOverviewAssignmentIcon ({assignment, assignmentHistory}) {
+export default function LessonOverviewAssignmentIcon ({assignment, assignmentHistory, large}) {
 	const now = new Date();
 	const due = assignment.getDueDate();
 	const noSubmit = assignment.isNonSubmit();
@@ -19,6 +20,6 @@ export default function LessonOverviewAssignmentIcon ({assignment, assignmentHis
 	if (due && due < now) { cls = 'late'; }
 
 	return (
-		<div className={cx('lesson-overview-assignment-icon', cls)} />
+		<div className={cx('lesson-overview-assignment-icon', cls, {large})} />
 	);
 }
