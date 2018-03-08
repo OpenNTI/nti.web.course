@@ -181,7 +181,7 @@ export default class ScormImport extends React.Component {
 
 			this.checkCounter = 0;
 
-			Upload(link, file, this.onComplete, this.onFailure, this.onProgress);
+			Upload(link, file, this.onComplete, this.onFailure, this.onProgress, type);
 
 			this.progressChecker = setInterval(() => { this.checkProgress(done); }, PROGRESS_TICK);
 		} catch (error) {
