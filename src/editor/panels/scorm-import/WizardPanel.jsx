@@ -15,7 +15,7 @@ const LABELS = {
 	missingInputs: 'Must provide a scorm package',
 	title: 'Drag a Scorm Package, or',
 	choose: 'Choose a File',
-	requirements: 'Must be a scorm package under 10MB.',
+	requirements: 'Must be a scorm package in zip format.',
 	wrongType: 'File type is unsupported.',
 	tooLarge: 'File is too large.',
 	unknownError: 'Unable to upload file.',
@@ -52,6 +52,7 @@ export default class ScormImport extends React.Component {
 		onCancel: PropTypes.func,
 		afterSave: PropTypes.func,
 		buttonLabel: PropTypes.string,
+		enterProgressState: PropTypes.func,
 		exitProgressState: PropTypes.func,
 		type: PropTypes.string,
 		catalogEntry: PropTypes.object,
@@ -180,7 +181,7 @@ export default class ScormImport extends React.Component {
 
 			this.checkCounter = 0;
 
-			Upload(link, file, this.onComplete, this.onFailure, this.onProgress);
+			Upload(link, file, this.onComplete, this.onFailure, this.onProgress, type);
 
 			this.progressChecker = setInterval(() => { this.checkProgress(done); }, PROGRESS_TICK);
 		} catch (error) {
@@ -222,8 +223,35 @@ export default class ScormImport extends React.Component {
 	}
 
 
+	renderSaveCmp () {
+		const { buttonLabel, saveCmp: Cmp } = this.props;
+		const { loading, saveDisabled } = this.state;
+
+		// TODO: if error, disable until file change?
+		if(saveDisabled) {
+			return null;
+		}
+
+
+		if(Cmp && !loading) {
+			return (<Cmp onSave={this.onSave} label={buttonLabel}/>);
+		}
+
+		return null;
+	}
+
+
+	renderCancelCmp () {
+		const { loading } = this.state;
+
+		if(this.props.onCancel && !loading) {
+			return (<div className="course-panel-cancel" onClick={this.props.onCancel}>{t('cancel')}</div>);
+		}
+	}
+
+
+
 	render () {
-		const { onCancel, buttonLabel, saveCmp: Cmp } = this.props;
 		const { error } = this.state;
 		return (
 			<div className="scorm-import-panel">
@@ -232,8 +260,8 @@ export default class ScormImport extends React.Component {
 					{this.renderBody()}
 				</div>
 				<div className="course-panel-controls">
-					{Cmp && <Cmp onSave={this.onSave} label={buttonLabel}/>}
-					{onCancel && <div className="course-panel-cancel" onClick={onCancel}>{t('cancel')}</div>}
+					{this.renderSaveCmp()}
+					{this.renderCancelCmp()}
 				</div>
 			</div>
 		);

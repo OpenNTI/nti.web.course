@@ -1,4 +1,4 @@
-export default function uploadCourseData (link, zipFile, onComplete, onFailure, onProgress) {
+export default function uploadCourseData (link, zipFile, onComplete, onFailure, onProgress, type) {
 	if (!link) {
 		onFailure(new Error('No Link'));
 	}
@@ -8,6 +8,9 @@ export default function uploadCourseData (link, zipFile, onComplete, onFailure, 
 
 	formData.append('writeout', true);
 	formData.append(zipFile.name, zipFile);
+	if (type === 'ImportSCORM') {
+		formData.append('reset-registrations', true);
+	}
 
 	xhr.open('POST', link, true);
 
