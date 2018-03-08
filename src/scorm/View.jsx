@@ -57,7 +57,7 @@ class Scorm extends Component {
 			<div className="scorm-card scorm-instructor-card">
 				<div className="scorm-title">{bundle.title}</div>
 				<a className="scorm-edit-link" onClick={this.editScorm}>{canLaunchCourse ? t('packageChange') : t('packageUpload')}</a>
-				{canLaunchCourse && <a className="scorm-export-link" href={this.exportScorm()} download="zip">{t('packageExport')}</a>}
+				{canLaunchCourse && <a className="scorm-export-link" href={this.exportScorm()} download>{t('packageExport')}</a>}
 				<div className="scorm-desc">{t('scormDescription')}</div>
 				{error && <div className="scorm-error">{error}</div>}
 				{canLaunchCourse && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">{t('launch')}</Button>}
