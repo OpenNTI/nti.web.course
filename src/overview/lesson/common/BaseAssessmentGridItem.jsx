@@ -43,10 +43,9 @@ export default class BaseAssessmentGridItem extends React.Component {
 
 	renderTitle () {
 		const {renderTitle, item} = this.props;
+		const title = renderTitle ? renderTitle() : null;
 
-		if (renderTitle) { return renderTitle(); }
-
-		return (<span className="title">{item.title || item.label}</span>);
+		return title || (<span className="title">{item.title || item.label}</span>);
 	}
 
 
