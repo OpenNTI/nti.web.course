@@ -53,11 +53,11 @@
             font-size: 14px;
             margin-top: 10px;
             line-height: 24px;
+            margin-bottom: 87px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
         .scorm-launch-button {
-            margin-top: 87px;
             border-radius: 3px;
             height: 40px;
             width: 120px;
@@ -76,6 +76,13 @@
             -moz-osx-font-smoothing: grayscale;
             font-weight: 600;
             font-size: 16px;
+        }
+
+        .scorm-error {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            color: $primary-red;
+            padding: 10px 0px;
         }
     }
     .scorm-instructor-card {
