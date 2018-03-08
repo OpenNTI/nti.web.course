@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Button} from 'nti-web-commons';
+import {scoped} from 'nti-lib-locale';
 
 import Base from '../../common/BaseAssessmentGridItem';
 
@@ -8,6 +10,13 @@ import AssessmentIcon from './AssessmentIcon';
 import AssignmentTitle from './AssignmentTitle';
 import AssignmentIcon from './AssignmentIcon';
 import AssignmentLabel from './AssignmentLabel';
+
+const DEFAULT_TEXT = {
+	review: 'Review',
+	start: 'Start',
+	view: 'View'
+};
+const t = scoped('course.overview.lesson.items.questionset.Grid', DEFAULT_TEXT);
 
 export default class LessonOverviewQuestionSetGridItem extends React.Component {
 	static propTypes = {
@@ -32,6 +41,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 				renderTitle={this.renderTitle}
 				renderIcon={this.renderIcon}
 				renderLabels={this.renderLabels}
+				renderButton={this.renderButton}
 			/>
 		);
 	}
@@ -78,5 +88,60 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 				<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission} />
 			);
 		}
+	}
+
+
+	renderButton = () => {
+		const {assignment} = this.props;
+
+		return assignment ? this.renderAssignmentButton() : this.renderAssessmentButton();
+	}
+
+
+	renderAssignmentButton () {
+		const {assignment, assignmentHistory} = this.props;
+		const parts = assignment.parts || [];
+		const startDate = assignment.getAvailableForSubmissionBeginning();
+		const dueDate = assignment.getAvailableForSubmissionEnding();
+		const now = new Date();
+
+		let text = '';
+
+		if (assignment.isNonSubmit()) {
+			text = t('start');
+		} else if (dueDate && dueDate < now) {
+			text = t('start');
+		} else if (!startDate || startDate >= now) {
+			text = t('start');
+		} else if (startDate && startDate > now) {
+			text = '';
+		} else if (parts.length === 0 && !assignment.isTimed) {
+			text = t('review');
+		}
+
+		return this.renderButtonText(text);
+	}
+
+
+	renderAssessmentButton () {
+		const {assessmentSubmission} = this.props;
+
+		let text = '';
+
+		if (!assessmentSubmission) {
+			text = t('start');
+		} else {
+			text = t('review');
+		}
+
+		return this.renderButtonText(text);
+	}
+
+	renderButtonText (text) {
+		return !text ? null : (
+			<Button rounded>
+				{text}
+			</Button>
+		);
 	}
 }
