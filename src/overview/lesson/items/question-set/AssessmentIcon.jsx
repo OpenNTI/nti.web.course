@@ -17,8 +17,8 @@ class Score extends React.Component {
 		inlinePercent: true,
 		colors: ['#40b450', '#b8b8b8'],
 		pixelDensity: (global.devicePixelRatio || 1) * 2,
-		width: 60,
-		height: 60
+		width: 50,
+		height: 50
 	}
 
 	state = {

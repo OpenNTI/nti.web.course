@@ -15,6 +15,7 @@
 		.icon-container {
 			flex: 0 0 auto;
 			width: rem-calc(75px);
+			min-height: rem-calc(60px);
 			text-align: center;
 
 			.icon {
@@ -33,7 +34,6 @@
 
 				& > .title {
 					display: inline-block;
-					font-style: italic;
 					white-space: nowrap;
 					overflow: hidden;
 					text-overflow: ellipsis;
@@ -42,7 +42,7 @@
 
 			.labels-container {
 				margin-top: 2px;
-				min-height: rem-calc(14px);
+				min-height: rem-calc(22px);
 
 				.nti-separated-inline-list {
 					font: normal 400 0.75rem/1.4 $body-font-family;
@@ -55,11 +55,14 @@
 			flex: 0 0 auto;
 
 			.nti-button.primary {
-				border: 1px #a8a8a8 solid;
 				border-radius: 4px;
-				box-shadow: inset 0px 1px 1px #cce49c;
-				padding: 8px 20px;
-				background-image: linear-gradient(to bottom, #a4ce50 0%, #87b133 100%);
+				padding: rem-calc(0 20px);
+				background-color: $secondary-green;
+				font-size: 1rem;
+				line-height: 2.5;
+				font-weight: 400;
+				min-width: rem-calc(95px);
+				text-align: center;
 			}
 		}
 	}
