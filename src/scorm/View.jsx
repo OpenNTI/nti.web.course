@@ -2,18 +2,28 @@
 import React, { Component } from 'react';
 import { Button, Layouts } from 'nti-web-commons';
 import PropTypes from 'prop-types';
+import { scoped } from 'nti-lib-locale';
 
 import Editor from './Editor';
 
 const IMPORT_SCORM = 'ImportScorm';
 const { Responsive } = Layouts;
 
+const t = scoped('scorm.view', {
+	launch: 'Open',
+	packageChange: 'Change Content Package',
+	packageUpload: 'Add Content Package',
+	packageExport: 'Export Content Package',
+	scormDescription: 'This course uses an external website for displaying content. \n Follow the link below to access your course content.'
+});
+
 class Scorm extends Component {
 	static propTypes = {
 		bundle: PropTypes.shape({
 			getScormCourse: PropTypes.func.isRequired,
 			getID: PropTypes.func.isRequired,
-			getLink: PropTypes.func.isRequired
+			getLink: PropTypes.func.isRequired,
+			fetchLink: PropTypes.func.isRequired
 		})
 	}
 
@@ -34,19 +44,21 @@ class Scorm extends Component {
 		this.setState({ showEditor: false });
 	}
 
+	exportScorm = () => {
+		return this.props.bundle.getLink('SCORMArchive');
+	}
+
 	renderInstructor = () => {
 		const { showEditor } = this.state;
 		const { bundle } = this.props;
-
+		const canLaunchCourse = bundle.Metadata.hasLink('LaunchSCORM');
 		return (
 			<div className="scorm-card scorm-instructor-card">
 				<div className="scorm-title">{bundle.title}</div>
-				<a className="scorm-edit-link" onClick={this.editScorm}>Change Content Package</a>
-				<div className="scorm-desc">
-					This course uses an external website for displaying content.
-					Follow the link below to access your course content.
-				</div>
-				{bundle.Metadata.hasLink('LaunchSCORM') && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">Open</Button>}
+				<a className="scorm-edit-link" onClick={this.editScorm}>{canLaunchCourse ? t('packageChange') : t('packageUpload')}</a>
+				{canLaunchCourse && <a className="scorm-export-link" href={this.exportScorm()} download="zip">{t('packageExport')}</a>}
+				<div className="scorm-desc">{t('scormDescription')}</div>
+				{canLaunchCourse && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">{t('launch')}</Button>}
 				{showEditor && !Responsive.isMobile() && <Editor onDismiss={this.onDismiss} bundle={this.props.bundle} />}
 			</div>
 		);
@@ -59,11 +71,8 @@ class Scorm extends Component {
 			<div className="scorm-card scorm-student-card">
 				<div className="scorm-student-progress">
 					<div className="scorm-title">{ bundle.title }</div>
-					<div className="scorm-desc">
-						This course uses an external website for displaying content.
-						Follow the link below to access your course content.
-					</div>
-					{bundle.Metadata.hasLink('LaunchSCORM') && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">Open</Button>}
+					<div className="scorm-desc">{t('scormDescription')}</div>
+					{bundle.Metadata.hasLink('LaunchSCORM') && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">{t('launch')}</Button>}
 				</div>
 			</div>
 		);
