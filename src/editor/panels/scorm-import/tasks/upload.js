@@ -8,6 +8,9 @@ export default function uploadCourseData (link, zipFile, onComplete, onFailure, 
 
 	formData.append('writeout', true);
 	formData.append(zipFile.name, zipFile);
+	if (link === 'ImportSCORM') {
+		formData.append('reset-registrations', true);
+	}
 
 	xhr.open('POST', link, true);
 
