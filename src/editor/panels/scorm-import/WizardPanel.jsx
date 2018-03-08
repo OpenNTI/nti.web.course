@@ -15,7 +15,7 @@ const LABELS = {
 	missingInputs: 'Must provide a scorm package',
 	title: 'Drag a Scorm Package, or',
 	choose: 'Choose a File',
-	requirements: 'Must be a scorm package under 10MB.',
+	requirements: 'Must be a scorm package in zip format.',
 	wrongType: 'File type is unsupported.',
 	tooLarge: 'File is too large.',
 	unknownError: 'Unable to upload file.',
