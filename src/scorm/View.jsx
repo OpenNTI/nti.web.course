@@ -24,7 +24,8 @@ class Scorm extends Component {
 			getID: PropTypes.func.isRequired,
 			getLink: PropTypes.func.isRequired,
 			fetchLink: PropTypes.func.isRequired
-		})
+		}),
+		error: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 	}
 
 	state = {
@@ -50,7 +51,7 @@ class Scorm extends Component {
 
 	renderInstructor = () => {
 		const { showEditor } = this.state;
-		const { bundle } = this.props;
+		const { bundle, error } = this.props;
 		const canLaunchCourse = bundle.Metadata.hasLink('LaunchSCORM');
 		return (
 			<div className="scorm-card scorm-instructor-card">
@@ -58,6 +59,7 @@ class Scorm extends Component {
 				<a className="scorm-edit-link" onClick={this.editScorm}>{canLaunchCourse ? t('packageChange') : t('packageUpload')}</a>
 				{canLaunchCourse && <a className="scorm-export-link" href={this.exportScorm()} download="zip">{t('packageExport')}</a>}
 				<div className="scorm-desc">{t('scormDescription')}</div>
+				{error && <div className="scorm-error">{error}</div>}
 				{canLaunchCourse && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">{t('launch')}</Button>}
 				{showEditor && !Responsive.isMobile() && <Editor onDismiss={this.onDismiss} bundle={this.props.bundle} />}
 			</div>
@@ -65,13 +67,14 @@ class Scorm extends Component {
 	}
 
 	renderStudent = () => {
-		const { bundle } = this.props;
+		const { bundle, error } = this.props;
 
 		return (
 			<div className="scorm-card scorm-student-card">
 				<div className="scorm-student-progress">
 					<div className="scorm-title">{ bundle.title }</div>
 					<div className="scorm-desc">{t('scormDescription')}</div>
+					{error && <div className="scorm-error">{error}</div>}
 					{bundle.Metadata.hasLink('LaunchSCORM') && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">{t('launch')}</Button>}
 				</div>
 			</div>
