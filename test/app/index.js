@@ -65,11 +65,8 @@ class Test extends React.Component {
 	getChildContext () {
 		return {
 			router: {
-				history: getHistory(),
 				baseroute: '/',
-				getRouteFor: () => {
-					debugger;
-				}
+				getRouteFor: () => {}
 			}
 		};
 	}
@@ -100,7 +97,7 @@ class Test extends React.Component {
 
 		return (
 			<div>
-				{nodes.slice(16, 17).map(node => (
+				{nodes.slice(2, 3).map(node => (
 					<Unit key={node.NTIID} course={course} node={node} layout={layout}/>
 				))}
 			</div>
