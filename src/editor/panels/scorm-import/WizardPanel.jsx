@@ -24,10 +24,7 @@ const LABELS = {
 	importPermissionError: 'You do not have permission to upload a Scorm package'
 };
 
-const NUM_CHECKS = 10;
 const TRANSFER_PCT = 25.0;
-const REMAINING_PCT = 100.0 - TRANSFER_PCT;
-const PROGRESS_TICK = 1000;
 
 const t = scoped('components.course.editor.scorm-import.wizardpanel', LABELS);
 
@@ -84,7 +81,9 @@ export default class ScormImport extends React.Component {
 
 	onComplete = (newBundle) => {
 		this.setState({ completed: true, newBundle });
+		this.checkStatus();
 	}
+
 
 	onFailure = (error) => {
 		const { createdEntry } = this.state;
@@ -99,7 +98,10 @@ export default class ScormImport extends React.Component {
 		else {
 			this.setState({error: handleError(error), saveDisabled: true});
 		}
+
+		this.checkStatus();
 	}
+
 
 	onProgress = (e) => {
 		this.setState({
@@ -109,7 +111,7 @@ export default class ScormImport extends React.Component {
 	}
 
 
-	checkProgress = (done) => {
+	checkStatus = () => {
 		const { completed, error, uploadDone, newBundle } = this.state;
 		const { onFinish } = this.props;
 
@@ -120,35 +122,18 @@ export default class ScormImport extends React.Component {
 
 			const {exitProgressState} = this.props;
 
-			exitProgressState && exitProgressState();
+			if (exitProgressState) {
+				exitProgressState();
+			}
 		}
 
-		if(uploadDone) {
-			this.checkCounter++;
-
-			if(this.checkCounter >= NUM_CHECKS) {
-				clearInterval(this.progressChecker);
-
-				const { afterSave } = this.props;
-
-				if(completed) {
-					// close this modal and show success message
-					onFinish && onFinish(newBundle);
-
-					Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'), { promptType: 'info' });
-				}
-				else {
-					// show 'taking longer than expected' message
-					afterSave && afterSave(newBundle);
-
-					done();
-				}
+		if(uploadDone && completed) {
+			// close this modal and show success message
+			if (onFinish) {
+				onFinish(newBundle);
 			}
-			else {
-				const newPct = TRANSFER_PCT + (REMAINING_PCT * this.checkCounter / NUM_CHECKS);
 
-				this.setState({pctComplete : newPct});
-			}
+			Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'), { promptType: 'info' });
 		}
 	}
 
@@ -177,13 +162,16 @@ export default class ScormImport extends React.Component {
 
 			const {enterProgressState} = this.props;
 
-			enterProgressState && enterProgressState();
+			if (enterProgressState) {
+				enterProgressState();
+			}
 
-			this.checkCounter = 0;
+			const onComplete = (newBundle) => {
+				this.onComplete(newBundle);
+				done();
+			};
 
-			Upload(link, file, this.onComplete, this.onFailure, this.onProgress, type);
-
-			this.progressChecker = setInterval(() => { this.checkProgress(done); }, PROGRESS_TICK);
+			Upload(link, file, onComplete, this.onFailure, this.onProgress, type);
 		} catch (error) {
 			this.setState({ error: t('unknownError') });
 		}
