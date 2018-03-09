@@ -6,4 +6,5 @@ export CourseItem from './info/Item';
 export Roster from './roster';
 export * as AdminTools from './admin-tools';
 export * as Navigation from './navigation';
+export * as Overview from './overview';
 export * from './scorm';
