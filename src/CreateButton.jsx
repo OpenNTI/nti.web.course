@@ -1,7 +1,7 @@
 import React from 'react';
 import { scoped } from 'nti-lib-locale';
 
-import * as Editor from '../editor';
+import * as Editor from './editor';
 
 const t = scoped('course.components.CreateButton', {
 	label: 'Create New Course',

@@ -5,7 +5,7 @@ import {Loading, Prompt, Flyout, DateTime, Input} from 'nti-web-commons';
 import { scoped } from 'nti-lib-locale';
 import cx from 'classnames';
 
-import {saveCatalogEntry} from '../editor/Actions';
+import {saveCatalogEntry} from '../../../editor/Actions';
 
 import EnrollmentOptions from './EnrollmentOptions';
 

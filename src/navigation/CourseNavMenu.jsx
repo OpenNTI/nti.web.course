@@ -4,7 +4,7 @@ import {Prompt} from 'nti-web-commons';
 import {getService} from 'nti-web-client';
 import {ContentNavMenu} from 'nti-content';
 
-import {PublishCourse} from '../components';
+import PublishCourse from '../info/inline/widgets/PublishCourse';
 
 export default class CourseNavMenu extends React.Component {
 	static propTypes = {

@@ -4,7 +4,7 @@ import {DateTime} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 import cx from 'classnames';
 
-import PublishCourse from '../../../components/PublishCourse';
+import PublishCourse from './PublishCourse';
 
 
 const t = scoped('course.info.inline.widgets.CourseVisibility', {

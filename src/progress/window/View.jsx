@@ -4,7 +4,7 @@ import {scoped} from 'nti-lib-locale';
 import {DisplayName} from 'nti-web-commons';
 import {getService} from 'nti-web-client';
 
-import UserGradeCard from '../UserGradeCard';
+import UserGradeCard from '../widgets/UserGradeCard';
 
 import Pager from './Pager';
 
