@@ -1,0 +1,66 @@
+@import '~nti-style-common';
+
+.nti-lesson-view {
+	& > .header {
+		display: flex;
+		padding-top: rem-calc(14px);
+		padding-bottom: rem-calc(14px);
+		box-shadow: 0 1px 2px 0 rgba(0,0,0,0.08);
+
+		.spacer {
+			flex: 1 1 auto;
+		}
+
+		.layout-toggle {
+			flex: 0 0 auto;
+		}
+	}
+
+
+	.layout-toggle {
+		label {
+			display: inline-block;
+			position: relative;
+
+			.toggle {
+				width: rem-calc(32px);
+				height: rem-calc(32px);
+				line-height: 2rem;
+				text-align: center;
+				border-radius: 0 3px 3px 0;
+				box-shadow: 0 1px 0 0 $border-grey,
+					0 -1px 0 0 $border-grey,
+					1px 0 0 0 $border-grey,
+					-1px 0 0 0 $border-grey;
+			}
+
+			input {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				opacity: 0;
+			}
+
+			&:first-of-type {
+				.toggle {
+					border-radius: 3px 0 0 3px;
+					box-shadow: 0 1px 0 0 $border-grey,
+						0 -1px 0 0 $border-grey,
+						-1px 0 0 0 $border-grey;
+				}
+			}
+
+
+			input:checked + .toggle {
+				background-color: $quad-grey;
+				box-shadow: 0 1px 0 0 $border-grey,
+					0 -1px 0 0 $border-grey,
+					1px 0 0 0 $border-grey,
+					-1px 0 0 0 $border-grey
+					inset 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+			}
+		}
+	}
+}
