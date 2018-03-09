@@ -67,6 +67,7 @@ export default class LessonOverviewRelatedWorkGridItem extends React.Component {
 		return (
 			<PaddedContainer>
 				<Card
+					item={item}
 					object={item}
 					component={LinkTo.Object}
 					getRoute={this.getHref}
