@@ -143,7 +143,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 	renderButtonText (text) {
 		return !text ? null : (
-			<Button rounded>
+			<Button component="span" rounded>
 				{text}
 			</Button>
 		);
