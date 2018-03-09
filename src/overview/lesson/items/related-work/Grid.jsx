@@ -68,6 +68,7 @@ export default class LessonOverviewRelatedWorkGridItem extends React.Component {
 			<PaddedContainer>
 				<LinkTo.Object object={item}>
 					<Card {...props}
+						component="span"
 						getRoute={this.getHref}
 						commentCount={commentCount}
 						contentPackage={props.course}
