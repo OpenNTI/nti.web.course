@@ -111,7 +111,7 @@ export default class ProgressWindow extends React.Component {
 
 		return (
 			<div className="toolbar">
-				<div className="btn primary" onClick={this.onEmail}>{t('email')}</div>
+				{this.props.onEmail ? <div className="btn primary" onClick={this.onEmail}>{t('email')}</div> : null}
 			</div>
 		);
 	}
