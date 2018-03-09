@@ -4,6 +4,7 @@ import cx from 'classnames';
 
 import {Grid, List} from './Constants';
 import Overview from './Overview';
+import PaddedContainer from './common/PaddedContainer';
 
 const RADIO_GROUP = 'nti-lesson-view-layout';
 
@@ -33,7 +34,7 @@ export default class LessonView extends React.Component {
 
 		return (
 			<div className={cx('nti-lesson-view', className)}>
-				<div className="header">
+				<PaddedContainer className="header">
 					<label className="grid">
 						<input type="radio" group={RADIO_GROUP} checked={layout === Grid} onChange={this.selectGrid} />
 						<span>Grid</span>
@@ -42,7 +43,7 @@ export default class LessonView extends React.Component {
 						<input type="radio" group={RADIO_GROUP} checked={layout === List} onChange={this.selectList} />
 						<span>List</span>
 					</label>
-				</div>
+				</PaddedContainer>
 				<Overview {...otherProps} layout={layout} />
 			</div>
 		);
