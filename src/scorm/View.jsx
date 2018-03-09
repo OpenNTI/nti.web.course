@@ -25,7 +25,8 @@ class Scorm extends Component {
 			getLink: PropTypes.func.isRequired,
 			fetchLink: PropTypes.func.isRequired
 		}),
-		error: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+		error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+		onBundleUpdate: PropTypes.func.isRequired
 	}
 
 	state = {
@@ -45,6 +46,12 @@ class Scorm extends Component {
 		this.setState({ showEditor: false });
 	}
 
+	onFinish = (newBundle) => {
+		this.setState({ showEditor: false }, () => {
+			this.props.onBundleUpdate(newBundle);
+		});
+	}
+
 	exportScorm = () => {
 		return this.props.bundle.getLink('SCORMArchive');
 	}
@@ -61,7 +68,7 @@ class Scorm extends Component {
 				<div className="scorm-desc">{t('scormDescription')}</div>
 				{error && <div className="scorm-error">{error}</div>}
 				{canLaunchCourse && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">{t('launch')}</Button>}
-				{showEditor && !Responsive.isMobile() && <Editor onDismiss={this.onDismiss} bundle={this.props.bundle} />}
+				{showEditor && !Responsive.isMobile() && <Editor onDismiss={this.onDismiss} onFinish={this.onFinish} bundle={bundle} />}
 			</div>
 		);
 	}

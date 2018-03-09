@@ -82,8 +82,8 @@ export default class ScormImport extends React.Component {
 	}
 
 
-	onComplete = (response) => {
-		this.setState({completed: true});
+	onComplete = (newBundle) => {
+		this.setState({ completed: true, newBundle });
 	}
 
 	onFailure = (error) => {
@@ -110,7 +110,7 @@ export default class ScormImport extends React.Component {
 
 
 	checkProgress = (done) => {
-		const { completed, error, uploadDone } = this.state;
+		const { completed, error, uploadDone, newBundle } = this.state;
 		const { onFinish } = this.props;
 
 		if(error) {
@@ -133,13 +133,13 @@ export default class ScormImport extends React.Component {
 
 				if(completed) {
 					// close this modal and show success message
-					onFinish && onFinish(false, this.state.createdEntry);
+					onFinish && onFinish(newBundle);
 
 					Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'), { promptType: 'info' });
 				}
 				else {
 					// show 'taking longer than expected' message
-					afterSave && afterSave();
+					afterSave && afterSave(newBundle);
 
 					done();
 				}

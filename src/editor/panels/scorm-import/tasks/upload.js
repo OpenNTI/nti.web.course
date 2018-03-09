@@ -23,7 +23,12 @@ export default function uploadCourseData (link, zipFile, onComplete, onFailure, 
 	xhr.onreadystatechange = () => {
 		if (xhr.readyState === 4) {
 			if (xhr.status >= 200 && xhr.status < 300) {
-				onComplete(xhr.responseText);
+				try {
+					const bundle = JSON.parse(xhr.response);
+					onComplete(bundle);
+				} catch (e) {
+					onFailure({ status: xhr.status, responseText: e });
+				}
 			} else {
 				onFailure({
 					status: xhr.status,

@@ -58,10 +58,10 @@ class PackageWizard extends React.Component {
 	}
 
 
-	afterSave = () => {
+	afterSave = (newBundle) => {
 		const { onFinish } = this.props;
 
-		onFinish && onFinish(this.state.catalogEntry);
+		onFinish && onFinish(newBundle);
 	}
 
 

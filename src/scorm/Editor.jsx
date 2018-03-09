@@ -9,16 +9,16 @@ const { Dialog } = Prompt;
 class Editor extends Component {
 	static propTypes = {
 		onDismiss: PropTypes.func.isRequired,
-		importLink: PropTypes.string.isRequired,
-		bundle: PropTypes.object
+		bundle: PropTypes.object,
+		onFinish: PropTypes.func.isRequired
 	}
 
 	render () {
-		const { onDismiss } = this.props;
+		const { onDismiss, onFinish } = this.props;
 
 		return(
 			<Dialog>
-				<PackageWizard onDismiss={onDismiss} onCancel={onDismiss} onFinish={onDismiss} bundle={this.props.bundle} />
+				<PackageWizard onDismiss={onDismiss} onCancel={onDismiss} onFinish={onFinish} bundle={this.props.bundle} />
 			</Dialog>
 		);
 	}
