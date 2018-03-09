@@ -1,6 +1,10 @@
 @import '~nti-style-common';
 
-.lesson-overview-assignment-status {
+.lesson-overview-assignment-status.nti-separated-inline-list  {
+	font: normal 600 0.625rem/1.3 $body-font-family;
+	text-transform: uppercase;
+	color: $tertiary-grey;
+
 	.completed {
 		&.ontime .label {
 			color: $secondary-green;

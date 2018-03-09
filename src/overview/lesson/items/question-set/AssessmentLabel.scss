@@ -1,6 +1,9 @@
 @import '~nti-style-common';
 
 .lesson-overview-questionset-assessment-label {
+	font: normal 400 0.75rem/1.4 $body-font-family;
+	color: $tertiary-grey;
+
 	.submitted {
 		.correct, .incorrect {
 			i, span {

@@ -8,15 +8,15 @@ const DEFAULT_TEXT = {
 	draft: 'Draft',
 	maxTime: '%(maxTime)s time limit',
 	completed: {
-		label: 'completed',
-		graded: 'graded',
+		label: 'completed ',
+		graded: 'graded ',
 		submittedAt: 'Submitted At %(date)s',
 		overTime: 'overtime',
 		overDue: 'overdue',
 		overTimeTip: '%(time)s overtime',
 		overDueTip: '%(time)s overdue',
-		modOpen: ' (',
-		modClose: ')',
+		modOpen: '(',
+		modClose: ') ',
 		modSeparator: ', '
 	},
 	due: {
@@ -67,15 +67,16 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			now: new Date(),
 			availableDate: a && a.getAssignedDate(),
 			dueDate: a && a.getDueDate(),
-			isNoSubmit: a && a.isNonSubmit(),
+			isNoSubmit: (a && a.isNonSubmit()) || (h && h.isSyntheticSubmission()),
+			isSynthetic: h && h.isSyntheticSubmission(),
 			isDraft: a && !a.isPublished(),
 			isTimed: a && a.isTimed,
-			maxTime: a && a.getMaximumTimeAllowed && a.getMaximumTimeAllowed(),
-			duration: a && a.getDuration && a.getDuration(),
+			maxTime: a && a.isTimed && a.getMaximumTimeAllowed && a.getMaximumTimeAllowed(),
+			duration: a && a.isTimed && a.getDuration && a.getDuration(),
 
 			isSubmitted: h && h.isSubmitted(),
 			completedDate: !canEdit && h && h.Submission && h.Submission.getCreatedTime(),
-			isExcused: h && h.Grade && h.Grade.isExcused()
+			isExcused: h && h.grade && h.grade.isExcused()
 
 		};
 
@@ -107,7 +108,9 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 
 	renderTimed () {
-		const {duration} = this.state;
+		const {duration, isSynthetic} = this.state;
+
+		if (isSynthetic) { return null; }
 
 		return duration ?
 			this.renderDuration() :
@@ -156,6 +159,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 						<span className="mod-close erros">{t('completed.modClose')}</span>
 					</React.Fragment>
 				)}
+				<DateTime className="date" date={completedDate} format="dddd, MMMM D" />
 			</span>
 		);
 	}
