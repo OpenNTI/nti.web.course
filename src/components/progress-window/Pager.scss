@@ -1,0 +1,32 @@
+@import "~nti-style-common";
+
+.progress-pager {
+	display: flex;
+	line-height: 50px;
+	position: absolute;
+	right: 76px;
+
+	.page-numbers {
+		font-size: 12px;
+		text-transform: uppercase;
+		font-weight: 600;
+		margin-right: 24px;
+	}
+
+	.page-controls {
+		.prev {
+			margin-right: 18px;
+		}
+
+		.next, .prev {
+			font-size: 24px;
+			color: $primary-blue;
+			cursor: pointer;
+
+			&.inactive {
+				color: $tertiary-grey;
+				cursor: default;
+			}
+		}
+	}
+}

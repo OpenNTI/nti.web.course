@@ -1,0 +1,96 @@
+@import "~nti-style-common";
+
+.progress-window {
+	width: 764px;
+	background-color: white;
+	text-align: center;
+	color: $primary-grey;
+
+	.header {
+		display: flex;
+		height: 50px;
+		box-shadow: 0 1px 0 0 #e2e2e2;
+		position: relative;
+
+		.username {
+			max-width: 400px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			font-size: 12px;
+			text-transform: uppercase;
+			color: $secondary-grey;
+			font-weight: 600;
+			line-height: 50px;
+			margin-left: 30px;
+		}
+
+		.close-button {
+			position: absolute;
+			line-height: 50px;
+			right: 14px;
+			font-size: 28px;
+			cursor: pointer;
+		}
+	}
+
+	.student-info {
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15), 0 1px 0 0 #e2e2e2;
+		background-color: #fbfbfb;
+
+		.user-grade-card {
+			margin-top: 1px;
+			border-right: solid 1px #e2e2e2;
+		}
+	}
+
+	.toolbar {
+		display: flex;
+		padding: 30px;
+		position: relative;
+
+		i.icon-search {
+			position: absolute;
+			color: $tertiary-grey;
+			font-size: 18px;
+			left: 32px;
+			top: 43px;
+		}
+
+		.nti-text-input {
+			border: none;
+			margin-top: 2px;
+			border-bottom: solid 1px #e2e2e2;
+			background-color: white;
+			width: 400px;
+			height: 40px;
+			font-size: 14px;
+			font-weight: 300;
+			padding-left: 26px;
+			margin-right: 20px;
+
+			&::placeholder {
+				font-style: italic;
+				color: $tertiary-grey;
+			}
+		}
+
+		.btn {
+			padding: 10px;
+			border-radius: 3px;
+			font-size: 14px;
+			font-weight: 300;
+			border: 1px solid #e2e2e2;
+			color: $primary-grey;
+			width: 130px;
+			margin-left: 10px;
+			cursor: pointer;
+
+			&.primary {
+				color: white;
+				background-color: $primary-blue;
+				border-color: $primary-blue;
+			}
+		}
+	}
+}

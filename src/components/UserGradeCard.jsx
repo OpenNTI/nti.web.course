@@ -10,9 +10,10 @@ const t = scoped('course.components.UserGradeCard', {
 
 export default class UserGradeCard extends React.Component {
 	static propTypes = {
-		user: PropTypes.oneOf([PropTypes.object, PropTypes.string]),
+		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 		grade: PropTypes.number,
-		onAssignGrade: PropTypes.func
+		onAssignGrade: PropTypes.func,
+		assignable: PropTypes.bool
 	}
 
 	onAssignClick = () => {
@@ -22,7 +23,11 @@ export default class UserGradeCard extends React.Component {
 	}
 
 	renderAssignGrade () {
-		return <div className="assign-grade" onClick={this.onAssignClick}>{t('assignGrade')}</div>;
+		if(this.props.assignable) {
+			return <div className="assign-grade" onClick={this.onAssignClick}>{t('assignGrade')}</div>;
+		}
+
+		return <div className="sub-info">{this.props.user}</div>;
 	}
 
 	render () {
