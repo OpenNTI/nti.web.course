@@ -1,5 +1,9 @@
 @import '~nti-style-common';
 
+.lesson-overview-base-list-item-link {
+	text-decoration: none;
+}
+
 .lesson-overview-base-list-item {
 	display: flex;
 	padding-top: rem-calc(13px);

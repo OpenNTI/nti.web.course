@@ -3,6 +3,10 @@
 .lesson-overview-base-assessment-grid-item {
 	margin: rem-calc(15px 0);
 
+	& > a {
+		text-decoration: none;
+	}
+
 	.container {
 		padding: rem-calc(13px 18px);
 		display: flex;

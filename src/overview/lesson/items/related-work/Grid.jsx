@@ -4,6 +4,7 @@ import {Summary} from 'nti-lib-interfaces';
 import {scoped} from 'nti-lib-locale';
 import {Card} from 'nti-web-commons';
 import {encodeForURI} from 'nti-lib-ntiids';
+import {LinkTo} from 'nti-web-routing';
 
 import PaddedContainer from '../../common/PaddedContainer';
 
@@ -65,11 +66,13 @@ export default class LessonOverviewRelatedWorkGridItem extends React.Component {
 
 		return (
 			<PaddedContainer>
-				<Card {...props}
-					getRoute={this.getHref}
-					commentCount={commentCount}
-					contentPackage={props.course}
-				/>
+				<LinkTo.Object object={item}>
+					<Card {...props}
+						getRoute={this.getHref}
+						commentCount={commentCount}
+						contentPackage={props.course}
+					/>
+				</LinkTo.Object>
 			</PaddedContainer>
 		);
 	}

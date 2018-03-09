@@ -5,8 +5,9 @@ import PropTypes from 'prop-types';
 import {getService} from 'nti-web-client';
 import {Layouts} from 'nti-web-commons';
 import {Tasks} from 'nti-commons';
+import {getHistory} from 'nti-web-routing';
 
-import Overview from '../../src/overview/lesson/Overview';
+import {Overview} from '../../src';
 
 import Picker from './PickCourse';
 
@@ -47,7 +48,7 @@ class Unit extends React.Component {
 		} = this;
 
 		return !overview ? null : (
-			<Overview course={course} outlineNode={node} overview={overview} layout={layout}/>
+			<Overview.Lesson course={course} outlineNode={node} overview={overview} layout={layout}/>
 		);
 	}
 }
@@ -57,9 +58,23 @@ class Test extends React.Component {
 		courseId: PropTypes.string
 	}
 
-	state = {
-		layout: Overview.Grid
+	static childContextTypes = {
+		router: PropTypes.object
 	}
+
+	getChildContext () {
+		return {
+			router: {
+				history: getHistory(),
+				baseroute: '/',
+				getRouteFor: () => {
+					debugger;
+				}
+			}
+		};
+	}
+
+	state = {}
 
 	async componentDidMount () {
 		const {courseId} = this.props;
@@ -76,32 +91,16 @@ class Test extends React.Component {
 	}
 
 
-	selectGrid = () => {
-		this.setState({
-			layout: Overview.Grid
-		});
-	}
-
-
-	selectList = () => {
-		this.setState({
-			layout: Overview.List
-		});
-	}
-
 
 	render () {
 		const {course, nodes, layout} = this.state;
-		const limit = localStorage.limit || 1;
+		// const limit = localStorage.limit || 1;
 
 		if (!course) { return null; }
 
 		return (
 			<div>
-				<label><input type="radio" checked={layout === Overview.Grid} onChange={this.selectGrid}/>Grid</label>
-				<label><input type="radio" checked={layout === Overview.List} onChange={this.selectList}/>List</label>
-
-				{nodes.slice(0, limit).map(node => (
+				{nodes.slice(16, 17).map(node => (
 					<Unit key={node.NTIID} course={course} node={node} layout={layout}/>
 				))}
 			</div>

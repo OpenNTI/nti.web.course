@@ -31,7 +31,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 
 	render () {
-		const {item} = this.props;
+		const {item, assignment, assessment} = this.props;
 
 		return (
 			<Base
@@ -42,6 +42,8 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 				renderIcon={this.renderIcon}
 				renderLabels={this.renderLabels}
 				renderButton={this.renderButton}
+
+				linkToObject={assignment || assessment}
 			/>
 		);
 	}

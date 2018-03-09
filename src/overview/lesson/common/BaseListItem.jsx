@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {List, AssetIcon} from 'nti-web-commons';
 import {isNTIID} from 'nti-lib-ntiids';
+import {LinkTo} from 'nti-web-routing';
 
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';
@@ -21,29 +22,34 @@ export default class LessonOverviewBaseListItem extends React.Component {
 
 		renderTitle: PropTypes.func,
 		renderLabels: PropTypes.func,
-		renderIcon: PropTypes.func
+		renderIcon: PropTypes.func,
+
+		linkToObject: PropTypes.object,
+		linkToContext: PropTypes.any
 	}
 
 
 	render () {
-		const {className, disabled} = this.props;
+		const {className, disabled, item, linkToObject, linkToContext} = this.props;
 
 		return (
-			<PaddedContainer className={cx('lesson-overview-base-list-item', className, {disabled})}>
-				<div className="icon-container">
-					<div className="icon">
-						{this.renderIcon()}
+			<LinkTo.Object className="lesson-overview-base-list-item-link" object={linkToObject || item} context={linkToContext}>
+				<PaddedContainer className={cx('lesson-overview-base-list-item', className, {disabled})}>
+					<div className="icon-container">
+						<div className="icon">
+							{this.renderIcon()}
+						</div>
 					</div>
-				</div>
-				<div className="right">
-					<TextPart className="title">
-						{this.renderTitle()}
-					</TextPart>
-					<TextPart className="labels">
-						{this.renderLabels()}
-					</TextPart>
-				</div>
-			</PaddedContainer>
+					<div className="right">
+						<TextPart className="title">
+							{this.renderTitle()}
+						</TextPart>
+						<TextPart className="labels">
+							{this.renderLabels()}
+						</TextPart>
+					</div>
+				</PaddedContainer>
+			</LinkTo.Object>
 		);
 	}
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {LinkTo} from 'nti-web-routing';
 
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';
@@ -11,31 +12,38 @@ export default class BaseAssessmentGridItem extends React.Component {
 		renderTitle: PropTypes.func,
 		renderIcon: PropTypes.func,
 		renderLabels: PropTypes.func,
-		renderButton: PropTypes.func
+		renderButton: PropTypes.func,
+
+		linkToObject: PropTypes.object,
+		linkToContext: PropTypes.any
 	}
 
 
 	render () {
+		const {item, linkToObject, linkToContext} = this.props;
+
 		return (
 			<PaddedContainer className="lesson-overview-base-assessment-grid-item">
-				<div className="container">
-					<div className="icon-container">
-						<div className="icon">
-							{this.renderIcon()}
+				<LinkTo.Object object={linkToObject || item} context={linkToContext}>
+					<div className="container">
+						<div className="icon-container">
+							<div className="icon">
+								{this.renderIcon()}
+							</div>
+						</div>
+						<div className="info-container">
+							<TextPart className="title-container">
+								{this.renderTitle()}
+							</TextPart>
+							<TextPart className="labels-container">
+								{this.renderLabels()}
+							</TextPart>
+						</div>
+						<div className="button-container">
+							{this.renderButton()}
 						</div>
 					</div>
-					<div className="info-container">
-						<TextPart className="title-container">
-							{this.renderTitle()}
-						</TextPart>
-						<TextPart className="labels-container">
-							{this.renderLabels()}
-						</TextPart>
-					</div>
-					<div className="button-container">
-						{this.renderButton()}
-					</div>
-				</div>
+				</LinkTo.Object>
 			</PaddedContainer>
 		);
 	}

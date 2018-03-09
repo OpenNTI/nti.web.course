@@ -101,6 +101,7 @@ class LessonOverviewGroup extends React.Component {
 			const isForum = topic.hasOwnProperty('TopicCount');
 
 			this.setState({
+				topic,
 				title: topic.title,
 				commentLabel: isForum ?
 					t('commentLabel.topics', {count: topic.TopicCount || 0}) :
@@ -136,7 +137,7 @@ class LessonOverviewGroup extends React.Component {
 
 		try {
 			const service = await getService();
-			const topic = await service.getObjectRaw(maybeFixNTIID(id, course));
+			const topic = await service.getObject(maybeFixNTIID(id, course));
 
 			return topic;
 		} catch (e) {

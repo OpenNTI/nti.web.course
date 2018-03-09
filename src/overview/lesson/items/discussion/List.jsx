@@ -7,6 +7,7 @@ import Base from '../../common/BaseListItem';
 export default class LessonOverviewDiscussionListItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
+		topic: PropTypes.object,
 
 		title: PropTypes.string,
 		commentLabel: PropTypes.string,
@@ -16,7 +17,7 @@ export default class LessonOverviewDiscussionListItem extends React.Component {
 
 
 	render () {
-		const {item, title, commentLabel, disabled} = this.props;
+		const {item, title, commentLabel, disabled, topic} = this.props;
 
 		return (
 			<Base
@@ -26,6 +27,8 @@ export default class LessonOverviewDiscussionListItem extends React.Component {
 				labels={commentLabel ? [commentLabel] : []}
 				disabled={disabled}
 				renderIcon={this.renderIcon}
+
+				linkToObject={topic}
 			/>
 		);
 	}

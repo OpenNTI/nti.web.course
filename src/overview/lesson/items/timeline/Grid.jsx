@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Card} from 'nti-web-commons';
+import {LinkTo} from 'nti-web-routing';
 
 import PaddedContainer from '../../common/PaddedContainer';
 
@@ -11,7 +12,9 @@ LessonOverviewTimelineGridItem.propTypes = {
 export default function LessonOverviewTimelineGridItem ({item, course}) {
 	return (
 		<PaddedContainer>
-			<Card item={item} contentPackage={course} internalOverride/>
+			<LinkTo.Object object={item}>
+				<Card item={item} contentPackage={course} internalOverride/>
+			</LinkTo.Object>
 		</PaddedContainer>
 	);
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Progress} from 'nti-lib-interfaces';
 import {Component as Video} from 'nti-web-video';
 import {Error as ErrorWidget, Loading} from 'nti-web-commons';
+import {LinkTo} from 'nti-web-routing';
 
 import {block} from '../../../../utils';
 
@@ -181,18 +182,20 @@ export default class LessonOverviewVideoGrid extends React.Component {
 					/>
 				)}
 				{(error || playing) ? null : (
-					<Loading.Mask loading={loading}
-						style={style}
-						tag="a"
-						className="overview-video-tap-area" href={link}>
-						{viewed && <div className="viewed">Viewed</div>}
-						<div className="wrapper">
-							<div className="buttons">
-								<span className="play" title="Play" onClick={this.onPlayClicked}/>
-								<span className="label" title={label}>{label}</span>
+					<LinkTo.Object object={item}>
+						<Loading.Mask loading={loading}
+							style={style}
+							className="overview-video-tap-area" href={link}
+						>
+							{viewed && <div className="viewed">Viewed</div>}
+							<div className="wrapper">
+								<div className="buttons">
+									<span className="play" title="Play" onClick={this.onPlayClicked}/>
+									<span className="label" title={label}>{label}</span>
+								</div>
 							</div>
-						</div>
-					</Loading.Mask>
+						</Loading.Mask>
+					</LinkTo.Object>
 				)}
 			</div>
 		);
