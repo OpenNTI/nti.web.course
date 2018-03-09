@@ -120,7 +120,9 @@ export default class ScormImport extends React.Component {
 
 			const {exitProgressState} = this.props;
 
-			exitProgressState && exitProgressState();
+			if (exitProgressState) {
+				exitProgressState();
+			}
 		}
 
 		if(uploadDone) {
@@ -177,7 +179,9 @@ export default class ScormImport extends React.Component {
 
 			const {enterProgressState} = this.props;
 
-			enterProgressState && enterProgressState();
+			if (enterProgressState) {
+				enterProgressState();
+			}
 
 			this.checkCounter = 0;
 
