@@ -1,1 +1,1 @@
-export default from './OutlineNode';
+export default from './View';
