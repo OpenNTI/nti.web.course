@@ -20,9 +20,9 @@ export default class LessonOverview extends React.Component {
 	static List = List
 
 	static propTypes = {
-		overview: PropTypes.object,
-		outlineNode: PropTypes.object,
-		course: PropTypes.object,
+		overview: PropTypes.object.isRequired,
+		outlineNode: PropTypes.object.isRequired,
+		course: PropTypes.object.isRequired,
 
 		className: PropTypes.string,
 
@@ -48,6 +48,7 @@ export default class LessonOverview extends React.Component {
 
 	renderOverview () {
 		const {overview, course, outlineNode, layout} = this.props;
+		const {Items:items} = overview;
 
 		return (
 			<React.Fragment>
@@ -57,13 +58,19 @@ export default class LessonOverview extends React.Component {
 					<Responsive.Item query={Responsive.isDesktop} render={this.renderLargeDates} />
 					<h1>{overview.title}</h1>
 				</PaddedContainer>
-				<Items
-					items={overview.Items}
-					overview={overview}
-					course={course}
-					outlineNode={outlineNode}
-					layout={layout}
-				/>
+				{items && items.length ?
+					(
+						<Items
+							items={items}
+							overview={overview}
+							course={course}
+							outlineNode={outlineNode}
+							layout={layout}
+						/>
+					) :
+					this.renderEmpty()
+				}
+
 			</React.Fragment>
 		);
 	}
@@ -95,6 +102,11 @@ export default class LessonOverview extends React.Component {
 				{ending && (<DateTime date={ending} format={format} />)}
 			</div>
 		);
+	}
+
+
+	renderEmpty () {
+		return null;
 	}
 }
 
