@@ -24,7 +24,7 @@ export default function LessonOverviewItems ({className, containerProps = {}, it
 				}
 
 				return (
-					<li key={index}>
+					<li key={index} data-mime-type={item.MimeType}>
 						{!Cmp && (<span>Missing Item: {item.MimeType}</span>)}
 						{Cmp && (<Cmp {...otherProps} index={index} item={item}/>)}
 					</li>
