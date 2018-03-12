@@ -8,7 +8,7 @@ class Score extends React.Component {
 
 		width: PropTypes.number,
 		height: PropTypes.number,
-		inlinePercent: PropTypes.number,
+		inlinePercent: PropTypes.bool,
 		colors: PropTypes.arrayOf(PropTypes.string),
 		pixelDensity: PropTypes.number,
 	}
