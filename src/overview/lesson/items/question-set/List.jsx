@@ -21,7 +21,7 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 	}
 
 	render () {
-		const {item} = this.props;
+		const {item, assignment, assessment} = this.props;
 
 		return (
 			<Base
@@ -31,6 +31,8 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 				renderTitle={this.renderTitle}
 				renderIcon={this.renderIcon}
 				renderLabels={this.renderLabels}
+
+				linkToObject={assignment || assessment}
 			/>
 		);
 	}
