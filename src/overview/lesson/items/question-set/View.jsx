@@ -58,7 +58,7 @@ class LessonOverviewQuestionSet extends React.Component {
 		try {
 			const collection = await course.getAssignments();
 
-			if (collection.isAssignment(target, collection)) {
+			if (collection.isAssignment(target)) {
 				this.setupAssignment(target, collection);
 			} else {
 				this.setupAssessment(target, collection);
