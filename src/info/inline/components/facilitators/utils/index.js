@@ -1,4 +1,5 @@
 import { getService } from 'nti-web-client';
+import { Presentation } from 'nti-web-commons';
 
 export function getAvailableRoles (courseInstance) {
 	let options = [];
@@ -122,7 +123,7 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 	(catalogInstructors || []).forEach((x, index) => {
 		let role = 'assistant';
 
-		const assetRoot = catalogEntry && catalogEntry.getAssetRoot();
+		const assetRoot = Presentation.Asset.getAssetRoot({ contentPackage: catalogEntry });
 
 		let imageUrl;
 
