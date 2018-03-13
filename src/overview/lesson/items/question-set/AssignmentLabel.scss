@@ -8,6 +8,8 @@
 	.completed {
 		&.ontime .label {
 			color: $secondary-green;
+			background: none;
+			padding-left: 0;
 		}
 
 		.errors {
