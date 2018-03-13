@@ -7,7 +7,7 @@ import WizardItem from '../../editor/wizard/WizardItem';
 import ScormImport from '../../editor/panels/scorm-import/WizardPanel';
 import ImportConfirmation from '../../editor/panels/importconfirmation/WizardPanel';
 
-import ModeSelect, {UPDATE_KEY} from './ModeSelect';
+import ModeSelect, {UPDATE_KEY, REPLACE_KEY} from './ModeSelect';
 
 const t = scoped('course.wizard.CourseWizard', {
 	finish: 'Finish',
@@ -24,12 +24,50 @@ class PackageWizard extends React.Component {
 		onFinish: PropTypes.func,
 		onCourseModified: PropTypes.func,
 		onDismiss: PropTypes.func,
-		bundle: PropTypes.obj
+		bundle: PropTypes.shape({
+			Metadata: PropTypes.shape({
+				hasLink: PropTypes.func.isRequired
+			}),
+			getID: PropTypes.func.isRequired
+		}).isRequired
+	}
+
+	/**
+	 * Constructor
+	 * @param {object} props - contains bundle
+	 */
+	constructor (props) {
+		super(props);
+
+		this.state = {};
+
+		const { bundle } = props;
+
+		/**
+		 * @property {boolean} hasScormPackage - checks for the presence of LauchScorm Link
+		 */
+		this.hasScormPackage = bundle.Metadata && !!bundle.Metadata.getLink('LaunchSCORM');
+
+		if (!this.hasScormPackage) {
+			this.setState({ mode: REPLACE_KEY });
+		}
 	}
 
 
-	state = {}
+	componentWillReceiveProps (nextProps) {
+		const { bundle } = this.props;
+		const nextBundle = nextProps.bundle;
 
+		if (bundle.getID() !== nextBundle.getID()) {
+			this.hasScormPackage = nextBundle.Metadata && nextBundle.Metadata.getLink('LaunchSCORM');
+
+			if (!this.hasScormPackage) {
+				this.setState({ mode: REPLACE_KEY });
+			} else {
+				this.setState({ mode: null });
+			}
+		}
+	}
 
 	cancel = () => {
 		this.props.onCancel && this.props.onCancel();
@@ -66,7 +104,6 @@ class PackageWizard extends React.Component {
 
 
 	renderUpload () {
-		// TODO: provide the appropriate link to the import panel based on the current mode
 		return (
 			<Switch.Item
 				className="scorm-package-content"
@@ -80,7 +117,9 @@ class PackageWizard extends React.Component {
 				type={this.state.mode}
 				onCancel={this.cancel}
 				onFinish={this.afterSave}
-				afterSave={this.afterSave} />
+				afterSave={this.afterSave}
+				firstTab={!this.hasScormPackage}
+			/>
 		);
 	}
 
@@ -102,12 +141,18 @@ class PackageWizard extends React.Component {
 		);
 	}
 
-
+	/**
+	 * Render
+	 * @returns {JSX} - Renders the switch chooser
+	 * @description Mode Chooser is hidden for courses with no content package. This is driven of of hasScormPackage property.
+	 */
 	render () {
+		const active = !this.hasScormPackage ? 'scormUpload' : 'TemplateChooser';
+	
 		return (
-			<Switch.Panel className="scorm-package" active="TemplateChooser">
+			<Switch.Panel className="scorm-package" active={active}>
 				<Switch.Container>
-					{this.renderMode()}
+					{this.hasScormPackage && this.renderMode()}
 					{this.renderUpload()}
 					{this.renderConfirmation()}
 				</Switch.Container>
