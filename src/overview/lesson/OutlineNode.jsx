@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Storage from 'nti-web-storage';
+import {getAppUsername} from 'nti-web-client';
 
 import {Grid, List} from './Constants';
 import Overview from './Overview';
@@ -16,19 +17,42 @@ export default class LessonView extends React.Component {
 	}
 
 	state = {
-		layout: Storage.getItem(STORAGE_KEY) || Grid
+		layout: this.getStoragePreference()
 	}
 
 
+	getStoragePreference () {
+		try {
+			// get encoded value from storage, decode, parse and get the value
+			// for the acting user.  If no entry, or the entry is not this user,
+			// return Grid as default
+			const rawValue = atob(Storage.getItem(STORAGE_KEY));
+			const jsonValue = JSON.parse(rawValue);
+			return jsonValue[getAppUsername()] || Grid;
+		} catch (e) {
+			return Grid;
+		}
+	}
+
+	setStoragePreference (value) {
+		// encode the value as a JSON key-value pair, where the key is
+		// the acting user and the value is their selected preference
+		const rawValue = JSON.stringify({
+			[getAppUsername()]: value
+		});
+
+		Storage.setItem(STORAGE_KEY, btoa(rawValue));
+	}
+
 	selectGrid = () => {
 		this.setState({layout: Grid});
-		Storage.setItem(STORAGE_KEY, Grid);
+		this.setStoragePreference(Grid);
 	}
 
 
 	selectList = () => {
 		this.setState({layout: List});
-		Storage.setItem(STORAGE_KEY, List);
+		this.setStoragePreference(List);
 	}
 
 
