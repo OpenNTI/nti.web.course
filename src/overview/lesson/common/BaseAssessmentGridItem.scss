@@ -8,7 +8,7 @@
 	}
 
 	.container {
-		padding: rem-calc(13px 18px);
+		padding: rem-calc(14px 18px);
 		display: flex;
 		align-items: center;
 		border-radius: 5px;
@@ -19,7 +19,6 @@
 		.icon-container {
 			flex: 0 0 auto;
 			width: rem-calc(75px);
-			min-height: rem-calc(60px);
 			text-align: center;
 
 			.icon {
@@ -41,6 +40,7 @@
 					white-space: nowrap;
 					overflow: hidden;
 					text-overflow: ellipsis;
+					max-width: 100%;
 				}
 			}
 
@@ -62,6 +62,50 @@
 				font-weight: 400;
 				min-width: rem-calc(95px);
 				text-align: center;
+			}
+		}
+
+		@include responsive-range(tablet) {
+			padding: rem-calc(14px 14px);
+
+			.icon-container {
+				width: rem-calc(65px);
+			}
+
+			.info-container {
+				.title-container {
+					font-size: 1rem;
+				}
+			}
+
+			.button-container {
+				.nti-button.primary {
+					font-size: 0.875rem;
+					padding: rem-calc(0 16px);
+					min-width: rem-calc(85px);
+				}
+			}
+		}
+
+		@include responsive-range(mobile) {
+			padding: rem-calc(10px 8px);
+
+			.icon-container {
+				width: rem-calc(55px);
+			}
+
+			.info-container {
+				.title-container {
+					font-size: 1rem;
+				}
+			}
+
+			.button-container {
+				.nti-button.primary {
+					font-size: 0.875rem;
+					padding: rem-calc(0 12px);
+					min-width: rem-calc(80px);
+				}
 			}
 		}
 	}
