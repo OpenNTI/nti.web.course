@@ -59,7 +59,12 @@ export default class LessonOverviewBaseListItem extends React.Component {
 		const {className, disabled, item, linkToObject, linkToContext} = this.props;
 
 		return (
-			<LinkTo.Object className="lesson-overview-base-list-item-link" object={linkToObject || item} context={linkToContext}>
+			<LinkTo.Object
+				data-ntiid={item.NTIID}
+				className="lesson-overview-base-list-item-link"
+				object={linkToObject || item}
+				context={linkToContext}
+			>
 				<PaddedContainer className={cx('lesson-overview-base-list-item', className, {disabled})}>
 					<div className="icon-container">
 						<div className="icon">

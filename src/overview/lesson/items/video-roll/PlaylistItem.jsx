@@ -59,7 +59,7 @@ export default class PlaylistItem extends React.Component {
 		const formattedDuration = duration != null ? DateTime.formatDuration(duration) : '';
 
 		return (
-			<li className={cx('lesson-overview-video-roll-playlist-item', {selected, required, viewed})}  onClick={this.onClick}>
+			<li className={cx('lesson-overview-video-roll-playlist-item', {selected, required, viewed})}  onClick={this.onClick} data-ntiid={item.NTIID}>
 				<a href={item.getID()} onClick={this.onClick}>
 					<span className="label">{item.title}</span>
 					<span className="meta">

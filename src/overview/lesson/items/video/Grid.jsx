@@ -165,7 +165,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const label = item.title || item.label;
 
 		return (
-			<div className="lesson-overview-video-container" onTouchMove={this.onTouchMove}>
+			<div className="lesson-overview-video-container" onTouchMove={this.onTouchMove} data-ntiid={item.NTIID}>
 				{error && (
 					<ErrorWidget error={error}/>
 				)}

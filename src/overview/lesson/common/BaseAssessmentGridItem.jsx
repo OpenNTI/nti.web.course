@@ -24,7 +24,7 @@ export default class BaseAssessmentGridItem extends React.Component {
 
 		return (
 			<PaddedContainer className="lesson-overview-base-assessment-grid-item">
-				<LinkTo.Object object={linkToObject || item} context={linkToContext}>
+				<LinkTo.Object object={linkToObject || item} context={linkToContext} data-ntiid={item.NTIID}>
 					<div className="container">
 						<div className="icon-container">
 							<div className="icon">

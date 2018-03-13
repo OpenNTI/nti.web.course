@@ -24,7 +24,7 @@ export default class VideoRollPlaylist extends React.Component {
 	render () {
 		const {
 			props: {
-				item: {Items: items}
+				item: {Items: items, NTIID}
 			},
 			state: {
 				selected
@@ -34,7 +34,7 @@ export default class VideoRollPlaylist extends React.Component {
 		const active = items[selected];
 
 		return (
-			<div className="lesson-overview-video-roll-playlist-container">
+			<div className="lesson-overview-video-roll-playlist-container" data-ntiid={NTIID}>
 				<div className="stage">
 					<Video {...this.props} item={active}/>
 				</div>

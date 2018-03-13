@@ -67,6 +67,7 @@ export default class LessonOverviewRelatedWorkGridItem extends React.Component {
 		return (
 			<PaddedContainer>
 				<Card
+					data-ntiid={item.NTIID}
 					item={item}
 					object={item}
 					component={LinkTo.Object}
