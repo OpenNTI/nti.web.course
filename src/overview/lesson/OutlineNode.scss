@@ -1,6 +1,8 @@
 @import '~nti-style-common';
 
 .nti-lesson-view {
+	padding-bottom: rem-calc(32px);
+
 	& > .header {
 		display: flex;
 		padding-top: rem-calc(14px);
