@@ -97,7 +97,7 @@ class Test extends React.Component {
 
 		return (
 			<div>
-				{nodes.slice(2, 3).map(node => (
+				{nodes.slice(12, 13).map(node => (
 					<Unit key={node.NTIID} course={course} node={node} layout={layout}/>
 				))}
 			</div>
