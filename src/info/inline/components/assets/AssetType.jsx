@@ -35,11 +35,13 @@ export default class AssetType extends React.Component {
 
 		const className = cx('asset', type);
 
-		return (<div className={className}>
-			<div className="asset-label">{t(type)}</div>
-			<Presentation.Asset contentPackage={catalogEntry} propName="src" type={type}>
-				<img onClick={this.launchImgDialog}/>
-			</Presentation.Asset>
-		</div>);
+		return (
+			<div className={className}>
+				<div className="asset-label">{t(type)}</div>
+				<Presentation.Asset contentPackage={catalogEntry} propName="src" type={type}>
+					<img onClick={this.launchImgDialog}/>
+				</Presentation.Asset>
+			</div>
+		);
 	}
 }

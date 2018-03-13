@@ -65,16 +65,18 @@ export default class DatePicker extends React.Component {
 	}
 
 	render () {
-		return (<Flyout.Triggered
-			className="course-date-picker-flyout"
-			trigger={this.renderTrigger()}
-			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			sizing={Flyout.SIZES.MATCH_SIDE}
-			ref={this.attachFlyoutRef}
-		>
-			<div>
-				<DayTimePicker value={this.props.date} disabledDays={this.props.disabledDays} onChange={this.onDateSelect} retainTime/>
-			</div>
-		</Flyout.Triggered>);
+		return (
+			<Flyout.Triggered
+				className="course-date-picker-flyout"
+				trigger={this.renderTrigger()}
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				sizing={Flyout.SIZES.MATCH_SIDE}
+				ref={this.attachFlyoutRef}
+			>
+				<div>
+					<DayTimePicker value={this.props.date} disabledDays={this.props.disabledDays} onChange={this.onDateSelect} retainTime/>
+				</div>
+			</Flyout.Triggered>
+		);
 	}
 }

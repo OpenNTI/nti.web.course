@@ -113,17 +113,19 @@ export default class CourseEditor extends React.Component {
 	renderPanel = (panel) => {
 		const tabPanel = panel.TabPanel;
 
-		return (<Switch.Item
-			className="course-panel-content"
-			key={tabPanel.tabName}
-			name={tabPanel.tabName}
-			component={PanelItem}
-			panelCmp={tabPanel}
-			catalogEntry={this.props.catalogEntry}
-			courseInstance={this.state.courseInstance}
-			onCancel={this.cancel}
-			afterSave={this.props.onSave}
-			saveCmp={SaveButton}/>);
+		return (
+			<Switch.Item
+				className="course-panel-content"
+				key={tabPanel.tabName}
+				name={tabPanel.tabName}
+				component={PanelItem}
+				panelCmp={tabPanel}
+				catalogEntry={this.props.catalogEntry}
+				courseInstance={this.state.courseInstance}
+				onCancel={this.cancel}
+				afterSave={this.props.onSave}
+				saveCmp={SaveButton}/>
+		);
 	}
 
 	renderItems () {
@@ -133,21 +135,23 @@ export default class CourseEditor extends React.Component {
 	render () {
 		const { catalogEntry } = this.props;
 
-		return (<div className="course-editor">
-			{this.renderLoadingMask()}
-			{this.renderCloseButton()}
-			<Switch.Panel className="course-panel editor" active={Edit.panels[0].TabPanel.tabName}>
-				<Switch.Controls className="course-editor-menu">
-					<Presentation.AssetBackground className="course-image" contentPackage={catalogEntry} type="landing"/>
-					<div className="course-id">{catalogEntry.ProviderUniqueID}</div>
-					<div className="course-title">{catalogEntry.title}</div>
-					{this.renderTriggers()}
-				</Switch.Controls>
-				<Switch.Container>
-					{this.renderItems()}
-				</Switch.Container>
-			</Switch.Panel>
-		</div>);
+		return (
+			<div className="course-editor">
+				{this.renderLoadingMask()}
+				{this.renderCloseButton()}
+				<Switch.Panel className="course-panel editor" active={Edit.panels[0].TabPanel.tabName}>
+					<Switch.Controls className="course-editor-menu">
+						<Presentation.AssetBackground className="course-image" contentPackage={catalogEntry} type="landing"/>
+						<div className="course-id">{catalogEntry.ProviderUniqueID}</div>
+						<div className="course-title">{catalogEntry.title}</div>
+						{this.renderTriggers()}
+					</Switch.Controls>
+					<Switch.Container>
+						{this.renderItems()}
+					</Switch.Container>
+				</Switch.Panel>
+			</div>
+		);
 	}
 }
 

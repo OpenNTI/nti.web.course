@@ -205,9 +205,11 @@ export default class ScormImport extends React.Component {
 	renderBody () {
 		const { loading } = this.state;
 
-		return (<div className="course-panel-getstarted-form">
-			{loading ? this.renderProgress() : this.renderFileForm()}
-		</div>);
+		return (
+			<div className="course-panel-getstarted-form">
+				{loading ? this.renderProgress() : this.renderFileForm()}
+			</div>
+		);
 	}
 
 

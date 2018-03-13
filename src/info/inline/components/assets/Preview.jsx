@@ -10,11 +10,13 @@ export default class Preview extends React.Component {
 	render () {
 		const { imageSrc, label } = this.props;
 
-		return (<div className="asset-preview">
-			<div className="image-container">
-				<img src={imageSrc} width="40" height="40"/>
+		return (
+			<div className="asset-preview">
+				<div className="image-container">
+					<img src={imageSrc} width="40" height="40"/>
+				</div>
+				<div className="label">{label}</div>
 			</div>
-			<div className="label">{label}</div>
-		</div>);
+		);
 	}
 }

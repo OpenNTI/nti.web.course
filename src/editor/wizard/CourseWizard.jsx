@@ -79,20 +79,22 @@ export default class CourseWizard extends React.Component {
 	renderItem = (panel, index, arr) => {
 		const stepName = 'step' + (index + 2);
 
-		return (<Switch.Item
-			className="course-panel-content"
-			key={stepName}
-			name={stepName}
-			component={WizardItem}
-			wizardCmp={panel.WizardPanel}
-			catalogEntry={this.state.catalogEntry}
-			stepName={panel.tabDescription}
-			onCancel={this.cancel}
-			onFinish={this.creationCompleted}
-			hideHeaderControls={panel.WizardPanel.hideHeaderControls}
-			afterSave={index === arr.length - 1
-				? () => this.creationCompleted(!panel.WizardPanel.disallowEditorRedirect)
-				: () => {}}/>);
+		return (
+			<Switch.Item
+				className="course-panel-content"
+				key={stepName}
+				name={stepName}
+				component={WizardItem}
+				wizardCmp={panel.WizardPanel}
+				catalogEntry={this.state.catalogEntry}
+				stepName={panel.tabDescription}
+				onCancel={this.cancel}
+				onFinish={this.creationCompleted}
+				hideHeaderControls={panel.WizardPanel.hideHeaderControls}
+				afterSave={index === arr.length - 1
+					? () => this.creationCompleted(!panel.WizardPanel.disallowEditorRedirect)
+					: () => {}}/>
+		);
 	}
 
 
@@ -102,11 +104,13 @@ export default class CourseWizard extends React.Component {
 		}
 
 		// return a placeholder if we haven't chosen a template yet
-		return (<Switch.Item
-			className="course-panel-content"
-			name="step2"
-			component={WizardItem}
-			wizardCmp={TemplateChooser}/>);
+		return (
+			<Switch.Item
+				className="course-panel-content"
+				name="step2"
+				component={WizardItem}
+				wizardCmp={TemplateChooser}/>
+		);
 	}
 
 	onTemplateSelect = (selected) => {
@@ -114,16 +118,18 @@ export default class CourseWizard extends React.Component {
 	}
 
 	renderTemplateChooser () {
-		return (<Switch.Item
-			className="course-panel-content"
-			name="TemplateChooser"
-			component={WizardItem}
-			wizardCmp={TemplateChooser}
-			availableTemplates={this.state.availableTemplates}
-			stepName={t('chooseTemplate')}
-			onTemplateSelect={this.onTemplateSelect}
-			onCancel={this.cancel}
-			firstTab />);
+		return (
+			<Switch.Item
+				className="course-panel-content"
+				name="TemplateChooser"
+				component={WizardItem}
+				wizardCmp={TemplateChooser}
+				availableTemplates={this.state.availableTemplates}
+				stepName={t('chooseTemplate')}
+				onTemplateSelect={this.onTemplateSelect}
+				onCancel={this.cancel}
+				firstTab />
+		);
 	}
 
 	render () {
@@ -131,11 +137,13 @@ export default class CourseWizard extends React.Component {
 			return <div className="course-panel wizard"><div className="course-wizard-item"><Loading.Mask/></div></div>;
 		}
 
-		return (<Switch.Panel className="course-panel wizard" active="TemplateChooser">
-			<Switch.Container>
-				{this.renderTemplateChooser()}
-				{this.renderItems()}
-			</Switch.Container>
-		</Switch.Panel>);
+		return (
+			<Switch.Panel className="course-panel wizard" active="TemplateChooser">
+				<Switch.Container>
+					{this.renderTemplateChooser()}
+					{this.renderItems()}
+				</Switch.Container>
+			</Switch.Panel>
+		);
 	}
 }

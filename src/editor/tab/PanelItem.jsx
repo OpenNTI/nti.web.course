@@ -45,10 +45,12 @@ export default class PanelItem extends React.Component {
 	render () {
 		const { panelCmp: Cmp, ...otherProps } = this.props;
 
-		return (<div className="course-panel-item">
-			<div className="course-panel-content-container">
-				<Cmp errorMsg={this.state.errorMsg}onInputChange={this.onInputChange} {...otherProps}/>
+		return (
+			<div className="course-panel-item">
+				<div className="course-panel-content-container">
+					<Cmp errorMsg={this.state.errorMsg}onInputChange={this.onInputChange} {...otherProps}/>
+				</div>
 			</div>
-		</div>);
+		);
 	}
 }

@@ -90,9 +90,11 @@ export default class ImportWizardPanel extends React.Component {
 	renderBody () {
 		const { loading } = this.state;
 
-		return (<div className="course-panel-getstarted-form">
-			{loading ? this.renderProgress() : this.renderFileImport()}
-		</div>);
+		return (
+			<div className="course-panel-getstarted-form">
+				{loading ? this.renderProgress() : this.renderFileImport()}
+			</div>
+		);
 	}
 
 	onComplete = (response) => {

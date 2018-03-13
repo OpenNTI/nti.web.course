@@ -90,11 +90,13 @@ export default class CourseCard extends React.Component {
 	}
 
 	renderControls () {
-		return (<div className="course-controls">
-			{this.renderPreview()}
-			{this.renderBadge()}
-			{this.renderDefaultOptions()}
-		</div>);
+		return (
+			<div className="course-controls">
+				{this.renderPreview()}
+				{this.renderBadge()}
+				{this.renderDefaultOptions()}
+			</div>
+		);
 	}
 
 	renderPreview () {
@@ -143,16 +145,18 @@ export default class CourseCard extends React.Component {
 	}
 
 	renderOptions () {
-		return (<Flyout.Triggered
-			className="admin-course-options"
-			trigger={this.renderOptionsButton()}
-			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			sizing={Flyout.SIZES.MATCH_SIDE}
-			ref={this.attachOptionsFlyoutRef}
-			arrow
-		>
-			<CourseMenu course={this.props.course} doEdit={this.doEdit} doExport={this.doExport} doDelete={this.deleteCourse}/>
-		</Flyout.Triggered>);
+		return (
+			<Flyout.Triggered
+				className="admin-course-options"
+				trigger={this.renderOptionsButton()}
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				sizing={Flyout.SIZES.MATCH_SIDE}
+				ref={this.attachOptionsFlyoutRef}
+				arrow
+			>
+				<CourseMenu course={this.props.course} doEdit={this.doEdit} doExport={this.doExport} doDelete={this.deleteCourse}/>
+			</Flyout.Triggered>
+		);
 	}
 
 	onCourseClick = () => {
@@ -184,18 +188,20 @@ export default class CourseCard extends React.Component {
 	render () {
 		const { course } = this.props;
 
-		return (<div className="course-item" onClick={this.onCourseClick}>
-			<div className="cover">
-				<Presentation.AssetBackground className="course-image" contentPackage={course} type="landing"/>
+		return (
+			<div className="course-item" onClick={this.onCourseClick}>
+				<div className="cover">
+					<Presentation.AssetBackground className="course-image" contentPackage={course} type="landing"/>
+				</div>
+				{this.renderControls()}
+				<div className="course-meta">
+					<div className="course-id">{course.ProviderUniqueID}</div>
+					<div className="course-title">{course.title}</div>
+					{this.renderInstructors()}
+				</div>
+				{this.renderAdminOptions()}
+				{this.renderCheckbox()}
 			</div>
-			{this.renderControls()}
-			<div className="course-meta">
-				<div className="course-id">{course.ProviderUniqueID}</div>
-				<div className="course-title">{course.title}</div>
-				{this.renderInstructors()}
-			</div>
-			{this.renderAdminOptions()}
-			{this.renderCheckbox()}
-		</div>);
+		);
 	}
 }

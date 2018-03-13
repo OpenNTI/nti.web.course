@@ -97,14 +97,16 @@ export default class WizardItem extends React.Component {
 	}
 
 	renderHeader () {
-		return (<div className="course-panel-header">
-			{this.renderCloseButton()}
-			{this.renderBackButton()}
-			<div className="header-text">
-				{this.renderTitle()}
-				{this.renderStepName()}
+		return (
+			<div className="course-panel-header">
+				{this.renderCloseButton()}
+				{this.renderBackButton()}
+				<div className="header-text">
+					{this.renderTitle()}
+					{this.renderStepName()}
+				</div>
 			</div>
-		</div>);
+		);
 	}
 
 	renderError () {
@@ -154,19 +156,21 @@ export default class WizardItem extends React.Component {
 
 		delete otherProps.onCancel;
 
-		return (<div className="course-wizard-item">
-			{this.renderHeader()}
-			{this.renderError()}
-			{this.renderLoading()}
-			<div className="course-panel-content-container">
-				<Cmp
-					onCancel={this.doCancel}
-					saveCmp={SaveButton}
-					enterProgressState={this.enterProgressState}
-					exitProgressState={this.exitProgressState}
-					{...otherProps}/>
+		return (
+			<div className="course-wizard-item">
+				{this.renderHeader()}
+				{this.renderError()}
+				{this.renderLoading()}
+				<div className="course-panel-content-container">
+					<Cmp
+						onCancel={this.doCancel}
+						saveCmp={SaveButton}
+						enterProgressState={this.enterProgressState}
+						exitProgressState={this.exitProgressState}
+						{...otherProps}/>
+				</div>
 			</div>
-		</div>);
+		);
 	}
 }
 

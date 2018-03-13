@@ -62,9 +62,11 @@ export default class MeetTimesView extends React.Component {
 			const startTime = Schedule.times && convertToTimeStr(Schedule.times[0]);
 			const endTime = Schedule.times && convertToTimeStr(Schedule.times[1]);
 
-			return (<div>
-				{selectedWeekdays.map((day) => this.renderDayRow(day, startTime, endTime))}
-			</div>);
+			return (
+				<div>
+					{selectedWeekdays.map((day) => this.renderDayRow(day, startTime, endTime))}
+				</div>
+			);
 		}
 
 		return (<div>-</div>);

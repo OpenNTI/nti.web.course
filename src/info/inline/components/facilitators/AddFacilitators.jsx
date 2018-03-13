@@ -171,17 +171,19 @@ export default class AddFacilitators extends React.Component {
 			return (<div className="role-value">{this.state.options[0] && t(this.state.options[0])}</div>);
 		}
 
-		return (<Flyout.Triggered
-			className="course-facilitator-role-flyout"
-			trigger={this.renderRoleTrigger()}
-			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			sizing={Flyout.SIZES.MATCH_SIDE}
-			ref={this.attachRoleFlyoutRef}
-		>
-			<div>
-				{options.map(this.renderRoleOption)}
-			</div>
-		</Flyout.Triggered>);
+		return (
+			<Flyout.Triggered
+				className="course-facilitator-role-flyout"
+				trigger={this.renderRoleTrigger()}
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				sizing={Flyout.SIZES.MATCH_SIDE}
+				ref={this.attachRoleFlyoutRef}
+			>
+				<div>
+					{options.map(this.renderRoleOption)}
+				</div>
+			</Flyout.Triggered>
+		);
 	}
 
 	onVisibilityChanged = (e) => {

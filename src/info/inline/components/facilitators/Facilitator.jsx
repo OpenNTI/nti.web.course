@@ -104,18 +104,20 @@ export default class Facilitator extends React.Component {
 	}
 
 	renderVisibilitySelect () {
-		return (<Flyout.Triggered
-			className="course-facilitator-visibility-flyout"
-			trigger={this.renderVisibilityTrigger()}
-			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			sizing={Flyout.SIZES.MATCH_SIDE}
-			ref={this.attachVisibilityFlyoutRef}
-		>
-			<div>
-				<div className="visibility-option" onClick={this.toggleVisible}>{t('visible')}</div>
-				<div className="visibility-option" onClick={this.toggleHidden}>{t('hidden')}</div>
-			</div>
-		</Flyout.Triggered>);
+		return (
+			<Flyout.Triggered
+				className="course-facilitator-visibility-flyout"
+				trigger={this.renderVisibilityTrigger()}
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				sizing={Flyout.SIZES.MATCH_SIDE}
+				ref={this.attachVisibilityFlyoutRef}
+			>
+				<div>
+					<div className="visibility-option" onClick={this.toggleVisible}>{t('visible')}</div>
+					<div className="visibility-option" onClick={this.toggleHidden}>{t('hidden')}</div>
+				</div>
+			</Flyout.Triggered>
+		);
 	}
 
 	renderRoleTrigger () {
@@ -140,17 +142,19 @@ export default class Facilitator extends React.Component {
 	}
 
 	renderRoleSelect (options) {
-		return (<Flyout.Triggered
-			className="course-facilitator-role-flyout"
-			trigger={this.renderRoleTrigger()}
-			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			sizing={Flyout.SIZES.MATCH_SIDE}
-			ref={this.attachRoleFlyoutRef}
-		>
-			<div>
-				{options.map(this.renderRoleOption)}
-			</div>
-		</Flyout.Triggered>);
+		return (
+			<Flyout.Triggered
+				className="course-facilitator-role-flyout"
+				trigger={this.renderRoleTrigger()}
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				sizing={Flyout.SIZES.MATCH_SIDE}
+				ref={this.attachRoleFlyoutRef}
+			>
+				<div>
+					{options.map(this.renderRoleOption)}
+				</div>
+			</Flyout.Triggered>
+		);
 	}
 
 	removeFacilitator = () => {
@@ -204,9 +208,11 @@ export default class Facilitator extends React.Component {
 		// only allow selecting roles if there editable and there is more than one
 		// option available to choose
 		if(!this.isMe() && editable && options && options.length > 1) {
-			return (<div className="role">
-				{this.renderRoleSelect(options)}
-			</div>);
+			return (
+				<div className="role">
+					{this.renderRoleSelect(options)}
+				</div>
+			);
 		}
 
 		if(editable || adminView) {

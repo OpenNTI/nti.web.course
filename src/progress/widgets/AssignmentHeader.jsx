@@ -41,17 +41,19 @@ export default class AssignmentHeader extends React.Component {
 	}
 
 	renderPublishControl () {
-		return (<Flyout.Triggered
-			className="assignment-header-publish-flyout"
-			trigger={this.renderPublishTrigger()}
-			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			sizing={Flyout.SIZES.MATCH_SIDE}
-			ref={this.attachPublishFlyoutRef}
-		>
-			<div>
-				<div className="assignment-control-option" onClick={this.publish}>Publish</div>
-			</div>
-		</Flyout.Triggered>);
+		return (
+			<Flyout.Triggered
+				className="assignment-header-publish-flyout"
+				trigger={this.renderPublishTrigger()}
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				sizing={Flyout.SIZES.MATCH_SIDE}
+				ref={this.attachPublishFlyoutRef}
+			>
+				<div>
+					<div className="assignment-control-option" onClick={this.publish}>Publish</div>
+				</div>
+			</Flyout.Triggered>
+		);
 	}
 
 	renderDueDateTrigger () {
@@ -61,17 +63,19 @@ export default class AssignmentHeader extends React.Component {
 	}
 
 	renderDueDateControl () {
-		return (<Flyout.Triggered
-			className="assignment-header-due-date-flyout"
-			trigger={this.renderDueDateTrigger()}
-			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-			sizing={Flyout.SIZES.MATCH_SIDE}
-			ref={this.attachDueDateFlyoutRef}
-		>
-			<div>
-				<div className="assignment-control-option" onClick={this.publish}>Change</div>
-			</div>
-		</Flyout.Triggered>);
+		return (
+			<Flyout.Triggered
+				className="assignment-header-due-date-flyout"
+				trigger={this.renderDueDateTrigger()}
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				sizing={Flyout.SIZES.MATCH_SIDE}
+				ref={this.attachDueDateFlyoutRef}
+			>
+				<div>
+					<div className="assignment-control-option" onClick={this.publish}>Change</div>
+				</div>
+			</Flyout.Triggered>
+		);
 	}
 
 	renderControls () {

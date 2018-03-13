@@ -103,15 +103,19 @@ export default class MeetTimesEdit extends React.Component {
 			{name: 'saturday', code: 'S'}
 		];
 
-		return (<div className="course-editor-weekdays">
-			{days.map(this.renderDay)}
-		</div>);
+		return (
+			<div className="course-editor-weekdays">
+				{days.map(this.renderDay)}
+			</div>
+		);
 	}
 
 	renderDaySelection () {
-		return (<div className="course-editor-day-selection">
-			{this.renderWeekdays()}
-		</div>);
+		return (
+			<div className="course-editor-day-selection">
+				{this.renderWeekdays()}
+			</div>
+		);
 	}
 
 	updateStartTime = (newDate) => {
@@ -123,15 +127,17 @@ export default class MeetTimesEdit extends React.Component {
 	};
 
 	renderTimeSelection () {
-		return (<div className="course-editor-time-selection">
-			<div className="course-editor-starttime">
-				<TimePicker value={this.state.startTime} onChange={this.updateStartTime}/>
+		return (
+			<div className="course-editor-time-selection">
+				<div className="course-editor-starttime">
+					<TimePicker value={this.state.startTime} onChange={this.updateStartTime}/>
+				</div>
+				<div className="spacer">-</div>
+				<div className="course-editor-endtime">
+					<TimePicker value={this.state.endTime} onChange={this.updateEndTime}/>
+				</div>
 			</div>
-			<div className="spacer">-</div>
-			<div className="course-editor-endtime">
-				<TimePicker value={this.state.endTime} onChange={this.updateEndTime}/>
-			</div>
-		</div>);
+		);
 	}
 
 	render () {

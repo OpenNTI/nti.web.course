@@ -136,25 +136,29 @@ export default class SettingsTabPanel extends React.Component {
 		const { catalogEntry } = this.props;
 		const { StartDate } = catalogEntry;
 
-		return (<Flyout.Triggered
-			className="preview-mode-widget"
-			trigger={this.renderPreviewLabel()}
-			ref={this.attachFlyoutRef}
-			horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-		>
-			<div>
-				{this.renderPreviewOption(t('previewOn'), t('previewOnDesc'), false, this.enablePreviewMode)}
-				{this.renderPreviewOption(t('previewOff'), t('previewOffDesc'), false, this.disablePreviewMode)}
-				{this.renderPreviewOption(t('nullPreview'), StartDate ? DateTime.format(StartDate, 'MMMM Do YYYY, h:mm a') : t('noDateFound'), !StartDate, this.nullOutPreviewMode)}
-			</div>
-		</Flyout.Triggered>);
+		return (
+			<Flyout.Triggered
+				className="preview-mode-widget"
+				trigger={this.renderPreviewLabel()}
+				ref={this.attachFlyoutRef}
+				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+			>
+				<div>
+					{this.renderPreviewOption(t('previewOn'), t('previewOnDesc'), false, this.enablePreviewMode)}
+					{this.renderPreviewOption(t('previewOff'), t('previewOffDesc'), false, this.disablePreviewMode)}
+					{this.renderPreviewOption(t('nullPreview'), StartDate ? DateTime.format(StartDate, 'MMMM Do YYYY, h:mm a') : t('noDateFound'), !StartDate, this.nullOutPreviewMode)}
+				</div>
+			</Flyout.Triggered>
+		);
 	}
 
 	renderOptions () {
-		return (<div className="course-options">
-			<div className="publicly-available-option">{this.renderOption(t('publiclyAvailable'), null, !this.state.isNonPublic, this.onPublicChange)}</div>
-			<div className="preview-mode-option"><div className="course-option"><div className="course-option-label">{t('previewMode')}</div>{this.renderPreviewWidet()}</div></div>
-		</div>);
+		return (
+			<div className="course-options">
+				<div className="publicly-available-option">{this.renderOption(t('publiclyAvailable'), null, !this.state.isNonPublic, this.onPublicChange)}</div>
+				<div className="preview-mode-option"><div className="course-option"><div className="course-option-label">{t('previewMode')}</div>{this.renderPreviewWidet()}</div></div>
+			</div>
+		);
 	}
 
 	renderOption (label, description, value, onChange) {

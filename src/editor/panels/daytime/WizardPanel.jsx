@@ -122,16 +122,20 @@ export default class DayTimeWizardPanel extends React.Component {
 			{name: 'friday', code: 'F'},
 			{name: 'saturday', code: 'S'}];
 
-		return (<div className="course-panel-weekdays">
-			{days.map(this.renderDay)}
-		</div>);
+		return (
+			<div className="course-panel-weekdays">
+				{days.map(this.renderDay)}
+			</div>
+		);
 	}
 
 	renderDaySelection () {
-		return (<div className="course-panel-day-selection">
-			<div className="course-panel-label">{t('whichDays')}</div>
-			{this.renderWeekdays()}
-		</div>);
+		return (
+			<div className="course-panel-day-selection">
+				<div className="course-panel-label">{t('whichDays')}</div>
+				{this.renderWeekdays()}
+			</div>
+		);
 	}
 
 	updateStartTime = (newDate) => {
@@ -143,16 +147,18 @@ export default class DayTimeWizardPanel extends React.Component {
 	};
 
 	renderTimeSelection () {
-		return (<div className="course-panel-time-selection">
-			<div className="course-panel-starttime">
-				<div className="course-panel-label">{t('startTime')}</div>
-				<TimePicker value={this.state.startTime} onChange={this.updateStartTime}/>
+		return (
+			<div className="course-panel-time-selection">
+				<div className="course-panel-starttime">
+					<div className="course-panel-label">{t('startTime')}</div>
+					<TimePicker value={this.state.startTime} onChange={this.updateStartTime}/>
+				</div>
+				<div className="course-panel-endtime">
+					<div className="course-panel-label">{t('endTime')}</div>
+					<TimePicker value={this.state.endTime} onChange={this.updateEndTime}/>
+				</div>
 			</div>
-			<div className="course-panel-endtime">
-				<div className="course-panel-label">{t('endTime')}</div>
-				<TimePicker value={this.state.endTime} onChange={this.updateEndTime}/>
-			</div>
-		</div>);
+		);
 	}
 
 	renderCancelCmp () {

@@ -127,9 +127,11 @@ export default class CourseListing extends React.Component {
 			return null;
 		}
 
-		return (<div className="course-item-list">
-			{this.state.courses.map((course, index) => this.renderCourse(course, index))}
-		</div>);
+		return (
+			<div className="course-item-list">
+				{this.state.courses.map((course, index) => this.renderCourse(course, index))}
+			</div>
+		);
 	}
 
 	render () {
