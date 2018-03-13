@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {List, AssetIcon} from 'nti-web-commons';
+import {List, AssetIcon, Card} from 'nti-web-commons';
 import {isNTIID} from 'nti-lib-ntiids';
 import {LinkTo} from 'nti-web-routing';
 
@@ -15,6 +15,7 @@ export default class LessonOverviewBaseListItem extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		item: PropTypes.object,
+		course: PropTypes.object,
 		disabled: PropTypes.bool,
 
 		title: PropTypes.string,
@@ -26,6 +27,31 @@ export default class LessonOverviewBaseListItem extends React.Component {
 
 		linkToObject: PropTypes.object,
 		linkToContext: PropTypes.any
+	}
+
+	state = {}
+
+	componentWillReceiveProps (nextProps) {
+		const {item:nextItem} = nextProps;
+		const {item:oldItem} = this.props;
+
+		if (nextItem !== oldItem) {
+			this.resolveIcon(nextProps);
+		}
+	}
+
+	componentDidMount () {
+		this.resolveIcon(this.props);
+	}
+
+	async resolveIcon (props) {
+		const {course, item = {}, renderIcon} = props;
+
+		if (renderIcon) { return; }
+
+		const icon = await Card.resolveIcon(item, course);
+
+		this.setState({icon});
 	}
 
 
@@ -55,6 +81,7 @@ export default class LessonOverviewBaseListItem extends React.Component {
 
 	renderIcon () {
 		const {renderIcon, item} = this.props;
+		const {icon} = this.state;
 		const type = [item.type, item.targetMimeType].filter(x => x);
 
 		if (renderIcon) { return renderIcon(); }
@@ -62,7 +89,7 @@ export default class LessonOverviewBaseListItem extends React.Component {
 		return (
 			<AssetIcon
 				className="lesson-overview-base-list-item-icon"
-				src={item.icon}
+				src={icon}
 				mimeType={type}
 				href={item.href}
 			>
