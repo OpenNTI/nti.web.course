@@ -14,7 +14,6 @@
 .lesson-overview-video-container {
 	position: relative;
 	overflow: hidden;
-	padding-top: 56.25%;
 	background: black;
 
 	.error {
@@ -31,13 +30,11 @@
 		top: 0;
 	}
 
-	.nti-video {
-		@extend %fill;
-	}
-
 	.overview-video-tap-area {
 		@extend %hardware-render;
 		@extend %fill;
+
+		padding-top: 56.25%;
 
 		background-color: $panel-background;
 		background-size: cover;
