@@ -33,8 +33,7 @@
 	.overview-video-tap-area {
 		@extend %hardware-render;
 		@extend %fill;
-
-		padding-top: 56.25%;
+		@include wide-screen;
 
 		background-color: $panel-background;
 		background-size: cover;
