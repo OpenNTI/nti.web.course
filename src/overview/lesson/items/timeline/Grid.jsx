@@ -12,14 +12,14 @@ LessonOverviewTimelineGridItem.propTypes = {
 export default function LessonOverviewTimelineGridItem ({item, course}) {
 	return (
 		<PaddedContainer>
-			<Card
-				data-ntiid={item.NTIID}
-				item={item}
-				object={item}
-				component={LinkTo.Object}
-				contentPackage={course}
-				internalOverride
-			/>
+			<LinkTo.Object object={item}>
+				<Card
+					data-ntiid={item.NTIID}
+					item={item}
+					contentPackage={course}
+					internalOverride
+				/>
+			</LinkTo.Object>
 		</PaddedContainer>
 	);
 }

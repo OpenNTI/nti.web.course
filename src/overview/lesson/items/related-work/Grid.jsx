@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Summary} from 'nti-lib-interfaces';
 import {scoped} from 'nti-lib-locale';
 import {Card} from 'nti-web-commons';
-import {encodeForURI} from 'nti-lib-ntiids';
 import {LinkTo} from 'nti-web-routing';
 
 import PaddedContainer from '../../common/PaddedContainer';
@@ -33,49 +31,22 @@ External Links:
 */
 
 
-const t = scoped('relatedwork.item', {
-	viewComments: 'View Comments'
-});
-
-export default class LessonOverviewRelatedWorkGridItem extends React.Component {
-	static propTypes = {
-		item: PropTypes.object.isRequired
-	}
-
-
-	getHref = (ntiid, {external} = {}) => {
-		// slug="content"
-		// externalSlug="external-content"
-
-		return encodeForURI(ntiid);
-	}
-
-
-	render () {
-		let {props} = this;
-		let {item} = props;
-		let commentCount = item[Summary];
-
-		if (commentCount) {
-			commentCount = commentCount.ItemCount;
-		}
-
-		if (typeof commentCount !== 'number') {
-			commentCount = t('viewComments');
-		}
-
-		return (
-			<PaddedContainer>
+LessonOverviewRelatedWorkGridItem.propTypes = {
+	item: PropTypes.object.isRequired,
+	course: PropTypes.object,
+	commentLabel: PropTypes.node
+};
+export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel}) {
+	return (
+		<PaddedContainer>
+			<LinkTo.Object object={item}>
 				<Card
 					data-ntiid={item.NTIID}
 					item={item}
-					object={item}
-					component={LinkTo.Object}
-					getRoute={this.getHref}
-					commentCount={commentCount}
-					contentPackage={props.course}
+					contentPackage={course}
+					labels={[commentLabel]}
 				/>
-			</PaddedContainer>
-		);
-	}
+			</LinkTo.Object>
+		</PaddedContainer>
+	);
 }
