@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import {getService} from 'nti-web-client';
 import {Layouts} from 'nti-web-commons';
 import {Tasks} from 'nti-commons';
-import {getHistory} from 'nti-web-routing';
 
 import {Overview} from '../../src';
 
