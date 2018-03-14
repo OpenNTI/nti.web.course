@@ -111,13 +111,19 @@
 		display: block;
 		overflow: hidden;
 		vertical-align: bottom;
-		padding: 0 1em 0 0.5em;
+		padding: 0 3.5em 0 0.5em;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		color: #fff;
 		font: normal 400 1.1rem/2.75em 'Open Sans Condensed';
 		margin-left: 50px;
 		background: none;
+
+		&::after {
+			position: absolute;
+			right: 3px;
+			top: 3px;
+		}
 	}
 
 	.play, .player {
@@ -141,7 +147,7 @@
 		height: 43px;
 	}
 
-	.player::before {
+	.player::before, .label::after {
 		@extend %icon-transcript;
 
 		content: '';
