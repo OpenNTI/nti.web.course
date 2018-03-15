@@ -74,9 +74,10 @@ export default class LessonOverviewVideoGrid extends React.Component {
 
 			// The "item" is now going to be a full Video object, we no longer have to look it up.
 			// Simply Parse/Present the video w/o looking it up in the VideoIndex
-			const v = item; //(await course.getVideoIndex()).get(id);
+			// const v = item; //(await course.getVideoIndex()).get(id);
 
 			try {
+				const v = item.sources != null ? item : (await course.getVideoIndex()).get(item.getID());
 				const poster = await (v ? v.getPoster() : Promise.resolve(null));
 
 				if (this.activeTask !== task) {
