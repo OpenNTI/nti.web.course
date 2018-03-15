@@ -13,12 +13,13 @@ const t = scoped('nti-web-course.overview.lesson.overview.RelatedWorkListItem', 
 export default class LessonOverviewRelatedWorkListItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
-		commentLabel: PropTypes.node
+		commentLabel: PropTypes.node,
+		requiredLabel: PropTypes.node
 	}
 
 
 	render () {
-		const {item, commentLabel} = this.props;
+		const {item, commentLabel, requiredLabel} = this.props;
 		const {byline} = item;
 
 
@@ -28,7 +29,8 @@ export default class LessonOverviewRelatedWorkListItem extends React.Component {
 				item={item}
 				labels={[
 					byline ? t('byline', {name: byline}) : null,
-					commentLabel
+					commentLabel,
+					requiredLabel
 				]}
 			/>
 		);
