@@ -13,10 +13,11 @@ LessonOverviewItems.propTypes = {
 	itemRef: PropTypes.func
 };
 export default function LessonOverviewItems ({className, containerProps = {}, items, itemRef, ...otherProps}) {
+	const filtered = items.filter(item => !!item || !registry.getItemFor(item.MimeType));
 
 	return (
 		<ul {...containerProps} className={cx('lesson-overview-items', className)}>
-			{items.map((item, index) => {
+			{filtered.map((item, index) => {
 				const Cmp = registry.getItemFor(item.MimeType);
 
 				if (itemRef) {
