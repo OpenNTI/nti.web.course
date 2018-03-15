@@ -20,7 +20,9 @@ class LessonOverviewVideo extends React.Component {
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
 		return (
-			<Cmp layout={layout} {...otherProps} />
+			<div className="single-video-item">
+				<Cmp layout={layout} {...otherProps} />
+			</div>
 		);
 	}
 }
