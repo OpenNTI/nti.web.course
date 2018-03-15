@@ -20,8 +20,8 @@ export default class LessonOverview extends React.Component {
 	static List = List
 
 	static propTypes = {
-		overview: PropTypes.object.isRequired,
-		outlineNode: PropTypes.object.isRequired,
+		overview: PropTypes.object,
+		outlineNode: PropTypes.object,
 		course: PropTypes.object.isRequired,
 
 		className: PropTypes.string,
@@ -109,4 +109,3 @@ export default class LessonOverview extends React.Component {
 		return null;
 	}
 }
-
