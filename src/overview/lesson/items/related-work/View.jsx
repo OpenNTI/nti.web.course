@@ -17,7 +17,7 @@ const DEFAULT_TEXT = {
 	},
 	viewComments: 'View Comments'
 };
-const t = scoped('course.overview.lessons.items.related-work.Grid', DEFAULT_TEXT);
+const t = scoped('course.overview.lessons.items.related-work', DEFAULT_TEXT);
 
 export default
 @Registry.register('application/vnd.nextthought.relatedworkref')
@@ -65,4 +65,4 @@ class LessonOverviewRelatedWork extends React.Component {
 				{...otherProps} />
 		);
 	}
-}
+};
