@@ -77,17 +77,19 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 
 	renderLabels = () => {
-		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
+		const {assignment, assignmentHistory, assessment, assessmentSubmission, item} = this.props;
+
+		const required = item['CompletionRequired'];
 
 		if (assignment) {
 			return (
-				<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} />
+				<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} required={required} />
 			);
 		}
 
 		if (assessment) {
 			return (
-				<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission} />
+				<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission} required={required} />
 			);
 		}
 	}

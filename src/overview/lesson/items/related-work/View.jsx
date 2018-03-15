@@ -50,8 +50,19 @@ class LessonOverviewRelatedWork extends React.Component {
 			</LinkTo.Object>
 		);
 
+		const required = item['CompletionRequired'];
+
+		const requiredLabel = required && (
+			<span key="required-label" className="required">Required</span>
+		);
+
 		return (
-			<Cmp layout={layout} item={item} commentLabel={commentLabel} {...otherProps} />
+			<Cmp
+				layout={layout}
+				item={item}
+				commentLabel={commentLabel}
+				requiredLabel={requiredLabel}
+				{...otherProps} />
 		);
 	}
 }

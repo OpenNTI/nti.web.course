@@ -33,9 +33,10 @@ External Links:
 LessonOverviewRelatedWorkGridItem.propTypes = {
 	item: PropTypes.object.isRequired,
 	course: PropTypes.object,
-	commentLabel: PropTypes.node
+	commentLabel: PropTypes.node,
+	requiredLabel: PropTypes.node
 };
-export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel}) {
+export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel, requiredLabel}) {
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item}>
@@ -43,7 +44,7 @@ export default function LessonOverviewRelatedWorkGridItem ({item, course, commen
 					data-ntiid={item.NTIID}
 					item={item}
 					contentPackage={course}
-					labels={[commentLabel]}
+					labels={[commentLabel, requiredLabel]}
 				/>
 			</LinkTo.Object>
 		</PaddedContainer>

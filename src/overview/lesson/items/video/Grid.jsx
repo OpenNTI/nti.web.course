@@ -162,6 +162,8 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const link = '#';//path.join('videos', encodeForURI(this.getID())) + '/';
 
 
+		const required = item['CompletionRequired'];
+
 		const label = item.title || item.label;
 
 		return (
@@ -187,7 +189,10 @@ export default class LessonOverviewVideoGrid extends React.Component {
 							style={style}
 							className="overview-video-tap-area" href={link}
 						>
-							{viewed && <div className="viewed">Viewed</div>}
+							<div className="video-badges">
+								{required && <div className="badge required">Required</div>}
+								{viewed && <div className="badge viewed">Viewed</div>}
+							</div>
 							<div className="wrapper">
 								<div className="buttons">
 									<span className="play" title="Play" onClick={this.onPlayClicked}/>

@@ -54,7 +54,7 @@ export default class PlaylistItem extends React.Component {
 		} = this;
 
 		const progress = item[Progress];
-		const required = item.required; //TODO: use the official property/method
+		const required = item['CompletionRequired'];
 		const viewed = (progress && progress.hasProgress());
 		const formattedDuration = duration != null ? DateTime.formatDuration(duration) : '';
 

@@ -9,15 +9,17 @@ const DEFAULT_TEXT = {
 		other: '%(count)s Questions'
 	},
 	correct: '%(correct)s Correct',
-	incorrect: '%(incorrect)s Incorrect'
+	incorrect: '%(incorrect)s Incorrect',
+	required: 'Required'
 };
 const t = scoped('course.overview.lesson.items.question-set.List', DEFAULT_TEXT);
 
 LessonOverviewQuestionSetAssessmentLabel.propTypes = {
 	assessment: PropTypes.object,
-	assessmentSubmission: PropTypes.object
+	assessmentSubmission: PropTypes.object,
+	required: PropTypes.bool
 };
-export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, assessmentSubmission}) {
+export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, assessmentSubmission, required}) {
 	const count = assessment ? parseInt(assessment['question-count'], 10) : 0;
 	const correct = assessmentSubmission && assessmentSubmission.getCorrect();
 	const incorrect = assessmentSubmission && assessmentSubmission.getIncorrect();
@@ -37,6 +39,7 @@ export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, a
 					</span>
 				</div>
 			)}
+			{required && (<span className="required">{t('required')}</span>)}
 		</List.SeparatedInline>
 	);
 }

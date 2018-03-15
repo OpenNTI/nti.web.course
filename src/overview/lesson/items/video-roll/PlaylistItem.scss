@@ -7,7 +7,7 @@ $text-color: #ebebeb;
 
 .lesson-overview-video-roll-playlist-item {
 	position: relative;
-	padding: rem-calc(8px 10px 8px 35px);
+	padding: rem-calc(6px 10px 8px 40px);
 	color: $text-color;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -39,8 +39,8 @@ $text-color: #ebebeb;
 			content: '';
 			overflow: hidden;
 			position: absolute;
-			top: 10px;
-			left: 12px;
+			top: 9px;
+			left: 15px;
 			right: auto;
 			width: 20px;
 			height: 20px;
@@ -51,7 +51,7 @@ $text-color: #ebebeb;
 		font-family: $header-font-family;
 		font-size: rem-calc(18px);
 		font-weight: 400;
-		line-height: normal;
+		line-height: 1.388888889;
 	}
 
 	.meta {

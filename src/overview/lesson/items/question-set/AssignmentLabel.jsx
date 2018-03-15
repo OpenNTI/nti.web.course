@@ -28,7 +28,8 @@ const DEFAULT_TEXT = {
 	excused: {
 		label: 'Excused Grade',
 		tip: 'This assignment will NOT count towards your grade'
-	}
+	},
+	required: 'Required'
 };
 const t = scoped('course.overview.lesson.overview.question-set.AssignmentLabel', DEFAULT_TEXT);
 
@@ -39,7 +40,8 @@ const isToday = (...args) => DateTime.isToday(...args);
 export default class LessonOverviewAssignmentLabel extends React.Component {
 	static propTypes = {
 		assignment: PropTypes.object,
-		assignmentHistory: PropTypes.object
+		assignmentHistory: PropTypes.object,
+		required: PropTypes.bool
 	}
 
 	state = {}
@@ -92,6 +94,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 				{this.renderTimed()}
 				{this.renderCompletion()}
 				{this.renderDue()}
+				{this.renderRequired()}
 				{this.renderExcused()}
 			</List.SeparatedInline>
 		);
@@ -195,6 +198,14 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			</span>
 		);
 	}
+
+
+	renderRequired () {
+		const {required} = this.props;
+
+		return required && (<span className="required">{t('required')}</span>);
+	}
+
 
 	renderExcused () {
 		const {isExcused} = this.state;
