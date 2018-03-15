@@ -21,7 +21,7 @@ class LessonOverviewGroup extends React.Component {
 		const isGrid = layout === Grid;
 
 		return !items ? null : (
-			<div className={cx('lesson-overview-group', {list: !isGrid, grid: isGrid})}>
+			<div className={cx('lesson-overview-group', {[List]: !isGrid, [Grid]: isGrid})}>
 				{isGrid && (<h2 style={{backgroundColor: `#${accentColor}`}}>{title}</h2>)}
 				<Items items={isGrid ? collateDiscussions(items) : items} layout={layout} {...otherProps} />
 			</div>

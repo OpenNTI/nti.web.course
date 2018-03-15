@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import {Grid, List} from '../../Constants';
 import Registry from '../Registry';
+import PaddedContainer from '../../common/PaddedContainer';
 
 import ListCmp from './List';
 import GridCmp from './Grid';
@@ -20,9 +21,9 @@ class LessonOverviewVideo extends React.Component {
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
 		return (
-			<div className="single-video-item">
+			<PaddedContainer className="single-video-item">
 				<Cmp layout={layout} {...otherProps} />
-			</div>
+			</PaddedContainer>
 		);
 	}
 }

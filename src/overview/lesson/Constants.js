@@ -1,2 +1,2 @@
-export const Grid = 'grid';
-export const List = 'list';
+export const Grid = 'grid-layout';
+export const List = 'list-layout';
