@@ -3,6 +3,40 @@
 .nti-lesson-view {
 	padding-bottom: rem-calc(32px);
 
+	&.nti-overview-grid {
+		& > .header {
+			box-shadow: none;
+			height: 28px;
+		}
+	}
+
+	&.nti-overview-list {
+		& > .header {
+			position: relative;
+
+			.dates {
+				position: absolute;
+				top: 80px;
+			}
+
+			.required-filter {
+				margin-top: 10px;
+				font-size: 10px;
+				font-weight: bold;
+				text-transform: uppercase;
+				color: $secondary-grey;
+
+				span {
+					padding-top: 3px;
+				}
+			}
+		}
+
+		.nti-lesson-overview.list-layout {
+			padding-top: 20px;
+		}
+	}
+
 	& > .header {
 		display: flex;
 		padding-top: rem-calc(14px);
@@ -15,6 +49,13 @@
 
 		.layout-toggle {
 			flex: 0 0 auto;
+		}
+
+		.dates {
+			font: normal 600 0.625rem/1.3 $body-font-family;
+			text-transform: uppercase;
+			color: $tertiary-grey;
+			padding-top: 12px;
 		}
 	}
 

@@ -1,19 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Loading, DateTime, Layouts} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Loading} from 'nti-web-commons';
 
 import {Grid, List} from './Constants';
 import Items from './items';
 import PaddedContainer from './common/PaddedContainer';
-
-const {Responsive} = Layouts;
-
-const DEFAULT_TEXT = {
-	dateRangeSeparator: ' - '
-};
-const t = scoped('nti-web-course.overview.lesson.Overview', DEFAULT_TEXT);
 
 export default class LessonOverview extends React.Component {
 	static Grid = Grid
@@ -46,6 +38,7 @@ export default class LessonOverview extends React.Component {
 		);
 	}
 
+
 	renderOverview () {
 		const {overview, course, outlineNode, layout} = this.props;
 		const {Items:items} = overview;
@@ -53,9 +46,6 @@ export default class LessonOverview extends React.Component {
 		return (
 			<React.Fragment>
 				<PaddedContainer className="header">
-					<Responsive.Item query={Responsive.isMobile} render={this.renderSmallDates} />
-					<Responsive.Item query={Responsive.isTablet} render={this.renderLargeDates} />
-					<Responsive.Item query={Responsive.isDesktop} render={this.renderLargeDates} />
 					<h1>{overview.title}</h1>
 				</PaddedContainer>
 				{items && items.length ?
@@ -72,35 +62,6 @@ export default class LessonOverview extends React.Component {
 				}
 
 			</React.Fragment>
-		);
-	}
-
-
-	renderLargeDates = () => {
-		return this.renderDates('dddd, MMMM Do');
-	}
-
-
-	renderSmallDates = () => {
-		return this.renderDates('ddd, MMM Do');
-	}
-
-
-	renderDates (format) {
-		const {course, outlineNode} = this.props;
-		const beginning = outlineNode.getAvailableBeginning();
-		const ending = outlineNode.getAvailableEnding();
-		const courseStart = course.CatalogEntry.getStartDate();
-
-		if (!beginning && !courseStart) { return null; }
-
-		return (
-			<div className="dates">
-				{beginning && (<DateTime date={beginning} format={format} />)}
-				{!beginning && courseStart && (<DateTime date={courseStart} format={format} />)}
-				{ending && (<span className="separator">{t('dateRangeSeparator')}</span>)}
-				{ending && (<DateTime date={ending} format={format} />)}
-			</div>
 		);
 	}
 
