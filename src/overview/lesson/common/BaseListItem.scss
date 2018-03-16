@@ -2,6 +2,10 @@
 
 .lesson-overview-base-list-item-link {
 	text-decoration: none;
+
+	&.disabled {
+		pointer-events: none;
+	}
 }
 
 .lesson-overview-base-list-item {

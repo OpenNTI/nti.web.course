@@ -15,7 +15,7 @@ export default function LessonOverviewDiscussionGridItem ({disabled, item, icon,
 	const img = icon ? {backgroundImage: `url(${icon})`} : null;
 
 	return (
-		<LinkTo.Object object={topic || item} data-ntiid={item.NTIID}>
+		<LinkTo.Object object={topic || item} data-ntiid={item.NTIID} className={cx('lesson-overview-discussion-link', { disabled: disabled })}>
 			<div className={cx('lesson-overview-discussion-grid-item', {unavailable: disabled})}>
 				<div style={img} className={cx('icon', {'default': !icon})} />
 				<div className="wrap">

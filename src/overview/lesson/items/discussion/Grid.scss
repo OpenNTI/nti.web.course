@@ -1,5 +1,11 @@
 @import "~nti-style-common";
 
+.lesson-overview-discussion-link {
+	&.disabled {
+		pointer-events: none;
+	}
+}
+
 .lesson-overview-discussion-grid-item {
 	$width: 230px;
 

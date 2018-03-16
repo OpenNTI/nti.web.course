@@ -109,7 +109,8 @@ class LessonOverviewGroup extends React.Component {
 			});
 		} catch (e) {
 			this.setState({
-				disabled: true
+				disabled: true,
+				title: item.title
 			});
 		}
 	}

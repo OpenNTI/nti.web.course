@@ -62,7 +62,7 @@ export default class LessonOverviewBaseListItem extends React.Component {
 		return (
 			<LinkTo.Object
 				data-ntiid={item.NTIID}
-				className="lesson-overview-base-list-item-link"
+				className={cx('lesson-overview-base-list-item-link', { disabled: disabled })}
 				object={linkToObject || item}
 				context={linkToContext}
 				onClick={onClick}
