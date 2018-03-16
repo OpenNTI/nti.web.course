@@ -39,7 +39,6 @@ function getStoragePreference (key) {
 }
 
 function setStoragePreference (key, value) {
-	debugger;
 	// encode the value as a JSON key-value pair, where the key is
 	// the acting user and the value is their selected preference
 	const rawValue = JSON.stringify({
@@ -92,7 +91,6 @@ export default class LessonView extends React.Component {
 			try {
 				const overview = await outlineNode.getContent({requiredOnly});
 
-				debugger;
 				this.setState({
 					loading: false,
 					overview
