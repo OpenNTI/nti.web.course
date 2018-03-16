@@ -34,12 +34,13 @@ LessonOverviewRelatedWorkGridItem.propTypes = {
 	item: PropTypes.object.isRequired,
 	course: PropTypes.object,
 	commentLabel: PropTypes.node,
-	requiredLabel: PropTypes.node
+	requiredLabel: PropTypes.node,
+	onClick: PropTypes.func,
 };
-export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel, requiredLabel}) {
+export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel, requiredLabel, onClick}) {
 	return (
 		<PaddedContainer>
-			<LinkTo.Object object={item}>
+			<LinkTo.Object object={item} onClick={onClick}>
 				<Card
 					data-ntiid={item.NTIID}
 					item={item}

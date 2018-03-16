@@ -14,17 +14,19 @@ export default class LessonOverviewRelatedWorkListItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		commentLabel: PropTypes.node,
-		requiredLabel: PropTypes.node
+		requiredLabel: PropTypes.node,
+		onClick: PropTypes.func,
 	}
 
 
 	render () {
-		const {item, commentLabel, requiredLabel} = this.props;
+		const {item, commentLabel, requiredLabel, onClick} = this.props;
 		const {byline} = item;
 
 
 		return (
 			<Base
+				onClick={onClick}
 				className="lesson-overview-related-work-list-item"
 				item={item}
 				labels={[

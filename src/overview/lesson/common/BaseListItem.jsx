@@ -26,7 +26,8 @@ export default class LessonOverviewBaseListItem extends React.Component {
 		renderIcon: PropTypes.func,
 
 		linkToObject: PropTypes.object,
-		linkToContext: PropTypes.any
+		linkToContext: PropTypes.any,
+		onClick: PropTypes.func,
 	}
 
 	state = {}
@@ -56,7 +57,7 @@ export default class LessonOverviewBaseListItem extends React.Component {
 
 
 	render () {
-		const {className, disabled, item, linkToObject, linkToContext} = this.props;
+		const {className, disabled, item, linkToObject, linkToContext, onClick} = this.props;
 
 		return (
 			<LinkTo.Object
@@ -64,6 +65,7 @@ export default class LessonOverviewBaseListItem extends React.Component {
 				className="lesson-overview-base-list-item-link"
 				object={linkToObject || item}
 				context={linkToContext}
+				onClick={onClick}
 			>
 				<PaddedContainer className={cx('lesson-overview-base-list-item', className, {disabled})}>
 					<div className="icon-container">
