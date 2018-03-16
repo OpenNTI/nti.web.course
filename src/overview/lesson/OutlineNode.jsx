@@ -96,7 +96,7 @@ export default class LessonView extends React.Component {
 	}
 
 	onFilterChange = (e) => {
-		console.log(e.target.value);
+		// console.log(e.target.value);
 	}
 
 
