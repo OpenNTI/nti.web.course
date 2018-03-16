@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Storage from 'nti-web-storage';
 import {getAppUsername} from 'nti-web-client';
-import {DateTime, Layouts, Checkbox} from 'nti-web-commons';
+import {DateTime, Layouts, Checkbox, Loading, Error} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
 import {Grid, List} from './Constants';
@@ -13,13 +13,41 @@ import PaddedContainer from './common/PaddedContainer';
 const {Responsive} = Layouts;
 
 const RADIO_GROUP = 'nti-lesson-view-layout';
-const STORAGE_KEY = 'nti-lesson-view-layout-value';
+const STORAGE_KEY = 'nti-lesson-view';
+const LAYOUT_STORAGE_KEY = 'layout-value';
+const REQUIRED_STORAGE_KEY = 'required-only-value';
 
 const DEFAULT_TEXT = {
 	dateRangeSeparator: ' - ',
 	requiredFilter: 'Only required'
 };
 const t = scoped('nti-web-course.overview.lesson.OutlineNode', DEFAULT_TEXT);
+
+function getStoragePreferenceJSON () {
+	try {
+		const rawValue = atob(Storage.getItem(STORAGE_KEY));
+
+		return JSON.parse(rawValue)[getAppUsername()] || {};
+	} catch (e) {
+		return {};
+	}
+}
+
+
+function getStoragePreference (key) {
+	return getStoragePreferenceJSON()[key];
+}
+
+function setStoragePreference (key, value) {
+	debugger;
+	// encode the value as a JSON key-value pair, where the key is
+	// the acting user and the value is their selected preference
+	const rawValue = JSON.stringify({
+		[getAppUsername()]: {...getStoragePreferenceJSON(), [key]: value}
+	});
+
+	Storage.setItem(STORAGE_KEY, btoa(rawValue));
+}
 
 export default class LessonView extends React.Component {
 	static propTypes = {
@@ -29,43 +57,119 @@ export default class LessonView extends React.Component {
 	}
 
 	state = {
-		layout: this.getStoragePreference()
+		layout: getStoragePreference(LAYOUT_STORAGE_KEY) || Grid,
+		requiredOnly: getStoragePreference(REQUIRED_STORAGE_KEY)
 	}
 
 
-	getStoragePreference () {
-		try {
-			// get encoded value from storage, decode, parse and get the value
-			// for the acting user.  If no entry, or the entry is not this user,
-			// return Grid as default
-			const rawValue = atob(Storage.getItem(STORAGE_KEY));
-			const jsonValue = JSON.parse(rawValue);
-			return jsonValue[getAppUsername()] || Grid;
-		} catch (e) {
-			return Grid;
+	componentDidUpdate (prevProps, prevState) {
+		const {course:oldCourse, outlineNode:oldNode} = prevProps;
+		const {requiredOnly: oldRequired} = prevState;
+		const {course:newCourse, outlineNode:newNode} = this.props;
+		const {requiredOnly: newRequired} = this.state;
+
+		if (oldCourse !== newCourse || oldNode !== newNode || oldRequired !== newRequired) {
+			this.setupFor(this.props);
 		}
 	}
 
-	setStoragePreference (value) {
-		// encode the value as a JSON key-value pair, where the key is
-		// the acting user and the value is their selected preference
-		const rawValue = JSON.stringify({
-			[getAppUsername()]: value
-		});
 
-		Storage.setItem(STORAGE_KEY, btoa(rawValue));
+	componentDidMount () {
+		this.setupFor(this.props);
 	}
+
+
+	setupFor (props = this.props) {
+		this.setState({
+			loading: true,
+			error: null
+		}, async () => {
+			const {requiredOnly} = this.state;
+			const {outlineNode} = this.props;
+
+			if (!outlineNode) { return; }
+
+			try {
+				const overview = await outlineNode.getContent({requiredOnly});
+
+				debugger;
+				this.setState({
+					loading: false,
+					overview
+				});
+			} catch (e) {
+				this.setState({
+					error: e
+				});
+			}
+		});
+	}
+
 
 	selectGrid = () => {
 		this.setState({layout: Grid});
-		this.setStoragePreference(Grid);
+		setStoragePreference(LAYOUT_STORAGE_KEY, Grid);
 	}
 
 
 	selectList = () => {
 		this.setState({layout: List});
-		this.setStoragePreference(List);
+		setStoragePreference(LAYOUT_STORAGE_KEY, List);
 	}
+
+
+	onFilterChange = (e) => {
+		const requiredOnly = e.target.checked;
+
+		this.setState({requiredOnly});
+		setStoragePreference(REQUIRED_STORAGE_KEY, requiredOnly);
+	}
+
+
+	render () {
+		const {className, ...otherProps} = this.props;
+		const {layout, loading, error, overview} = this.state;
+		const listTypeCls = layout === List ? 'nti-overview-list' : 'nti-overview-grid';
+
+		return (
+			<div className={cx('nti-lesson-view', listTypeCls, className)}>
+				{loading && (<Loading.Mask />)}
+				{!loading && error && (<Error error={error} />)}
+				{!loading && !error && (
+					<React.Fragment>
+						<PaddedContainer className="header">
+							{layout === List && this.renderFilterRequired()}
+							<Responsive.Item query={Responsive.isMobile} render={this.renderSmallDates} />
+							<Responsive.Item query={Responsive.isTablet} render={this.renderLargeDates} />
+							<Responsive.Item query={Responsive.isDesktop} render={this.renderLargeDates} />
+							<div className="spacer" />
+							<div className="layout-toggle">
+								<label className="grid">
+									<input type="radio" group={RADIO_GROUP} name="grid" checked={layout === Grid} onChange={this.selectGrid} />
+									<div className="toggle">
+										<i className="icon-grid" />
+									</div>
+								</label>
+								<label className="list">
+									<input type="radio" group={RADIO_GROUP} name="list" checked={layout === List} onChange={this.selectList} />
+									<div className="toggle">
+										<i className="icon-list" />
+									</div>
+								</label>
+							</div>
+						</PaddedContainer>
+						<Overview {...otherProps} overview={overview} layout={layout} />
+					</React.Fragment>
+				)}
+			</div>
+		);
+	}
+
+
+	renderFilterRequired () {
+		return <div className="required-filter"><Checkbox label={t('requiredFilter')} onChange={this.onFilterChange} checked={this.state.requiredOnly} /></div>;
+	}
+
 
 	renderLargeDates = () => {
 		return this.renderDates('dddd, MMMM Do');
@@ -91,49 +195,6 @@ export default class LessonView extends React.Component {
 				{!beginning && courseStart && (<DateTime date={courseStart} format={format} />)}
 				{ending && (<span className="separator">{t('dateRangeSeparator')}</span>)}
 				{ending && (<DateTime date={ending} format={format} />)}
-			</div>
-		);
-	}
-
-	onFilterChange = (e) => {
-		// console.log(e.target.value);
-	}
-
-
-	renderFilterRequired () {
-		return <div className="required-filter"><Checkbox label={t('requiredFilter')} onChange={this.onFilterChange}/></div>;
-	}
-
-
-	render () {
-		const {className, ...otherProps} = this.props;
-		const {layout} = this.state;
-		const listTypeCls = layout === List ? 'nti-overview-list' : 'nti-overview-grid';
-
-		return (
-			<div className={cx('nti-lesson-view', listTypeCls, className)}>
-				<PaddedContainer className="header">
-					{layout === List && this.renderFilterRequired()}
-					<Responsive.Item query={Responsive.isMobile} render={this.renderSmallDates} />
-					<Responsive.Item query={Responsive.isTablet} render={this.renderLargeDates} />
-					<Responsive.Item query={Responsive.isDesktop} render={this.renderLargeDates} />
-					<div className="spacer" />
-					<div className="layout-toggle">
-						<label className="grid">
-							<input type="radio" group={RADIO_GROUP} name="grid" checked={layout === Grid} onChange={this.selectGrid} />
-							<div className="toggle">
-								<i className="icon-grid" />
-							</div>
-						</label>
-						<label className="list">
-							<input type="radio" group={RADIO_GROUP} name="list" checked={layout === List} onChange={this.selectList} />
-							<div className="toggle">
-								<i className="icon-list" />
-							</div>
-						</label>
-					</div>
-				</PaddedContainer>
-				<Overview {...otherProps} layout={layout} />
 			</div>
 		);
 	}

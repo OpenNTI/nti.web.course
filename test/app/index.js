@@ -14,43 +14,35 @@ Layouts.Responsive.setWebappContext();
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
-const queue = new Tasks.Executor();
+// const queue = new Tasks.Executor();
 
-class Unit extends React.Component {
-	static propTypes = {
-		course: PropTypes.object,
-		layout: PropTypes.any,
-		node: PropTypes.object,
-	}
+// class Unit extends React.Component {
+// 	static propTypes = {
+// 		course: PropTypes.object,
+// 		layout: PropTypes.any,
+// 		node: PropTypes.object,
+// 	}
 
-	state = {}
+// 	state = {}
 
-	async componentDidMount () {
-		const {node} = this.props;
-		const overview = await queue.queueTask(() => node.getContent());
 
-		this.setState({
-			overview
-		});
-	}
+// 	render () {
+// 		const {
+// 			props: {
+// 				course,
+// 				layout,
+// 				node
+// 			},
+// 			state: {
+// 				overview
+// 			}
+// 		} = this;
 
-	render () {
-		const {
-			props: {
-				course,
-				layout,
-				node
-			},
-			state: {
-				overview
-			}
-		} = this;
-
-		return !overview ? null : (
-			<Overview.Lesson course={course} outlineNode={node} overview={overview} layout={layout}/>
-		);
-	}
-}
+// 		return !overview ? null : (
+// 			<Overview.Lesson course={course} outlineNode={node}layout={layout}/>
+// 		);
+// 	}
+// }
 
 class Test extends React.Component {
 	static propTypes = {
@@ -65,7 +57,12 @@ class Test extends React.Component {
 		return {
 			router: {
 				baseroute: '/',
-				getRouteFor: () => {}
+				getRouteFor: () => {
+					return {
+						href: '/foo',
+						download: true
+					};
+				}
 			}
 		};
 	}
@@ -89,15 +86,15 @@ class Test extends React.Component {
 
 
 	render () {
-		const {course, nodes, layout} = this.state;
+		const {course, nodes} = this.state;
 		// const limit = localStorage.limit || 1;
 
 		if (!course) { return null; }
 
 		return (
 			<div>
-				{nodes.slice(12, 13).map(node => (
-					<Unit key={node.NTIID} course={course} node={node} layout={layout}/>
+				{nodes.slice(30, 31).map(node => (
+					<Overview.Lesson key={node.NTIID} course={course} outlineNode={node} />
 				))}
 			</div>
 
