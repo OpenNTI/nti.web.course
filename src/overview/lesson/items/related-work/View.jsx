@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Summary} from 'nti-lib-interfaces';
-import {scoped} from 'nti-lib-locale';
-import {LinkTo} from 'nti-web-routing';
+import { getEventTarget } from 'nti-lib-dom';
+import { Summary } from 'nti-lib-interfaces';
+import { scoped } from 'nti-lib-locale';
+import { LinkTo } from 'nti-web-routing';
 
-import {List, Grid} from '../../Constants';
+import { List, Grid } from '../../Constants';
 import Registry from '../Registry';
 
 import ListCmp from './List';
@@ -24,7 +25,32 @@ export default
 class LessonOverviewRelatedWork extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([List, Grid]),
-		item: PropTypes.object
+		item: PropTypes.object,
+		course: PropTypes.object,
+		outlineNode: PropTypes.object
+	}
+
+	static contextTypes = {
+		analyticsManager: PropTypes.object.isRequired
+	}
+
+	maybeSendExternalViewEvent = (e) => {
+		const {context: {analyticsManager}, props: {course, outlineNode, item}} = this;
+		const link = getEventTarget(e, '[href]');
+		const externalLink = getEventTarget(e, 'a[href][target]');
+
+		if (externalLink && link === externalLink) {
+
+			const resourceId = item.NTIID || item.ntiid; //Cards built from DOM have lowercase.
+
+			analyticsManager.ExternalResourceView.send(resourceId, {
+				context: analyticsManager.toAnalyticsPath([
+					course.NTIID,
+					outlineNode.NTIID,
+					outlineNode.ContentNTIID,
+				], resourceId)
+			});
+		}
 	}
 
 	render () {
@@ -41,7 +67,7 @@ class LessonOverviewRelatedWork extends React.Component {
 		if (typeof commentCount !== 'number') {
 			commentCount = t('viewComments');
 		} else {
-			commentCount = t('comments', {count: commentCount});
+			commentCount = t('comments', {count: commentCount });
 		}
 
 		const commentLabel = (
@@ -58,6 +84,7 @@ class LessonOverviewRelatedWork extends React.Component {
 
 		return (
 			<Cmp
+				onClick={this.maybeSendExternalViewEvent}
 				layout={layout}
 				item={item}
 				commentLabel={commentLabel}
