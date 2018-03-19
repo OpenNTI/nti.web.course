@@ -72,14 +72,10 @@ export default class CourseOverviewLessonHeader extends React.Component {
 
 
 	renderList () {
-		const {requiredOnly} = this.props;
-
 		return (
 			<React.Fragment>
 				<PaddedContainer className="bar">
-					<div className="required-filter">
-						<Checkbox label={t('requiredFilter')} onChange={this.onRequiredFilterChange} checked={requiredOnly} />
-					</div>
+					{this.renderFilterCheckbox()}
 					<div className="spacer" />
 					{this.renderLayoutToggle()}
 				</PaddedContainer>
@@ -104,6 +100,20 @@ export default class CourseOverviewLessonHeader extends React.Component {
 					{this.renderTitle()}
 				</PaddedContainer>
 			</React.Fragment>
+		);
+	}
+
+
+	renderFilterCheckbox () {
+		debugger;
+		const {course, requiredOnly} = this.props;
+
+		if (!course.CompletionPolicy) { return null; }
+
+		return (
+			<div className="required-filter">
+				<Checkbox label={t('requiredFilter')} onChange={this.onRequiredFilterChange} checked={requiredOnly} />
+			</div>
 		);
 	}
 
