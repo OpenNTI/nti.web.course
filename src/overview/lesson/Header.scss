@@ -55,10 +55,7 @@
 				line-height: 2rem;
 				text-align: center;
 				border-radius: 0 3px 3px 0;
-				box-shadow: 0 1px 0 0 $border-grey,
-					0 -1px 0 0 $border-grey,
-					1px 0 0 0 $border-grey,
-					-1px 0 0 0 $border-grey;
+				box-shadow: 0 1px 0 0 $border-grey, 0 -1px 0 0 $border-grey, 1px 0 0 0 $border-grey, -1px 0 0 0 $border-grey;
 			}
 
 			input {
@@ -74,20 +71,17 @@
 			&:first-of-type {
 				.toggle {
 					border-radius: 3px 0 0 3px;
-					box-shadow: 0 1px 0 0 $border-grey,
-						0 -1px 0 0 $border-grey,
-						-1px 0 0 0 $border-grey;
+					box-shadow: 0 1px 0 0 $border-grey, 0 -1px 0 0 $border-grey, -1px 0 0 0 $border-grey;
 				}
 			}
 
-
 			input:checked + .toggle {
 				background-color: $quad-grey;
-				box-shadow: 0 1px 0 0 $border-grey,
+				box-shadow:
+					0 1px 0 0 $border-grey,
 					0 -1px 0 0 $border-grey,
 					1px 0 0 0 $border-grey,
-					-1px 0 0 0 $border-grey
-					inset 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+					-1px 0 0 0 $border-grey inset 0 1px 2px 0 rgba(0, 0, 0, 0.25);
 			}
 		}
 	}
@@ -97,9 +91,5 @@
 		font-weight: bold;
 		text-transform: uppercase;
 		color: $secondary-grey;
-
-		span {
-			padding-top: 3px;
-		}
 	}
 }
