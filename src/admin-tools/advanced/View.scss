@@ -1,0 +1,33 @@
+@import '~nti-style-common';
+
+.course-admin-course-overview {
+	@include clearfix;
+
+	.admin-active-days {
+		width: 100%;
+		margin-top: 5px;
+	}
+
+	.admin-row {
+		display: flex;
+
+		.admin-card {
+			width: 250px;
+			height: 320px;
+
+			.value {
+				padding-top: 1rem;
+			}
+		}
+
+		.active-users {
+			margin: 0 0 0 4px;
+			height: 320px;
+
+			.header {
+				margin-top: 0;
+				margin-bottom: 0;
+			}
+		}
+	}
+}
