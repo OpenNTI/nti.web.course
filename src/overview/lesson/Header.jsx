@@ -105,7 +105,6 @@ export default class CourseOverviewLessonHeader extends React.Component {
 
 
 	renderFilterCheckbox () {
-		debugger;
 		const {course, requiredOnly} = this.props;
 
 		if (!course.CompletionPolicy) { return null; }
