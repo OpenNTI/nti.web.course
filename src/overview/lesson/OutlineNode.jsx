@@ -3,25 +3,15 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Storage from 'nti-web-storage';
 import {getAppUsername} from 'nti-web-client';
-import {DateTime, Layouts, Checkbox, Loading, Error} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Loading, Error} from 'nti-web-commons';
 
 import {Grid, List} from './Constants';
-import Overview from './Overview';
-import PaddedContainer from './common/PaddedContainer';
+import Header from './Header';
+import OverviewContents from './OverviewContents';
 
-const {Responsive} = Layouts;
-
-const RADIO_GROUP = 'nti-lesson-view-layout';
 const STORAGE_KEY = 'nti-lesson-view';
 const LAYOUT_STORAGE_KEY = 'layout-value';
 const REQUIRED_STORAGE_KEY = 'required-only-value';
-
-const DEFAULT_TEXT = {
-	dateRangeSeparator: ' - ',
-	requiredFilter: 'Only required'
-};
-const t = scoped('nti-web-course.overview.lesson.OutlineNode', DEFAULT_TEXT);
 
 function getStoragePreferenceJSON () {
 	try {
@@ -83,13 +73,13 @@ export default class LessonView extends React.Component {
 			loading: true,
 			error: null
 		}, async () => {
-			const {requiredOnly} = this.state;
+			const {requiredOnly, layout} = this.state;
 			const {outlineNode} = this.props;
 
 			if (!outlineNode) { return; }
 
 			try {
-				const overview = await outlineNode.getContent({requiredOnly});
+				const overview = await outlineNode.getContent({requiredOnly: requiredOnly && layout === List});
 
 				this.setState({
 					loading: false,
@@ -104,98 +94,48 @@ export default class LessonView extends React.Component {
 	}
 
 
-	selectGrid = () => {
-		this.setState({layout: Grid});
+	setLayout = (layout) => {
+		this.setState({layout});
 		setStoragePreference(LAYOUT_STORAGE_KEY, Grid);
 	}
 
 
-	selectList = () => {
-		this.setState({layout: List});
-		setStoragePreference(LAYOUT_STORAGE_KEY, List);
-	}
-
-
-	onFilterChange = (e) => {
-		const requiredOnly = e.target.checked;
-
+	setRequiredOnly = (requiredOnly) => {
 		this.setState({requiredOnly});
 		setStoragePreference(REQUIRED_STORAGE_KEY, requiredOnly);
 	}
 
 
 	render () {
-		const {className, ...otherProps} = this.props;
-		const {layout, loading, error, overview} = this.state;
+		const {className, outlineNode, course, ...otherProps} = this.props;
+		const {layout, requiredOnly, loading, error, overview} = this.state;
 		const listTypeCls = layout === List ? 'nti-overview-list' : 'nti-overview-grid';
 
 		return (
 			<div className={cx('nti-lesson-view', listTypeCls, className)}>
-				{loading && (<Loading.Mask />)}
-				{!loading && error && (<Error error={error} />)}
-				{!loading && !error && (
-					<React.Fragment>
-						<PaddedContainer className="header">
-							{layout === List && this.renderFilterRequired()}
-							<Responsive.Item query={Responsive.isMobile} render={this.renderSmallDates} />
-							<Responsive.Item query={Responsive.isTablet} render={this.renderLargeDates} />
-							<Responsive.Item query={Responsive.isDesktop} render={this.renderLargeDates} />
-							<div className="spacer" />
-							<div className="layout-toggle">
-								<label className="grid">
-									<input type="radio" group={RADIO_GROUP} name="grid" checked={layout === Grid} onChange={this.selectGrid} />
-									<div className="toggle">
-										<i className="icon-grid" />
-									</div>
-								</label>
-								<label className="list">
-									<input type="radio" group={RADIO_GROUP} name="list" checked={layout === List} onChange={this.selectList} />
-									<div className="toggle">
-										<i className="icon-list" />
-									</div>
-								</label>
-							</div>
-						</PaddedContainer>
-						<Overview {...otherProps} overview={overview} layout={layout} />
-					</React.Fragment>
-				)}
-			</div>
-		);
-	}
-
-
-	renderFilterRequired () {
-		return <div className="required-filter"><Checkbox label={t('requiredFilter')} onChange={this.onFilterChange} checked={this.state.requiredOnly} /></div>;
-	}
-
-
-	renderLargeDates = () => {
-		return this.renderDates('dddd, MMMM Do');
-	}
-
-
-	renderSmallDates = () => {
-		return this.renderDates('ddd, MMM Do');
-	}
-
-
-	renderDates (format) {
-		const {course, outlineNode} = this.props;
-
-		if (!outlineNode) { return null; }
-
-		const beginning = outlineNode.getAvailableBeginning();
-		const ending = outlineNode.getAvailableEnding();
-		const courseStart = course.CatalogEntry.getStartDate();
-
-		if (!beginning && !courseStart) { return null; }
-
-		return (
-			<div className="dates">
-				{beginning && (<DateTime date={beginning} format={format} />)}
-				{!beginning && courseStart && (<DateTime date={courseStart} format={format} />)}
-				{ending && (<span className="separator">{t('dateRangeSeparator')}</span>)}
-				{ending && (<DateTime date={ending} format={format} />)}
+				<Header
+					outlineNode={outlineNode}
+					course={course}
+					overview={overview}
+					layout={layout}
+					requiredOnly={requiredOnly}
+					setLayout={this.setLayout}
+					setRequiredOnly={this.setRequiredOnly}
+				/>
+				<div className="content">
+					{loading && (<Loading.Mask />)}
+					{!loading && error && (<Error error={error} />)}
+					{!loading && !error && (
+						<OverviewContents
+							{...otherProps}
+							outlineNode={outlineNode}
+							course={course}
+							overview={overview}
+							layout={layout}
+							requiredOnly={requiredOnly}
+						/>
+					)}
+				</div>
 			</div>
 		);
 	}

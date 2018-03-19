@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Loading} from 'nti-web-commons';
 
 import {Grid, List} from './Constants';
 import Items from './items';
-import PaddedContainer from './common/PaddedContainer';
 
 export default class LessonOverview extends React.Component {
 	static Grid = Grid
@@ -18,7 +16,8 @@ export default class LessonOverview extends React.Component {
 
 		className: PropTypes.string,
 
-		layout: PropTypes.oneOf([Grid, List])
+		layout: PropTypes.oneOf([Grid, List]),
+		requiredOnly: PropTypes.bool
 	}
 
 	static defaultProps = {
@@ -32,7 +31,6 @@ export default class LessonOverview extends React.Component {
 
 		return (
 			<div className={cx('nti-lesson-overview', className, layout.toLowerCase(), {loading})}>
-				{loading && (<Loading.Mask />)}
 				{!loading && this.renderOverview()}
 			</div>
 		);
@@ -45,9 +43,6 @@ export default class LessonOverview extends React.Component {
 
 		return (
 			<React.Fragment>
-				<PaddedContainer className="header">
-					<h1>{overview.title}</h1>
-				</PaddedContainer>
 				{items && items.length ?
 					(
 						<Items
@@ -60,7 +55,6 @@ export default class LessonOverview extends React.Component {
 					) :
 					this.renderEmpty()
 				}
-
 			</React.Fragment>
 		);
 	}
