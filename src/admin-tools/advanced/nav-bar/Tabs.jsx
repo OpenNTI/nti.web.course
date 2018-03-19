@@ -12,7 +12,7 @@ export default function CourseAdminAdvancedTabs () {
 	return (
 		<ul className="course-admin-advanced-tabs">
 			<li>
-				<LinkTo.Path to="./completion" activeClassName="active">{t('completion')}</LinkTo.Path>
+				<LinkTo.Path to="./" activeClassName="active">{t('completion')}</LinkTo.Path>
 			</li>
 		</ul>
 	);

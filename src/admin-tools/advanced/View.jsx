@@ -4,5 +4,6 @@ import Completion from './completion';
 import Frame from './Frame';
 
 export default Router.for([
+	Route({path: '/', component: Completion, name: 'course-admin.default'}),
 	Route({path: '/completion', component: Completion, name: 'course-admin.completion'})
 ], {frame: Frame});
