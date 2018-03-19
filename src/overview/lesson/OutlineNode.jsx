@@ -181,6 +181,9 @@ export default class LessonView extends React.Component {
 
 	renderDates (format) {
 		const {course, outlineNode} = this.props;
+
+		if (!outlienNode) { return null; }
+
 		const beginning = outlineNode.getAvailableBeginning();
 		const ending = outlineNode.getAvailableEnding();
 		const courseStart = course.CatalogEntry.getStartDate();
