@@ -9,8 +9,7 @@ const t = scoped('course.admin-tools.advanced.completion.View', {
 	cancel: 'Cancel',
 	save: 'Save',
 	completable: 'Completable',
-	count: 'Number of Completable Items',
-	percentage: 'Percentage'
+	percentage: 'Percentage (1 to 100)'
 });
 
 export default class CourseAdminCompletion extends React.Component {
@@ -19,7 +18,6 @@ export default class CourseAdminCompletion extends React.Component {
 	}
 
 	state = {
-		count: 0,
 		percentage: 0.0
 	}
 
@@ -47,25 +45,6 @@ export default class CourseAdminCompletion extends React.Component {
 		);
 	}
 
-
-	onCountChange = (count) => {
-		this.setState({count});
-	}
-
-
-	renderCount () {
-		const disabled = !this.state.completable;
-		const className = cx('completion-control', {disabled});
-
-		return (
-			<div className={className}>
-				<div className="label">{t('count')}</div>
-				<div className="control"><Input.Text disabled={disabled} value={this.state.count} onChange={this.onCountChange}/></div>
-			</div>
-		);
-	}
-
-
 	onPercentageChange = (percentage) => {
 		this.setState({percentage});
 	}
@@ -78,22 +57,21 @@ export default class CourseAdminCompletion extends React.Component {
 		return (
 			<div className={className}>
 				<div className="label">{t('percentage')}</div>
-				<div className="control"><Input.Text disabled={disabled} value={this.state.percentage} onChange={this.onPercentageChange}/></div>
+				<div className="control"><Input.Number min={1} max={100} className="nti-text-input" constrain disabled={disabled} value={this.state.percentage} onChange={this.onPercentageChange}/></div>
 			</div>
 		);
 	}
 
 
 	onSave = () => {
-		const {completable, count, percentage} = this.state;
+		const {completable, percentage} = this.state;
 		const {course} = this.props;
 
 		if(completable) {
 			getService().then(service => {
 				service.put(course.getLink('CompletionPolicy'), {
 					MimeType: 'application/vnd.nextthought.completion.aggregatecompletionpolicy',
-					count,
-					percentage
+					percentage: percentage ? percentage / 100.0 : 0
 				});
 			});
 		}
@@ -128,7 +106,6 @@ export default class CourseAdminCompletion extends React.Component {
 			<div className="course-admin-completion">
 				<div className="inputs">
 					{this.renderCompletableToggle()}
-					{this.renderCount()}
 					{this.renderPercentage()}
 				</div>
 				{this.renderBottomControls()}
