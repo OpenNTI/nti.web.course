@@ -137,6 +137,8 @@ export default class CourseAssetEditor extends React.Component {
 
 		this.setState({
 			active: 'uploading',
+			uploadProgress: null,
+			uploadError: null,
 			error: null
 		}, async () => {
 			try {
@@ -157,6 +159,13 @@ export default class CourseAssetEditor extends React.Component {
 	onPickerBack = () => {
 		this.setState({
 			active: 'crop'
+		});
+	}
+
+
+	onUploadingBack = () => {
+		this.setState({
+			active: 'picker'
 		});
 	}
 

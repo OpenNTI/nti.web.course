@@ -12,7 +12,8 @@ const MIN_TIME = 5000;
 const t = scoped('course.info.inline.assets.course-asset-editor.Uploading', {
 	uploading: 'Uploading the course assets. This may take a few moments.',
 	uploaded: 'Course assets uploaded',
-	done: 'Done'
+	done: 'Done',
+	unknownError: 'Unable to upload course assets.'
 });
 
 function getPercentage (progress, uploaded) {
@@ -28,7 +29,9 @@ function getPercentage (progress, uploaded) {
 export default class CourseAssetUploading extends React.Component {
 	static propTypes = {
 		onSave: PropTypes.func,
+		onBack: PropTypes.func,
 		uploadProgress: PropTypes.object,
+		uploadError: PropTypes.object,
 		uploaded: PropTypes.any
 	}
 
@@ -36,10 +39,10 @@ export default class CourseAssetUploading extends React.Component {
 
 
 	componentWillReceiveProps (nextProps) {
-		const {uploadProgress:newProgress, uploaded: newUploaded} = nextProps;
-		const {uploadProgress:oldProgress, uploaded: oldUploaded} = this.props;
+		const {uploadProgress:newProgress, uploaded: newUploaded, uploadError: newError} = nextProps;
+		const {uploadProgress:oldProgress, uploaded: oldUploaded, uploadError: oldError} = this.props;
 
-		if (newProgress !== oldProgress || newUploaded !== oldUploaded) {
+		if (newProgress !== oldProgress || newUploaded !== oldUploaded || newError !== oldError) {
 			this.setupFor(nextProps);
 		}
 	}
@@ -50,9 +53,14 @@ export default class CourseAssetUploading extends React.Component {
 
 
 	setupFor (props = this.props) {
-		const {uploadProgress, uploaded} = props;
+		const {uploadProgress, uploaded, uploadError} = props;
 
 		this.started = this.started || new Date();
+
+		if (uploadError) {
+			this.setState({uploadError});
+			return;
+		}
 
 		if (!uploaded) {
 			this.setState({uploadProgress});
@@ -83,6 +91,15 @@ export default class CourseAssetUploading extends React.Component {
 	}
 
 
+	onBack = () => {
+		const {onBack} = this.props;
+
+		if (onBack) {
+			onBack();
+		}
+	}
+
+
 	onContinue = () => {
 		const {onSave} = this.props;
 
@@ -93,21 +110,39 @@ export default class CourseAssetUploading extends React.Component {
 
 
 	render () {
-		const {uploaded, uploadProgress} = this.state;
+		const {uploaded, uploadProgress, uploadError} = this.state;
+		const disableCancel = uploadError ? false : !uploaded;
 
 		return (
 			<div className="course-asset-editor-uploading">
-				<Header onCancel={this.onContinue} cancelDisabled={!uploaded} />
+				<Header
+					onBack={uploadError && this.onBack}
+					onCancel={this.onContinue}
+					cancelDisabled={disableCancel}
+				/>
 				<div className="progress-container">
-					{this.renderProgress(uploadProgress, uploaded)}
+					{this.renderProgress(uploadProgress, uploaded, uploadError)}
 				</div>
-				<Footer onContinue={this.onContinue} continueLabel={t('done')} continueDisabled={!uploaded} noCancel />
+				<Footer
+					onContinue={this.onContinue}
+					continueLabel={t('done')}
+					continueDisabled={disableCancel}
+					noCancel
+				/>
 			</div>
 		);
 	}
 
 
-	renderProgress (progress, uploaded) {
+	renderProgress (progress, uploaded, uploadError) {
+		if (uploadError) {
+			return (
+				<div className="upload-error">
+					<span>{uploadError.responseText || t('unknownError')}</span>
+				</div>
+			);
+		}
+
 		const percentage = getPercentage(progress, uploaded);
 
 		return (
