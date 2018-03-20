@@ -13,7 +13,7 @@ LessonOverviewItems.propTypes = {
 	itemRef: PropTypes.func
 };
 export default function LessonOverviewItems ({className, containerProps = {}, items, itemRef, ...otherProps}) {
-	const filtered = items.filter(item => !!item || !registry.getItemFor(item.MimeType));
+	const filtered = items.filter(x => x).filter(item => !!item || !registry.getItemFor(item.MimeType));
 
 	return (
 		<ul {...containerProps} className={cx('lesson-overview-items', className)}>
