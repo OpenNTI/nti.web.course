@@ -92,4 +92,4 @@ class LessonOverviewRelatedWork extends React.Component {
 				{...otherProps} />
 		);
 	}
-};
+}
