@@ -21,7 +21,18 @@ export default class PickCourse extends React.Component {
 
 
 		const service = await getService();
-		this.library = await Library.get(service, 'Main');
+		this.library = Library.get(service, 'Main');
+		this.library.addListener('change', this.handleLibraryUpdate);
+		this.unsubscribe = () => this.library.removeListener('change', this.handleLibraryUpdate);
+	}
+
+	componentWillUnmount () {
+		if (this.unsubscribe) {
+			this.unsubscribe();
+		}
+	}
+
+	handleLibraryUpdate = () => {
 		this.setState({loading: false});
 	}
 
