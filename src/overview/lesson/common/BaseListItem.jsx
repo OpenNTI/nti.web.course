@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {List, AssetIcon, Card} from 'nti-web-commons';
+import {List, AssetIcon, Card, Table} from 'nti-web-commons';
 import {isNTIID} from 'nti-lib-ntiids';
 import {LinkTo} from 'nti-web-routing';
 import {CircularProgress} from 'nti-web-charts';
@@ -12,7 +12,9 @@ import TextPart from './TextPart';
 const isExternal = (item) => /external/i.test(item.type) || !isNTIID(item.href);
 
 
-export default class LessonOverviewBaseListItem extends React.Component {
+class LessonOverviewBaseListItemInfo extends React.Component {
+	static cssClassName = 'lesson-overview-base-list-item-table-info-cell'
+
 	static propTypes = {
 		className: PropTypes.string,
 		item: PropTypes.object,
@@ -28,7 +30,7 @@ export default class LessonOverviewBaseListItem extends React.Component {
 
 		linkToObject: PropTypes.object,
 		linkToContext: PropTypes.any,
-		onClick: PropTypes.func,
+		onClick: PropTypes.func
 	}
 
 	state = {}
@@ -141,4 +143,23 @@ export default class LessonOverviewBaseListItem extends React.Component {
 			</List.SeparatedInline>
 		);
 	}
+}
+
+LessonOverviewBaseListItem.propTypes = {
+	item: PropTypes.object,
+	extraColumns: PropTypes.array
+};
+export default function LessonOverviewBaseListItem ({item, extraColumns = [], ...otherProps}) {
+	const columns = [LessonOverviewBaseListItemInfo, ...extraColumns];
+	const extraProps = {item, ...otherProps};
+
+	return (
+		<Table.TableRow
+			item={item}
+			columns={columns}
+			extraProps={extraProps}
+			component="div"
+			className="lesson-overview-base-list-item-table-row"
+		/>
+	);
 }

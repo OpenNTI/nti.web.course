@@ -12,10 +12,11 @@ export default class LessonOverviewSurveyListItem extends React.Component {
 	}
 
 	render () {
-		const {item} = this.props;
+		const {item, ...otherProps} = this.props;
 
 		return (
 			<Base
+				{...otherProps}
 				className="lesson-overview-survey-list-item"
 				item={item}
 				renderLabels={this.renderLabels}

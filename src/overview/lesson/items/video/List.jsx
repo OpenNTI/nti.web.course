@@ -39,7 +39,7 @@ export default class LessonOverviewVideoListItem extends React.Component {
 	}
 
 	render () {
-		const {item} = this.props;
+		const {item, ...otherProps} = this.props;
 		const {duration} = this.state;
 		const formattedDuration = duration != null ? DateTime.formatDuration(duration) : '';
 		const required = item['CompletionRequired'];
@@ -52,6 +52,7 @@ export default class LessonOverviewVideoListItem extends React.Component {
 
 		return (
 			<Base
+				{...otherProps}
 				className="lesson-overview-video-list-item"
 				item={item}
 				renderIcon={this.renderIcon}

@@ -21,10 +21,11 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 	}
 
 	render () {
-		const {item, assignment, assessment} = this.props;
+		const {item, assignment, assessment, ...otherProps} = this.props;
 
 		return (
 			<Base
+				{...otherProps}
 				className="lesson-overview-question-set-list-item"
 				item={item}
 

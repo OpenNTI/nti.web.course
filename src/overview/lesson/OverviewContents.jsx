@@ -38,7 +38,7 @@ export default class LessonOverview extends React.Component {
 
 
 	renderOverview () {
-		const {overview, course, outlineNode, layout} = this.props;
+		const {overview, course, outlineNode, layout, ...otherProps} = this.props;
 		const {Items:items} = overview;
 
 		return (
@@ -51,6 +51,8 @@ export default class LessonOverview extends React.Component {
 							course={course}
 							outlineNode={outlineNode}
 							layout={layout}
+							{...otherProps}
+
 						/>
 					) :
 					this.renderEmpty()

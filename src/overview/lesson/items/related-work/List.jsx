@@ -20,12 +20,13 @@ export default class LessonOverviewRelatedWorkListItem extends React.Component {
 
 
 	render () {
-		const {item, commentLabel, requiredLabel, onClick} = this.props;
+		const {item, commentLabel, requiredLabel, onClick, ...otherProps} = this.props;
 		const {byline} = item;
 
 
 		return (
 			<Base
+				{...otherProps}
 				onClick={onClick}
 				className="lesson-overview-related-work-list-item"
 				item={item}
