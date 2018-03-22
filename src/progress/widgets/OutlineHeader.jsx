@@ -28,7 +28,7 @@ export default class OutlineHeader extends React.Component {
 		const itemsComplete = (courseProgress && courseProgress.AbsoluteProgress) || 0;
 		const itemsTotal = (courseProgress && courseProgress.MaxPossibleProgress) || 0;
 
-		const completedDate = courseProgress.CompletedDate;
+		const completedDate = courseProgress && courseProgress.CompletedDate;
 		const isCompleted = courseProgress && courseProgress.CompletedDate;
 		const pctComplete = (courseProgress && courseProgress.PercentageProgress * 100) || 0;
 		const remainingItems = itemsTotal - itemsComplete;
@@ -42,6 +42,7 @@ export default class OutlineHeader extends React.Component {
 		}
 
 		this.setState({
+			courseProgress,
 			isCompleted,
 			pctComplete,
 			completedDate,
@@ -59,6 +60,10 @@ export default class OutlineHeader extends React.Component {
 	}
 
 	render () {
+		if(!this.state.courseProgress) {
+			return null;
+		}
+
 		return (
 			<div className="outline-progress-header">
 				<CircularProgress width="38" height="38" value={this.state.pctComplete} showPctSymbol={false} deficitFillColor="#b8b8b8"/>
