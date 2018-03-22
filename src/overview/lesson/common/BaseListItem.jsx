@@ -4,6 +4,7 @@ import cx from 'classnames';
 import {List, AssetIcon, Card} from 'nti-web-commons';
 import {isNTIID} from 'nti-lib-ntiids';
 import {LinkTo} from 'nti-web-routing';
+import {CircularProgress} from 'nti-web-charts';
 
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';
@@ -71,6 +72,7 @@ export default class LessonOverviewBaseListItem extends React.Component {
 					<div className="icon-container">
 						<div className="icon">
 							{this.renderIcon()}
+							{this.renderCompletedStatus()}
 						</div>
 					</div>
 					<div className="right">
@@ -103,6 +105,17 @@ export default class LessonOverviewBaseListItem extends React.Component {
 				{isExternal(item) && (<div className="external" />)}
 			</AssetIcon>
 		);
+	}
+
+
+	renderCompletedStatus () {
+		if(this.props.item.CompletedDate) {
+			return (
+				<div className="progress-icon">
+					<CircularProgress width="20" height="20" isComplete/>
+				</div>
+			);
+		}
 	}
 
 
