@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Progress} from 'nti-lib-interfaces';
 import {Component as Video} from 'nti-web-video';
 import {Error as ErrorWidget, Loading} from 'nti-web-commons';
 import {LinkTo} from 'nti-web-routing';
@@ -157,8 +156,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		}
 
 
-		const progress = item[Progress];
-		const viewed = (progress && progress.hasProgress());
+		const viewed = item.hasCompleted && item.hasCompleted();
 
 		const link = '#';//path.join('videos', encodeForURI(this.getID())) + '/';
 

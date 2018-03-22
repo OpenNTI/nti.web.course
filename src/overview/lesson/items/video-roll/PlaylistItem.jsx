@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Progress} from 'nti-lib-interfaces';
 import {DateTime, List} from 'nti-web-commons';
 
 import GridCompleteIcon from '../../common/GridCompleteIcon';
@@ -66,9 +65,8 @@ export default class PlaylistItem extends React.Component {
 			state: {duration}
 		} = this;
 
-		const progress = item[Progress];
 		const required = item['CompletionRequired'];
-		const viewed = (progress && progress.hasProgress());
+		const viewed = item.hasCompleted && item.hasCompleted();
 		const formattedDuration = duration != null ? DateTime.formatDuration(duration) : '';
 
 		return (
