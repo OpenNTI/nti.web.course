@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // import {DateTime} from 'nti-web-commons';
 
 import Overview from '../../../overview/lesson/OverviewContents';
+import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 
 import Loading from './Loading';
 
@@ -51,11 +52,11 @@ export default class ProgressOverviewContentsPage extends React.Component {
 				{loading && (<Loading pageHeight={pageHeight} />)}
 				{overview && overview.Items && overview.Items.length && (
 					<React.Fragment>
-						<div className="header">
+						<PaddedContainer className="header">
 							<div className="title">
 								{overview.title}
 							</div>
-						</div>
+						</PaddedContainer>
 						<Overview
 							overview={overview}
 							outlineNode={outlineNode}

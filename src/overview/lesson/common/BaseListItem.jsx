@@ -70,7 +70,7 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 				context={linkToContext}
 				onClick={onClick}
 			>
-				<PaddedContainer className={cx('lesson-overview-base-list-item', className, {disabled})}>
+				<div className={cx('lesson-overview-base-list-item', className, {disabled})}>
 					<div className="icon-container">
 						<div className="icon">
 							{this.renderIcon()}
@@ -85,7 +85,7 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 							{this.renderLabels()}
 						</TextPart>
 					</div>
-				</PaddedContainer>
+				</div>
 			</LinkTo.Object>
 		);
 	}
@@ -154,12 +154,14 @@ export default function LessonOverviewBaseListItem ({item, extraColumns = [], ..
 	const extraProps = {item, ...otherProps};
 
 	return (
-		<Table.TableRow
-			item={item}
-			columns={columns}
-			extraProps={extraProps}
-			component="div"
-			className="lesson-overview-base-list-item-table-row"
-		/>
+		<PaddedContainer className="lesson-overview-base-list-item-container">
+			<Table.TableRow
+				item={item}
+				columns={columns}
+				extraProps={extraProps}
+				component="div"
+				className="lesson-overview-base-list-item-table-row"
+			/>
+		</PaddedContainer>
 	);
 }

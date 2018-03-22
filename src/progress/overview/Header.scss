@@ -1,0 +1,21 @@
+@import '~nti-style-common';
+
+.progress-overview-header {
+	display: flex;
+	box-shadow: 0 1px 0 0 $border-grey;
+	padding: rem-calc(8px);
+
+	.spacer {
+		flex: 1 1 auto;
+	}
+
+	.close {
+		width: rem-calc(34px);
+		height: rem-calc(34px);
+		line-height: rem-calc(36px);//to make it look more centered
+		text-align: center;
+		font-size: 1.75rem;
+		color: $secondary-grey;
+	}
+}
+

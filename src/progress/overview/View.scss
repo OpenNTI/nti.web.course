@@ -1,0 +1,18 @@
+@import '~nti-style-common';
+
+.course-progress-overview-prompt {
+	& > .icon-close { display: none; }
+}
+
+.progress-overview-container {
+	width: 100vw;
+	height: 100vh;
+	overflow: auto;
+
+	.progress-overview {
+		background: white;
+		width: rem-calc(764px);
+		max-width: 100vh;
+		margin: rem-calc(50px auto);
+	}
+}
