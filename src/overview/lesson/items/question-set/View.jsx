@@ -20,7 +20,8 @@ const HANDLES = [
 	'application/vnd.nextthought.nanosubmitassignment',
 	'application/vnd.nextthought.naassignment',
 	'application/vnd.nextthought.assignment',
-	'application/vnd.nextthought.assignmentref'
+	'application/vnd.nextthought.assignmentref',
+	'application/vnd.nextthought.assessment.assignment'
 ];
 
 export default
