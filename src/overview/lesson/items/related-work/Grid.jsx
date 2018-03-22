@@ -4,6 +4,7 @@ import {Card} from 'nti-web-commons';
 import {LinkTo} from 'nti-web-routing';
 
 import PaddedContainer from '../../common/PaddedContainer';
+import GridCompleteIcon from '../../common/GridCompleteIcon';
 
 /*
 Internal Links:
@@ -41,12 +42,15 @@ export default function LessonOverviewRelatedWorkGridItem ({item, course, commen
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item} onClick={onClick}>
-				<Card
-					data-ntiid={item.NTIID}
-					item={item}
-					contentPackage={course}
-					labels={[commentLabel, requiredLabel]}
-				/>
+				<div className="completable card">
+					<Card
+						data-ntiid={item.NTIID}
+						item={item}
+						contentPackage={course}
+						labels={[commentLabel, requiredLabel]}
+					/>
+					{item.CompletedDate && <GridCompleteIcon/>}
+				</div>
 			</LinkTo.Object>
 		</PaddedContainer>
 	);

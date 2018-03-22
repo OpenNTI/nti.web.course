@@ -4,6 +4,7 @@ import {Button} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
 import Base from '../../common/BaseAssessmentGridItem';
+import GridCompleteIcon from '../../common/GridCompleteIcon';
 
 import AssessmentLabel from './AssessmentLabel';
 import AssessmentIcon from './AssessmentIcon';
@@ -63,12 +64,28 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
 
 		if (assignment) {
+			if(assignment.CompletedDate) {
+				return (
+					<div className="completable">
+						<GridCompleteIcon/>
+					</div>
+				);
+			}
+
 			return (
 				<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory} large />
 			);
 		}
 
 		if (assessment) {
+			if(assessment.CompletedDate) {
+				return (
+					<div className="completable">
+						<GridCompleteIcon/>
+					</div>
+				);
+			}
+
 			return (
 				<AssessmentIcon assessment={assessment} assessmentSubmission={assessmentSubmission} />
 			);

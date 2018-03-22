@@ -4,6 +4,7 @@ import cx from 'classnames';
 import {Progress} from 'nti-lib-interfaces';
 import {DateTime, List} from 'nti-web-commons';
 
+import GridCompleteIcon from '../../common/GridCompleteIcon';
 import {block} from '../../../../utils';
 
 export default class PlaylistItem extends React.Component {
@@ -46,6 +47,18 @@ export default class PlaylistItem extends React.Component {
 		}
 	}
 
+	renderCompleteIcon () {
+		if(!this.props.item.CompletedDate) {
+			return null;
+		}
+
+		return (
+			<div className="completable">
+				<GridCompleteIcon/>
+			</div>
+		);
+	}
+
 
 	render () {
 		const {
@@ -61,14 +74,19 @@ export default class PlaylistItem extends React.Component {
 		return (
 			<li className={cx('lesson-overview-video-roll-playlist-item', {selected, required, viewed})}  onClick={this.onClick} data-ntiid={item.NTIID}>
 				<a href={item.getID()} onClick={this.onClick}>
-					<span className="label">{item.title || item.label}</span>
-					<span className="meta">
-						<List.SeparatedInline>
-							{formattedDuration}
-							{required && ('Required')}
-							{viewed && ('Viewed')}
-						</List.SeparatedInline>
-					</span>
+					<div className="label-container">
+						{this.renderCompleteIcon()}
+						<div className="video-info">
+							<span className="label">{item.title || item.label}</span>
+							<span className="meta">
+								<List.SeparatedInline>
+									{formattedDuration}
+									{required && ('Required')}
+									{viewed && ('Viewed')}
+								</List.SeparatedInline>
+							</span>
+						</div>
+					</div>
 				</a>
 			</li>
 		);
