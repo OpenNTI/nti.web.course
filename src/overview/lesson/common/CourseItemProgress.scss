@@ -1,0 +1,25 @@
+@import '~nti-style-common';
+
+.course-item-progress {
+	display: flex;
+
+	&.no-progress {
+		.value {
+			color: $tertiary-grey;
+		}
+	}
+
+	.value {
+		color: $primary-green;
+		font-size: 14px;
+		font-weight: 100;
+		margin-left: 10px;
+		padding-top: 5px;
+		width: 2.5rem;
+	}
+
+	.check {
+		width: 28px !important;
+		top: 4px !important;
+	}
+}

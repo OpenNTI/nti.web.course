@@ -5,6 +5,7 @@ import Storage from 'nti-web-storage';
 import {getAppUsername} from 'nti-web-client';
 import {Loading, Error} from 'nti-web-commons';
 
+import CourseItemProgress from './common/CourseItemProgress';
 import {Grid, List} from './Constants';
 import Header from './Header';
 import OverviewContents from './OverviewContents';
@@ -81,9 +82,15 @@ export default class LessonView extends React.Component {
 			try {
 				const overview = await outlineNode.getContent({requiredOnly: requiredOnly && layout === List});
 
+				const isAdmin = this.props.course.isAdministrator;
+
+				// only get progress stats if admin
+				const progress = isAdmin ? await outlineNode.fetchLink('ProgressStatisticsByItem') : null;
+
 				this.setState({
 					loading: false,
-					overview
+					overview,
+					progressByItems: progress && progress.Items
 				});
 			} catch (e) {
 				this.setState({
@@ -108,8 +115,14 @@ export default class LessonView extends React.Component {
 
 	render () {
 		const {className, outlineNode, course, ...otherProps} = this.props;
-		const {layout, requiredOnly, loading, error, overview} = this.state;
+		const {layout, requiredOnly, loading, error, overview, progressByItems} = this.state;
 		const listTypeCls = layout === List ? 'nti-overview-list' : 'nti-overview-grid';
+
+		let extraColumns = [];
+
+		if(progressByItems) {
+			extraColumns.push(CourseItemProgress);
+		}
 
 		return (
 			<div className={cx('nti-lesson-view', listTypeCls, className)}>
@@ -133,6 +146,8 @@ export default class LessonView extends React.Component {
 							overview={overview}
 							layout={layout}
 							requiredOnly={requiredOnly}
+							progressByItems={progressByItems}
+							extraColumns={extraColumns}
 						/>
 					)}
 				</div>
