@@ -1,0 +1,23 @@
+@import "~nti-style-common";
+
+.outline-progress-header {
+	display: flex;
+
+	.progress-labels {
+		margin-left: 9px;
+		margin-top: 2px;
+
+		.course-progress {
+			font-weight: 300;
+			font-size: 16px;
+			line-height: 22px;
+		}
+
+		.sub-label {
+			font-size: 10px;
+			text-transform: uppercase;
+			font-weight: bold;
+			color: $tertiary-grey;
+		}
+	}
+}
