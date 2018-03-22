@@ -33,6 +33,8 @@ $text-color: #ebebeb;
 	}
 
 	&.viewed {
+		padding-left: rem-calc(40px);
+
 		&::after {
 			@extend %circle-white-check;
 
