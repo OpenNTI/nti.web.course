@@ -15,6 +15,7 @@ function isNetworkError (e) {
 const SUBMITTED_QUIZ = 'application/vnd.nextthought.assessment.assessedquestionset';
 
 const HANDLES = [
+	'application/vnd.nextthought.naquestionset',
 	'application/vnd.nextthought.naquestionref',
 	'application/vnd.nextthought.questionsetref',
 	'application/vnd.nextthought.nanosubmitassignment',
