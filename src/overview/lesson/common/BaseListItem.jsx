@@ -111,7 +111,8 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 
 
 	renderCompletedStatus () {
-		if(this.props.item.CompletedDate) {
+		const {item} = this.props;
+		if(item.hasCompleted && item.hasCompleted()) {
 			return (
 				<div className="progress-icon">
 					<CircularProgress width="20" height="20" isComplete/>

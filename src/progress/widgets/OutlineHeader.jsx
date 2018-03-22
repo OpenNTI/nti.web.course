@@ -17,20 +17,17 @@ export default class OutlineHeader extends React.Component {
 	async componentDidMount () {
 		const {course} = this.props;
 		const {PreferredAccess} = course;
-		const isAdmin = course.isAdministrative;
 
-		let courseProgress = PreferredAccess.CourseProgress;
-
-		if(isAdmin) {
-			courseProgress = await course.fetchLink('ProgressStats');
-		}
+		const courseProgress = course.isAdministrative
+			? await course.fetchLinkParsed('ProgressStats')
+			: PreferredAccess.CourseProgress;
 
 		const itemsComplete = (courseProgress && courseProgress.AbsoluteProgress) || 0;
 		const itemsTotal = (courseProgress && courseProgress.MaxPossibleProgress) || 0;
 
-		const completedDate = courseProgress && courseProgress.CompletedDate;
-		const isCompleted = courseProgress && courseProgress.CompletedDate;
-		const pctComplete = (courseProgress && courseProgress.PercentageProgress * 100) || 0;
+		const completedDate = courseProgress && courseProgress.getCompletedDate();
+		const isCompleted = Boolean(completedDate);
+		const pctComplete = ((courseProgress || {}).PercentageProgress * 100) || 0;
 		const remainingItems = itemsTotal - itemsComplete;
 
 		let subLabel = '0 Items Remaining';

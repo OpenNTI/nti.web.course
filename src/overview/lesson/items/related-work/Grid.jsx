@@ -49,7 +49,7 @@ export default function LessonOverviewRelatedWorkGridItem ({item, course, commen
 						contentPackage={course}
 						labels={[commentLabel, requiredLabel]}
 					/>
-					{item.CompletedDate && <GridCompleteIcon/>}
+					{item.hasCompleted() && <GridCompleteIcon/>}
 				</div>
 			</LinkTo.Object>
 		</PaddedContainer>
