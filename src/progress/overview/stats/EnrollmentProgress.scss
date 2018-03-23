@@ -1,0 +1,26 @@
+@import '~nti-style-common';
+
+.progress-overview-stats-enrollment-progress {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	.avatar-container {
+		width: rem-calc(100px);
+		height: rem-calc(100px);
+		margin-bottom: rem-calc(20px);
+
+		.avatar {
+			width: 100%;
+			border-radius: 50px;
+		}
+	}
+
+	.username {
+		display: block;
+		text-align: center;
+		font: normal 600 1rem/1.4 $body-font-family;
+		color: $primary-grey;
+	}
+}

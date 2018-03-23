@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
-import {Loading} from 'nti-web-commons';
+import {Loading, Avatar} from 'nti-web-commons';
 
 import {formatProgressStats} from './utils';
 
@@ -96,6 +96,7 @@ export default class CourseStanding extends React.Component {
 
 		return (
 			<div className="series">
+				{this.renderEnrollmentProgress()}
 				{series.map((data, index) => {
 					const percentTotal = Math.round((data.total / upperBound) * 100);
 					const startingPercent = Math.floor(data.start * 100);
@@ -111,6 +112,25 @@ export default class CourseStanding extends React.Component {
 						<div className="data" key={index} style={style} />
 					);
 				})}
+			</div>
+		);
+	}
+
+
+	renderEnrollmentProgress () {
+		const {enrollment} = this.props;
+
+		if (!enrollment) { return null; }
+
+		const {CourseProgress, UserProfile} = enrollment;
+		const {PercentageProgress} = CourseProgress;
+		const style = {
+			left: `${Math.floor(PercentageProgress * 100)}%`
+		};
+
+		return (
+			<div className="enrollment-progress" style={style}>
+				<Avatar entity={UserProfile} />
 			</div>
 		);
 	}

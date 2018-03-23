@@ -2,10 +2,11 @@
 
 .progress-overview-stats {
 	display: flex;
+	backgound: $panel-background;
 	box-shadow: 0 1px 0 0 $border-grey;
 
 
-	.progress-overview-stats-enrollment {
+	.progress-overview-stats-enrollment-progress {
 		flex: 0 0 auto;
 		width: 33%;
 		box-shadow: inset -1px 0 0 0 $border-grey;
