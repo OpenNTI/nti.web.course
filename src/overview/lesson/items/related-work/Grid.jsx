@@ -42,14 +42,13 @@ export default function LessonOverviewRelatedWorkGridItem ({item, course, commen
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item} onClick={onClick}>
-				<div className="completable card">
+				<div className="card">
 					<Card
 						data-ntiid={item.NTIID}
 						item={item}
 						contentPackage={course}
 						labels={[requiredLabel, commentLabel]}
 					/>
-					{item.hasCompleted() && <GridCompleteIcon/>}
 				</div>
 			</LinkTo.Object>
 		</PaddedContainer>
