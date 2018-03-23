@@ -73,35 +73,33 @@ export default class LessonView extends React.Component {
 	}
 
 
-	setupFor (props = this.props) {
-		this.setState({
-			loading: true,
-			error: null
-		}, async () => {
-			const {requiredOnly, layout} = this.state;
-			const {outlineNode} = this.props;
+	async setupFor (props = this.props) {
+		const {requiredOnly, layout} = this.state;
+		const {outlineNode} = this.props;
 
-			if (!outlineNode) { return; }
+		if (!outlineNode) { return; }
 
-			try {
-				const overview = await outlineNode.getContent({requiredOnly: requiredOnly && layout !== Grid});
+		this.setState({ loading: true, error: null });
 
-				const isAdmin = this.props.course.isAdministrator;
+		try {
+			const overview = await outlineNode.getContent({requiredOnly: requiredOnly && layout !== Grid});
 
-				// only get progress stats if admin
-				const progress = isAdmin ? await outlineNode.fetchLink('ProgressStatisticsByItem') : null;
+			const isAdmin = this.props.course.isAdministrator;
 
-				this.setState({
-					loading: false,
-					overview,
-					progressByItems: progress && progress.Items
-				});
-			} catch (e) {
-				this.setState({
-					error: e
-				});
-			}
-		});
+			// only get progress stats if admin
+			const {progressByItems} = !isAdmin ? {} : await outlineNode.fetchLink('ProgressStatisticsByItem');
+
+			this.setState({
+				loading: false,
+				overview,
+				progressByItems
+			});
+		} catch (e) {
+			this.setState({
+				loading: false,
+				error: e
+			});
+		}
 	}
 
 
