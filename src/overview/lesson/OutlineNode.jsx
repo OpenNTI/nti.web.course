@@ -14,6 +14,8 @@ const STORAGE_KEY = 'nti-lesson-view';
 const LAYOUT_STORAGE_KEY = 'layout-value';
 const REQUIRED_STORAGE_KEY = 'required-only-value';
 
+const changed = (A, B, keys = []) => keys.some(x => A[x] !== B[x]);
+
 function getStoragePreferenceJSON () {
 	try {
 		const rawValue = atob(Storage.getItem(STORAGE_KEY));
@@ -58,12 +60,9 @@ export default class LessonView extends React.Component {
 
 
 	componentDidUpdate (prevProps, prevState) {
-		const {course:oldCourse, outlineNode:oldNode} = prevProps;
-		const {requiredOnly: oldRequired} = prevState;
-		const {course:newCourse, outlineNode:newNode} = this.props;
-		const {requiredOnly: newRequired} = this.state;
+		const values = ['course', 'requiredOnly', 'layout'];
 
-		if (oldCourse !== newCourse || oldNode !== newNode || oldRequired !== newRequired) {
+		if (changed({...this.props, ...this.state}, {...prevProps, ...prevState}, values)) {
 			this.setupFor(this.props);
 		}
 	}
@@ -85,7 +84,7 @@ export default class LessonView extends React.Component {
 			if (!outlineNode) { return; }
 
 			try {
-				const overview = await outlineNode.getContent({requiredOnly: requiredOnly && layout === List});
+				const overview = await outlineNode.getContent({requiredOnly: requiredOnly && layout !== Grid});
 
 				const isAdmin = this.props.course.isAdministrator;
 
