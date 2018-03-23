@@ -101,7 +101,7 @@ export default class DayTimeTabPanel extends React.Component {
 			selectedWeekdays.push(day.name);
 		}
 
-		this.setState({selectedWeekdays : selectedWeekdays});
+		this.setState({ selectedWeekdays });
 	}
 
 	renderDay = (day, index) => {

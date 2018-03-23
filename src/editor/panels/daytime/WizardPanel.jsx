@@ -100,7 +100,7 @@ export default class DayTimeWizardPanel extends React.Component {
 			selectedWeekdays.push(day.name);
 		}
 
-		this.setState({selectedWeekdays : selectedWeekdays});
+		this.setState({ selectedWeekdays });
 	}
 
 	renderDay = (day, index) => {
