@@ -6,17 +6,8 @@ import Overview from '../../../overview/lesson/OverviewContents';
 import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 
 import Loading from './Loading';
+import CompletedDate from './CompletedDate';
 
-ExtraColumn.propTypes = {
-	item: PropTypes.object
-};
-function ExtraColumn ({item}) {
-	return (
-		<div>
-			Extra Column
-		</div>
-	);
-}
 
 export default class ProgressOverviewContentsPage extends React.Component {
 	static propTypes = {
@@ -24,7 +15,8 @@ export default class ProgressOverviewContentsPage extends React.Component {
 		page: PropTypes.object,
 		error: PropTypes.object,
 		pageHeight: PropTypes.number,
-		course: PropTypes.object
+		course: PropTypes.object,
+		completedItems: PropTypes.object
 	}
 
 
@@ -43,7 +35,7 @@ export default class ProgressOverviewContentsPage extends React.Component {
 
 
 	render () {
-		const {loading, page, pageHeight, course} = this.props;
+		const {loading, page, pageHeight, course, completedItems} = this.props;
 		const overview = page && page.Items[0];
 		const outlineNode = overview && overview.parent();
 		const available = outlineNode && outlineNode.getAvailableBeginning();
@@ -72,7 +64,8 @@ export default class ProgressOverviewContentsPage extends React.Component {
 							layout={Overview.List}
 							requiredOnly={true}
 
-							extraColumns={[ExtraColumn]}
+							completedItems={completedItems}
+							extraColumns={[CompletedDate]}
 						/>
 					</React.Fragment>
 				)}

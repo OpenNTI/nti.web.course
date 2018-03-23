@@ -11,7 +11,8 @@ const PAGE_HEIGHT = 500;
 
 export default class ProgressOverviewContents extends React.Component {
 	static propTypes = {
-		course: PropTypes.object
+		course: PropTypes.object,
+		enrollment: PropTypes.object
 	}
 
 	state = {}
@@ -30,12 +31,23 @@ export default class ProgressOverviewContents extends React.Component {
 	}
 
 
-	setupFor (props) {
-		const {course} = props;
+	async setupFor (props) {
+		const {course, enrollment} = props;
 
 		this.setState({
+			completedItems: null,
 			store: new Store(course.getContentDataSource())
 		});
+
+		try {
+			const completedItems = await enrollment.fetchLink('CompletedItems');
+
+			this.setState({
+				completedItems
+			});
+		} catch (e) {
+			//its fine if it throws
+		}
 	}
 
 
@@ -55,8 +67,10 @@ export default class ProgressOverviewContents extends React.Component {
 	}
 
 	renderPage = (props) => {
+		const {completedItems} = this.state;
+
 		return (
-			<Page {...props} course={this.props.course} />
+			<Page {...props} course={this.props.course} completedItems={completedItems} />
 		);
 	}
 
