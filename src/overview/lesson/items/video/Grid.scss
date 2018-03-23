@@ -3,14 +3,6 @@
 %icon-transcript { background-image: url(./assets/play-transcript.png); }
 %circle-white-check { background-image: url(../assets/circle-check-white-20.png); }
 
-%fill {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-}
-
 .lesson-overview-video-container {
 	position: relative;
 	overflow: hidden;
@@ -32,7 +24,8 @@
 
 	.overview-video-tap-area {
 		@extend %hardware-render;
-		@extend %fill;
+
+		@include fill;
 		@include wide-screen;
 
 		background-color: $panel-background;
@@ -45,7 +38,8 @@
 
 		&.play::after {
 			@extend %icon-play;
-			@extend %fill;
+
+			@include fill;
 
 			content: '';
 			background: {
