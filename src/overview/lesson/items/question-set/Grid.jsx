@@ -63,7 +63,9 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 	renderIcon = () => {
 		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
 
-		if((assignment || assessment).hasCompleted()) {
+		const item = assignment || assessment;
+
+		if(item && item.hasCompleted && item.hasCompleted()) {
 			return (
 				<div className="completable">
 					<GridCompleteIcon/>
