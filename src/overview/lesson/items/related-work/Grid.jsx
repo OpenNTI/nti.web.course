@@ -47,7 +47,7 @@ export default function LessonOverviewRelatedWorkGridItem ({item, course, commen
 						data-ntiid={item.NTIID}
 						item={item}
 						contentPackage={course}
-						labels={[commentLabel, requiredLabel]}
+						labels={[requiredLabel, commentLabel]}
 					/>
 					{item.hasCompleted() && <GridCompleteIcon/>}
 				</div>

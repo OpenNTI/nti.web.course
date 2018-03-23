@@ -26,6 +26,7 @@ export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, a
 
 	return (
 		<List.SeparatedInline className="lesson-overview-questionset-assessment-label">
+			{required && (<div className="required">{t('required')}</div>)}
 			{!assessmentSubmission && (<span className="question-count">{t('questionCount', {count})}</span>)}
 			{assessmentSubmission && (
 				<div className="submitted">
@@ -39,7 +40,6 @@ export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, a
 					</span>
 				</div>
 			)}
-			{required && (<span className="required">{t('required')}</span>)}
 		</List.SeparatedInline>
 	);
 }

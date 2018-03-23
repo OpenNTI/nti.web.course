@@ -79,7 +79,7 @@ class LessonOverviewRelatedWork extends React.Component {
 		const required = item['CompletionRequired'];
 
 		const requiredLabel = required && (
-			<span key="required-label" className="required">Required</span>
+			<div key="required-label" className="required">Required</div>
 		);
 
 		return (

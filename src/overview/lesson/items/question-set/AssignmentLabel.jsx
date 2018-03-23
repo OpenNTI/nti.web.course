@@ -93,8 +93,8 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 				{this.renderDraft()}
 				{this.renderTimed()}
 				{this.renderCompletion()}
-				{this.renderDue()}
 				{this.renderRequired()}
+				{this.renderDue()}
 				{this.renderExcused()}
 			</List.SeparatedInline>
 		);
@@ -203,7 +203,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 	renderRequired () {
 		const {required} = this.props;
 
-		return required && (<span className="required">{t('required')}</span>);
+		return required && (<div className="required">{t('required')}</div>);
 	}
 
 
