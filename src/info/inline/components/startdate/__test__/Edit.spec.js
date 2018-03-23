@@ -7,7 +7,7 @@ import Edit from '../Edit';
 /* eslint-env jest */
 describe('Start date edit test', () => {
 	test('Test startDate editor', () => {
-		const date = '2015-08-17T05:00:00Z';
+		const date = new Date('2015-08-17T05:00:00Z');
 
 		const catalogEntry = {
 			'StartDate': date,
