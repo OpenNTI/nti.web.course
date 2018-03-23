@@ -46,9 +46,14 @@ export default class LessonView extends React.Component {
 		course: PropTypes.object.isRequired
 	}
 
-	state = {
-		layout: getStoragePreference(LAYOUT_STORAGE_KEY) || Grid,
-		requiredOnly: getStoragePreference(REQUIRED_STORAGE_KEY)
+	constructor (props) {
+		super(props);
+		// Since the default values of this state object are computed, we want the object assigned to this.state to
+		// be evaluated on constrution instead of once at class definition time.
+		this.state = {
+			layout: getStoragePreference(LAYOUT_STORAGE_KEY) || Grid,
+			requiredOnly: getStoragePreference(REQUIRED_STORAGE_KEY)
+		};
 	}
 
 
@@ -103,7 +108,7 @@ export default class LessonView extends React.Component {
 
 	setLayout = (layout) => {
 		this.setState({layout});
-		setStoragePreference(LAYOUT_STORAGE_KEY, Grid);
+		setStoragePreference(LAYOUT_STORAGE_KEY, layout);
 	}
 
 
