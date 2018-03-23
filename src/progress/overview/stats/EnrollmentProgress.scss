@@ -10,10 +10,26 @@
 		width: rem-calc(100px);
 		height: rem-calc(100px);
 		margin-bottom: rem-calc(20px);
+		position: relative;
 
 		.avatar {
 			width: 100%;
+			height: 100%;
 			border-radius: 50px;
+		}
+
+		.circular-progress {
+			position: absolute;
+			right: -5px;
+			bottom: -5px;;
+			left: auto;
+			top: auto;
+			width: 35px;
+			height: 35px;
+			border: 2px solid white;
+			border-radius: 40px;
+			box-sizing: content-box;
+			background: white;
 		}
 	}
 
