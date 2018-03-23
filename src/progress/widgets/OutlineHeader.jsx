@@ -19,7 +19,7 @@ export default class OutlineHeader extends React.Component {
 		const itemsComplete = (courseProgress && courseProgress.AbsoluteProgress) || 0;
 		const itemsTotal = (courseProgress && courseProgress.MaxPossibleProgress) || 0;
 
-		const pctComplete = ((courseProgress || {}).PercentageProgress * 100) || 0;
+		const pctComplete = Math.floor(((courseProgress || {}).PercentageProgress * 100) || 0);
 		const remainingItems = itemsTotal - itemsComplete;
 
 		let subLabel = '0 Items Remaining';
