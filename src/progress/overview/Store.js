@@ -4,7 +4,7 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 	constructor () {
 		super();
 
-		this.set('enrollment', null);
+		this.set('currentItem', null);
 
 		this.set('totalItems', null);
 		this.set('currentItemIndex', null);
@@ -17,10 +17,10 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 	}
 
 
-	loadCourse (course) {
-		this.set('enrollment', course.PreferredAccess);
-		this.set('totalItems', 1);
+	loadCourse (enrollment, course) {
+		this.set('currentItem', enrollment);
 		this.set('currentItemIndex', 1);
+		this.set('totalItems', 1);
 		this.set('hasNextPage', false);
 		this.set('hasPrevPage', false);
 	}

@@ -1,0 +1,25 @@
+@import '~nti-style-common';
+
+.progress-overview-stats-charts {
+	height: rem-calc(250px);
+	position: relative;
+
+	.switcher {
+		padding: rem-calc(8px);
+
+		.chart {
+			display: inline-block;
+			border: 1px solid $border-grey;
+			border-radius: 10px;
+			padding: rem-calc(0 10px);
+			font: normal 600 0.625rem/2 $body-font-family;
+			color: $secondary-grey;
+			text-transform: uppercase;
+		}
+	}
+
+	.active-chart {
+		width: 100%;
+		height: calc(100% - 38px);
+	}
+}

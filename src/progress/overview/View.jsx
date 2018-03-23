@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import {Prompt, Layouts} from 'nti-web-commons';
 
 import Store from './Store';
-import Contents from './contents';
 import Header from './Header';
+import Stats from './stats';
+import Contents from './contents';
 
 const {InfiniteLoad} = Layouts;
 
 const propMap = {
-	enrollment: 'enrollment',
+	currentItem: 'currentItem',
 	totalItems: 'totalItems',
 	currentItemIndex: 'currentItemIndex',
 	hasNextItem: 'hasNextItem',
@@ -52,6 +53,7 @@ class ProgressOverview extends React.Component {
 
 	static propTypes = {
 		course: PropTypes.object.isRequired,
+		enrollment: PropTypes.object,
 		batch: PropTypes.bool,
 		singleItem: PropTypes.bool,
 
@@ -59,7 +61,7 @@ class ProgressOverview extends React.Component {
 		onDismiss: PropTypes.func,
 
 		store: PropTypes.object,
-		enrollment: PropTypes.object,
+		currentItem: PropTypes.object,
 		totalItems: PropTypes.number,
 		currentItemIndex: PropTypes.number,
 		hasNextItem: PropTypes.bool,
@@ -74,22 +76,22 @@ class ProgressOverview extends React.Component {
 
 
 	componentDidUpdate (oldProps) {
-		const {course:oldCourse, batch:oldBatch} = oldProps;
-		const {course:newCourse, batch:newBatch} = this.props;
+		const {course:oldCourse, enrollment:oldEnrollment, batch:oldBatch} = oldProps;
+		const {course:newCourse, enrollment:newEnrollment, batch:newBatch} = this.props;
 
-		if (oldCourse !== newCourse || oldBatch !== newBatch) {
+		if (oldCourse !== newCourse || oldEnrollment !== newEnrollment || oldBatch !== newBatch) {
 			this.setupFor(this.props);
 		}
 	}
 
 
 	setupFor (props) {
-		const {store, course, batch} = this.props;
+		const {store, course, enrollment, batch} = this.props;
 
 		if (batch) {
 			store.loadBatch(batch);
 		} else if (course) {
-			store.loadCourse(course);
+			store.loadCourse(enrollment, course);
 		}
 	}
 
@@ -103,14 +105,15 @@ class ProgressOverview extends React.Component {
 
 
 	render () {
-		const {course} = this.props;
+		const {course, currentItem} = this.props;
 
 
 		return (
 			<InfiniteLoad.Container className="progress-overview-container">
 				<div className="progress-overview">
 					<Header {...this.props} doClose={this.doClose} />
-					<Contents course={course} />
+					<Stats course={course} enrollment={currentItem} />
+					<Contents course={course} enrollment={currentItem} />
 				</div>
 			</InfiniteLoad.Container>
 		);

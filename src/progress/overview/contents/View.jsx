@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import {Layouts} from 'nti-web-commons';
 
 import Store from './Store';
+import Loading from './Loading';
 import Page from './Page';
 
 const {InfiniteLoad} = Layouts;
+const PAGE_HEIGHT = 500;
 
 export default class ProgressOverviewContents extends React.Component {
 	static propTypes = {
@@ -41,17 +43,27 @@ export default class ProgressOverviewContents extends React.Component {
 		if (!this.state.store) { return null; }
 
 		return (
-			<InfiniteLoad.Store
-				store={this.state.store}
-				defaultPageHeight={500}
-				renderPage={this.renderPage}
-			/>
+			<div className="progress-overview-contents">
+				<InfiniteLoad.Store
+					store={this.state.store}
+					defaultPageHeight={PAGE_HEIGHT}
+					renderPage={this.renderPage}
+					renderLoading={this.renderLoading}
+				/>
+			</div>
 		);
 	}
 
 	renderPage = (props) => {
 		return (
 			<Page {...props} course={this.props.course} />
+		);
+	}
+
+
+	renderLoading = () => {
+		return (
+			<Loading pageHeight={PAGE_HEIGHT * 3} />
 		);
 	}
 }
