@@ -40,7 +40,14 @@ export default class OutlineHeader extends React.Component {
 	async loadAdminProgress (course) {
 		const courseProgress = await course.fetchLink('ProgressStats');
 
-		this.setState(this.getStateValues(courseProgress));
+		const studentsFinished = courseProgress.CountCompleted || 0;
+
+		const subLabel = studentsFinished === 1 ? '1 Student Finished' : studentsFinished + ' Students Finished';
+
+		this.setState({
+			...this.getStateValues(courseProgress),
+			subLabel
+		});
 	}
 
 
