@@ -2,14 +2,52 @@
 
 .progress-overview-header {
 	display: flex;
+	align-items: center;
 	box-shadow: 0 1px 0 0 $border-grey;
-	padding: rem-calc(8px);
+	padding: rem-calc(8px 8px 8px 30px);
+
+	.username {
+		font: normal 600 0.75rem/1.4 $body-font-family;
+		color: $secondary-grey;
+		text-transform: uppercase;
+	}
+
+	.current-page {
+		font: normal 600 0.75rem/1.4 $body-font-family;
+		text-transform: uppercase;
+		color: $primary-grey;
+	}
 
 	.spacer {
 		flex: 1 1 auto;
 	}
 
+
+	.page-control {
+		width: rem-calc(28px);
+		height: rem-calc(28px);
+		line-height: rem-calc(28px);
+		text-align: center;
+		font-size: 1.125rem;
+		cursor: pointer;
+		color: $primary-blue;
+
+		&.page-up {
+			margin-left: 1rem;
+		}
+
+		&.page-down {
+			margin-right: 1rem;
+		}
+
+		&.disabled {
+			color: $tertiary-grey;
+			pointer-events: none;
+		}
+	}
+
 	.close {
+		cursor: pointer;
 		width: rem-calc(34px);
 		height: rem-calc(34px);
 		line-height: rem-calc(36px);//to make it look more centered
