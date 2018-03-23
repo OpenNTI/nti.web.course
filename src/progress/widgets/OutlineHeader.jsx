@@ -14,19 +14,11 @@ export default class OutlineHeader extends React.Component {
 
 	state = {}
 
-	async componentDidMount () {
-		const {course} = this.props;
-		const {PreferredAccess} = course;
 
-		const courseProgress = course.isAdministrative
-			? await course.fetchLinkParsed('ProgressStats')
-			: PreferredAccess.CourseProgress;
-
+	getStateValues (courseProgress, isCompleted) {
 		const itemsComplete = (courseProgress && courseProgress.AbsoluteProgress) || 0;
 		const itemsTotal = (courseProgress && courseProgress.MaxPossibleProgress) || 0;
 
-		const completedDate = courseProgress && courseProgress.getCompletedDate();
-		const isCompleted = Boolean(completedDate);
 		const pctComplete = ((courseProgress || {}).PercentageProgress * 100) || 0;
 		const remainingItems = itemsTotal - itemsComplete;
 
@@ -38,13 +30,51 @@ export default class OutlineHeader extends React.Component {
 			subLabel = remainingItems === 1 ? '1 Item Remaining' : remainingItems + ' Items Remaining';
 		}
 
-		this.setState({
+		return {
 			courseProgress,
-			isCompleted,
 			pctComplete,
-			completedDate,
 			subLabel
+		};
+	}
+
+	async loadAdminProgress (course) {
+		const courseProgress = await course.fetchLink('ProgressStats');
+
+		this.setState(this.getStateValues(courseProgress));
+	}
+
+
+	loadStudentProgress (course) {
+		const {PreferredAccess} = course;
+
+		const courseProgress = PreferredAccess.CourseProgress;
+
+		const completedDate = courseProgress && courseProgress.getCompletedDate();
+		const isCompleted = Boolean(completedDate);
+
+		this.setState({
+			...this.getStateValues(courseProgress),
+			completedDate,
+			isCompleted
 		});
+	}
+
+	async loadProgress (course) {
+		if(course.isAdministrative) {
+			this.loadAdminProgress(course);
+		} else {
+			this.loadStudentProgress(course);
+		}
+	}
+
+	componentDidMount () {
+		this.loadProgress(this.props.course);
+	}
+
+	componentDidUpdate (prevProps) {
+		if(prevProps.course !== this.props.course) {
+			this.loadProgress(this.props.course);
+		}
 	}
 
 	renderLabel () {
