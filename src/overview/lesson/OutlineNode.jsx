@@ -84,7 +84,7 @@ export default class LessonView extends React.Component {
 		try {
 			const overview = await outlineNode.getContent({requiredOnly: requiredOnly && layout !== Grid});
 
-			const isAdmin = this.props.course.isAdministrator;
+			const isAdmin = this.props.course.isAdministrative;
 
 			// only get progress stats if admin
 			const {progressByItems} = !isAdmin ? {} : await outlineNode.fetchLink('ProgressStatisticsByItem');
