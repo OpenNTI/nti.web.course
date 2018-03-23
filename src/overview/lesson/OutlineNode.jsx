@@ -60,7 +60,7 @@ export default class LessonView extends React.Component {
 
 
 	componentDidUpdate (prevProps, prevState) {
-		const values = ['course', 'requiredOnly', 'layout'];
+		const values = ['course', 'requiredOnly', 'layout', 'outlineNode'];
 
 		if (changed({...this.props, ...this.state}, {...prevProps, ...prevState}, values)) {
 			this.setupFor(this.props);
