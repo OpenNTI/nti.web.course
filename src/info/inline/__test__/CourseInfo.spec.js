@@ -46,18 +46,11 @@ describe('CourseInfo test', () => {
 		const catalogEntry = {
 			title,
 			StartDate: startDate,
-			getStartDate: function () {
-				return startDate;
-			},
-			getEndDate: function () {
-				return null;
-			},
-			getLink: function () {
-				return null;
-			},
-			getEnrollmentOptions: function () {
-				return {};
-			}
+			getStartDate: () => startDate,
+			getEndDate: () => null,
+			getLink: () => null,
+			getEnrollmentOptions: () => {},
+			getDefaultAssetRoot: () => ''
 		};
 
 		const cmp = mount(<CourseInfo catalogEntry={catalogEntry} editable/>);
