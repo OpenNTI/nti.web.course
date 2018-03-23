@@ -53,12 +53,12 @@ export default class ProgressOverviewHEader extends React.Component {
 
 
 	render () {
-		const {singleItem, currentItem} = this.props;
+		const {singleItem} = this.props;
 
 		return (
 			<div className="progress-overview-header">
-				{!singleItem && currentItem && (this.renderPager())}
-				{singleItem && !currentItem && (<div className="spacer"/>)}
+				{!singleItem && (this.renderPager())}
+				{singleItem && (<div className="spacer"/>)}
 				<div className="close" onClick={this.doClose}>
 					<i className="icon-light-x" />
 				</div>
@@ -69,20 +69,25 @@ export default class ProgressOverviewHEader extends React.Component {
 
 	renderPager () {
 		const {currentItem, totalItems, currentItemIndex, hasNextItem, hasPrevItem} = this.props;
+		const showPager = totalItems || currentItemIndex || hasNextItem || hasPrevItem;
 
 		return (
 			<React.Fragment>
-				<DisplayName entity={currentItem.UserProfile} />
+				{currentItem && (<DisplayName entity={currentItem.UserProfile} />)}
 				<div className="spacer" />
-				<div className="current-page">
-					{t('page', {page: currentItemIndex || 0, total: totalItems || 0})}
-				</div>
-				<div className={cx('page-up', 'page-control', {disabled: !hasPrevItem})} onClick={this.loadPrevItem}>
-					<i className="icon-chevron-up" />
-				</div>
-				<div className={cx('page-down', 'page-control', {disabled: !hasNextItem})} onClick={this.loadNextItem}>
-					<i className="icon-chevron-down" />
-				</div>
+				{showPager && (
+					<React.Fragment>
+						<div className="current-page">
+							{t('page', {page: currentItemIndex || 0, total: totalItems || 0})}
+						</div>
+						<div className={cx('page-up', 'page-control', {disabled: !hasPrevItem})} onClick={this.loadPrevItem}>
+							<i className="icon-chevron-up" />
+						</div>
+						<div className={cx('page-down', 'page-control', {disabled: !hasNextItem})} onClick={this.loadNextItem}>
+							<i className="icon-chevron-down" />
+						</div>
+					</React.Fragment>
+				)}
 			</React.Fragment>
 		);
 	}

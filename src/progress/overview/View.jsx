@@ -1,15 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt, Layouts} from 'nti-web-commons';
+import {Prompt, Layouts, Loading} from 'nti-web-commons';
+import {scoped} from 'nti-lib-locale';
 
 import Store from './Store';
 import Header from './Header';
 import Stats from './stats';
 import Contents from './contents';
 
+const t = scoped('course.progress.overview.View', {
+	error: 'Unable to load Progress.'
+});
+
 const {InfiniteLoad} = Layouts;
 
 const propMap = {
+	loading: 'loading',
+	error: 'error',
 	currentItem: 'currentItem',
 	totalItems: 'totalItems',
 	currentItemIndex: 'currentItemIndex',
@@ -22,13 +29,13 @@ const propMap = {
 export default
 @Store.connect(propMap)
 class ProgressOverview extends React.Component {
-	static showForBatch (batch, course) {
+	static showForBatchLink (batch, course) {
 		return new Promise ((fulfill) => {
 			const Cmp = this;
 
 			Prompt.modal((
 				<Cmp
-					batch={batch}
+					batchLink={batch}
 					course={course}
 					onClose={fulfill}
 				/>
@@ -54,13 +61,15 @@ class ProgressOverview extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		enrollment: PropTypes.object,
-		batch: PropTypes.object,
+		batchLink: PropTypes.string,
 		singleItem: PropTypes.bool,
 
 		onClose: PropTypes.func,
 		onDismiss: PropTypes.func,
 
 		store: PropTypes.object,
+		loading: PropTypes.bool,
+		error: PropTypes.object,
 		currentItem: PropTypes.object,
 		totalItems: PropTypes.number,
 		currentItemIndex: PropTypes.number,
@@ -76,8 +85,8 @@ class ProgressOverview extends React.Component {
 
 
 	componentDidUpdate (oldProps) {
-		const {course:oldCourse, enrollment:oldEnrollment, batch:oldBatch} = oldProps;
-		const {course:newCourse, enrollment:newEnrollment, batch:newBatch} = this.props;
+		const {course:oldCourse, enrollment:oldEnrollment, batchLink:oldBatch} = oldProps;
+		const {course:newCourse, enrollment:newEnrollment, batchLink:newBatch} = this.props;
 
 		if (oldCourse !== newCourse || oldEnrollment !== newEnrollment || oldBatch !== newBatch) {
 			this.setupFor(this.props);
@@ -86,10 +95,10 @@ class ProgressOverview extends React.Component {
 
 
 	setupFor (props) {
-		const {store, course, enrollment, batch} = this.props;
+		const {store, course, enrollment, batchLink} = this.props;
 
-		if (batch) {
-			store.loadBatch(batch);
+		if (batchLink) {
+			store.loadBatchLink(batchLink);
 		} else if (course) {
 			store.loadCourse(enrollment, course);
 		}
@@ -105,15 +114,20 @@ class ProgressOverview extends React.Component {
 
 
 	render () {
-		const {course, currentItem} = this.props;
-
+		const {course, currentItem, loading, error} = this.props;
 
 		return (
 			<InfiniteLoad.Container className="progress-overview-container">
 				<div className="progress-overview">
 					<Header {...this.props} doClose={this.doClose} />
-					<Stats course={course} enrollment={currentItem} />
-					<Contents course={course} enrollment={currentItem} />
+					{loading && (<div className="loading-mask"><Loading.Mask /></div>)}
+					{!loading && error && (<div className="error">{t('error')}</div>)}
+					{!loading && !error && (
+						<React.Fragment>
+							<Stats course={course} enrollment={currentItem} />
+							<Contents course={course} enrollment={currentItem} />
+						</React.Fragment>
+					)}
 				</div>
 			</InfiniteLoad.Container>
 		);

@@ -5,6 +5,8 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 	constructor () {
 		super();
 
+		this.set('loading', false);
+		this.set('error', null);
 		this.set('currentItem', null);
 
 		this.set('totalItems', null);
@@ -14,33 +16,51 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 	}
 
 
-	async loadNextItem () {
-		const service = await getService();
-		const batch = await service.getBatch(this.nextLink);
-
-		this.loadBatch(batch);
+	loadNextItem () {
+		if (this.nextLink) {
+			this.loadBatchLink(this.nextLink);
+		}
 	}
 
-	async loadPrevItem () {
-		const service = await getService();
-		const batch = await service.getBatch(this.prevLink);
-
-		this.loadBatch(batch);
+	loadPrevItem () {
+		if (this.prevLink) {
+			this.loadBatchLink(this.prevLink);
+		}
 	}
 
 
-	loadBatch (batch) {
-		const {Items, TotalItemCount, BatchPage} = batch;
+	async loadBatchLink (batchLink) {
+		this.nextLink = null;
+		this.prevLink = null;
 
-		this.batch = batch;
-		this.nextLink = batch.getLink('batch-next');
-		this.prevLink = batch.getLink('batch-prev');
+		this.set('loading', true);
+		this.set('error', null);
+		this.set('currentItem', null);
+		this.set('hasNextItem', false);
+		this.set('hasPrevItem', false);
+		this.emitChange('loading');
 
-		this.set('currentItem', Items[0]);
-		this.set('currentItemIndex', BatchPage);
-		this.set('totalItems', TotalItemCount);
-		this.set('hasNextItem', !!this.nextLink);
-		this.set('hasPrevItem', !!this.prevLink);
+		try {
+			const service = await getService();
+			const batch = await service.getBatch(batchLink);
+			const {Items, TotalItemCount, BatchPage} = batch;
+
+			this.batch = batch;
+			this.nextLink = batch.getLink('batch-next');
+			this.prevLink = batch.getLink('batch-prev');
+
+			this.set('loading', false);
+			this.set('currentItem', Items[0]);
+			this.set('currentItemIndex', BatchPage);
+			this.set('totalItems', TotalItemCount);
+			this.set('hasNextItem', !!this.nextLink);
+			this.set('hasPrevItem', !!this.prevLink);
+			this.emitChange('currentItem', 'currentItemIndex', 'totalItems', 'hasNextItem', 'hasPrevItem');
+		} catch (e) {
+			this.set('loading', false);
+			this.set('error', e);
+			this.emitChange('error', 'loading');
+		}
 	}
 
 
@@ -50,5 +70,6 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 		this.set('totalItems', 1);
 		this.set('hasNextItem', false);
 		this.set('hasPrevItem', false);
+		this.emitChange('currentItem', 'currentItemIndex', 'totalItems', 'hasNextItem', 'hasPrevItem');
 	}
 }
