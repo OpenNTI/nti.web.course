@@ -54,7 +54,7 @@ class ProgressOverview extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		enrollment: PropTypes.object,
-		batch: PropTypes.bool,
+		batch: PropTypes.object,
 		singleItem: PropTypes.bool,
 
 		onClose: PropTypes.func,
