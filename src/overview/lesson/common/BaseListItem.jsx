@@ -35,6 +35,13 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 
 	state = {}
 
+
+	componentWillUnmount () {
+		this.unmounted = this;
+		this.setState = () => {};
+	}
+
+
 	componentWillReceiveProps (nextProps) {
 		const {item:nextItem} = nextProps;
 		const {item:oldItem} = this.props;

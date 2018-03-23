@@ -61,7 +61,7 @@ const HANDLES = [
 
 export default
 @Registry.register(HANDLES)
-class LessonOverviewGroup extends React.Component {
+class LessonOverviewDiscussion extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		course: PropTypes.object,
@@ -82,6 +82,12 @@ class LessonOverviewGroup extends React.Component {
 
 	componentDidMount () {
 		this.setupFor(this.props);
+	}
+
+
+	componentWillUnmount () {
+		this.unmounted = this;
+		this.setState = () => {};
 	}
 
 

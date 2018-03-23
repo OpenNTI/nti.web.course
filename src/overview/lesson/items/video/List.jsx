@@ -25,6 +25,12 @@ export default class LessonOverviewVideoListItem extends React.Component {
 	}
 
 
+	componentWillUnmount () {
+		this.unmounted = this;
+		this.setState = () => {};
+	}
+
+
 	async setupFor (props) {
 		const {item} = this.props;
 
