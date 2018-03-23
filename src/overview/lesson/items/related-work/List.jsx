@@ -31,9 +31,9 @@ export default class LessonOverviewRelatedWorkListItem extends React.Component {
 				className="lesson-overview-related-work-list-item"
 				item={item}
 				labels={[
+					requiredLabel,
 					byline ? t('byline', {name: byline}) : null,
-					commentLabel,
-					requiredLabel
+					commentLabel
 				]}
 			/>
 		);
