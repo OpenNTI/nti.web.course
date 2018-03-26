@@ -90,10 +90,10 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 	render () {
 		return (
 			<List.SeparatedInline className="lesson-overview-assignment-status">
+				{this.renderRequired()}
 				{this.renderDraft()}
 				{this.renderTimed()}
 				{this.renderCompletion()}
-				{this.renderRequired()}
 				{this.renderDue()}
 				{this.renderExcused()}
 			</List.SeparatedInline>
