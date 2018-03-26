@@ -69,6 +69,8 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 	render () {
 		const {className, disabled, item, linkToObject, linkToContext, onClick} = this.props;
 
+		const title = this.renderTitle();
+
 		return (
 			<LinkTo.Object
 				data-ntiid={item.NTIID}
@@ -85,8 +87,8 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 						</div>
 					</div>
 					<div className="right">
-						<TextPart className="title">
-							{this.renderTitle()}
+						<TextPart className={cx('title', {plain: typeof title === 'string'})}>
+							{title}
 						</TextPart>
 						<TextPart className="labels">
 							{this.renderLabels()}
