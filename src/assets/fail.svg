@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Fail</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Fail">
+            <rect id="bounding" x="0" y="0" width="100" height="100"></rect>
+            <g id="Group" transform="translate(13.000000, 13.000000)">
+                <circle id="Oval-3" stroke="#F35252" stroke-width="2" cx="37.5" cy="37.5" r="36.5"></circle>
+                <ellipse id="Oval-4" stroke="#F35252" stroke-width="2" cx="25.2906977" cy="28.7790698" rx="4.23255814" ry="5.97674419"></ellipse>
+                <ellipse id="Oval-4" stroke="#F35252" stroke-width="2" cx="47.9651163" cy="28.7790698" rx="4.23255814" ry="5.97674419"></ellipse>
+                <path d="M20.9302326,54.0697674 C20.4416839,53.3369445 26.5933488,46.872093 37.0612093,46 C47.5290698,45.127907 54.0697674,48.4011628 53.6337209,49.2732558 C53.1976744,50.1453488 47.0930233,47.3421927 37.0612093,48.2142857 C27.0293953,49.0863787 21.4187812,54.8025904 20.9302326,54.0697674 Z" id="Path-4" fill="#F35252"></path>
+            </g>
+        </g>
+    </g>
+</svg>
