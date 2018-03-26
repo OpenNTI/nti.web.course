@@ -48,7 +48,7 @@ export default class LessonOverviewVideoListItem extends React.Component {
 		const {item, ...otherProps} = this.props;
 		const {duration} = this.state;
 		const formattedDuration = duration != null ? DateTime.formatDuration(duration) : '';
-		const required = item['CompletionRequired'];
+		const required = item.CompletionRequired;
 
 		let labels = [];
 

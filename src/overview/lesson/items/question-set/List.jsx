@@ -79,7 +79,7 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
 
 		if (assignment) {
-			const required = assignment['CompletionRequired'];
+			const required = assignment.CompletionRequired;
 
 			return (
 				<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} required={required}/>
@@ -87,7 +87,7 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 		}
 
 		if (assessment) {
-			const required = assessment['CompletionRequired'];
+			const required = assessment.CompletionRequired;
 
 			return (
 				<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission} required={required}/>

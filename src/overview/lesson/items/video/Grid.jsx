@@ -161,7 +161,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const link = '#';//path.join('videos', encodeForURI(this.getID())) + '/';
 
 
-		const required = item['CompletionRequired'];
+		const required = item.CompletionRequired;
 
 		const label = item.title || item.label;
 

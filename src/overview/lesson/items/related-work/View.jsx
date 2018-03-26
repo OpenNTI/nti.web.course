@@ -76,7 +76,7 @@ class LessonOverviewRelatedWork extends React.Component {
 			</LinkTo.Object>
 		);
 
-		const required = item['CompletionRequired'];
+		const required = item.CompletionRequired;
 
 		const requiredLabel = required && (
 			<div key="required-label" className="required">Required</div>

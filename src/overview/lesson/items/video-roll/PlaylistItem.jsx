@@ -51,7 +51,7 @@ export default class PlaylistItem extends React.Component {
 			state: {duration}
 		} = this;
 
-		const required = item['CompletionRequired'];
+		const required = item.CompletionRequired;
 		const viewed = item.hasCompleted && item.hasCompleted();
 		const formattedDuration = duration != null ? DateTime.formatDuration(duration) : '';
 
