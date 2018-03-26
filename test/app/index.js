@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import {getService} from 'nti-web-client';
 import {Layouts} from 'nti-web-commons';
-import {Tasks} from 'nti-commons';
+// import {Tasks} from 'nti-commons';
 
 import {Overview} from '../../src';
 
@@ -93,7 +93,7 @@ class Test extends React.Component {
 
 		return (
 			<div>
-				{nodes.slice(30, 31).map(node => (
+				{nodes.slice(0, 3).map(node => (
 					<Overview.Lesson key={node.NTIID} course={course} outlineNode={node} />
 				))}
 			</div>
