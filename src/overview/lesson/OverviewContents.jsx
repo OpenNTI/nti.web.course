@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {EmptyState} from 'nti-web-commons';
+import {scoped} from 'nti-lib-locale';
 
 import {Grid, List} from './Constants';
 import Items from './items';
+
+const t = scoped('course.overview.lesson.OverviewContents', {
+	noItems: 'There are no items in this lesson.',
+	noRequiredItems: 'There are no required items in this lesson.'
+});
 
 export default class LessonOverview extends React.Component {
 	static Grid = Grid
@@ -63,6 +70,11 @@ export default class LessonOverview extends React.Component {
 
 
 	renderEmpty () {
-		return null;
+		const {requiredOnly} = this.props;
+		const msg = requiredOnly ? t('noRequiredItems') : t('noItems');
+
+		return (
+			<EmptyState header={msg} />
+		);
 	}
 }

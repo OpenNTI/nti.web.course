@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Storage from 'nti-web-storage';
 import {getAppUsername} from 'nti-web-client';
-import {Loading, Error} from 'nti-web-commons';
+import {Loading, Error as ErrorCmp} from 'nti-web-commons';
 
 import CourseItemProgress from './common/CourseItemProgress';
 import {Grid, List} from './Constants';
@@ -139,7 +139,7 @@ export default class LessonView extends React.Component {
 				/>
 				<div className="content">
 					{loading && (<Loading.Mask />)}
-					{!loading && error && (<Error error={error} />)}
+					{!loading && error && (<ErrorCmp error={error} />)}
 					{!loading && !error && (
 						<OverviewContents
 							{...otherProps}
@@ -147,7 +147,7 @@ export default class LessonView extends React.Component {
 							course={course}
 							overview={overview}
 							layout={layout}
-							requiredOnly={requiredOnly}
+							requiredOnly={requiredOnly && layout !== Grid}
 							progressByItems={progressByItems}
 							extraColumns={extraColumns}
 						/>
