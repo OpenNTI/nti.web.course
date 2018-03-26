@@ -122,7 +122,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 			text = t('review');
 		} else if (dueDate && dueDate < now) {
 			text = t('start');
-		} else if (!startDate || startDate >= now) {
+		} else if (!startDate || now >= startDate) {
 			text = t('start');
 		} else if (startDate && startDate > now) {
 			text = '';
