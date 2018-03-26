@@ -5,6 +5,7 @@ import { Summary } from 'nti-lib-interfaces';
 import { scoped } from 'nti-lib-locale';
 import { LinkTo } from 'nti-web-routing';
 
+import Required from '../../common/Required';
 import { List, Grid } from '../../Constants';
 import Registry from '../Registry';
 
@@ -79,7 +80,7 @@ class LessonOverviewRelatedWork extends React.Component {
 		const required = item.CompletionRequired;
 
 		const requiredLabel = required && (
-			<div key="required-label" className="required">Required</div>
+			<Required key="required-label"/>
 		);
 
 		return (

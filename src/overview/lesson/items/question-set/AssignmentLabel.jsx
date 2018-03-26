@@ -4,7 +4,9 @@ import cx from 'classnames';
 import {List, DateTime} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
-const DEFAULT_TEXT = {
+import Required from '../../common/Required';
+
+const t = scoped('course.overview.lesson.overview.question-set.AssignmentLabel', {
 	draft: 'Draft',
 	maxTime: '%(maxTime)s time limit',
 	completed: {
@@ -28,10 +30,8 @@ const DEFAULT_TEXT = {
 	excused: {
 		label: 'Excused Grade',
 		tip: 'This assignment will NOT count towards your grade'
-	},
-	required: 'Required'
-};
-const t = scoped('course.overview.lesson.overview.question-set.AssignmentLabel', DEFAULT_TEXT);
+	}
+});
 
 const getNaturalDuration = (...args) => DateTime.getNaturalDuration(...args);
 const formatDate = (...args) => DateTime.format(...args);
@@ -203,7 +203,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 	renderRequired () {
 		const {required} = this.props;
 
-		return required && (<div className="required">{t('required')}</div>);
+		return required && (<Required/>);
 	}
 
 

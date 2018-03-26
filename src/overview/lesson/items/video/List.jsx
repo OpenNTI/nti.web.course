@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {DateTime} from 'nti-web-commons';
 
 import Base from '../../common/BaseListItem';
+import Required from '../../common/Required';
 
 export default class LessonOverviewVideoListItem extends React.Component {
 	static propTypes = {
@@ -53,7 +54,7 @@ export default class LessonOverviewVideoListItem extends React.Component {
 		let labels = [];
 
 		if(required) {
-			labels.push(<div key="required-label" className="required">Required</div>);
+			labels.push(<Required key="required-label"/>);
 		}
 
 		if(formattedDuration) {

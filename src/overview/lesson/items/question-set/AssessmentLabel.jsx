@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {List} from 'nti-web-commons';
 
-const DEFAULT_TEXT = {
+import Required from '../../common/Required';
+
+const t = scoped('course.overview.lesson.items.question-set.List', {
 	questionCount: {
 		one: '%(count)s Question',
 		other: '%(count)s Questions'
 	},
 	correct: '%(correct)s Correct',
-	incorrect: '%(incorrect)s Incorrect',
-	required: 'Required'
-};
-const t = scoped('course.overview.lesson.items.question-set.List', DEFAULT_TEXT);
+	incorrect: '%(incorrect)s Incorrect'
+});
 
 LessonOverviewQuestionSetAssessmentLabel.propTypes = {
 	assessment: PropTypes.object,
@@ -26,7 +26,7 @@ export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, a
 
 	return (
 		<List.SeparatedInline className="lesson-overview-questionset-assessment-label">
-			{required && (<div className="required">{t('required')}</div>)}
+			{required && (<Required/>)}
 			{!assessmentSubmission && (<span className="question-count">{t('questionCount', {count})}</span>)}
 			{assessmentSubmission && (
 				<div className="submitted">

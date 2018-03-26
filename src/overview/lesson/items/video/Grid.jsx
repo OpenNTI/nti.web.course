@@ -4,6 +4,7 @@ import {Component as Video} from 'nti-web-video';
 import {Error as ErrorWidget, Loading} from 'nti-web-commons';
 import {LinkTo} from 'nti-web-routing';
 
+import Required from '../../common/Required';
 import {block} from '../../../../utils';
 
 const initialState = {
@@ -189,7 +190,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 							className="overview-video-tap-area" href={link}
 						>
 							<div className="video-badges">
-								{required && <div className="badge required">Required</div>}
+								{required && <Required className="badge"/>}
 								{viewed && <div className="badge viewed">Viewed</div>}
 							</div>
 							<div className="wrapper">
