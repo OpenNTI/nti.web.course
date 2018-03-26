@@ -122,7 +122,7 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 		if(item.hasCompleted && item.hasCompleted()) {
 			return (
 				<div className="progress-icon">
-					<CircularProgress width="20" height="20" isComplete/>
+					<CircularProgress width={20} height={20} isComplete/>
 				</div>
 			);
 		}
