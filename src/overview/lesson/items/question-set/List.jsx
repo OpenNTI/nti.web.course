@@ -78,20 +78,12 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 	renderLabels = () => {
 		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
 
-		if (assignment) {
-			const required = assignment.CompletionRequired;
+		const required = (assignment || assessment).CompletionRequired;
 
-			return (
-				<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} required={required}/>
-			);
-		}
-
-		if (assessment) {
-			const required = assessment.CompletionRequired;
-
-			return (
-				<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission} required={required}/>
-			);
-		}
+		return assignment ? (
+			<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} required={required}/>
+		) : assessment ? (
+			<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission} required={required}/>
+		) : null;
 	}
 }
