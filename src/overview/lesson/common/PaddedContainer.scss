@@ -5,7 +5,6 @@
 	padding-left: $lesson-overview-desktop-padding;
 	padding-right: $lesson-overview-desktop-padding;
 
-
 	@include responsive-range(tablet) {
 		padding-left: $lesson-overview-tablet-padding;
 		padding-right: $lesson-overview-tablet-padding;
