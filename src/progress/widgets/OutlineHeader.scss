@@ -21,3 +21,23 @@
 		}
 	}
 }
+
+.default-outline-header {
+	font: normal 500 0.9em/3.5em "Open Sans", sans-serif;
+	color: #a1a1a1;
+	box-shadow: none;
+	display: inline-block;
+	padding: 0 0 0 3em;
+
+	&::after {
+		content: '';
+		overflow: hidden;
+		top: 15px;
+		left: 18px;
+		right: auto;
+		background-image: url(assets/topic.png);
+		width: 18px;
+		height: 20px;
+		position: absolute;
+	}
+}

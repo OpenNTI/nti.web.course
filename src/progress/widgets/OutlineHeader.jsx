@@ -4,7 +4,8 @@ import {scoped} from 'nti-lib-locale';
 import {CircularProgress} from 'nti-web-charts';
 
 const t = scoped('course.components.GradeCard', {
-	courseProgress: 'Course Progress'
+	courseProgress: 'Course Progress',
+	outline: 'Outline'
 });
 
 export default class OutlineHeader extends React.Component {
@@ -50,6 +51,12 @@ export default class OutlineHeader extends React.Component {
 		});
 	}
 
+	isStudent (course) {
+		const {PreferredAccess} = course;
+
+		return PreferredAccess && /courseinstanceenrollment/.test(PreferredAccess.MimeType);
+	}
+
 
 	loadStudentProgress (course) {
 		const {PreferredAccess} = course;
@@ -67,10 +74,18 @@ export default class OutlineHeader extends React.Component {
 	}
 
 	async loadProgress (course) {
-		if(course.isAdministrative) {
+		const isCompletable = Object.keys(course).includes('CompletionPolicy');
+
+		if(isCompletable && this.isStudent(course)) {
+			this.loadStudentProgress(course);
+		} else if(isCompletable && course.hasLink('ProgressStats')) {
 			this.loadAdminProgress(course);
 		} else {
-			this.loadStudentProgress(course);
+			// neither student nor user with access to see stats
+			// or not even a completable course, just show generic "Outline" label
+			this.setState({
+				showDefaultHeader: true
+			});
 		}
 	}
 
@@ -94,8 +109,8 @@ export default class OutlineHeader extends React.Component {
 	}
 
 	render () {
-		if(!this.state.courseProgress) {
-			return null;
+		if(!this.state.courseProgress || this.state.showDefaultHeader) {
+			return <div className="default-outline-header">{t('outline')}</div>;
 		}
 
 		return (
