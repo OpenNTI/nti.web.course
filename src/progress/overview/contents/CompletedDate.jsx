@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {DateTime} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
+import {getCompletedDate} from './utils';
+
 const t = scoped('course.progress.overview.contents.CompletedDate', {
 	completed: 'Completed %(date)s'
 });
@@ -14,8 +16,7 @@ ProgressOverviewContentsCompletedDate.propTypes = {
 export default function ProgressOverviewContentsCompletedDate ({item, completedItems}) {
 	if (!completedItems) { return null; }
 
-	const {Items} = completedItems || {};
-	const completedDate = Items[item.NTIID] || Items[item.href] || Items[item['Target-NTIID']] || Items[item['target-NTIID']];
+	const completedDate = getCompletedDate(item, completedItems);
 
 	if (!completedDate) { return null; }
 

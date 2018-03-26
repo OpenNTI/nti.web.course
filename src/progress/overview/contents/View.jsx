@@ -7,7 +7,7 @@ import Loading from './Loading';
 import Page from './Page';
 
 const {InfiniteLoad} = Layouts;
-const PAGE_HEIGHT = 500;
+const PAGE_HEIGHT = 200;
 
 export default class ProgressOverviewContents extends React.Component {
 	static propTypes = {
@@ -22,10 +22,10 @@ export default class ProgressOverviewContents extends React.Component {
 	}
 
 	compnentDidUpdate (prevProps) {
-		const {course:oldCourse} = prevProps;
-		const {course:newCourse} = this.props;
+		const {course:oldCourse, enrollment:oldEnrollment} = prevProps;
+		const {course:newCourse, enrollment:newEnrollment} = this.props;
 
-		if (oldCourse !== newCourse) {
+		if (oldCourse !== newCourse || oldEnrollment !== newEnrollment) {
 			this.setupFor(this.props);
 		}
 	}
@@ -33,20 +33,23 @@ export default class ProgressOverviewContents extends React.Component {
 
 	async setupFor (props) {
 		const {course, enrollment} = props;
+		const store = new Store(course.getContentDataSource());
 
 		this.setState({
-			completedItems: null,
-			store: new Store(course.getContentDataSource())
+			completedItems: null
 		});
 
 		try {
 			const completedItems = await enrollment.fetchLink('CompletedItems');
 
 			this.setState({
-				completedItems
+				completedItems,
+				store
 			});
 		} catch (e) {
-			//its fine if it throws
+			this.setState({
+				store
+			});
 		}
 	}
 
@@ -58,6 +61,7 @@ export default class ProgressOverviewContents extends React.Component {
 			<div className="progress-overview-contents">
 				<InfiniteLoad.Store
 					store={this.state.store}
+					buffer={3}
 					defaultPageHeight={PAGE_HEIGHT}
 					renderPage={this.renderPage}
 					renderLoading={this.renderLoading}

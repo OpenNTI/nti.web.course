@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import {DateTime} from 'nti-web-commons';
 
 import Overview from '../../../overview/lesson/OverviewContents';
 import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 
+import {filterOutNonRequiredItems} from './utils';
 import Loading from './Loading';
 import CompletedDate from './CompletedDate';
 
@@ -33,19 +35,31 @@ export default class ProgressOverviewContentsPage extends React.Component {
 		};
 	}
 
+	getOverview () {
+		const {page, completedItems} = this.props;
+		const overview = page && page.Items[0];
+
+		if (!overview) { return null; }
+
+
+
+		return filterOutNonRequiredItems(overview, completedItems);
+	}
+
 
 	render () {
-		const {loading, page, pageHeight, course, completedItems} = this.props;
-		const overview = page && page.Items[0];
+		const {loading, pageHeight, course, completedItems} = this.props;
+		const overview = this.getOverview();
 		const outlineNode = overview && overview.parent();
 		const available = outlineNode && outlineNode.getAvailableBeginning();
 		const ending = outlineNode && outlineNode.getAvailableEnding();
 		const dateFormat = 'MMMM, D YYYY';
+		const empty = overview && (!overview.Items || !overview.Items.length);
 
 		return (
-			<div className="progress-overview-contents-page">
+			<div className={cx('progress-overview-contents-page', {empty})}>
 				{loading && (<Loading pageHeight={pageHeight} />)}
-				{overview && overview.Items && overview.Items.length && (
+				{!loading && overview && (
 					<React.Fragment>
 						<PaddedContainer className="header">
 							<div className="sub-title">
@@ -56,17 +70,24 @@ export default class ProgressOverviewContentsPage extends React.Component {
 								{overview.title}
 							</div>
 						</PaddedContainer>
-						<Overview
-							overview={overview}
-							outlineNode={outlineNode}
-							course={course}
+						{
+							overview.Items && overview.Items.length ?
+								(
+									<Overview
+										overview={overview}
+										outlineNode={outlineNode}
+										course={course}
 
-							layout={Overview.List}
-							requiredOnly={true}
+										layout={Overview.List}
+										requiredOnly={true}
 
-							completedItems={completedItems}
-							extraColumns={[CompletedDate]}
-						/>
+										completedItems={completedItems}
+										extraColumns={[CompletedDate]}
+									/>
+								) :
+								null
+						}
+
 					</React.Fragment>
 				)}
 			</div>
