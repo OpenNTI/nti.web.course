@@ -26,7 +26,7 @@ export default class CourseAdminCompletion extends React.Component {
 		const {course} = this.props;
 
 		if(course.CompletionPolicy) {
-			this.setState({completable: true, percentage: course.CompletionPolicy.percentage});
+			this.setState({completable: true, percentage: (course.CompletionPolicy.percentage || 0) * 100});
 		}
 	}
 
