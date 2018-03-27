@@ -11,6 +11,10 @@
 		flex-direction: column;
 		justify-content: center;
 		margin-right: 250px;
+
+		.video-badges {
+			display: none;
+		}
 	}
 
 	.playlist {
