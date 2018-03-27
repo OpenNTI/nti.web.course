@@ -152,7 +152,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 		return (
 			<span className={cx('completed', {late, ontime: !late})}>
-				<span className="label" data-qtip={qtip}>{isNoSubmit ? t('completed.graded') : t('completed.label')}</span>
+				<span data-qtip={qtip}>{isNoSubmit ? t('completed.graded') : t('completed.label')}</span>
 				{(overtime != null || overdue != null) && (
 					<React.Fragment>
 						<span className="mod-open errors">{t('completed.modOpen')}</span>
