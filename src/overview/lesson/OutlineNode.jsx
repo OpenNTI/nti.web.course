@@ -75,14 +75,15 @@ export default class LessonView extends React.Component {
 
 	async setupFor (props = this.props) {
 		const {requiredOnly, layout} = this.state;
-		const {outlineNode} = this.props;
+		const {outlineNode, course} = this.props;
 
 		if (!outlineNode) { return; }
 
 		this.setState({ loading: true, error: null });
 
 		try {
-			const overview = await outlineNode.getContent({requiredOnly: requiredOnly && layout !== Grid});
+			const filterAllowed = course.CompletionPolicy && layout !== Grid;
+			const overview = await outlineNode.getContent({requiredOnly: filterAllowed && requiredOnly});
 
 			const isAdmin = this.props.course.isAdministrative;
 
