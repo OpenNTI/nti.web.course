@@ -190,7 +190,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 							className="overview-video-tap-area" href={link}
 						>
 							<div className="video-badges">
-								{required && <Required className="badge"/>}
+								{(!viewed && required) && <Required className="badge"/>}
 								{viewed && <div className="badge viewed">Viewed</div>}
 							</div>
 							<div className="wrapper">
