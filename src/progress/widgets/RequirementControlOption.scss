@@ -1,0 +1,17 @@
+@import "~nti-style-common";
+
+.require-control-option {
+	padding-left: 36px;
+	position: relative;
+	height: 42px;
+	line-height: 42px;
+	cursor: pointer;
+
+	i {
+		position: absolute;
+		left: 12px;
+		top: 12px;
+		color: $primary-blue;
+		font-size: 18px;
+	}
+}
