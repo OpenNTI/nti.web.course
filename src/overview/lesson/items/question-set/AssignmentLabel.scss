@@ -6,7 +6,7 @@
 	color: $tertiary-grey;
 
 	.completed {
-		&.ontime .label {
+		&.ontime .status-label {
 			color: $secondary-green;
 			background: none;
 			padding-left: 0;
