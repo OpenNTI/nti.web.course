@@ -2,18 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {CircularProgress} from 'nti-web-charts';
+import {Hooks} from 'nti-web-session';
+import {getService} from 'nti-web-client';
 
 const t = scoped('course.components.GradeCard', {
 	courseProgress: 'Course Progress',
 	outline: 'Outline'
 });
 
-export default class OutlineHeader extends React.Component {
+const LOAD_WAIT = 30000;
+
+export default
+@Hooks.afterBatchEvents()
+class OutlineHeader extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired
 	}
 
 	state = {}
+
+
+	afterBatchEvents (events) {
+		const {course} = this.props;
+
+		getService().then(service => {
+			service.get(course.NTIID).then(newCourse => {
+				this.loadProgress(newCourse);
+			});
+		});
+	}
 
 
 	getStateValues (courseProgress, isCompleted) {
@@ -94,7 +111,10 @@ export default class OutlineHeader extends React.Component {
 	}
 
 	componentDidUpdate (prevProps) {
-		if(prevProps.course !== this.props.course) {
+		// only update after a buffer time.  otherwise, updates will continually
+		// be triggered
+		if(!this.lastLoadTime || (Date.now() - this.lastLoadTime > LOAD_WAIT)) {
+			this.lastLoadTime = Date.now();
 			this.loadProgress(this.props.course);
 		}
 	}
