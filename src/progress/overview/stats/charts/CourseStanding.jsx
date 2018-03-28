@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import {scoped} from 'nti-lib-locale';
-import {Loading, Avatar} from 'nti-web-commons';
+import {Loading, DisplayName} from 'nti-web-commons';
 
 import {formatProgressStats} from './utils';
 
 const t = scoped('course.progress.overview.stats.charts.CourseStanding', {
 	label: 'Course Standing',
-	percentComplete: 'Percent Complete',
-	percentStudents: 'Percent Students'
+	progressBinLabel: '%(start)s - %(end)s%%',
+	progressPercentLabel: ' - %(percent)s%%'
 });
 
 export default class CourseStanding extends React.Component {
@@ -78,10 +79,12 @@ export default class CourseStanding extends React.Component {
 								<div className="line second" />
 								<div className="line third" />
 								<div className="line fourth" />
+								<div className="line fifth" />
 							</div>
 							<div className="series-container">
 								{this.renderStats(stats)}
 							</div>
+							{this.renderEnrollmentProgress()}
 						</div>
 					</div>
 				)}
@@ -96,7 +99,6 @@ export default class CourseStanding extends React.Component {
 
 		return (
 			<div className="series">
-				{this.renderEnrollmentProgress()}
 				{series.map((data, index) => {
 					const percentTotal = Math.round((data.total / upperBound) * 100);
 					const startingPercent = Math.floor(data.start * 100);
@@ -105,11 +107,16 @@ export default class CourseStanding extends React.Component {
 					const style = {
 						left: `${startingPercent}%`,
 						width: `${endingPercent - startingPercent}%`,
-						top: `${100 - percentTotal}%`
+						top: percentTotal ? `${100 - percentTotal}%` : 'auto'
 					};
 
 					return (
-						<div className="data" key={index} style={style} />
+						<div className={cx('data', {empty: percentTotal === 0})} key={index} style={style}>
+							<div className="fill" />
+							<div className="label">
+								{t('progressBinLabel', {start: startingPercent, end: endingPercent})}
+							</div>
+						</div>
 					);
 				})}
 			</div>
@@ -124,13 +131,19 @@ export default class CourseStanding extends React.Component {
 
 		const {CourseProgress, UserProfile} = enrollment;
 		const {PercentageProgress} = CourseProgress;
+		const percent = Math.floor(PercentageProgress * 100);
 		const style = {
-			left: `${Math.floor(PercentageProgress * 100)}%`
+			left: `${percent}%`
 		};
 
 		return (
-			<div className="enrollment-progress" style={style}>
-				<Avatar entity={UserProfile} />
+			<div className={cx('enrollment-progress', {left: percent > 50})} style={style}>
+				<div className="label">
+					<DisplayName entity={UserProfile} />
+					<span>
+						{t('progressPercentLabel', {percent})}
+					</span>
+				</div>
 			</div>
 		);
 	}
