@@ -4,6 +4,7 @@ import {scoped} from 'nti-lib-locale';
 import {CircularProgress} from 'nti-web-charts';
 import {Hooks} from 'nti-web-session';
 import {getService} from 'nti-web-client';
+import {HOC} from 'nti-web-commons';
 
 const t = scoped('course.components.GradeCard', {
 	courseProgress: 'Course Progress',
@@ -23,6 +24,8 @@ class OutlineHeader extends React.Component {
 
 
 	afterBatchEvents (events) {
+		// if an analytics event occurs, go ahead and assume we need
+		// a reload of progress data
 		const {course} = this.props;
 
 		getService().then(service => {
@@ -111,11 +114,25 @@ class OutlineHeader extends React.Component {
 	}
 
 	componentDidUpdate (prevProps) {
+		const isDifferentCourse = prevProps.course !== this.props.course;
+
 		// only update after a buffer time.  otherwise, updates will continually
 		// be triggered
-		if(!this.lastLoadTime || (Date.now() - this.lastLoadTime > LOAD_WAIT)) {
+		if(isDifferentCourse || !this.lastLoadTime || (Date.now() - this.lastLoadTime > LOAD_WAIT)) {
 			this.lastLoadTime = Date.now();
 			this.loadProgress(this.props.course);
+		}
+	}
+
+	onPreferredAccessChange () {
+		// if the PreferredAccess changes and we have a completable course for
+		// a student user, we should update the state to reflect the PreferredAccess
+		const {course} = this.props;
+
+		const isCompletable = Object.keys(course).includes('CompletionPolicy');
+
+		if(isCompletable && this.isStudent(course)) {
+			this.loadStudentProgress(course);
 		}
 	}
 
@@ -135,8 +152,10 @@ class OutlineHeader extends React.Component {
 
 		return (
 			<div className="outline-progress-header">
-				<CircularProgress width="38" height="38" value={this.state.pctComplete} showPctSymbol={false} deficitFillColor="#b8b8b8"/>
-				{this.renderLabel()}
+				<HOC.ItemChanges item={this.props.course.PreferredAccess} onItemChange={this.onPreferredAccessChange}>
+					<CircularProgress width="38" height="38" value={this.state.pctComplete} showPctSymbol={false} deficitFillColor="#b8b8b8"/>
+					{this.renderLabel()}
+				</HOC.ItemChanges>
 			</div>
 		);
 	}
