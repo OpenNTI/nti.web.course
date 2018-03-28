@@ -115,6 +115,15 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	}
 
 
+	updateCompletedState () {
+		const {item} = this.props;
+
+		if (item.updateCompletedState) {
+			item.updateCompletedState();
+		}
+	}
+
+
 	stop = () => {
 		const {video} = this;
 		if (video) {
@@ -125,6 +134,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 
 	onStop = () => {
 		this.setState({playing: false});
+		this.updateCompletedState();
 	}
 
 
@@ -135,6 +145,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 
 	onTouchMove = () => {
 		this.setState({playing: false});
+		this.updateCompletedState();
 	}
 
 

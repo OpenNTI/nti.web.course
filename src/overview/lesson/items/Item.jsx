@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {InactivityMonitor} from 'nti-lib-dom';
 import {Hooks} from 'nti-web-session';
 import {HOC} from 'nti-web-commons';
 
@@ -29,16 +30,33 @@ class LessonOverviewItem extends React.Component {
 			[item['target-NTIID']]: true,
 			[item.href]: true
 		};
-		const shouldUpdate = events.some(event => possibleIDs[event.ResourceID]);
+		const shouldUpdate = events.some(event => possibleIDs[event.ResourceId]);
 
-		if (!shouldUpdate) { return; }
+		this.isDirty = this.isDirty || shouldUpdate;
+
+		if (this.becameActive) {
+			this.setupFor(this.props);
+		}
+	}
+
+
+	componentDidMount () {
+		const monitor = this.activeStateMonitor = new InactivityMonitor();
+		this.unsubscribe = monitor.addChangeListener(this.onActiveStateChanged);
+		this.onActiveStateChanged(true);
 
 		this.setupFor(this.props);
 	}
 
 
-	componentDidMount () {
-		this.setupFor(this.props);
+	componentWillUnmount () {
+		this.unsubscribe();
+		this.unsubscribe = () => {};
+
+		this.unmounted = true;
+		this.setState = () => {};
+
+		this.onActiveStateChanged(false);
 	}
 
 
@@ -46,9 +64,22 @@ class LessonOverviewItem extends React.Component {
 		const {item:oldItem} = oldProps;
 		const {item:newItem} = this.props;
 
-		if (oldItem !== newItem) {
+		if (oldItem !== newItem || this.isDirty) {
 			this.setupFor(this.props);
 		}
+	}
+
+
+	onActiveStateChanged = (active) => {
+		if (active) {
+			if (this.isDirty) {
+				this.setupFor(this.props);
+			} else if (!this.isActive) {
+				this.becameActive = true;
+			}
+		}
+
+		this.isActive = active;
 	}
 
 
@@ -58,6 +89,9 @@ class LessonOverviewItem extends React.Component {
 		if (item.updateCompletedState) {
 			item.updateCompletedState();
 		}
+
+		delete this.isDirty;
+		delete this.becameActive;
 	}
 
 
