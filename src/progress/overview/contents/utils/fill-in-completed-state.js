@@ -1,4 +1,6 @@
 function fillInItems (items, enrollment) {
+	if (!items) { return; }
+
 	for (let item of items) {
 		const subItems = item.Items;
 
