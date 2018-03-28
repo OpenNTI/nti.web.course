@@ -3,8 +3,9 @@ export default class ProgressOverviewContentsStore {
 		this.dataSource = dataSource;
 		this.params = {
 			sort: 'by-lesson',
-			searchTerm,
-			requiredOnly: true
+			decorateProgress: false,
+			decorateSummary: false,
+			searchTerm
 		};
 
 		this.cache = {};
