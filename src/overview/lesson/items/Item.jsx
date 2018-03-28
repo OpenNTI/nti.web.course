@@ -18,7 +18,8 @@ class LessonOverviewItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		index: PropTypes.number,
-		itemRef: PropTypes.func
+		itemRef: PropTypes.func,
+		readOnly: PropTypes.bool
 	}
 
 	afterBatchEvents (events) {
@@ -84,9 +85,9 @@ class LessonOverviewItem extends React.Component {
 
 
 	setupFor (props) {
-		const {item} = props;
+		const {item, readOnly} = props;
 
-		if (item.updateCompletedState) {
+		if (item.updateCompletedState && !readOnly) {
 			item.updateCompletedState();
 		}
 

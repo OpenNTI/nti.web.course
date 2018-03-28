@@ -6,7 +6,7 @@ import {DateTime} from 'nti-web-commons';
 import Overview from '../../../overview/lesson/OverviewContents';
 import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 
-import {filterOutNonRequiredItems} from './utils';
+import {fillInCompletedState} from './utils';
 import Loading from './Loading';
 import CompletedDate from './CompletedDate';
 
@@ -18,7 +18,7 @@ export default class ProgressOverviewContentsPage extends React.Component {
 		error: PropTypes.object,
 		pageHeight: PropTypes.number,
 		course: PropTypes.object,
-		completedItems: PropTypes.object
+		enrollment: PropTypes.object
 	}
 
 
@@ -35,20 +35,39 @@ export default class ProgressOverviewContentsPage extends React.Component {
 		};
 	}
 
-	getOverview () {
-		const {page, completedItems} = this.props;
-		const overview = page && page.Items[0];
+	getOverview (props = this.props) {
+		const {page} = props;
 
-		if (!overview) { return null; }
+		return page && page.Items[0];
+	}
+
+	componentDidMount () {
+		this.setupFor(this.props);
+	}
 
 
+	componentDidUpdate (oldProps) {
+		const oldOverview = this.getOverview(oldProps);
+		const newOverview = this.getOverview(this.props);
 
-		return filterOutNonRequiredItems(overview, completedItems);
+		if (oldOverview !== newOverview) {
+			this.setupFor(this.props);
+		}
+	}
+
+
+	setupFor (props) {
+		const overview = this.getOverview(props);
+		const {enrollment} = props;
+
+		if (overview) {
+			fillInCompletedState(overview, enrollment);
+		}
 	}
 
 
 	render () {
-		const {loading, pageHeight, course, completedItems} = this.props;
+		const {loading, pageHeight, course} = this.props;
 		const overview = this.getOverview();
 		const outlineNode = overview && overview.parent();
 		const available = outlineNode && outlineNode.getAvailableBeginning();
@@ -79,9 +98,9 @@ export default class ProgressOverviewContentsPage extends React.Component {
 										course={course}
 
 										layout={Overview.List}
+										readOnly={true}
 										requiredOnly={true}
 
-										completedItems={completedItems}
 										extraColumns={[CompletedDate]}
 									/>
 								) :

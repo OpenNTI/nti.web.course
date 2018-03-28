@@ -7,7 +7,7 @@ import Loading from './Loading';
 import Page from './Page';
 
 const {InfiniteLoad} = Layouts;
-const PAGE_HEIGHT = 200;
+const PAGE_HEIGHT = 210;
 
 export default class ProgressOverviewContents extends React.Component {
 	static propTypes = {
@@ -32,25 +32,11 @@ export default class ProgressOverviewContents extends React.Component {
 
 
 	async setupFor (props) {
-		const {course, enrollment} = props;
-		const store = new Store(course.getContentDataSource());
+		const {course} = props;
 
 		this.setState({
-			completedItems: null
+			store: new Store(course.getContentDataSource())
 		});
-
-		try {
-			const completedItems = await enrollment.fetchLink('CompletedItems');
-
-			this.setState({
-				completedItems,
-				store
-			});
-		} catch (e) {
-			this.setState({
-				store
-			});
-		}
 	}
 
 
@@ -71,10 +57,10 @@ export default class ProgressOverviewContents extends React.Component {
 	}
 
 	renderPage = (props) => {
-		const {completedItems} = this.state;
+		const {course, enrollment} = this.props;
 
 		return (
-			<Page {...props} course={this.props.course} completedItems={completedItems} />
+			<Page {...props} course={course} enrollment={enrollment} />
 		);
 	}
 
