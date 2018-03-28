@@ -117,7 +117,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		let text = '';
 
 		if (assignment.isNonSubmit()) {
-			text = t('start');
+			text = t('view');
 		} else if (assignmentHistory) {
 			text = t('review');
 		} else if (dueDate && dueDate < now) {
