@@ -63,6 +63,8 @@ class ProgressOverview extends React.Component {
 		enrollment: PropTypes.object,
 		batchLink: PropTypes.string,
 		singleItem: PropTypes.bool,
+		loadNextPage: PropTypes.func,
+		loadPrevPage: PropTypes.func,
 
 		onClose: PropTypes.func,
 		onDismiss: PropTypes.func,
@@ -75,8 +77,6 @@ class ProgressOverview extends React.Component {
 		currentItemIndex: PropTypes.number,
 		hasNextItem: PropTypes.bool,
 		hasPrevItem: PropTypes.bool,
-		loadNextItem: PropTypes.func,
-		loadPrevItem: PropTypes.func
 	}
 
 	componentDidMount () {

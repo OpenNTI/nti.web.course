@@ -20,8 +20,8 @@ export default class ProgressOverviewHEader extends React.Component {
 		hasNextItem: PropTypes.bool,
 		hasPrevItem: PropTypes.bool,
 
-		loadNextItem: PropTypes.func,
-		loadPrevItem: PropTypes.func
+		loadNextPage: PropTypes.func,
+		loadPrevPage: PropTypes.func
 	}
 
 
@@ -34,20 +34,20 @@ export default class ProgressOverviewHEader extends React.Component {
 	}
 
 
-	loadPrevItem = () => {
-		const {loadPrevItem} = this.props;
+	loadPrevPage = () => {
+		const {loadPrevPage, hasPrevItem} = this.props;
 
-		if (loadPrevItem) {
-			loadPrevItem();
+		if (loadPrevPage && hasPrevItem) {
+			loadPrevPage();
 		}
 	}
 
 
-	loadNextItem = () => {
-		const {loadNextItem} = this.props;
+	loadNextPage = () => {
+		const {loadNextPage, hasNextItem} = this.props;
 
-		if (loadNextItem) {
-			loadNextItem();
+		if (loadNextPage && hasNextItem) {
+			loadNextPage();
 		}
 	}
 
@@ -80,10 +80,10 @@ export default class ProgressOverviewHEader extends React.Component {
 						<div className="current-page">
 							{t('page', {page: currentItemIndex || 0, total: totalItems || 0})}
 						</div>
-						<div className={cx('page-up', 'page-control', {disabled: !hasPrevItem})} onClick={this.loadPrevItem}>
+						<div className={cx('page-up', 'page-control', {disabled: !hasPrevItem})} onClick={this.loadPrevPage}>
 							<i className="icon-chevron-up" />
 						</div>
-						<div className={cx('page-down', 'page-control', {disabled: !hasNextItem})} onClick={this.loadNextItem}>
+						<div className={cx('page-down', 'page-control', {disabled: !hasNextItem})} onClick={this.loadNextPage}>
 							<i className="icon-chevron-down" />
 						</div>
 					</React.Fragment>
