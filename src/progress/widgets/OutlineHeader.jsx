@@ -29,7 +29,7 @@ class OutlineHeader extends React.Component {
 		const {course} = this.props;
 
 		getService().then(service => {
-			service.get(course.NTIID).then(newCourse => {
+			service.getObject(course.NTIID).then(newCourse => {
 				this.loadProgress(newCourse);
 			});
 		});
