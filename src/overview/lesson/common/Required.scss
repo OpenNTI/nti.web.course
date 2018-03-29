@@ -6,6 +6,10 @@
 	display: inline-block;
 	margin: 0;
 	padding: 5px;
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: $tertiary-grey;
 
 	.nti-separated-inline-list li & {
 		display: inline-block;
