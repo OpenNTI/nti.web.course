@@ -6,7 +6,8 @@ import {scoped} from 'nti-lib-locale';
 import Store from './Store';
 import Header from './Header';
 import Stats from './stats';
-import Contents from './contents';
+import DefaultContents from './contents';
+import ScormContents from './scorm-contents';
 
 const t = scoped('course.progress.overview.View', {
 	error: 'Unable to load Progress.'
@@ -115,6 +116,7 @@ class ProgressOverview extends React.Component {
 
 	render () {
 		const {course, currentItem, loading, error} = this.props;
+		const Contents = course.isScormInstance ? ScormContents : DefaultContents;
 
 		return (
 			<InfiniteLoad.Container className="progress-overview-container">
