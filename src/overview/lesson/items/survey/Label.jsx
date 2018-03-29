@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {List} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
+import Required from '../../common/Required';
+
 const DEFAULT_TEXT = {
 	question: {
 		one: '%(count)s Question',
@@ -20,8 +22,11 @@ LessonOverviewSurveyLabel.propTypes = {
 	item: PropTypes.object
 };
 export default function LessonOverviewSurveyLabel ({item}) {
+	const required = (item || {}).CompletionRequired;
+
 	return (
 		<List.SeparatedInline className="lesson-overview-survey-label">
+			{required && <Required/>}
 			<span className="question-count">{t('question', {count: item.getQuestionCount()})}</span>
 			<span className="submissions">{t('submissions', {count: item.submissions})}</span>
 		</List.SeparatedInline>
