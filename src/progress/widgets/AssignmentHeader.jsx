@@ -43,7 +43,7 @@ export default class AssignmentHeader extends React.Component {
 	renderPublishControl () {
 		return (
 			<Flyout.Triggered
-				className="assignment-header-publish-flyout"
+				className="course-progress-assignment-header-publish-flyout"
 				trigger={this.renderPublishTrigger()}
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 				sizing={Flyout.SIZES.MATCH_SIDE}
@@ -65,7 +65,7 @@ export default class AssignmentHeader extends React.Component {
 	renderDueDateControl () {
 		return (
 			<Flyout.Triggered
-				className="assignment-header-due-date-flyout"
+				className="course-progress-assignment-header-due-date-flyout"
 				trigger={this.renderDueDateTrigger()}
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 				sizing={Flyout.SIZES.MATCH_SIDE}
@@ -138,7 +138,7 @@ export default class AssignmentHeader extends React.Component {
 
 	render () {
 		return (
-			<div className="assignment-header">
+			<div className="course-progress-assignment-header">
 				{this.renderControls()}
 				{this.renderStatistics()}
 			</div>
