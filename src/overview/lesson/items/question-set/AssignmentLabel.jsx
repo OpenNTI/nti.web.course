@@ -159,7 +159,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 						{overtime != null && (<span className="errors" data-qtip={overtime}>{t('completed.overTime')}</span>)}
 						{overtime != null && overdue != null && (<span className="mod-separator errors">{t('completed.modSeparator')}</span>)}
 						{overdue != null && (<span className="errors" data-qtip={overdue}>{t('completed.overDue')}</span>)}
-						<span className="mod-close erros">{t('completed.modClose')}</span>
+						<span className="mod-close errors">{t('completed.modClose')}</span>
 					</React.Fragment>
 				)}
 				<DateTime className="date" date={completedDate} format="dddd, MMMM D" />
