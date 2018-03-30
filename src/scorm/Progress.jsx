@@ -43,7 +43,7 @@ export default class Progress extends Component {
 			const courseProgress = await bundle.fetchLink('ProgressStats');
 
 			this.setState({
-				pctProgress: courseProgress.PercentageProgress,
+				pctProgress: Math.floor((courseProgress.PercentageProgress || 0) * 100),
 				courseProgress
 			});
 		}
