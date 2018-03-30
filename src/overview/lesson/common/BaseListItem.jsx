@@ -30,7 +30,9 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 
 		linkToObject: PropTypes.object,
 		linkToContext: PropTypes.any,
-		onClick: PropTypes.func
+		onClick: PropTypes.func,
+
+		noCompletedStatus: PropTypes.bool
 	}
 
 	state = {}
@@ -120,8 +122,8 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 
 
 	renderCompletedStatus () {
-		const {item} = this.props;
-		if(item.hasCompleted && item.hasCompleted()) {
+		const {item, noCompletedStatus} = this.props;
+		if(item.hasCompleted && item.hasCompleted() && !noCompletedStatus) {
 			return (
 				<div className="progress-icon">
 					<CircularProgress width={20} height={20} isComplete/>

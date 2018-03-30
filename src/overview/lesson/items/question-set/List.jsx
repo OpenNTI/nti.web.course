@@ -34,6 +34,8 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 				renderLabels={this.renderLabels}
 
 				linkToObject={assignment || assessment}
+
+				noCompletedStatus={!!assignment}
 			/>
 		);
 	}
