@@ -20,7 +20,7 @@ export default class RequirementControl extends React.Component {
 	static propTypes = {
 		record: PropTypes.object.isRequired,
 		onChange: PropTypes.func,
-		className: PropTypes.func
+		className: PropTypes.string
 	}
 
 	state = {}
