@@ -1,0 +1,26 @@
+.lesson-overview-base-assessment-grid-item {
+	.icon {
+		display: inline-block;
+		position: relative;
+
+		.progress-icon {
+			position: absolute;
+			bottom: -11px;
+			right: -2px;
+			width: 24px;
+			height: 24px;
+			background-color: white;
+			border-radius: 24px;
+
+			.circular-progress {
+				position: absolute;
+				top: 2px;
+				left: 2px;
+
+				.check {
+					top: 3px !important;
+				}
+			}
+		}
+	}
+}

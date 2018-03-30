@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
+import {CircularProgress} from 'nti-web-charts';
 
 import Base from '../../common/BaseAssessmentGridItem';
 
@@ -34,9 +35,25 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 	}
 
 
+	renderCompletedStatus () {
+		const {item} = this.props;
+
+		if(item.hasCompleted && item.hasCompleted()) {
+			return (
+				<div className="progress-icon">
+					<CircularProgress width={20} height={20} isComplete/>
+				</div>
+			);
+		}
+	}
+
+
 	renderIcon = () => {
 		return (
-			<Icon large />
+			<div className="icon">
+				<Icon large />
+				{this.renderCompletedStatus()}
+			</div>
 		);
 	}
 
