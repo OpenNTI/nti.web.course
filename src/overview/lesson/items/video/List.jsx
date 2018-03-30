@@ -36,7 +36,7 @@ export default class LessonOverviewVideoListItem extends React.Component {
 		const {item} = this.props;
 
 		try {
-			const thumb = await item.getThumbnail();
+			const thumb = (await item.getThumbnail()) || item.poster; //legacy fallback
 			const duration = await item.getDuration();
 
 			this.setState({thumb, duration});
