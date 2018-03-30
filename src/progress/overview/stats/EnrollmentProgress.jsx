@@ -16,7 +16,7 @@ ProgressOverviewStatsEnrollment.propTypes = {
 	course: PropTypes.object
 };
 
-const getScormStatus = (enrollment) => {
+export const getScormStatus = (enrollment) => {
 	const { CourseProgress } = enrollment || {};
 	const { Completed, CompletedItem } = CourseProgress || {};
 
