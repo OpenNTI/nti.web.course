@@ -83,6 +83,12 @@
             padding: 10px 0px;
         }
     }
+
+	.scorm-student-progress {
+		display: flex;
+		width: 100%;
+	}
+
     .scorm-instructor-card {
         .scorm-edit-link, .scorm-export-link {
             display: block;
