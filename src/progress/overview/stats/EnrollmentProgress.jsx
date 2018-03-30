@@ -19,6 +19,11 @@ ProgressOverviewStatsEnrollment.propTypes = {
 const getScormStatus = (enrollment) => {
 	const { CourseProgress } = enrollment || {};
 	const { Completed, CompletedItem } = CourseProgress || {};
+
+	if (Completed == null || CourseProgress == null) {
+		return '';
+	}
+
 	if (Completed && CompletedItem && CompletedItem.Success) {
 		return 'passed';
 	} else if (Completed && CompletedItem && CompletedItem.Success === false) {
