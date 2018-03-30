@@ -7,7 +7,8 @@ import Required from '../../common/Required';
 
 export default class LessonOverviewVideoListItem extends React.Component {
 	static propTypes = {
-		item: PropTypes.object
+		item: PropTypes.object,
+		course: PropTypes.object
 	}
 
 	state = {poster: null}
@@ -33,11 +34,12 @@ export default class LessonOverviewVideoListItem extends React.Component {
 
 
 	async setupFor (props) {
-		const {item} = this.props;
+		const {item, course} = this.props;
 
 		try {
-			const thumb = (await item.getThumbnail()) || item.poster; //legacy fallback
-			const duration = await item.getDuration();
+			const v = item.sources != null ? item : (await course.getVideoIndex()).get(item.getID());
+			const thumb = await v.getThumbnail();
+			const duration = await v.getDuration();
 
 			this.setState({thumb, duration});
 		} catch (e) {
