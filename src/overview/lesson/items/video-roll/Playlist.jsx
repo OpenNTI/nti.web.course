@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Video from '../video/Grid';
+import CompletionMonitor from '../../common/CompletionMonitor';
 
 import PlaylistItem from './PlaylistItem';
 
@@ -9,6 +10,7 @@ export default class VideoRollPlaylist extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
 		item: PropTypes.object,
+		readOnly: PropTypes.bool
 	}
 
 	state = {
@@ -24,7 +26,8 @@ export default class VideoRollPlaylist extends React.Component {
 	render () {
 		const {
 			props: {
-				item: {Items: items, NTIID}
+				item: {Items: items, NTIID},
+				readOnly
 			},
 			state: {
 				selected
@@ -36,15 +39,17 @@ export default class VideoRollPlaylist extends React.Component {
 		return (
 			<div className="lesson-overview-video-roll-playlist-container" data-ntiid={NTIID}>
 				<div className="stage">
-					<Video {...this.props} item={active}/>
+					<CompletionMonitor {...this.props} item={active} component={Video} />
 				</div>
 				<ul className="playlist">
 					{items.map((x => (
-						<PlaylistItem
+						<CompletionMonitor
+							item={x}
+							component={PlaylistItem}
 							key={x.getID()}
 							selected={active === x}
-							item={x}
 							onClick={this.handleSelect}
+							readOnly={readOnly}
 						/>
 					)))}
 				</ul>

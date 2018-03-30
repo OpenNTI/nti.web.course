@@ -6,7 +6,7 @@ import {getService} from 'nti-web-client';
 import {Layouts} from 'nti-web-commons';
 // import {Tasks} from 'nti-commons';
 
-import {Overview} from '../../src';
+import {Progress, Overview} from '../../src';
 
 import Picker from './PickCourse';
 
@@ -57,11 +57,21 @@ class Test extends React.Component {
 		return {
 			router: {
 				baseroute: '/',
+				route: {
+					location: {
+						pathname: '/completion'
+					}
+				},
 				getRouteFor: () => {
 					return {
 						href: '/foo',
 						download: true
 					};
+				},
+				history: {
+					push: () => {},
+					replace: () => {},
+					createHref: () => {}
 				}
 			}
 		};
@@ -83,6 +93,13 @@ class Test extends React.Component {
 		});
 	}
 
+	showProgress = () => {
+		const {course} = this.state;
+		const link = course.getLink('CourseEnrollmentRoster');
+		const overview = Progress.Overview;
+
+		overview.showForBatchLink(`${link}?batchSize=1&batchStart=0`, course);
+	}
 
 
 	render () {
@@ -93,7 +110,10 @@ class Test extends React.Component {
 
 		return (
 			<div>
-				{nodes.slice(0, 3).map(node => (
+				<button onClick={this.showProgress}>
+					Show Progress
+				</button>
+				{nodes.slice(0, 1).map(node => (
 					<Overview.Lesson key={node.NTIID} course={course} outlineNode={node} />
 				))}
 			</div>
