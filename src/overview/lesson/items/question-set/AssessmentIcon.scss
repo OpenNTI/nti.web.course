@@ -1,0 +1,10 @@
+@import '~nti-style-common';
+
+.lesson-overview-self-assessment-icon {
+	width: rem-calc(44px);
+	height: rem-calc(44px);
+	background-size: cover;
+	background-image: url('../assets/self-check.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+}

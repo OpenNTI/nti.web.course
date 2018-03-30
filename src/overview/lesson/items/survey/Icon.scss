@@ -3,13 +3,7 @@
 .lesson-overview-survey-icon {
 	width: rem-calc(48px);
 	height: rem-calc(48px);
-
-	background-image: url('../assets/survey.png');
+	background-image: url('../assets/poll-survey.svg');
 	background-size: cover;
 	background-repeat: no-repeat;
-
-	&.large {
-		width: rem-calc(54px);
-		height: rem-calc(54px);
-	}
 }

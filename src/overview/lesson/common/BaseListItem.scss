@@ -25,15 +25,15 @@
 		flex: 0 0 auto;
 		width: 80px;
 		text-align: center;
+		position: relative;
 
 		.icon {
 			display: inline-block;
-			position: relative;
 
 			.progress-icon {
 				position: absolute;
 				bottom: -11px;
-				right: -2px;
+				right: 6px;
 				width: 24px;
 				height: 24px;
 				background-color: white;

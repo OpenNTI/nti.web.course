@@ -78,7 +78,9 @@ export default class LessonOverviewVideoListItem extends React.Component {
 
 		return (
 			<div className="lesson-overview-video-list-item-icon">
-				{thumb && (<img src={thumb} />)}
+				{thumb && (
+					<span className="thumb" style={{backgroundImage: `url(${thumb})`}} />
+				)}
 			</div>
 		);
 	}
