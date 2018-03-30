@@ -153,7 +153,7 @@ class OutlineHeader extends React.Component {
 		return (
 			<HOC.ItemChanges item={this.props.course.PreferredAccess} onItemChange={this.onPreferredAccessChange}>
 				<div className="outline-progress-header">
-					<CircularProgress width="38" height="38" value={this.state.pctComplete} showPctSymbol={false} deficitFillColor="#b8b8b8"/>
+					<CircularProgress width={38} height={38} value={this.state.pctComplete} showPctSymbol={false} deficitFillColor="#b8b8b8"/>
 					{this.renderLabel()}
 				</div>
 			</HOC.ItemChanges>
