@@ -11,7 +11,6 @@ export default class ScormProgressOverviewContents extends React.Component {
 	};
 
 	state = {
-		completedItems: [],
 		overview: {}
 	};
 
@@ -32,10 +31,10 @@ export default class ScormProgressOverviewContents extends React.Component {
 	}
 
 	compnentDidUpdate (prevProps) {
-		const { course: oldCourse } = prevProps;
-		const { course: newCourse } = this.props;
+		const { course: oldCourse, enrollment: oldEnrollment } = prevProps;
+		const { course: newCourse, enrollment: newEnrollment } = this.props;
 
-		if (oldCourse !== newCourse) {
+		if (oldCourse !== newCourse && oldEnrollment !== newEnrollment) {
 			this.setupFor(this.props);
 		}
 	}
@@ -43,16 +42,24 @@ export default class ScormProgressOverviewContents extends React.Component {
 	async setupFor (props) {
 		const { course, enrollment } = props;
 
+		if (!enrollment) {
+			return;
+		}
+
 		try {
-			const completedItems = await enrollment.fetchLink('CompletedItems');
 			const assignments = await course.getAllAssignments();
+
+			// Need to resolve the completion since there isn't a overview
+			if (assignments && assignments.length > 0) {
+				assignments.forEach(assignment => assignment.updateCompletedState(enrollment));
+			}
+
 			const overview = {
 				title: 'Assignments',
 				Items: assignments,
 			};
 
 			this.setState({
-				completedItems,
 				overview
 			});
 		} catch (e) {
@@ -61,7 +68,7 @@ export default class ScormProgressOverviewContents extends React.Component {
 	}
 
 	render () {
-		const { overview, completedItems } = this.state;
+		const { overview } = this.state;
 		const { course } = this.props;
 		const shouldRenderOverview = overview && overview.Items && overview.Items.length > 0;
 
@@ -73,9 +80,9 @@ export default class ScormProgressOverviewContents extends React.Component {
 						outlineNode={{}}
 						course={course}
 						layout={Overview.List}
-						requiredOnly={true}
-						completedItems={completedItems}
+						requiredOnly
 						extraColumns={[CompletedDate]}
+						readOnly
 					/>
 				)}
 			</div>

@@ -32,7 +32,9 @@ class LessonOverviewQuestionSet extends React.Component {
 		item: PropTypes.object,
 		course: PropTypes.object,
 
-		layout: PropTypes.oneOf([Grid, List])
+		layout: PropTypes.oneOf([Grid, List]),
+
+		readOnly: PropTypes.bool
 	}
 
 	state = {}
@@ -61,9 +63,9 @@ class LessonOverviewQuestionSet extends React.Component {
 			const collection = await course.getAssignments();
 
 			if (collection.isAssignment(target)) {
-				this.setupAssignment(target, collection);
+				this.setupAssignment(target, collection, item);
 			} else {
-				this.setupAssessment(target, collection);
+				this.setupAssessment(target, collection, item);
 			}
 		} catch (e) {
 			//TODO: figure out what to do here is anything
@@ -73,10 +75,12 @@ class LessonOverviewQuestionSet extends React.Component {
 
 	async setupAssignment (id, collection) {
 		try {
-			const assignment = await collection.fetchAssignment(id);
+			const assignment = this.props.readOnly ?
+				await collection.getAssignment(id) :
+				await collection.fetchAssignment(id);
 
 			this.setState({
-				assignment,
+				assignment: assignment,
 				networkError: false
 			}, async () => {
 				try {
