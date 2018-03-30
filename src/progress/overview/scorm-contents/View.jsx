@@ -63,17 +63,21 @@ export default class ScormProgressOverviewContents extends React.Component {
 	render () {
 		const { overview, completedItems } = this.state;
 		const { course } = this.props;
+		const shouldRenderOverview = overview && overview.Items && overview.Items.length > 0;
+
 		return (
 			<div className="progress-overview-contents">
-				<Overview
-					overview={overview}
-					outlineNode={{}}
-					course={course}
-					layout={Overview.List}
-					requiredOnly={true}
-					completedItems={completedItems}
-					extraColumns={[CompletedDate]}
-				/>
+				{shouldRenderOverview && (
+					<Overview
+						overview={overview}
+						outlineNode={{}}
+						course={course}
+						layout={Overview.List}
+						requiredOnly={true}
+						completedItems={completedItems}
+						extraColumns={[CompletedDate]}
+					/>
+				)}
 			</div>
 		);
 	}

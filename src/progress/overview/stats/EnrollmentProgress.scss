@@ -39,4 +39,20 @@
 		font: normal 600 1rem/1.4 $body-font-family;
 		color: $primary-grey;
 	}
+
+	.scorm-completion-status {
+		text-align: center;
+
+		&.passed, &.completed {
+			color: $primary-green;
+		}
+
+		&.failed {
+			color: $primary-red;
+		}
+
+		&.incomplete {
+			color: $tertiary-grey;
+		}
+	}
 }
