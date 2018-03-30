@@ -37,6 +37,13 @@ export default class Progress extends Component {
 		this.loadData(this.props.bundle);
 	}
 
+
+	componentDidUpdate (prevProps) {
+		if(prevProps.bundle !== this.props.bundle) {
+			this.loadData(this.props.bundle);
+		}
+	}
+
 	async loadData (bundle) {
 		if(this.props.isAdmin) {
 			// load ProgressStats
