@@ -20,6 +20,12 @@ export default class PlaylistItem extends React.Component {
 	}
 
 
+	componentWillUnmount () {
+		this.unmounted = true;
+		this.setState = () => {};
+	}
+
+
 	componentWillReceiveProps (nextProps) {
 		if (this.props.item !== nextProps.item) {
 			this.resolveDuration(nextProps);

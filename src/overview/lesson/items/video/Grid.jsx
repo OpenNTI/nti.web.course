@@ -43,6 +43,11 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		this.fillInVideo(this.props);
 	}
 
+	componentWillUnmount () {
+		this.unmounted = true;
+		this.setState = () => {};
+	}
+
 
 	componentWillReceiveProps (nextProps) {
 		if (this.getID() !== this.getID(nextProps)) {
@@ -68,7 +73,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		this.activeTask = task;
 
 		const load = async () => {
-			if (this.activeTask !== task) {
+			if (this.activeTask !== task || this.unmounted) {
 				return;
 			}
 
@@ -80,7 +85,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 				const v = item.sources != null ? item : (await course.getVideoIndex()).get(item.getID());
 				const poster = await (v ? v.getPoster() : Promise.resolve(null));
 
-				if (this.activeTask !== task) {
+				if (this.activeTask !== task || this.unmounted) {
 					return;
 				}
 

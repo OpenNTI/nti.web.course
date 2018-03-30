@@ -40,6 +40,12 @@ class LessonOverviewQuestionSet extends React.Component {
 	state = {}
 
 
+	componentWillUnmount () {
+		this.unmounted = true;
+		this.setState = () => {};
+	}
+
+
 	componentWillReceiveProps (nextProps) {
 		const {item:newItem, course:newCourse} = nextProps;
 		const {item:oldItem, course:oldCourse} = this.props;
@@ -82,21 +88,21 @@ class LessonOverviewQuestionSet extends React.Component {
 			this.setState({
 				assignment: assignment,
 				networkError: false
-			}, async () => {
-				try {
-					const history = await assignment.loadHistory();
-
-					this.setState({
-						assignmentHistory: history
-					});
-				} catch (e) {
-					if (isNetworkError(e)) {
-						this.setNetworkError();
-					}
-
-					//its fine if we can't load the history
-				}
 			});
+
+			try {
+				const history = await assignment.loadHistory();
+
+				this.setState({
+					assignmentHistory: history
+				});
+			} catch (e) {
+				if (isNetworkError(e)) {
+					this.setNetworkError();
+				}
+				//its fine if we can't load the history
+			}
+
 		} catch (e) {
 			//TODO: figure out if/how we need to handle this case
 		}

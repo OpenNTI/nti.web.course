@@ -104,14 +104,30 @@ class LessonOverviewItem extends React.Component {
 			otherProps.ref = x => itemRef(index, x);
 		}
 
+
+
 		return (
-			<HOC.ItemChanges item={item}>
+			<Wrap item={item}>
 				{
 					Cmp ?
 						(<Cmp {...otherProps} index={index} item={item} />) :
 						(<span>MissingItem: {item.MimeType}</span>)
 				}
-			</HOC.ItemChanges>
+			</Wrap>
 		);
 	}
+}
+
+
+Wrap.propTypes = {
+	children: PropTypes.node,
+	item: PropTypes.object,
+};
+function Wrap (props) {
+	const {item, children} = props;
+	return item.addListener ? (
+		<HOC.ItemChanges {...props}/>
+	) : (
+		React.Children.only(children)
+	);
 }
