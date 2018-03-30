@@ -9,7 +9,8 @@ import {formatProgressStats} from './utils';
 const t = scoped('course.progress.overview.stats.charts.CourseStanding', {
 	label: 'Course Standing',
 	progressBinLabel: '%(start)s - %(end)s%%',
-	progressPercentLabel: ' - %(percent)s%%'
+	progressPercentLabel: ' - %(percent)s%%',
+	error: 'Unable to load progress statistics.'
 });
 
 export default class CourseStanding extends React.Component {
@@ -54,6 +55,7 @@ export default class CourseStanding extends React.Component {
 				});
 			} catch (e) {
 				this.setState({
+					loading: false,
 					error: e
 				});
 			}
@@ -62,7 +64,7 @@ export default class CourseStanding extends React.Component {
 
 
 	render () {
-		const {loading, stats} = this.state;
+		const {loading, error, stats} = this.state;
 
 		return (
 			<div className="progress-overview-charts-course-standing">
@@ -71,6 +73,7 @@ export default class CourseStanding extends React.Component {
 						<Loading.Spinner />
 					</div>
 				)}
+				{!loading && error && (<div className="error-container"><div className="error">{t('error')}</div></div>)}
 				{!loading && stats && (
 					<div className="chart-container">
 						<div className="chart">
