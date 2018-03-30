@@ -37,13 +37,20 @@ export default class Progress extends Component {
 		this.loadData(this.props.bundle);
 	}
 
+
+	componentDidUpdate (prevProps) {
+		if(prevProps.bundle !== this.props.bundle) {
+			this.loadData(this.props.bundle);
+		}
+	}
+
 	async loadData (bundle) {
 		if(this.props.isAdmin) {
 			// load ProgressStats
 			const courseProgress = await bundle.fetchLink('ProgressStats');
 
 			this.setState({
-				pctProgress: courseProgress.PercentageProgress,
+				pctProgress: Math.floor((courseProgress.PercentageProgress || 0) * 100),
 				courseProgress
 			});
 		}
