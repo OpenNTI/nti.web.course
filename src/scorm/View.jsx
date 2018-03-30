@@ -77,7 +77,7 @@ class Scorm extends Component {
 					{canLaunchCourse && <Button className="scorm-launch-button" href={this.getLaunchLink()} rel="external">{t('launch')}</Button>}
 					{showEditor && !Responsive.isMobile() && <Editor onDismiss={this.onDismiss} onFinish={this.onFinish} bundle={bundle} />}
 				</div>
-				{this.isCompletableCourse() && <Progress bundle={bundle} isAdmin/>}
+				{this.isCompletableCourse() && bundle.isAdministrative() && <Progress bundle={bundle} isAdmin/>}
 			</div>
 		);
 	}
