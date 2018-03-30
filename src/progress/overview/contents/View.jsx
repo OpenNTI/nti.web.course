@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Layouts} from 'nti-web-commons';
+import {Layouts, EmptyState} from 'nti-web-commons';
+import {scoped} from 'nti-lib-locale';
 
 import Store from './Store';
 import Loading from './Loading';
 import Page from './Page';
+
+const t = scoped('course.progress.overview.content.View', {
+	empty: 'There are no completable items in this course.'
+});
 
 const {InfiniteLoad} = Layouts;
 const PAGE_HEIGHT = 210;
@@ -51,6 +56,8 @@ export default class ProgressOverviewContents extends React.Component {
 					defaultPageHeight={PAGE_HEIGHT}
 					renderPage={this.renderPage}
 					renderLoading={this.renderLoading}
+					renderError={this.renderEmpty}
+					renderEmpty={this.renderEmpty}
 				/>
 			</div>
 		);
@@ -68,6 +75,13 @@ export default class ProgressOverviewContents extends React.Component {
 	renderLoading = () => {
 		return (
 			<Loading pageHeight={PAGE_HEIGHT * 3} />
+		);
+	}
+
+
+	renderEmpty = () => {
+		return (
+			<EmptyState header={t('empty')} />
 		);
 	}
 }
