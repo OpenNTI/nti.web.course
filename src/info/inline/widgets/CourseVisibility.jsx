@@ -71,7 +71,7 @@ export default class CourseVisibility extends React.Component {
 		const { OpenEnrollment, IMSEnrollment, FiveminuteEnrollment, StoreEnrollment } = items;
 
 		const isForCredit = (IMSEnrollment && IMSEnrollment.SourcedID) || FiveminuteEnrollment;
-		const isPublic = (StoreEnrollment || (OpenEnrollment && OpenEnrollment.enabled)) && !catalogEntry.is_non_public;
+		const isPublic = (StoreEnrollment || (OpenEnrollment && OpenEnrollment.enabled)) && !catalogEntry.isHidden;
 
 		let label = t('invitationOnly');
 
@@ -95,7 +95,7 @@ export default class CourseVisibility extends React.Component {
 		return this.renderLabeledContent(
 			t('visibleInCatalog'),
 			null,
-			catalogEntry.is_non_public ? t('no') : t('yes')
+			catalogEntry.isHidden ? t('no') : t('yes')
 		);
 	}
 
