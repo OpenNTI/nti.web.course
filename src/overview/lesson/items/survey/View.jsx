@@ -9,7 +9,7 @@ import GridCmp from './Grid';
 
 export default
 @Registry.register('application/vnd.nextthought.surveyref')
-class LessonOverviewTimeline extends React.Component {
+class LessonOverviewSurveyItem extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([Grid, List])
 	}
