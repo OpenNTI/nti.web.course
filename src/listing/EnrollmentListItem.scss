@@ -1,0 +1,88 @@
+@import '~nti-style-common';
+
+@mixin bar {
+	border-radius: 100px;
+	background-color: $border-grey-light;
+}
+
+@mixin value {
+	border-radius: 100px;
+	background-color: $primary-green;
+}
+
+.nti-course-enrollment-list-item {
+	padding: rem-calc(20px);
+	display: flex;
+	flex-direction: row;
+	height: rem-calc(143px);
+
+	.course-enrollment-icon {
+		width: 20%;
+		max-width: rem-calc(140px);
+	}
+
+	.course-enrollment-meta {
+		display: flex;
+		flex-direction: column;
+		padding: rem-calc(0 20px);
+
+		.label {
+			font: normal 600 0.625rem/2 $body-font-family;
+			color: $tertiary-grey;
+			text-transform: uppercase;
+			flex: 0 0 auto;
+		}
+
+		.title {
+			font: normal 600 1rem/1.2 $header-font-family;
+			color: $primary-grey;
+			text-transform: uppercase;
+			flex: 1 1 auto;
+		}
+
+		.progress-container {
+			flex: 0 0 auto;
+		}
+	}
+
+	.progress-container {
+		.completed {
+			.date {
+				display: inline-block;
+				vertical-align: middle;
+				font: normal 600 0.625rem/2 $body-font-family;
+				color: $primary-green;
+				text-transform: uppercase;
+			}
+
+			i {
+				display: inline-block;
+				vertical-align: middle;
+				color: white;
+				background-color: $primary-green;
+				margin-right: 0.5rem;
+				padding: 0.1875rem;
+				border-radius: 24px;
+			}
+		}
+
+		progress {
+			appearance: none;
+			border: none;
+			height: 5px;
+			@include bar();
+
+			&::-webkit-progress-bar {
+				@include bar();
+			}
+
+			&::-webkit-progress-value {
+				@include value();
+			}
+
+			&::-moz-progress-bar {
+				@include value();
+			}
+		}
+	}
+}
