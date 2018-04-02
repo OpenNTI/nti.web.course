@@ -5,7 +5,7 @@ import CourseVisibility from '../CourseVisibility';
 
 /* eslint-env jest */
 describe('CourseVisibility test', () => {
-	function makeCatalogEntry (Preview, isNonPublic, StartDate, optionNames) {
+	function makeCatalogEntry (Preview, isHidden, StartDate, optionNames) {
 		let Items = {};
 
 		(optionNames || []).forEach(o => {
@@ -21,7 +21,7 @@ describe('CourseVisibility test', () => {
 				};
 			},
 			Preview,
-			'is_non_public': isNonPublic,
+			isHidden,
 			StartDate
 		};
 	}
