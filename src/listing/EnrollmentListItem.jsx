@@ -73,7 +73,7 @@ export default class CourseEnrollmentListItem extends React.Component {
 					</div>
 				)}
 				{!CompletedDate && (
-					<progress max={1} value={PercentageProgress || 0.5} />
+					<progress max={1} value={PercentageProgress || 0} />
 				)}
 			</div>
 		);
