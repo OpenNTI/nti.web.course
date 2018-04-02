@@ -41,7 +41,7 @@
     "nti-lib-ntiids": "^1.1.0",
     "nti-lib-store": "^1.0.1",
     "nti-util-logger": "^1.1.2",
-    "nti-web-charts": "^0.2.0",
+    "nti-web-charts": "0.x.x",
     "nti-web-client": "^1.1.3",
     "nti-web-commons": "0.x.x",
     "nti-web-reports": "0.x.x",
