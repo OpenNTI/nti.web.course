@@ -36,4 +36,22 @@
 			}
 		}
 	}
+
+	.course-progress {
+		width: 758px;
+		margin-top: 5px;
+		box-shadow: 0 1px 2px 1px #ccc;
+		color: #555;
+
+		.progress-overview-charts-course-standing {
+			height: 150px;
+		}
+
+		.title {
+			font-size: 24px;
+			margin-left: 14px;
+			padding: 10px;
+			font-weight: 500;
+		}
+	}
 }

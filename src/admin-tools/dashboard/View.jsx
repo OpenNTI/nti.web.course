@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from 'nti-lib-locale';
 import { Widgets } from 'nti-web-reports';
 
-const t = scoped('course.admin.dashboard', {
-	totalEnrollments: 'Total Enrollments',
-	somethingElse: 'Something Else'
-});
-const { ActiveDays, ActiveUsers, ActiveTimes, LabeledValue } = Widgets;
+import CourseStanding from '../../progress/overview/stats/charts/CourseStanding';
+
+const { ActiveDays, ActiveUsers, ActiveTimes, Statistics } = Widgets;
 
 CourseOverview.propTypes = {
 	course: PropTypes.object
@@ -17,13 +14,15 @@ export default function CourseOverview ({course}) {
 		<div className="course-admin-course-overview">
 			<div className="admin-row">
 				<div>
-					<LabeledValue label={t('totalEnrollments')}>
-						{course.enrolledTotalCount || 0}
-					</LabeledValue>
+					<Statistics entity={course}/>
 				</div>
 				<div className="active-users">
 					<ActiveUsers entity={course}/>
 				</div>
+			</div>
+			<div className="course-progress">
+				<div className="title">Progress</div>
+				<CourseStanding course={course}/>
 			</div>
 			<div className="active-days">
 				<ActiveDays entity={course}/>
