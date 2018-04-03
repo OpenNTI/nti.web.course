@@ -132,7 +132,7 @@ export default class CourseStanding extends React.Component {
 
 		if (!enrollment) { return null; }
 
-		const {CourseProgress, UserProfile} = enrollment;
+		const {CourseProgress, UserProfile, Username} = enrollment;
 		const {PercentageProgress} = CourseProgress;
 		const percent = Math.floor(PercentageProgress * 100);
 		const style = {
@@ -142,7 +142,7 @@ export default class CourseStanding extends React.Component {
 		return (
 			<div className={cx('enrollment-progress', {left: percent > 50})} style={style}>
 				<div className="label">
-					<DisplayName entity={UserProfile} />
+					<DisplayName entity={UserProfile || Username} />
 					<span>
 						{t('progressPercentLabel', {percent})}
 					</span>

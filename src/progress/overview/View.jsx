@@ -39,6 +39,7 @@ class ProgressOverview extends React.Component {
 					batchLink={batch}
 					course={course}
 					onClose={fulfill}
+					modal
 				/>
 			), 'course-progress-overview-prompt');
 
@@ -54,6 +55,7 @@ class ProgressOverview extends React.Component {
 					course={course}
 					onClose={fulfill}
 					singleItem
+					modal
 				/>
 			), 'course-progress-overview-prompt');
 		});
@@ -63,6 +65,7 @@ class ProgressOverview extends React.Component {
 		course: PropTypes.object.isRequired,
 		enrollment: PropTypes.object,
 		batchLink: PropTypes.string,
+		modal: PropTypes.bool,
 		singleItem: PropTypes.bool,
 
 		onClose: PropTypes.func,
@@ -115,23 +118,25 @@ class ProgressOverview extends React.Component {
 
 
 	render () {
-		const {course, currentItem, loading, error} = this.props;
+		const {course, currentItem, loading, error, modal, singleItem} = this.props;
 		const Contents = course.isScormInstance ? ScormContents : DefaultContents;
 
-		return (
-			<InfiniteLoad.Container className="progress-overview-container">
-				<div className="progress-overview">
-					<Header {...this.props} doClose={this.doClose} />
-					{loading && (<div className="loading-mask"><Loading.Mask /></div>)}
-					{!loading && error && (<div className="error">{t('error')}</div>)}
-					{!loading && !error && (
-						<React.Fragment>
-							<Stats course={course} enrollment={currentItem} />
-							<Contents course={course} enrollment={currentItem} />
-						</React.Fragment>
-					)}
-				</div>
-			</InfiniteLoad.Container>
+		const contents = (
+			<div className="progress-overview">
+				{modal && (<Header {...this.props} doClose={this.doClose} singleItem={singleItem} />)}
+				{loading && (<div className="loading-mask"><Loading.Mask /></div>)}
+				{!loading && error && (<div className="error">{t('error')}</div>)}
+				{!loading && !error && (
+					<React.Fragment>
+						<Stats course={course} enrollment={currentItem} singleItem={singleItem}/>
+						<Contents course={course} enrollment={currentItem} singleItem={singleItem}/>
+					</React.Fragment>
+				)}
+			</div>
 		);
+
+		return modal ?
+			(<InfiniteLoad.Container className="progress-overview-container">{contents}</InfiniteLoad.Container>) :
+			contents;
 	}
 }
