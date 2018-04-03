@@ -8,10 +8,15 @@ import {HOC} from 'nti-web-commons';
 
 const t = scoped('course.components.GradeCard', {
 	courseProgress: 'Course Progress',
-	outline: 'Outline'
+	outline: 'Outline',
+	getCertificate: 'Download Certificate',
+	completed: 'Completed'
 });
 
 const LOAD_WAIT = 30000;
+
+const STUDENT = 'Student';
+const ADMIN = 'Admin';
 
 export default
 @Hooks.afterBatchEvents()
@@ -67,7 +72,8 @@ class OutlineHeader extends React.Component {
 
 		this.setState({
 			...this.getStateValues(courseProgress),
-			subLabel
+			subLabel,
+			type: ADMIN
 		});
 	}
 
@@ -84,12 +90,13 @@ class OutlineHeader extends React.Component {
 		const courseProgress = PreferredAccess.CourseProgress;
 
 		const completedDate = courseProgress && courseProgress.getCompletedDate();
-		const isCompleted = Boolean(completedDate);
+		const isCompleted = true;//Boolean(completedDate);
 
 		this.setState({
 			...this.getStateValues(courseProgress),
 			completedDate,
-			isCompleted
+			isCompleted,
+			type: STUDENT
 		});
 	}
 
@@ -136,11 +143,29 @@ class OutlineHeader extends React.Component {
 		}
 	}
 
+	renderCertificateLink () {
+		const {course} = this.props;
+		const {PreferredAccess} = course;
+		const certLink = PreferredAccess.getLink('Certificate');
+
+		if(!certLink) {
+			return <div className="sub-label"><a href="">{t('completed')}</a></div>;
+		}
+
+		return <div className="sub-label cert-link"><a href={certLink}>{t('getCertificate')}</a></div>;
+	}
+
 	renderLabel () {
+		const {type, isCompleted} = this.state;
+
 		return (
 			<div className="progress-labels">
 				<div className="course-progress">{t('courseProgress')}</div>
-				<div className="sub-label">{this.state.subLabel}</div>
+				{
+					type === STUDENT && isCompleted
+						? this.renderCertificateLink()
+						: <div className="sub-label">{this.state.subLabel}</div>
+				}
 			</div>
 		);
 	}

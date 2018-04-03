@@ -18,6 +18,12 @@
 			text-transform: uppercase;
 			font-weight: bold;
 			color: $tertiary-grey;
+
+			&.cert-link {
+				a {
+					color: $primary-blue;
+				}
+			}
 		}
 	}
 }
