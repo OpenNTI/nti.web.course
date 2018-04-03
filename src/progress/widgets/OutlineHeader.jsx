@@ -149,10 +149,10 @@ class OutlineHeader extends React.Component {
 		const certLink = PreferredAccess.getLink('Certificate');
 
 		if(!certLink) {
-			return <div className="sub-label"><a href="">{t('completed')}</a></div>;
+			return <div className="sub-label">{t('completed')}</div>;
 		}
 
-		return <div className="sub-label cert-link"><a href={certLink}>{t('getCertificate')}</a></div>;
+		return <div className="sub-label cert-link"><a href={certLink} target="_blank">{t('getCertificate')}</a></div>;
 	}
 
 	renderLabel () {
