@@ -10,6 +10,8 @@ CourseOverview.propTypes = {
 	course: PropTypes.object
 };
 export default function CourseOverview ({course}) {
+	const isCompletable = course.CompletionPolicy && course.hasLink('ProgressStats');
+
 	return (
 		<div className="course-admin-course-overview">
 			<div className="admin-row">
@@ -20,10 +22,12 @@ export default function CourseOverview ({course}) {
 					<ActiveUsers entity={course}/>
 				</div>
 			</div>
-			<div className="course-progress">
-				<div className="title">Progress</div>
-				<CourseStanding course={course}/>
-			</div>
+			{isCompletable && (
+				<div className="course-progress">
+					<div className="title">Progress</div>
+					<CourseStanding course={course}/>
+				</div>
+			)}
 			<div className="active-days">
 				<ActiveDays entity={course}/>
 			</div>
