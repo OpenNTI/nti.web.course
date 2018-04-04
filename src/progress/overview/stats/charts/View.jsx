@@ -15,6 +15,8 @@ export default class ProgressOverviewStatsCharts extends React.Component {
 	render () {
 		const {enrollment, course, large} = this.props;
 
+		if (!course || !course.hasLink('ProgressStats')) { return null; }
+
 		return (
 			<div className={cx('progress-overview-stats-charts', {large})}>
 				<div className="switcher">
