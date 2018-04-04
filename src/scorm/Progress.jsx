@@ -25,8 +25,6 @@ export default class Progress extends Component {
 			getLink: PropTypes.func.isRequired,
 			fetchLink: PropTypes.func.isRequired
 		}),
-		error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-		onBundleUpdate: PropTypes.func.isRequired,
 		isAdmin: PropTypes.bool
 	}
 
