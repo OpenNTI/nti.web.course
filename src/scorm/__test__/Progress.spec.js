@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 
 import Progress from '../Progress';
 
-describe('Scorm view test', () => {
+describe('Scorm progress view test', () => {
 	const verifyView = (isInstructor, completed, passed, done) => {
 		const bundle = {
 			getScormCourse: () => {},
