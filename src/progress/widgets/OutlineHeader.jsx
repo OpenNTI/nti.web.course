@@ -13,7 +13,7 @@ const t = scoped('course.components.GradeCard', {
 	completed: 'Completed'
 });
 
-const LOAD_WAIT = 30000;
+const LOAD_WAIT = 5000;
 
 const STUDENT = 'Student';
 const ADMIN = 'Admin';
@@ -73,6 +73,7 @@ class OutlineHeader extends React.Component {
 		this.setState({
 			...this.getStateValues(courseProgress),
 			subLabel,
+			course,
 			type: ADMIN
 		});
 	}
@@ -96,6 +97,7 @@ class OutlineHeader extends React.Component {
 			...this.getStateValues(courseProgress),
 			completedDate,
 			isCompleted,
+			course,
 			type: STUDENT
 		});
 	}
@@ -134,7 +136,7 @@ class OutlineHeader extends React.Component {
 	onPreferredAccessChange () {
 		// if the PreferredAccess changes and we have a completable course for
 		// a student user, we should update the state to reflect the PreferredAccess
-		const {course} = this.props;
+		const {course} = this.state;
 
 		const isCompletable = Object.keys(course).includes('CompletionPolicy');
 
@@ -144,7 +146,7 @@ class OutlineHeader extends React.Component {
 	}
 
 	renderCertificateLink () {
-		const {course} = this.props;
+		const {course} = this.state;
 		const {PreferredAccess} = course;
 		const certLink = PreferredAccess.getLink('Certificate');
 
@@ -176,7 +178,7 @@ class OutlineHeader extends React.Component {
 		}
 
 		return (
-			<HOC.ItemChanges item={this.props.course.PreferredAccess} onItemChange={this.onPreferredAccessChange}>
+			<HOC.ItemChanges item={this.state.course.PreferredAccess} onItemChange={this.onPreferredAccessChange}>
 				<div className="outline-progress-header">
 					<CircularProgress width={38} height={38} value={this.state.pctComplete} showPctSymbol={false} deficitFillColor="#b8b8b8"/>
 					{this.renderLabel()}
