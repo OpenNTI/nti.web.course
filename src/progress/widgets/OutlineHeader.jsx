@@ -90,7 +90,7 @@ class OutlineHeader extends React.Component {
 		const courseProgress = PreferredAccess.CourseProgress;
 
 		const completedDate = courseProgress && courseProgress.getCompletedDate();
-		const isCompleted = true;//Boolean(completedDate);
+		const isCompleted = Boolean(completedDate);
 
 		this.setState({
 			...this.getStateValues(courseProgress),
