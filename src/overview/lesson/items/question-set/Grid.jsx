@@ -30,22 +30,32 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		assessmentSubmission: PropTypes.object
 	}
 
+	state = {}
+
 
 	render () {
 		const {item, assignment, assessment} = this.props;
+		const {inlineEditorExpanded} = this.state;
 
 		return (
-			<Base
-				className="lesson-overview-question-set-grid-item"
-				item={item}
+			<div>
+				<Base
+					className="lesson-overview-question-set-grid-item"
+					item={item}
 
-				renderTitle={this.renderTitle}
-				renderIcon={this.renderIcon}
-				renderLabels={this.renderLabels}
-				renderButton={this.renderButton}
+					renderTitle={this.renderTitle}
+					renderIcon={this.renderIcon}
+					renderLabels={this.renderLabels}
+					renderButton={this.renderButton}
 
-				linkToObject={assignment || assessment}
-			/>
+					linkToObject={assignment || assessment}
+				/>
+				{inlineEditorExpanded && (
+					<div className="assignment-inline-editor">
+						inline editor goes here
+					</div>
+				)}
+			</div>
 		);
 	}
 
@@ -81,6 +91,11 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 	}
 
 
+	onInlineEditorExpanded = (expanded) => {
+		this.setState({inlineEditorExpanded: expanded});
+	}
+
+
 	renderLabels = () => {
 		const {assignment, assignmentHistory, assessment, assessmentSubmission, item} = this.props;
 
@@ -88,7 +103,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 		if (assignment) {
 			return (
-				<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} required={required} />
+				<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} required={required} onInlineEditorExpanded={this.onInlineEditorExpanded} />
 			);
 		}
 

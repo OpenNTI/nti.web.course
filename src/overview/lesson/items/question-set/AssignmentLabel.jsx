@@ -41,7 +41,8 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 	static propTypes = {
 		assignment: PropTypes.object,
 		assignmentHistory: PropTypes.object,
-		required: PropTypes.bool
+		required: PropTypes.bool,
+		onInlineEditorExpanded: PropTypes.func
 	}
 
 	state = {}
@@ -168,8 +169,23 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 	}
 
 
+	onStatusClick = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		const {statusExpanded} = this.state;
+
+		this.setState({statusExpanded: !statusExpanded}, () => {
+			const {onInlineEditorExpanded} = this.props;
+
+			onInlineEditorExpanded && onInlineEditorExpanded(!statusExpanded);
+		});
+	}
+
+
 	renderDue () {
 		const {completedDate, dueDate, availableDate, now, isDraft, isNoSubmit} = this.state;
+		const {assignment} = this.props;
 
 		if (completedDate) { return null; }
 
@@ -190,6 +206,15 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			text = t('due.availableNow');
 		} else if (!isDraft && availableDate) {
 			text = t('due.available', {date: format(availableDate)});
+		}
+
+		if(assignment && assignment.getDateEditingLink()) {
+			// render editable widget
+			return !text ? null : (
+				<span className={cx('due', 'editable', {today: dueToday, late})} onClick={this.onStatusClick}>
+					{text}<i className="icon-chevron-down"/>
+				</span>
+			);
 		}
 
 		return !text ? null : (
