@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {EmptyState} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
+import { Disable } from 'nti-web-routing';
 
 import {Grid, List} from './Constants';
 import Items from './items';
@@ -24,7 +25,8 @@ export default class LessonOverview extends React.Component {
 		className: PropTypes.string,
 
 		layout: PropTypes.oneOf([Grid, List]),
-		requiredOnly: PropTypes.bool
+		requiredOnly: PropTypes.bool,
+		readOnly: PropTypes.bool
 	}
 
 	static defaultProps = {
@@ -45,11 +47,12 @@ export default class LessonOverview extends React.Component {
 
 
 	renderOverview () {
-		const {overview, course, outlineNode, layout, ...otherProps} = this.props;
+		const {overview, course, outlineNode, layout, readOnly, ...otherProps} = this.props;
 		const {Items:items} = overview;
+		const Cmp = readOnly ? Disable : React.Fragment;
 
 		return (
-			<React.Fragment>
+			<Cmp>
 				{items && items.length ?
 					(
 						<Items
@@ -64,7 +67,7 @@ export default class LessonOverview extends React.Component {
 					) :
 					this.renderEmpty()
 				}
-			</React.Fragment>
+			</Cmp>
 		);
 	}
 

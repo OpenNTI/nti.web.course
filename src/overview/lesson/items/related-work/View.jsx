@@ -28,7 +28,8 @@ class LessonOverviewRelatedWork extends React.Component {
 		layout: PropTypes.oneOf([List, Grid]),
 		item: PropTypes.object,
 		course: PropTypes.object,
-		outlineNode: PropTypes.object
+		outlineNode: PropTypes.object,
+		editMode: PropTypes.bool
 	}
 
 	static contextTypes = {
@@ -55,7 +56,7 @@ class LessonOverviewRelatedWork extends React.Component {
 	}
 
 	render () {
-		const {layout, item, ...otherProps} = this.props;
+		const {layout, item, editMode, ...otherProps} = this.props;
 
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
@@ -88,7 +89,7 @@ class LessonOverviewRelatedWork extends React.Component {
 				onClick={this.maybeSendExternalViewEvent}
 				layout={layout}
 				item={item}
-				commentLabel={commentLabel}
+				commentLabel={!editMode && commentLabel}
 				requiredLabel={requiredLabel}
 				{...otherProps} />
 		);
