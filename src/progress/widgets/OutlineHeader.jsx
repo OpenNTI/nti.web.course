@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {CircularProgress} from 'nti-web-charts';
 import {Hooks} from 'nti-web-session';
-import {getService} from 'nti-web-client';
 import {HOC} from 'nti-web-commons';
 
 const t = scoped('course.components.GradeCard', {
@@ -33,10 +32,8 @@ class OutlineHeader extends React.Component {
 		// a reload of progress data
 		const {course} = this.props;
 
-		getService().then(service => {
-			service.getObject(course.NTIID).then(newCourse => {
-				this.loadProgress(newCourse);
-			});
+		course.refreshPreferredAccess().then(() => {
+			this.loadProgress(course);
 		});
 	}
 
@@ -73,7 +70,6 @@ class OutlineHeader extends React.Component {
 		this.setState({
 			...this.getStateValues(courseProgress),
 			subLabel,
-			course,
 			type: ADMIN
 		});
 	}
@@ -97,7 +93,6 @@ class OutlineHeader extends React.Component {
 			...this.getStateValues(courseProgress),
 			completedDate,
 			isCompleted,
-			course,
 			type: STUDENT
 		});
 	}
@@ -136,7 +131,7 @@ class OutlineHeader extends React.Component {
 	onPreferredAccessChange () {
 		// if the PreferredAccess changes and we have a completable course for
 		// a student user, we should update the state to reflect the PreferredAccess
-		const {course} = this.state;
+		const {course} = this.props;
 
 		const isCompletable = Object.keys(course).includes('CompletionPolicy');
 
@@ -146,7 +141,7 @@ class OutlineHeader extends React.Component {
 	}
 
 	renderCertificateLink () {
-		const {course} = this.state;
+		const {course} = this.props;
 		const {PreferredAccess} = course;
 		const certLink = PreferredAccess.getLink('Certificate');
 
@@ -178,7 +173,7 @@ class OutlineHeader extends React.Component {
 		}
 
 		return (
-			<HOC.ItemChanges item={this.state.course.PreferredAccess} onItemChange={this.onPreferredAccessChange}>
+			<HOC.ItemChanges item={this.props.course.PreferredAccess} onItemChange={this.onPreferredAccessChange}>
 				<div className="outline-progress-header">
 					<CircularProgress width={38} height={38} value={this.state.pctComplete} showPctSymbol={false} deficitFillColor="#b8b8b8"/>
 					{this.renderLabel()}
