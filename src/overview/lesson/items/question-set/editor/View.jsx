@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Publish} from 'nti-web-commons';
+import {Publish, Prompt} from 'nti-web-commons';
 
 import Footer from './Footer';
 import PublishState, {PUBLISH, SCHEDULE, DRAFT} from './Publish';
@@ -97,28 +97,76 @@ export default class AssignmentEditor extends React.Component {
 
 		this.setState({loading: true});
 
-		if(assignment.hasLink('publish')) {
-			await assignment.postToLink('publish');
-		}
+		let continueWithOp = true;
+		let success = false;
 
-		const link = assignment.hasLink('date-edit') ? 'date-edit' : assignment.hasLink('edit') ? 'edit' : null;
+		try {
+			if(assignment.hasLink('publish')) {
+				await assignment.postToLink('publish');
+			}
 
-		if(link) {
-			await assignment.putToLink(link, {
-				'available_for_submission_beginning': selectedPublishType === SCHEDULE ? scheduledDate.getTime() / 1000.0 : null,
-				'available_for_submission_ending': dueDateChecked && dueDate ? dueDate.getTime() / 1000.0 : null
-			});
-		}
+			const link = assignment.hasLink('date-edit') ? 'date-edit' : assignment.hasLink('edit') ? 'edit' : null;
 
-		if(selectedPublishType === DRAFT) {
-			await assignment.postToLink('unpublish');
+			try {
+				if(link) {
+					await assignment.putToLink(link, {
+						'available_for_submission_beginning': selectedPublishType === SCHEDULE ? scheduledDate.getTime() / 1000.0 : null,
+						'available_for_submission_ending': dueDateChecked && dueDate ? dueDate.getTime() / 1000.0 : null
+					});
+				}
+			}
+			catch(putEx) {
+				// the initial put "fails", could just be needing confirmation
+				if(putEx.code === 'AvailableToUnavailable') {
+					try {
+						await Prompt.areYouSure('', putEx.message);
+
+						try {
+							await assignment.requestLink (
+								link,
+								'put',
+								{
+									'available_for_submission_beginning': selectedPublishType === SCHEDULE ? scheduledDate.getTime() / 1000.0 : null,
+									'available_for_submission_ending': dueDateChecked && dueDate ? dueDate.getTime() / 1000.0 : null,
+								},
+								{
+									force: 'True'
+								});
+						} catch(forcePutEx) {
+							// error with force put
+							continueWithOp = false;
+							this.setState({error: forcePutEx.message});
+						}
+					}
+					catch(promptEx) {
+						// user selected "No" on prompt
+						continueWithOp = false;
+					}
+				} else {
+					// if not asking for confirmation, then this was a legitimate error
+					// so set the state accordingly
+					continueWithOp = false;
+					this.setState({error: putEx.message});
+				}
+			}
+
+			if(continueWithOp) {
+				if(selectedPublishType === DRAFT) {
+					await assignment.postToLink('unpublish');
+				}
+
+				await assignment.refresh();
+
+				success = true;
+			}
+		} catch(e) {
+			// any other errors that happen along the way
+			this.setState({error: e.message});
 		}
 
 		this.setState({loading: false});
 
-		await assignment.refresh();
-
-		if(onDismiss) {
+		if(success && onDismiss) {
 			onDismiss(true);
 		}
 	}
@@ -144,6 +192,7 @@ export default class AssignmentEditor extends React.Component {
 						<PublishState onPublishChange={this.onPublishChange} selectedType={this.state.selectedPublishType} scheduledDate={this.state.scheduledDate}/>
 						{showReset && <Reset onReset={this.onReset}/>}
 						<DueDate onDateChanged={this.onDueDateChange} date={this.state.dueDate} onDueDateChecked={this.onDueDateChecked} dueDateChecked={this.state.dueDateChecked}/>
+						{this.state.error && <div className="error">{this.state.error}</div>}
 					</div>
 					<Footer onSave={this.onSave} onCancel={this.onCancel}/>
 				</div>
