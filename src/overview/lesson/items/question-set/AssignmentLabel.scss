@@ -25,6 +25,16 @@
 		&.late {
 			color: $primary-red;
 		}
+
+		i {
+			margin-left: 3px;
+		}
+
+		&.editable .label:hover {
+			text-decoration: underline;
+			border-radius: 10px;
+			cursor: pointer;
+		}
 	}
 
 	.excused {
