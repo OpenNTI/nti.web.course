@@ -24,6 +24,7 @@ export default class AssignmentEditor extends React.Component {
 		let selectedPublishType = PUBLISH;
 		let scheduledDate;
 		let dueDate = new Date();
+		let hasDate = false;
 
 		if(assignment) {
 			const availableBeginning = assignment['available_for_submission_beginning'];
@@ -47,6 +48,7 @@ export default class AssignmentEditor extends React.Component {
 
 			if(availableEnding) {
 				dueDate = new Date(availableEnding);
+				hasDate = true;
 			}
 		}
 
@@ -54,7 +56,7 @@ export default class AssignmentEditor extends React.Component {
 			selectedPublishType,
 			scheduledDate,
 			dueDate,
-			dueDateChecked: Boolean(dueDate)
+			dueDateChecked: hasDate
 		};
 	}
 
@@ -104,7 +106,7 @@ export default class AssignmentEditor extends React.Component {
 		if(link) {
 			await assignment.putToLink(link, {
 				'available_for_submission_beginning': selectedPublishType === SCHEDULE ? scheduledDate.getTime() / 1000.0 : null,
-				'available_for_submission_ending': dueDateChecked && dueDate.getTime() / 1000.0
+				'available_for_submission_ending': dueDateChecked && dueDate ? dueDate.getTime() / 1000.0 : null
 			});
 		}
 
