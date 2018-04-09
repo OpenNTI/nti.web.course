@@ -9,15 +9,20 @@
 		color: #494949;
 		margin: 0.5em 0 0;
 
-		.nti-checkbox {
+		.nti-checkbox-input {
 			display: inline-block;
 			vertical-align: middle;
 			margin-right: 11px;
 			position: relative;
 
+
 			span.label {
 				font-size: 14px;
 				font-weight: 600;
+			}
+
+			.date-editor {
+				margin-top: 10px;
 			}
 		}
 	}

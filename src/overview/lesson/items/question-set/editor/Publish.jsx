@@ -64,7 +64,7 @@ export default class AssignmentEditorPublish extends React.Component {
 		return (
 			<div className="publish-option">
 				<div className="label schedule">
-					<div className="nti-radio">
+					<div className="nti-radio-input">
 						<Radio name="assignment-publish-option-input" label={t(PUBLISH)} checked={selected} onChange={this.selectPublish}/>
 					</div>
 				</div>
@@ -89,7 +89,7 @@ export default class AssignmentEditorPublish extends React.Component {
 		return (
 			<div className="schedule-option">
 				<div className="label schedule">
-					<div className="nti-radio">
+					<div className="nti-radio-input">
 						<Radio name="assignment-publish-option-input" label={t(SCHEDULE)} checked={selected} onChange={this.selectSchedule}/>
 					</div>
 				</div>
@@ -110,7 +110,7 @@ export default class AssignmentEditorPublish extends React.Component {
 		return (
 			<div className="draft-option">
 				<div className="label draft">
-					<div className="nti-radio">
+					<div className="nti-radio-input">
 						<Radio name="assignment-publish-option-input" label={t(DRAFT)} checked={selected} onChange={this.selectDraft}/>
 					</div>
 				</div>

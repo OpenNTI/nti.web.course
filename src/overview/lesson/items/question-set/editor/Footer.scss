@@ -1,7 +1,9 @@
 @import '~nti-style-common';
 
-.assignment-inline-editor .footer {
+.assignment-inline-editor .assignment-due-date-editor .footer {
 	overflow: hidden;
+	border-top: none;
+	background: none;
 
 	.save {
 		background-color: #3fb3f6;

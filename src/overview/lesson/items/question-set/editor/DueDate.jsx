@@ -50,7 +50,7 @@ export default class AssignmentEditorDueDate extends React.Component {
 		return (
 			<div className="inline-due-date-editor">
 				<div className="label">
-					<div className="nti-checkbox">
+					<div className="nti-checkbox-input">
 						<Checkbox label={t('dueDate')} onChange={this.onDueDateChange} checked={selected} />
 						<DateEditor disabled={!selected} date={this.props.date} onDateChanged={this.onChange}/>
 					</div>

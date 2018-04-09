@@ -32,7 +32,7 @@ export default class AssignmentEditor extends React.Component {
 
 			const available = availableBeginning && new Date(availableBeginning);
 			const value = Publish.evaluatePublishStateFor({
-				isPublished: () => assignment && (assignment.PublicationState != null || (available && available && available < Date.now())),
+				isPublished: () => assignment && (assignment.PublicationState != null && (!available || available < Date.now())),
 				getPublishDate: () => assignment && available
 			});
 
