@@ -237,7 +237,7 @@ export default class AssignmentEditorDueDate extends React.Component {
 				</div>
 				<div className="set-current-date">
 					or
-					<a onClick={this.setDateToCurrent} disalbed={disabled}>Current Date/Time</a>
+					<a onClick={this.setDateToCurrent} disabled={disabled}>Current Date/Time</a>
 				</div>
 			</div>
 		);

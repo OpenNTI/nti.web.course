@@ -11,6 +11,7 @@ import AssessmentIcon from './AssessmentIcon';
 import AssignmentTitle from './AssignmentTitle';
 import AssignmentIcon from './AssignmentIcon';
 import AssignmentLabel from './AssignmentLabel';
+import Editor from './editor';
 
 const DEFAULT_TEXT = {
 	review: 'Review',
@@ -51,12 +52,14 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 					linkToObject={assignment || assessment}
 				/>
 				{inlineEditorExpanded && (
-					<div className="assignment-inline-editor">
-						inline editor goes here
-					</div>
+					<Editor assignment={assignment || assessment} onDismiss={this.onEditorDismiss}/>
 				)}
 			</div>
 		);
+	}
+
+	onEditorDismiss = () => {
+		this.setState({inlineEditorExpanded: false});
 	}
 
 	renderTitle = () => {
