@@ -42,7 +42,8 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		assignment: PropTypes.object,
 		assignmentHistory: PropTypes.object,
 		required: PropTypes.bool,
-		onInlineEditorExpanded: PropTypes.func
+		onInlineEditorExpanded: PropTypes.func,
+		statusExpanded: PropTypes.bool
 	}
 
 	state = {}
@@ -51,7 +52,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		const {assignment:newAssignment, assignmentHistory:newHistory} = nextProps;
 		const {assignment:oldAssignment, assignmentHistory:oldHistory} = this.props;
 
-		if (newAssignment !== oldAssignment || newHistory !== oldHistory) {
+		if (newAssignment !== oldAssignment || newHistory !== oldHistory || this.state.assignmentModified !== newAssignment.getLastModified().getTime()) {
 			this.setupFor(nextProps);
 		}
 	}
@@ -79,8 +80,8 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 			isSubmitted: h && h.isSubmitted(),
 			completedDate: !canEdit && h && h.Submission && h.Submission.getCreatedTime(),
-			isExcused: h && h.grade && h.grade.isExcused()
-
+			isExcused: h && h.grade && h.grade.isExcused(),
+			assignmentModified: a.getLastModified().getTime()
 		};
 
 		this.setState(state);
@@ -173,13 +174,9 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const {statusExpanded} = this.state;
+		const {onInlineEditorExpanded} = this.props;
 
-		this.setState({statusExpanded: !statusExpanded}, () => {
-			const {onInlineEditorExpanded} = this.props;
-
-			onInlineEditorExpanded && onInlineEditorExpanded(!statusExpanded);
-		});
+		onInlineEditorExpanded && onInlineEditorExpanded();
 	}
 
 
@@ -209,10 +206,12 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		}
 
 		if(assignment && assignment.getDateEditingLink()) {
+			const className = this.props.statusExpanded ? 'icon-chevron-up' : 'icon-chevron-down';
+
 			// render editable widget
 			return !text ? null : (
 				<span className={cx('due', 'editable', {today: dueToday, late})} onClick={this.onStatusClick}>
-					{text}<i className="icon-chevron-down"/>
+					<span className="label">{text}</span><i className={className}/>
 				</span>
 			);
 		}

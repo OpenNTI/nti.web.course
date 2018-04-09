@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {LinkTo} from 'nti-web-routing';
+import cx from 'classnames';
+
+import Editor from '../items/question-set/editor';
 
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';
@@ -15,35 +18,87 @@ export default class BaseAssessmentGridItem extends React.Component {
 		renderButton: PropTypes.func,
 
 		linkToObject: PropTypes.object,
-		linkToContext: PropTypes.any
+		linkToContext: PropTypes.any,
+
+		inlineEditorExpanded: PropTypes.bool,
+		onEditorDismiss: PropTypes.func
+	}
+
+	state = {}
+
+	componentDidMount () {
+		this.setState({
+			editorExpanded: this.props.inlineEditorExpanded
+		});
+	}
+
+
+	componentDidUpdate (oldProps) {
+		if(oldProps.inlineEditorExpanded && !this.props.inlineEditorExpanded) {
+			this.setState({
+				editorTransitioning: true
+			}, () => {
+				setTimeout(() => {
+					this.setState({
+						editorExpanded: false,
+						editorTransitioning: false
+					});
+				}, 500);
+			});
+		}
+		else if(this.props.inlineEditorExpanded && !this.state.editorExpanded && !this.state.editorTransitioning) {
+			this.setState({
+				editorTransitioning: true
+			}, () => {
+				setTimeout(() => {
+					this.setState({
+						editorExpanded: true,
+						editorTransitioning: false
+					});
+				}, 500);
+			});
+		}
 	}
 
 
 	render () {
-		const {item, linkToObject, linkToContext} = this.props;
+		const {item, linkToObject, linkToContext, inlineEditorExpanded} = this.props;
+		const {editorTransitioning} = this.state;
+
+		const statusCls = inlineEditorExpanded ? 'status-open' : 'status-closed';
+		const statusOpening = editorTransitioning && 'status-transitioning';
+
+		const className = cx('container', statusCls, statusOpening);
 
 		return (
 			<PaddedContainer className="lesson-overview-base-assessment-grid-item">
-				<LinkTo.Object object={linkToObject || item} context={linkToContext} data-ntiid={item.NTIID}>
-					<div className="container">
-						<div className="icon-container">
-							<div className="icon">
-								{this.renderIcon()}
+				<div className={className}>
+					<LinkTo.Object object={linkToObject || item} context={linkToContext} data-ntiid={item.NTIID}>
+						<div className="target">
+							<div className="icon-container">
+								<div className="icon">
+									{this.renderIcon()}
+								</div>
+							</div>
+							<div className="info-container">
+								<TextPart className="title-container">
+									{this.renderTitle()}
+								</TextPart>
+								<TextPart className="labels-container">
+									{this.renderLabels()}
+								</TextPart>
+							</div>
+							<div className="button-container">
+								{this.renderButton()}
 							</div>
 						</div>
-						<div className="info-container">
-							<TextPart className="title-container">
-								{this.renderTitle()}
-							</TextPart>
-							<TextPart className="labels-container">
-								{this.renderLabels()}
-							</TextPart>
-						</div>
-						<div className="button-container">
-							{this.renderButton()}
-						</div>
+					</LinkTo.Object>
+					<div className="editor-container">
+						{(this.state.editorTransitioning || this.state.editorExpanded) && (
+							<Editor assignment={linkToObject} onDismiss={this.onEditorDismiss} statusExpanded={this.props.inlineEditorExpanded}/>
+						)}
 					</div>
-				</LinkTo.Object>
+				</div>
 			</PaddedContainer>
 		);
 	}
@@ -75,5 +130,13 @@ export default class BaseAssessmentGridItem extends React.Component {
 		const {renderButton} = this.props;
 
 		return renderButton ? renderButton() : null;
+	}
+
+	onEditorDismiss = (savedData) => {
+		const {onEditorDismiss} = this.props;
+
+		if(onEditorDismiss) {
+			onEditorDismiss(savedData);
+		}
 	}
 }

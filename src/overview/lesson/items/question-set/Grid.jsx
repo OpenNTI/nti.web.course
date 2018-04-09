@@ -11,7 +11,6 @@ import AssessmentIcon from './AssessmentIcon';
 import AssignmentTitle from './AssignmentTitle';
 import AssignmentIcon from './AssignmentIcon';
 import AssignmentLabel from './AssignmentLabel';
-import Editor from './editor';
 
 const DEFAULT_TEXT = {
 	review: 'Review',
@@ -31,7 +30,9 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		assessmentSubmission: PropTypes.object
 	}
 
-	state = {}
+	state = {
+		statusExpanded: false
+	}
 
 
 	render () {
@@ -50,15 +51,15 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 					renderButton={this.renderButton}
 
 					linkToObject={assignment || assessment}
+
+					inlineEditorExpanded={inlineEditorExpanded}
+					onEditorDismiss={this.onEditorDismiss}
 				/>
-				{inlineEditorExpanded && (
-					<Editor assignment={assignment || assessment} onDismiss={this.onEditorDismiss}/>
-				)}
 			</div>
 		);
 	}
 
-	onEditorDismiss = () => {
+	onEditorDismiss = (savedData) => {
 		this.setState({inlineEditorExpanded: false});
 	}
 
@@ -94,8 +95,8 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 	}
 
 
-	onInlineEditorExpanded = (expanded) => {
-		this.setState({inlineEditorExpanded: expanded});
+	onInlineEditorExpanded = () => {
+		this.setState({inlineEditorExpanded: !this.state.inlineEditorExpanded});
 	}
 
 
@@ -106,7 +107,13 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 		if (assignment) {
 			return (
-				<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} required={required} onInlineEditorExpanded={this.onInlineEditorExpanded} />
+				<AssignmentLabel
+					assignment={assignment}
+					assignmentHistory={assignmentHistory}
+					required={required}
+					onInlineEditorExpanded={this.onInlineEditorExpanded}
+					statusExpanded={this.state.inlineEditorExpanded}
+				/>
 			);
 		}
 
@@ -168,7 +175,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 	renderButtonText (text) {
 		return !text ? null : (
-			<Button component="span" rounded>
+			<Button component="span" disabled={this.state.inlineEditorExpanded} rounded>
 				{text}
 			</Button>
 		);

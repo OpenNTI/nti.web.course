@@ -116,8 +116,10 @@ export default class AssignmentEditor extends React.Component {
 
 		this.setState({loading: false});
 
+		await assignment.refresh();
+
 		if(onDismiss) {
-			onDismiss();
+			onDismiss(true);
 		}
 	}
 

@@ -1,13 +1,12 @@
 @import '~nti-style-common';
 
 .assignment-inline-editor .footer {
-	background-color: white;
-	border-top: 1px solid #d9d9d9;
 	overflow: hidden;
 
 	.save {
 		background-color: #3fb3f6;
 		color: white;
+		border-radius: 3px;
 	}
 
 	.cancel {

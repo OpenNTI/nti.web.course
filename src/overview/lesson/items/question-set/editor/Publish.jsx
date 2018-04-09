@@ -69,7 +69,7 @@ export default class AssignmentEditorPublish extends React.Component {
 					</div>
 				</div>
 				{selected && (
-					<div className="publish-container container">
+					<div className="publish-container">
 						<div className="publish-label">{t('publishDesc')}</div>
 					</div>
 				)}
@@ -94,7 +94,7 @@ export default class AssignmentEditorPublish extends React.Component {
 					</div>
 				</div>
 				{selected && (
-					<div className="schedule-container container">
+					<div className="schedule-container">
 						<div className="schedule-label">{t('scheduleDesc')}</div>
 						<DateEditor date={this.props.scheduledDate} onDateChanged={this.onScheduledDateChanged}/>
 					</div>
@@ -115,7 +115,7 @@ export default class AssignmentEditorPublish extends React.Component {
 					</div>
 				</div>
 				{selected && (
-					<div className="draft-container container">
+					<div className="draft-container">
 						<div className="draft-label">{t('draftDesc')}</div>
 					</div>
 				)}
