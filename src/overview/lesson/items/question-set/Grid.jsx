@@ -27,7 +27,10 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		assignmentHistory: PropTypes.object,
 
 		assessment: PropTypes.object,
-		assessmentSubmission: PropTypes.object
+		assessmentSubmission: PropTypes.object,
+
+		onRequirementChange: PropTypes.func,
+		editMode: PropTypes.bool
 	}
 
 	state = {
@@ -101,18 +104,21 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 
 	renderLabels = () => {
-		const {assignment, assignmentHistory, assessment, assessmentSubmission, item} = this.props;
+		const {assignment, assignmentHistory, assessment, assessmentSubmission, onRequirementChange, item, editMode} = this.props;
 
 		const required = item.CompletionRequired;
 
 		if (assignment) {
 			return (
 				<AssignmentLabel
+					overviewItemRef={item}
 					assignment={assignment}
 					assignmentHistory={assignmentHistory}
 					required={required}
 					onInlineEditorExpanded={this.onInlineEditorExpanded}
 					statusExpanded={this.state.inlineEditorExpanded}
+					onRequirementChange={onRequirementChange}
+					editMode={editMode}
 				/>
 			);
 		}

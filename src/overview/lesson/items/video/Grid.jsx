@@ -4,6 +4,7 @@ import {Component as Video} from 'nti-web-video';
 import {Error as ErrorWidget, Loading} from 'nti-web-commons';
 import {LinkTo} from 'nti-web-routing';
 
+import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';
 import {block} from '../../../../utils';
 
@@ -24,7 +25,8 @@ export default class LessonOverviewVideoGrid extends React.Component {
 
 		activeIndex: PropTypes.number,
 		index: PropTypes.number,
-		touching: PropTypes.bool
+		touching: PropTypes.bool,
+		onRequirementChange: PropTypes.func
 	}
 
 	state = initialState
@@ -159,6 +161,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 			activeIndex,
 			index,
 			touching,
+			onRequirementChange,
 			item,
 		} = this.props;
 
@@ -206,7 +209,9 @@ export default class LessonOverviewVideoGrid extends React.Component {
 							className="overview-video-tap-area" href={link}
 						>
 							<div className="video-badges">
-								{(!viewed && required) && <Required className="badge"/>}
+								{onRequirementChange ?
+									<RequirementControl record={item} onChange={onRequirementChange}/>
+									: (!viewed && required) && <Required className="badge"/>}
 								{viewed && <div className="badge viewed">Viewed</div>}
 							</div>
 							<div className="wrapper">

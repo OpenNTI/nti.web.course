@@ -5,6 +5,7 @@ import { Summary } from 'nti-lib-interfaces';
 import { scoped } from 'nti-lib-locale';
 import { LinkTo } from 'nti-web-routing';
 
+import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';
 import { List, Grid } from '../../Constants';
 import Registry from '../Registry';
@@ -29,7 +30,8 @@ class LessonOverviewRelatedWork extends React.Component {
 		item: PropTypes.object,
 		course: PropTypes.object,
 		outlineNode: PropTypes.object,
-		editMode: PropTypes.bool
+		editMode: PropTypes.bool,
+		onRequirementChange: PropTypes.func
 	}
 
 	static contextTypes = {
@@ -56,7 +58,7 @@ class LessonOverviewRelatedWork extends React.Component {
 	}
 
 	render () {
-		const {layout, item, editMode, ...otherProps} = this.props;
+		const {layout, item, editMode, onRequirementChange, ...otherProps} = this.props;
 
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
@@ -80,7 +82,9 @@ class LessonOverviewRelatedWork extends React.Component {
 
 		const required = item.CompletionRequired;
 
-		const requiredLabel = required && (
+		const requiredLabel = onRequirementChange ? (
+			<RequirementControl record={item} onChange={onRequirementChange}/>
+		) : required && (
 			<Required key="required-label"/>
 		);
 

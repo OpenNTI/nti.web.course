@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {DateTime, List} from 'nti-web-commons';
 
+import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import {block} from '../../../../utils';
 
 export default class PlaylistItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		onClick: PropTypes.func,
-		selected: PropTypes.bool
+		selected: PropTypes.bool,
+		onRequirementChange: PropTypes.func
 	}
 
 	state = {}
@@ -51,9 +53,19 @@ export default class PlaylistItem extends React.Component {
 		}
 	}
 
+
+	requirementChange = (val) => {
+		const {onRequirementChange, item} = this.props;
+
+		if(onRequirementChange) {
+			onRequirementChange(val, item);
+		}
+	}
+
+
 	render () {
 		const {
-			props: {item, selected},
+			props: {item, selected, onRequirementChange},
 			state: {duration}
 		} = this;
 
@@ -70,7 +82,7 @@ export default class PlaylistItem extends React.Component {
 							<span className="meta">
 								<List.SeparatedInline>
 									{formattedDuration}
-									{required && ('Required')}
+									{onRequirementChange ? <RequirementControl record={item} onChange={this.requirementChange}/> : required && ('Required')}
 									{viewed && ('Viewed')}
 								</List.SeparatedInline>
 							</span>

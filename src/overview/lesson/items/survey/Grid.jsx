@@ -18,7 +18,8 @@ const t = scoped('course.overview.lesson.items.survey.Grid', DEFAULT_TEXT);
 
 export default class LessonOverviewSurveyGridItem extends React.Component {
 	static propTypes = {
-		item: PropTypes.object
+		item: PropTypes.object,
+		onRequirementChange: PropTypes.func
 	}
 
 	render () {
@@ -59,10 +60,10 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 
 
 	renderLabels = () => {
-		const {item} = this.props;
+		const {item, onRequirementChange} = this.props;
 
 		return (
-			<Label item={item} />
+			<Label item={item} onRequirementChange={onRequirementChange}/>
 		);
 	}
 

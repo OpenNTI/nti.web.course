@@ -8,6 +8,23 @@
 	overflow: hidden;
 	background: black;
 
+	.video-badges {
+		.require-control-value {
+			background-color: white;
+			border-radius: 16px;
+			height: 32px;
+			line-height: 26px;
+			padding: 0 15px;
+			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+
+			span {
+				color: $secondary-grey;
+				text-transform: uppercase;
+				font-size: 10px;
+			}
+		}
+	}
+
 	.error {
 		position: absolute;
 		color: lightgray;

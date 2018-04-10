@@ -10,6 +10,7 @@ export default class VideoRollPlaylist extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
 		item: PropTypes.object,
+		onRequirementChange: PropTypes.func,
 		readOnly: PropTypes.bool
 	}
 
@@ -27,7 +28,8 @@ export default class VideoRollPlaylist extends React.Component {
 		const {
 			props: {
 				item: {Items: items, NTIID},
-				readOnly
+				readOnly,
+				onRequirementChange
 			},
 			state: {
 				selected
@@ -49,6 +51,7 @@ export default class VideoRollPlaylist extends React.Component {
 							key={x.getID()}
 							selected={active === x}
 							onClick={this.handleSelect}
+							onRequirementChange={onRequirementChange}
 							readOnly={readOnly}
 						/>
 					)))}

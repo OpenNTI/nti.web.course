@@ -5,6 +5,7 @@ import {List, DateTime} from 'nti-web-commons';
 import {scoped} from 'nti-lib-locale';
 
 import Required from '../../common/Required';
+import RequirementControl from '../../../../progress/widgets/RequirementControl';
 
 const t = scoped('course.overview.lesson.overview.question-set.AssignmentLabel', {
 	draft: 'Draft',
@@ -39,11 +40,14 @@ const isToday = (...args) => DateTime.isToday(...args);
 
 export default class LessonOverviewAssignmentLabel extends React.Component {
 	static propTypes = {
+		overviewItemRef: PropTypes.object,
 		assignment: PropTypes.object,
 		assignmentHistory: PropTypes.object,
 		required: PropTypes.bool,
 		onInlineEditorExpanded: PropTypes.func,
-		statusExpanded: PropTypes.bool
+		statusExpanded: PropTypes.bool,
+		onRequirementChange: PropTypes.func,
+		editMode: PropTypes.bool
 	}
 
 	state = {}
@@ -186,7 +190,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 	renderDue () {
 		const {completedDate, dueDate, availableDate, now, isDraft, isNoSubmit} = this.state;
-		const {assignment} = this.props;
+		const {assignment, editMode} = this.props;
 
 		if (completedDate) { return null; }
 
@@ -209,7 +213,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			text = t('due.available', {date: format(availableDate)});
 		}
 
-		if(assignment && assignment.getDateEditingLink()) {
+		if(editMode && assignment && assignment.getDateEditingLink()) {
 			const className = this.props.statusExpanded ? 'icon-chevron-up' : 'icon-chevron-down';
 
 			// render editable widget
@@ -229,7 +233,12 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 
 	renderRequired () {
-		const {required} = this.props;
+		const {required, onRequirementChange, overviewItemRef} = this.props;
+
+		if(onRequirementChange) {
+			return <RequirementControl record={overviewItemRef} onChange={onRequirementChange}/>;
+		}
+
 
 		return required && (<Required/>);
 	}
