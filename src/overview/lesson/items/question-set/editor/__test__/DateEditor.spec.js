@@ -4,8 +4,6 @@ import { mount } from 'enzyme';
 
 import DateEditor from '../DateEditor';
 
-const wait = (x) => new Promise(f => setTimeout(f, x));
-
 const MONTHS = {
 	JANUARY: 1,
 	FEBRUARY: 2,
