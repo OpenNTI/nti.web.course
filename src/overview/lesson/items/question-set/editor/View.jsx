@@ -60,6 +60,58 @@ export default class AssignmentEditor extends React.Component {
 		};
 	}
 
+	componentDidMount () {
+		this.setup(this.props.assignment);
+	}
+
+
+	componentDidUpdate (oldProps) {
+		if(oldProps.assignment !== this.props.assignment) {
+			this.setup(this.props.assignment);
+		}
+	}
+
+	setup (assignment) {
+		let selectedPublishType = PUBLISH;
+		let scheduledDate;
+		let dueDate = new Date();
+		let hasDate = false;
+
+		if(assignment) {
+			const availableBeginning = assignment['available_for_submission_beginning'];
+			const availableEnding = assignment['available_for_submission_ending'];
+
+			const available = availableBeginning && new Date(availableBeginning);
+
+			const value = Publish.evaluatePublishStateFor({
+				isPublished: () => assignment && (assignment.PublicationState != null && (!available || available < Date.now())),
+				getPublishDate: () => assignment && available
+			});
+
+			if(value) {
+				if(value instanceof Date) {
+					selectedPublishType = SCHEDULE;
+					scheduledDate = value;
+				}
+				else {
+					selectedPublishType = value.toLowerCase();
+				}
+			}
+
+			if(availableEnding) {
+				dueDate = new Date(availableEnding);
+				hasDate = true;
+			}
+		}
+
+		this.setState({
+			selectedPublishType,
+			scheduledDate,
+			dueDate,
+			dueDateChecked: hasDate
+		});
+	}
+
 
 	onPublishChange = (selectedPublishType, scheduledDate) => {
 		this.setState({selectedPublishType, scheduledDate});
