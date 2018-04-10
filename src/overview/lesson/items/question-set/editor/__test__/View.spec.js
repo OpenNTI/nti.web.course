@@ -51,6 +51,47 @@ describe('Assignment editor view test', () => {
 	});
 
 
+	test('Test reset', async () => {
+		let didReset = false;
+		let didDismiss = false;
+
+		const onDismiss = () => {
+			didDismiss = true;
+		};
+
+		const assignment = {
+			hasLink: (rel) => {
+				return rel === 'Reset';
+			},
+			postToLink: (rel, data) => {
+				if(rel === 'Reset') {
+					didReset = true;
+				}
+
+				return Promise.resolve({});
+			},
+			refresh: () => {},
+			'available_for_submission_beginning': new Date().getTime(),
+			'available_for_submission_ending': new Date().getTime(),
+			PublicationState: 'true'
+		};
+
+		const cmp = mount(<View assignment={assignment} onDismiss={onDismiss}/>);
+
+		cmp.find('.inline-reset-menu').first().find('.publish-reset').first().simulate('click');
+
+		await wait(200);
+
+		expect(didReset).toBe(true);
+
+		cmp.find('.footer').first().find('.cancel').first().simulate('click');
+
+		await wait(200);
+
+		expect(didDismiss).toBe(true);
+	});
+
+
 	test('Test scheduled assignment with due date', async () => {
 		const now = new Date();
 		const date = new Date('10/31/2018');
