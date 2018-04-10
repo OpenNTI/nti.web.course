@@ -95,11 +95,12 @@ export default class AssignmentEditorDueDate extends React.Component {
 		const now = new Date();
 		const selectedDate = date || now;
 		const thisYear = now.getFullYear();
+		const selectedMonth = selectedDate ? selectedDate.getMonth().toString() : '0';
 
 		this.setState({
-			selectedMonth: selectedDate ? selectedDate.getMonth().toString() : '0',
+			selectedMonth,
 			selectedDay: selectedDate ? selectedDate.getDate().toString() : '1',
-			availableDays: this.getDaysForMonth(null, selectedDate ? selectedDate.getFullYear() : thisYear),
+			availableDays: this.getDaysForMonth(selectedMonth, selectedDate ? selectedDate.getFullYear() : thisYear),
 			availableYears: Array.apply(null, {length: 6}).map(Number.call, Number).map(n => { return {label: (n + thisYear).toString(), value: (n + thisYear).toString()}; }),
 			selectedYear: selectedDate ? selectedDate.getFullYear().toString() : thisYear.toString(),
 			selectedDate
