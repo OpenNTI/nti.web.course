@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {CircularProgress} from 'nti-web-charts';
 import {Hooks} from 'nti-web-session';
-import {HOC} from 'nti-web-commons';
+import {HOC, Iframe, Prompt} from 'nti-web-commons';
 
 const t = scoped('course.components.GradeCard', {
 	courseProgress: 'Course Progress',
 	outline: 'Outline',
-	getCertificate: 'Download Certificate',
-	completed: 'Completed'
+	getCertificate: 'View Certificate',
+	completed: 'Completed',
+	certificateTitle: 'Certificate of Completion for %(title)s'
 });
 
 const LOAD_WAIT = 5000;
@@ -140,6 +141,21 @@ class OutlineHeader extends React.Component {
 		}
 	}
 
+
+	showCertificate = () => {
+		this.setState({
+			showCertificate: true
+		});
+	}
+
+
+	hideCertificate = () => {
+		this.setState({
+			showCertificate: false
+		});
+	}
+
+
 	renderCertificateLink () {
 		const {course} = this.props;
 		const {PreferredAccess} = course;
@@ -149,7 +165,16 @@ class OutlineHeader extends React.Component {
 			return <div className="sub-label">{t('completed')}</div>;
 		}
 
-		return <div className="sub-label cert-link"><a href={certLink} target="_blank">{t('getCertificate')}</a></div>;
+		return (
+			<div className="sub-label cert-link">
+				<a onClick={this.showCertificate}>{t('getCertificate')}</a>
+				{this.state.showCertificate && (
+					<Prompt.Dialog onBeforeDismiss={this.hideCertificate}>
+						<Iframe src={certLink} title={t('certificateTitle', {title: PreferredAccess.CatalogEntry.title})} />
+					</Prompt.Dialog>
+				)}
+			</div>
+		);
 	}
 
 	renderLabel () {

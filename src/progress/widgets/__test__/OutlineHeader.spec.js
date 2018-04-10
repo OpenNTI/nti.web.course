@@ -113,8 +113,7 @@ describe('OutlineHeader view test', () => {
 
 		const certAnchor = cmp.find('.progress-labels').first().find('.sub-label').first().find('a').first();
 
-		expect(certAnchor.text()).toEqual('Download Certificate');
-		expect(certAnchor.prop('href')).toEqual('/some/certlink');
+		expect(certAnchor.text()).toEqual('View Certificate');
 	});
 
 	test('Test incomplete instructor view, one student finished', async () => {

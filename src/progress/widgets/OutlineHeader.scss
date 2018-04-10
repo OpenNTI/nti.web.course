@@ -22,6 +22,8 @@
 			&.cert-link {
 				a {
 					color: $primary-blue;
+					text-decoration: none;
+					cursor: pointer;
 				}
 			}
 		}
