@@ -61,6 +61,7 @@ export default class LessonOverview extends React.Component {
 							course={course}
 							outlineNode={outlineNode}
 							layout={layout}
+							readOnly={readOnly}
 							{...otherProps}
 
 						/>

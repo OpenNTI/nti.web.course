@@ -80,8 +80,10 @@ class LessonOverviewQuestionSet extends React.Component {
 
 
 	async setupAssignment (id, collection) {
+		const {readOnly} = this.props;
+
 		try {
-			const assignment = this.props.readOnly ?
+			const assignment = readOnly ?
 				await collection.getAssignment(id) :
 				await collection.fetchAssignment(id);
 
@@ -89,6 +91,10 @@ class LessonOverviewQuestionSet extends React.Component {
 				assignment: assignment,
 				networkError: false
 			});
+
+			if (readOnly) {
+				return;
+			}
 
 			try {
 				const history = await assignment.loadHistory();
@@ -111,12 +117,15 @@ class LessonOverviewQuestionSet extends React.Component {
 
 
 	setupAssessment (id, collection) {
+		const {readOnly} = this.props;
 		const assessment = collection.getAssessment(id);
 
 		this.setState({
 			assessment,
 			networkError: false
 		}, async () => {
+			if (readOnly) { return; }
+
 			try {
 				const service = await getService();
 				const pageInfo = await service.getPageInfo(id);

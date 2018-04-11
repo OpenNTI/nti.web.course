@@ -1,10 +1,11 @@
 export default class ProgressOverviewContentsStore {
-	constructor (dataSource, searchTerm) {
+	constructor (dataSource, searchTerm, requiredOnly) {
 		this.dataSource = dataSource;
 		this.params = {
 			sort: 'by-lesson',
 			decorateProgress: false,
 			decorateSummary: false,
+			requiredOnly,
 			searchTerm
 		};
 

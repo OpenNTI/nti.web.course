@@ -18,7 +18,8 @@ export default class ProgressOverviewContentsPage extends React.Component {
 		error: PropTypes.object,
 		pageHeight: PropTypes.number,
 		course: PropTypes.object,
-		enrollment: PropTypes.object
+		enrollment: PropTypes.object,
+		requiredOnly: PropTypes.bool
 	}
 
 
@@ -67,7 +68,7 @@ export default class ProgressOverviewContentsPage extends React.Component {
 
 
 	render () {
-		const {loading, pageHeight, course} = this.props;
+		const {loading, pageHeight, course, requiredOnly} = this.props;
 		const overview = this.getOverview();
 		const outlineNode = overview && overview.parent();
 		const available = outlineNode && outlineNode.getAvailableBeginning();
@@ -98,8 +99,8 @@ export default class ProgressOverviewContentsPage extends React.Component {
 										course={course}
 
 										layout={Overview.List}
-										readOnly={true}
-										requiredOnly={true}
+										readOnly
+										requiredOnly={requiredOnly}
 
 										extraColumns={[CompletedDate]}
 									/>

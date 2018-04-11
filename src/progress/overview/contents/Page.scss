@@ -15,4 +15,10 @@
 			color: $primary-grey;
 		}
 	}
+
+	&.empty {
+		.header {
+			opacity: 0.5;
+		}
+	}
 }
