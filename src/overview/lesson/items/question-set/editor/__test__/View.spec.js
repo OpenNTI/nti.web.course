@@ -180,7 +180,7 @@ describe('Assignment editor view test', () => {
 
 		const assignment = {
 			hasLink: (rel) => {
-				return rel === 'date-edit-start' || rel === 'publish' || rel === 'date-edit';
+				return rel === 'date-edit-start' || rel === 'publish' || rel === 'date-edit' || rel === 'unpublish';
 			},
 			postToLink: (rel, data) => {
 				if(rel === 'unpublish') {

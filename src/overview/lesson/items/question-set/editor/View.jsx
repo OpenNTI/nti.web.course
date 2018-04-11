@@ -203,7 +203,7 @@ export default class AssignmentEditor extends React.Component {
 			}
 
 			if(continueWithOp) {
-				if(selectedPublishType === DRAFT) {
+				if(selectedPublishType === DRAFT && assignment.hasLink('unpublish')) {
 					await assignment.postToLink('unpublish');
 				}
 
@@ -241,7 +241,7 @@ export default class AssignmentEditor extends React.Component {
 			<div className="assignment-inline-editor menu-container">
 				<div className="assignment-due-date-editor">
 					<div className="contents">
-						<PublishState onPublishChange={this.onPublishChange} selectedType={this.state.selectedPublishType} scheduledDate={this.state.scheduledDate}/>
+						<PublishState onPublishChange={this.onPublishChange} selectedType={this.state.selectedPublishType} scheduledDate={this.state.scheduledDate} assignment={assignment}/>
 						{showReset && <Reset onReset={this.onReset}/>}
 						<DueDate onDateChanged={this.onDueDateChange} date={this.state.dueDate} onDueDateChecked={this.onDueDateChecked} dueDateChecked={this.state.dueDateChecked}/>
 						{this.state.error && <div className="error">{this.state.error}</div>}

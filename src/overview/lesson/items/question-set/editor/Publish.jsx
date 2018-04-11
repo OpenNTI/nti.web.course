@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from 'nti-lib-locale';
 import {Radio} from 'nti-web-commons';
+import cx from 'classnames';
 
 import DateEditor from './DateEditor';
 
@@ -21,6 +22,7 @@ export const DRAFT = 'draft';
 
 export default class AssignmentEditorPublish extends React.Component {
 	static propTypes = {
+		assignment: PropTypes.object.isRequired,
 		onPublishChange: PropTypes.func,
 		selectedType: PropTypes.oneOf([PUBLISH, SCHEDULE, DRAFT]),
 		scheduledDate: PropTypes.object
@@ -105,13 +107,18 @@ export default class AssignmentEditorPublish extends React.Component {
 
 
 	renderDraft () {
-		const selected = this.props.selectedType === DRAFT;
+		const {assignment, selectedType} = this.props;
+
+		const selected = selectedType === DRAFT;
+		const disabled = !assignment.hasLink('unpublish');
+
+		const className = cx('draft-option', { disabled });
 
 		return (
-			<div className="draft-option">
+			<div className={className}>
 				<div className="label draft">
 					<div className="nti-radio-input">
-						<Radio name="assignment-publish-option-input" label={t(DRAFT)} checked={selected} onChange={this.selectDraft}/>
+						<Radio disabled={disabled} name="assignment-publish-option-input" label={t(DRAFT)} checked={selected} onChange={this.selectDraft}/>
 					</div>
 				</div>
 				{selected && (
