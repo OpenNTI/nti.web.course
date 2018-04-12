@@ -6,7 +6,7 @@ import {getService} from '@nti/web-client';
 import {Layouts} from '@nti/web-commons';
 // import {Tasks} from '@nti/lib-commons';
 
-import {Progress, Overview} from '../../src';
+import {Progress, Overview, AdminTools} from '../../src';
 
 import Picker from './PickCourse';
 
@@ -59,7 +59,7 @@ class Test extends React.Component {
 				baseroute: '/',
 				route: {
 					location: {
-						pathname: '/completion'
+						pathname: '/lti'
 					}
 				},
 				getRouteFor: () => {
@@ -110,12 +110,7 @@ class Test extends React.Component {
 
 		return (
 			<div>
-				<button onClick={this.showProgress}>
-					Show Progress
-				</button>
-				{nodes.slice(0, 1).map(node => (
-					<Overview.Lesson key={node.NTIID} course={course} outlineNode={node} />
-				))}
+				<AdminTools.Advanced course={course} />
 			</div>
 
 		);

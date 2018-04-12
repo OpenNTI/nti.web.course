@@ -1,0 +1,39 @@
+
+@import '~nti-style-common';
+
+li.lti-configured-tool {
+	box-shadow: 0 1px 0 0 $border-grey-light;
+	padding: 1rem 1rem;
+	list-style: none;
+	text-decoration: none;
+	display: flex;
+
+	.lti-tool-title {
+		flex: 2;
+	}
+
+	.lti-cofingured-tool-preview {
+		cursor: pointer;
+	}
+}
+
+.lti-configured-tool-options {
+	.flyout-inner {
+		padding: 5px;
+		min-width: 130px;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+
+		.lti-configured-tool-edit, .lti-configured-tool-delete {
+			margin: 5px 5px;
+			display: flex;
+			align-items: center;
+			cursor: pointer;
+		}
+
+		.lti-configured-tool-edit i, .lti-configured-tool-delete i {
+			padding-right: 5px;
+		}
+	}
+}
+
