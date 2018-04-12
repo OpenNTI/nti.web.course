@@ -3,9 +3,10 @@
 
 .nti-lesson-overview.grid-layout {
 	.require-control-value {
-		height: 20px;
+		height: 26px;
 		border-radius: 3px;
-		padding: 4px 6px;
+		padding: 0 6px;
+		display: inline-block;
 
 		span {
 			height: 14px;
@@ -23,9 +24,10 @@
 
 .lesson-overview-group.grid-layout {
 	.require-control-value {
-		height: 20px;
+		height: 26px;
 		border-radius: 3px;
-		padding: 4px 6px;
+		padding: 0 6px;
+		display: inline-block;
 
 		span {
 			height: 14px;
