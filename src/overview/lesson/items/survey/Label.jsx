@@ -25,10 +25,11 @@ LessonOverviewSurveyLabel.propTypes = {
 };
 export default function LessonOverviewSurveyLabel ({item, onRequirementChange}) {
 	const required = (item || {}).CompletionRequired;
+	const completable = (item || {}).isCompletable && (item || {}).isCompletable();
 
 	return (
 		<List.SeparatedInline className="lesson-overview-survey-label">
-			{onRequirementChange ?
+			{completable && onRequirementChange ?
 				(
 					<RequirementControl record={item} onChange={onRequirementChange}/>
 				)

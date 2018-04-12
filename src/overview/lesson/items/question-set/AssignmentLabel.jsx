@@ -235,7 +235,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 	renderRequired () {
 		const {required, onRequirementChange, overviewItemRef} = this.props;
 
-		if(onRequirementChange) {
+		if(overviewItemRef.isCompletable && overviewItemRef.isCompletable() && onRequirementChange) {
 			return <RequirementControl record={overviewItemRef} onChange={onRequirementChange}/>;
 		}
 

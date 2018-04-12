@@ -82,7 +82,7 @@ export default class PlaylistItem extends React.Component {
 							<span className="meta">
 								<List.SeparatedInline>
 									{formattedDuration}
-									{onRequirementChange ? <RequirementControl record={item} onChange={this.requirementChange}/> : required && ('Required')}
+									{item.isCompletable && item.isCompletable() && onRequirementChange ? <RequirementControl record={item} onChange={this.requirementChange}/> : required && ('Required')}
 									{viewed && ('Viewed')}
 								</List.SeparatedInline>
 							</span>

@@ -82,7 +82,7 @@ class LessonOverviewRelatedWork extends React.Component {
 
 		const required = item.CompletionRequired;
 
-		const requiredLabel = onRequirementChange ? (
+		const requiredLabel = item.isCompletable && item.isCompletable() && onRequirementChange ? (
 			<RequirementControl record={item} onChange={onRequirementChange}/>
 		) : required && (
 			<Required key="required-label"/>
