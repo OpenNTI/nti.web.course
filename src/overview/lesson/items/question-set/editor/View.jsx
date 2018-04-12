@@ -169,9 +169,9 @@ export default class AssignmentEditor extends React.Component {
 			}
 			catch(putEx) {
 				// the initial put "fails", could just be needing confirmation
-				if(putEx.code === 'AvailableToUnavailable') {
+				if(putEx.code === 'AvailableToUnavailable' || 'AssessmentDateConfirm') {
 					try {
-						await Prompt.areYouSure('', putEx.message);
+						await Prompt.areYouSure('', putEx.message, { iconClass: 'alert', confirmButtonClass: 'alert', confirmButtonLabel: 'Yes', cancelButtonLabel: 'No' });
 
 						try {
 							await assignment.requestLink (
