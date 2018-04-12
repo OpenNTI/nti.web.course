@@ -1,0 +1,17 @@
+
+.lti-tools-config {
+	max-width: 700px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	.lti-tools-config-headerBar {
+		display: flex;
+		align-items: center;
+
+		.lti-tools-config-header {
+			flex: 2;
+			font-size: 18px;
+			font-weight: 600;
+		}
+	}
+}
