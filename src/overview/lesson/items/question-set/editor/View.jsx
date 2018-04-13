@@ -10,6 +10,7 @@ import DueDate from './DueDate';
 export default class AssignmentEditor extends React.Component {
 	static propTypes = {
 		assignment: PropTypes.object.isRequired,
+		assignmentRef: PropTypes.object.isRequired,
 		onDismiss: PropTypes.func
 	}
 
@@ -234,16 +235,27 @@ export default class AssignmentEditor extends React.Component {
 
 
 	render () {
-		const {assignment} = this.props;
+		const {assignment, assignmentRef} = this.props;
 		const showReset = assignment.hasLink('Reset') || (!assignment.hasLink('date-edit-start'));
 
 		return (
 			<div className="assignment-inline-editor menu-container">
 				<div className="assignment-due-date-editor">
 					<div className="contents">
-						<PublishState onPublishChange={this.onPublishChange} selectedType={this.state.selectedPublishType} scheduledDate={this.state.scheduledDate} assignment={assignment}/>
+						<PublishState
+							onPublishChange={this.onPublishChange}
+							selectedType={this.state.selectedPublishType}
+							scheduledDate={this.state.scheduledDate}
+							assignment={assignment}
+							assignmentRef={assignmentRef}
+						/>
 						{showReset && <Reset onReset={this.onReset}/>}
-						<DueDate onDateChanged={this.onDueDateChange} date={this.state.dueDate} onDueDateChecked={this.onDueDateChecked} dueDateChecked={this.state.dueDateChecked}/>
+						<DueDate
+							onDateChanged={this.onDueDateChange}
+							date={this.state.dueDate}
+							onDueDateChecked={this.onDueDateChecked}
+							dueDateChecked={this.state.dueDateChecked}
+						/>
 						{this.state.error && <div className="error">{this.state.error}</div>}
 					</div>
 					<Footer onSave={this.onSave} onCancel={this.onCancel}/>

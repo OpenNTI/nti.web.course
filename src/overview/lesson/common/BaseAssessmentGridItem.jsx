@@ -95,7 +95,7 @@ export default class BaseAssessmentGridItem extends React.Component {
 					</LinkTo.Object>
 					<div className="editor-container">
 						{(this.state.editorTransitioning || this.state.editorExpanded) && (
-							<Editor assignment={linkToObject} onDismiss={this.onEditorDismiss} statusExpanded={this.props.inlineEditorExpanded}/>
+							<Editor assignment={linkToObject} assignmentRef={item} onDismiss={this.onEditorDismiss}/>
 						)}
 					</div>
 				</div>

@@ -23,6 +23,7 @@ export const DRAFT = 'draft';
 export default class AssignmentEditorPublish extends React.Component {
 	static propTypes = {
 		assignment: PropTypes.object.isRequired,
+		assignmentRef: PropTypes.object.isRequired,
 		onPublishChange: PropTypes.func,
 		selectedType: PropTypes.oneOf([PUBLISH, SCHEDULE, DRAFT]),
 		scheduledDate: PropTypes.object
@@ -67,7 +68,7 @@ export default class AssignmentEditorPublish extends React.Component {
 			<div className="publish-option">
 				<div className="label schedule">
 					<div className="nti-radio-input">
-						<Radio name="assignment-publish-option-input" label={t(PUBLISH)} checked={selected} onChange={this.selectPublish}/>
+						<Radio name={this.getInputName()} label={t(PUBLISH)} checked={selected} onChange={this.selectPublish}/>
 					</div>
 				</div>
 				{selected && (
@@ -85,6 +86,10 @@ export default class AssignmentEditorPublish extends React.Component {
 	}
 
 
+	getInputName () {
+		return 'assignment-publish-option-input-' + this.props.assignmentRef.NTIID;
+	}
+
 	renderSchedule () {
 		const selected = this.props.selectedType === SCHEDULE;
 
@@ -92,7 +97,7 @@ export default class AssignmentEditorPublish extends React.Component {
 			<div className="schedule-option">
 				<div className="label schedule">
 					<div className="nti-radio-input">
-						<Radio name="assignment-publish-option-input" label={t(SCHEDULE)} checked={selected} onChange={this.selectSchedule}/>
+						<Radio name={this.getInputName()} label={t(SCHEDULE)} checked={selected} onChange={this.selectSchedule}/>
 					</div>
 				</div>
 				{selected && (
@@ -118,7 +123,7 @@ export default class AssignmentEditorPublish extends React.Component {
 			<div className={className}>
 				<div className="label draft">
 					<div className="nti-radio-input">
-						<Radio disabled={disabled} name="assignment-publish-option-input" label={t(DRAFT)} checked={selected} onChange={this.selectDraft}/>
+						<Radio disabled={disabled} name={this.getInputName()} label={t(DRAFT)} checked={selected} onChange={this.selectDraft}/>
 					</div>
 				</div>
 				{selected && (
