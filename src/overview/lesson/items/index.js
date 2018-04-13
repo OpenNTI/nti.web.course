@@ -8,5 +8,6 @@ import './timeline';
 import './topic';
 import './video';
 import './video-roll';
+import './lti';
 
 export default from './View';
