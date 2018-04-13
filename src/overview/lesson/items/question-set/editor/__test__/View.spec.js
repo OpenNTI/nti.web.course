@@ -7,6 +7,10 @@ import View from '../View';
 const wait = (x) => new Promise(f => setTimeout(f, x));
 
 describe('Assignment editor view test', () => {
+	const assignmentRef = {
+		NTIID: 'refID'
+	};
+
 	test('Test empty assignment', async () => {
 		const assignment = {
 			hasLink: (rel) => {
@@ -17,7 +21,7 @@ describe('Assignment editor view test', () => {
 			PublicationState: null
 		};
 
-		const cmp = mount(<View assignment={assignment}/>);
+		const cmp = mount(<View assignment={assignment} assignmentRef={assignmentRef}/>);
 
 		// draft is selected, there is no reset and due date editor is disabled
 		expect(cmp.find('.draft-container').exists()).toBe(true);
@@ -39,7 +43,7 @@ describe('Assignment editor view test', () => {
 			PublicationState: 'true'
 		};
 
-		const cmp = mount(<View assignment={assignment}/>);
+		const cmp = mount(<View assignment={assignment} assignmentRef={assignmentRef}/>);
 
 		// publish is selected, there is no reset and due date editor is disabled
 		expect(cmp.find('.publish-container').exists()).toBe(true);
@@ -76,7 +80,7 @@ describe('Assignment editor view test', () => {
 			PublicationState: 'true'
 		};
 
-		const cmp = mount(<View assignment={assignment} onDismiss={onDismiss}/>);
+		const cmp = mount(<View assignment={assignment} assignmentRef={assignmentRef} onDismiss={onDismiss}/>);
 
 		cmp.find('.inline-reset-menu').first().find('.publish-reset').first().simulate('click');
 
@@ -108,7 +112,7 @@ describe('Assignment editor view test', () => {
 			PublicationState: 'true'
 		};
 
-		const cmp = mount(<View assignment={assignment}/>);
+		const cmp = mount(<View assignment={assignment} assignmentRef={assignmentRef}/>);
 
 		// schedule is selected and the scheduled date widget reflects the provided date
 		expect(cmp.find('.schedule-container').exists()).toBe(true);
@@ -150,7 +154,7 @@ describe('Assignment editor view test', () => {
 			PublicationState: null
 		};
 
-		const cmp = mount(<View assignment={assignment}/>);
+		const cmp = mount(<View assignment={assignment} assignmentRef={assignmentRef}/>);
 
 		const scheduledDate = new Date('10/25/2018');
 		const dueDate = new Date('10/31/2018');
@@ -198,7 +202,7 @@ describe('Assignment editor view test', () => {
 			PublicationState: null
 		};
 
-		const cmp = mount(<View assignment={assignment}/>);
+		const cmp = mount(<View assignment={assignment} assignmentRef={assignmentRef}/>);
 
 		// simulates saving as a draft, which should invoke an unpublish call
 		cmp.find('.save').simulate('click');

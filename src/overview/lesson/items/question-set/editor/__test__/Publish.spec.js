@@ -11,8 +11,12 @@ describe('Publish controls test', () => {
 		}
 	};
 
+	const assignmentRef = {
+		NTIID: 'refID'
+	};
+
 	test('Test publish type', async () => {
-		const cmp = mount(<Publish selectedType={PUBLISH} assignment={assignment}/>);
+		const cmp = mount(<Publish selectedType={PUBLISH} assignment={assignment} assignmentRef={assignmentRef}/>);
 
 		expect(cmp.find('.publish-label').first().text()).toEqual('Assignment is visible to students');
 		expect(cmp.find('.schedule-container').exists()).toBe(false);
@@ -24,7 +28,7 @@ describe('Publish controls test', () => {
 	test('Test schedule type', async () => {
 		const date = new Date('10/25/18');
 
-		const cmp = mount(<Publish selectedType={SCHEDULE} scheduledDate={date} assignment={assignment}/>);
+		const cmp = mount(<Publish selectedType={SCHEDULE} scheduledDate={date} assignment={assignment} assignmentRef={assignmentRef}/>);
 
 		expect(cmp.find('.schedule-label').first().text()).toEqual('When do you want students to have access to the assignment?');
 		expect(cmp.find('.publish-container').exists()).toBe(false);
@@ -36,7 +40,7 @@ describe('Publish controls test', () => {
 	});
 
 	test('Test draft type', async () => {
-		const cmp = mount(<Publish selectedType={DRAFT} assignment={assignment}/>);
+		const cmp = mount(<Publish selectedType={DRAFT} assignment={assignment} assignmentRef={assignmentRef}/>);
 
 		expect(cmp.find('.draft-label').first().text()).toEqual('Currently not visible to any students');
 		expect(cmp.find('.publish-container').exists()).toBe(false);
