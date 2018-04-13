@@ -9,7 +9,7 @@ const DEFAULT_TEXT = {
 	day: 'Day',
 	year: 'Year'
 };
-const t = scoped('course.overview.lesson.items.questionset.editor.DueDate', DEFAULT_TEXT);
+const t = scoped('course.overview.lesson.items.questionset.editor.AssignmentEditorDateEditor', DEFAULT_TEXT);
 
 const MONTHS = [
 	{
@@ -63,7 +63,7 @@ const MONTHS = [
 
 ];
 
-export default class AssignmentEditorDueDate extends React.Component {
+export default class AssignmentEditorDateEditor extends React.Component {
 	static propTypes = {
 		date: PropTypes.object,
 		onDueDateChecked: PropTypes.func,
@@ -97,11 +97,27 @@ export default class AssignmentEditorDueDate extends React.Component {
 		const thisYear = now.getFullYear();
 		const selectedMonth = selectedDate ? selectedDate.getMonth().toString() : '0';
 
+		let availableYears = Array.apply(null, {length: 6}).map(Number.call, Number).map(n => { return {label: (n + thisYear).toString(), value: (n + thisYear).toString()}; });
+
+		const selectedDateYear = selectedDate.getFullYear().toString();
+
+		// handle a selected year not in the default range by placing it at the
+		// top of the select options
+		if(!availableYears.map(x => x.value).includes(selectedDateYear)) {
+			availableYears = [
+				{
+					label: selectedDateYear,
+					value: selectedDateYear
+				},
+				...availableYears
+			];
+		}
+
 		this.setState({
 			selectedMonth,
 			selectedDay: selectedDate ? selectedDate.getDate().toString() : '1',
 			availableDays: this.getDaysForMonth(selectedMonth, selectedDate ? selectedDate.getFullYear() : thisYear),
-			availableYears: Array.apply(null, {length: 6}).map(Number.call, Number).map(n => { return {label: (n + thisYear).toString(), value: (n + thisYear).toString()}; }),
+			availableYears,
 			selectedYear: selectedDate ? selectedDate.getFullYear().toString() : thisYear.toString(),
 			selectedDate
 		});
