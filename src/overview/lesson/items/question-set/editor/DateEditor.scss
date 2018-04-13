@@ -62,6 +62,11 @@
 			}
 
 			&.open {
+				ul {
+					max-height: 12rem;
+					overflow-y: scroll;
+				}
+
 				.option-label.selected {
 					background-color: white;
 					color: $primary-grey;
