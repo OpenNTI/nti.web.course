@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {LinkTo} from 'nti-web-routing';
 import cx from 'classnames';
-
-import Editor from '../items/question-set/editor';
+import {InlineEditor} from 'nti-assignment-editor';
 
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';
@@ -95,7 +94,7 @@ export default class BaseAssessmentGridItem extends React.Component {
 					</LinkTo.Object>
 					<div className="editor-container">
 						{(this.state.editorTransitioning || this.state.editorExpanded) && (
-							<Editor assignment={linkToObject} assignmentRef={item} onDismiss={this.onEditorDismiss}/>
+							<InlineEditor assignment={linkToObject} assignmentRef={item} onDismiss={this.onEditorDismiss}/>
 						)}
 					</div>
 				</div>
