@@ -36,7 +36,7 @@ export default class IdentifierEdit extends React.Component {
 		const { error } = this.props;
 
 		if(error) {
-			return <div className="error">{t('titleIsRequired')}</div>;
+			return <div className="error">{error.message || t('titleIsRequired')}</div>;
 		}
 	}
 
