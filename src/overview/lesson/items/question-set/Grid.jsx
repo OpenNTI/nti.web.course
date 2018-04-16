@@ -125,7 +125,12 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 		if (assessment) {
 			return (
-				<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission} required={required} />
+				<AssessmentLabel
+					overviewItemRef={item}
+					assessment={assessment}
+					assessmentSubmission={assessmentSubmission}
+					onRequirementChange={onRequirementChange}
+					required={required} />
 			);
 		}
 	}

@@ -4,6 +4,7 @@ import {scoped} from 'nti-lib-locale';
 import {List} from 'nti-web-commons';
 
 import Required from '../../common/Required';
+import RequirementControl from '../../../../progress/widgets/RequirementControl';
 
 const t = scoped('course.overview.lesson.items.question-set.List', {
 	questionCount: {
@@ -15,18 +16,25 @@ const t = scoped('course.overview.lesson.items.question-set.List', {
 });
 
 LessonOverviewQuestionSetAssessmentLabel.propTypes = {
+	overviewItemRef: PropTypes.object,
 	assessment: PropTypes.object,
 	assessmentSubmission: PropTypes.object,
-	required: PropTypes.bool
+	required: PropTypes.bool,
+	onRequirementChange: PropTypes.func,
+	editMode: PropTypes.bool
 };
-export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, assessmentSubmission, required}) {
+export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, assessmentSubmission, required, overviewItemRef, onRequirementChange}) {
 	const count = assessment ? parseInt(assessment['question-count'], 10) : 0;
 	const correct = assessmentSubmission && assessmentSubmission.getCorrect();
 	const incorrect = assessmentSubmission && assessmentSubmission.getIncorrect();
 
+	const requiredWidget = onRequirementChange && overviewItemRef.isCompletable && overviewItemRef.isCompletable()
+		? (<RequirementControl record={overviewItemRef} onChange={onRequirementChange}/>)
+		: required && (<Required/>);
+
 	return (
 		<List.SeparatedInline className="lesson-overview-questionset-assessment-label">
-			{required && (<Required/>)}
+			{requiredWidget}
 			{!assessmentSubmission && (<span className="question-count">{t('questionCount', {count})}</span>)}
 			{assessmentSubmission && (
 				<div className="submitted">
