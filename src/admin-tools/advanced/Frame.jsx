@@ -7,7 +7,8 @@ import NavBar from './nav-bar';
 
 export default class CourseAdminAdvancedView extends React.Component {
 	static propTypes = {
-		children: PropTypes.node
+		children: PropTypes.node,
+		course: PropTypes.object
 	}
 
 	render () {
@@ -20,12 +21,12 @@ export default class CourseAdminAdvancedView extends React.Component {
 	}
 
 	renderLayout () {
-		const {children} = this.props;
+		const {children, course} = this.props;
 
 		return (
 			<Layouts.NavContent.Container>
 				<Layouts.NavContent.Nav className="nav-bar">
-					<NavBar/>
+					<NavBar course={course} />
 				</Layouts.NavContent.Nav>
 				<Layouts.NavContent.Content className="content">
 					{React.Children.map(children, (item) => {
