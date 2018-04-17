@@ -5,6 +5,8 @@ import { Panels, DialogButtons, Prompt, Select, Input } from 'nti-web-commons';
 const { Label } = Input;
 const { Dialog } = Prompt;
 
+import Store from '../../Store';
+
 import Manual from './forms/Manual';
 import ByXML from './forms/ByXML';
 import ByURL from './forms/ByURL';
@@ -21,13 +23,20 @@ const modeOptions = [
 	{ label: 'Paste XML', value: MODES.XML }
 ];
 
-export default class Base extends Component {
+const propMap = {
+	'editing-error': 'error',
+};
+
+export default
+@Store.connect(propMap)
+class Base extends Component {
 	static propTypes = {
 		onBeforeDismiss: PropTypes.func.isRequired,
 		title: PropTypes.string.isRequired,
 		onSubmit: PropTypes.func.isRequired,
 		submitLabel: PropTypes.string.isRequired,
-		error: PropTypes.string
+		error: PropTypes.string,
+		store: PropTypes.object,
 	}
 
 	constructor (props) {
@@ -91,30 +100,37 @@ export default class Base extends Component {
 		onSubmit(item);
 	}
 
-	renderForm () {
-		const { mode, item } = this.state;
-		let Form;
+	onBeforeDismiss = () => {
+		const { store, onBeforeDismiss } = this.props;
+		store.clearError();
+		onBeforeDismiss();
+	}
 
-		if (mode === MODES.XML) { Form = ByXML; }
-		else if (mode === MODES.URL) { Form = ByURL; }
-		else { Form = Manual; }
+	renderForm () {
+		const { item } = this.state;
+		const { formselector } = item;
+		let Form = Manual;
+
+		if (formselector === MODES.XML) { Form = ByXML; }
+		else if (formselector === MODES.URL) { Form = ByURL; }
 
 		return <Form onSubmit={this.onSubmit} onChange={this.onChange} item={item} />;
 	}
 
+
 	render () {
-		const { onBeforeDismiss, title, submitLabel = 'Create', error } = this.props;
+		const { title, submitLabel = 'Create', error } = this.props;
 		const { item: { formselector } } = this.state;
 
 		const buttons = [
-			{ label: 'Cancel', onClick: onBeforeDismiss },
+			{ label: 'Cancel', onClick: this.onBeforeDismiss },
 			{ label: submitLabel, onClick: this.onSubmit }
 		];
 
 		return (
-			<Dialog closeOnMaskClick onBeforeDismiss={onBeforeDismiss}>
+			<Dialog closeOnMaskClick onBeforeDismiss={this.onBeforeDismiss}>
 				<div className="lti-base-tool-editing">
-					<Panels.TitleBar title={title} iconAction={onBeforeDismiss} />
+					<Panels.TitleBar title={title} iconAction={this.onBeforeDismiss} />
 					{error && <span className="lti-base-tool-error">{error}</span>}
 					<Label className="config-type-label" label="Configuration Type">
 						<Select value={formselector} onChange={this.onModeSelect}>

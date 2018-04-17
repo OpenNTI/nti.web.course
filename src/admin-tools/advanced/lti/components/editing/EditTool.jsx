@@ -26,10 +26,11 @@ export default class EditTool extends Component {
 
 		try {
 			await item.save(updatedItem);
-			onBeforeDismiss();
 		} catch (error) {
 			this.setState({ error });
 		}
+
+		onBeforeDismiss();
 	}
 
 	render () {
