@@ -1,25 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'nti-web-commons';
+import { scoped } from 'nti-lib-locale';
 
 import BaseForm from './BaseForm';
 
 const { Label, Text } = Input;
 
+const DEFAULT_TEXT = {
+	title: 'Title',
+	desc: 'Description',
+	launch: 'Launch URL',
+	secureUrl: 'Secure Launch URL'
+};
+
+const t = scoped('nti-web-course.admin-tools.advanced.lti.editing.forms.Manual', DEFAULT_TEXT);
+
 const Manual = ({ onChange, onSubmit, item }) => (
 	<BaseForm onChange={onChange} onSubmit={onSubmit} item={item}>
-		<Label label="Title">
-			<Text value={item.title} onChange={value => onChange('title', value)} placeholder="Title" />
+		<Label label={t('title')}>
+			<Text value={item.title} onChange={value => onChange('title', value)} placeholder={t('title')} />
 		</Label>
-		<Label label="Description">
-			<Text value={item.description} onChange={value => onChange('description', value)} placeholder="Description" />
+		<Label label={t('desc')}>
+			<Text value={item.description} onChange={value => onChange('description', value)} placeholder={t('desc')} />
 		</Label>
 		<div className="split-input">
-			<Label label="Launch URL">
-				<Text value={item['launch_url']} onChange={(value) => onChange('launch_url', value)} placeholder="Launch URL" />
+			<Label label={t('launch')}>
+				<Text value={item['launch_url']} onChange={(value) => onChange('launch_url', value)} placeholder={t('launch')} />
 			</Label>
-			<Label label="Secure Launch URL">
-				<Text value={item['secure_launch_url']} onChange={(value) => onChange('secure_launch_url', value)} placeholder="Secure Launch URL" />
+			<Label label={t('secureUrl')}>
+				<Text value={item['secure_launch_url']} onChange={(value) => onChange('secure_launch_url', value)} placeholder={t('secureUrl')} />
 			</Label>
 		</div>
 	</BaseForm>

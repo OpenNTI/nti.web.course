@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Flyout } from 'nti-web-commons';
+import { Flyout, HOC } from 'nti-web-commons';
+import { scoped } from 'nti-lib-locale';
 
 import EditTool from '../editing/EditTool';
+import Store from '../../Store';
+
+const DEFAULT_TEXT = {
+	edit: 'Edit',
+	delete: 'Delete',
+};
+
+const t = scoped('nti-web-course.admin-tools.advanced.lti.tools.Tool', DEFAULT_TEXT);
 
 export default class Tool extends Component {
 	static propTypes = {
 		item: PropTypes.shape({
-			title: PropTypes.string.isRequired
+			title: PropTypes.string.isRequired,
+			delete: PropTypes.func.isRequired
 		}).isRequired
 	}
 
@@ -15,7 +25,25 @@ export default class Tool extends Component {
 		showEditor: false
 	}
 
-	attachFlyoutRef = x => this.flyout = x
+	attachFlyoutRef = x => this.flyout = x;
+
+	hideEditor = () => {
+		this.setState({ showEditor: false });
+	}
+
+	showEditor = () => {
+		this.setState({ showEditor: true });
+	}
+
+	delete = () => {
+		const store = Store.getInstance();
+		store.deleteItem(this.props.item);
+	}
+
+	onItemChange = () => {
+		const store = Store.getInstance();
+		store.itemChange(this.props.item);
+	}
 
 	renderOptions = () => {
 		const trigger = (
@@ -34,23 +62,15 @@ export default class Tool extends Component {
 				<React.Fragment>
 					<div className="lti-configured-tool-edit" onClick={this.showEditor}>
 						<i className="icon-edit" />
-						Edit
+						{t('edit')}
 					</div>
-					<div className="lti-configured-tool-delete">
+					<div className="lti-configured-tool-delete" onClick={this.delete}>
 						<i className="icon-delete" />
-						Delete
+						{t('delete')}
 					</div>
 				</React.Fragment>
 			</Flyout.Triggered>
 		);
-	}
-
-	hideEditor = () => {
-		this.setState({ showEditor: false });
-	}
-
-	showEditor = () => {
-		this.setState({ showEditor: true });
 	}
 
 	render () {
@@ -58,11 +78,13 @@ export default class Tool extends Component {
 		const { showEditor } = this.state;
 
 		return (
-			<li className="lti-configured-tool">
-				<div className="lti-tool-title">{item.title}</div>
-				{this.renderOptions()}
-				{showEditor && <EditTool item={item} onBeforeDismiss={this.hideEditor} />}
-			</li>
+			<HOC.ItemChanges item={item} onItemChange={this.onItemChange}>
+				<li className="lti-configured-tool">
+					<div className="lti-tool-title">{item.title}</div>
+					{this.renderOptions()}
+					{showEditor && <EditTool item={item} onBeforeDismiss={this.hideEditor} />}
+				</li>
+			</HOC.ItemChanges>
 		);
 	}
 }

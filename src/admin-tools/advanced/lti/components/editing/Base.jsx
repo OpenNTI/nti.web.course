@@ -26,46 +26,52 @@ export default class Base extends Component {
 		onBeforeDismiss: PropTypes.func.isRequired,
 		title: PropTypes.string.isRequired,
 		onSubmit: PropTypes.func.isRequired,
-		submitLabel: PropTypes.string.isRequired
+		submitLabel: PropTypes.string.isRequired,
+		error: PropTypes.string
 	}
 
-	static getDerivedStateFromProps (nextProps, prevState) {
-		if (nextProps.item) {
-			const { item } = nextProps;
+	constructor (props) {
+		super(props);
+		const item = this._setupItem(props);
+		this.state = { item };
+	}
+
+	componentDidMount () {
+		const item = this._setupItem(this.props);
+		this.setState({ item });
+	}
+
+	_setupItem (props) {
+		const { item } = props;
+		if (item) {
 			const { title, description, MimeType } = item;
 
 			return {
-				item: {
-					title,
-					description,
-					'consumer_key': item['consumer_key'],
-					secret: '',
-					'launch_url': item['launch_url'],
-					'secure_launch_url': item['secure_launch_url'],
-					'xml_paste': '',
-					'xml_link': '',
-					MimeType,
-					formselector: MODES.MANUAL
-				}
-			};
-		} else if (!prevState || !prevState.item) {
-			return {
-				item: {
-					formselector: MODES.MANUAL,
-					title: '',
-					description: '',
-					'consumer_key': '',
-					secret: '',
-					'launch_url': '',
-					'secure_launch_url': '',
-					'xml_paste': '',
-					'xml_link': '',
-					'MimeType': 'application/vnd.nextthought.ims.consumer.configuredtool'
-				}
+				title,
+				description,
+				'consumer_key': item['consumer_key'],
+				secret: '',
+				'launch_url': item['launch_url'],
+				'secure_launch_url': item['secure_launch_url'],
+				'xml_paste': '',
+				'xml_link': '',
+				MimeType,
+				formselector: MODES.MANUAL
 			};
 		}
 
-		return null;
+		return {
+			formselector: MODES.MANUAL,
+			title: '',
+			description: '',
+			'consumer_key': '',
+			secret: '',
+			'launch_url': '',
+			'secure_launch_url': '',
+			'xml_paste': '',
+			'xml_link': '',
+			'MimeType': 'application/vnd.nextthought.ims.consumer.configuredtool'
+		};
 	}
 
 	onModeSelect = ({ target: { value } }) => {
@@ -78,7 +84,7 @@ export default class Base extends Component {
 		this.setState({ item: { ...item, [name]: value } });
 	}
 
-	onSubmit = async () => {
+	onSubmit = () => {
 		const { item } = this.state;
 		const { onSubmit } = this.props;
 
@@ -97,7 +103,7 @@ export default class Base extends Component {
 	}
 
 	render () {
-		const { onBeforeDismiss, title, submitLabel = 'Create' } = this.props;
+		const { onBeforeDismiss, title, submitLabel = 'Create', error } = this.props;
 		const { item: { formselector } } = this.state;
 
 		const buttons = [
@@ -109,6 +115,7 @@ export default class Base extends Component {
 			<Dialog closeOnMaskClick onBeforeDismiss={onBeforeDismiss}>
 				<div className="lti-base-tool-editing">
 					<Panels.TitleBar title={title} iconAction={onBeforeDismiss} />
+					{error && <span className="lti-base-tool-error">{error}</span>}
 					<Label className="config-type-label" label="Configuration Type">
 						<Select value={formselector} onChange={this.onModeSelect}>
 							{modeOptions.map(({ value, label }) => (
