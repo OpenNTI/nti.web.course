@@ -27,7 +27,7 @@ export default
 class LTITools extends Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
-		items: PropTypes.array.isRequired,
+		items: PropTypes.array,
 		loading: PropTypes.bool,
 		error: PropTypes.string,
 		store: PropTypes.shape({
@@ -88,7 +88,7 @@ class LTITools extends Component {
 				</div>
 				{error && <span className="lti-tools-config-error">{ error }</span>}
 				{loading && <Loading.Spinner size={40} />}
-				<ToolList items={items} />
+				{Array.isArray(items) && <ToolList items={items} />}
 				{addIsVisible && <AddTool onBeforeDismiss={this.onAddDismiss} />}
 			</div>
 		);

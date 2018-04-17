@@ -16,10 +16,10 @@ const BaseForm = ({ item, onChange, children, onSubmit}) => (
 	<form className="lti-base-form" onSubmit={onSubmit}>
 		<div className="split-input">
 			<Label label={t('consumerKey')}>
-				<Text value={item['consumer_key']} onChange={value => onChange('consumer_key', value)} className="lti-tool-'consumer_key'" placeholder={t('consumerKey')} />
+				<Text required value={item['consumer_key']} onChange={value => onChange('consumer_key', value)} className="lti-tool-'consumer_key'" placeholder={t('consumerKey')} />
 			</Label>
 			<Label label={t('secret')}>
-				<Text value={item.secret} onChange={value => onChange('secret', value)} className="lti-tool-Scret" placeholder={t('secret')} type="password" />
+				<Text required value={item.secret} onChange={value => onChange('secret', value)} className="lti-tool-Scret" placeholder={t('secret')} type="password" />
 			</Label>
 		</div>
 		{children}
