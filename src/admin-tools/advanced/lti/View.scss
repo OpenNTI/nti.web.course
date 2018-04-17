@@ -1,3 +1,4 @@
+@import '~nti-style-common';
 
 .lti-tools-config {
 	max-width: 700px;
@@ -13,5 +14,13 @@
 			font-size: 18px;
 			font-weight: 600;
 		}
+	}
+
+	.lti-tools-config-error {
+		color: $primary-red;
+		padding: 1rem 1rem;
+		display: block;
+		border: 1px solid $border-grey-light;
+		margin: 1rem 0;
 	}
 }
