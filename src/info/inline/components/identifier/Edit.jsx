@@ -6,8 +6,13 @@ import {Input} from 'nti-web-commons';
 
 const t = scoped('course.info.inline.components.identifier.Edit', {
 	label: 'Course Identifier',
-	titleIsRequired: 'Identifier is required'
+	titleIsRequired: 'Identifier is required',
+	idTooLong: 'Provided identifier must be not be longer than 32 characters.'
 });
+
+const ERROR_MAP = {
+	'TooLong': t('idTooLong')
+};
 
 export default class IdentifierEdit extends React.Component {
 	static propTypes = {
@@ -36,7 +41,7 @@ export default class IdentifierEdit extends React.Component {
 		const { error } = this.props;
 
 		if(error) {
-			return <div className="error">{error.message || t('titleIsRequired')}</div>;
+			return <div className="error">{ERROR_MAP[error.code] || error.message || t('titleIsRequired')}</div>;
 		}
 	}
 
