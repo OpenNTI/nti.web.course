@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getService } from 'nti-web-client';
-import { Models } from 'nti-lib-interfaces';
-import { Switch, Loading } from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import { getService } from '@nti/web-client';
+import { Models } from '@nti/lib-interfaces';
+import { Switch, Loading } from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import { Blank } from '../templates/Blank';
 import { Import } from '../templates/Import';

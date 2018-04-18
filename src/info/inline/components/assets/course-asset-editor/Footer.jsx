@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button} from 'nti-web-commons';
+import {Button} from '@nti/web-commons';
 
 
 export default class CourseAssetEditorFooter extends React.Component {

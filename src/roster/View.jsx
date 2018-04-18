@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {searchable, contextual} from 'nti-web-search';
-import {scoped} from 'nti-lib-locale';
+import {searchable, contextual} from '@nti/web-search';
+import {scoped} from '@nti/lib-locale';
 
 import Store from './Store';
 

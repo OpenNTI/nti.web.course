@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getService} from 'nti-web-client';
-import {parseNTIID} from 'nti-lib-ntiids';
-import {scoped} from 'nti-lib-locale';
+import {getService} from '@nti/web-client';
+import {parseNTIID} from '@nti/lib-ntiids';
+import {scoped} from '@nti/lib-locale';
 
 import {Grid, List} from '../../Constants';
 import Registry from '../Registry';

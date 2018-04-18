@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {rawContent} from 'nti-commons';
+import {rawContent} from '@nti/lib-commons';
 
 TextPart.propTypes = { children: PropTypes.node };
 export default function TextPart ({children, ...props}) {

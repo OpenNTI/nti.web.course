@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from 'nti-lib-locale';
-import {CircularProgress} from 'nti-web-charts';
-import {Hooks} from 'nti-web-session';
-import {HOC, Iframe, Prompt} from 'nti-web-commons';
+import {scoped} from '@nti/lib-locale';
+import {CircularProgress} from '@nti/web-charts';
+import {Hooks} from '@nti/web-session';
+import {HOC, Iframe, Prompt} from '@nti/web-commons';
 
 const t = scoped('course.components.GradeCard', {
 	courseProgress: 'Course Progress',

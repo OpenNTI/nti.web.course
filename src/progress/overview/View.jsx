@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt, Layouts, Loading} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Prompt, Layouts, Loading} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import Store from './Store';
 import Header from './Header';

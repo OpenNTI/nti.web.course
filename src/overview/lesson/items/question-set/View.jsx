@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getService} from 'nti-web-client';
+import {getService} from '@nti/web-client';
 
 import {List, Grid} from '../../Constants';
 import Registry from '../Registry';

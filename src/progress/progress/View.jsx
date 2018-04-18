@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Layouts} from 'nti-web-commons';
+import {Layouts} from '@nti/web-commons';
 
 import Store from './Store';
 import Page from './parts/Page';

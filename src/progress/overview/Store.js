@@ -1,5 +1,5 @@
-import {Stores} from 'nti-lib-store';
-import {getService} from 'nti-web-client';
+import {Stores} from '@nti/lib-store';
+import {getService} from '@nti/web-client';
 
 export default class ProgressOverviewStore extends Stores.SimpleStore {
 	constructor () {

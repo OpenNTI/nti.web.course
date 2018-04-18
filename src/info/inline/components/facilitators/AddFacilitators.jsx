@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TokenEditor, Avatar, Flyout, Prompt } from 'nti-web-commons';
-import { getService } from 'nti-web-client';
-import {scoped} from 'nti-lib-locale';
+import { TokenEditor, Avatar, Flyout, Prompt } from '@nti/web-commons';
+import { getService } from '@nti/web-client';
+import {scoped} from '@nti/lib-locale';
 import cx from 'classnames';
 
 import Role from './Role';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { DateTime } from 'nti-web-commons';
+import { DateTime } from '@nti/web-commons';
 
 import Edit from '../Edit';
 

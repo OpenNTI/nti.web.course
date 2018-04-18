@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Loading} from 'nti-web-commons';
+import {Loading} from '@nti/web-commons';
 
 export default class CourseAdminView extends React.Component {
 	static propTypes = {

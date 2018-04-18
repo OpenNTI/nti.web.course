@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Prompt} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import Facilitator from './Facilitator';
 import AddFacilitators from './AddFacilitators';

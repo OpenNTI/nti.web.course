@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {List} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {List} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';

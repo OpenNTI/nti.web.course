@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Flyout, Avatar} from 'nti-web-commons';
+import {Flyout, Avatar} from '@nti/web-commons';
 import cx from 'classnames';
-import {scoped} from 'nti-lib-locale';
-import {getService, getAppUsername} from 'nti-web-client';
+import {scoped} from '@nti/lib-locale';
+import {getService, getAppUsername} from '@nti/web-client';
 
 import Role from './Role';
 import {getAvailableRoles} from './utils';

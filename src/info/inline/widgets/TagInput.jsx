@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {TokenEditor} from 'nti-web-commons';
-import {getService} from 'nti-web-client';
+import {TokenEditor} from '@nti/web-commons';
+import {getService} from '@nti/web-client';
 
 import {validateTag} from './utils';
 

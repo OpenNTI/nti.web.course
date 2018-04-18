@@ -1,5 +1,5 @@
 import React from 'react';
-import { Prompt } from 'nti-web-commons';
+import { Prompt } from '@nti/web-commons';
 
 import CourseWizard from './wizard/CourseWizard';
 import CourseEditor from './tab/CourseEditor';

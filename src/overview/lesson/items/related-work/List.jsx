@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from 'nti-lib-locale';
+import {scoped} from '@nti/lib-locale';
 
 import Base from '../../common/BaseListItem';
 
@@ -8,7 +8,7 @@ import Base from '../../common/BaseListItem';
 const DEFAULT_TEXT = {
 	byline: 'By %(name)s'
 };
-const t = scoped('nti-web-course.overview.lesson.overview.RelatedWorkListItem', DEFAULT_TEXT);
+const t = scoped('web-course.overview.lesson.overview.RelatedWorkListItem', DEFAULT_TEXT);
 
 export default class LessonOverviewRelatedWorkListItem extends React.Component {
 	static propTypes = {

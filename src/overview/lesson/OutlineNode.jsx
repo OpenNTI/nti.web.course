@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import Storage from 'nti-web-storage';
-import {getAppUsername} from 'nti-web-client';
-import {Loading, Error as ErrorCmp} from 'nti-web-commons';
+import Storage from '@nti/web-storage';
+import {getAppUsername} from '@nti/web-client';
+import {Loading, Error as ErrorCmp} from '@nti/web-commons';
 
 import CourseItemProgress from './common/CourseItemProgress';
 import {Grid, List} from './Constants';

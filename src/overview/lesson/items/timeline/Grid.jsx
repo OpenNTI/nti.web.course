@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Card} from 'nti-web-commons';
-import {LinkTo} from 'nti-web-routing';
+import {Card} from '@nti/web-commons';
+import {LinkTo} from '@nti/web-routing';
 
 import PaddedContainer from '../../common/PaddedContainer';
 

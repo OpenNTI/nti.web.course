@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {LinkTo} from 'nti-web-routing';
+import {LinkTo} from '@nti/web-routing';
 
 LessonOverviewDiscussionGridItem.propTypes = {
 	disabled: PropTypes.bool,

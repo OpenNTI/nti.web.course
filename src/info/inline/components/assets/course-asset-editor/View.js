@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt, Switch, Loading, Presentation} from 'nti-web-commons';
+import {Prompt, Switch, Loading, Presentation} from '@nti/web-commons';
 
 import BaseAssetPicker from './BaseAssetPicker';
 import AssetCropping from './AssetCropping';

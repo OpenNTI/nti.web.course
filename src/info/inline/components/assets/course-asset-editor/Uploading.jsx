@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from 'nti-lib-locale';
+import {scoped} from '@nti/lib-locale';
 
 import Header from './Header';
 import Footer from './Footer';

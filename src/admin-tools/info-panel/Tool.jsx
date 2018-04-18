@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { LinkTo } from 'nti-web-routing';
+import { LinkTo } from '@nti/web-routing';
 
 const Tool = ({ title, subtitle, icon, link }) => (
 	<div className="admin-info-tool">

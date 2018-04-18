@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {LinkTo} from 'nti-web-routing';
+import {LinkTo} from '@nti/web-routing';
 import cx from 'classnames';
-import {InlineEditor} from 'nti-assignment-editor';
+import {InlineEditor} from '@nti/web-assignment-editor';
 
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {DateTime} from 'nti-web-commons';
+import {DateTime} from '@nti/web-commons';
 
 import Overview from '../../../overview/lesson/OverviewContents';
 import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { scoped } from 'nti-lib-locale';
-import { Input, Prompt } from 'nti-web-commons';
-import { getService } from 'nti-web-client';
+import { scoped } from '@nti/lib-locale';
+import { Input, Prompt } from '@nti/web-commons';
+import { getService } from '@nti/web-client';
 
 import { Upload } from './tasks';
 

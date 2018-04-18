@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getService} from 'nti-web-client';
-import {Library} from 'nti-lib-interfaces';
+import {getService} from '@nti/web-client';
+import {Library} from '@nti/lib-interfaces';
 
 const stop = e => (e.stopPropagation(), e.preventDefault());
 

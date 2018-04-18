@@ -1,4 +1,4 @@
-import {Router, Route} from 'nti-web-routing';
+import {Router, Route} from '@nti/web-routing';
 
 import InfoPanel from './InfoPanel';
 

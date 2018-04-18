@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Input} from 'nti-web-commons';
-import {getService} from 'nti-web-client';
+import {Input} from '@nti/web-commons';
+import {getService} from '@nti/web-client';
 import cx from 'classnames';
-import { scoped } from 'nti-lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.admin-tools.advanced.completion.View', {
 	cancel: 'Cancel',

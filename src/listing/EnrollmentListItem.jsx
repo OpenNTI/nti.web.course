@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Presentation, DateTime} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Presentation, DateTime} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.listing.EnrollmentListItem', {
 	completed: 'Completed on %(date)s'

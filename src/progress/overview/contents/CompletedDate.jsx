@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DateTime} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {DateTime} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.progress.overview.contents.CompletedDate', {
 	completed: 'Completed %(date)s'

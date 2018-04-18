@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {List, DateTime} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {List, DateTime} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import Required from '../../common/Required';
 import RequirementControl from '../../../../progress/widgets/RequirementControl';

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getEventTarget } from 'nti-lib-dom';
-import { Summary } from 'nti-lib-interfaces';
-import { scoped } from 'nti-lib-locale';
-import { LinkTo } from 'nti-web-routing';
+import { getEventTarget } from '@nti/lib-dom';
+import { Summary } from '@nti/lib-interfaces';
+import { scoped } from '@nti/lib-locale';
+import { LinkTo } from '@nti/web-routing';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {ImageEditor} from 'nti-web-whiteboard';
+import {ImageEditor} from '@nti/web-whiteboard';
 
 export default class AssetPickerSize extends React.Component {
 	static propTypes = {

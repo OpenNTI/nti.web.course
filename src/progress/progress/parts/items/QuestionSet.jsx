@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from 'nti-lib-locale';
+import {scoped} from '@nti/lib-locale';
 
 import Base from './Base';
 import Registry from './Registry';
@@ -11,7 +11,7 @@ const DEFAULT_TEXT = {
 		other: '%(count)s Questions'
 	}
 };
-const t = scoped('nti-web-course.progress.QuestionSetItem', DEFAULT_TEXT);
+const t = scoped('web-course.progress.QuestionSetItem', DEFAULT_TEXT);
 
 export default
 @Registry.register('application/vnd.nextthought.questionsetref')

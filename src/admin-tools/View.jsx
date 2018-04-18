@@ -1,4 +1,4 @@
-import {Router, Route} from 'nti-web-routing';
+import {Router, Route} from '@nti/web-routing';
 
 import Dashboard from './dashboard';
 import Reports from './reports';

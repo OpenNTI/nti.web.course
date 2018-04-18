@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {DisplayName} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {DisplayName} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.progress.overview.Header', {
 	page: '%(page)s of %(total)s'

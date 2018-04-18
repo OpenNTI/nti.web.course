@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
-import {Error as ErrorWidget, Loading} from 'nti-web-commons';
-import Logger from 'nti-util-logger';
+import {Error as ErrorWidget, Loading} from '@nti/web-commons';
+import Logger from '@nti/util-logger';
 
 import {block, stop} from '../../../../utils';
 import View from '../View';

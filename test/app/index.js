@@ -2,9 +2,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import {getService} from 'nti-web-client';
-import {Layouts} from 'nti-web-commons';
-// import {Tasks} from 'nti-commons';
+import {getService} from '@nti/web-client';
+import {Layouts} from '@nti/web-commons';
+// import {Tasks} from '@nti/lib-commons';
 
 import {Progress, Overview} from '../../src';
 

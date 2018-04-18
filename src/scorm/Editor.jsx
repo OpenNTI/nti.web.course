@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Prompt } from 'nti-web-commons';
+import { Prompt } from '@nti/web-commons';
 
 import PackageWizard from './package-wizard';
 

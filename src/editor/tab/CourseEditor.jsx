@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Prompt, Loading, Presentation } from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
-import {getService} from 'nti-web-client';
+import { Switch, Prompt, Loading, Presentation } from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
+import {getService} from '@nti/web-client';
 
 import Store from '../Store';
 import { Edit } from '../templates/Edit';

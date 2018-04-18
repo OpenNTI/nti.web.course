@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from 'nti-lib-locale';
-import { Prompt, Switch, Loading } from 'nti-web-commons';
+import {scoped} from '@nti/lib-locale';
+import { Prompt, Switch, Loading } from '@nti/web-commons';
 
 import Store from '../Store';
 import {

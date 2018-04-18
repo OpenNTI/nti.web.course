@@ -1,8 +1,8 @@
 
 import React, { Component } from 'react';
-import { Button, Layouts } from 'nti-web-commons';
+import { Button, Layouts } from '@nti/web-commons';
 import PropTypes from 'prop-types';
-import { scoped } from 'nti-lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import Editor from './Editor';
 import Progress from './Progress';

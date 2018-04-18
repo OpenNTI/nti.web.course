@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {List, AssetIcon, Card, Table} from 'nti-web-commons';
-import {isNTIID} from 'nti-lib-ntiids';
-import {LinkTo} from 'nti-web-routing';
-import {CircularProgress} from 'nti-web-charts';
+import {List, AssetIcon, Card, Table} from '@nti/web-commons';
+import {isNTIID} from '@nti/lib-ntiids';
+import {LinkTo} from '@nti/web-routing';
+import {CircularProgress} from '@nti/web-charts';
 
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';

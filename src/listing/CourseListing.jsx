@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getService } from 'nti-web-client';
-import { Loading, Prompt } from 'nti-web-commons';
+import { getService } from '@nti/web-client';
+import { Loading, Prompt } from '@nti/web-commons';
 
 import * as Editor from '../editor';
 

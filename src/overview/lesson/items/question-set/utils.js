@@ -1,4 +1,4 @@
-import {scoped} from 'nti-lib-locale';
+import {scoped} from '@nti/lib-locale';
 
 const DEFAULT_TEXT = {
 	assignmentTitle: {
@@ -6,7 +6,7 @@ const DEFAULT_TEXT = {
 		points: '%(points)spts.'
 	}
 };
-const t = scoped('nti-web-course.overview.lesson.overview.question-set', DEFAULT_TEXT);
+const t = scoped('web-course.overview.lesson.overview.question-set', DEFAULT_TEXT);
 
 export function getAssignmentTitle (assignment) {
 	return t('assignmentTitle.title', {title: assignment.title});

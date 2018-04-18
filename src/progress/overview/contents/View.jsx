@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Layouts, EmptyState, Checkbox} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import {Layouts, EmptyState, Checkbox} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 

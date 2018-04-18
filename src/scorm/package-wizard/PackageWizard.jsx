@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from 'nti-web-commons';
-import { scoped } from 'nti-lib-locale';
+import { Switch } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import WizardItem from '../../editor/wizard/WizardItem';
 import ScormImport from '../../editor/panels/scorm-import/WizardPanel';

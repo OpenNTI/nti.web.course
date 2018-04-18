@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button} from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
-import {CircularProgress} from 'nti-web-charts';
+import {Button} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
+import {CircularProgress} from '@nti/web-charts';
 
 import Base from '../../common/BaseAssessmentGridItem';
 

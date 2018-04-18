@@ -1,5 +1,5 @@
-import { getService } from 'nti-web-client';
-import { Presentation } from 'nti-web-commons';
+import { getService } from '@nti/web-client';
+import { Presentation } from '@nti/web-commons';
 
 export function getAvailableRoles (courseInstance) {
 	let options = [];

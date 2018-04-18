@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Loading} from 'nti-web-commons';
-import {getService} from 'nti-web-client';
+import {Loading} from '@nti/web-commons';
+import {getService} from '@nti/web-client';
 import cx from 'classnames';
 
 import Store from '../../editor/Store';

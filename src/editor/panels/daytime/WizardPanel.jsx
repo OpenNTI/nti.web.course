@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TimePicker } from 'nti-web-commons';
-import {scoped} from 'nti-lib-locale';
+import { TimePicker } from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import {saveCatalogEntry} from '../../../editor/Actions';
 

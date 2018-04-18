@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt} from 'nti-web-commons';
-import {getService} from 'nti-web-client';
-import {ContentNavMenu} from 'nti-content';
+import {Prompt} from '@nti/web-commons';
+import {getService} from '@nti/web-client';
+import {ContentNavMenu} from '@nti/web-content';
 
 import PublishCourse from '../info/inline/widgets/PublishCourse';
 

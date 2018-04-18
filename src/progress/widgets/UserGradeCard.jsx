@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Avatar, DisplayName} from 'nti-web-commons';
-import { scoped } from 'nti-lib-locale';
+import {Avatar, DisplayName} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.components.UserGradeCard', {
 	assignGrade: 'Assign Final Grade',

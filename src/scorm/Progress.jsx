@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {CircularProgress} from 'nti-web-charts';
-import { scoped } from 'nti-lib-locale';
+import {CircularProgress} from '@nti/web-charts';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
 const t = scoped('scorm.progress', {

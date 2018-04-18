@@ -1,5 +1,5 @@
 import React from 'react';
-import {ImageEditor} from 'nti-web-whiteboard';
+import {ImageEditor} from '@nti/web-whiteboard';
 
 export default function ImageEditorWrapper (props) {
 	return (

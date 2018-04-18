@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { mount } from 'enzyme';
-import { TestUtils } from 'nti-web-client';
+import { TestUtils } from '@nti/web-client';
 
 import CourseWizard from '../CourseWizard';
 
