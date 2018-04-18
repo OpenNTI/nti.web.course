@@ -113,6 +113,18 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 	renderDraft () {
 		const {isDraft} = this.state;
+		const {editMode, assignment} = this.props;
+
+		if(editMode && assignment && assignment.getDateEditingLink()) {
+			const className = this.props.statusExpanded ? 'icon-chevron-up' : 'icon-chevron-down';
+
+			// render editable widget
+			return (
+				<span onClick={this.onStatusClick}>
+					<span className="draft">{t('draft')}</span><i className={className}/>
+				</span>
+			);
+		}
 
 		return isDraft ?
 			(<span className="draft">{t('draft')}</span>) :
@@ -207,7 +219,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			text = t('due.available', {date: format(availableDate)});
 		} else if (dueDate) {
 			text = t('due.due', {date: format(dueDate)});
-		} else if (availableDate < now) {
+		} else if (!isDraft && availableDate < now) {
 			text = t('due.availableNow');
 		} else if (!isDraft && availableDate) {
 			text = t('due.available', {date: format(availableDate)});
