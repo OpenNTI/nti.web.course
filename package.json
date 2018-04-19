@@ -4,21 +4,21 @@
   "author": "nextthought",
   "description": "ReactJS components for course management",
   "license": "UNLICENSED",
-  "main": "./lib/index-cjs.js",
-  "module": "./lib/index.js",
+  "main": "lib/index-cjs.js",
+  "module": "lib/index.js",
   "style": "./lib/index.css",
   "files": [
     "lib"
   ],
   "scripts": {
-    "test": "nti-cmp-scripts test",
-    "start": "nti-cmp-scripts start",
-    "prepack": "nti-cmp-scripts build",
-    "build": "nti-cmp-scripts build",
-    "clean": "nti-cmp-scripts clean",
-    "check": "nti-cmp-scripts check",
-    "release": "nti-cmp-scripts release",
-    "install-snapshots": "nti-cmp-scripts install-snapshots"
+    "test": "cmp-scripts test",
+    "start": "cmp-scripts start",
+    "prepack": "cmp-scripts build",
+    "build": "cmp-scripts build",
+    "clean": "cmp-scripts clean",
+    "check": "cmp-scripts check",
+    "release": "cmp-scripts release",
+    "install-snapshots": "cmp-scripts install-snapshots"
   },
   "repository": {
     "type": "git",
@@ -39,7 +39,7 @@
     "@nti/lib-ntiids": "^1.1.0",
     "@nti/lib-store": "^1.0.1",
     "@nti/util-logger": "^1.1.2",
-    "@nti/web-assignment-editor": "^1.11.0",
+    "@nti/web-assignment-editor": "^1.14.0",
     "@nti/web-charts": "0.x.x",
     "@nti/web-client": "^1.1.3",
     "@nti/web-commons": "0.x.x",
@@ -56,7 +56,7 @@
     "react-day-picker": "^6.1.0"
   },
   "devDependencies": {
-    "nti-cmp-scripts": "^1.0.32",
+    "@nti/cmp-scripts": "^1.16.0",
     "@nti/style-common": "^1.4.5",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
