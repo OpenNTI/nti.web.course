@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Panels, DialogButtons, Prompt, Select, Input } from 'nti-web-commons';
+import { Panels, DialogButtons, Prompt, Select, Input } from '@nti/web-commons';
 
 const { Label } = Input;
 const { Dialog } = Prompt;
