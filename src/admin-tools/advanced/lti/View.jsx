@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Loading } from 'nti-web-commons';
+import { Button, Loading } from '@nti/web-commons';
 import PropTypes from 'prop-types';
-import { scoped } from 'nti-lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import Store from './Store';
 

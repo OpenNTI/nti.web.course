@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input } from 'nti-web-commons';
-import { scoped } from 'nti-lib-locale';
+import { Input } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 const { Label, Text } = Input;
 
