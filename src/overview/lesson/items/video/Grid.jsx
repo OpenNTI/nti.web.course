@@ -165,7 +165,14 @@ export default class LessonOverviewVideoGrid extends React.Component {
 			item,
 		} = this.props;
 
-		const {loading, context, video, poster, playing, error} = this.state;
+		const {
+			loading,
+			context,
+			video,
+			poster,
+			playing,
+			error
+		} = this.state;
 
 
 		const style = poster && { backgroundImage: 'url(' + poster + ')' };
@@ -209,9 +216,11 @@ export default class LessonOverviewVideoGrid extends React.Component {
 							className="overview-video-tap-area" href={link}
 						>
 							<div className="video-badges">
-								{item && item.isCompletable && item.isCompletable() && onRequirementChange ?
+								{item && item.isCompletable && item.isCompletable() && onRequirementChange ? (
 									<RequirementControl record={item} onChange={onRequirementChange}/>
-									: (!viewed && required) && <Required className="badge"/>}
+								) : ((!viewed && required) && (
+									<Required className="badge"/>
+								))}
 								{viewed && <div className="badge viewed">Viewed</div>}
 							</div>
 							<div className="wrapper">
