@@ -57,7 +57,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		}
 
 		if (this.props.activeIndex !== nextProps.activeIndex) {
-			this.setState({playing: false});
+			this.setState({interacted: false, playing: false});
 		}
 	}
 
@@ -94,6 +94,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 				this.setState({
 					poster,
 					loading: false,
+					interacted: false,
 					video: v,
 					context: [
 						course.getID(),
@@ -116,6 +117,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	onPlayClicked = (e) => {
 		block(e);
 		const {video} = this;
+		this.setState({interacted: true});
 		if (video) {
 			video.play();
 		}
@@ -168,6 +170,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const {
 			loading,
 			context,
+			interacted,
 			video,
 			poster,
 			playing,
@@ -199,6 +202,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 				)}
 				{(error || !video || !renderVideoFully) ? null : (
 					<Video
+						deferred={!interacted}
 						ref={this.attachVideoRef}
 						src={video}
 						onEnded={this.onStop}
