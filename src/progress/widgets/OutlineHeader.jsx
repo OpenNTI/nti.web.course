@@ -4,13 +4,16 @@ import {scoped} from '@nti/lib-locale';
 import {CircularProgress} from '@nti/web-charts';
 import {Hooks} from '@nti/web-session';
 import {HOC, Iframe, Prompt} from '@nti/web-commons';
+import {getService} from '@nti/web-client';
 
 const t = scoped('course.components.GradeCard', {
 	courseProgress: 'Course Progress',
 	outline: 'Outline',
 	getCertificate: 'View Certificate',
 	completed: 'Completed',
-	certificateTitle: 'Certificate of Completion for %(title)s'
+	certificateTitle: 'Certificate of Completion for %(title)s',
+	unableToLoad: 'Unable to retrieve certificate',
+	error: 'Certificate Error'
 });
 
 const LOAD_WAIT = 5000;
@@ -142,10 +145,23 @@ class OutlineHeader extends React.Component {
 	}
 
 
-	showCertificate = () => {
-		this.setState({
-			showCertificate: true
-		});
+	showCertificate = async () => {
+		const service = await getService();
+
+		const {course} = this.props;
+		const {PreferredAccess} = course;
+		const certLink = PreferredAccess.getLink('Certificate');
+
+		try {
+			await service.head(certLink);
+
+			this.setState({
+				showCertificate: true
+			});
+		}
+		catch (e) {
+			Prompt.alert(t('unableToLoad'), t('error'));
+		}
 	}
 
 
