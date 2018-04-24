@@ -115,7 +115,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		const {isDraft} = this.state;
 		const {editMode, assignment} = this.props;
 
-		if(editMode && assignment && assignment.getDateEditingLink()) {
+		if(isDraft && editMode && assignment && assignment.getDateEditingLink()) {
 			const className = this.props.statusExpanded ? 'icon-chevron-up' : 'icon-chevron-down';
 
 			// render editable widget
