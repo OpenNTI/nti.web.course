@@ -6,9 +6,14 @@
 	justify-content: center;
 	flex-direction: column;
 
+	.enrollment-info {
+		width: 100%;
+	}
+
 	.avatar-container {
 		width: rem-calc(100px);
 		height: rem-calc(100px);
+		margin: 0 auto;
 		margin-bottom: rem-calc(20px);
 		position: relative;
 
@@ -38,6 +43,9 @@
 		text-align: center;
 		font: normal 600 1rem/1.4 $body-font-family;
 		color: $primary-grey;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		padding: 0 10px;
 	}
 
 	.scorm-completion-status {

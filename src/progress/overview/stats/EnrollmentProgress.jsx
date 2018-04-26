@@ -44,9 +44,11 @@ export default function ProgressOverviewStatsEnrollment ({enrollment, course}) {
 	return (
 		<div className="progress-overview-stats-enrollment-progress">
 			<div className="enrollment-info">
-				<div className="avatar-container">
-					<Avatar entity={UserProfile} />
-					<CircularProgress value={progress} width={35} height={35} />
+				<div className="icon">
+					<div className="avatar-container">
+						<Avatar entity={UserProfile} />
+						<CircularProgress value={progress} width={35} height={35} />
+					</div>
 				</div>
 				<DisplayName entity={UserProfile} />
 				{isScormInstance && (
