@@ -13,7 +13,7 @@ class CompletionMonitor extends React.Component {
 		component: PropTypes.node
 	}
 
-	afterBatchEvent (events) {
+	afterBatchEvents (events) {
 		const {item} = this.props;
 
 		const possibleIDs = {
