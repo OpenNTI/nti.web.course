@@ -17,6 +17,10 @@
 		}
 	}
 
+	.draft {
+		margin-right: 3px;
+	}
+
 	.due {
 		&.today {
 			color: $primary-orange;
