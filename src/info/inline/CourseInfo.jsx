@@ -123,6 +123,12 @@ export default class CourseInfo extends React.Component {
 		});
 	}
 
+	saveTranscriptCredits = (values) => {
+		// TODO: Save changes to course
+
+		return Promise.resolve();
+	}
+
 	componentDidMount () {
 		Store.addChangeListener(this.onStoreChange);
 	}
@@ -294,7 +300,8 @@ export default class CourseInfo extends React.Component {
 						editable={editable}
 						isEditing={activeEditor === EDITORS.TRANSCRIPT_CREDIT}
 						onBeginEditing={this.activateTranscriptCreditEditor}
-						onEndEditing={this.endEditing}/>
+						onEndEditing={this.endEditing}
+						doSave={this.saveTranscriptCredits}/>
 					<Section
 						className="prerequisites-section"
 						components={[Prerequisites]}

@@ -1,0 +1,17 @@
+@import "~@nti/style-common";
+
+.transcript-credit-hours {
+	&.edit {
+		.content-column {
+			width: 100%;
+		}
+	}
+
+	.credit-entries {
+		// float: right;
+	}
+
+	.add-button.add-credit {
+		// float: right;
+	}
+}

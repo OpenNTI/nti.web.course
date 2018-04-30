@@ -1,18 +1,7 @@
 @import "~@nti/style-common";
 
-.credit-hours {
-	.enrollment {
-		.enroll-link {
-			margin: 6px 0;
-
-			a {
-				color: $primary-blue;
-				text-decoration: none;
-			}
-		}
-
-		.no-credit {
-			color: red;
-		}
+.transcript-credit-hours {
+	.credit-type {
+		margin-left: 5px;
 	}
 }

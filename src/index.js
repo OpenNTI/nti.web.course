@@ -1,6 +1,7 @@
 export CourseCreateButton from './CreateButton';
 export * as Editor from './editor';
 export Info from './info/inline/CourseInfo';
+export ManageTranscriptCredits from './info/inline/components/transcriptcredit/managetypes';
 export * as Progress from './progress';
 export ProgressWindow from './progress/window';
 export * as ProgressWidgets from './progress/widgets';

@@ -13,6 +13,12 @@
 			height: 32px;
 		}
 	}
+
+	.daytime-picker {
+		.TimePicker .meridiem-select-box.select-box .menu-label {
+			line-height: 2rem;
+		}
+	}
 }
 
 .date-picker {

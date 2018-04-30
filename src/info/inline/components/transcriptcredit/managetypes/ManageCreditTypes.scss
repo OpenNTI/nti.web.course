@@ -1,0 +1,61 @@
+@import "~@nti/style-common";
+
+.manage-credit-types {
+	background-color: white;
+	padding: 2rem;
+
+	.all-types {
+		.header {
+			display: flex;
+			margin-bottom: 0.3rem;
+
+			.header-text {
+				margin-right: 1rem;
+				width: 8rem;
+				font-size: 10px;
+				text-transform: uppercase;
+				font-weight: 600;
+				color: #b8b8b8;
+				padding-left: 0.9rem;
+				text-align: left;
+			}
+		}
+	}
+
+	.add-editor {
+		.nti-text-input {
+			margin-right: 1rem;
+			width: 8rem;
+			background-color: white;
+		}
+	}
+
+	.credit-type {
+		margin-bottom: 1.2rem;
+		padding-right: 3rem;
+		display: flex;
+		position: relative;
+
+		.nti-text-input {
+			margin-right: 1rem;
+			width: 8rem;
+			border: none;
+			background-color: white;
+			border-bottom: solid 1px #d5d5d5;
+		}
+
+		.checkbox-component {
+			margin-top: 0.5rem;
+
+			.label {
+				font-size: 12px;
+			}
+		}
+
+		.nt-remove-button {
+			position: absolute;
+			right: 1rem;
+			top: 0.4rem;
+		}
+	}
+}

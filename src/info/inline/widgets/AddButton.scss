@@ -10,9 +10,14 @@
 		border-radius: 30px;
 		width: 22px;
 		height: 22px;
+		line-height: 18px;
 		border: solid 2px;
 		padding-top: 1px;
 		text-align: center;
+
+		i {
+			line-height: 16px;
+		}
 	}
 
 	.add-label {
