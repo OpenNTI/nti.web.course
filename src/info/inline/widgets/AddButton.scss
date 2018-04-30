@@ -1,0 +1,22 @@
+@import "~@nti/style-common";
+
+.add-button {
+	color: $primary-blue;
+	display: flex;
+	cursor: pointer;
+
+	.add-icon {
+		margin-right: 10px;
+		border-radius: 30px;
+		width: 22px;
+		height: 22px;
+		border: solid 2px;
+		padding-top: 1px;
+		text-align: center;
+	}
+
+	.add-label {
+		font-size: 14px;
+		padding-top: 3px;
+	}
+}

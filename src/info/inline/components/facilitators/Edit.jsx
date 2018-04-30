@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {Prompt} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
+import AddButton from '../../widgets/AddButton';
+
 import Facilitator from './Facilitator';
 import AddFacilitators from './AddFacilitators';
 
@@ -109,14 +111,7 @@ export default class FacilitatorsEdit extends React.Component {
 	}
 
 	renderAddFacilitator () {
-		return (
-			<div className="add-facilitator" onClick={this.launchAddDialog}>
-				<div className="add-icon">
-					<i className="icon-add"/>
-				</div>
-				<div className="add-label">{t('addFacilitators')}</div>
-			</div>
-		);
+		return <AddButton clickHandler={this.launchAddDialog} className="add-facilitator" label={t('addFacilitators')}/>;
 	}
 
 	updateValues () {
