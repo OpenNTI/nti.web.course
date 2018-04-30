@@ -16,7 +16,7 @@ import CourseVideo from './widgets/CourseVideo';
 import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
-	RedemptionCodes, Prerequisites, Department, Facilitators, Assets, Credit } from './components';
+	RedemptionCodes, Prerequisites, Department, Facilitators, Assets, Credit, TranscriptCredit } from './components';
 import {TechSupport} from './components/techsupport';
 
 const EDITORS = {
@@ -24,7 +24,8 @@ const EDITORS = {
 	START_DATE: 'StartDate',
 	END_DATE: 'EndDate',
 	MEET_TIMES: 'MeetTimes',
-	FACILITATORS: 'Facilitators'
+	FACILITATORS: 'Facilitators',
+	TRANSCRIPT_CREDIT: 'TranscriptCredit'
 };
 
 /**
@@ -166,6 +167,10 @@ export default class CourseInfo extends React.Component {
 		this.setState({activeEditor: EDITORS.FACILITATORS});
 	}
 
+	activateTranscriptCreditEditor = () => {
+		this.setState({activeEditor: EDITORS.TRANSCRIPT_CREDIT});
+	}
+
 	endEditing = (savedCatalogEntry) => {
 		const { onSave } = this.props;
 
@@ -281,6 +286,15 @@ export default class CourseInfo extends React.Component {
 						components={[Credit]}
 						catalogEntry={catalogEntry}
 						enrollmentAccess={enrollmentAccess}/>
+					<Section
+						className="transcript-credits-section"
+						components={[TranscriptCredit]}
+						catalogEntry={catalogEntry}
+						enrollmentAccess={enrollmentAccess}
+						editable={editable}
+						isEditing={activeEditor === EDITORS.TRANSCRIPT_CREDIT}
+						onBeginEditing={this.activateTranscriptCreditEditor}
+						onEndEditing={this.endEditing}/>
 					<Section
 						className="prerequisites-section"
 						components={[Prerequisites]}
