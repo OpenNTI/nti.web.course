@@ -186,7 +186,7 @@ class OutlineHeader extends React.Component {
 				<a onClick={this.showCertificate}>{t('getCertificate')}</a>
 				{this.state.showCertificate && (
 					<Prompt.Dialog onBeforeDismiss={this.hideCertificate}>
-						<Iframe src={certLink} title={t('certificateTitle', {title: PreferredAccess.CatalogEntry.title})} />
+						<Iframe downloadable src={certLink} title={t('certificateTitle', {title: PreferredAccess.CatalogEntry.title})} />
 					</Prompt.Dialog>
 				)}
 			</div>
