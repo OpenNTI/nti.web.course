@@ -4,6 +4,7 @@ import {scoped} from '@nti/lib-locale';
 import {Prompt, DialogButtons, Panels} from '@nti/web-commons';
 
 import ManageCreditTypes from './ManageCreditTypes';
+import Store from './CreditTypesStore';
 
 const t = scoped('course.info.inline.components.transcriptcredit.managetypes.Dialog', {
 	title: 'Manage Credit Types',
@@ -15,6 +16,7 @@ export default class ManageCreditTypesDialog extends React.Component {
 		return new Promise((fulfill, reject) => {
 			Prompt.modal(
 				<ManageCreditTypesDialog
+					dialog
 					onClose={onClose}
 					onSave={fulfill}
 					onCancel={reject}
@@ -27,17 +29,24 @@ export default class ManageCreditTypesDialog extends React.Component {
 	static propTypes = {
 		onClose: PropTypes.func,
 		onSave: PropTypes.func,
-		onDismiss: PropTypes.func
+		onDismiss: PropTypes.func,
+		dialog: PropTypes.bool
+	}
+
+	constructor (props) {
+		super(props);
+
+		this.store = Store.getInstance();
 	}
 
 
 	state = {}
 
 
-	onSave = () => {
+	onSave = async () => {
 		const {onSave, onDismiss} = this.props;
 
-		// TODO: Save changes
+		await this.store.saveValues(this.state.values);
 
 		if(onSave) {
 			onSave();
@@ -68,9 +77,11 @@ export default class ManageCreditTypesDialog extends React.Component {
 
 		return (
 			<div className="manage-credit-types-dialog">
-				<div className="title">
-					<Panels.TitleBar title={t('title')} iconAction={this.onDismiss} />
-				</div>
+				{this.props.dialog && (
+					<div className="title">
+						<Panels.TitleBar title={t('title')} iconAction={this.onDismiss} />
+					</div>
+				)}
 				<div className="content">
 					<ManageCreditTypes onValuesUpdated={this.onValuesUpdated}/>
 				</div>

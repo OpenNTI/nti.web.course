@@ -45,9 +45,6 @@
 		color: $primary-grey;
 
 		.credit-type-option {
-			padding: 0.5rem;
-			cursor: pointer;
-
 			&.disabled {
 				cursor: initial;
 				color: $tertiary-grey;
@@ -59,6 +56,11 @@
 
 			&.add-new {
 				color: $primary-blue;
+			}
+
+			.credit-entry-type-option {
+				padding: 0.5rem;
+				cursor: pointer;
 			}
 		}
 	}

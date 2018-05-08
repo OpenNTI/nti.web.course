@@ -4,6 +4,7 @@ import {scoped} from '@nti/lib-locale';
 
 import AddButton from '../../widgets/AddButton';
 
+import CreditTypeStore from './managetypes/CreditTypesStore';
 import CreditEntry from './CreditEntry';
 
 
@@ -22,22 +23,26 @@ export default class TranscriptCreditEdit extends React.Component {
 	constructor (props) {
 		super(props);
 
+		this.creditTypeStore = CreditTypeStore.getInstance();
+
 		//TODO: transcripts - get entries from course
 		this.state = {
 			entries: [
 				{NTIID: 'nti_1', value: 15, type: 'ECTS points'}
-			],
-			creditTypes: [
-				'CEU hours',
-				'Credit hours',
-				'ECTS points',
-				'PLM hours'
 			]
 		};
 	}
 
 	componentDidMount () {
-		this.determineRemainingTypes();
+		this.loadTypes();
+	}
+
+	async loadTypes () {
+		await this.creditTypeStore.loadAllTypes();
+
+		this.setState({creditTypes: this.creditTypeStore.getTypesAsStrings()}, () => {
+			this.determineRemainingTypes();
+		});
 	}
 
 	determineRemainingTypes () {
@@ -108,12 +113,14 @@ export default class TranscriptCreditEdit extends React.Component {
 		this.setState({entries}, this.afterUpdate);
 	}
 
-	onNewTypeAdded = (newType) => {
-		const creditTypes = [...this.state.creditTypes];
+	onNewTypeAdded = async (newType) => {
+		// when adding a new type on the fly, we should wait for the store to save values,
+		// then update our state with the reloaded type data from the store
+		await this.creditTypeStore.saveValues([newType]);
 
-		creditTypes.push(newType);
-
-		this.setState({creditTypes}, this.afterUpdate);
+		this.setState({creditTypes: this.creditTypeStore.getTypesAsStrings()}, () => {
+			this.afterUpdate();
+		});
 	}
 
 	renderEntry = (entry) => {
@@ -145,6 +152,12 @@ export default class TranscriptCreditEdit extends React.Component {
 	}
 
 	render () {
+		const {creditTypes} = this.state;
+
+		if(!creditTypes) {
+			return null;
+		}
+
 		return (
 			<div className="columned transcript-credit-hours edit">
 				<div className="field-info">

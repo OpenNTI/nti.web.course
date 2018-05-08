@@ -46,10 +46,15 @@ export default class TranscriptCreditEntry extends React.Component {
 	typeChanged = (val) => {
 		const {onChange, entry} = this.props;
 
-		this.setState({type: val});
+		// typeChanged gets called both when the type select value is changed and
+		// when a new type is added on the fly.  when a new type is added, the value
+		// will be an object with type and unit properties.. otherwise, it's just a string
+		const combined = val.type ? val.type + ' ' + val.unit : val;
+
+		this.setState({type: combined});
 
 		if(onChange) {
-			const newEntry = {...entry, type: val};
+			const newEntry = {...entry, type: combined};
 
 			onChange(newEntry);
 		}
@@ -87,7 +92,7 @@ export default class TranscriptCreditEntry extends React.Component {
 
 		const className = cx('credit-type-option', {disabled: !remainingTypes.includes(option), selected: option === this.props.entry.type});
 
-		return <div className={className}><CreditEntryTypeOption option={option} onClick={this.typeChanged}/></div>;
+		return <div key={option} className={className}><CreditEntryTypeOption option={option} onClick={this.typeChanged}/></div>;
 	}
 
 	launchAddTypeDialog = () => {

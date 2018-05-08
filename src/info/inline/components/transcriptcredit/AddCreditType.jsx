@@ -45,7 +45,7 @@ export default class AddCreditType extends React.Component {
 		else
 		{
 			if(this.props.onSave) {
-				this.props.onSave(combined);
+				this.props.onSave({type, unit});
 
 				if (onDismiss) {
 					onDismiss();

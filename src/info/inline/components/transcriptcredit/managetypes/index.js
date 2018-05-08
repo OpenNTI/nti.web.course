@@ -1,1 +1,1 @@
-export default from './ManageCreditTypes';
+export default from './Dialog';

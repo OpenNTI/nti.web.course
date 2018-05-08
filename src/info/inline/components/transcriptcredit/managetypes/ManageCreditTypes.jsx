@@ -17,12 +17,14 @@ const t = scoped('course.info.inline.components.transcriptcredit.managetypes.Man
 export default
 @Store.connect({
 	loading: 'loading',
-	types: 'types'
+	types: 'types',
+	error: 'error'
 })
 class ManageCreditTypes extends React.Component {
 	static propTypes = {
 		loading: PropTypes.bool,
 		types: PropTypes.arrayOf(PropTypes.object),
+		error: PropTypes.string,
 		store: PropTypes.object,
 		onValuesUpdated: PropTypes.func
 	}
@@ -107,17 +109,9 @@ class ManageCreditTypes extends React.Component {
 		return newID.toString();
 	}
 
-	renderAddEditor () {
-		return (
-			<div className="add-editor">
-				<Input.Text/>
-				<Input.Text/>
-			</div>
-		);
-	}
-
 	renderTypesEditor () {
 		const {types} = this.state;
+		const {error} = this.props;
 
 		if(!types) {
 			return null;
@@ -125,13 +119,16 @@ class ManageCreditTypes extends React.Component {
 
 		return (
 			<div className="all-types">
-				<div className="header">
-					<span className="header-text">{t('type')}</span>
-					<span className="header-text">{t('unit')}</span>
-				</div>
+				{error && <div className="error">{error}</div>}
+				{types && types.length > 0 && (
+					<div className="header">
+						<span className="header-text">{t('type')}</span>
+						<span className="header-text">{t('unit')}</span>
+					</div>
+				)}
 				{types.map(this.renderType)}
 				<div className="add-type">
-					{this.state.addMode ? this.renderAddEditor() : <AddButton label={t('addNewType')} clickHandler={this.addEntry}/>}
+					<AddButton label={t('addNewType')} clickHandler={this.addEntry}/>
 				</div>
 			</div>
 		);
@@ -144,7 +141,8 @@ class ManageCreditTypes extends React.Component {
 		return (
 			<div className="manage-credit-types">
 				{error && <div className="error">{error}</div>}
-				{loading ? <Loading.Ellipsis/> : this.renderTypesEditor()}
+				{loading && <Loading.Ellipsis/>}
+				{this.renderTypesEditor()}
 			</div>
 		);
 	}

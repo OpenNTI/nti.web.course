@@ -7,7 +7,7 @@ const t = scoped('course.info.inline.components.transcriptcredit.managetypes.Cre
 	disabled: 'Disabled'
 });
 
-export default class ManageCreditTypes extends React.Component {
+export default class CreditType extends React.Component {
 	static propTypes = {
 		type: PropTypes.object.isRequired,
 		onChange: PropTypes.func,
@@ -29,6 +29,7 @@ export default class ManageCreditTypes extends React.Component {
 		const {onChange, type} = this.props;
 
 		if(onChange) {
+			type.unit = val;
 			onChange({...type, unit: val});
 		}
 	}

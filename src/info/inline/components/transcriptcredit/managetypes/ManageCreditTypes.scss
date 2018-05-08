@@ -4,6 +4,13 @@
 	background-color: white;
 	padding: 2rem;
 
+	.error {
+		margin-bottom: 2rem;
+		color: red;
+		font-weight: 600;
+		text-align: center;
+	}
+
 	.all-types {
 		.header {
 			display: flex;
