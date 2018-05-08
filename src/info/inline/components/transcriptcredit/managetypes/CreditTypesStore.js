@@ -11,6 +11,10 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 	}
 
 	async saveValues (values) {
+		if(!values) {
+			return Promise.resolve();
+		}
+
 		this.set('loading', true);
 		this.set('error', null);
 		this.emitChange('loading');
@@ -24,8 +28,6 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 			if(newDefs) {
 				// PUT to collection link
 				const requests = newDefs.map(d => {
-					service.put;
-
 					return service.put(defsCollection.href, d);
 				});
 
@@ -49,6 +51,10 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		}
 		catch (e) {
 			this.set('error', e.message || e);
+			this.set('loading', false);
+			this.emitChange('error', 'loading');
+
+			return Promise.resolve();
 		}
 
 		await this.loadAllTypes();

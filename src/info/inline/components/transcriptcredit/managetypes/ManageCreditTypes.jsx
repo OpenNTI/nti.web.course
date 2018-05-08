@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Loading, Input} from '@nti/web-commons';
+import {Loading} from '@nti/web-commons';
 
 import AddButton from '../../../widgets/AddButton';
 
