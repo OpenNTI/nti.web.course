@@ -10,9 +10,38 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		this.set('error', null);
 	}
 
+	async removeValues (values) {
+		if(!values || values.length === 0) {
+			return;
+		}
+
+		const service = await getService();
+
+		try {
+			const requests = values.map(d => {
+				const deleteLink = d && d.Links && d.Links.filter(l => l.rel === 'delete')[0];
+
+				if(!deleteLink) {
+					return Promise.reject('No delete link');
+				}
+
+				return service.delete(deleteLink);
+			});
+
+			await Promise.all(requests);
+		}
+		catch (e) {
+			this.set('error', e.message || e);
+			this.set('loading', false);
+			this.emitChange('error', 'loading');
+
+			return;
+		}
+	}
+
 	async saveValues (values) {
 		if(!values) {
-			return Promise.resolve();
+			return;
 		}
 
 		this.set('loading', true);
@@ -54,7 +83,7 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 			this.set('loading', false);
 			this.emitChange('error', 'loading');
 
-			return Promise.resolve();
+			return;
 		}
 
 		await this.loadAllTypes();
@@ -80,9 +109,17 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 			return {};
 		}
 
+		const allItems = this.get('types');
+
+		const existing = defs.filter(x => x.NTIID).filter(def => {
+			const match = allItems.filter(i => i.NTIID === def.NTIID)[0];
+
+			return match.type !== def['credit_type'] || match.unit !== def['credit_units'];
+		});
+
 		return {
-			'newDefs': defs.filter(x => !x.NTIID),
-			'existing': defs.filter(x => x.NTIID)
+			newDefs: defs.filter(x => !x.NTIID),
+			existing
 		};
 	}
 

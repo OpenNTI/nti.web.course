@@ -43,9 +43,10 @@ class ManageCreditTypes extends React.Component {
 
 
 	componentDidUpdate (oldProps) {
-		if(oldProps.types !== this.props.types) {
+		if(oldProps.types !== this.props.types || oldProps.error !== this.props.error) {
 			this.setState({
-				types: this.props.types
+				types: this.props.types,
+				flaggedForRemoval: null
 			});
 		}
 	}
@@ -54,7 +55,7 @@ class ManageCreditTypes extends React.Component {
 		const {onValuesUpdated} = this.props;
 
 		if(onValuesUpdated) {
-			onValuesUpdated(this.state.types);
+			onValuesUpdated(this.state.types, this.state.flaggedForRemoval);
 		}
 	}
 
@@ -86,7 +87,15 @@ class ManageCreditTypes extends React.Component {
 	onEntryRemove = (removedEntry) => {
 		const newTypes = this.state.types.filter(x => this.getEffectiveId(x) !== this.getEffectiveId(removedEntry));
 
-		this.setState({types: newTypes}, this.updateValues);
+		const flaggedForRemoval = this.state.flaggedForRemoval;
+
+		let newFlaggedForRemoval;
+
+		if(removedEntry.NTIID) {
+			newFlaggedForRemoval = flaggedForRemoval ? [...flaggedForRemoval, removedEntry] : [removedEntry];
+		}
+
+		this.setState({types: newTypes, flaggedForRemoval: newFlaggedForRemoval}, this.updateValues);
 	}
 
 

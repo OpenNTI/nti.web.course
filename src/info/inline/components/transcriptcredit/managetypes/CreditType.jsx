@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {Input, Checkbox, RemoveButton} from '@nti/web-commons';
-
-const t = scoped('course.info.inline.components.transcriptcredit.managetypes.CreditType', {
-	disabled: 'Disabled'
-});
+import {Input, RemoveButton} from '@nti/web-commons';
 
 export default class CreditType extends React.Component {
 	static propTypes = {
@@ -29,16 +24,7 @@ export default class CreditType extends React.Component {
 		const {onChange, type} = this.props;
 
 		if(onChange) {
-			type.unit = val;
 			onChange({...type, unit: val});
-		}
-	}
-
-	onDisabledChange = (val) => {
-		const {onChange, type} = this.props;
-
-		if(onChange) {
-			onChange({...type, disabled: !type.disabled});
 		}
 	}
 
@@ -57,8 +43,7 @@ export default class CreditType extends React.Component {
 			<div className="credit-type">
 				<Input.Text value={type.type} onChange={this.onTypeChange}/>
 				<Input.Text value={type.unit} onChange={this.onUnitChange}/>
-				<Checkbox label={t('disabled')} onChange={this.onDisabledChange} checked={type.disabled} />
-				{!type.NTIID && <RemoveButton onRemove={this.onRemove}/>}
+				<RemoveButton onRemove={this.onRemove}/>
 			</div>
 		);
 	}

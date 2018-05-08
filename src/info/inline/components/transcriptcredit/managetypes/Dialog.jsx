@@ -48,6 +48,8 @@ export default class ManageCreditTypesDialog extends React.Component {
 
 		await this.store.saveValues(this.state.values);
 
+		await this.store.removeValues(this.state.flaggedForRemoval);
+
 		if(onSave) {
 			onSave();
 
@@ -65,8 +67,8 @@ export default class ManageCreditTypesDialog extends React.Component {
 		}
 	}
 
-	onValuesUpdated = (newValues) => {
-		this.setState({values: newValues});
+	onValuesUpdated = (newValues, flaggedForRemoval) => {
+		this.setState({values: newValues, flaggedForRemoval});
 	}
 
 
