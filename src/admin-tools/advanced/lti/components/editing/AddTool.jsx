@@ -24,7 +24,7 @@ export default class AddTool extends Component {
 		const successful = await store.addItem(item);
 
 		if (successful) {
-			onBeforeDismiss();
+			onBeforeDismiss(item);
 		}
 	}
 

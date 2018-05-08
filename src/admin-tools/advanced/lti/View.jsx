@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 
 import Store from './Store';
-
 import AddTool from './components/editing/AddTool';
 import ToolList from './components/tools/ToolList';
 
@@ -59,8 +58,14 @@ class LTITools extends Component {
 		this.setState({ addIsVisible: true });
 	}
 
-	onAddDismiss = () => {
+	onAddDismiss = (addedItem) => {
 		this.setState({ addIsVisible: false });
+
+		const {store} = this.props;
+
+		if(addedItem) {
+			store.loadItems();
+		}
 	}
 
 	renderEmpty = () => {
