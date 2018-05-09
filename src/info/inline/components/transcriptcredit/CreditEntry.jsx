@@ -90,9 +90,11 @@ export default class TranscriptCreditEntry extends React.Component {
 	renderOption = (option) => {
 		const remainingTypes = this.props.remainingTypes || [];
 
-		const className = cx('credit-type-option', {disabled: !remainingTypes.includes(option), selected: option === this.props.entry.type});
+		const disabled = !remainingTypes.includes(option);
 
-		return <div key={option} className={className}><CreditEntryTypeOption option={option} onClick={this.typeChanged}/></div>;
+		const className = cx('credit-type-option', {disabled, selected: option === this.props.entry.type});
+
+		return <div key={option} className={className}><CreditEntryTypeOption option={option} onClick={disabled ? null : this.typeChanged}/></div>;
 	}
 
 	launchAddTypeDialog = () => {
