@@ -8,7 +8,10 @@ export default class RequirementControlOption extends React.Component {
 		isSelected: PropTypes.bool
 	}
 
-	onClick = () => {
+	onClick = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+
 		const {onChange} = this.props;
 
 		if(onChange) {
