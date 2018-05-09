@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Prompt, DialogButtons, Panels} from '@nti/web-commons';
+import {Prompt, DialogButtons, Panels, Loading} from '@nti/web-commons';
 
 import ManageCreditTypes from './ManageCreditTypes';
 import Store from './CreditTypesStore';
@@ -46,6 +46,8 @@ export default class ManageCreditTypesDialog extends React.Component {
 	onSave = async () => {
 		const {onSave, onDismiss} = this.props;
 
+		this.setState({loading: true});
+
 		await this.store.saveValues(this.state.values);
 
 		await this.store.removeValues(this.state.flaggedForRemoval);
@@ -57,6 +59,9 @@ export default class ManageCreditTypesDialog extends React.Component {
 				onDismiss();
 			}
 		}
+
+		// so the loading bar doesn't just flash for a split second
+		setTimeout(() => { this.setState({loading: false}); }, 400);
 	}
 
 	onDismiss = () => {
@@ -73,6 +78,8 @@ export default class ManageCreditTypesDialog extends React.Component {
 
 
 	render () {
+		const {loading} = this.state;
+
 		const buttons = [
 			{label: t('done'), onClick: this.onSave}
 		];
@@ -87,7 +94,7 @@ export default class ManageCreditTypesDialog extends React.Component {
 				<div className="content">
 					<ManageCreditTypes onValuesUpdated={this.onValuesUpdated}/>
 				</div>
-				<DialogButtons buttons={buttons} />
+				{loading ? <div className="loading-bar"><Loading.Ellipsis/></div> : <DialogButtons buttons={buttons} />}
 			</div>
 		);
 	}

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Loading} from '@nti/web-commons';
 
 import AddButton from '../../../widgets/AddButton';
 
@@ -145,12 +144,10 @@ class ManageCreditTypes extends React.Component {
 
 	render () {
 		const {error} = this.state;
-		const {loading} = this.props;
 
 		return (
 			<div className="manage-credit-types">
 				{error && <div className="error">{error}</div>}
-				{loading && <Loading.Ellipsis/>}
 				{this.renderTypesEditor()}
 			</div>
 		);

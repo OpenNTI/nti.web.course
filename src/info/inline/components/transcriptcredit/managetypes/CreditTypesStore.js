@@ -25,10 +25,12 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 					return Promise.reject('No delete link');
 				}
 
-				return service.delete(deleteLink);
+				return service.delete(deleteLink.href);
 			});
 
 			await Promise.all(requests);
+
+			await this.loadAllTypes();
 		}
 		catch (e) {
 			this.set('error', e.message || e);
@@ -72,10 +74,14 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 						return Promise.reject('No edit link');
 					}
 
-					return service.putToLink(editLink, d);
+					return service.put(editLink.href, d);
 				});
 
 				await Promise.all(requests);
+			}
+
+			if(newDefs || existing) {
+				await this.loadAllTypes();
 			}
 		}
 		catch (e) {
@@ -85,8 +91,6 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 
 			return;
 		}
-
-		await this.loadAllTypes();
 	}
 
 	buildDefinitions (values) {

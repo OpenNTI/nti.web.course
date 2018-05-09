@@ -50,12 +50,10 @@
 				color: $tertiary-grey;
 			}
 
-			&.selected {
-
-			}
-
 			&.add-new {
 				color: $primary-blue;
+				padding: 0.5rem;
+				cursor: pointer;
 			}
 
 			.credit-entry-type-option {
