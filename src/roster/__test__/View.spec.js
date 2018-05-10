@@ -65,7 +65,7 @@ describe('Test roster view', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
-	test('Test view', (done) => {
+	test.skip('Test view', (done) => {
 		const course = {
 			getLink: function (url) {
 				return url;

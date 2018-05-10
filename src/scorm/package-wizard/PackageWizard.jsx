@@ -49,7 +49,7 @@ class PackageWizard extends React.Component {
 		this.hasScormPackage = bundle.Metadata && !!bundle.Metadata.getLink('LaunchSCORM');
 
 		if (!this.hasScormPackage) {
-			this.setState({ mode: REPLACE_KEY });
+			this.state.mode = REPLACE_KEY;
 		}
 	}
 
@@ -148,7 +148,7 @@ class PackageWizard extends React.Component {
 	 */
 	render () {
 		const active = !this.hasScormPackage ? 'scormUpload' : 'TemplateChooser';
-	
+
 		return (
 			<Switch.Panel className="scorm-package" active={active}>
 				<Switch.Container>

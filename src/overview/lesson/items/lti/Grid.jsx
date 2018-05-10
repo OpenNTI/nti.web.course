@@ -9,7 +9,7 @@ LTIExternalToolAssetGridItem.propTypes = {
 	item: PropTypes.object.isRequired,
 	course: PropTypes.object.isRequired
 };
-export default function LTIExternalToolAssetGridItem({ item, course }) {
+export default function LTIExternalToolAssetGridItem ({ item, course }) {
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item}>

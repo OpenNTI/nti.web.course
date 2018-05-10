@@ -21,6 +21,7 @@ describe('OutlineHeader view test', () => {
 		const course = {
 			CompletionPolicy: {},
 			PreferredAccess: {
+				addListener () {},
 				MimeType: 'some.type.courseinstanceenrollment',
 				CourseProgress: {
 					getCompletedDate () {
@@ -43,6 +44,7 @@ describe('OutlineHeader view test', () => {
 		const course = {
 			CompletionPolicy: {},
 			PreferredAccess: {
+				addListener () {},
 				MimeType: 'some.type.courseinstanceenrollment',
 				CourseProgress: {
 					getCompletedDate () {
@@ -65,6 +67,7 @@ describe('OutlineHeader view test', () => {
 		const course = {
 			CompletionPolicy: {},
 			PreferredAccess: {
+				addListener () {},
 				MimeType: 'some.type.courseinstanceenrollment',
 				CourseProgress: {
 					getCompletedDate () {
@@ -90,6 +93,7 @@ describe('OutlineHeader view test', () => {
 		const course = {
 			CompletionPolicy: {},
 			PreferredAccess: {
+				addListener () {},
 				MimeType: 'some.type.courseinstanceenrollment',
 				CourseProgress: {
 					getCompletedDate () {
