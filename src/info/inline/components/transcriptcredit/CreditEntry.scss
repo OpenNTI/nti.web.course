@@ -8,6 +8,10 @@
 		font-size: 12px;
 		height: 28px;
 		color: $primary-grey;
+
+		&:invalid {
+			background-color: rgba($primary-red, 0.1);
+		}
 	}
 
 	.credit-type-select {

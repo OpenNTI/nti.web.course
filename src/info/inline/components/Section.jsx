@@ -104,23 +104,24 @@ export default class Section extends React.Component {
 	 *
 	 * @param  {string} key     catalogEntry field name
 	 * @param  {object} value   catalogEntry field value
+	 * @param  {string} error   store any errorsfound when updating values
 	 * @return {void}
 	 */
-	aggregateChanges = (key, value) => {
+	aggregateChanges = (key, value, error) => {
 		const { pendingChanges } = this.state;
 
 		const updated = { ...(pendingChanges || {}) };
 
 		updated[key] = value;
 
-		this.setState({ pendingChanges: updated });
+		this.setState({ pendingChanges: updated, error });
 	}
 
 	savePendingChanges = () => {
 		const { catalogEntry, onEndEditing, doSave } = this.props;
-		const { pendingChanges, saveable } = this.state;
+		const { pendingChanges, saveable, error } = this.state;
 
-		if(!saveable) {
+		if(!saveable || error) {
 			return;
 		}
 

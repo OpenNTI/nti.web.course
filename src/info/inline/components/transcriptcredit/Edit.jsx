@@ -55,22 +55,25 @@ export default class TranscriptCreditEdit extends React.Component {
 		});
 	}
 
-	afterUpdate () {
+	afterUpdate (error) {
 		this.determineRemainingTypes();
 
-		this.updateValues();
+		this.updateValues(error);
 	}
 
-	updateValues () {
+	updateValues (error) {
 		const { onValueChange } = this.props;
 
-		onValueChange && onValueChange('awardable_credits', this.state.entries.map(x => {
-			return {
-				amount: x.amount,
-				'credit_definition': x.creditDefinition.NTIID,
-				MimeType: 'application/vnd.nextthought.credit.courseawardablecredit'
-			};
-		}));
+		onValueChange && onValueChange(
+			'awardable_credits', this.state.entries.map(x => {
+				return {
+					amount: x.amount,
+					'credit_definition': x.creditDefinition.NTIID,
+					MimeType: 'application/vnd.nextthought.credit.courseawardablecredit'
+				};
+			}),
+			error
+		);
 	}
 
 	removeEntry = (entry) => {
@@ -83,7 +86,7 @@ export default class TranscriptCreditEdit extends React.Component {
 		return entry.NTIID || entry.addID;
 	}
 
-	onEntryChange = (entry) => {
+	onEntryChange = (entry, error) => {
 		const entries = this.state.entries.map(x => {
 			if(this.getEffectiveId(x) === this.getEffectiveId(entry)) {
 				return entry;
@@ -92,7 +95,7 @@ export default class TranscriptCreditEdit extends React.Component {
 			return x;
 		});
 
-		this.setState({entries}, this.afterUpdate);
+		this.setState({entries}, () => { this.afterUpdate(error); });
 	}
 
 	findNewID () {

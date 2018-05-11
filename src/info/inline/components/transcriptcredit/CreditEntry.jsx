@@ -26,6 +26,8 @@ export default class TranscriptCreditEntry extends React.Component {
 
 	attachFlyoutRef = x => this.flyout = x
 
+	attachInputRef = x => this.input = x;
+
 	constructor (props) {
 		super(props);
 
@@ -37,10 +39,18 @@ export default class TranscriptCreditEntry extends React.Component {
 
 		this.setState({amount: val});
 
+		const valid = this.input.validity;
+
+		let error = null;
+
+		if(valid.patternMismatch) {
+			error = 'Must be a numeric value';
+		}
+
 		if(onChange) {
 			const newEntry = {...entry, amount: val};
 
-			onChange(newEntry);
+			onChange(newEntry, error);
 		}
 	}
 
@@ -71,7 +81,7 @@ export default class TranscriptCreditEntry extends React.Component {
 	}
 
 	renderEditableValue () {
-		return <Input.Text className="credit-value" value={this.props.entry.amount} onChange={this.valueChanged}/>;
+		return <Input.Text className="credit-value" value={this.props.entry.amount} onChange={this.valueChanged} pattern="[0-9]+([.,][0-9]+)?" ref={this.attachInputRef}/>;
 	}
 
 	renderType () {
