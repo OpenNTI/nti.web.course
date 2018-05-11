@@ -15,11 +15,12 @@ const t = scoped('course.info.inline.components.transcriptcredit.CreditEntry', {
 export default class TranscriptCreditEntry extends React.Component {
 	static propTypes = {
 		entry: PropTypes.object.isRequired,
-		allTypes: PropTypes.arrayOf(PropTypes.string),
-		remainingTypes: PropTypes.arrayOf(PropTypes.string),
+		allTypes: PropTypes.arrayOf(PropTypes.object),
+		remainingTypes: PropTypes.arrayOf(PropTypes.object),
 		onRemove: PropTypes.func,
 		onChange: PropTypes.func,
 		onNewTypeAdded: PropTypes.func,
+		removable: PropTypes.bool,
 		editable: PropTypes.bool
 	}
 
@@ -34,10 +35,10 @@ export default class TranscriptCreditEntry extends React.Component {
 	valueChanged = (val) => {
 		const {onChange, entry} = this.props;
 
-		this.setState({value: val});
+		this.setState({amount: val});
 
 		if(onChange) {
-			const newEntry = {...entry, value: val};
+			const newEntry = {...entry, amount: val};
 
 			onChange(newEntry);
 		}
@@ -46,15 +47,10 @@ export default class TranscriptCreditEntry extends React.Component {
 	typeChanged = (val) => {
 		const {onChange, entry} = this.props;
 
-		// typeChanged gets called both when the type select value is changed and
-		// when a new type is added on the fly.  when a new type is added, the value
-		// will be an object with type and unit properties.. otherwise, it's just a string
-		const combined = val.type ? val.type + ' ' + val.unit : val;
-
-		this.setState({type: combined});
+		this.setState({creditDefinition: val});
 
 		if(onChange) {
-			const newEntry = {...entry, type: combined};
+			const newEntry = {...entry, creditDefinition: val};
 
 			onChange(newEntry);
 		}
@@ -71,30 +67,40 @@ export default class TranscriptCreditEntry extends React.Component {
 	}
 
 	renderValue () {
-		return <div className="credit-value">{this.props.entry.value}</div>;
+		return <div className="credit-value">{this.props.entry.amount}</div>;
 	}
 
 	renderEditableValue () {
-		return <Input.Text className="credit-value" value={this.props.entry.value} onChange={this.valueChanged}/>;
+		return <Input.Text className="credit-value" value={this.props.entry.amount} onChange={this.valueChanged}/>;
 	}
 
 	renderType () {
-		return <div className="credit-type">{this.props.entry.type}</div>;
+		const {entry} = this.props;
+
+		return <div className="credit-type">{this.getStringForType(entry.creditDefinition)}</div>;
 	}
 
 
 	renderTypeTrigger () {
-		return <div className="credit-type-select">{this.props.entry.type}<i className="icon-chevron-down"/></div>;
+		const {entry} = this.props;
+
+		return <div className="credit-type-select">{this.getStringForType(entry.creditDefinition)}<i className="icon-chevron-down"/></div>;
+	}
+
+	getStringForType (type) {
+		return type && (type.type + ' ' + type.unit);
 	}
 
 	renderOption = (option) => {
+		const {entry} = this.props;
+
 		const remainingTypes = this.props.remainingTypes || [];
 
-		const disabled = !remainingTypes.includes(option);
+		const disabled = !remainingTypes.filter(x => x.creditDefinition + ' ' + x.unit).includes(option);
 
-		const className = cx('credit-type-option', {disabled, selected: option === this.props.entry.type});
+		const className = cx('credit-type-option', {disabled, selected: this.getStringForType(option) === this.getStringForType(entry.creditDefinition)});
 
-		return <div key={option} className={className}><CreditEntryTypeOption option={option} onClick={disabled ? null : this.typeChanged}/></div>;
+		return <div key={this.getStringForType(option)} className={className}><CreditEntryTypeOption option={option} onClick={disabled ? null : this.typeChanged}/></div>;
 	}
 
 	launchAddTypeDialog = () => {
@@ -102,9 +108,9 @@ export default class TranscriptCreditEntry extends React.Component {
 			const {onNewTypeAdded} = this.props;
 
 			if(onNewTypeAdded) {
-				onNewTypeAdded(savedType);
-
-				this.typeChanged(savedType);
+				onNewTypeAdded(savedType).then(newlyAdded => {
+					this.typeChanged(newlyAdded);
+				});
 			}
 		});
 	}
@@ -136,13 +142,13 @@ export default class TranscriptCreditEntry extends React.Component {
 
 
 	render () {
-		const {editable} = this.props;
+		const {editable, removable} = this.props;
 
 		return (
 			<div className="credit-entry">
 				{editable ? this.renderEditableValue() : this.renderValue()}
 				{editable ? this.renderEditableType() : this.renderType()}
-				{editable && this.renderRemoveButton()}
+				{editable && removable && this.renderRemoveButton()}
 			</div>
 		);
 	}

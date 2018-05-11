@@ -25,7 +25,7 @@ export default class AddCreditType extends React.Component {
 	}
 
 	static propTypes = {
-		existingTypes: PropTypes.arrayOf(PropTypes.string),
+		existingTypes: PropTypes.arrayOf(PropTypes.object),
 		onSave: PropTypes.func,
 		onDismiss: PropTypes.func
 	}
@@ -37,7 +37,7 @@ export default class AddCreditType extends React.Component {
 		const {onDismiss} = this.props;
 		const {unit, type} = this.state;
 		const combined = type + ' ' + unit;
-		const exists = (this.props.existingTypes || []).map(x => x.toLowerCase()).filter(x => x === combined.toLowerCase());
+		const exists = (this.props.existingTypes || []).map(x => x.type.toLowerCase() + ' ' + x.unit.toLowerCase()).filter(x => x === combined.toLowerCase());
 
 		if(exists.length > 0) {
 			this.setState({error: t('alreadyExists')});

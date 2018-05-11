@@ -20,16 +20,16 @@ export default class TranscriptCreditEdit extends React.Component {
 		onValueChange: PropTypes.func
 	}
 
+	static FIELD_NAME = 'awardable_credits';
+
 	constructor (props) {
 		super(props);
 
 		this.creditTypeStore = CreditTypeStore.getInstance();
 
-		//TODO: transcripts - get entries from course
+		// in this context, we are using type to indicate the type reference that we change
 		this.state = {
-			entries: [
-				{NTIID: 'nti_1', value: 15, type: 'ECTS points'}
-			]
+			entries: props.catalogEntry.credits || []
 		};
 	}
 
@@ -40,15 +40,15 @@ export default class TranscriptCreditEdit extends React.Component {
 	async loadTypes () {
 		await this.creditTypeStore.loadAllTypes();
 
-		this.setState({creditTypes: this.creditTypeStore.getTypesAsStrings()}, () => {
+		this.setState({creditTypes: this.creditTypeStore.getTypes()}, () => {
 			this.determineRemainingTypes();
 		});
 	}
 
 	determineRemainingTypes () {
 		const allTypes = this.state.creditTypes;
-		const takenTypes = this.state.entries.map(x => x.type);
-		const remainingTypes = allTypes.filter(x => !takenTypes.includes(x));
+		const takenTypes = this.state.entries.map(x => x.creditDefinition.type + ' ' + x.creditDefinition.unit);
+		const remainingTypes = allTypes.filter(x => !takenTypes.includes(x.type + ' ' + x.unit));
 
 		this.setState({
 			remainingTypes
@@ -64,7 +64,13 @@ export default class TranscriptCreditEdit extends React.Component {
 	updateValues () {
 		const { onValueChange } = this.props;
 
-		onValueChange && onValueChange('transcriptCredits', this.state.entries);
+		onValueChange && onValueChange('awardable_credits', this.state.entries.map(x => {
+			return {
+				amount: x.amount,
+				'credit_definition': x.creditDefinition.NTIID,
+				MimeType: 'application/vnd.nextthought.credit.courseawardablecredit'
+			};
+		}));
 	}
 
 	removeEntry = (entry) => {
@@ -104,8 +110,8 @@ export default class TranscriptCreditEdit extends React.Component {
 
 		const entry = {
 			addID: this.findNewID(),
-			value: 1,
-			type: this.state.remainingTypes[0]
+			amount: 1,
+			creditDefinition: this.state.remainingTypes[0]
 		};
 
 		entries.push(entry);
@@ -114,13 +120,21 @@ export default class TranscriptCreditEdit extends React.Component {
 	}
 
 	onNewTypeAdded = async (newType) => {
+		const {creditTypes} = this.state;
+
 		// when adding a new type on the fly, we should wait for the store to save values,
 		// then update our state with the reloaded type data from the store
 		await this.creditTypeStore.saveValues([newType]);
 
-		this.setState({creditTypes: this.creditTypeStore.getTypesAsStrings()}, () => {
+		const newCreditTypes = this.creditTypeStore.getTypes();
+
+		const newlyAdded = newCreditTypes.filter(x => !creditTypes.map(y => y.NTIID).includes(x.NTIID))[0];
+
+		this.setState({creditTypes: this.creditTypeStore.getTypes()}, () => {
 			this.afterUpdate();
 		});
+
+		return newlyAdded;
 	}
 
 	renderEntry = (entry) => {
@@ -133,6 +147,7 @@ export default class TranscriptCreditEdit extends React.Component {
 				allTypes={this.state.creditTypes}
 				remainingTypes={this.state.remainingTypes}
 				onNewTypeAdded={this.onNewTypeAdded}
+				removable={this.state.entries && this.state.entries.length > 1}
 				editable
 			/>
 		);

@@ -19,31 +19,38 @@ export default class TranscriptCreditView extends React.Component {
 		enrollmentAccess: PropTypes.object
 	}
 
+	static FIELD_NAME = 'credits';
+
 	constructor (props) {
 		super(props);
 
-		//TODO: transcripts - get entries from course
 		this.state = {
-			entries: [
-				{value: 15, type: 'ECTS points'}
-			]
+			entries: props.catalogEntry.credits
 		};
 	}
 
 	renderEntry = (entry) => {
 		return (
 			<CreditEntry
-				key={entry.type}
+				key={entry.creditDefinition.type + ' ' + entry.creditDefinition.unit}
 				entry={entry}
 			/>
 		);
 	}
 
 	renderContent () {
+		if(!this.state.entries || this.state.entries.length === 0) {
+			return (
+				<div className="content">
+					{t('noCredit')}
+				</div>
+			);
+		}
+
 		return (
 			<div className="content">
 				<div className="credit-entries">
-					{(this.state.entries || []).map(this.renderEntry)}
+					{this.state.entries.map(this.renderEntry)}
 				</div>
 			</div>
 		);

@@ -127,8 +127,8 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		};
 	}
 
-	getTypesAsStrings () {
-		return (this.get('types') || []).map(t => (t.type + ' ' + t.unit));
+	getTypes () {
+		return this.get('types') || [];
 	}
 
 	async loadAllTypes () {
