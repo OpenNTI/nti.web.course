@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {ConflictResolution} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import AddButton from '../../../widgets/AddButton';
@@ -35,9 +36,22 @@ class ManageCreditTypes extends React.Component {
 	componentDidMount () {
 		const {store} = this.props;
 
+		ConflictResolution.registerHandler('DuplicateCreditDefinitionError', this.saveConflictHandler);
+
 		if(store) {
 			store.loadAllTypes();
 		}
+	}
+
+
+	componentWillUnmount () {
+		ConflictResolution.unregisterHandler('DuplicateCreditDefinitionError', this.saveConflictHandler);
+	}
+
+	saveConflictHandler = (challenge) => {
+		return new Promise((confirm, reject) => {
+			challenge.reject();
+		});
 	}
 
 
