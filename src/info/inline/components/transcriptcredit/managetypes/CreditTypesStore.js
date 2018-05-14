@@ -1,5 +1,15 @@
 import {Stores} from '@nti/lib-store';
 import {getService} from '@nti/web-client';
+import {scoped} from '@nti/lib-locale';
+
+const t = scoped('course.info.inline.components.transcriptcredit.managetypes.CreditTypeStore', {
+	tooShortError: '%(field)s is required'
+});
+
+const FIELD_MAP = {
+	'credit_type': 'Type',
+	'credit_units': 'Unit'
+};
 
 export default class CreditTypesStore extends Stores.SimpleStore {
 	constructor () {
@@ -33,12 +43,20 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 			await this.loadAllTypes();
 		}
 		catch (e) {
-			this.set('error', e.message || e);
+			this.set('error', this.makeNiceError(e));
 			this.set('loading', false);
 			this.emitChange('error', 'loading');
 
 			return;
 		}
+	}
+
+	makeNiceError (e) {
+		if(e.code === 'TooShort') {
+			return t('tooShortError', {field: FIELD_MAP[e.field]});
+		}
+
+		return e.message || e;
 	}
 
 	async saveValues (values) {
@@ -85,7 +103,7 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 			}
 		}
 		catch (e) {
-			this.set('error', e.message || e);
+			this.set('error', this.makeNiceError(e));
 			this.set('loading', false);
 			this.emitChange('error', 'loading');
 

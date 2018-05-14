@@ -6,7 +6,8 @@ import {getService} from '@nti/web-client';
 import {Layouts} from '@nti/web-commons';
 // import {Tasks} from '@nti/lib-commons';
 
-import {Progress, Overview, AdminTools} from '../../src';
+import {Progress, Overview, Info} from '../../src';
+import ManageCreditTypesDialog from '../../src/info/inline/components/transcriptcredit/managetypes/Dialog';
 
 import Picker from './PickCourse';
 
@@ -80,16 +81,12 @@ class Test extends React.Component {
 	state = {}
 
 	async componentDidMount () {
-		const {courseId} = this.props;
+		const courseId = 'tag:nextthought.com,2011-10:OU-CourseInfo-9208505778827852429_4744113955624525798';
 		const service = await getService();
 		const course = await service.getObject(courseId);
-		const outline = await course.getOutline();
-		const items = outline.getFlattenedList();
-		const nodes = items.filter(item => item.hasLink('overview-content'));
 
 		this.setState({
-			course,
-			nodes
+			course
 		});
 	}
 
@@ -103,17 +100,18 @@ class Test extends React.Component {
 
 
 	render () {
-		const {course, nodes} = this.state;
+		const {course} = this.state;
 		// const limit = localStorage.limit || 1;
 
 		if (!course) { return null; }
 
 		return (
-			<div>
-				<AdminTools.Advanced course={course} />
-			</div>
-
+			<ManageCreditTypesDialog/>
 		);
+
+		// return (
+		// 	<Info catalogEntry={course} editable/>
+		// );
 	}
 }
 
