@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 import {Input, Flyout, RemoveButton} from '@nti/web-commons';
+import {getService} from '@nti/web-client';
 
 import AddCreditType from './AddCreditType';
 import CreditEntryTypeOption from './CreditEntryTypeOption';
@@ -28,10 +29,14 @@ export default class TranscriptCreditEntry extends React.Component {
 
 	attachInputRef = x => this.input = x;
 
-	constructor (props) {
-		super(props);
+	state = {}
 
-		this.state = {};
+	componentDidMount () {
+		getService().then(service => {
+			const creditDefs = service.getCollection('CreditDefinitions', 'Global');
+
+			this.setState({canAddTypes: creditDefs.accepts && creditDefs.accepts.length > 0});
+		});
 	}
 
 	valueChanged = (val) => {
@@ -126,7 +131,7 @@ export default class TranscriptCreditEntry extends React.Component {
 	}
 
 	renderAddNewType () {
-		return <div className="credit-type-option add-new" onClick={this.launchAddTypeDialog}>{t('addNewType')}</div>;
+		return this.state.canAddTypes && <div className="credit-type-option add-new" onClick={this.launchAddTypeDialog}>{t('addNewType')}</div>;
 	}
 
 	renderEditableType () {
