@@ -9,6 +9,7 @@ const t = scoped('course.admin-tools.advanced.completion.View', {
 	cancel: 'Cancel',
 	save: 'Save',
 	completable: 'Completable',
+	certificates: 'Award Certificate on Completion',
 	percentage: 'Percentage (1 to 100)'
 });
 
@@ -26,13 +27,19 @@ export default class CourseAdminCompletion extends React.Component {
 		const {course} = this.props;
 
 		if(course.CompletionPolicy) {
-			this.setState({completable: true, percentage: (course.CompletionPolicy.percentage || 0) * 100});
+			this.setState({
+				completable: true,
+				certificationPolicy: Boolean(course.CompletionPolicy.offersCompletionCertificate),
+				percentage: (course.CompletionPolicy.percentage || 0) * 100
+			});
 		}
 	}
 
 
 	onCompletionPolicyChange = () => {
-		this.setState({completable: !this.state.completable});
+		let state = {completable: !this.state.completable};
+
+		this.setState(state);
 	}
 
 
@@ -41,6 +48,22 @@ export default class CourseAdminCompletion extends React.Component {
 			<div className="completion-control">
 				<div className="label">{t('completable')}</div>
 				<div className="control"><Input.Toggle value={this.state.completable} onChange={this.onCompletionPolicyChange}/></div>
+			</div>
+		);
+	}
+
+	onCertificationChange = () => {
+		this.setState({certificationPolicy: !this.state.certificationPolicy});
+	}
+
+	renderCertificateToggle () {
+		const disabled = !this.state.completable;
+		const className = cx('completion-control', {disabled});
+
+		return (
+			<div className={className}>
+				<div className="label">{t('certificates')}</div>
+				<div className="control"><Input.Toggle disabled={!this.state.completable} value={this.state.certificationPolicy} onChange={this.onCertificationChange}/></div>
 			</div>
 		);
 	}
@@ -64,14 +87,15 @@ export default class CourseAdminCompletion extends React.Component {
 
 
 	onSave = () => {
-		const {completable, percentage} = this.state;
+		const {completable, percentage, certificationPolicy} = this.state;
 		const {course} = this.props;
 
 		if(completable) {
 			getService().then(service => {
 				service.put(course.getLink('CompletionPolicy'), {
 					MimeType: 'application/vnd.nextthought.completion.aggregatecompletionpolicy',
-					percentage: percentage ? percentage / 100.0 : 0
+					percentage: percentage ? percentage / 100.0 : 0,
+					'offers_completion_certificate': Boolean(certificationPolicy)
 				});
 			});
 		}
@@ -106,6 +130,7 @@ export default class CourseAdminCompletion extends React.Component {
 			<div className="course-admin-completion">
 				<div className="inputs">
 					{this.renderCompletableToggle()}
+					{this.renderCertificateToggle()}
 					{this.renderPercentage()}
 				</div>
 				{this.renderBottomControls()}
