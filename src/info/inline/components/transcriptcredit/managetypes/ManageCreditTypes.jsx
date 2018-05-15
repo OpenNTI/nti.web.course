@@ -56,7 +56,7 @@ class ManageCreditTypes extends React.Component {
 
 
 	componentDidUpdate (oldProps) {
-		if(oldProps.types !== this.props.types || oldProps.error !== this.props.error) {
+		if(oldProps.types !== this.props.types) {
 			this.setState({
 				types: this.props.types,
 				flaggedForRemoval: null
