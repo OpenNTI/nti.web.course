@@ -112,13 +112,11 @@ export default class TranscriptCreditEdit extends React.Component {
 	addEntry = () => {
 		const entries = [...this.state.entries];
 
-		const entry = {
+		entries.push({
 			addID: this.findNewID(),
 			amount: 1,
 			creditDefinition: this.state.remainingTypes[0]
-		};
-
-		entries.push(entry);
+		});
 
 		this.setState({entries}, this.afterUpdate);
 	}
