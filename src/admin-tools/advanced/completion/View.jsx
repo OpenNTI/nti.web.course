@@ -37,7 +37,7 @@ export default class CourseAdminCompletion extends React.Component {
 
 
 	onCompletionPolicyChange = () => {
-		let state = {completable: !this.state.completable};
+		let state = {completable: !this.state.completable, certificationPolicy: !this.state.completable};
 
 		this.setState(state);
 	}
