@@ -3,7 +3,8 @@ import {getService} from '@nti/web-client';
 import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.info.inline.components.transcriptcredit.managetypes.CreditTypeStore', {
-	tooShortError: '%(field)s is required'
+	tooShortError: '%(field)s is required',
+	tooLongError: '%(field)s cannot be longer than 16 characters'
 });
 
 const FIELD_MAP = {
@@ -54,6 +55,9 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 	makeNiceError (e) {
 		if(e.code === 'TooShort') {
 			return t('tooShortError', {field: FIELD_MAP[e.field]});
+		}
+		else if(e.code === 'TooLong') {
+			return t('tooLongError', {field: FIELD_MAP[e.field]});
 		}
 
 		return e.message || e;
