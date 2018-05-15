@@ -16,7 +16,7 @@ import CourseVideo from './widgets/CourseVideo';
 import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
-	RedemptionCodes, Prerequisites, Department, Facilitators, Assets, Credit, TranscriptCredit } from './components';
+	RedemptionCodes, Prerequisites, Department, Facilitators, Assets, TranscriptCredit } from './components';
 import {TechSupport} from './components/techsupport';
 
 const EDITORS = {
