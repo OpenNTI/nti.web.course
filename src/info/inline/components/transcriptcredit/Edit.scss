@@ -5,6 +5,16 @@
 		.content-column {
 			width: 100%;
 		}
+
+		.add-button {
+			.add-icon {
+				display: none;
+			}
+
+			.add-label {
+				margin-left: 15px;
+			}
+		}
 	}
 
 	.credits-container {
