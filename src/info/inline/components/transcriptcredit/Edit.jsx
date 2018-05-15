@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
 import AddButton from '../../widgets/AddButton';
+import CreditViewContents from '../credit/Contents';
 
 import CreditTypeStore from './managetypes/CreditTypesStore';
 import CreditEntry from './CreditEntry';
 
 
 const t = scoped('course.info.inline.components.transcriptcredit.edit', {
-	label: 'Transcript Credit Hours',
+	label: 'Credits',
 	addCredit: 'Add Credit'
 });
 
@@ -156,7 +157,26 @@ export default class TranscriptCreditEdit extends React.Component {
 		);
 	}
 
+	hasLegacyCredit () {
+		return Boolean(this.props.catalogEntry[CreditViewContents.FIELD_NAME] && this.props.catalogEntry[CreditViewContents.FIELD_NAME][0]);
+	}
+
 	renderContent () {
+		return (
+			<div className="credits-container edit">
+				{
+					this.hasLegacyCredit() && (
+						<div className="legacy-credits">
+							<CreditViewContents {...this.props}/>
+						</div>
+					)
+				}
+				{this.renderTranscriptCredits()}
+			</div>
+		);
+	}
+
+	renderTranscriptCredits () {
 		const {remainingTypes} = this.state;
 
 		return (

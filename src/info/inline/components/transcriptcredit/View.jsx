@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
+import CreditViewContents from '../credit/Contents';
+
 import CreditEntry from './CreditEntry';
 
 
 const t = scoped('course.info.inline.components.transcriptcredit.view', {
-	label: 'Transcript Credit Hours',
+	label: 'Credits',
 	available: ' Credits Available',
 	availableSingular: ' Credit Available',
 	openEnrolled: 'You’re registered for the open course.',
@@ -38,8 +40,12 @@ export default class TranscriptCreditView extends React.Component {
 		);
 	}
 
-	renderContent () {
+	renderTranscriptCredits () {
 		if(!this.state.entries || this.state.entries.length === 0) {
+			if(this.hasLegacyCredit()) {
+				return null;
+			}
+
 			return (
 				<div className="content">
 					{t('noCredit')}
@@ -52,6 +58,25 @@ export default class TranscriptCreditView extends React.Component {
 				<div className="credit-entries">
 					{this.state.entries.map(this.renderEntry)}
 				</div>
+			</div>
+		);
+	}
+
+	hasLegacyCredit () {
+		return Boolean(this.props.catalogEntry[CreditViewContents.FIELD_NAME] && this.props.catalogEntry[CreditViewContents.FIELD_NAME][0]);
+	}
+
+	renderContent () {
+		return (
+			<div className="credits-container">
+				{
+					this.hasLegacyCredit() && (
+						<div className="legacy-credits">
+							<CreditViewContents {...this.props}/>
+						</div>
+					)
+				}
+				{this.renderTranscriptCredits()}
 			</div>
 		);
 	}

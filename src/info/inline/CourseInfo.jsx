@@ -297,11 +297,6 @@ export default class CourseInfo extends React.Component {
 						onBeginEditing={this.activateTranscriptCreditEditor}
 						onEndEditing={this.endEditing}/>
 					<Section
-						className="credits-section"
-						components={[Credit]}
-						catalogEntry={catalogEntry}
-						enrollmentAccess={enrollmentAccess}/>
-					<Section
 						className="prerequisites-section"
 						components={[Prerequisites]}
 						catalogEntry={catalogEntry}/>

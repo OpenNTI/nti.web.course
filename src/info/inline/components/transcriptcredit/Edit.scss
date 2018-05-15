@@ -7,11 +7,15 @@
 		}
 	}
 
-	.credit-entries {
-		// float: right;
-	}
-
-	.add-button.add-credit {
-		// float: right;
+	.credits-container {
+		&.edit {
+			.legacy-credits {
+				padding: 0.5rem;
+				border-radius: 5px;
+				border: solid 1px #ddd;
+				opacity: 0.5;
+				pointer-events: none;
+			}
+		}
 	}
 }

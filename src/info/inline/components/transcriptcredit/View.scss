@@ -4,4 +4,13 @@
 	.credit-type {
 		margin-left: 5px;
 	}
+
+	.legacy-credits {
+		margin-bottom: 1rem;
+
+		a {
+			color: $primary-blue;
+			text-decoration: none;
+		}
+	}
 }
