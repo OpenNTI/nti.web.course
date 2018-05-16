@@ -8,7 +8,7 @@ export default class Store {
 
 
 	async getTotalCount () {
-		const page = await this.dataSource.loadPage(2, {sort: 'by-lesson'});
+		const page = await this.dataSource.loadPage(1, {sort: 'by-lesson'});
 
 		return page.TotalPageCount;
 	}
