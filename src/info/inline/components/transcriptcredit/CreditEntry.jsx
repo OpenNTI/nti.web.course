@@ -86,7 +86,7 @@ export default class TranscriptCreditEntry extends React.Component {
 	}
 
 	renderEditableValue () {
-		return <Input.Text className="credit-value" value={this.props.entry.amount} onChange={this.valueChanged} pattern="[0-9]+([.,][0-9]+)?" ref={this.attachInputRef}/>;
+		return <Input.Text className="credit-value" maxLength="6" value={this.props.entry.amount} onChange={this.valueChanged} pattern="[0-9]+([.,][0-9]+)?" ref={this.attachInputRef}/>;
 	}
 
 	renderType () {
