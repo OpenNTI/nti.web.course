@@ -59,6 +59,10 @@
 		font-size: 12px;
 		color: $primary-grey;
 
+		> div {
+			max-height: 11rem;
+		}
+
 		.credit-type-option {
 			&.disabled {
 				cursor: initial;
