@@ -14,7 +14,7 @@ export default class ProgressOverviewContentsStore {
 	}
 
 	async getTotalCount () {
-		const page = await this.dataSource.loadPage(2, this.params);
+		const page = await this.dataSource.loadPage(1, this.params);
 
 		return page.TotalPageCount;
 	}
