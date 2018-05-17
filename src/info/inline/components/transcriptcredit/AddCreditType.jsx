@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Prompt, Input, DialogButtons, Panels} from '@nti/web-commons';
+import {Prompt, Input, DialogButtons, Panels, ConflictResolution} from '@nti/web-commons';
 
 import CreditTypeStore from './managetypes/CreditTypesStore';
 
@@ -34,6 +34,18 @@ export default class AddCreditType extends React.Component {
 
 	componentDidMount () {
 		this.creditTypeStore = CreditTypeStore.getInstance();
+
+		ConflictResolution.registerHandler('DuplicateCreditDefinitionError', this.saveConflictHandler);
+	}
+
+	componentWillUnmount () {
+		ConflictResolution.unregisterHandler('DuplicateCreditDefinitionError', this.saveConflictHandler);
+	}
+
+	saveConflictHandler = (challenge) => {
+		return new Promise((confirm, reject) => {
+			challenge.reject();
+		});
 	}
 
 
