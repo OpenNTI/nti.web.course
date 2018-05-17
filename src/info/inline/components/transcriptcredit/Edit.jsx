@@ -124,10 +124,6 @@ export default class TranscriptCreditEdit extends React.Component {
 	onNewTypeAdded = async (newType) => {
 		const {creditTypes} = this.state;
 
-		// when adding a new type on the fly, we should wait for the store to save values,
-		// then update our state with the reloaded type data from the store
-		await this.creditTypeStore.saveValues([newType]);
-
 		const newCreditTypes = this.creditTypeStore.getTypes();
 
 		const newlyAdded = newCreditTypes.filter(x => !creditTypes.map(y => y.NTIID).includes(x.NTIID))[0];

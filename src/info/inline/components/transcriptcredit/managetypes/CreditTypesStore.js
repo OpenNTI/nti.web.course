@@ -4,7 +4,8 @@ import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.info.inline.components.transcriptcredit.managetypes.CreditTypeStore', {
 	tooShortError: '%(field)s is required',
-	tooLongError: '%(field)s cannot be longer than 16 characters'
+	tooLongError: '%(field)s cannot be longer than 16 characters',
+	missingError: '%(field)s is required'
 });
 
 const FIELD_MAP = {
@@ -58,6 +59,9 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		}
 		else if(e.code === 'TooLong') {
 			return t('tooLongError', {field: FIELD_MAP[e.field]});
+		}
+		else if(e.code === 'RequiredMissing') {
+			return t('missingError', {field: FIELD_MAP[e.field]});
 		}
 
 		return e.message || e;
@@ -113,6 +117,10 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 
 			return;
 		}
+	}
+
+	getError () {
+		return this.get('error');
 	}
 
 	buildDefinitions (values) {

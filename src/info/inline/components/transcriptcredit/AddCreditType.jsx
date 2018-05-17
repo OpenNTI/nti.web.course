@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Prompt, Input, DialogButtons, Panels} from '@nti/web-commons';
 
+import CreditTypeStore from './managetypes/CreditTypesStore';
+
 const t = scoped('course.info.inline.components.transcriptcredit.AddCreditType', {
 	addNewType: 'Add New Type...',
 	title: 'Add New Credit Type',
@@ -30,27 +32,38 @@ export default class AddCreditType extends React.Component {
 		onDismiss: PropTypes.func
 	}
 
+	componentDidMount () {
+		this.creditTypeStore = CreditTypeStore.getInstance();
+	}
+
 
 	state = {}
 
-	onSave = () => {
+	onSave = async () => {
 		const {onDismiss} = this.props;
 		const {unit, type} = this.state;
-		const combined = type + ' ' + unit;
-		const exists = (this.props.existingTypes || []).map(x => x.type.toLowerCase() + ' ' + x.unit.toLowerCase()).filter(x => x === combined.toLowerCase());
 
-		if(exists.length > 0) {
-			this.setState({error: t('alreadyExists')});
-		}
-		else
-		{
-			if(this.props.onSave) {
-				this.props.onSave({type, unit});
+		try {
+			await this.creditTypeStore.saveValues([{type, unit}]);
 
-				if (onDismiss) {
-					onDismiss();
+
+			const error = this.creditTypeStore.getError();
+
+			if(error) {
+				this.setState({error});
+			}
+			else {
+				if(this.props.onSave) {
+					this.props.onSave({type, unit});
+
+					if (onDismiss) {
+						onDismiss();
+					}
 				}
 			}
+		}
+		catch (e) {
+			this.setState({error: e});
 		}
 	}
 
