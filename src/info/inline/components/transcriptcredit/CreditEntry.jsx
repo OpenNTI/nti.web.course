@@ -13,8 +13,6 @@ const t = scoped('course.info.inline.components.transcriptcredit.CreditEntry', {
 	addNewType: 'Add New Type...'
 });
 
-const fixedDecimal = (n,d) => parseFloat(Math.round(n * 100) / 100).toFixed(d);
-
 export default class TranscriptCreditEntry extends React.Component {
 	static propTypes = {
 		entry: PropTypes.object.isRequired,
@@ -84,7 +82,7 @@ export default class TranscriptCreditEntry extends React.Component {
 	}
 
 	renderValue () {
-		return <div className="credit-value">{fixedDecimal(this.props.entry.amount, 2)}</div>;
+		return <div className="credit-value">{this.props.entry.amount.toFixed(2)}</div>;
 	}
 
 	renderEditableValue () {
