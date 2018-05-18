@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
+import {getService} from '@nti/web-client';
 
 import AddButton from '../../widgets/AddButton';
 import CreditViewContents from '../credit/Contents';
 
 import CreditTypeStore from './managetypes/CreditTypesStore';
 import CreditEntry from './CreditEntry';
+import AddCreditType from './AddCreditType';
 
 
 const t = scoped('course.info.inline.components.transcriptcredit.edit', {
 	label: 'Credits',
-	addCredit: 'Add Credit'
+	addCredit: 'Add Credit',
+	addDefinition: 'Add New Type',
+	noRemainingTypes: 'To add a new credit, a new credit type is required',
+	noTypes: 'To get started, add a new credit type',
+	noTypesCantAdd: 'There are no credit types defined'
 });
 
 export default class TranscriptCreditEdit extends React.Component {
@@ -36,6 +42,12 @@ export default class TranscriptCreditEdit extends React.Component {
 
 	componentDidMount () {
 		this.loadTypes();
+
+		getService().then(service => {
+			const creditDefs = service.getCollection('CreditDefinitions', 'Global');
+
+			this.setState({canAddTypes: creditDefs.accepts && creditDefs.accepts.length > 0});
+		});
 	}
 
 	async loadTypes () {
@@ -109,24 +121,24 @@ export default class TranscriptCreditEdit extends React.Component {
 		return newID.toString();
 	}
 
-	addEntry = () => {
+	addEntry = (providedType) => {
 		const entries = [...this.state.entries];
 
 		entries.push({
 			addID: this.findNewID(),
 			amount: 1,
-			creditDefinition: this.state.remainingTypes[0]
+			creditDefinition: providedType || this.state.remainingTypes[0]
 		});
 
 		this.setState({entries}, this.afterUpdate);
 	}
 
+	onAddClick = () => {
+		this.addEntry();
+	}
+
 	onNewTypeAdded = async (newType) => {
 		const {creditTypes} = this.state;
-
-		// when adding a new type on the fly, we should wait for the store to save values,
-		// then update our state with the reloaded type data from the store
-		await this.creditTypeStore.saveValues([newType]);
 
 		const newCreditTypes = this.creditTypeStore.getTypes();
 
@@ -174,6 +186,34 @@ export default class TranscriptCreditEdit extends React.Component {
 		);
 	}
 
+	launchAddTypeDialog = () => {
+		AddCreditType.show().then(savedType => {
+			this.onNewTypeAdded(savedType).then((newTypeDef) => {
+				this.addEntry(newTypeDef);
+			});
+		});
+	}
+
+	renderAddNewType () {
+		const {creditTypes} = this.state;
+
+		let infoText = t('noTypes');
+
+		if(!this.state.canAddTypes) {
+			return <div>{t('noTypesCantAdd')}</div>;
+		}
+
+		if(creditTypes && creditTypes.length > 0) {
+			infoText = t('noRemainingTypes');
+
+			if(!this.state.canAddTypes) {
+				return null;
+			}
+		}
+
+		return <div className="add-definition"><div className="info-text">{infoText}</div><div onClick={this.launchAddTypeDialog} className="add-definition-button">{t('addDefinition')}</div></div>;
+	}
+
 	renderTranscriptCredits () {
 		const {remainingTypes} = this.state;
 
@@ -182,7 +222,8 @@ export default class TranscriptCreditEdit extends React.Component {
 				<div className="credit-entries">
 					{(this.state.entries || []).map(this.renderEntry)}
 				</div>
-				{remainingTypes && remainingTypes.length > 0 && <AddButton clickHandler={this.addEntry} className="add-credit" label={t('addCredit')}/>}
+				{remainingTypes && remainingTypes.length > 0 && <AddButton clickHandler={this.onAddClick} className="add-credit" label={t('addCredit')}/>}
+				{!remainingTypes || remainingTypes.length === 0 && this.renderAddNewType()}
 			</div>
 		);
 	}
