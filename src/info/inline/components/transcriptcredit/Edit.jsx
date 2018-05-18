@@ -199,16 +199,16 @@ export default class TranscriptCreditEdit extends React.Component {
 
 		let infoText = t('noTypes');
 
-		if(!this.state.canAddTypes) {
-			return <div>{t('noTypesCantAdd')}</div>;
-		}
-
 		if(creditTypes && creditTypes.length > 0) {
 			infoText = t('noRemainingTypes');
 
 			if(!this.state.canAddTypes) {
 				return null;
 			}
+		}
+
+		if(!this.state.canAddTypes) {
+			return <div>{t('noTypesCantAdd')}</div>;
 		}
 
 		return <div className="add-definition"><div className="info-text">{infoText}</div><div onClick={this.launchAddTypeDialog} className="add-definition-button">{t('addDefinition')}</div></div>;
