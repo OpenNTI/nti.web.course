@@ -87,38 +87,71 @@ class ManageCreditTypes extends React.Component {
 	addEntry = () => {
 		const newTypes = [...this.state.types];
 
-		newTypes.push({
+		const newType = {
 			addID: this.findNewID(),
 			type: '',
 			unit: '',
-			disabled: false
-		});
+			disabled: false,
+			addedRow: true
+		};
 
-		this.setState({types: newTypes}, this.updateValues);
+		newTypes.push(newType);
+
+		this.setState({types: newTypes, typeInEditMode: newType}, this.updateValues);
 	}
 
-	onEntryRemove = (removedEntry) => {
-		const newTypes = this.state.types.filter(x => this.getEffectiveId(x) !== this.getEffectiveId(removedEntry));
+	onEntryRemove = async (removedEntry) => {
+		await this.props.store.removeValues([removedEntry]);
 
-		const flaggedForRemoval = this.state.flaggedForRemoval;
-
-		let newFlaggedForRemoval;
-
-		if(removedEntry.NTIID) {
-			newFlaggedForRemoval = flaggedForRemoval ? [...flaggedForRemoval, removedEntry] : [removedEntry];
-		}
-
-		this.setState({types: newTypes, flaggedForRemoval: newFlaggedForRemoval}, this.updateValues);
+		await this.props.store.loadAllTypes();
 	}
 
+	onExitEditMode = (type) => {
+		this.setState({typeInEditMode: null});
+	}
+
+	onEnterEditMode = (type) => {
+		this.setState({typeInEditMode: type});
+	}
+
+	onNewEntryCancel = () => {
+		const newTypes = this.state.types.filter(x => !x.addedRow);
+
+		this.setState({types: newTypes});
+	}
 
 	renderType = (type) => {
-		return <CreditType key={this.getEffectiveId(type)} type={type} onChange={this.onEntryChange} onRemove={this.onEntryRemove}/>;
+		const {typeInEditMode} = this.state;
+
+		let disabled = true;
+		let inEditMode = false;
+
+		if(typeInEditMode == null) {
+			disabled = false;
+		}
+
+		if(this.getEffectiveId(typeInEditMode) === this.getEffectiveId(type)) {
+			disabled = false;
+			inEditMode = true;
+		}
+
+		return (
+			<CreditType
+				key={this.getEffectiveId(type)}
+				type={type}
+				onEnterEditMode={this.onEnterEditMode}
+				onExitEditMode={this.onExitEditMode}
+				onChange={this.onEntryChange}
+				onRemove={this.onEntryRemove}
+				onNewEntryCancel={this.onNewEntryCancel}
+				disabled={disabled}
+				inEditMode={inEditMode}/>
+		);
 	}
 
 
 	getEffectiveId (entry) {
-		return entry.NTIID || entry.addID;
+		return entry && (entry.NTIID || entry.addID);
 	}
 
 	findNewID () {
@@ -132,8 +165,7 @@ class ManageCreditTypes extends React.Component {
 	}
 
 	renderTypesEditor () {
-		const {types} = this.state;
-		const {error} = this.props;
+		const {types, typeInEditMode} = this.state;
 
 		if(!types) {
 			return null;
@@ -141,7 +173,6 @@ class ManageCreditTypes extends React.Component {
 
 		return (
 			<div className="all-types">
-				{error && <div className="error">{error}</div>}
 				{types && types.length > 0 && (
 					<div className="header">
 						<span className="header-text">{t('type')}</span>
@@ -149,9 +180,11 @@ class ManageCreditTypes extends React.Component {
 					</div>
 				)}
 				{types.map(this.renderType)}
-				<div className="add-type">
-					<AddButton label={t('addNewType')} clickHandler={this.addEntry}/>
-				</div>
+				{typeInEditMode == null && (
+					<div className="add-type">
+						<AddButton label={t('addNewType')} clickHandler={this.addEntry}/>
+					</div>
+				)}
 			</div>
 		);
 	}

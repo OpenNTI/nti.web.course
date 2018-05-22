@@ -41,8 +41,6 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 			});
 
 			await Promise.all(requests);
-
-			await this.loadAllTypes();
 		}
 		catch (e) {
 			this.set('error', this.makeNiceError(e));
@@ -106,9 +104,7 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 				await Promise.all(requests);
 			}
 
-			if(newDefs || existing) {
-				await this.loadAllTypes();
-			}
+			return;
 		}
 		catch (e) {
 			this.set('error', this.makeNiceError(e));

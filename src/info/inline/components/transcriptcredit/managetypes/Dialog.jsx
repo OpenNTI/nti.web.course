@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Prompt, DialogButtons, Panels, Loading} from '@nti/web-commons';
+import {Prompt, Panels} from '@nti/web-commons';
 
 import ManageCreditTypes from './ManageCreditTypes';
 import Store from './CreditTypesStore';
@@ -48,9 +48,11 @@ export default class ManageCreditTypesDialog extends React.Component {
 
 		this.setState({loading: true});
 
+		await this.store.removeValues(this.state.flaggedForRemoval);
+
 		await this.store.saveValues(this.state.values);
 
-		await this.store.removeValues(this.state.flaggedForRemoval);
+		await this.store.loadAllTypes();
 
 		if(onSave) {
 			onSave();
@@ -78,12 +80,6 @@ export default class ManageCreditTypesDialog extends React.Component {
 
 
 	render () {
-		const {loading} = this.state;
-
-		const buttons = [
-			{label: t('done'), onClick: this.onSave}
-		];
-
 		return (
 			<div className="manage-credit-types-dialog">
 				{this.props.dialog && (
@@ -94,7 +90,6 @@ export default class ManageCreditTypesDialog extends React.Component {
 				<div className="content">
 					<ManageCreditTypes onValuesUpdated={this.onValuesUpdated}/>
 				</div>
-				{loading ? <div className="loading-bar"><Loading.Ellipsis/></div> : <DialogButtons buttons={buttons} />}
 			</div>
 		);
 	}
