@@ -85,8 +85,6 @@ class ManageCreditTypes extends React.Component {
 	}
 
 	addEntry = () => {
-		const newTypes = [...this.state.types];
-
 		const newType = {
 			addID: this.findNewID(),
 			type: '',
@@ -95,7 +93,7 @@ class ManageCreditTypes extends React.Component {
 			addedRow: true
 		};
 
-		newTypes.push(newType);
+		const newTypes = [...this.state.types, newType];
 
 		this.setState({types: newTypes, typeInEditMode: newType}, this.updateValues);
 	}
