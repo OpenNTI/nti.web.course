@@ -58,6 +58,7 @@ export default class AddCreditType extends React.Component {
 		try {
 			await this.creditTypeStore.saveValues([{type, unit}]);
 
+			await this.creditTypeStore.loadAllTypes();
 
 			const error = this.creditTypeStore.getError();
 

@@ -60,7 +60,7 @@ export default class TranscriptCreditEdit extends React.Component {
 
 	determineRemainingTypes () {
 		const allTypes = this.state.creditTypes;
-		const takenTypes = this.state.entries.map(x => x.creditDefinition.type + ' ' + x.creditDefinition.unit);
+		const takenTypes = this.state.entries.filter(x => x.creditDefinition).map(x => x.creditDefinition.type + ' ' + x.creditDefinition.unit);
 		const remainingTypes = allTypes.filter(x => !takenTypes.includes(x.type + ' ' + x.unit));
 
 		this.setState({
