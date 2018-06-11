@@ -59,7 +59,7 @@ export default class AddFacilitators extends React.Component {
 		return getService()
 			.then(s => s.getContacts())
 			.then((contacts) => {
-				return contacts.search(value, false, true)
+				return contacts.search(value, { allowAppUser: true, allowAnyEntityType: false, allowContacts: true })
 					.then((results) => {
 						const users = results.filter(entity => entity.isUser );
 
