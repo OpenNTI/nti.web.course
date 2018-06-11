@@ -236,7 +236,7 @@ export default class Facilitator extends React.Component {
 			);
 		}
 
-		return <Avatar className="image" entityId={facilitator.username}/>;
+		return <Avatar className="image" entity={facilitator.username}/>;
 	}
 
 	onTitleChange = (e) => {
