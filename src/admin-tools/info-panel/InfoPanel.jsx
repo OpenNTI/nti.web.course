@@ -6,6 +6,7 @@ import Tool from './Tool';
 // import DashboardIcon from './assets/dashboard.svg';
 import ReportsIcon from './assets/reports.svg';
 import RosterIcon from './RosterIcon';
+import AdvancedIcon from './assets/advanced.svg';
 
 
 const t = scoped('course.admin-tools.info-panel.InfoPanel', {
@@ -14,7 +15,7 @@ const t = scoped('course.admin-tools.info-panel.InfoPanel', {
 	rosterTitle: 'Roster',
 	rosterSubtitle: 'Manage and communicate with groups of learners.',
 	advancedTitle: 'Advanced',
-	advancedSubtitle: 'Control advanced course settings.'
+	advancedSubtitle: 'Manage advanced controls and integrate with other services.'
 });
 
 const InfoPanel = ({ totalLearners, showRoster, showReports }) => (
@@ -23,7 +24,7 @@ const InfoPanel = ({ totalLearners, showRoster, showReports }) => (
 		{/* <Tool title="Dashboard" subtitle="Leverage data to form insights about your course." link={'admin-info-dashboard'} icon={DashboardIcon} /> */}
 		{showReports && <Tool title={t('reportsTitle')} subtitle={t('reportsSubtitle')} link={'admin-info-reports'} icon={ReportsIcon} />}
 		{showRoster && <Tool title={t('rosterTitle')} subtitle={t('rosterSubtitle')} link={'admin-info-roster'} icon={<RosterIcon totalLearners={totalLearners} />} />}
-		{showRoster && <Tool title={t('advancedTitle')} subtitle={t('advancedSubtitle')} link={'admin-info-advanced'} icon={<div className="advanced-item"><i className="icon-settings"/></div>} />}
+		{showRoster && <Tool title={t('advancedTitle')} subtitle={t('advancedSubtitle')} link={'admin-info-advanced'} icon={AdvancedIcon} />}
 	</div>
 );
 
