@@ -36,7 +36,7 @@ export default class SettingsTabPanel extends React.Component {
 		super(props);
 
 		this.state = {
-			isNonPublic: props.catalogEntry.is_non_public,
+			isNonPublic: props.catalogEntry.isNonPublic,
 			previewMode: props.catalogEntry.PreviewRawValue
 		};
 	}
