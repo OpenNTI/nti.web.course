@@ -18,25 +18,27 @@ const t = scoped('course.admin-tools.info-panel.InfoPanel', {
 	advancedSubtitle: 'Manage advanced controls and integrate with other services.'
 });
 
-const InfoPanel = ({ totalLearners, showRoster, showReports }) => (
+const InfoPanel = ({ totalLearners, showRoster, showReports, showAdvanced }) => (
 	<div className="course-admin-panel">
 		<h2 className="admin-panel-header">Admin Tools</h2>
 		{/* <Tool title="Dashboard" subtitle="Leverage data to form insights about your course." link={'admin-info-dashboard'} icon={DashboardIcon} /> */}
 		{showReports && <Tool title={t('reportsTitle')} subtitle={t('reportsSubtitle')} link={'admin-info-reports'} icon={ReportsIcon} />}
 		{showRoster && <Tool title={t('rosterTitle')} subtitle={t('rosterSubtitle')} link={'admin-info-roster'} icon={<RosterIcon totalLearners={totalLearners} />} />}
-		{showRoster && <Tool title={t('advancedTitle')} subtitle={t('advancedSubtitle')} link={'admin-info-advanced'} icon={AdvancedIcon} />}
+		{showAdvanced && <Tool title={t('advancedTitle')} subtitle={t('advancedSubtitle')} link={'admin-info-advanced'} icon={AdvancedIcon} />}
 	</div>
 );
 
 InfoPanel.defaultProps = {
 	showReports: false,
-	showRoster: false
+	showRoster: false,
+	showAdvanced: false
 };
 
 InfoPanel.propTypes = {
 	totalLearners: PropTypes.number,
 	showReports: PropTypes.bool,
-	showRoster: PropTypes.bool
+	showRoster: PropTypes.bool,
+	showAdvanced: PropTypes.bool
 };
 
 export default InfoPanel;
