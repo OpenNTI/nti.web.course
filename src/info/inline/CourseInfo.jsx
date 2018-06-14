@@ -11,7 +11,7 @@ import {
 	COURSE_SAVE_ERROR
 } from '../../editor/Constants';
 
-import CourseVisibility from './widgets/CourseVisibility';
+import CourseVisibility from './enrollment/CourseVisibility';
 import CourseVideo from './widgets/CourseVideo';
 import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';

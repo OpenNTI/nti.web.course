@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { scoped } from '@nti/lib-locale';
+import {scoped} from '@nti/lib-locale';
+import {Loading} from '@nti/web-commons';
 import cx from 'classnames';
+
+import Store from './EnrollmentOptionsStore';
+import {ExternalEnrollment, IMSEnrollment, OpenEnrollment, StoreEnrollment} from './options';
 
 const FIELDS = {
 	OpenEnrollment: [
@@ -46,13 +50,100 @@ function getDisplayFor (value) {
 	return DISPLAY_MAPPING[value] || value;
 }
 
-export default class EnrollmentOptions extends React.Component {
+export default
+@Store.connect({
+	enrollmentOptions: 'enrollmentOptions',
+	availableOptions: 'availableOptions',
+	error: 'error'
+})
+class EnrollmentOptions extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired
+		catalogEntry: PropTypes.object.isRequired,
+		store: PropTypes.object.isRequired,
+		enrollmentOptions: PropTypes.array,
+		availableOptions: PropTypes.array,
+		loading: PropTypes.bool,
+		error: PropTypes.string
 	}
 
 	constructor (props) {
 		super(props);
+	}
+
+	componentDidMount () {
+		const {store, catalogEntry} = this.props;
+
+		store.loadEnrollmentOptions(catalogEntry);
+	}
+
+	state = {}
+
+	getCmpFor (option) {
+		if(/externalenrollmentoption/.test(option.MimeType)) {
+			return ExternalEnrollment;
+		}
+
+		if(/storeenrollmentoption/.test(option.MimeType)) {
+			return StoreEnrollment;
+		}
+
+		if(/ozoneenrollmentoption/.test(option.MimeType)) {
+			return IMSEnrollment;
+		}
+
+		if(/openenrollmentoption/.test(option.MimeType)) {
+			return OpenEnrollment;
+		}
+
+		// default to open or return null?
+	}
+
+	onItemActivate = (mimeType) => {
+		this.setState({activeItem: mimeType});
+	}
+
+	onItemDeactivate = (mimeType) => {
+		this.setState({activeItem: null});
+	}
+
+	renderOption (option, addable) {
+		const Cmp = this.getCmpFor(option);
+
+		if(!Cmp) {
+			return;
+		}
+
+		return (
+			<Cmp
+				key={option.MimeType}
+				option={option}
+				onItemActivate={this.onItemActivate}
+				onItemDeactivate={this.onItemDeactivate}
+				inEditMode={this.state.activeItem === option.MimeType}
+				isDisabled={this.state.activeItem && this.state.activeItem !== option.MimeType}
+				editable={option.hasLink('edit')}
+				addable={addable}
+			/>
+		);
+	}
+
+	renderExistingOption = (option, addable) => {
+		return this.renderOption(option, false);
+	}
+
+	renderAddableOption = (option) => {
+		return this.renderOption(option, true);
+	}
+
+	renderOptions () {
+		const {availableOptions, enrollmentOptions} = this.props;
+
+		return (
+			<div className="options-list">
+				{(enrollmentOptions || []).map(this.renderExistingOption)}
+				{(availableOptions || []).map(this.renderAddableOption)}
+			</div>
+		);
 	}
 
 	getOption (optionName) {
@@ -176,13 +267,16 @@ export default class EnrollmentOptions extends React.Component {
 	}
 
 	render () {
+		const {loading} = this.props;
+
+		if(loading) {
+			return <Loading.Ellipsis/>;
+		}
+
 		return (
 			<div className="enrollment-options">
-				<div className="course-option-label">{t('enrollmentOptions')}</div>
-				{this.renderOpenEnrollment()}
-				{this.renderStoreEnrollment()}
-				{this.renderEnrollmentOption('IMSEnrollment')}
-				{this.renderEnrollmentOption('FiveminuteEnrollment')}
+				<div className="enrollment-options-title">{t('enrollmentOptions')}</div>
+				{this.renderOptions()}
 			</div>
 		);
 	}
