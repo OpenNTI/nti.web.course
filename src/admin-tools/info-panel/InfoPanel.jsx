@@ -18,13 +18,13 @@ const t = scoped('course.admin-tools.info-panel.InfoPanel', {
 	advancedSubtitle: 'Manage advanced controls and integrate with other services.'
 });
 
-const InfoPanel = ({ totalLearners, showRoster, showReports, showAdvanced }) => (
+const InfoPanel = ({ totalLearners, bundle, showRoster, showReports, showAdvanced }) => (
 	<div className="course-admin-panel">
 		<h2 className="admin-panel-header">Admin Tools</h2>
 		{/* <Tool title="Dashboard" subtitle="Leverage data to form insights about your course." link={'admin-info-dashboard'} icon={DashboardIcon} /> */}
-		{showReports && <Tool title={t('reportsTitle')} subtitle={t('reportsSubtitle')} link={'admin-info-reports'} icon={ReportsIcon} />}
-		{showRoster && <Tool title={t('rosterTitle')} subtitle={t('rosterSubtitle')} link={'admin-info-roster'} icon={<RosterIcon totalLearners={totalLearners} />} />}
-		{showAdvanced && <Tool title={t('advancedTitle')} subtitle={t('advancedSubtitle')} link={'admin-info-advanced'} icon={AdvancedIcon} />}
+		{showReports && <Tool title={t('reportsTitle')} bundle={bundle} subtitle={t('reportsSubtitle')} link={'admin-info-reports'} icon={ReportsIcon} />}
+		{showRoster && <Tool title={t('rosterTitle')} bundle={bundle} subtitle={t('rosterSubtitle')} link={'admin-info-roster'} icon={<RosterIcon totalLearners={totalLearners} />} />}
+		{showAdvanced && <Tool title={t('advancedTitle')} bundle={bundle} subtitle={t('advancedSubtitle')} link={'admin-info-advanced'} icon={AdvancedIcon} />}
 	</div>
 );
 
@@ -36,6 +36,7 @@ InfoPanel.defaultProps = {
 
 InfoPanel.propTypes = {
 	totalLearners: PropTypes.number,
+	bundle: PropTypes.object,
 	showReports: PropTypes.bool,
 	showRoster: PropTypes.bool,
 	showAdvanced: PropTypes.bool
