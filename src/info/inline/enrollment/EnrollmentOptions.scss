@@ -43,6 +43,15 @@
 }
 
 .editable-item {
+	&.custom {
+		.item-summary {
+			.item-icon {
+				background-color: white;
+				border: solid 3px #9c9;
+			}
+		}
+	}
+
 	&.ims {
 		.item-summary {
 			.item-icon {

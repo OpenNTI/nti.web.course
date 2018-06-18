@@ -5,7 +5,7 @@ import {Loading} from '@nti/web-commons';
 import cx from 'classnames';
 
 import Store from './EnrollmentOptionsStore';
-import {ExternalEnrollment, IMSEnrollment, OpenEnrollment, StoreEnrollment} from './options';
+import {CustomExternalEnrollment, ExternalEnrollment, IMSEnrollment, OpenEnrollment, StoreEnrollment} from './options';
 
 const FIELDS = {
 	OpenEnrollment: [
@@ -79,6 +79,10 @@ class EnrollmentOptions extends React.Component {
 	state = {}
 
 	getCmpFor (option) {
+		if(/ensyncimisexternalenrollmentoption/.test(option.MimeType)) {
+			return CustomExternalEnrollment;
+		}
+
 		if(/externalenrollmentoption/.test(option.MimeType)) {
 			return ExternalEnrollment;
 		}

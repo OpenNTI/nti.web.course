@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 import { Input } from '@nti/web-commons';
+import cx from 'classnames';
 
 import Store from '../EnrollmentOptionsStore';
 import EditableItem from '../common/EditableItem';
@@ -9,7 +10,7 @@ import FieldView from '../common/FieldView';
 
 const t = scoped('course.info.inline.enrollment.options.ExternalEnrollment', {
 	title: 'External',
-	description: 'External Enrollment',
+	description: 'Enroll using a URL',
 	url: 'URL'
 });
 
@@ -19,7 +20,10 @@ export default class ExternalEnrollment extends React.Component {
 		addable: PropTypes.bool,
 		editable: PropTypes.bool,
 		onItemActivate: PropTypes.func,
-		onItemDeactivate: PropTypes.func
+		onItemDeactivate: PropTypes.func,
+		customTitle: PropTypes.string,
+		customDescription: PropTypes.string,
+		className: PropTypes.string
 	}
 
 	state = {}
@@ -110,15 +114,18 @@ export default class ExternalEnrollment extends React.Component {
 
 	render () {
 		const newProps = {...this.props};
+		const {customTitle, customDescription, className} = this.props;
 
 		delete newProps.onItemActivate;
 		delete newProps.onItemDeactivate;
 
+		const cls = cx('external', className);
+
 		return (
 			<EditableItem
-				title={t('title')}
-				description={t('description')}
-				className="external"
+				title={customTitle || t('title')}
+				description={customDescription || t('description')}
+				className={cls}
 				onItemActivate={this.onItemActivate}
 				onItemDeactivate={this.onItemDeactivate}
 				onSave={this.onSave}

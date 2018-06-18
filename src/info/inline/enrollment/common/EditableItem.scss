@@ -103,6 +103,12 @@
 
 		.item-summary {
 			cursor: initial;
+
+			.item-info {
+				.description {
+					font-style: italic;
+				}
+			}
 		}
 	}
 
