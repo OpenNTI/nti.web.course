@@ -24,7 +24,8 @@ export default class CourseWizard extends React.Component {
 		catalogEntry: PropTypes.object,
 		onCancel: PropTypes.func,
 		onFinish: PropTypes.func,
-		onCourseModified: PropTypes.func
+		onCourseModified: PropTypes.func,
+		template: PropTypes.object
 	}
 
 	constructor (props) {
@@ -48,11 +49,16 @@ export default class CourseWizard extends React.Component {
 
 		this.state = {
 			catalogEntry,
-			loadingTemplates: true
+			loadingTemplates: Boolean(!props.template),
+			panels: props.template && props.template.panels
 		};
 	}
 
 	async componentDidMount () {
+		if(this.props.template) {
+			return;
+		}
+
 		const service = await getService();
 		const courseWorkspace = service.getWorkspace('Courses');
 		const allCoursesCollection = courseWorkspace && service.getCollection('AllCourses', courseWorkspace.Title);
@@ -91,6 +97,7 @@ export default class CourseWizard extends React.Component {
 				onCancel={this.cancel}
 				onFinish={this.creationCompleted}
 				hideHeaderControls={panel.WizardPanel.hideHeaderControls}
+				firstTab={this.props.template && index === 0}	// if provided a template, don't allow back control on first step
 				afterSave={index === arr.length - 1
 					? () => this.creationCompleted(!panel.WizardPanel.disallowEditorRedirect)
 					: () => {}}/>
@@ -128,19 +135,22 @@ export default class CourseWizard extends React.Component {
 				stepName={t('chooseTemplate')}
 				onTemplateSelect={this.onTemplateSelect}
 				onCancel={this.cancel}
-				firstTab />
+				firstTab
+			/>
 		);
 	}
 
 	render () {
+		const {template} = this.props;
+
 		if(this.state.loadingTemplates) {
 			return <div className="course-panel wizard"><div className="course-wizard-item"><Loading.Mask/></div></div>;
 		}
 
 		return (
-			<Switch.Panel className="course-panel wizard" active="TemplateChooser">
+			<Switch.Panel className="course-panel wizard" active={template ? 'step2' : 'TemplateChooser'}>
 				<Switch.Container>
-					{this.renderTemplateChooser()}
+					{!template && this.renderTemplateChooser()}
 					{this.renderItems()}
 				</Switch.Container>
 			</Switch.Panel>
