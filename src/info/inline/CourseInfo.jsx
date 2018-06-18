@@ -4,6 +4,7 @@ import {Loading} from '@nti/web-commons';
 import {getService} from '@nti/web-client';
 import cx from 'classnames';
 
+import {AdminTools} from '../../';
 import Store from '../../editor/Store';
 import {
 	COURSE_SAVING,
@@ -18,6 +19,7 @@ import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
 	RedemptionCodes, Prerequisites, Department, Facilitators, Assets, TranscriptCredit } from './components';
 import {TechSupport} from './components/techsupport';
+
 
 const EDITORS = {
 	COURSE_INFO: 'CourseInfo',
@@ -40,7 +42,8 @@ export default class CourseInfo extends React.Component {
 		editable: PropTypes.bool,
 		onCancel: PropTypes.func,
 		onFinish: PropTypes.func,
-		onSave: PropTypes.func
+		onSave: PropTypes.func,
+		hasAdminToolsAccess: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -258,7 +261,7 @@ export default class CourseInfo extends React.Component {
 	}
 
 	render () {
-		const { editable } = this.props;
+		const { editable, hasAdminToolsAccess } = this.props;
 		const { activeEditor, catalogEntry, courseInstance, enrollmentAccess, facilitators, loading } = this.state;
 
 		if(loading || !catalogEntry) {
@@ -344,6 +347,7 @@ export default class CourseInfo extends React.Component {
 						hideDeleteBlock/>
 				</div>
 				<TechSupport />
+				{hasAdminToolsAccess && <AdminTools.InfoPanel {...this.props}/>}
 			</div>
 		);
 	}
