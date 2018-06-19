@@ -181,20 +181,26 @@ export default class ImportWizardPanel extends React.Component {
 		};
 
 		const service = await getService();
-		const catalogEntryFactory = await Models.courses.CatalogEntry.getFactory(service);
-		const createdEntry = await catalogEntryFactory.create(data, catalogEntryFactory.IMPORTED_LEVEL_KEY);
-		await createdEntry.save(data);
 
-		this.setState({loading: true, createdEntry, completed: false, saveDisabled: false, error: null, pctComplete: 0});
+		try {
+			const catalogEntryFactory = await Models.courses.CatalogEntry.getFactory(service);
+			const createdEntry = await catalogEntryFactory.create(data, catalogEntryFactory.IMPORTED_LEVEL_KEY);
+			await createdEntry.save(data);
 
-		const {enterProgressState} = this.props;
+			this.setState({loading: true, createdEntry, completed: false, saveDisabled: false, error: null, pctComplete: 0});
 
-		enterProgressState && enterProgressState();
+			const {enterProgressState} = this.props;
 
-		this.checkCounter = 0;
-		Upload(createdEntry, file, this.onComplete, this.onFailure, this.onProgress);
+			enterProgressState && enterProgressState();
 
-		this.progressChecker = setInterval(() => { this.checkProgress(done); }, PROGRESS_TICK);
+			this.checkCounter = 0;
+			Upload(createdEntry, file, this.onComplete, this.onFailure, this.onProgress);
+
+			this.progressChecker = setInterval(() => { this.checkProgress(done); }, PROGRESS_TICK);
+		}
+		catch (e) {
+			this.setState({error: e.message || e});
+		}
 	};
 
 	renderSaveCmp () {
