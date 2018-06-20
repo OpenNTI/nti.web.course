@@ -22,8 +22,13 @@ const t = scoped('course.components.PublishCourse', {
 	previewOnDesc: 'Course is not visible',
 	previewOff: 'Off',
 	previewOffDesc: 'Course is visible',
-	noDateFound: 'No start date found'
+	noDateFound: 'No start date found',
+	general: 'General',
+	enrollment: 'Enrollment'
 });
+
+const GENERAL = 'general-tab';
+const ENROLLMENT = 'enrollment-tab';
 
 export default class PublishCourse extends React.Component {
 	static propTypes = {
@@ -48,7 +53,8 @@ export default class PublishCourse extends React.Component {
 			this.state = {
 				course,
 				isNonPublic: course.isNonPublic,
-				previewMode: course.PreviewRawValue
+				previewMode: course.PreviewRawValue,
+				activeTab: GENERAL
 			};
 		}
 	}
@@ -82,7 +88,8 @@ export default class PublishCourse extends React.Component {
 		this.setState({
 			course: catalogEntry,
 			isNonPublic: catalogEntry.isNonPublic,
-			previewMode: catalogEntry.PreviewRawValue
+			previewMode: catalogEntry.PreviewRawValue,
+			activeTab: this.state.activeTab || GENERAL
 		});
 	}
 
@@ -202,14 +209,25 @@ export default class PublishCourse extends React.Component {
 		);
 	}
 
-	renderOptions () {
+	renderGeneralOptions () {
+		if(!this.state.course) {
+			return <Loading.Mask/>;
+		}
+
 		return (
 			<div className="course-options">
 				<div className="publicly-available-option">{this.renderOption(t('publiclyAvailable'), null, !this.state.isNonPublic, this.onPublicChange)}</div>
 				<div className="preview-mode-option"><div className="course-option"><div className="course-option-label">{t('previewMode')}</div>{this.renderPreviewWidget()}</div></div>
-				<EnrollmentOptions catalogEntry={this.state.course}/>
 			</div>
 		);
+	}
+
+	renderEnerollmentOptions () {
+		if(!this.state.course) {
+			return <Loading.Mask/>;
+		}
+
+		return <EnrollmentOptions catalogEntry={this.state.course}/>;
 	}
 
 	renderOption (label, description, value, onChange) {
@@ -242,7 +260,23 @@ export default class PublishCourse extends React.Component {
 	renderContents () {
 		return (
 			<div className="contents">
-				{this.state.course ? this.renderOptions() : (<Loading.Mask/>)}
+				{this.state.activeTab === GENERAL && this.renderGeneralOptions()}
+				{this.state.activeTab === ENROLLMENT && this.renderEnerollmentOptions()}
+			</div>
+		);
+	}
+
+	renderNavItem (name, label) {
+		const cls = cx('publish-nav-item', {active: this.state.activeTab === name});
+
+		return <div className={cls}onClick={() => { this.setState({activeTab: name}); }}>{label}</div>;
+	}
+
+	renderNavBar () {
+		return (
+			<div className="publish-nav-bar">
+				{this.renderNavItem(GENERAL, t('general'))}
+				{this.renderNavItem(ENROLLMENT, t('enrollment'))}
 			</div>
 		);
 	}
@@ -251,6 +285,7 @@ export default class PublishCourse extends React.Component {
 		return (
 			<div className="publish-course">
 				{this.renderHeader()}
+				{this.renderNavBar()}
 				{this.renderContents()}
 				{this.renderBottomControls()}
 			</div>

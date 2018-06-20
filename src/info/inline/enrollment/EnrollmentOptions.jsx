@@ -6,6 +6,7 @@ import cx from 'classnames';
 
 import Store from './EnrollmentOptionsStore';
 import {CustomExternalEnrollment, ExternalEnrollment, IMSEnrollment, OpenEnrollment, StoreEnrollment} from './options';
+import EnrollmentCard from './common/EnrollmentCard';
 
 const FIELDS = {
 	OpenEnrollment: [
@@ -23,7 +24,7 @@ const FIELDS = {
 };
 
 const t = scoped('course.components.EnrollmentOptions', {
-	enrollmentOptions: 'Enrollment Options',
+	enrollmentOptions: 'Enrollment',
 	OpenEnrollment: 'Open',
 	IMSEnrollment: 'IMS',
 	StoreEnrollment: 'Purchase',
@@ -145,7 +146,7 @@ class EnrollmentOptions extends React.Component {
 		return (
 			<div className="options-list">
 				{(enrollmentOptions || []).map(this.renderExistingOption)}
-				{(availableOptions || []).map(this.renderAddableOption)}
+				{/* {(availableOptions || []).map(this.renderAddableOption)} */}
 			</div>
 		);
 	}
