@@ -27,7 +27,8 @@ const EDITORS = {
 	END_DATE: 'EndDate',
 	MEET_TIMES: 'MeetTimes',
 	FACILITATORS: 'Facilitators',
-	TRANSCRIPT_CREDIT: 'TranscriptCredit'
+	TRANSCRIPT_CREDIT: 'TranscriptCredit',
+	REDEMPTION_CODES: 'RedemptionCodes'
 };
 
 /**
@@ -180,6 +181,10 @@ export default class CourseInfo extends React.Component {
 		this.setState({activeEditor: EDITORS.TRANSCRIPT_CREDIT});
 	}
 
+	activateRedemptionEditor = () => {
+		this.setState({ activeEditor: EDITORS.REDEMPTION_CODES });
+	}
+
 	endEditing = (savedCatalogEntry) => {
 		const { onSave } = this.props;
 
@@ -190,9 +195,17 @@ export default class CourseInfo extends React.Component {
 		}
 	}
 
+	endCodeEditing = async () => {
+		const { courseInstance, catalogEntry } = this.state;
+		const redemptionCodes = await courseInstance.getAccessTokens();
+		this.setState({ redemptionCodes });
+
+		this.endEditing(catalogEntry);
+	}
+
 	renderRedemptionWidget () {
 		const { editable } = this.props;
-		const { redemptionCodes } = this.state;
+		const { redemptionCodes, activeEditor, courseInstance } = this.state;
 
 		if(!editable) {
 			return null;
@@ -202,7 +215,15 @@ export default class CourseInfo extends React.Component {
 			<Section
 				className="course-redemption-codes"
 				components={[RedemptionCodes]}
-				redemptionCodes={redemptionCodes}/>
+				redemptionCodes={redemptionCodes}
+				courseInstance={courseInstance}
+				editable={editable}
+				isEditing={activeEditor === EDITORS.REDEMPTION_CODES}
+				onBeginEditing={this.activateRedemptionEditor}
+				onEndEditing={this.endCodeEditing}
+				hideDeleteBlock
+				done
+			/>
 		);
 	}
 

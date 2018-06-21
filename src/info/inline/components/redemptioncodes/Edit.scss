@@ -1,1 +1,11 @@
 @import "~@nti/style-common";
+
+.redemption-codes-editor {
+	.create-code {
+		color: $primary-blue;
+		cursor: pointer;
+		font-weight: 100;
+		display: block;
+		text-align: right;
+	}
+}

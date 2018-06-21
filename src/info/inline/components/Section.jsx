@@ -9,6 +9,7 @@ const t = scoped('course.info.inline.components.Section', {
 	edit: 'Edit',
 	cancel: 'Cancel',
 	save: 'Save',
+	done: 'Done',
 	deleteBlock: 'Delete Block'
 });
 
@@ -45,7 +46,8 @@ export default class Section extends React.Component {
 		hideDeleteBlock: PropTypes.bool,
 		className: PropTypes.string,
 		redemptionCodes: PropTypes.arrayOf(PropTypes.object),
-		title: PropTypes.string
+		title: PropTypes.string,
+		done: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -231,10 +233,11 @@ export default class Section extends React.Component {
 
 	renderSave () {
 		const {saveable} = this.state;
+		const {done} = this.props;
 
 		const className = cx('save', { disabled: !saveable });
 
-		return <div className={className} onClick={this.savePendingChanges}>{t('save')}</div>;
+		return <div className={className} onClick={this.savePendingChanges}>{done ? t('done') : t('save')}</div>;
 	}
 
 	renderControls () {
