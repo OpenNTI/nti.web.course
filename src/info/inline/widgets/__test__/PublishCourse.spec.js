@@ -41,7 +41,7 @@ describe('Settings TabPanel test', () => {
 			},
 			PreviewRawValue,
 			StartDate,
-			isNonPublic,
+			isHidden: isNonPublic,
 			Preview: PreviewRawValue ? true : false,
 			getEnrollmentOptions: function () {
 				return {};
