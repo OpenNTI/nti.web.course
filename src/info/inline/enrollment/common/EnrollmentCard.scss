@@ -1,0 +1,102 @@
+@import "~@nti/style-common";
+
+.enrollment-card {
+	width: 335px;
+	margin-left: 25px;
+	margin-bottom: 25px;
+	padding: 16px 25px;
+	border: 1px solid #e2e2e2;
+	border-radius: 3px;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+	font-size: 14px;
+	font-weight: 300;
+	color: $primary-grey;
+	position: relative;
+
+	&.add {
+		background-color: #fbfbfb;
+		color: $tertiary-grey;
+		text-align: center;
+		cursor: pointer;
+
+		.icon {
+			text-align: center;
+			width: 100%;
+			font-size: 90px;
+			margin-bottom: 10px;
+		}
+
+		.text {
+			text-transform: uppercase;
+			font-size: 12px;
+			text-align: center;
+		}
+	}
+
+	&.deletable {
+		padding-bottom: 60px;
+	}
+
+	.footer {
+		position: absolute;
+		bottom: 0;
+		height: 50px;
+		line-height: 50px;
+		border-top: solid 1px #eee;
+		width: 100%;
+		left: 0;
+		font-weight: 600;
+		color: $secondary-grey;
+
+		.delete-controls {
+			cursor: pointer;
+			display: inline;
+
+			i {
+				margin-left: 15px;
+				margin-right: 6px;
+				vertical-align: middle;
+			}
+		}
+	}
+
+	.enrollment-header {
+		display: flex;
+
+		.title {
+			margin-bottom: 10px;
+		}
+	}
+
+	.description {
+		color: $secondary-grey;
+		line-height: 19px;
+		margin-bottom: 10px;
+	}
+
+	.informational {
+		margin-top: 10px;
+		font-style: italic;
+	}
+
+	.dot-suffix {
+		&::before {
+			display: inline-block;
+			vertical-align: middle;
+			content: "·";
+			font-size: 1rem;
+			line-height: 0.875;
+			margin-left: 0.3rem;
+			position: relative;
+			top: -1px;
+		}
+
+		.value {
+			margin-left: 5px;
+
+			&.free {
+				color: $primary-green;
+			}
+		}
+	}
+}

@@ -1,0 +1,72 @@
+@import "~@nti/style-common";
+
+.enrollment-options {
+	.enrollment-options-title {
+		margin-left: 35px;
+		margin-bottom: 20px;
+		position: relative;
+
+		.customize-button {
+			position: absolute;
+			right: 35px;
+			top: 0;
+			font-size: 14px;
+			font-weight: 300;
+			color: $primary-blue;
+			cursor: pointer;
+		}
+	}
+
+	.options-list {
+		display: flex;
+		flex-wrap: wrap;
+		padding-left: 10px;
+	}
+}
+
+.editable-item {
+	&.custom {
+		.item-summary {
+			.item-icon {
+				background-color: white;
+				border: solid 3px #9c9;
+			}
+		}
+	}
+
+	&.ims {
+		.item-summary {
+			.item-icon {
+				background-color: white;
+				border: solid 3px #99c;
+			}
+		}
+	}
+
+	&.open {
+		.item-summary {
+			.item-icon {
+				background-color: white;
+				border: solid 3px #cc9;
+			}
+		}
+	}
+
+	&.store {
+		.item-summary {
+			.item-icon {
+				background-color: white;
+				border: solid 3px #c9c;
+			}
+		}
+	}
+
+	&.external {
+		.item-summary {
+			.item-icon {
+				background-color: white;
+				border: solid 3px #9cc;
+			}
+		}
+	}
+}
