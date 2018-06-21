@@ -21,7 +21,6 @@
 		.text-sub {
 			font-size: 16px;
 			line-height: 26px;
-			width: 262px;
 			opacity: 0.7;
 			font-weight: 100;
 		}
@@ -142,14 +141,16 @@
 			.cancel {
 				color: #757474;
 				cursor: pointer;
-				padding: 9px 25px;
+				padding: 0 25px;
+				line-height: 40px;
 			}
 
 			.publish {
 				color: white;
 				background-color: $primary-blue;
 				cursor: pointer;
-				padding: 9px 25px;
+				padding: 0 25px;
+				line-height: 40px;
 			}
 		}
 	}

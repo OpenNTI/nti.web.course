@@ -14,7 +14,7 @@ const t = scoped('course.components.PublishCourse', {
 	ready: 'Ready to Launch?',
 	headerSubText: 'That\'s exciting!  Review a couple settings before the big moment.',
 	cancel: 'Cancel',
-	publish: 'Update Visibility',
+	publish: 'Save',
 	publiclyAvailable: 'Visible in Catalog',
 	previewMode: 'Preview Mode',
 	nullPreview: 'Based on start date',
@@ -222,7 +222,7 @@ export default class PublishCourse extends React.Component {
 		);
 	}
 
-	renderEnerollmentOptions () {
+	renderEnrollmentOptions () {
 		if(!this.state.course) {
 			return <Loading.Mask/>;
 		}
@@ -261,7 +261,7 @@ export default class PublishCourse extends React.Component {
 		return (
 			<div className="contents">
 				{this.state.activeTab === GENERAL && this.renderGeneralOptions()}
-				{this.state.activeTab === ENROLLMENT && this.renderEnerollmentOptions()}
+				{this.state.activeTab === ENROLLMENT && this.renderEnrollmentOptions()}
 			</div>
 		);
 	}

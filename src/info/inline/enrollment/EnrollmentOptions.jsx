@@ -2,54 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Loading} from '@nti/web-commons';
-import cx from 'classnames';
 
 import Store from './EnrollmentOptionsStore';
-import {CustomExternalEnrollment, ExternalEnrollment, IMSEnrollment, OpenEnrollment, StoreEnrollment} from './options';
-import EnrollmentCard from './common/EnrollmentCard';
-
-const FIELDS = {
-	OpenEnrollment: [
-
-	],
-	IMSEnrollment: [
-		'SourcedID'
-	],
-	StoreEnrollment: [
-
-	],
-	FiveminuteEnrollment: [
-		'Price', 'CRN', 'Term'
-	]
-};
+import {CustomExternalEnrollment, ExternalEnrollment, IMSEnrollment, OpenEnrollment, FiveMinuteEnrollment, StoreEnrollment} from './options';
+import AddEnrollmentOption from './AddEnrollmentOption';
+import {MIME_TYPES} from './common/OptionText';
 
 const t = scoped('course.components.EnrollmentOptions', {
 	enrollmentOptions: 'Enrollment',
-	OpenEnrollment: 'Open',
-	IMSEnrollment: 'IMS',
-	StoreEnrollment: 'Purchase',
-	FiveminuteEnrollment: 'Five-Minute',
-	yes: 'Yes',
-	no: 'No',
-	enabled: 'Enabled',
-	available: 'Available',
-	enrolled: 'Enrolled',
-	SourcedID: 'Sourced ID',
-	Price: 'Cost',
-	CRN: 'CRN',
-	Term: 'Term',
-	Amount: 'Cost',
-	alsoFree: 'This class is also available for free'
+	customize: 'Customize your Options',
+	doneCustomizing: 'Done',
+	addOption: 'Add an option'
 });
 
-const DISPLAY_MAPPING = {
-	'true': t('yes'),
-	'false': t('no')
+const cmpMap = {
+	[MIME_TYPES.OPEN]: OpenEnrollment,
+	[MIME_TYPES.STORE]: StoreEnrollment,
+	[MIME_TYPES.FIVE_MINUTE]: FiveMinuteEnrollment,
+	[MIME_TYPES.CUSTOM_EXTERNAL]: CustomExternalEnrollment,
+	[MIME_TYPES.EXTERNAL]: ExternalEnrollment,
+	[MIME_TYPES.IMS]: IMSEnrollment
 };
-
-function getDisplayFor (value) {
-	return DISPLAY_MAPPING[value] || value;
-}
 
 export default
 @Store.connect({
@@ -80,35 +53,8 @@ class EnrollmentOptions extends React.Component {
 	state = {}
 
 	getCmpFor (option) {
-		if(/ensyncimisexternalenrollmentoption/.test(option.MimeType)) {
-			return CustomExternalEnrollment;
-		}
-
-		if(/externalenrollmentoption/.test(option.MimeType)) {
-			return ExternalEnrollment;
-		}
-
-		if(/storeenrollmentoption/.test(option.MimeType)) {
-			return StoreEnrollment;
-		}
-
-		if(/ozoneenrollmentoption/.test(option.MimeType)) {
-			return IMSEnrollment;
-		}
-
-		if(/openenrollmentoption/.test(option.MimeType)) {
-			return OpenEnrollment;
-		}
-
 		// default to open or return null?
-	}
-
-	onItemActivate = (mimeType) => {
-		this.setState({activeItem: mimeType});
-	}
-
-	onItemDeactivate = (mimeType) => {
-		this.setState({activeItem: null});
+		return cmpMap[option.MimeType];
 	}
 
 	renderOption (option, addable) {
@@ -122,12 +68,7 @@ class EnrollmentOptions extends React.Component {
 			<Cmp
 				key={option.MimeType}
 				option={option}
-				onItemActivate={this.onItemActivate}
-				onItemDeactivate={this.onItemDeactivate}
-				inEditMode={this.state.activeItem === option.MimeType}
-				isDisabled={this.state.activeItem && this.state.activeItem !== option.MimeType}
-				editable={option.hasLink('edit')}
-				addable={addable}
+				editMode={this.state.editMode}
 			/>
 		);
 	}
@@ -136,139 +77,59 @@ class EnrollmentOptions extends React.Component {
 		return this.renderOption(option, false);
 	}
 
-	renderAddableOption = (option) => {
-		return this.renderOption(option, true);
+	launchAddDialog = () => {
+		AddEnrollmentOption.show(this.props.availableOptions, this.props.enrollmentOptions).then(selectedType => {
+			this.props.store.addEnrollmentOption(selectedType);
+		});
+	}
+
+	renderAddButton () {
+		const {availableOptions} = this.props;
+
+		if(!availableOptions || availableOptions.length === 0) {
+			return null;
+		}
+
+		return <div className="add enrollment-card" onClick={this.launchAddDialog}><div className="icon">+</div><div className="text">{t('addOption')}</div></div>;
 	}
 
 	renderOptions () {
-		const {availableOptions, enrollmentOptions} = this.props;
+		const {enrollmentOptions} = this.props;
 
 		return (
 			<div className="options-list">
 				{(enrollmentOptions || []).map(this.renderExistingOption)}
-				{/* {(availableOptions || []).map(this.renderAddableOption)} */}
+				{this.state.editMode && this.renderAddButton()}
 			</div>
 		);
 	}
 
-	getOption (optionName) {
-		const options = this.props.catalogEntry.getEnrollmentOptions();
-
-		return ((options && options.Items) || {})[optionName];
+	enterEditMode = () => {
+		this.setState({editMode: true});
 	}
 
-	renderValue = (keyValuePair) => {
-		const { label, value } = keyValuePair;
-
-		if(value) {
-			return (
-				<div key={label} className="option-field">
-					<div className="label">{t(label)}</div>
-					<div className="value">{getDisplayFor(value)}</div>
-				</div>
-			);
-		}
+	exitEditMode = () => {
+		this.setState({editMode: false});
 	}
 
-	renderEnrollmentOption (optionName) {
-		const option = this.getOption(optionName);
-
-		if(option) {
-			const className = cx('enrollment-option', optionName.toLowerCase());
-
-			const keyValuePairs = (FIELDS[optionName] || [])
-				.map(f => {
-					return {
-						label: f,
-						value: option[f] !== undefined && option[f].toString()
-					};
-				});
-
-			return (
-				<div className={className}>
-					<div className="title">{t(optionName)}</div>
-					<div className="values">
-						{keyValuePairs.map(this.renderValue)}
-					</div>
-				</div>
-			);
-		}
+	renderCustomizeButton () {
+		return <div className="customize-button" onClick={this.enterEditMode}>{t('customize')}</div>;
 	}
 
-	renderPurchasableInfo (option) {
-		const { Purchasables } = option;
-
-		if(Purchasables && Purchasables.Items && Purchasables.Items.length > 0) {
-			const purchasable = Purchasables.Items[0];
-
-			return (
-				<div className="option-field">
-					<div className="label">{t('Amount')}</div>
-					<div className="value">{getDisplayFor(purchasable.Amount)}</div>
-				</div>
-			);
-		}
+	renderDoneCustomizingButton () {
+		return <div className="customize-button" onClick={this.exitEditMode}>{t('doneCustomizing')}</div>;
 	}
 
-	renderOpenEnrollment () {
-		const openEnrollment = this.getOption('OpenEnrollment');
+	canCustomize () {
+		const {availableOptions, enrollmentOptions} = this.props;
 
-		if(!openEnrollment || !openEnrollment.enabled) {
-			return null;
+		if(availableOptions && availableOptions.length > 0) {
+			return true;
 		}
 
-		const className = cx('enrollment-option', 'open-enrollment');
+		const editableOptions = (enrollmentOptions || []).filter(x => x.hasLink('edit'));
 
-		const keyValuePairs = [
-			{
-				label: 'Amount',
-				value: 'Free'
-			}
-		];
-
-		return (
-			<div className={className}>
-				<div className="title">{t('OpenEnrollment')}</div>
-				<div className="values">
-					{keyValuePairs.map(this.renderValue)}
-				</div>
-			</div>
-		);
-
-	}
-
-	renderStoreEnrollment () {
-		const storeEnrollment = this.getOption('StoreEnrollment');
-
-		if(!storeEnrollment) {
-			return null;
-		}
-
-		const { Purchasables } = (storeEnrollment || {});
-
-		let amount = 0;
-
-		if(Purchasables && Purchasables.Items && Purchasables.Items.length > 0) {
-			amount = Purchasables.Items[0].Amount;
-		}
-
-		const className = cx('enrollment-option', 'store-enrollment');
-
-		const keyValuePairs = [
-			{
-				label: 'Amount',
-				value:amount
-			}
-		];
-
-		return (
-			<div className={className}>
-				<div className="title">{t('StoreEnrollment')}</div>
-				<div className="values">
-					{keyValuePairs.map(this.renderValue)}
-				</div>
-			</div>
-		);
+		return editableOptions.length > 0;
 	}
 
 	render () {
@@ -280,7 +141,11 @@ class EnrollmentOptions extends React.Component {
 
 		return (
 			<div className="enrollment-options">
-				<div className="enrollment-options-title">{t('enrollmentOptions')}</div>
+				<div className="enrollment-options-title">
+					<span>{t('enrollmentOptions')}</span>
+					{!this.state.editMode && this.renderCustomizeButton()}
+					{this.state.editMode && this.renderDoneCustomizingButton()}
+				</div>
 				{this.renderOptions()}
 			</div>
 		);

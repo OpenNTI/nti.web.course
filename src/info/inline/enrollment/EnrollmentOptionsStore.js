@@ -28,7 +28,7 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 		}
 	}
 
-	addEnrollmentOption = async (option, params) => {
+	addEnrollmentOption = async (params) => {
 		this.set('loading', true);
 		this.set('error', false);
 		this.emitChange('loading', 'error');

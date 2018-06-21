@@ -4,34 +4,24 @@ import PropTypes from 'prop-types';
 import EnrollmentCard from '../common/EnrollmentCard';
 import OptionText, {TITLE, DESCRIPTION} from '../common/OptionText';
 
-export default class StoreEnrollment extends React.Component {
+export default class FiveMinuteEnrollment extends React.Component {
 	static propTypes = {
 		option: PropTypes.object.isRequired
 	}
 
 	state = {}
 
+	//	'Price', 'CRN', 'Term'
+
 	render () {
 		const {option} = this.props;
-
-		let purchasables = null;
-
-		if(option.getPurchasables) {
-			purchasables = option.getPurchasables();
-		}
-
-		let amount = 0;
-
-		if(purchasables && purchasables.length > 0) {
-			amount = purchasables[0].amount;
-		}
 
 		return (
 			<EnrollmentCard
 				title={OptionText.getContentFor(option, TITLE)}
 				description={OptionText.getContentFor(option, DESCRIPTION)}
-				postTitleCmp={<div className="dot-suffix"><span className="value">${amount}</span></div>}
-				className="store"
+				// postTitleCmp={<div className="dot-suffix"><span className="value">{this.props.option.SourcedID}</span></div>}
+				className="five-minute"
 				{...this.props}
 			/>
 		);

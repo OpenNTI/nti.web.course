@@ -1,19 +1,21 @@
 import React from 'react';
-import { scoped } from '@nti/lib-locale';
+import PropTypes from 'prop-types';
 
+import OptionText, {TITLE, DESCRIPTION} from '../common/OptionText';
 
 import ExternalEnrollment from './ExternalEnrollment';
 
-const t = scoped('course.info.inline.enrollment.options.CustomExternalEnrollment', {
-	title: 'Custom External',
-	description: 'Enroll using a custom URL'
-});
+CustomExternalEnrollment.propTypes = {
+	option: PropTypes.object.isRequired
+};
 
 export default function CustomExternalEnrollment (props) {
+	const {option} = props;
+
 	return (
 		<ExternalEnrollment
-			customTitle={t('title')}
-			customDescription={t('description')}
+			customTitle={OptionText.getContentFor(option, TITLE)}
+			customDescription={OptionText.getContentFor(option, DESCRIPTION)}
 			className="custom"
 			{...props}
 		/>

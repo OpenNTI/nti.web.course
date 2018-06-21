@@ -1,34 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { scoped } from '@nti/lib-locale';
 
 import EnrollmentCard from '../common/EnrollmentCard';
-
-const t = scoped('course.info.inline.enrollment.options.OpenEnrollment', {
-	title: 'Open Enroll',
-	description: 'Get complete access to interact with all course content including the lectures, course materials, quizzes, and discussions once class is in session.',
-	amount: 'Amount',
-	free: 'Free'
-});
+import OptionText, {TITLE, DESCRIPTION} from '../common/OptionText';
 
 export default class OpenEnrollment extends React.Component {
 	static propTypes = {
-		option: PropTypes.object.isRequired,
-		addable: PropTypes.bool,
-		editable: PropTypes.bool,
-		onItemActivate: PropTypes.func,
-		onItemDeactivate: PropTypes.func
+		option: PropTypes.object.isRequired
 	}
 
 	state = {}
 
 	render () {
+		const {option} = this.props;
+
 		return (
 			<EnrollmentCard
-				title={t('title')}
-				description={t('description')}
+				title={OptionText.getContentFor(option, TITLE)}
+				description={OptionText.getContentFor(option, DESCRIPTION)}
 				postTitleCmp={<div className="dot-suffix"><span className="free value">$0</span></div>}
 				className="open"
+				{...this.props}
 			/>
 		);
 	}
