@@ -80,7 +80,14 @@ export default class CourseInfo extends React.Component {
 
 		const courseInstance = await this.getCourseInstance(service, catalogEntry);
 
-		const redemptionCodes = courseInstance ? await courseInstance.getAccessTokens() : null;
+		let redemptionCodes = null;
+
+		try {
+			redemptionCodes = courseInstance ? await courseInstance.getAccessTokens() : null;
+		} catch (e) {
+			// some users may not have access to the tokens
+			redemptionCodes = null;
+		}
 
 		const accessLink = catalogEntry.getLink('UserCoursePreferredAccess');
 
