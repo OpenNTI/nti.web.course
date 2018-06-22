@@ -52,7 +52,7 @@ export default class PublishCourse extends React.Component {
 		else {
 			this.state = {
 				course,
-				isNonPublic: course.isNonPublic,
+				isNonPublic: course.isHidden,
 				previewMode: course.PreviewRawValue,
 				activeTab: GENERAL
 			};
@@ -87,7 +87,7 @@ export default class PublishCourse extends React.Component {
 
 		this.setState({
 			course: catalogEntry,
-			isNonPublic: catalogEntry.isNonPublic,
+			isNonPublic: catalogEntry.isHidden,
 			previewMode: catalogEntry.PreviewRawValue,
 			activeTab: this.state.activeTab || GENERAL
 		});

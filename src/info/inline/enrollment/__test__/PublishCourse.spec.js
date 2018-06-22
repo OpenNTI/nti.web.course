@@ -27,7 +27,7 @@ const onAfter = () => {
 };
 
 /* eslint-env jest */
-describe('Settings TabPanel test', () => {
+describe('PublishCourse test', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
