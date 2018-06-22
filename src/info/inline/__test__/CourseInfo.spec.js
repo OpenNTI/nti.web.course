@@ -9,6 +9,7 @@ const courseInstance = {
 	getAccessTokens: () => {
 		return Promise.resolve(redemptionCodes);
 	},
+	hasLink: () => true,
 	getLink: (l) => l
 };
 
