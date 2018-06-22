@@ -214,6 +214,8 @@ export default class CourseInfo extends React.Component {
 		const { editable } = this.props;
 		const { redemptionCodes, activeEditor, courseInstance } = this.state;
 
+		let canCreate = courseInstance && courseInstance.hasLink('CreateCourseInvitation');
+
 		if(!editable) {
 			return null;
 		}
@@ -224,7 +226,7 @@ export default class CourseInfo extends React.Component {
 				components={[RedemptionCodes]}
 				redemptionCodes={redemptionCodes}
 				courseInstance={courseInstance}
-				editable={editable}
+				editable={editable && canCreate}
 				isEditing={activeEditor === EDITORS.REDEMPTION_CODES}
 				onBeginEditing={this.activateRedemptionEditor}
 				onEndEditing={this.endCodeEditing}

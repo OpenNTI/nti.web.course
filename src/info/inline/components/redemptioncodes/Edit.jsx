@@ -64,7 +64,7 @@ class RedemptionCodesEdit extends React.Component {
 					<div className="field-label">{t('label')}</div>
 				</div>
 				{error && <div className="error">{error}</div>}
-				{items.map(code => <Code key={code.getID()} code={code} onDelete={this.deleteCode} />)}
+				{(items || []).map(code => <Code key={code.getID()} code={code} onDelete={this.deleteCode} />)}
 				{canCreateCode && <a className="create-code" onClick={this.createCode}>Create Code</a>}
 			</div>
 		);
