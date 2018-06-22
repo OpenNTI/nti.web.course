@@ -12,7 +12,8 @@ const t = scoped('course.components.EnrollmentOptions', {
 	enrollmentOptions: 'Enrollment',
 	customize: 'Customize your Options',
 	doneCustomizing: 'Done',
-	addOption: 'Add an option'
+	addOption: 'Add an option',
+	emptyText: 'There are no enrollment options available.'
 });
 
 const cmpMap = {
@@ -28,7 +29,8 @@ export default
 @Store.connect({
 	enrollmentOptions: 'enrollmentOptions',
 	availableOptions: 'availableOptions',
-	error: 'error'
+	error: 'error',
+	loading: 'loading'
 })
 class EnrollmentOptions extends React.Component {
 	static propTypes = {
@@ -132,21 +134,28 @@ class EnrollmentOptions extends React.Component {
 		return editableOptions.length > 0;
 	}
 
+	renderEmptyState () {
+		return <div className="empty-state">{t('emptyText')}</div>;
+	}
+
 	render () {
-		const {loading} = this.props;
+		const {loading, availableOptions, enrollmentOptions} = this.props;
 
 		if(loading) {
 			return <Loading.Ellipsis/>;
 		}
 
+		let isEmpty = (!availableOptions || availableOptions.length === 0) && (!enrollmentOptions || enrollmentOptions.length === 0);
+
 		return (
 			<div className="enrollment-options">
 				<div className="enrollment-options-title">
 					<span>{t('enrollmentOptions')}</span>
-					{!this.state.editMode && this.renderCustomizeButton()}
-					{this.state.editMode && this.renderDoneCustomizingButton()}
+					{isEmpty && this.renderEmptyState()}
+					{!isEmpty && !this.state.editMode && this.renderCustomizeButton()}
+					{!isEmpty && this.state.editMode && this.renderDoneCustomizingButton()}
 				</div>
-				{this.renderOptions()}
+				{!isEmpty && this.renderOptions()}
 			</div>
 		);
 	}

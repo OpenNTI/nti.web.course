@@ -110,6 +110,6 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 		this.set('availableOptions', availableOptionsFiltered);
 		this.set('loading', false);
 
-		this.emitChange('enrollmentOptions', 'availableOptions');
+		this.emitChange('enrollmentOptions', 'availableOptions', 'loading');
 	}
 }
