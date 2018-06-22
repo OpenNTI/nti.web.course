@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getService} from '@nti/web-client';
 import {Prompt, Panels} from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-import cx from 'classnames';
 
 import OptionText, {TITLE, DESCRIPTION} from './common/OptionText';
 

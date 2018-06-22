@@ -1,5 +1,4 @@
 import {Stores} from '@nti/lib-store';
-import {getService} from '@nti/web-client';
 
 export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 	constructor () {
