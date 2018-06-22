@@ -62,7 +62,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	}
 
 
-	onError (error) {
+	onError = (error) => {
 		this.setState({
 			...initialState,
 			error
@@ -198,13 +198,14 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		return (
 			<div className="lesson-overview-video-container" onTouchMove={this.onTouchMove} data-ntiid={item.NTIID}>
 				{error && (
-					<ErrorWidget error={error}/>
+					<ErrorWidget error={{ message: 'Unable to load video.' }}/>
 				)}
 				{(error || !video || !renderVideoFully) ? null : (
 					<Video
 						deferred={!interacted}
 						ref={this.attachVideoRef}
 						src={video}
+						onError={this.onError}
 						onEnded={this.onStop}
 						onPlaying={this.onPlay}
 						analyticsData={{
