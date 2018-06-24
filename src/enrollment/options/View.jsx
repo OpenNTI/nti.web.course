@@ -6,6 +6,7 @@ import {scoped} from '@nti/lib-locale';
 
 import Store from './Store';
 import Administrating from './parts/Administrating';
+import Enrolled from './parts/Enrolled';
 
 const t = scoped('course.enrollment.options', {
 	unavailable: 'This course is unavailable for enrollment at this time'
@@ -68,22 +69,25 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 	setupOptions (props) {
 		const {options, enrolled} = props;
-		const sorted = options && options.sort((a, b) => {
-			const aPrice = a.getPrice();
-			const bPrice = b.getPrice();
+		const sorted = options && options
+			.filter(option => option.isAvailable)
+			.sort((a, b) => {
+				const aPrice = a.getPrice();
+				const bPrice = b.getPrice();
 
-			if (aPrice && bPrice) {
-				return aPrice - bPrice;
-			} else if (aPrice && !bPrice) {
-				return -1;
-			} else if (!aPrice && !bPrice) {
-				return 1;
-			} else {
-				return b.ORDER - a.ORDER;
-			}
-		});
+				if (aPrice && bPrice) {
+					return aPrice - bPrice;
+				} else if (aPrice && !bPrice) {
+					return -1;
+				} else if (!aPrice && !bPrice) {
+					return 1;
+				} else {
+					return b.ORDER - a.ORDER;
+				}
+			});
+
 		const active = enrolled ?
-			sorted.find(option => option.isEnrolled) :
+			sorted.find(option => option.isEnrolled()) :
 			sorted[0];
 
 		if (!active || (sorted && !sorted.length)) {
@@ -152,7 +156,14 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 
 	renderEnrolled () {
-		debugger;
+		const {catalogEntry} = this.props;
+		const {activeOption} = this.state;
+
+		if (!activeOption) { return null; }
+
+		return (
+			<Enrolled option={activeOption} catalogEntry={catalogEntry} />
+		);
 	}
 
 
