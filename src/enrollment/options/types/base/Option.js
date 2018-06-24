@@ -1,3 +1,6 @@
+import EnrolledTitle from './EnrolledTitle';
+import EnrolledDescription from './EnrolledDescription';
+
 export default class BaseEnrollment {
 	static async load (option, access) {
 		const Cls = this;
@@ -9,6 +12,9 @@ export default class BaseEnrollment {
 	}
 
 	ORDER = 100
+
+	EnrolledTitle = EnrolledTitle
+	EnrolledDescription = EnrolledDescription
 
 	constructor (option, access) {
 		this.option = option;
