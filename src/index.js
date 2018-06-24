@@ -7,6 +7,7 @@ export ProgressWindow from './progress/window';
 export * as ProgressWidgets from './progress/widgets';
 export CourseMenu from './listing/CourseMenu';
 export EnrollmentListItem from './listing/EnrollmentListItem';
+export * as Enrollment from './enrollment';
 export CourseItem from './info/Item';
 export Roster from './roster';
 export * as AdminTools from './admin-tools';
