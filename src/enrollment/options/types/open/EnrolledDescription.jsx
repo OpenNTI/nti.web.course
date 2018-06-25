@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {formatStartDate, isArchived} from '../../utils';
+import {getCatalogEntryData, isArchived} from '../../utils';
 import Description from '../../common/Description';
 
 import t from './wording';
@@ -31,8 +31,8 @@ export default class CourseEnrollmentOpenEnrolledDescription extends React.Compo
 
 	renderActive () {
 		const {catalogEntry} = this.props;
-		const startDate = formatStartDate(catalogEntry);
+		const data = getCatalogEntryData(catalogEntry);
 
-		return startDate ? t('enrolled.description.active.startDate', {startDate}) : t('enrolled.description.active.noStartDate');
+		return data.fullStartDate ? t('enrolled.description.active.startDate', data) : t('enrolled.description.active.noStartDate', data);
 	}
 }
