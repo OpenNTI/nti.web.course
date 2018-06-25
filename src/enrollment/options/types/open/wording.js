@@ -8,7 +8,7 @@ export default scoped('course.enrollment.types.open', {
 		},
 		description: {
 			active: {
-				startDate: 'Class begins %(startDate)s and will be conducted fully online.',
+				startDate: 'Class begins %(fullStartDate)s and will be conducted fully online.',
 				noStartDate: 'Class will be conducted fully online.'
 			},
 			archived: 'Thanks for your participation! The content of this course will remain available for you to review at any time.'

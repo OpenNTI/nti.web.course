@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
+import {isArchived, getCatalogEntryData} from '../../utils';
 import Title from '../../common/Title';
 
 import t from './wording';
@@ -17,14 +18,14 @@ export default class CourseEnrollmentOpenTypeEnrolledTitle extends React.Compone
 
 	render () {
 		const {catalogEntry} = this.props;
-		const endDate = catalogEntry.getEndDate();
+		const data = getCatalogEntryData(catalogEntry);
 
 		return (
 			<Title>
 				{
-					endDate && endDate < Date.now() ?
-						t('enrolled.title.archived') :
-						t('enrolled.title.active')
+					isArchived(catalogEntry) ?
+						t('enrolled.title.archived', data) :
+						t('enrolled.title.active', data)
 				}
 			</Title>
 		);

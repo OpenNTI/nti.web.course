@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
-import {formatStartDate} from '../utils';
+import {getCatalogEntryData} from '../utils';
 import Title from '../common/Title';
 import Description from '../common/Description';
 
 const t = scoped('course.enrollment.options.Administrating', {
 	title: 'Administrating',
 	description: {
-		startDate: 'You are administering this course. Class begins %(startDate)s and will be conducted fully online.',
+		startDate: 'You are administering this course. Class begins %(fullStartDate)s and will be conducted fully online.',
 		noStartDate: 'You are administering this course. Class will be conducted fully online.'
 	}
 });
@@ -33,10 +33,10 @@ export default class CourseEnrollmentOptionsAdministrating extends React.Compone
 
 	renderDescription () {
 		const {catalogEntry} = this.props;
-		const startDate = formatStartDate(catalogEntry);
+		const data = getCatalogEntryData(catalogEntry);
 
-		return startDate ?
-			t('description.startDate', {startDate}) :
-			t('description.noStartDate');
+		return data.fullStartDate ?
+			t('description.startDate', data) :
+			t('description.noStartDate', data);
 	}
 }
