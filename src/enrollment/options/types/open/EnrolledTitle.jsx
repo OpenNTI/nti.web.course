@@ -4,10 +4,7 @@ import {scoped} from '@nti/lib-locale';
 
 import Title from '../../common/Title';
 
-const t = scoped('course.enrollment.open.enrolled.title', {
-	active: 'Enrolled in the open course',
-	archived: 'Enrolled in the archived course'
-});
+import t from './wording';
 
 export default class CourseEnrollmentOpenTypeEnrolledTitle extends React.Component {
 	static propTypes = {
@@ -26,9 +23,9 @@ export default class CourseEnrollmentOpenTypeEnrolledTitle extends React.Compone
 			<Title>
 				{
 					endDate && endDate < Date.now() ?
-						t('archived') :
-						t('active')
-				} 
+						t('enrolled.title.archived') :
+						t('enrolled.title.active')
+				}
 			</Title>
 		);
 	}

@@ -4,6 +4,7 @@ import cx from 'classnames';
 import {Loading} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
+import {sortOptions} from './utils';
 import Store from './Store';
 import Administrating from './parts/Administrating';
 import Enrolled from './parts/Enrolled';
@@ -69,22 +70,7 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 	setupOptions (props) {
 		const {options, enrolled} = props;
-		const sorted = options && options
-			.filter(option => option.isAvailable)
-			.sort((a, b) => {
-				const aPrice = a.getPrice();
-				const bPrice = b.getPrice();
-
-				if (aPrice && bPrice) {
-					return aPrice - bPrice;
-				} else if (aPrice && !bPrice) {
-					return -1;
-				} else if (!aPrice && !bPrice) {
-					return 1;
-				} else {
-					return b.ORDER - a.ORDER;
-				}
-			});
+		const sorted = sortOptions(options);
 
 		const active = enrolled ?
 			sorted.find(option => option.isEnrolled()) :
@@ -151,7 +137,7 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 		return (
 			<Administrating catalogEntry={catalogEntry} />
-		);	
+		);
 	}
 
 

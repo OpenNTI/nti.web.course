@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {DateTime} from '@nti/web-commons';
 
+import {formatStartDate} from '../utils';
 import Title from '../common/Title';
 import Description from '../common/Description';
 
@@ -33,10 +33,10 @@ export default class CourseEnrollmentOptionsAdministrating extends React.Compone
 
 	renderDescription () {
 		const {catalogEntry} = this.props;
-		const startDate = catalogEntry.getStartDate();
+		const startDate = formatStartDate(catalogEntry);
 
 		return startDate ?
-			t('description.startDate', {startDate: DateTime.format(startDate, 'MMMM Do, h:mm A z')}) :
+			t('description.startDate', {startDate}) :
 			t('description.noStartDate');
 	}
 }
