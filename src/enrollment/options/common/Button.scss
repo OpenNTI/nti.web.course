@@ -6,4 +6,8 @@
 	font: normal 300 1.125rem/1.3rem $body-font-family;
 	padding: 0.875rem 1.25rem;
 	text-align: center;
+
+	&.caution {
+		background-color: $primary-red;
+	}
 }

@@ -1,4 +1,5 @@
 import Description from './Description';
+import DropButton from './DropButton';
 import EnrollButton from './EnrollButton';
 import EnrolledTitle from './EnrolledTitle';
 import EnrolledDescription from './EnrolledDescription';
@@ -21,6 +22,7 @@ export default class BaseEnrollment {
 	ListItem = ListItem
 	Description = Description
 	EnrollButton = EnrollButton
+	DropButton = DropButton
 
 	constructor (option, access, catalogEntry) {
 		this.option = option;
@@ -31,6 +33,14 @@ export default class BaseEnrollment {
 
 	isEnrolled () {
 		return this.option && this.option.enrolled;
+	}
+
+
+	enrolledBeforeArchived () {
+		const endDate = this.catalogEntry.getEndDate();
+		const enrolledDate = this.access && this.access.getCreatedTime();
+
+		return !endDate || (enrolledDate && enrolledDate < endDate);
 	}
 
 
