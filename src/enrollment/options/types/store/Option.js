@@ -1,8 +1,24 @@
 import Base from '../base';
 import Registry from '../Registry';
+import {scoped} from '@nti/lib-locale';
 
-import EnrolledTitle from './EnrolledTitle';
-import EnrolledDescription from './EnrolledDescription';
+import {isArchived, getCatalogEntryData} from '../../utils';
+
+const t = scoped('course.enrollment.types.store', {
+	enrolled: {
+		title: {
+			active: 'You\'re Enrolled',
+			archived: 'You took the Course'
+		},
+		description: {
+			active: {
+				startDate: 'Your access to exam preparation materials begins %(fullStartDate)s.',
+				noStartDate: 'Your access to exam preparation materials begins now.'
+			},
+			archived: 'Thanks for your participation! The content of this course will remain available for you to review at any time.'
+		}
+	}
+});
 
 function handles (option) {
 	return option.MimeType === 'application/vnd.nextthought.courseware.storeenrollmentoption';
@@ -12,12 +28,34 @@ function handles (option) {
 export default class StoreEnrollmentOption extends Base {
 	ORDER = 2
 
-	EnrolledTitle = EnrolledTitle
-	EnrolledDescription = EnrolledDescription
-
 	async load (option) {
 		if (!this.isAvailable() && !this.isEnrolled()) {
 			return;
 		}
+	}
+
+	getEnrolledTitle (catalogEntry) {
+		const data = getCatalogEntryData(catalogEntry);
+
+		//TODO: check the option for the title
+
+		return isArchived(catalogEntry) ?
+			t('enrolled.title.archived', data) :
+			t('enrolled.title.active', data);
+	}
+
+
+	getEnrolledDescription (catalogEntry) {
+		const data = getCatalogEntryData(catalogEntry);
+
+		//TODO: check the option for the description
+
+		if (isArchived(catalogEntry)) {
+			return t('enrolled.description.archived', data);
+		}
+
+		return data.fullStartDate ?
+			t('enrolled.description.active.startDate', data) :
+			t('enrolled.description.active.noStartDate', data);
 	}
 }

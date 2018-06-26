@@ -1,14 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Title from '../../common/Title';
 
-BaseEnrolledTitle.propTypes = {
-	option: PropTypes.object
-};
-export default function BaseEnrolledTitle ({option}) {
-	return (
-		<div>
-			{`!!Missing Enrollment Title ${option.option.Class} for !!`}
-		</div>
-	);
+export default class BaseEnrolledTitle extends React.Component {
+	static propTypes = {
+		option: PropTypes.shape({
+			getEnrolledTitle: PropTypes.func.isRequired
+		}).isRequired,
+		catalogEntry: PropTypes.object
+	}
+
+	render () {
+		const {option, catalogEntry} = this.props;
+
+		return (
+			<Title>
+				{option.getEnrolledTitle(catalogEntry)}
+			</Title>
+		);
+	}
 }
