@@ -13,6 +13,10 @@ const t = scoped('course.enrollment.types.store', {
 		description: {
 			active: 'Gain complete access to all exam preparation materials in the course.',
 			archived: 'Archived courses are out of session but all course content will remain available including the lectures, course materials, quizzes, and discussions.'
+		},
+		buttonLabel: {
+			active: 'Enroll as a Lifelong Learner',
+			archived: 'Add Archived Course'
 		}
 	},
 	enrolled: {
@@ -65,6 +69,17 @@ export default class StoreEnrollmentOption extends Base {
 		return isArchived(catalogEntry) ?
 			t('notEnrolled.description.archived', data) :
 			t('notEnrolled.description.active', data);
+	}
+
+	getEnrollButtonLabel () {
+		const {catalogEntry} = this;
+		const data = getCatalogEntryData(catalogEntry);
+
+		//TODO: check the option for the button label
+
+		return isArchived(catalogEntry) ?
+			t('notEnrolled.buttonLabel.archived', data) :
+			t('notEnrolled.buttonLabel.active', data);
 	}
 
 

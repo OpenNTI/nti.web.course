@@ -21,8 +21,10 @@ export default class CourseEnrollmentOptionDescription extends React.Component {
 
 		return (
 			<div className="nti-course-enrollment-options-option-description">
-				<Description option={option} />
-				{Highlights && (<Highlights option={option} />)}
+				<div className="contents">
+					<Description option={option} />
+					{Highlights && (<Highlights option={option} />)}
+				</div>
 				{EnrollButton && (<EnrollButton option={option} />)}
 			</div>
 		);

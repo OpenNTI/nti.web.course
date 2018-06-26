@@ -13,6 +13,10 @@ const t = scoped('course.enrollment.types.open', {
 		description: {
 			active: 'Gain complete access to interact with all course content.',
 			archived: 'Archived courses are out of session but all course content will remain available.'
+		},
+		buttonLabel: {
+			active: 'Enroll in the Open Course',
+			archived: 'Add Archived Course'
 		}
 	},
 	enrolled: {
@@ -66,6 +70,18 @@ export default class OpenEnrollmentOption extends Base {
 		return isArchived(catalogEntry) ?
 			t('notEnrolled.description.archived', data) :
 			t('notEnrolled.description.active', data);
+	}
+
+
+	getEnrollButtonLabel () {
+		const {catalogEntry} = this;
+		const data = getCatalogEntryData(catalogEntry);
+
+		//TODO: check the option for the button label
+
+		return isArchived(catalogEntry) ?
+			t('notEnrolled.buttonLabel.archived', data) :
+			t('notEnrolled.buttonLabel.active', data);
 	}
 
 

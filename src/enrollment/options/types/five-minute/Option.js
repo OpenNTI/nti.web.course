@@ -13,6 +13,10 @@ const t = scoped('course.enrollment.types.five-minute', {
 		description: {
 			active: 'Earn transcripted college credit',
 			archived: 'Earn transcripted college credit'
+		},
+		buttonLabel: {
+			active: 'Earn College Credit',
+			archived: 'Earn College Credit'
 		}
 	},
 	enrolled: {
@@ -53,6 +57,7 @@ export default class FiveMinuteEnrollmentOption extends Base {
 		const data = getCatalogEntryData(catalogEntry);
 
 		//TODO: check the option for the title
+		//TODO: check if the admission is pending/reject or that the api is down
 
 		return isArchived(catalogEntry) ?
 			t('notEnrolled.title.archived', data) :
@@ -65,10 +70,23 @@ export default class FiveMinuteEnrollmentOption extends Base {
 		const data = getCatalogEntryData(catalogEntry);
 
 		//TODO: check the option for the title
+		//TODO: check if the admission is pending/reject or that the api is down
 
 		return isArchived(catalogEntry) ?
 			t('notEnrolled.description.archived', data) :
 			t('notEnrolled.description.active', data);
+	}
+
+
+	getEnrollButtonLabel () {
+		const {catalogEntry} = this;
+		const data = getCatalogEntryData(catalogEntry);
+
+		//TODO: check the option for the button label
+
+		return isArchived(catalogEntry) ?
+			t('notEnrolled.buttonLabel.archived', data) :
+			t('notEnrolled.buttonLabel.active', data);
 	}
 
 
