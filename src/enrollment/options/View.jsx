@@ -6,11 +6,14 @@ import {scoped} from '@nti/lib-locale';
 
 import {sortOptions} from './utils';
 import Store from './Store';
+import Title from './common/Title';
 import Administrating from './parts/Administrating';
 import Enrolled from './parts/Enrolled';
+import OptionList from './parts/OptionList';
 
 const t = scoped('course.enrollment.options', {
-	unavailable: 'This course is unavailable for enrollment at this time'
+	unavailable: 'This course is unavailable for enrollment at this time',
+	notEnrolledLabel: 'Enroll Today'
 });
 
 const propMap = {
@@ -72,11 +75,11 @@ export default class CourseEnrollmentOptions extends React.Component {
 		const {options, enrolled} = props;
 		const sorted = sortOptions(options);
 
-		const active = enrolled ?
+		const selected = enrolled ?
 			sorted.find(option => option.isEnrolled()) :
 			sorted[0];
 
-		if (!active || (sorted && !sorted.length)) {
+		if (!selected || (sorted && !sorted.length)) {
 			this.setState({
 				invalidOptions: true
 			});
@@ -84,9 +87,16 @@ export default class CourseEnrollmentOptions extends React.Component {
 			this.setState({
 				invalidOptions: false,
 				sortedOptions: sorted,
-				activeOption: active
+				selectedOption: selected
 			});
 		}
+	}
+
+
+	selectOption = (option) => {
+		this.setState({
+			selectedOption: option
+		});
 	}
 
 
@@ -128,7 +138,7 @@ export default class CourseEnrollmentOptions extends React.Component {
 			return this.renderEnrolled();
 		}
 
-		this.renderOptionList();
+		return this.renderOptionList();
 	}
 
 
@@ -142,29 +152,30 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 
 	renderEnrolled () {
-		const {catalogEntry} = this.props;
-		const {activeOption} = this.state;
+		const {selectedOption} = this.state;
 
-		if (!activeOption) { return null; }
+		if (!selectedOption) { return null; }
 
 		return (
-			<Enrolled option={activeOption} catalogEntry={catalogEntry} />
+			<Enrolled option={selectedOption} />
 		);
 	}
 
 
 	renderOptionList () {
-		const {sortedOptions} = this.state;
+		const {sortedOptions, selectedOption} = this.state;
 
 		if (!sortedOptions) { return; }
 
-		debugger;
-
+		return (
+			<React.Fragment>
+				<Title className="not-enrolled-label">{t('notEnrolledLabel')}</Title>
+				<OptionList options={sortedOptions} selectedOption={selectedOption} selectOption={this.selectOption} />
+			</React.Fragment>
+		);
 	}
 
 
-	renderGift () {
-		debugger;
-	}
+	renderGift () {}
 
 }

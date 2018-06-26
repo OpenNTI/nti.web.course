@@ -5,6 +5,12 @@ import {scoped} from '@nti/lib-locale';
 import {isArchived, getCatalogEntryData} from '../../utils';
 
 const t = scoped('course.enrollment.types.store', {
+	notEnrolled: {
+		title: {
+			active: 'Candidate',
+			archived: 'This Course is Archived'
+		}
+	},
 	enrolled: {
 		title: {
 			active: 'You\'re Enrolled',
@@ -32,6 +38,17 @@ export default class StoreEnrollmentOption extends Base {
 		if (!this.isAvailable() && !this.isEnrolled()) {
 			return;
 		}
+	}
+
+	getTitle () {
+		const {catalogEntry} = this;
+		const data = getCatalogEntryData(catalogEntry);
+
+		//TODO: check the option for the title
+
+		return isArchived(catalogEntry) ?
+			t('notEnrolled.title.archived', data) :
+			t('notEnrolled.title.active', data);
 	}
 
 	getEnrolledTitle () {
