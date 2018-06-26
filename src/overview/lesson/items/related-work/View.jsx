@@ -7,7 +7,8 @@ import { LinkTo } from '@nti/web-routing';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';
-import { List, Grid } from '../../Constants';
+import PublishState from '../../common/PublishState';
+import { List, Grid, Unpublished } from '../../Constants';
 import Registry from '../Registry';
 
 import ListCmp from './List';
@@ -88,6 +89,8 @@ class LessonOverviewRelatedWork extends React.Component {
 			<Required key="required-label"/>
 		);
 
+		const publishLabel = item.TargetPublishState === Unpublished ? <PublishState publishState={item.TargetPublishState} /> : null;
+
 		return (
 			<Cmp
 				onClick={this.maybeSendExternalViewEvent}
@@ -95,6 +98,7 @@ class LessonOverviewRelatedWork extends React.Component {
 				item={item}
 				commentLabel={!editMode && commentLabel}
 				requiredLabel={requiredLabel}
+				publishLabel={publishLabel}
 				{...otherProps} />
 		);
 	}
