@@ -1,7 +1,8 @@
+import Description from './Description';
+import EnrollButton from './EnrollButton';
 import EnrolledTitle from './EnrolledTitle';
 import EnrolledDescription from './EnrolledDescription';
 import ListItem from './ListItem';
-import Description from './Description';
 
 export default class BaseEnrollment {
 	static async load (option, access, catalogEntry) {
@@ -19,6 +20,7 @@ export default class BaseEnrollment {
 	EnrolledDescription = EnrolledDescription
 	ListItem = ListItem
 	Description = Description
+	EnrollButton = EnrollButton
 
 	constructor (option, access, catalogEntry) {
 		this.option = option;
