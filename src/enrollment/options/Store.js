@@ -63,4 +63,16 @@ export default class CourseEnrollmentOptionsStore extends Stores.SimpleStore {
 			this.emitChange('loading', 'error');
 		}
 	}
+
+	cleanUp () {
+		this.set('catalogEntry', null);
+		this.set('options', null);
+
+		this.set('archived', false);
+		this.set('enrolled', false);
+		this.set('administrative', false);
+
+		this.set('loading', false);
+		this.set('error', false);
+	}
 }

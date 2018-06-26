@@ -23,7 +23,7 @@ export default class CourseEnrollmentOptionsAdministrating extends React.Compone
 
 	render () {
 		return (
-			<div className="course-enrollment-options-administrating">
+			<div className="nti-course-enrollment-options-administrating">
 				<Title>{t('title')}</Title>
 				<Description>{this.renderDescription()}</Description>
 			</div>
