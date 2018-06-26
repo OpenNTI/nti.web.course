@@ -30,6 +30,10 @@ const t = scoped('course.enrollment.types.open', {
 				noStartDate: 'Class will be conducted fully online.'
 			},
 			archived: 'Thanks for your participation! The content of this course will remain available for you to review at any time.'
+		},
+		buttonLabel: {
+			enrolledBeforeArchived: 'Drop the Open Course',
+			enrolledAfterArchived: 'Drop the Archived Course'
 		}
 	}
 });
@@ -110,5 +114,15 @@ export default class OpenEnrollmentOption extends Base {
 		return data.fullStartDate ?
 			t('enrolled.description.active.startDate', data) :
 			t('enrolled.description.active.noStartDate', data);
+	}
+
+
+	getDropButtonLabel () {
+		const {catalogEntry} = this;
+		const data = getCatalogEntryData(catalogEntry);
+
+		return this.enrolledBeforeArchived() ?
+			t('enrolled.buttonLabel.enrolledBeforeArchived', data) :
+			t('enrolled.buttonLabel.enrolledAfterArchived', data);
 	}
 }

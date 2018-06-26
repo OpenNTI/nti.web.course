@@ -21,10 +21,12 @@ export default class CourseEnrollmentEnrolled extends React.Component {
 		} = option;
 
 		return (
-			<div className="course-enrollment-options-enrolled">
-				<EnrolledTitle option={option} />
-				<EnrolledDescription option={option} />
-				{Actions && (<Actions option={option} />)}
+			<div className="nti-course-enrollment-options-enrolled">
+				<div className="contents">
+					<EnrolledTitle option={option} />
+					<EnrolledDescription option={option} />
+					{Actions && (<Actions option={option} />)}
+				</div>
 				{DropButton && (<DropButton option={option} />)}
 			</div>
 		);
