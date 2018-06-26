@@ -35,7 +35,8 @@ export default class OpenEnrollmentOption extends Base {
 	}
 
 
-	getEnrolledTitle (catalogEntry) {
+	getEnrolledTitle () {
+		const {catalogEntry} = this;
 		const data = getCatalogEntryData(catalogEntry);
 
 		//TODO: check the option for the title
@@ -46,7 +47,8 @@ export default class OpenEnrollmentOption extends Base {
 	}
 
 
-	getEnrolledDescription (catalogEntry) {
+	getEnrolledDescription () {
+		const {catalogEntry} = this;
 		const data = getCatalogEntryData(catalogEntry);
 
 		//TODO: check the option for the description

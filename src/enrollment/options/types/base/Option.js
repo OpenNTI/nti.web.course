@@ -3,9 +3,9 @@ import EnrolledDescription from './EnrolledDescription';
 import ListItem from './ListItem';
 
 export default class BaseEnrollment {
-	static async load (option, access) {
+	static async load (option, access, catalogEntry) {
 		const Cls = this;
-		const enrollmentOption = new Cls(option, access);
+		const enrollmentOption = new Cls(option, access, catalogEntry);
 
 		await enrollmentOption.load();
 
@@ -18,9 +18,10 @@ export default class BaseEnrollment {
 	EnrolledDescription = EnrolledDescription
 	ListItem = ListItem
 
-	constructor (option, access) {
+	constructor (option, access, catalogEntry) {
 		this.option = option;
 		this.access = access;
+		this.catalogEntry = catalogEntry;
 	}
 
 
@@ -37,6 +38,11 @@ export default class BaseEnrollment {
 
 	getPrice () {
 		return this.option.Price || null;
+	}
+
+
+	getTitle () {
+		return `!! Missing Title for ${this.option.class} !!`;
 	}
 
 

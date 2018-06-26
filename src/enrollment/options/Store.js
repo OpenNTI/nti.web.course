@@ -15,7 +15,7 @@ async function getPreferredAccess (catalogEntry) {
 function getEnrollmentOptions (catalogEntry) {
 	return Array.from(catalogEntry.getEnrollmentOptions() || []);
 }
- 
+
 export default class CourseEnrollmentOptionsStore extends Stores.SimpleStore {
 	constructor () {
 		super();
@@ -43,9 +43,9 @@ export default class CourseEnrollmentOptionsStore extends Stores.SimpleStore {
 			const options = await Promise.all(
 				(getEnrollmentOptions(catalogEntry) || [])
 					.map(option => {
-						const type = getTypeFor(option, access);
+						const type = getTypeFor(option, access, catalogEntry);
 
-						return type ? type.load(option, access) : null;
+						return type ? type.load(option, access, catalogEntry) : null;
 					})
 					.filter(x => !!x)
 			);
