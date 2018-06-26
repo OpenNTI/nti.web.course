@@ -18,7 +18,7 @@ export default class CodeStore extends Stores.SimpleStore {
 	async createItem () {
 		try {
 			const item = await this.course.postToLink('CreateCourseInvitation', null, true);
-			const items = this.get('items');
+			const items = this.get('items') || [];
 
 			this.set('items', [...items, item]);
 			this.emitChange('items');
@@ -52,7 +52,7 @@ export default class CodeStore extends Stores.SimpleStore {
 		try {
 			const items = await this.course.getAccessTokens();
 			this.set('loading', false);
-			this.set('items', items);
+			this.set('items', items || []);
 			this.emitChange('loading', 'items');
 		} catch (error) {
 			this.set('error', error);
