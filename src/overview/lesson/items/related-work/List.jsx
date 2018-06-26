@@ -15,6 +15,7 @@ export default class LessonOverviewRelatedWorkListItem extends React.Component {
 		item: PropTypes.object,
 		commentLabel: PropTypes.node,
 		requiredLabel: PropTypes.node,
+		publishLabel: PropTypes.node,
 		onClick: PropTypes.func,
 	}
 
@@ -33,7 +34,8 @@ export default class LessonOverviewRelatedWorkListItem extends React.Component {
 				labels={[
 					requiredLabel,
 					byline ? t('byline', {name: byline}) : null,
-					commentLabel
+					commentLabel,
+					publishLabel
 				]}
 			/>
 		);

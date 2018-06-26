@@ -35,9 +35,10 @@ LessonOverviewRelatedWorkGridItem.propTypes = {
 	course: PropTypes.object,
 	commentLabel: PropTypes.node,
 	requiredLabel: PropTypes.node,
+	publishLabel: PropTypes.node,
 	onClick: PropTypes.func,
 };
-export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel, requiredLabel, onClick}) {
+export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel, requiredLabel, publishLabel, onClick}) {
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item} onClick={onClick}>
@@ -46,7 +47,7 @@ export default function LessonOverviewRelatedWorkGridItem ({item, course, commen
 						data-ntiid={item.NTIID}
 						item={item}
 						contentPackage={course}
-						labels={[requiredLabel, commentLabel]}
+						labels={[requiredLabel, commentLabel, publishLabel]}
 					/>
 				</div>
 			</LinkTo.Object>
