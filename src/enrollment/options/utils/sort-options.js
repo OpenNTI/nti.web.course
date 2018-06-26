@@ -8,9 +8,9 @@ export default function sortOptions (options) {
 			if (aPrice && bPrice) {
 				return aPrice - bPrice;
 			} else if (aPrice && !bPrice) {
-				return -1;
-			} else if (!aPrice && bPrice) {
 				return 1;
+			} else if (!aPrice && bPrice) {
+				return -1;
 			} else {
 				return a.ORDER - b.ORDER;
 			}
