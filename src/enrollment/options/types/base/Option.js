@@ -32,7 +32,7 @@ export default class BaseEnrollment {
 
 	isAvailable() {
 		//If you are administrating a course no option is available;
-		return this.option && this.option.available && (!this.access || !this.access.isAdministrative);
+		return this.option && (this.option.available || this.option.enrolled) && (!this.access || !this.access.isAdministrative);
 	}
 
 

@@ -6,10 +6,10 @@ import {getTypeFor} from '../types';
 export default class CourseEnrollmentEnrolled extends React.Component {
 	static propTypes = {
 		option: PropTypes.shape({
-			EnrolledTitle: PropTypes.element.isRequired,
-			EnrolledDescription: PropTypes.element.isRequired,
-			Actions: PropTypes.element,
-			DropButton: PropTypes.element
+			EnrolledTitle: PropTypes.func.isRequired,
+			EnrolledDescription: PropTypes.func.isRequired,
+			Actions: PropTypes.func,
+			DropButton: PropTypes.func
 		}).isRequired
 	}
 
