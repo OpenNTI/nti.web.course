@@ -1,6 +1,7 @@
 import EnrolledTitle from './EnrolledTitle';
 import EnrolledDescription from './EnrolledDescription';
 import ListItem from './ListItem';
+import Description from './Description';
 
 export default class BaseEnrollment {
 	static async load (option, access, catalogEntry) {
@@ -17,6 +18,7 @@ export default class BaseEnrollment {
 	EnrolledTitle = EnrolledTitle
 	EnrolledDescription = EnrolledDescription
 	ListItem = ListItem
+	Description = Description
 
 	constructor (option, access, catalogEntry) {
 		this.option = option;
@@ -43,6 +45,11 @@ export default class BaseEnrollment {
 
 	getTitle () {
 		return `!! Missing Title for ${this.option.class} !!`;
+	}
+
+
+	getDescription () {
+		return ` !! Missing Description for ${this.option.class} !!`;
 	}
 
 

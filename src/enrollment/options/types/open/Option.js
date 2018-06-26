@@ -9,6 +9,10 @@ const t = scoped('course.enrollment.types.open', {
 		title: {
 			active: 'Take the Course For Free',
 			archived: 'This Course iS Archived'
+		},
+		description: {
+			active: 'Gain complete access to interact with all course content.',
+			archived: 'Archived courses are out of session but all course content will remain available.'
 		}
 	},
 	enrolled: {
@@ -50,6 +54,18 @@ export default class OpenEnrollmentOption extends Base {
 		return isArchived(catalogEntry) ?
 			t('notEnrolled.title.archived', data) :
 			t('notEnrolled.title.active', data);
+	}
+
+
+	getDescription () {
+		const {catalogEntry} = this;
+		const data = getCatalogEntryData(catalogEntry);
+
+		//TODO: check the option for the description
+
+		return isArchived(catalogEntry) ?
+			t('notEnrolled.description.archived', data) :
+			t('notEnrolled.description.active', data);
 	}
 
 
