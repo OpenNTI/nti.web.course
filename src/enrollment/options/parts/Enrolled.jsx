@@ -10,12 +10,11 @@ export default class CourseEnrollmentEnrolled extends React.Component {
 			EnrolledDescription: PropTypes.element.isRequired,
 			Actions: PropTypes.element,
 			DropButton: PropTypes.element
-		}).isRequired,
-		catalogEntry: PropTypes.object.isRequired
+		}).isRequired
 	}
 
 	render () {
-		const {option, catalogEntry} = this.props;
+		const {option} = this.props;
 		const {
 			EnrolledTitle,
 			EnrolledDescription,
@@ -25,10 +24,10 @@ export default class CourseEnrollmentEnrolled extends React.Component {
 
 		return (
 			<div className="course-enrollment-options-enrolled">
-				<EnrolledTitle option={option} catalogEntry={catalogEntry} />
-				<EnrolledDescription option={option} catalogEntry={catalogEntry} />
-				{Actions && (<Actions option={option} catalogEntry={catalogEntry} />)}
-				{DropButton && (<DropButton option={option} catalogEntry={catalogEntry} />)}
+				<EnrolledTitle option={option} />
+				<EnrolledDescription option={option} />
+				{Actions && (<Actions option={option} />)}
+				{DropButton && (<DropButton option={option} />)}
 			</div>
 		);
 	}
