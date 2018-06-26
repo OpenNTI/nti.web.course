@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import PaddedContainer from './PaddedContainer';
-
 CourseEnrollmentOptiontsButton.propTypes = {
 	className: PropTypes.string,
 	caution: PropTypes.bool

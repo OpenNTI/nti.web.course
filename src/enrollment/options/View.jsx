@@ -52,6 +52,13 @@ export default class CourseEnrollmentOptions extends React.Component {
 	}
 
 
+	componentWillUnmount () {
+		const {store} = this.props;
+
+		store.cleanUp();
+	}
+
+
 	componentDidUpdate (prevProps) {
 		const {catalogEntry:oldEntry, options:oldOptions} = prevProps;
 		const {catalogEntry:newEntry, options:newOptions} = this.props;
@@ -73,8 +80,16 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 
 	setupOptions (props) {
-		const {options, enrolled} = props;
+		const {options, enrolled, administrative} = props;
 		const sorted = sortOptions(options);
+
+		//If we are administrative there's no need to set up the options
+		if (administrative) {
+			this.setState({
+				invalidOptions: false
+			});
+			return;
+		}
 
 		const selected = enrolled ?
 			sorted.find(option => option.isEnrolled()) :
@@ -102,12 +117,12 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 
 	render () {
-		const {className, catalogEntry, loading, error, enrolled} = this.props;
+		const {className, loading, error, enrolled} = this.props;
 		const {invalidOptions} = this.state;
 		const hasError = error || invalidOptions;
 
 		return (
-			<div className={cx('nti-course-enrollment-options', {'is-enrolled': enrolled})}>
+			<div className={cx('nti-course-enrollment-options', className, {'is-enrolled': enrolled})}>
 				<div className="enrollment-container">
 					{loading && (<Loading.Spinner />)}
 					{!loading && hasError && (this.renderError())}

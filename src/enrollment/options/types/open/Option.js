@@ -8,7 +8,7 @@ const t = scoped('course.enrollment.types.open', {
 	notEnrolled: {
 		title: {
 			active: 'Take the Course For Free',
-			archived: 'This Course iS Archived'
+			archived: 'This Course is Archived'
 		},
 		description: {
 			active: 'Gain complete access to interact with all course content.',
