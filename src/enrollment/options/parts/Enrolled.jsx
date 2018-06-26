@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getTypeFor} from '../types';
-
 export default class CourseEnrollmentEnrolled extends React.Component {
 	static propTypes = {
 		option: PropTypes.shape({

@@ -9,6 +9,10 @@ const t = scoped('course.enrollment.types.store', {
 		title: {
 			active: 'Candidate',
 			archived: 'This Course is Archived'
+		},
+		description: {
+			active: 'Gain complete access to all exam preparation materials in the course.',
+			archived: 'Archived courses are out of session but all course content will remain available including the lectures, course materials, quizzes, and discussions.'
 		}
 	},
 	enrolled: {
@@ -50,6 +54,19 @@ export default class StoreEnrollmentOption extends Base {
 			t('notEnrolled.title.archived', data) :
 			t('notEnrolled.title.active', data);
 	}
+
+
+	getDescription () {
+		const {catalogEntry} = this;
+		const data = getCatalogEntryData(catalogEntry);
+
+		//TODO: check the option for the description
+
+		return isArchived(catalogEntry) ?
+			t('notEnrolled.description.archived', data) :
+			t('notEnrolled.description.active', data);
+	}
+
 
 	getEnrolledTitle () {
 		const {catalogEntry} = this;

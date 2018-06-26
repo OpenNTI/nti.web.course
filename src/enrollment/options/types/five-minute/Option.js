@@ -9,6 +9,10 @@ const t = scoped('course.enrollment.types.five-minute', {
 		title: {
 			active: 'Earn College Credit',
 			archived: 'Earn College Credit'
+		},
+		description: {
+			active: 'Earn transcripted college credit',
+			archived: 'Earn transcripted college credit'
 		}
 	},
 	enrolled: {
@@ -53,6 +57,18 @@ export default class FiveMinuteEnrollmentOption extends Base {
 		return isArchived(catalogEntry) ?
 			t('notEnrolled.title.archived', data) :
 			t('notEnrolled.title.active', data);
+	}
+
+
+	getDescription () {
+		const {catalogEntry} = this;
+		const data = getCatalogEntryData(catalogEntry);
+
+		//TODO: check the option for the title
+
+		return isArchived(catalogEntry) ?
+			t('notEnrolled.description.archived', data) :
+			t('notEnrolled.description.active', data);
 	}
 
 

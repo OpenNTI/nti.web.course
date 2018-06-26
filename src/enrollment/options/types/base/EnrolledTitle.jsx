@@ -7,16 +7,15 @@ export default class BaseEnrolledTitle extends React.Component {
 	static propTypes = {
 		option: PropTypes.shape({
 			getEnrolledTitle: PropTypes.func.isRequired
-		}).isRequired,
-		catalogEntry: PropTypes.object
+		}).isRequired
 	}
 
 	render () {
-		const {option, catalogEntry} = this.props;
+		const {option} = this.props;
 
 		return (
 			<Title>
-				{option.getEnrolledTitle(catalogEntry)}
+				{option.getEnrolledTitle()}
 			</Title>
 		);
 	}

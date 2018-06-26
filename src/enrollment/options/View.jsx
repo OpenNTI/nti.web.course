@@ -9,6 +9,7 @@ import Store from './Store';
 import Title from './common/Title';
 import Administrating from './parts/Administrating';
 import Enrolled from './parts/Enrolled';
+import OptionDescription from './parts/OptionDescription';
 import OptionList from './parts/OptionList';
 
 const t = scoped('course.enrollment.options', {
@@ -171,6 +172,7 @@ export default class CourseEnrollmentOptions extends React.Component {
 			<React.Fragment>
 				<Title className="not-enrolled-label">{t('notEnrolledLabel')}</Title>
 				<OptionList options={sortedOptions} selectedOption={selectedOption} selectOption={this.selectOption} />
+				<OptionDescription option={selectedOption} />
 			</React.Fragment>
 		);
 	}
