@@ -35,7 +35,7 @@ export default class FiveMinuteEnrollmentOption extends Base {
 	ORDER = 3
 
 	getPrice () {
-		return this.option.OU_PRICE;
+		return this.option.OU_Price;
 	}
 
 	async load () {
