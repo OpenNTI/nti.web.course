@@ -21,7 +21,7 @@ export default class LessonOverviewRelatedWorkListItem extends React.Component {
 
 
 	render () {
-		const {item, commentLabel, requiredLabel, onClick, ...otherProps} = this.props;
+		const {item, commentLabel, requiredLabel, publishLabel, onClick, ...otherProps} = this.props;
 		const {byline} = item;
 
 
