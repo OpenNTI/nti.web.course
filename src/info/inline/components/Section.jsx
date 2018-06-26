@@ -47,7 +47,8 @@ export default class Section extends React.Component {
 		className: PropTypes.string,
 		redemptionCodes: PropTypes.arrayOf(PropTypes.object),
 		title: PropTypes.string,
-		done: PropTypes.bool
+		done: PropTypes.bool,
+		hideCancel: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -92,10 +93,10 @@ export default class Section extends React.Component {
 		onEndEditing && onEndEditing();
 	}
 
-	componentWillReceiveProps (oldProps, newProps) {
-		if(!newProps.isEditing && oldProps.isEditing) {
+	componentDidUpdate (prevProps) {
+		if (!this.props.isEditing && prevProps.isEditing) {
 			// reset saveable state if we're leaving editing mode
-			this.setState({saveable: true});
+			this.setState({ saveable: true });
 		}
 	}
 
@@ -241,15 +242,18 @@ export default class Section extends React.Component {
 	}
 
 	renderControls () {
-		if(this.props.isEditing) {
+		const { isEditing, hideCancel } = this.props;
+
+		if (isEditing) {
 			return (
 				<div className="section-controls">
 					{this.renderDelete()}
 					<div className="buttons">
-						<div className="cancel" onClick={this.endEditing}>{t('cancel')}</div>
+						{!hideCancel && <div className="cancel" onClick={this.endEditing}>{t('cancel')}</div>}
 						{this.renderSave()}
 					</div>
-				</div>);
+				</div>
+			);
 		}
 
 		return null;

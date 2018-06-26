@@ -231,6 +231,7 @@ export default class CourseInfo extends React.Component {
 				onBeginEditing={this.activateRedemptionEditor}
 				onEndEditing={this.endCodeEditing}
 				hideDeleteBlock
+				hideCancel
 				done
 			/>
 		);
