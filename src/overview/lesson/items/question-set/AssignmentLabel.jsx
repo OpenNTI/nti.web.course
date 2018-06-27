@@ -214,7 +214,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		let text = '';
 
 		if (dueToday) {
-			text = t('due.today', {time: formatDate(dueDate, 'h:m a z')});
+			text = t('due.today', {time: formatDate(dueDate, 'h:mm a z')});
 		} else if (availableDate > now && dueDate > now) {
 			text = t('due.available', {date: format(availableDate)});
 		} else if (dueDate) {
