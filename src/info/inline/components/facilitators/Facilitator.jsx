@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Flyout, Avatar} from '@nti/web-commons';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
-import {getService, getAppUsername} from '@nti/web-client';
+import {getService} from '@nti/web-client';
 
 import Role from './Role';
 import {getAvailableRoles} from './utils';
@@ -51,10 +51,6 @@ export default class Facilitator extends React.Component {
 				});
 			});
 		}
-	}
-
-	isMe () {
-		return getAppUsername() === this.props.facilitator.username;
 	}
 
 	componentDidMount () {
@@ -164,10 +160,6 @@ export default class Facilitator extends React.Component {
 	}
 
 	renderDelete () {
-		if(this.isMe()) {
-			return null;
-		}
-
 		return (<div className="delete-facilitator" onClick={this.removeFacilitator}><i className="icon-light-x"/></div>);
 	}
 
@@ -207,7 +199,7 @@ export default class Facilitator extends React.Component {
 
 		// only allow selecting roles if there editable and there is more than one
 		// option available to choose
-		if(!this.isMe() && editable && options && options.length > 1) {
+		if(editable && options && options.length > 1) {
 			return (
 				<div className="role">
 					{this.renderRoleSelect(options)}

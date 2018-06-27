@@ -131,6 +131,6 @@ describe('Facilitator component test', () => {
 		expect(cmp.find('.role').first().text()).toEqual('Assistant');
 		expect(cmp.find('.title').first().text()).toEqual(title);
 
-		expect(cmp.find('.delete-facilitator').exists()).toBe(false);
+		expect(cmp.find('.delete-facilitator').exists()).toBe(true);
 	});
 });
