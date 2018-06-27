@@ -20,7 +20,9 @@ export default class BaseAssessmentGridItem extends React.Component {
 		linkToContext: PropTypes.any,
 
 		inlineEditorExpanded: PropTypes.bool,
-		onEditorDismiss: PropTypes.func
+		onEditorDismiss: PropTypes.func,
+
+		className: PropTypes.string
 	}
 
 	state = {}
@@ -67,7 +69,7 @@ export default class BaseAssessmentGridItem extends React.Component {
 		const statusCls = inlineEditorExpanded ? 'status-open' : 'status-closed';
 		const statusOpening = editorTransitioning && 'status-transitioning';
 
-		const className = cx('container', statusCls, statusOpening);
+		const className = cx('container', statusCls, statusOpening, this.props.className);
 
 		return (
 			<PaddedContainer className="lesson-overview-base-assessment-grid-item">

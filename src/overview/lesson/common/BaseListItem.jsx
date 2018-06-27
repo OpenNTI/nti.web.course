@@ -37,24 +37,22 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 
 	state = {}
 
-
-	componentWillUnmount () {
-		this.unmounted = this;
-		this.setState = () => {};
+	componentDidMount () {
+		this.resolveIcon(this.props);
 	}
 
-
-	componentWillReceiveProps (nextProps) {
-		const {item:nextItem} = nextProps;
-		const {item:oldItem} = this.props;
+	componentDidUpdate (oldProps) {
+		const { item: nextItem } = this.props;
+		const { item: oldItem } = oldProps;
 
 		if (nextItem !== oldItem) {
-			this.resolveIcon(nextProps);
+			this.resolveIcon(this.props);
 		}
 	}
 
-	componentDidMount () {
-		this.resolveIcon(this.props);
+	componentWillUnmount () {
+		this.unmounted = this;
+		this.setState = () => { };
 	}
 
 	async resolveIcon (props) {

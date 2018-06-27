@@ -28,7 +28,7 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 				{...otherProps}
 				className="lesson-overview-question-set-list-item"
 				item={item}
-
+				disabled={!(assignment || assessment)}
 				renderTitle={this.renderTitle}
 				renderIcon={this.renderIcon}
 				renderLabels={this.renderLabels}

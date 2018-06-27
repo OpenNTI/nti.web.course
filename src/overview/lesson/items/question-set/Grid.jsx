@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Button} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
+import cx from 'classnames';
 
 import Base from '../../common/BaseAssessmentGridItem';
 import GridCompleteIcon from '../../common/GridCompleteIcon';
@@ -41,11 +42,11 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 	render () {
 		const {item, assignment, assessment} = this.props;
 		const {inlineEditorExpanded} = this.state;
-
+		const classname = cx('lesson-overview-question-set-grid-item', { disabled: !(assignment || assessment) });
 		return (
 			<div>
 				<Base
-					className="lesson-overview-question-set-grid-item"
+					className={classname}
 					item={item}
 
 					renderTitle={this.renderTitle}
@@ -185,8 +186,10 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 	}
 
 	renderButtonText (text) {
+		const {assignment, assessment} = this.props;
+		const blockNavigation = !(assessment || assignment);
 		return !text ? null : (
-			<Button component="span" disabled={this.state.inlineEditorExpanded} rounded>
+			<Button component="span" disabled={this.state.inlineEditorExpanded || blockNavigation} rounded>
 				{text}
 			</Button>
 		);
