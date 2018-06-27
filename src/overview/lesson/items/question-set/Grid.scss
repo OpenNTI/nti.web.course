@@ -1,0 +1,6 @@
+.lesson-overview-question-set-grid-item {
+	&.disabled {
+		pointer-events: none;
+		cursor: initial;
+	}
+}

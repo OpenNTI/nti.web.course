@@ -1,6 +1,11 @@
 @import '~@nti/style-common';
 
 .lesson-overview-question-set-list-item {
+	&.disabled {
+		pointer-events: none;
+		cursor: initial;
+	}
+
 	.fallback-questionset-icon {
 		width: rem-calc(40px);
 		height: rem-calc(40px);

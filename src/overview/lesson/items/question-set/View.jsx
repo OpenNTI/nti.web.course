@@ -40,24 +40,24 @@ class LessonOverviewQuestionSet extends React.Component {
 	state = {}
 
 
+	componentDidMount () {
+		this.setupFor(this.props);
+	}
+
+
 	componentWillUnmount () {
 		this.unmounted = true;
 		this.setState = () => {};
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {item:newItem, course:newCourse} = nextProps;
-		const {item:oldItem, course:oldCourse} = this.props;
+	componentDidUpdate (prevProps) {
+		const {item:newItem, course:newCourse} = this.props;
+		const {item:oldItem, course:oldCourse} = prevProps;
 
 		if (newItem !== oldItem || newCourse !== oldCourse) {
-			this.setupFor(nextProps);
+			this.setupFor(this.props);
 		}
-	}
-
-
-	componentDidMount () {
-		this.setupFor(this.props);
 	}
 
 
