@@ -56,7 +56,8 @@
 	}
 
 	.contents {
-		height: 578px;
+		max-height: 578px;
+		min-height: 60vh;
 		color: #494949;
 		padding-top: 50px;
 
