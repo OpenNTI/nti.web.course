@@ -44,6 +44,7 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 			const service = await getService();
 			const batch = await service.getBatch(batchLink);
 			const {Items, FilteredTotalItemCount, TotalItemCount, BatchPage} = batch;
+			const total = FilteredTotalItemCount != null ? FilteredTotalItemCount : TotalItemCount;
 
 			this.batch = batch;
 			this.nextLink = batch.getLink('batch-next');
@@ -52,8 +53,8 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 			this.set('loading', false);
 			this.set('currentItem', Items[0]);
 			this.set('currentItemIndex', BatchPage);
-			this.set('totalItems', FilteredTotalItemCount || TotalItemCount);
-			this.set('hasNextItem', !!this.nextLink && BatchPage < FilteredTotalItemCount);
+			this.set('totalItems', total);
+			this.set('hasNextItem', !!this.nextLink && BatchPage < total);
 			this.set('hasPrevItem', !!this.prevLink);
 			this.emitChange('currentItem', 'currentItemIndex', 'totalItems', 'hasNextItem', 'hasPrevItem');
 		} catch (e) {
