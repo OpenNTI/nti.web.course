@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
-import {getCatalogEntryData} from '../utils';
-import Title from '../common/Title';
-import Description from '../common/Description';
+import {getCatalogEntryData} from '../../utils';
+import Title from '../../common/Title';
+import Description from '../../common/Description';
 
 const t = scoped('course.enrollment.options.Administrating', {
 	title: 'Administrating',

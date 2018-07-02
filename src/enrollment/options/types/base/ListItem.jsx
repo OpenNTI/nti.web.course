@@ -30,6 +30,7 @@ export default class BaseEnrollmentListItem extends React.Component {
 			<ListItem
 				title={option.getTitle()}
 				price={option.getPrice()}
+				enrolled={option.isEnrolled()}
 				selected={selected}
 				onSelect={this.onSelect}
 			/>
