@@ -4,6 +4,7 @@ import EnrollButton from './EnrollButton';
 import EnrolledTitle from './EnrolledTitle';
 import EnrolledDescription from './EnrolledDescription';
 import ListItem from './ListItem';
+import UpgradeDescription from './UpgradeDescription';
 
 export default class BaseEnrollment {
 	static async load (option, access, catalogEntry) {
@@ -21,8 +22,10 @@ export default class BaseEnrollment {
 	EnrolledDescription = EnrolledDescription
 	ListItem = ListItem
 	Description = Description
+	UpgradeDescription = UpgradeDescription
 	EnrollButton = EnrollButton
 	DropButton = DropButton
+
 
 	constructor (option, access, catalogEntry) {
 		this.option = option;
@@ -44,7 +47,7 @@ export default class BaseEnrollment {
 	}
 
 
-	isAvailable() {
+	isAvailable () {
 		//If you are administrating a course no option is available;
 		return this.option && (this.option.available || this.option.enrolled) && (!this.access || !this.access.isAdministrative);
 	}
@@ -72,5 +75,10 @@ export default class BaseEnrollment {
 
 	getEnrolledDescription () {
 		return `!! Missing Enrolled Description for ${this.option.class} !!`;
+	}
+
+
+	getUpgradeDescription () {
+		return this.getDescription();
 	}
 }

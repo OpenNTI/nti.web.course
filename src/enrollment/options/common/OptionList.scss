@@ -1,0 +1,18 @@
+@import "~@nti/style-common";
+
+.nti-course-enrollment-option-list {
+	padding: 5px 1rem;
+	list-style: none;
+	margin: 0;
+
+	li {
+		margin: 5px 0;
+		padding: 0.625rem 1rem;
+		box-shadow: 0 0 0 1px $border-grey-light;
+		border-radius: 3px;
+
+		&.selected {
+			box-shadow: 0 0 0 2px $primary-blue;
+		}
+	}
+}

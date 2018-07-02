@@ -1,0 +1,12 @@
+@import '~@nti/style-common';
+
+.nti-course-enrollment-enrolled-upgrade {
+	.actions {
+		display: flex;
+		flex-direction: row;
+
+		.cancel, .upgrade {
+			flex: 1 1 50%;
+		}
+	}
+}

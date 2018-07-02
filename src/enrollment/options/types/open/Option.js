@@ -1,7 +1,7 @@
-import Base from '../base';
-import Registry from '../Registry';
 import {scoped} from '@nti/lib-locale';
 
+import Base from '../base';
+import Registry from '../Registry';
 import {isArchived, getCatalogEntryData} from '../../utils';
 
 const t = scoped('course.enrollment.types.open', {

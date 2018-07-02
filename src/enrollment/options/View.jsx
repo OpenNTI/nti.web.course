@@ -4,13 +4,10 @@ import cx from 'classnames';
 import {Loading} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
-import {sortOptions} from './utils';
 import Store from './Store';
-import Title from './common/Title';
-import Administrating from './parts/Administrating';
-import Enrolled from './parts/Enrolled';
-import OptionDescription from './parts/OptionDescription';
-import OptionList from './parts/OptionList';
+import Administrating from './parts/administrating';
+import Enrolled from './parts/enrolled';
+import NotEnrolled from './parts/not-enrolled';
 
 const t = scoped('course.enrollment.options', {
 	unavailable: 'This course is unavailable for enrollment at this time',
@@ -44,9 +41,6 @@ export default class CourseEnrollmentOptions extends React.Component {
 	}
 
 
-	state = {}
-
-
 	componentDidMount () {
 		this.setupFor(this.props);
 	}
@@ -60,15 +54,11 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 
 	componentDidUpdate (prevProps) {
-		const {catalogEntry:oldEntry, options:oldOptions} = prevProps;
-		const {catalogEntry:newEntry, options:newOptions} = this.props;
+		const {catalogEntry:oldEntry} = prevProps;
+		const {catalogEntry:newEntry} = this.props;
 
 		if (oldEntry !== newEntry) {
 			this.setupFor(this.props);
-		}
-
-		if (oldOptions !== newOptions) {
-			this.setupOptions(this.props);
 		}
 	}
 
@@ -79,57 +69,18 @@ export default class CourseEnrollmentOptions extends React.Component {
 	}
 
 
-	setupOptions (props) {
-		const {options, enrolled, administrative} = props;
-		const sorted = sortOptions(options);
-
-		//If we are administrative there's no need to set up the options
-		if (administrative) {
-			this.setState({
-				invalidOptions: false
-			});
-			return;
-		}
-
-		const selected = enrolled ?
-			sorted.find(option => option.isEnrolled()) :
-			sorted[0];
-
-		if (!selected || (sorted && !sorted.length)) {
-			this.setState({
-				invalidOptions: true
-			});
-		} else {
-			this.setState({
-				invalidOptions: false,
-				sortedOptions: sorted,
-				selectedOption: selected
-			});
-		}
-	}
-
-
-	selectOption = (option) => {
-		this.setState({
-			selectedOption: option
-		});
-	}
-
-
 	render () {
 		const {className, loading, error, enrolled} = this.props;
-		const {invalidOptions} = this.state;
-		const hasError = error || invalidOptions;
 
 		return (
 			<div className={cx('nti-course-enrollment-options', className, {'is-enrolled': enrolled})}>
 				<div className="enrollment-container">
 					{loading && (<Loading.Spinner />)}
-					{!loading && hasError && (this.renderError())}
-					{!loading && !hasError && (this.renderOptions())}
+					{!loading && error && (this.renderError())}
+					{!loading && !error && (this.renderOptions())}
 				</div>
 				<div className="gift-container">
-					{!loading && !hasError && (this.renderGift())}
+					{!loading && !error && (this.renderGift())}
 				</div>
 			</div>
 		);
@@ -144,51 +95,28 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 
 	renderOptions () {
-		const {enrolled, administrative} = this.props;
+		const {
+			enrolled,
+			administrative,
+			catalogEntry,
+			options
+		} = this.props;
+
+		let Cmp = null;
 
 		if (administrative) {
-			return this.renderAdministrative();
+			Cmp = Administrating;
+		} else if (!options || !options.length) {
+			//TODO: render something here
+			return null;
+		} else if (enrolled) {
+			Cmp = Enrolled;
+		} else {
+			Cmp = NotEnrolled;
 		}
 
-		if (enrolled) {
-			return this.renderEnrolled();
-		}
-
-		return this.renderOptionList();
-	}
-
-
-	renderAdministrative () {
-		const {catalogEntry} = this.props;
-
 		return (
-			<Administrating catalogEntry={catalogEntry} />
-		);
-	}
-
-
-	renderEnrolled () {
-		const {selectedOption} = this.state;
-
-		if (!selectedOption) { return null; }
-
-		return (
-			<Enrolled option={selectedOption} />
-		);
-	}
-
-
-	renderOptionList () {
-		const {sortedOptions, selectedOption} = this.state;
-
-		if (!sortedOptions) { return; }
-
-		return (
-			<React.Fragment>
-				<Title className="not-enrolled-label">{t('notEnrolledLabel')}</Title>
-				<OptionList options={sortedOptions} selectedOption={selectedOption} selectOption={this.selectOption} />
-				<OptionDescription option={selectedOption} />
-			</React.Fragment>
+			<Cmp options={options} catalogEntry={catalogEntry} />
 		);
 	}
 
