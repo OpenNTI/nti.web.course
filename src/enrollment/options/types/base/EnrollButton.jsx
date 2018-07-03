@@ -19,7 +19,7 @@ export default class CourseEnrollmentBaseTypeEnrollButton extends React.Componen
 		if (!label) { return null; }
 
 		return (
-			<EnrollLink object={option.option}>
+			<EnrollLink option={option}>
 				<Button>
 					{label}
 				</Button>

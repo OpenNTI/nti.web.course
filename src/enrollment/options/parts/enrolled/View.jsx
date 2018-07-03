@@ -54,7 +54,7 @@ export default class CourseEnrollmentEnrolled extends React.Component {
 		const {updating} = this.state;
 
 		return (
-			<div className="nti-coursene-enrollment-options-enrolled">
+			<div className="nti-course-enrollment-options-enrolled">
 				{updating ? this.renderUpdate() : this.renderEnrolled()}
 			</div>
 		);
