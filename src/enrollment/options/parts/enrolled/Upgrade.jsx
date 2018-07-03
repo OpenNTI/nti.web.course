@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {LinkTo} from '@nti/web-routing';
 
 import OptionList from '../../common/OptionList';
 import Title from '../../common/Title';
 import Button from '../../common/Button';
+import EnrollmentLink from '../../common/EnrollmentLink';
 
 const t = scoped('course.enrollment.options.parts.enrolled.Upgrade', {
 	title: 'Upgrade your Learning',
@@ -53,6 +53,15 @@ export default class CourseEnrollmentOptionsEnrolledUpgrade extends React.Compon
 	}
 
 
+	onCancel = () => {
+		const {onCancel} = this.props;
+
+		if (onCancel) {
+			onCancel();
+		}
+	}
+
+
 	render () {
 		const {options} = this.props;
 		const {selected} = this.state;
@@ -87,11 +96,11 @@ export default class CourseEnrollmentOptionsEnrolledUpgrade extends React.Compon
 					</Button>
 				)}
 				{(selected && !selected.isEnrolled()) && (
-					<LinkTo.Object object={selected} context="enroll" className="upgrade">
+					<EnrollmentLink option={selected} className="upgrade">
 						<Button>
 							{t('upgrade')}
 						</Button>
-					</LinkTo.Object>
+					</EnrollmentLink>
 				)}
 			</div>
 		);

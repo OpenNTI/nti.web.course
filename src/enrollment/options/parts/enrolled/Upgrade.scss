@@ -8,5 +8,15 @@
 		.cancel, .upgrade {
 			flex: 1 1 50%;
 		}
+
+		.cancel {
+			box-shadow: inset 0 1px 0 0 $border-grey-light;
+			background: $panel-background;
+			color: $secondary-grey;
+		}
+
+		.upgrade.disabled {
+			background: $tertiary-grey;
+		}
 	}
 }

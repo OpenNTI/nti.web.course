@@ -36,9 +36,16 @@ export default class CourseEnrollmentEnrolled extends React.Component {
 	}
 
 
-	doUpdate = () => {
+	doUpgrade = () => {
 		this.setState({
 			updating: true
+		});
+	}
+
+
+	cancelUpgrade = () => {
+		this.setState({
+			updating: false
 		});
 	}
 
@@ -65,7 +72,7 @@ export default class CourseEnrollmentEnrolled extends React.Component {
 			<Current
 				option={enrolled}
 				hasUpdates={upgradeOptions && upgradeOptions.length > 1}
-				doUpdate={this.doUpdate}
+				doUpgrade={this.doUpgrade}
 			/>
 		);
 	}
@@ -77,6 +84,7 @@ export default class CourseEnrollmentEnrolled extends React.Component {
 		return (
 			<Upgrade
 				options={upgradeOptions}
+				onCancel={this.cancelUpgrade}
 			/>
 		);
 	}

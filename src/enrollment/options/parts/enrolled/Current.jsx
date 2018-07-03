@@ -17,15 +17,15 @@ export default class CourseEnrollmentOptionsEnrolledCurrent extends React.Compon
 			DropButton: PropTypes.func
 		}),
 		hasUpdates: PropTypes.bool,
-		doUpdate: PropTypes.func
+		doUpgrade: PropTypes.func
 	}
 
 
 	onUpgrade = () => {
-		const {doUpdate} = this.props;
+		const {doUpgrade} = this.props;
 
-		if (doUpdate) {
-			doUpdate();
+		if (doUpgrade) {
+			doUpgrade();
 		}
 	}
 
@@ -35,7 +35,6 @@ export default class CourseEnrollmentOptionsEnrolledCurrent extends React.Compon
 		const {
 			EnrolledTitle,
 			EnrolledDescription,
-			Actions,
 			DropButton
 		} = option;
 

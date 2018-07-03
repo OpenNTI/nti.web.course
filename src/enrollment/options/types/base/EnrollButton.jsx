@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {LinkTo} from '@nti/web-routing';
 
 import Button from '../../common/Button';
+import EnrollLink from '../../common/EnrollmentLink';
 
 export default class CourseEnrollmentBaseTypeEnrollButton extends React.Component {
 	static propTypes = {
@@ -19,11 +19,11 @@ export default class CourseEnrollmentBaseTypeEnrollButton extends React.Componen
 		if (!label) { return null; }
 
 		return (
-			<LinkTo.Object object={option.option} context="enroll">
+			<EnrollLink object={option.option}>
 				<Button>
 					{label}
 				</Button>
-			</LinkTo.Object>
+			</EnrollLink>
 		);
 	}
 }
