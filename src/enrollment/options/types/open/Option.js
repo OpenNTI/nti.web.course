@@ -7,29 +7,32 @@ import {isArchived, getCatalogEntryData} from '../../utils';
 const t = scoped('course.enrollment.types.open', {
 	notEnrolled: {
 		title: {
-			active: 'Take the Course For Free',
-			archived: 'This Course is Archived'
+			active: 'Basic',
+			archived: 'Archived'
 		},
 		description: {
-			active: 'Gain complete access to interact with all course content.',
-			archived: 'Archived courses are out of session but all course content will remain available.'
+			active: 'Interact with content and connect with a community of learners.',
+			archived: 'Interact with content and connect with a community of learners.'
 		},
 		buttonLabel: {
-			active: 'Enroll in the Open Course',
-			archived: 'Add Archived Course'
+			active: 'Get for Free',
+			archived: 'Get for Free'
 		}
 	},
 	enrolled: {
 		title: {
-			active: 'Enrolled in the open course',
-			archived: 'Enrolled in the archived course'
+			active: 'Basic',
+			archived: 'Archived'
 		},
 		description: {
 			active: {
 				startDate: 'Class begins %(fullStartDate)s and will be conducted fully online.',
 				noStartDate: 'Class will be conducted fully online.'
 			},
-			archived: 'Thanks for your participation! The content of this course will remain available for you to review at any time.'
+			archived: {
+				endDate: 'This course ended on %(fullEndDate)s. The content of this course will remain available for you to review at any time.',
+				noEndDate: 'The content of this course will remain available for you to review at any time'
+			}
 		},
 		buttonLabel: {
 			enrolledBeforeArchived: 'Drop the Open Course',
@@ -108,7 +111,9 @@ export default class OpenEnrollmentOption extends Base {
 		//TODO: check the option for the description
 
 		if (isArchived(catalogEntry)) {
-			return t('enrolled.description.archived', data);
+			return data.fullEndDate ?
+				t('enrolled.description.archived.endDate', data) :
+				t('enrolled.description.acrhived.noEndDate', data);
 		}
 
 		return data.fullStartDate ?
