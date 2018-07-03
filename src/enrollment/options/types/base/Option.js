@@ -52,6 +52,8 @@ export default class BaseEnrollment {
 		return this.option && (this.option.available || this.option.enrolled) && (!this.access || !this.access.isAdministrative);
 	}
 
+	shouldOverride () { return false; }
+
 
 	getPrice () {
 		return this.option.Price || null;

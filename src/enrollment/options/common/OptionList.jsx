@@ -34,7 +34,7 @@ export default class CourseEnrollmentOptionList extends React.Component {
 					const isSelected = option === selected;
 
 					return (
-						<li key={key} className={cx({selected: isSelected})}>
+						<li key={key} className={cx({selected: isSelected && options.length > 1})}>
 							<ListItem option={option} onSelect={this.selectOption} selected={isSelected}/>
 						</li>
 					);
