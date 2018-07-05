@@ -1,3 +1,4 @@
+import './ensync-imis-external-enrollment';
 import './five-minute';
 import './open';
 import './store';
