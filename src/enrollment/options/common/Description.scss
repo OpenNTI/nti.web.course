@@ -3,4 +3,9 @@
 .nti-course-enrollment-description {
 	font: normal 400 0.875rem/1.4 $body-font-family;
 	min-height: rem-calc(100px);
+
+	a[href] {
+		color: $primary-blue;
+		text-decoration: none;
+	}
 }
