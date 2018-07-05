@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Loading} from '@nti/web-commons';
+import {Loading, Input} from '@nti/web-commons';
 
 import Store from './EnrollmentOptionsStore';
 import {CustomExternalEnrollment, ExternalEnrollment, IMSEnrollment, OpenEnrollment, FiveMinuteEnrollment, StoreEnrollment} from './options';
@@ -13,6 +13,8 @@ const t = scoped('course.components.EnrollmentOptions', {
 	customize: 'Customize your Options',
 	doneCustomizing: 'Done',
 	addOption: 'Add an option',
+	allowOpen: 'Allow Open Enrollment',
+	allowCustomExternal: 'Allow External Enrollment',
 	emptyText: 'There are no enrollment options available.'
 });
 
@@ -29,12 +31,15 @@ export default
 @Store.connect({
 	enrollmentOptions: 'enrollmentOptions',
 	availableOptions: 'availableOptions',
+	allowOpenEnrollment: 'allowOpenEnrollment',
 	error: 'error',
 	loading: 'loading'
 })
 class EnrollmentOptions extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
+		courseInstance: PropTypes.object.isRequired,
+		allowOpenEnrollment: PropTypes.bool,
 		store: PropTypes.object.isRequired,
 		enrollmentOptions: PropTypes.array,
 		availableOptions: PropTypes.array,
@@ -47,9 +52,9 @@ class EnrollmentOptions extends React.Component {
 	}
 
 	componentDidMount () {
-		const {store, catalogEntry} = this.props;
+		const {store, catalogEntry, courseInstance} = this.props;
 
-		store.loadEnrollmentOptions(catalogEntry);
+		store.loadEnrollmentOptions(catalogEntry, courseInstance);
 	}
 
 	state = {}
@@ -138,24 +143,84 @@ class EnrollmentOptions extends React.Component {
 		return <div className="empty-state">{t('emptyText')}</div>;
 	}
 
+	toggleOpenEnrollment = () => {
+		this.props.store.toggleOpenEnrollment(!this.props.allowOpenEnrollment);
+	}
+
+	toggleExternalEnrollment = () => {
+		const {availableOptions} = this.props;
+
+		let customExternalOption = null;
+
+		if(availableOptions) {
+			customExternalOption = availableOptions.filter(x => x.MimeType.match(/ensyncimisexternalenrollmentoption/))[0];
+		}
+
+		if(!customExternalOption) {
+			return;
+		}
+
+		if(this.hasExternalEnrollment) {
+			this.props.store.removeOption(customExternalOption);
+		}
+		else {
+			this.props.store.addEnrollmentOption(customExternalOption);
+		}
+	}
+
+	allowsExternalEnrollment () {
+		const {availableOptions} = this.props;
+
+		if(availableOptions) {
+			const filtered = availableOptions.filter(x => x.MimeType.match(/ensyncimisexternalenrollmentoption/));
+
+			return filtered.length > 0;
+		}
+
+		return false;
+	}
+
+	hasExternalEnrollment () {
+		const {enrollmentOptions} = this.props;
+
+		if(enrollmentOptions) {
+			const filtered = enrollmentOptions.filter(x => x.MimeType.match(/ensyncimisexternalenrollmentoption/));
+
+			return filtered.length > 0;
+		}
+
+		return false;
+	}
+
 	render () {
-		const {loading, availableOptions, enrollmentOptions} = this.props;
+		const {loading/*, availableOptions, enrollmentOptions*/} = this.props;
 
 		if(loading) {
 			return <Loading.Ellipsis/>;
 		}
 
-		let isEmpty = (!availableOptions || availableOptions.length === 0) && (!enrollmentOptions || enrollmentOptions.length === 0);
+		// let isEmpty = (!availableOptions || availableOptions.length === 0) && (!enrollmentOptions || enrollmentOptions.length === 0);
+
 
 		return (
 			<div className="enrollment-options">
-				<div className="enrollment-options-title">
-					<span>{t('enrollmentOptions')}</span>
-					{isEmpty && this.renderEmptyState()}
-					{!isEmpty && !this.state.editMode && this.renderCustomizeButton()}
-					{!isEmpty && this.state.editMode && this.renderDoneCustomizingButton()}
+				{/* <div className="enrollment-options-title"> */}
+				{/* <span>{t('enrollmentOptions')}</span> */}
+				<div className="enrollment-option">
+					<div className="label">{t('allowOpen')}</div>
+					<div className="control"><Input.Toggle value={this.props.allowOpenEnrollment} onChange={this.toggleOpenEnrollment}/></div>
 				</div>
-				{!isEmpty && this.renderOptions()}
+				{this.allowsExternalEnrollment() && (
+					<div className="enrollment-option">
+						<div className="label">{t('allowCustomExternal')}</div>
+						<div className="control"><Input.Toggle value={this.hasExternalEnrollment()} onChange={this.toggleExternalEnrollment}/></div>
+					</div>
+				)}
+				{/* {isEmpty && this.renderEmptyState()}
+					{!isEmpty && !this.state.editMode && this.renderCustomizeButton()}
+					{!isEmpty && this.state.editMode && this.renderDoneCustomizingButton()} */}
+				{/* </div> */}
+				{/* {!isEmpty && this.renderOptions()} */}
 			</div>
 		);
 	}

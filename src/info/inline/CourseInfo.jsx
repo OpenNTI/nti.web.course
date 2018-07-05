@@ -284,10 +284,10 @@ export default class CourseInfo extends React.Component {
 
 	renderCourseVisibilityWidget () {
 		const { editable } = this.props;
-		const { catalogEntry } = this.state;
+		const { catalogEntry, courseInstance } = this.state;
 
 		if(editable) {
-			return <CourseVisibility catalogEntry={catalogEntry} onVisibilityChanged={this.endEditing}/>;
+			return <CourseVisibility catalogEntry={catalogEntry} courseInstance={courseInstance} onVisibilityChanged={this.endEditing}/>;
 		}
 	}
 

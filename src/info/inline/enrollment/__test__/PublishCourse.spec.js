@@ -54,7 +54,7 @@ describe('PublishCourse test', () => {
 
 		let cmp = mount(
 			<PublishCourse
-				course={catalogEntry}
+				catalogEntry={catalogEntry}
 			/>
 		);
 
@@ -78,7 +78,7 @@ describe('PublishCourse test', () => {
 
 		let cmp = mount(
 			<PublishCourse
-				course={catalogEntry}
+				catalogEntry={catalogEntry}
 			/>
 		);
 
@@ -97,7 +97,7 @@ describe('PublishCourse test', () => {
 
 		let cmp = mount(
 			<PublishCourse
-				course={catalogEntry}
+				catalogEntry={catalogEntry}
 			/>
 		);
 
@@ -117,7 +117,7 @@ describe('PublishCourse test', () => {
 
 		let cmp = mount(
 			<PublishCourse
-				course={catalogEntry}
+				catalogEntry={catalogEntry}
 			/>
 		);
 

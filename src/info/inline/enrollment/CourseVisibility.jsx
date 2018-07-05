@@ -23,13 +23,14 @@ const t = scoped('course.info.inline.widgets.CourseVisibility', {
 export default class CourseVisibility extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
+		courseInstance: PropTypes.object.isRequired,
 		onVisibilityChanged: PropTypes.func
 	}
 
 	launchVisibilityDialog = () => {
-		const { catalogEntry } = this.props;
+		const { catalogEntry, courseInstance } = this.props;
 
-		PublishCourse.show(catalogEntry).then((value) => {
+		PublishCourse.show(catalogEntry, courseInstance).then((value) => {
 			const { onVisibilityChanged } = this.props;
 
 			onVisibilityChanged && onVisibilityChanged(value);

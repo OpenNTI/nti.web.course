@@ -66,19 +66,49 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 		return this.get('error');
 	}
 
-	async loadEnrollmentOptions (catalogEntry) {
+	async toggleOpenEnrollment (allow) {
+		if(this.courseInstance) {
+			const payload = {...this.vendorInfo};
+
+			if(!payload.NTI) {
+				payload.NTI = {DenyOpenEnrollment: !allow};
+			}
+			else {
+				payload.NTI.DenyOpenEnrollment = !allow;
+			}
+
+			await this.courseInstance.putToLink('VendorInfo', payload);
+
+			await this.loadEnrollmentOptions(this.catalogEntry, this.courseInstance, true);
+		}
+	}
+
+	async loadEnrollmentOptions (catalogEntry, courseInstance, skipLoadingMask) {
 		if(!catalogEntry) {
 			return;
 		}
 
 		if(!this.catalogEntry || catalogEntry.getID() !== this.catalogEntry.getID()) {
 			this.catalogEntry = catalogEntry;
+			this.courseInstance = courseInstance;
 		}
 
-		this.set('loading', true);
-		this.emitChange('loading');
+		if(!skipLoadingMask) {
+			this.set('loading', true);
+			this.emitChange('loading');
+		}
 
 		await this.catalogEntry.refresh();
+
+		const vendorInfo = await courseInstance.fetchLink('VendorInfo');
+
+		this.vendorInfo = vendorInfo;
+
+		let allowOpenEnrollment = true;
+
+		if(vendorInfo && vendorInfo.NTI) {
+			allowOpenEnrollment = !vendorInfo.NTI.DenyOpenEnrollment; // if it's not there, just allow open
+		}
 
 		const optionsContainer = await this.catalogEntry.fetchLinkParsed('EnrollmentOptions');
 
@@ -108,8 +138,9 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 
 		this.set('enrollmentOptions', enrollmentOptions);
 		this.set('availableOptions', availableOptionsFiltered);
+		this.set('allowOpenEnrollment', allowOpenEnrollment);
 		this.set('loading', false);
 
-		this.emitChange('enrollmentOptions', 'availableOptions', 'loading');
+		this.emitChange('enrollmentOptions', 'availableOptions', 'allowOpenEnrollment', 'loading');
 	}
 }
