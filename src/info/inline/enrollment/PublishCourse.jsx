@@ -14,7 +14,7 @@ const t = scoped('course.components.PublishCourse', {
 	ready: 'Ready to Launch?',
 	headerSubText: 'That\'s exciting!  Review a couple settings before the big moment.',
 	cancel: 'Cancel',
-	publish: 'Save',
+	done: 'Done',
 	publiclyAvailable: 'Visible in Catalog',
 	previewMode: 'Preview Mode',
 	nullPreview: 'Based on start date',
@@ -107,9 +107,10 @@ export default class PublishCourse extends React.Component {
 	}
 
 	cancel = () => {
-		const { onCancel } = this.props;
+		const { onFinish } = this.props;
+		const { catalogEntry } = this.state;
 
-		onCancel && onCancel();
+		onFinish && onFinish(catalogEntry);
 	}
 
 	renderBottomControls () {
@@ -120,8 +121,7 @@ export default class PublishCourse extends React.Component {
 		return (
 			<div className="bottom-controls">
 				<div className="buttons">
-					<div className="cancel" onClick={this.cancel}>{t('cancel')}</div>
-					<div className="publish" onClick={this.onSave}>{t('publish')}</div>
+					<div className="publish" onClick={this.cancel}>{t('done')}</div>
 				</div>
 			</div>
 		);
@@ -251,13 +251,27 @@ export default class PublishCourse extends React.Component {
 	};
 
 	onPublicChange = (value) => {
-		this.setState({isNonPublic: !value});
+		const { catalogEntry } = this.state;
+
+		this.setState({isNonPublic: !value}, () => {
+			saveCatalogEntry(catalogEntry, {
+				ProviderUniqueID: catalogEntry.ProviderUniqueID,
+				['is_non_public']: this.state.isNonPublic
+			});
+		});
 	}
 
 	onPreviewChange = (value) => {
+		const { catalogEntry } = this.state;
+
 		this.flyout && this.flyout.dismiss();
 
-		this.setState({previewMode: value});
+		this.setState({previewMode: value}, () => {
+			saveCatalogEntry(catalogEntry, {
+				ProviderUniqueID: catalogEntry.ProviderUniqueID,
+				Preview: this.state.previewMode
+			});
+		});
 	}
 
 	renderContents () {
@@ -272,7 +286,7 @@ export default class PublishCourse extends React.Component {
 	renderNavItem (name, label) {
 		const cls = cx('publish-nav-item', {active: this.state.activeTab === name});
 
-		return <div className={cls}onClick={() => { this.setState({activeTab: name}); }}>{label}</div>;
+		return <div className={cls} onClick={() => { this.setState({activeTab: name}); }}>{label}</div>;
 	}
 
 	renderNavBar () {

@@ -104,12 +104,6 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 
 		this.vendorInfo = vendorInfo;
 
-		let allowOpenEnrollment = true;
-
-		if(vendorInfo && vendorInfo.NTI) {
-			allowOpenEnrollment = !vendorInfo.NTI.DenyOpenEnrollment; // if it's not there, just allow open
-		}
-
 		const optionsContainer = await this.catalogEntry.fetchLinkParsed('EnrollmentOptions');
 
 		const availableOptions = optionsContainer.AvailableEnrollmentOptions;
@@ -135,6 +129,9 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 			});
 
 		const availableOptionsFiltered = availableOptions.filter(x => !existingTypes.includes(x.MimeType)); // don't allow adding types that already exist
+
+		const openEnroll = enrollmentOptions.filter(x => x.MimeType.match(/openenrollment/));
+		const allowOpenEnrollment = openEnroll[0] && openEnroll[0].enabled;
 
 		this.set('enrollmentOptions', enrollmentOptions);
 		this.set('availableOptions', availableOptionsFiltered);
