@@ -78,9 +78,9 @@ export default class CourseEnrollmentOptionsEnrolledUpgrade extends React.Compon
 
 
 	renderSelectedOption (selected) {
-		const {UpgradeDescription} = selected || {};
+		const {Description} = selected || {};
 
-		return UpgradeDescription ? <UpgradeDescription option={selected} /> : null;
+		return Description ? <Description option={selected} /> : null;
 	}
 
 

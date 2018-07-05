@@ -1,10 +1,11 @@
+import {getTranslationFor} from '../../utils';
+
 import Description from './Description';
 import DropButton from './DropButton';
 import EnrollButton from './EnrollButton';
 import EnrolledTitle from './EnrolledTitle';
 import EnrolledDescription from './EnrolledDescription';
 import ListItem from './ListItem';
-import UpgradeDescription from './UpgradeDescription';
 
 export default class BaseEnrollment {
 	static async load (option, access, catalogEntry) {
@@ -22,7 +23,6 @@ export default class BaseEnrollment {
 	EnrolledDescription = EnrolledDescription
 	ListItem = ListItem
 	Description = Description
-	UpgradeDescription = UpgradeDescription
 	EnrollButton = EnrollButton
 	DropButton = DropButton
 
@@ -59,28 +59,68 @@ export default class BaseEnrollment {
 		return this.option.Price || null;
 	}
 
-
 	getTitle () {
-		return `!! Missing Title for ${this.option.class} !!`;
+		if (!this.getString) {
+			return `!! Missing Title for ${this.option.Class} !!`;
+		}
+
+		//TODO: Check the option for the title
+
+		return getTranslationFor(this.getString, 'notEnrolled.title', this.catalogEntry, this.option, this.access);
 	}
 
 
 	getDescription () {
-		return ` !! Missing Description for ${this.option.class} !!`;
+		if (!this.getString) {
+			return `!! Missing Description for ${this.option.Class} !!`;
+		}
+
+		//TODO: Check the option for the description
+
+		return getTranslationFor(this.getString, 'notEnrolled.description', this.catalogEntry, this.option, this.access);
+	}
+
+
+	getEnrollButtonLabel () {
+		if (!this.getString) {
+			return `!! Missing Enroll Button Label for ${this.option.Class} !!`;
+		}
+
+		//TODO: Check the option for the button label
+
+		return getTranslationFor(this.getString, 'notEnrolled.buttonLabel', this.catalogEntry, this.option, this.access);
 	}
 
 
 	getEnrolledTitle () {
-		return `!! Missing Enrolled Title for ${this.option.class} !!`;
+		if (!this.getString) {
+			return `!! Missing Enrolled Title for ${this.option.Class} !!`;
+		}
+
+		//TODO: Check the option for the title
+
+		return getTranslationFor(this.getString, 'enrolled.title', this.catalogEntry, this.option, this.access);
 	}
 
 
 	getEnrolledDescription () {
-		return `!! Missing Enrolled Description for ${this.option.class} !!`;
+		if (!this.getString) {
+			return `!! Missing Enrolled Description for ${this.option.Class} !!`;
+		}
+
+		//TODO: Check the option for the description
+
+		return getTranslationFor(this.getString, 'enrolled.description', this.catalogEntry, this.option, this.access);
 	}
 
 
-	getUpgradeDescription () {
-		return this.getDescription();
+	getDropButtonButtonLabel () {
+		if (!this.getString) {
+			return `!! Missing Enrolled Description for ${this.option.Class} !!`;
+		}
+
+		//TODO: Check the option for the drop button label
+
+		return getTranslationFor(this.getString, 'enrolled.buttonLabel', this.catalogEntry, this.option, this.access);
 	}
 }
