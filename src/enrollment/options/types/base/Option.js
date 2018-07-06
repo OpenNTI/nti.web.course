@@ -59,6 +59,17 @@ export default class BaseEnrollment {
 		return this.option.Price || null;
 	}
 
+
+	isGiftable () {
+		return false;
+	}
+
+
+	isRedeemable () {
+		return false;
+	}
+
+
 	getTitle () {
 		if (!this.getString) {
 			return `!! Missing Title for ${this.option.Class} !!`;
