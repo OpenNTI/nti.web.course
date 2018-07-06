@@ -2,5 +2,113 @@
 
 .webinar-overview-editor {
 	text-align: center;
-	width: 375px;
+	width: 810px;
+	padding-top: 30px;
+
+	.header-info {
+		display: flex;
+
+		.date {
+			min-width: 80px;
+			text-align: center;
+
+			.month {
+				text-transform: uppercase;
+				color: $primary-red;
+				font-weight: bold;
+				font-size: 10px;
+				line-height: 14px;
+			}
+
+			.day {
+				font-size: 28px;
+				color: $primary-grey;
+			}
+		}
+
+		.webinar-info {
+			padding-right: 40px;
+			margin-bottom: 16px;
+
+			.title {
+				font-size: 18px;
+				line-height: 20px;
+				color: black;
+				text-align: left;
+				margin-bottom: 5px;
+			}
+
+			.time-info {
+				line-height: 14px;
+				font-size: 10px;
+				font-weight: bold;
+				text-transform: uppercase;
+				color: $tertiary-grey;
+				margin-bottom: 16px;
+				text-align: left;
+			}
+
+			.image-and-description {
+				display: flex;
+
+				.image-upload {
+					background-color: #fbfbfb;
+					min-width: 210px;
+					height: 122px;
+					border-radius: 5px;
+					border: 1.5px dashed #e2e2e2;
+				}
+
+				.description {
+					line-height: 19px;
+					font-size: 14px;
+					color: $secondary-grey;
+					text-align: left;
+					padding-left: 20px;
+				}
+			}
+		}
+	}
+
+	.info-banner {
+		background-color: #fcf4d7;
+		color: $secondary-grey;
+		text-align: left;
+		font-size: 14px;
+		padding: 9px 110px 9px 80px;
+	}
+
+	.other-info {
+		text-align: left;
+		padding-left: 80px;
+
+		.section-title {
+			padding-top: 20px;
+			font-size: 16px;
+			color: $primary-grey;
+		}
+
+		.section-description {
+			font-size: 14px;
+			color: $secondary-grey;
+			margin-top: 5px;
+			margin-bottom: 16px;
+		}
+
+		.options {
+			display: flex;
+			padding-bottom: 70px;
+
+			.submissions {
+				width: 310px;
+			}
+
+			.subsection-title {
+				font-size: 10px;
+				color: $tertiary-grey;
+				text-transform: uppercase;
+				font-weight: bold;
+			}
+		}
+	}
 }
