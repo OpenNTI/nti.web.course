@@ -7,7 +7,7 @@ import Registry from '../Registry';
 const t = scoped('course.enrollment.types.store', {
 	enrolled: {
 		title: 'Premium',
-		decription: {
+		description: {
 			'archived': 'The course ended on %(fullEndDate)s. The content of this course will remain available for you to review at any time.',
 			'notArchived-started': 'You now have access to interact with all course content including the lectures, course materials, quizzes, and discussions.',
 			'notArchived-startDate-notStarted': 'The course begins on %(fullStartDate)s and will be conducted fully online.',
