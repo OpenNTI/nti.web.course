@@ -8,6 +8,7 @@ import Store from './Store';
 import Administrating from './parts/administrating';
 import Enrolled from './parts/enrolled';
 import NotEnrolled from './parts/not-enrolled';
+import Gifting from './parts/gifting';
 
 const t = scoped('course.enrollment.options', {
 	unavailable: 'This course is unavailable for enrollment at this time',
@@ -121,6 +122,15 @@ export default class CourseEnrollmentOptions extends React.Component {
 	}
 
 
-	renderGift () {}
+	renderGift () {
+		const {options} = this.props;
+
+		if (!options) { return null; }
+
+		return (
+			<Gifting options={options} />
+		);
+	}
+
 
 }

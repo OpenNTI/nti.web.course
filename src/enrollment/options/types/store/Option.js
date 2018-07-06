@@ -1,5 +1,6 @@
 import {scoped} from '@nti/lib-locale';
 
+import {getTranslationFor} from '../../utils';
 import Base from '../base';
 import Registry from '../Registry';
 
@@ -18,6 +19,15 @@ const t = scoped('course.enrollment.types.store', {
 		title: 'Premium',
 		description: 'Complete access to interact with all of the content.',
 		buttonLabel: 'Purchase'
+	},
+	gifting: {
+		giftable: {
+			title: 'Give This Course as a Gift',
+			label: 'Lifelong Leaner Only'
+		},
+		redeemable: {
+			title: 'Redeem a Gift'
+		}
 	}
 });
 
@@ -32,9 +42,43 @@ export default class StoreEnrollmentOption extends Base {
 
 	getString = t
 
-	async load (option) {
+	getPrice () {
+		return this.purchasable ? this.purchasable.amount : null;
+	}
+
+
+	isGiftable () {
+		return !!this.giftable;
+	}
+
+
+	isRedeemable () {
+		return !!this.redeemable;
+	}
+
+
+	async load () {
 		if (!this.isAvailable() && !this.isEnrolled()) {
 			return;
 		}
+
+		this.purchasable = this.option.getPurchasable();
+		this.giftable = this.option.getPurchasableForGifting();
+		this.redeemable = this.option.getPurchasableForRedeeming();
+	}
+
+
+	getGiftTitle () {
+		return getTranslationFor(this.getString, 'gifting.giftable.title', this.catalogEntry, this.option, this.access);
+	}
+
+
+	getGiftLabel () {
+		return getTranslationFor(this.getString, 'gifting.giftable.label', this.catalogEntry, this.option, this.access);
+	}
+
+
+	getRedeemTitle () {
+		return getTranslationFor(this.getString, 'gifting.redeemable.title', this.catalogEntry, this.option, this.access);
 	}
 }
