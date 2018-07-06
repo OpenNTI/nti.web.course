@@ -1,0 +1,71 @@
+@import '~@nti/style-common';
+
+.webinar-registration-editor {
+	width: 430px;
+
+	.title {
+		font-size: 24px;
+		font-weight: 300;
+		line-height: 33px;
+		color: $primary-grey;
+		margin-bottom: 15px;
+	}
+
+	.description {
+		font-size: 14px;
+		color: $secondary-grey;
+		line-height: 22px;
+		margin-bottom: 5px;
+	}
+
+	.learn-more {
+		color: $tertiary-grey;
+		font-size: 14px;
+		line-height: 22px;
+		font-weight: 300;
+		cursor: pointer;
+	}
+
+	.nti-text-input {
+		width: 430px;
+		background-color: white;
+		font-weight: 300;
+		font-size: 14px;
+		margin-top: 32px;
+
+		&:placeholder {
+			font-size: 14px;
+		}
+	}
+
+	.learn-more-content {
+		.steps-title {
+			font-size: 10px;
+			color: $tertiary-grey;
+			text-transform: uppercase;
+			font-weight: bold;
+			margin-top: 20px;
+			margin-bottom: 18px;
+		}
+
+		.step {
+			display: flex;
+			color: $secondary-grey;
+			font-size: 14px;
+			line-height: 32px;
+			margin-bottom: 10px;
+
+			.step-number {
+				border-radius: 32px;
+				width: 32px;
+				height: 32px;
+				line-height: 32px;
+				font-size: 12px;
+				text-align: center;
+				color: $tertiary-grey;
+				border: solid 1px $tertiary-grey;
+				margin-right: 10px;
+			}
+		}
+	}
+}
