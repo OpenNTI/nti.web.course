@@ -1,0 +1,127 @@
+@import '~@nti/style-common';
+
+.section-select-info {
+	line-height: 40px;
+
+	.color-preview {
+		display: inline-block;
+		vertical-align: middle;
+		width: 20px;
+		height: 20px;
+		border-radius: 3px;
+		margin-right: 0.5rem;
+	}
+
+	.name {
+		display: inline-block;
+		vertical-align: middle;
+		width: 200px;
+		font: normal 400 0.875rem/40px "Open Sans", sans-serif;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+}
+
+.section-select-flyout {
+	.section-option {
+		padding: 8px;
+		border-bottom: 1px solid #eae9e9;
+
+		&:first-child {
+			border-top: 0.75px solid rgba(0, 0, 0, 0.08);
+		}
+
+		&.selected {
+			color: $primary-blue;
+		}
+	}
+
+	.add-new {
+		line-height: 20px;
+		color: $primary-blue;
+		padding: 8px;
+		font-size: 0.875rem;
+	}
+
+	.create-section-form {
+		.contents {
+			padding: 0.7rem;
+
+			.label {
+				font-size: 0.625em;
+				text-transform: uppercase;
+				color: #757474;
+			}
+
+			.nti-text-input {
+				background-color: white;
+
+				&.name-input {
+					margin-bottom: 1.25rem;
+				}
+
+				&.hex-input {
+					font-size: 11px;
+					height: 21px;
+				}
+			}
+
+			.color-samples {
+				margin: 0;
+				padding: 0;
+				margin-top: 0.5rem;
+				margin-bottom: 2rem;
+				max-width: 240px;
+				list-style: none;
+
+				.color-sample {
+					display: inline-block;
+					width: 20px;
+					height: 20px;
+					margin-right: 9px;
+					cursor: pointer;
+					padding: 8px 7px;
+					border: 1px solid transparent;
+					border-radius: 3px;
+					margin-bottom: 4px;
+
+					&.selected {
+						position: relative;
+
+						&::after {
+							content: '';
+							display: block;
+							position: absolute;
+							top: -4px;
+							left: -4px;
+							right: -4px;
+							bottom: -4px;
+							box-shadow: 0 0 0 1px #979797;
+							border-radius: 4px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.overview-position-select {
+	.section-select {
+		background: white;
+		line-height: 40px;
+		font-size: 0.875rem;
+		padding: 0 1em 0 10px;
+		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+		cursor: pointer;
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		width: 260px;
+	}
+
+	.rank-select {
+
+	}
+}
