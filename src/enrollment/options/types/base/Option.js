@@ -125,7 +125,7 @@ export default class BaseEnrollment {
 	}
 
 
-	getDropButtonButtonLabel () {
+	getDropButtonLabel () {
 		if (!this.getString) {
 			return `!! Missing Enrolled Description for ${this.option.Class} !!`;
 		}
