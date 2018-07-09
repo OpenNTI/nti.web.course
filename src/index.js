@@ -15,3 +15,4 @@ export * as Navigation from './navigation';
 export * as Overview from './overview';
 export * from './scorm';
 export * as Templates from './editor/templates';
+export * from './lti-tools';
