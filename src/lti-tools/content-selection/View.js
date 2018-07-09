@@ -1,0 +1,44 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Prompt, Resizable } from '@nti/web-commons';
+
+export default
+class ContentSelection extends Component {
+	static propTypes = {
+		src: PropTypes.string.isRequired,
+		overviewGroupOID: PropTypes.string.isRequired,
+		onClose: PropTypes.func.isRequired,
+		title: PropTypes.string,
+		selectContent: PropTypes.func.isRequired
+	};
+
+	componentDidMount () {
+		window.addEventListener('message', this.selectedContent, false);
+	}
+
+	componentWillUnmount () {
+		window.removeEventListener('message', this.selectedContent);
+	}
+
+	selectedContent = ({ data }) => {
+		if (data.key === 'nti-lti-tool-content-selection-finished') {
+			const { title, ConfiguredTool, description } = data.data;
+			this.props.selectContent({ title, ConfiguredTool, description, launchUrl: data.data['launch_url'] });
+		}
+	}
+
+	render () {
+		const { src, overviewGroupOID, onClose, title } = this.props;
+
+		return (
+			<Prompt.Dialog onBeforeDismiss={this.hideCertificate}>
+				<Resizable onClose={onClose} title={title}>
+					<iframe
+						className="lti-content-selection-iframe"
+						src={`${src}?overview_group=${overviewGroupOID}`}
+					/>
+				</Resizable>
+			</Prompt.Dialog>
+		);
+	}
+}
