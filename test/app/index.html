@@ -13,8 +13,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta name="apple-mobile-web-app-title" content="nextthought app"/>
-	<title>NextThought Content</title>
-	<link href="index.css" type="text/css" rel="stylesheet">
+	<title><%= htmlWebpackPlugin.options.title %></title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
 	<style>
 		body {
@@ -28,6 +27,5 @@
 </head>
 <body>
 	<div id="content" style="height: 100%;"></div>
-	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>
