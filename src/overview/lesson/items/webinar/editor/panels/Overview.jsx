@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {DialogButtons} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -15,7 +15,8 @@ const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', 
 
 export default class WebinarOverviewEditor extends React.Component {
 	static propTypes = {
-
+		onCancel: PropTypes.func,
+		onAddToLesson: PropTypes.func
 	}
 
 	renderDate () {
@@ -75,6 +76,22 @@ export default class WebinarOverviewEditor extends React.Component {
 				{this.renderAutoCompletion()}
 			</div>
 		);
+	}
+
+	onCancel = () => {
+		const {onCancel} = this.props;
+
+		if(onCancel) {
+			onCancel();
+		}
+	}
+
+	onSave = () => {
+		const {onAddToLesson} = this.props;
+
+		if(onAddToLesson) {
+			onAddToLesson();
+		}
 	}
 
 	renderButtons () {
