@@ -11,11 +11,17 @@ const NOT_CONNECTED = 'not-connected';
 
 export default class WebinarEditor extends React.Component {
 	static propTypes = {
-
+		activePanel: PropTypes.string
 	}
 
 	state = {
 		activePanel: REGISTRATION
+	}
+
+	componentDidMount () {
+		if(this.props.activePanel) {
+			this.setState({activePanel: this.props.activePanel});
+		}
 	}
 
 	togglePanel = () => {
@@ -32,8 +38,8 @@ export default class WebinarEditor extends React.Component {
 
 	render () {
 		return (
-			<div>
-				<div onClick={this.togglePanel}>Toggle</div>
+			<div className="webinar-editor">
+				{!this.props.activePanel && <div onClick={this.togglePanel}>Toggle</div>}
 				{this.state.activePanel === REGISTRATION && <Registration/>}
 				{this.state.activePanel === OVERVIEW && <Overview/>}
 				{this.state.activePanel === NOT_CONNECTED && <NotConnected/>}

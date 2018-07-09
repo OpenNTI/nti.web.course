@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {DialogButtons} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
-const t = scoped('course.overview.lesson.items.webinar.editor.panels.NotConnected', {
+const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', {
 	save: 'Add to Lesson',
 	cancel: 'Cancel',
 	position: 'Position',

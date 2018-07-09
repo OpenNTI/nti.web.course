@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
-const t = scoped('course.overview.lesson.items.webinar.editor.panels.NotConnected', {
+const t = scoped('course.overview.lesson.items.webinar.editor.panels.Registration', {
 	title: 'Paste or Enter a Registration Link',
 	description: 'After you create a webinar in GoToWebinar you can add it to your course by providing a registration link.',
 	learnMore: 'Learn More',
