@@ -23,6 +23,21 @@
 	}
 }
 
+.rank-select-flyout {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+	.rank-option {
+		padding: 8px;
+		font: normal 400 0.875rem/40px "Open Sans", sans-serif;
+
+		&.selected {
+			color: $primary-blue;
+		}
+	}
+}
+
 .section-select-flyout {
 	.section-option {
 		padding: 8px;
@@ -45,6 +60,16 @@
 	}
 
 	.create-section-form {
+		.error {
+			font-size: 0.875rem;
+			line-height: 1.5rem;
+			color: white;
+			z-index: 1;
+			background-color: $primary-red;
+			text-align: left;
+			padding: 0 0.5rem;
+		}
+
 		.contents {
 			padding: 0.7rem;
 
@@ -108,7 +133,7 @@
 }
 
 .overview-position-select {
-	.section-select {
+	.section-trigger {
 		background: white;
 		line-height: 40px;
 		font-size: 0.875rem;
@@ -119,9 +144,19 @@
 		display: inline-block;
 		vertical-align: middle;
 		width: 260px;
+		margin-right: 1rem;
 	}
 
-	.rank-select {
-
+	.rank-trigger {
+		background: white;
+		line-height: 40px;
+		font-size: 0.875rem;
+		padding: 0 1em 0 10px;
+		box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+		cursor: pointer;
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		width: 55px;
 	}
 }
