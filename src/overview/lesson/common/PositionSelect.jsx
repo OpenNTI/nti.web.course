@@ -10,7 +10,10 @@ const t = scoped('course.overview.lesson.common.PositionSelect', {
 	cancel: 'Cancel',
 	invalidColor: 'Please enter a valid color.',
 	missingRequired: 'Please fill out all required fields.',
-	noLink: 'No content link.'
+	noLink: 'No content link.',
+	addNew: '+ Create a section',
+	sectionName: 'Section Name',
+	chooseColor: 'Choose a Color'
 });
 
 // TODO: belongs in OverviewGroup model or somewhere else?
@@ -42,11 +45,11 @@ const isValidHexColor = function (code) {
 
 export default class LessonOverviewPositionSelect extends React.Component {
 	attachSectionFlyoutRef = x => this.sectionFlyout = x
-
 	attachRankFlyoutRef = x => this.rankFlyout = x
 
 	static propTypes = {
-		lessonOverview: PropTypes.object.isRequired
+		lessonOverview: PropTypes.object.isRequired,
+		onChange: PropTypes.func
 	}
 
 	state = {}
@@ -72,7 +75,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				className={className}
 				key={section.getID()}
 				onClick={() => {
-					this.setState({selectedSection: section, selectedRank: 1});
+					this.updateValues(section, 1);
 
 					if(this.sectionFlyout) {
 						this.sectionFlyout.dismiss();
@@ -90,6 +93,16 @@ export default class LessonOverviewPositionSelect extends React.Component {
 
 	onCancel = () => {
 		this.setState({inCreationMode: false, hexValue: null, sectionName: null});
+	}
+
+	updateValues (selectedSection, selectedRank) {
+		const {onChange} = this.props;
+
+		this.setState({selectedSection, selectedRank});
+
+		if(onChange) {
+			onChange(selectedSection, selectedRank);
+		}
 	}
 
 	onSave = async () => {
@@ -126,7 +139,9 @@ export default class LessonOverviewPositionSelect extends React.Component {
 			const newSection = await service.postParseResponse(contentsLink, content);
 			await lessonOverview.refresh();
 
-			this.setState({selectedSection: newSection, inCreationMode: false, hexValue: null, sectionName: null});
+			this.updateValues(newSection, 1);
+
+			this.setState({inCreationMode: false, hexValue: null, sectionName: null});
 		}
 		catch (e) {
 			this.setState({error: e.message || e});
@@ -162,8 +177,8 @@ export default class LessonOverviewPositionSelect extends React.Component {
 			<div className="create-section-form">
 				{error && <div className="error">{error}</div>}
 				<div className="contents">
-					<Input.Text className={sectionNameInputCls} value={this.state.sectionName} onChange={this.sectionNameChange} placeholder="Section Name"/>
-					<div className="label">Choose a color</div>
+					<Input.Text className={sectionNameInputCls} value={this.state.sectionName} onChange={this.sectionNameChange} placeholder={t('sectionName')}/>
+					<div className="label">{t('chooseColor')}</div>
 					<span>#</span><Input.Text value={this.state.hexValue} onChange={this.hexValueChange} className="hex-input"/>
 					<ul className="color-samples">
 						{COLOR_CHOICES.map(this.renderColorPreview)}
@@ -197,7 +212,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 			>
 				<div className="section-select-flyout">
 					{!this.state.inCreationMode && this.props.lessonOverview.Items.map(this.renderSectionOption)}
-					{!this.state.inCreationMode && <div className="add-new" onClick={this.enterCreateMode}>+ Add New</div>}
+					{!this.state.inCreationMode && <div className="add-new" onClick={this.enterCreateMode}>{t('addNew')}</div>}
 					{this.state.inCreationMode && this.renderCreateNewSection()}
 				</div>
 			</Flyout.Triggered>
@@ -211,17 +226,19 @@ export default class LessonOverviewPositionSelect extends React.Component {
 	}
 
 	renderRankOption = (rank) => {
+		const className = cx('rank-option', {selected: rank + 1 === this.state.selectedRank});
+
 		return (
 			<li
 				key={rank}
 				onClick={() => {
-					this.setState({selectedRank: rank + 1});
+					this.updateValues(this.state.selectedSection, rank + 1);
 
 					if(this.rankFlyout) {
 						this.rankFlyout.dismiss();
 					}
 				}}
-				className="rank-option"
+				className={className}
 			>
 				{rank + 1}
 			</li>

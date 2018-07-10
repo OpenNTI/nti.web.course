@@ -28,7 +28,7 @@ export default class WebinarNotConnected extends React.Component {
 	}
 
 	onConnect = () => {
-		// route to Site Admin integrations
+		// open integrations form?
 	}
 
 	render () {

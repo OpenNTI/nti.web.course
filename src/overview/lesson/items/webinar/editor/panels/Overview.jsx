@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {DialogButtons} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
+import PositionSelect from '../../../../common/PositionSelect';
+
 const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', {
 	save: 'Add to Lesson',
 	cancel: 'Cancel',
@@ -15,9 +17,12 @@ const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', 
 
 export default class WebinarOverviewEditor extends React.Component {
 	static propTypes = {
+		lessonOverview: PropTypes.object.isRequired,
 		onCancel: PropTypes.func,
 		onAddToLesson: PropTypes.func
 	}
+
+	state = {}
 
 	renderDate () {
 		return <div className="date"><div className="month">Dec</div><div className="day">22</div></div>;
@@ -44,10 +49,15 @@ export default class WebinarOverviewEditor extends React.Component {
 		);
 	}
 
+	onPositionChange = (selectedSection, selectedRank) => {
+		this.setState({selectedSection, selectedRank});
+	}
+
 	renderPosition () {
 		return (
 			<div className="position-section">
 				<div className="section-title">{t('position')}</div>
+				<PositionSelect lessonOverview={this.props.lessonOverview} onChange={this.onPositionChange}/>
 			</div>
 		);
 	}
@@ -90,6 +100,7 @@ export default class WebinarOverviewEditor extends React.Component {
 		const {onAddToLesson} = this.props;
 
 		if(onAddToLesson) {
+			// gather up state from position select and anything else?
 			onAddToLesson();
 		}
 	}
