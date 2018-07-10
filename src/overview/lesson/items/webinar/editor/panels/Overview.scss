@@ -59,6 +59,66 @@
 					border: 1.5px dashed #e2e2e2;
 				}
 
+				.image-preview {
+					position: relative;
+
+					img {
+						width: 200px;
+						border: 1px solid rgba(0, 0, 0, 0.1);
+					}
+
+					.remove-image {
+						position: absolute;
+						top: 10px;
+						right: 10px;
+
+						.nt-remove-button i {
+							border: solid 2px white;
+						}
+					}
+				}
+
+				.image-upload-container {
+					width: 200px;
+					position: relative;
+					margin: 0;
+
+					.nti-image-editor {
+						max-width: 200px;
+
+						.nti-image-editor-upload {
+							height: 132px;
+							width: 200px;
+
+							input {
+								z-index: 10;
+							}
+
+							.container {
+								display: none;
+							}
+						}
+					}
+
+					.content {
+						position: absolute;
+						bottom: 30px;
+						width: 200px;
+						text-align: center;
+						color: $secondary-grey;
+						z-index: 0;
+
+						i {
+							font-size: 36px;
+						}
+
+						.text {
+							margin-top: 20px;
+							font-size: 14px;
+						}
+					}
+				}
+
 				.description {
 					line-height: 19px;
 					font-size: 14px;

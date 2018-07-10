@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {DialogButtons, RemoveButton} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
+import {ImageEditor} from '@nti/web-whiteboard';
 
 import PositionSelect from '../../../../common/PositionSelect';
+
+import EditImage from './EditImage';
 
 const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', {
 	save: 'Add to Lesson',
@@ -30,6 +33,22 @@ export default class WebinarOverviewEditor extends React.Component {
 		return <div className="date"><div className="month">Dec</div><div className="day">22</div></div>;
 	}
 
+	onImageUpload = async (editorState) => {
+		const img = await ImageEditor.getImageForEditorState(editorState);
+
+		this.setState({editorState: img}, () => {
+			EditImage.show(ImageEditor.getEditorState(img, {crop: {width: img.naturalWidth, height: img.naturalHeight}})).then((newImg) => {
+				this.onImageCropperSave(newImg);
+			}).catch(() => {
+				this.setState({editorState: null});
+			});
+		});
+	}
+
+	onImageCropperSave = async (img) => {
+		this.setState({img});
+	}
+
 	renderWebinarInfo () {
 		// TODO: Populate with actual webinar info, not the plot to Hard Ticket to Hawaii
 		return (
@@ -37,11 +56,36 @@ export default class WebinarOverviewEditor extends React.Component {
 				<div className="title">Never Settle: Using LinkedIn for Brand Marketing</div>
 				<div className="time-info">Live 2HR Webinar Sunday at 1:30 PM PDT</div>
 				<div className="image-and-description">
-					<div className="image-upload"/>
+					{this.renderImage()}
 					<div className="description">Two drug enforcement agents are killed on a private Hawaiian island. Donna and Taryn, two operatives for The Agency (Molokai Cargo), accidentally intercept a delivery of diamonds intended for drug lord Seth Romero, who takes exception and tries to get them back. Soon other Agency operatives get involved, and a full-scale fight to the finish ensues, complicated here and there by a contaminated snake made deadly by toxic cancer-infested rats!</div>
 				</div>
 			</div>
 		);
+	}
+
+	renderImage () {
+		if(!this.state.img && !this.state.editorState) {
+			return (
+				<div className="image-upload-container">
+					<ImageEditor.Editor onChange={this.onImageUpload}/>
+					<div className="content">
+						<i className="icon-upload"/>
+						<div className="text">Add an Image</div>
+					</div>
+				</div>
+			);
+		}
+
+		if(this.state.img) {
+			return (
+				<div className="image-preview">
+					<img src={this.state.img.src}/>
+					<div className="remove-image">
+						<RemoveButton onRemove={() => {this.setState({img: null, editorState: null});}}/>
+					</div>
+				</div>
+			);
+		}
 	}
 
 	renderInfoBanner () {
