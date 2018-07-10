@@ -9,8 +9,15 @@ class ContentSelection extends Component {
 		overviewGroupOID: PropTypes.string.isRequired,
 		onClose: PropTypes.func.isRequired,
 		title: PropTypes.string,
-		selectContent: PropTypes.func.isRequired
+		selectContent: PropTypes.func.isRequired,
+		height: PropTypes.number,
+		width: PropTypes.number
 	};
+
+	static defaultProps = {
+		height: 550,
+		width: 550
+	}
 
 	componentDidMount () {
 		window.addEventListener('message', this.selectedContent, false);
@@ -28,11 +35,11 @@ class ContentSelection extends Component {
 	}
 
 	render () {
-		const { src, overviewGroupOID, onClose, title } = this.props;
+		const { src, overviewGroupOID, onClose, title, width, height } = this.props;
 
 		return (
 			<Prompt.Dialog onBeforeDismiss={this.hideCertificate}>
-				<Resizable onClose={onClose} title={title}>
+				<Resizable onClose={onClose} title={title} width={width} height={height}>
 					<iframe
 						className="lti-content-selection-iframe"
 						src={`${src}?overview_group=${overviewGroupOID}`}
