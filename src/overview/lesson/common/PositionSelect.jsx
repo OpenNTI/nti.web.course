@@ -7,7 +7,10 @@ import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.overview.lesson.common.PositionSelect', {
 	save: 'Save',
-	cancel: 'Cancel'
+	cancel: 'Cancel',
+	invalidColor: 'Please enter a valid color.',
+	missingRequired: 'Please fill out all required fields.',
+	noLink: 'No content link.'
 });
 
 // TODO: belongs in OverviewGroup model or somewhere else?
@@ -29,6 +32,13 @@ const COLOR_CHOICES = [
 	'D3545B',
 	'728957'
 ];
+
+const hex16Re = /^#?([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/i;
+const hex8Re = /^#?([0-9a-f])([0-9a-f])([0-9a-f])$/i;
+
+const isValidHexColor = function (code) {
+	return hex16Re.test(code) || hex8Re.test(code);
+};
 
 export default class LessonOverviewPositionSelect extends React.Component {
 	attachSectionFlyoutRef = x => this.sectionFlyout = x
@@ -54,10 +64,6 @@ export default class LessonOverviewPositionSelect extends React.Component {
 		);
 	}
 
-	renderSectionTrigger () {
-		return <div className="section-trigger">{this.renderSectionInfo(this.state.selectedSection || {})}</div>;
-	}
-
 	renderSectionOption = (section) => {
 		const className = cx('section-option', {selected: section === this.state.selectedSection});
 
@@ -66,7 +72,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				className={className}
 				key={section.getID()}
 				onClick={() => {
-					this.setState({selectedSection: section});
+					this.setState({selectedSection: section, selectedRank: 1});
 
 					if(this.sectionFlyout) {
 						this.sectionFlyout.dismiss();
@@ -90,13 +96,15 @@ export default class LessonOverviewPositionSelect extends React.Component {
 		const {lessonOverview} = this.props;
 		const {sectionName, hexValue} = this.state;
 
+		this.setState({error: null, errorField: null});
+
 		if(!sectionName) {
-			this.setState({error: 'Title is required'});
+			this.setState({error: t('missingRequired'), errorField: 'sectionName'});
 			return;
 		}
 
-		if(!hexValue) {
-			this.setState({error: 'Color is required'});
+		if(!hexValue || !isValidHexColor(hexValue)) {
+			this.setState({error: t('invalidColor')});
 			return;
 		}
 
@@ -104,7 +112,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 			const contentsLink = lessonOverview.getLink('ordered-contents');
 
 			if(!contentsLink) {
-				this.setState({error: 'No contents link'});
+				this.setState({error: t('noLink')});
 				return;
 			}
 
@@ -146,13 +154,15 @@ export default class LessonOverviewPositionSelect extends React.Component {
 	}
 
 	renderCreateNewSection () {
-		const {error} = this.state;
+		const {error, errorField} = this.state;
+
+		const sectionNameInputCls = cx('name-input', {invalid: errorField === 'sectionName'});
 
 		return (
 			<div className="create-section-form">
 				{error && <div className="error">{error}</div>}
 				<div className="contents">
-					<Input.Text className="name-input" value={this.state.sectionName} onChange={this.sectionNameChange} placeholder="Section Name"/>
+					<Input.Text className={sectionNameInputCls} value={this.state.sectionName} onChange={this.sectionNameChange} placeholder="Section Name"/>
 					<div className="label">Choose a color</div>
 					<span>#</span><Input.Text value={this.state.hexValue} onChange={this.hexValueChange} className="hex-input"/>
 					<ul className="color-samples">
@@ -179,8 +189,9 @@ export default class LessonOverviewPositionSelect extends React.Component {
 		return (
 			<Flyout.Triggered
 				className="section-select"
-				trigger={this.renderSectionTrigger()}
+				trigger={<div className="section-trigger">{this.renderSectionInfo(this.state.selectedSection || {})}<i className="icon-chevron-down"/></div>}
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
+				verticalAlign={Flyout.ALIGNMENTS.BOTTOM}
 				sizing={Flyout.SIZES.MATCH_SIDE}
 				ref={this.attachSectionFlyoutRef}
 			>
@@ -196,7 +207,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 	renderRankTrigger (disabled) {
 		const className = cx('rank-trigger', {disabled});
 
-		return <div className={className}>{this.state.selectedRank}</div>;
+		return <div className={className}>{this.state.selectedRank}<i className="icon-chevron-down"/></div>;
 	}
 
 	renderRankOption = (rank) => {
@@ -239,6 +250,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				className="rank-select"
 				trigger={this.renderRankTrigger()}
 				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
+				verticalAlign={Flyout.ALIGNMENTS.BOTTOM}
 				sizing={Flyout.SIZES.MATCH_SIDE}
 				ref={this.attachRankFlyoutRef}
 			>

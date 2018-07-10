@@ -49,6 +49,7 @@
 
 		&.selected {
 			color: $primary-blue;
+			pointer-events: none;
 		}
 	}
 
@@ -81,6 +82,10 @@
 
 			.nti-text-input {
 				background-color: white;
+
+				&.invalid {
+					border: solid 1px $primary-red;
+				}
 
 				&.name-input {
 					margin-bottom: 1.25rem;
@@ -145,6 +150,12 @@
 		vertical-align: middle;
 		width: 260px;
 		margin-right: 1rem;
+
+		i {
+			position: absolute;
+			right: 8px;
+			top: 14px;
+		}
 	}
 
 	.rank-trigger {
@@ -158,5 +169,16 @@
 		display: inline-block;
 		vertical-align: middle;
 		width: 55px;
+
+		&.disabled {
+			pointer-events: none;
+			opacity: 0.7;
+		}
+
+		i {
+			position: absolute;
+			right: 8px;
+			top: 14px;
+		}
 	}
 }
