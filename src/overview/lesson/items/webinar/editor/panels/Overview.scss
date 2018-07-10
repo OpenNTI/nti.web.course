@@ -76,11 +76,23 @@
 		text-align: left;
 		font-size: 14px;
 		padding: 9px 110px 9px 80px;
+		position: relative;
+
+		.nt-remove-button {
+			position: absolute;
+			right: 8px;
+			top: 16px;
+
+			i {
+				font-size: 9px;
+			}
+		}
 	}
 
 	.other-info {
 		text-align: left;
 		padding-left: 80px;
+		padding-bottom: 70px;
 
 		.section-title {
 			padding-top: 20px;
@@ -98,7 +110,6 @@
 
 		.options {
 			display: flex;
-			padding-bottom: 70px;
 
 			.submissions {
 				width: 310px;

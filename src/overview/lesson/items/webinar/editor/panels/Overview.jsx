@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DialogButtons} from '@nti/web-commons';
+import {DialogButtons, RemoveButton} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import PositionSelect from '../../../../common/PositionSelect';
@@ -12,12 +12,14 @@ const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', 
 	autoCompletion: 'Auto Completion',
 	autoCompletionDesc: 'Define what is required for learners to complete this webinar.',
 	requiredSubmissions: 'Required Submissions',
-	minimumPercentWatched: 'Minimum Percent Watched'
+	minimumPercentWatched: 'Minimum Percent Watched',
+	infoTip: 'Guarantee all learners have access to your content by reviewing your GoToWebinar registration and attendee limits.'
 });
 
 export default class WebinarOverviewEditor extends React.Component {
 	static propTypes = {
 		lessonOverview: PropTypes.object.isRequired,
+		overviewGroup: PropTypes.object.isRequired,
 		onCancel: PropTypes.func,
 		onAddToLesson: PropTypes.func
 	}
@@ -29,6 +31,7 @@ export default class WebinarOverviewEditor extends React.Component {
 	}
 
 	renderWebinarInfo () {
+		// TODO: Populate with actual webinar info, not the plot to Hard Ticket to Hawaii
 		return (
 			<div className="webinar-info">
 				<div className="title">Never Settle: Using LinkedIn for Brand Marketing</div>
@@ -42,9 +45,14 @@ export default class WebinarOverviewEditor extends React.Component {
 	}
 
 	renderInfoBanner () {
+		if(this.state.hideBanner) {
+			return null;
+		}
+
 		return (
 			<div className="info-banner">
-				<div className="info-text">Guarantee all learners have access to your content by reviewing your GoToWebinar registration and attendee limits.</div>
+				<div className="info-text">{t('infoTip')}</div>
+				<RemoveButton onRemove={() => { this.setState({hideBanner: true}); }}/>
 			</div>
 		);
 	}
@@ -57,33 +65,35 @@ export default class WebinarOverviewEditor extends React.Component {
 		return (
 			<div className="position-section">
 				<div className="section-title">{t('position')}</div>
-				<PositionSelect lessonOverview={this.props.lessonOverview} onChange={this.onPositionChange}/>
+				<PositionSelect lessonOverview={this.props.lessonOverview} overviewGroup={this.props.overviewGroup} onChange={this.onPositionChange}/>
 			</div>
 		);
 	}
 
-	renderAutoCompletion () {
-		return (
-			<div className="auto-completion-section">
-				<div className="section-title">{t('autoCompletion')}</div>
-				<div className="section-description">{t('autoCompletionDesc')}</div>
-				<div className="options">
-					<div className="submissions">
-						<div className="subsection-title">{t('requiredSubmissions')}</div>
-					</div>
-					<div className="percentage">
-						<div className="subsection-title">{t('minimumPercentWatched')}</div>
-					</div>
-				</div>
-			</div>
-		);
-	}
+	// renderAutoCompletion () {
+	// 	// TODO: Not finished. Come back to this implementation later
+	//
+	// 	return (
+	// 		<div className="auto-completion-section">
+	// 			<div className="section-title">{t('autoCompletion')}</div>
+	// 			<div className="section-description">{t('autoCompletionDesc')}</div>
+	// 			<div className="options">
+	// 				<div className="submissions">
+	// 					<div className="subsection-title">{t('requiredSubmissions')}</div>
+	// 				</div>
+	// 				<div className="percentage">
+	// 					<div className="subsection-title">{t('minimumPercentWatched')}</div>
+	// 				</div>
+	// 			</div>
+	// 		</div>
+	// 	);
+	// }
 
 	renderOtherInfo () {
 		return (
 			<div className="other-info">
 				{this.renderPosition()}
-				{this.renderAutoCompletion()}
+				{/* {this.renderAutoCompletion()} */}
 			</div>
 		);
 	}

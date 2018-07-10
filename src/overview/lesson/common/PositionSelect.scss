@@ -39,6 +39,12 @@
 	}
 }
 
+.section-select.flyout, .rank-select.flyout {
+	.flyout-inner {
+		max-height: 16rem;
+	}
+}
+
 .section-select-flyout {
 	.section-option {
 		padding: 8px;
@@ -173,7 +179,7 @@
 
 		&.disabled {
 			pointer-events: none;
-			opacity: 0.7;
+			opacity: 0.5;
 		}
 
 		i {

@@ -49,13 +49,20 @@ export default class LessonOverviewPositionSelect extends React.Component {
 
 	static propTypes = {
 		lessonOverview: PropTypes.object.isRequired,
+		overviewGroup: PropTypes.object.isRequired,
 		onChange: PropTypes.func
 	}
 
 	state = {}
 
 	componentDidMount () {
-		this.setState({selectedRank: 1, selectedSection: this.props.lessonOverview.Items[0]});
+		const providedOverviewGroup = this.props.lessonOverview.Items.filter(x=>x.getID() === this.props.overviewGroup.getID())[0];
+
+		// initial state is the last position of the provided overview group
+		this.setState({
+			selectedRank: (providedOverviewGroup.Items || []).length + 1,
+			selectedSection: providedOverviewGroup
+		});
 	}
 
 	renderSectionInfo (section) {
@@ -75,7 +82,8 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				className={className}
 				key={section.getID()}
 				onClick={() => {
-					this.updateValues(section, 1);
+					// auto-select the last rank available for the newly selected section
+					this.updateValues(section, (section.Items || []).length + 1);
 
 					if(this.sectionFlyout) {
 						this.sectionFlyout.dismiss();
