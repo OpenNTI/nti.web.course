@@ -86,27 +86,27 @@ export default class CourseAdminCompletion extends React.Component {
 	}
 
 
-	onSave = () => {
+	onSave = async () => {
 		const {completable, percentage, certificationPolicy} = this.state;
 		const {course} = this.props;
 
+		const service = await getService();
+
 		if(completable) {
-			getService().then(service => {
-				service.put(course.getLink('CompletionPolicy'), {
-					MimeType: 'application/vnd.nextthought.completion.aggregatecompletionpolicy',
-					percentage: percentage ? percentage / 100.0 : 0,
-					'offers_completion_certificate': Boolean(certificationPolicy)
-				});
+			await service.put(course.getLink('CompletionPolicy'), {
+				MimeType: 'application/vnd.nextthought.completion.aggregatecompletionpolicy',
+				percentage: percentage ? percentage / 100.0 : 0,
+				'offers_completion_certificate': Boolean(certificationPolicy)
 			});
 		}
 		else {
 			// delete from CompletionPolicy?
-			getService().then(service => {
-				const encodedID = encodeURIComponent(course.NTIID);
+			const encodedID = encodeURIComponent(course.NTIID);
 
-				service.delete(course.getLink('CompletionPolicy') + '/' + encodedID);
-			});
+			await service.delete(course.getLink('CompletionPolicy') + '/' + encodedID);
 		}
+
+		await course.refresh();
 	}
 
 
