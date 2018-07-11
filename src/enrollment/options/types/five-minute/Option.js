@@ -20,7 +20,10 @@ const t = scoped('course.enrollment.types.five-minute', {
 	},
 	notEnrolled: {
 		title: 'For Credit',
-		description: 'Earn transcripted college credit.',
+		description: {
+			noCutOff: 'Earn transcripted college credit from the University of Oklahoma.',
+			hasCutOff: 'Earn transcripted college credit from the University of Oklahoma.  Not available after %(enrollCutOffDate)s.'
+		},
 		buttonLabel: {
 			hasPrice: 'Buy for $%(price)s',
 			noPrice: 'Earn College Credit'
@@ -78,6 +81,10 @@ export default class FiveMinuteEnrollmentOption extends Base {
 
 	getPrice () {
 		return this.option.OU_Price;
+	}
+
+	getEnrollCutOffDate () {
+		return this.option.getEnrollCutOffDate && this.option.getEnrollCutOffDate();
 	}
 
 	async load () {

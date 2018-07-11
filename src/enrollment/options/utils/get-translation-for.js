@@ -9,6 +9,7 @@ const ATTRIBUTES = [
 	c => c.getStartDate() ? 'startDate' : 'noStartDate',
 	c => hasStarted(c) ? 'started' : 'notStarted',
 	(c, o) => o.getPrice ? 'hasPrice' : 'noPrice',
+	(c, o) => o.getEnrollCutOffDate && o.getEnrollCutOffDate() ? 'hasCutOff' : 'noCutOff',
 	(c, o, a) => {
 		const endDate = c.getEndDate();
 		const enrolledDate = a && a.getCreatedTime();
