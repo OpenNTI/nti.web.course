@@ -160,7 +160,7 @@ class EnrollmentOptions extends React.Component {
 			return;
 		}
 
-		if(this.hasExternalEnrollment) {
+		if(this.hasExternalEnrollment()) {
 			this.props.store.removeOption(customExternalOption);
 		}
 		else {
