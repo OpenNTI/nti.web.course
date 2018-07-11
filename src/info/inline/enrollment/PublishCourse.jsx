@@ -8,6 +8,7 @@ import cx from 'classnames';
 import {saveCatalogEntry} from '../../../editor/Actions';
 
 import EnrollmentOptions from './EnrollmentOptions';
+import Store from './EnrollmentOptionsStore';
 
 
 const t = scoped('course.components.PublishCourse', {
@@ -59,6 +60,8 @@ export default class PublishCourse extends React.Component {
 				activeTab: GENERAL
 			};
 		}
+
+		this.optionsStore = Store.getInstance();
 	}
 
 	attachFlyoutRef = x => this.flyout = x
@@ -257,6 +260,10 @@ export default class PublishCourse extends React.Component {
 			saveCatalogEntry(catalogEntry, {
 				ProviderUniqueID: catalogEntry.ProviderUniqueID,
 				['is_non_public']: this.state.isNonPublic
+			}, () => {
+				if(this.optionsStore) {
+					this.optionsStore.updateVisibility();
+				}
 			});
 		});
 	}

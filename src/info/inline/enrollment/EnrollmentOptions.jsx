@@ -33,6 +33,7 @@ export default
 	availableOptions: 'availableOptions',
 	allowOpenEnrollment: 'allowOpenEnrollment',
 	error: 'error',
+	warning: 'warning',
 	loading: 'loading'
 })
 class EnrollmentOptions extends React.Component {
@@ -44,6 +45,7 @@ class EnrollmentOptions extends React.Component {
 		enrollmentOptions: PropTypes.array,
 		availableOptions: PropTypes.array,
 		loading: PropTypes.bool,
+		warning: PropTypes.string,
 		error: PropTypes.string
 	}
 
@@ -193,7 +195,7 @@ class EnrollmentOptions extends React.Component {
 	}
 
 	render () {
-		const {loading/*, availableOptions, enrollmentOptions*/} = this.props;
+		const {loading, warning /*, availableOptions, enrollmentOptions*/} = this.props;
 
 		if(loading) {
 			return <Loading.Ellipsis/>;
@@ -206,6 +208,7 @@ class EnrollmentOptions extends React.Component {
 			<div className="enrollment-options">
 				{/* <div className="enrollment-options-title"> */}
 				{/* <span>{t('enrollmentOptions')}</span> */}
+				{warning && <div className="warning">{warning}</div>}
 				<div className="enrollment-option">
 					<div className="label">{t('allowOpen')}</div>
 					<div className="control"><Input.Toggle value={this.props.allowOpenEnrollment} onChange={this.toggleOpenEnrollment}/></div>

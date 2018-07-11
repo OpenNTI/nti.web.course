@@ -66,6 +66,11 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 		return this.get('error');
 	}
 
+	updateVisibility () {
+		// should we refresh everything?
+		this.loadEnrollmentOptions(this.catalogEntry, this.courseInstance);
+	}
+
 	async toggleOpenEnrollment (allow) {
 		if(this.courseInstance) {
 			const payload = {...this.vendorInfo};
@@ -133,11 +138,18 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 		const openEnroll = enrollmentOptions.filter(x => x.MimeType.match(/openenrollment/));
 		const allowOpenEnrollment = openEnroll[0] && openEnroll[0].enabled;
 
+		if(allowOpenEnrollment && this.catalogEntry.isHidden) {
+			this.set('warning', 'This course is currently not visible in the catalog.  These enrollment options will be available once the course is configured to be visible in the catalog.');
+		}
+		else {
+			this.set('warning');
+		}
+
 		this.set('enrollmentOptions', enrollmentOptions);
 		this.set('availableOptions', availableOptionsFiltered);
 		this.set('allowOpenEnrollment', allowOpenEnrollment);
 		this.set('loading', false);
 
-		this.emitChange('enrollmentOptions', 'availableOptions', 'allowOpenEnrollment', 'loading');
+		this.emitChange('enrollmentOptions', 'availableOptions', 'allowOpenEnrollment', 'warning', 'loading');
 	}
 }

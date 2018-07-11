@@ -1,6 +1,14 @@
 @import "~@nti/style-common";
 
 .enrollment-options {
+	.warning {
+		background-color: #fffacc;
+		margin: 0 34px;
+		padding: 10px;
+		font-size: 14px;
+		font-weight: 400;
+	}
+
 	.enrollment-options-title {
 		margin-left: 35px;
 		margin-bottom: 20px;
