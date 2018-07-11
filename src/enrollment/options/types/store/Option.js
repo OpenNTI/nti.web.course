@@ -18,7 +18,10 @@ const t = scoped('course.enrollment.types.store', {
 	notEnrolled: {
 		title: 'Premium',
 		description: 'Complete access to interact with all of the content.',
-		buttonLabel: 'Purchase'
+		buttonLabel: {
+			hasPrice: 'Buy for $%(price)s',
+			noPrice: 'Purchase'
+		}
 	},
 	gifting: {
 		giftable: {

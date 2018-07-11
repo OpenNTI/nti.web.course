@@ -77,7 +77,7 @@ export default class BaseEnrollment {
 
 		//TODO: Check the option for the title
 
-		return getTranslationFor(this.getString, 'notEnrolled.title', this.catalogEntry, this.option, this.access);
+		return getTranslationFor(this.getString, 'notEnrolled.title', this.catalogEntry, this, this.access);
 	}
 
 
@@ -88,7 +88,7 @@ export default class BaseEnrollment {
 
 		//TODO: Check the option for the description
 
-		return getTranslationFor(this.getString, 'notEnrolled.description', this.catalogEntry, this.option, this.access);
+		return getTranslationFor(this.getString, 'notEnrolled.description', this.catalogEntry, this, this.access);
 	}
 
 
@@ -97,9 +97,7 @@ export default class BaseEnrollment {
 			return `!! Missing Enroll Button Label for ${this.option.Class} !!`;
 		}
 
-		//TODO: Check the option for the button label
-
-		return getTranslationFor(this.getString, 'notEnrolled.buttonLabel', this.catalogEntry, this.option, this.access);
+		return getTranslationFor(this.getString, 'notEnrolled.buttonLabel', this.catalogEntry, this, this.access);
 	}
 
 
@@ -110,7 +108,7 @@ export default class BaseEnrollment {
 
 		//TODO: Check the option for the title
 
-		return getTranslationFor(this.getString, 'enrolled.title', this.catalogEntry, this.option, this.access);
+		return getTranslationFor(this.getString, 'enrolled.title', this.catalogEntry, this, this.access);
 	}
 
 
@@ -121,7 +119,7 @@ export default class BaseEnrollment {
 
 		//TODO: Check the option for the description
 
-		return getTranslationFor(this.getString, 'enrolled.description', this.catalogEntry, this.option, this.access);
+		return getTranslationFor(this.getString, 'enrolled.description', this.catalogEntry, this, this.access);
 	}
 
 
@@ -132,6 +130,6 @@ export default class BaseEnrollment {
 
 		//TODO: Check the option for the drop button label
 
-		return getTranslationFor(this.getString, 'enrolled.buttonLabel', this.catalogEntry, this.option, this.access);
+		return getTranslationFor(this.getString, 'enrolled.buttonLabel', this.catalogEntry, this, this.access);
 	}
 }

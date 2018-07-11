@@ -21,7 +21,10 @@ const t = scoped('course.enrollment.types.five-minute', {
 	notEnrolled: {
 		title: 'For Credit',
 		description: 'Earn transcripted college credit.',
-		buttonLabel: 'Earn College Credit'
+		buttonLabel: {
+			hasPrice: 'Buy for $%(price)s',
+			noPrice: 'Earn College Credit'
+		}
 	},
 	pending: {
 		label: 'Admission Pending...',

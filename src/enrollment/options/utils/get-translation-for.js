@@ -8,6 +8,7 @@ const ATTRIBUTES = [
 	(c, o) => o && o.isEnrolled ? 'enrolled' : 'notEnrolled',
 	c => c.getStartDate() ? 'startDate' : 'noStartDate',
 	c => hasStarted(c) ? 'started' : 'notStarted',
+	(c, o) => o.getPrice ? 'hasPrice' : 'noPrice',
 	(c, o, a) => {
 		const endDate = c.getEndDate();
 		const enrolledDate = a && a.getCreatedTime();
@@ -44,9 +45,9 @@ export default function getTranslationFor (t, base, catalogEntry, option, access
 		const key = `${base}.${keyCombo.join('-')}`;
 
 		if (!t.isMissing(key)) {
-			return t(key, getCatalogEntryData(catalogEntry));
+			return t(key, getCatalogEntryData(catalogEntry, option));
 		}
 	}
 
-	return t(base, getCatalogEntryData(catalogEntry));
+	return t(base, getCatalogEntryData(catalogEntry, option));
 }
