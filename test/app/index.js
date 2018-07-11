@@ -2,13 +2,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import {getService} from '@nti/web-client';
+// import {getService} from '@nti/web-client';
 import {Layouts} from '@nti/web-commons';
 // import {Tasks} from '@nti/lib-commons';
 
 import {Enrollment} from '../../src';
 
-import Picker from './PickCourse';
+// import Picker from './PickCourse';
 
 Layouts.Responsive.setWebappContext();
 
@@ -47,6 +47,10 @@ window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 const OPEN = 'application/vnd.nextthought.courseware.openenrollmentoption';
 const FIVE_MINUTE = 'application/vnd.nextthought.courseware.fiveminuteenrollmentoption';
 const STORE = 'application/vnd.nextthought.courseware.storeenrollmentoption';
+const IMIS = 'application/vnd.nextthought.courseware.ensyncimisexternalenrollmentoption';
+
+const YESTERDAY = (new Date()).setDate((new Date()).getDate() - 1);
+const TOMORROW = (new Date()).setDate((new Date()).getDate() + 1);
 
 function buildOption () {
 	let mimeType = '';
@@ -59,8 +63,10 @@ function buildOption () {
 	let dropCutoff = null;
 	let enrollCutoff = null;
 	let ouPrice = null;
-	let apiDown = false;
+	// let apiDown = false;
 	let purchasables = null;
+	let enrollmentURL = null;
+	let seatAvailable = null;
 
 	let o = {};
 
@@ -114,21 +120,32 @@ function buildOption () {
 		return o;
 	};
 
-	o.apiDown = (x) => {
-		apiDown = x;
-		return o;
-	};
+	// o.apiDown = (x) => {
+	// 	apiDown = x;
+	// 	return o;
+	// };
 
 	o.purchasables = (x) => {
 		purchasables = x;
 		return o;
-	}
+	};
+
+	o.enrollmentURL = (x) => {
+		enrollmentURL = x;
+		return o;
+	};
+
+
+	o.seatAvailable = (x) => {
+		seatAvailable = x;
+		return o;
+	};
 
 	o.build = () => {
 		return {
 			MimeType: mimeType,
-			isEnrolled,
-			isAvailable,
+			enrolled: isEnrolled,
+			available: isAvailable,
 			description,
 			title,
 			'drop_description': dropDescription,
@@ -136,9 +153,32 @@ function buildOption () {
 			'OU_DropCutOffDate': dropCutoff,
 			'OU_EnrollCutOffDate': enrollCutoff,
 			'OU_Price': ouPrice,
-			'Purchasables': purchasables
+			'Purchasables': purchasables,
+			enrollmentURL,
+			fetchLink: (link) => {
+				if (link === 'fmaep.course.details') {
+					if (seatAvailable) {
+						return {Course: {SeatAvailable: seatAvailable}};
+					}
+
+					throw new Error('Api Down');
+				}
+			},
+			getPurchasable () {
+				return purchasables && purchasables.Items[0];
+			},
+			getPurchasableForGifting () {
+				const item = purchasables && purchasables.Items[0];
+
+				return item && item.Giftable && item;
+			},
+			getPurchasableForRedeeming () {
+				const item = purchasables && purchasables.Items[0];
+
+				return item && item.Redeemable && item;
+			}
 		};
-	}
+	};
 
 	return o;
 }
@@ -175,7 +215,7 @@ function buildPurchasable () {
 				{
 					Giftable: giftable,
 					Redeemable: redeemable,
-					Amount: price
+					amount: price
 				}
 			]
 		};
@@ -201,37 +241,40 @@ function buildCourse () {
 	c.enrolled = (x) => {
 		enrolled = x;
 		return c;
-	}
+	};
 
 	c.admin = (x) => {
 		admin = x;
 		return c;
-	}
+	};
 
 
 	c.startDate = (x) => {
 		startDate = x;
 		return c;
-	}
+	};
 
 	c.endDate = (x) => {
 		endDate = x;
 		return c;
-	}
+	};
 
 	c.build = () => {
 		return {
 			getEnrollmentOptions () {
-				return options
+				return options;
 			},
 
 			async fetchLinkParsed (rel) {
 				if (rel === 'UserCoursePreferredAccess') {
 					if (!enrolled && !admin) {
-						throw ('Not Enrolled');
+						throw new Error('Not Enrolled');
 					} else {
 						return {
-							isAdministrative: admin
+							isAdministrative: admin,
+							getCreatedTime () {
+								return YESTERDAY;
+							}
 						};
 					}
 				}
@@ -246,31 +289,49 @@ function buildCourse () {
 			getEndDate () {
 				return endDate;
 			}
-		}
-	}
+		};
+	};
 
 	return c;
 }
 
 const course = buildCourse()
-	.enrolled(true)
+	.enrolled(false)
+	.startDate(TOMORROW)
+	// .endDate(YESTERDAY)
 	.addOption(
 		buildOption()
 			.type(OPEN)
 			.available(true)
-			.enrolled(true)
+			.enrolled(false)
 			.build()
 	)
 	.addOption(
 		buildOption()
 			.type(FIVE_MINUTE)
 			.available(false)
+			.ouPrice(200)
+			.seatAvailable(10)
 			.build()
 	)
 	.addOption(
 		buildOption()
 			.type(STORE)
+			.available(true)
+			.purchasables(
+				buildPurchasable()
+					.price(100)
+					.giftable(true)
+					.redeemable(true)
+					.build()
+			)
+			.build()
+	)
+	.addOption(
+		buildOption()
+			.type(IMIS)
 			.available(false)
+			.enrollmentURL('http://www.google.com')
 			.build()
 	)
 	.build();
