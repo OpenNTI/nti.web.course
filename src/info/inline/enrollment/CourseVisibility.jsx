@@ -23,7 +23,7 @@ const t = scoped('course.info.inline.widgets.CourseVisibility', {
 export default class CourseVisibility extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
-		courseInstance: PropTypes.object.isRequired,
+		courseInstance: PropTypes.object,
 		onVisibilityChanged: PropTypes.func
 	}
 
