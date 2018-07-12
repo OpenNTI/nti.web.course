@@ -210,7 +210,7 @@ class EnrollmentOptions extends React.Component {
 					<div className="label">{t('allowOpen')}</div>
 					<div className="control"><Input.Toggle value={this.props.allowOpenEnrollment} onChange={this.toggleOpenEnrollment}/></div>
 				</div>
-				{this.allowsExternalEnrollment() && (
+				{(this.allowsExternalEnrollment() || this.hasExternalEnrollment()) && (
 					<div className="enrollment-option">
 						<div className="label">{t('allowCustomExternal')}</div>
 						<div className="control"><Input.Toggle value={this.hasExternalEnrollment()} onChange={this.toggleExternalEnrollment}/></div>
