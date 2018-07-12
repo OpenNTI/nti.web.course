@@ -7,6 +7,7 @@ import Registry from '../Registry';
 
 import Description from './Description';
 import EnrollButton from './EnrollButton';
+import DropButton from './DropButton';
 
 const t = scoped('course.enrollment.types.five-minute', {
 	enrolled: {
@@ -44,6 +45,10 @@ const t = scoped('course.enrollment.types.five-minute', {
 		zero: 'No Seats Remaining',
 		one: '%(count)s Seat Available',
 		other: '%(count)s Seats Available'
+	},
+	dropInfo: {
+		title: 'How do I drop?',
+		description: 'Please contact your site administrator for assistance dropping the course.'
 	}
 });
 
@@ -60,6 +65,7 @@ export default class FiveMinuteEnrollmentOption extends Base {
 
 	Description = Description
 	EnrollButton = EnrollButton
+	DropButton = DropButton
 
 	isPending () {
 		return this.admissionState === 'Pending';
@@ -136,5 +142,15 @@ export default class FiveMinuteEnrollmentOption extends Base {
 
 	getAvailabelSeatsLabel () {
 		return this.getString('seatsAvailable', {count: this.availableSeats});
+	}
+
+
+	getDropInfoTitle () {
+		return getTranslationFor(this.getString, 'dropInfo.title', this.catalogEntry, this.option, this.access);
+	}
+
+
+	getDropInfoDescription () {
+		return getTranslationFor(this.getString, 'dropInfo.description', this.catalogEntry, this.option, this.access);
 	}
 }
