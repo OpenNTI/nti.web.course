@@ -29,6 +29,12 @@ export default class WebinarOverviewEditor extends React.Component {
 
 	state = {}
 
+	constructor (props) {
+		super(props);
+
+		this.state = {selectedSection: props.overviewGroup, selectedRank: (props.overviewGroup.Items || []).length + 1};
+	}
+
 	renderDate () {
 		return <div className="date"><div className="month">Dec</div><div className="day">22</div></div>;
 	}
@@ -109,7 +115,7 @@ export default class WebinarOverviewEditor extends React.Component {
 		return (
 			<div className="position-section">
 				<div className="section-title">{t('position')}</div>
-				<PositionSelect lessonOverview={this.props.lessonOverview} overviewGroup={this.props.overviewGroup} onChange={this.onPositionChange}/>
+				<PositionSelect lessonOverview={this.props.lessonOverview} overviewGroup={this.state.selectedSection} onChange={this.onPositionChange}/>
 			</div>
 		);
 	}
@@ -152,10 +158,11 @@ export default class WebinarOverviewEditor extends React.Component {
 
 	onSave = () => {
 		const {onAddToLesson} = this.props;
+		const {selectedSection, selectedRank, img, webinar} = this.state;
 
 		if(onAddToLesson) {
 			// gather up state from position select and anything else?
-			onAddToLesson();
+			onAddToLesson(selectedSection, selectedRank, img, webinar);
 		}
 	}
 
