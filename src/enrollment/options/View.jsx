@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Loading} from '@nti/web-commons';
+import { Loading, HOC } from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import Store from './Store';
@@ -70,20 +70,27 @@ export default class CourseEnrollmentOptions extends React.Component {
 	}
 
 
+	onItemChange = () => {
+		const { store } = this.props;
+		store.setup();
+	}
+
 	render () {
-		const {className, loading, error, enrolled} = this.props;
+		const {className, loading, error, enrolled, catalogEntry} = this.props;
 
 		return (
-			<div className={cx('nti-course-enrollment-options', className, {'is-enrolled': enrolled})}>
-				<div className="enrollment-container">
-					{loading && (<Loading.Spinner />)}
-					{!loading && error && (this.renderError())}
-					{!loading && !error && (this.renderOptions())}
+			<HOC.ItemChanges item={catalogEntry} onItemChanged={this.onItemChange}>
+				<div className={cx('nti-course-enrollment-options', className, {'is-enrolled': enrolled})}>
+					<div className="enrollment-container">
+						{loading && (<Loading.Spinner />)}
+						{!loading && error && (this.renderError())}
+						{!loading && !error && (this.renderOptions())}
+					</div>
+					<div className="gift-container">
+						{!loading && !error && (this.renderGift())}
+					</div>
 				</div>
-				<div className="gift-container">
-					{!loading && !error && (this.renderGift())}
-				</div>
-			</div>
+			</HOC.ItemChanges>
 		);
 	}
 
