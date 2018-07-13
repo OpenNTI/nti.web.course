@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DialogButtons, RemoveButton} from '@nti/web-commons';
+import {DialogButtons, RemoveButton, DateTime} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {ImageEditor} from '@nti/web-whiteboard';
 
@@ -23,6 +23,7 @@ export default class WebinarOverviewEditor extends React.Component {
 	static propTypes = {
 		lessonOverview: PropTypes.object.isRequired,
 		overviewGroup: PropTypes.object.isRequired,
+		webinar: PropTypes.object.isRequired,
 		onCancel: PropTypes.func,
 		onAddToLesson: PropTypes.func
 	}
@@ -32,11 +33,26 @@ export default class WebinarOverviewEditor extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = {selectedSection: props.overviewGroup, selectedRank: (props.overviewGroup.Items || []).length + 1};
+		const nearestSession = props.webinar.getNearestSession();
+
+		this.state = {
+			startDate: nearestSession && nearestSession.getStartTime(),
+			endDate: nearestSession && nearestSession.getEndTime(),
+			selectedSection: props.overviewGroup,
+			selectedRank: (props.overviewGroup.Items || []).length + 1,
+			webinar: props.webinar
+		};
 	}
 
 	renderDate () {
-		return <div className="date"><div className="month">Dec</div><div className="day">22</div></div>;
+		const {startDate} = this.state;
+
+		return (
+			<div className="date">
+				<div className="month">{DateTime.format(startDate, 'MMM')}</div>
+				<div className="day">{DateTime.format(startDate, 'D')}</div>
+			</div>
+		);
 	}
 
 	onImageUpload = async (editorState) => {
@@ -56,14 +72,24 @@ export default class WebinarOverviewEditor extends React.Component {
 	}
 
 	renderWebinarInfo () {
-		// TODO: Populate with actual webinar info, not the plot to Hard Ticket to Hawaii
+		const {webinar} = this.props;
+		const {startDate, endDate} = this.state;
+
+		let info = '';
+
+		if(startDate && endDate) {
+			const timeDiff = (endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60;
+
+			info = timeDiff + 'HR';
+		}
+
 		return (
 			<div className="webinar-info">
-				<div className="title">Never Settle: Using LinkedIn for Brand Marketing</div>
-				<div className="time-info">Live 2HR Webinar Sunday at 1:30 PM PDT</div>
+				<div className="title">{webinar.subject}</div>
+				<div className="time-info">Live {info} Webinar {DateTime.format(startDate, 'dddd [at] hh:mm a z')}</div>
 				<div className="image-and-description">
 					{this.renderImage()}
-					<div className="description">Two drug enforcement agents are killed on a private Hawaiian island. Donna and Taryn, two operatives for The Agency (Molokai Cargo), accidentally intercept a delivery of diamonds intended for drug lord Seth Romero, who takes exception and tries to get them back. Soon other Agency operatives get involved, and a full-scale fight to the finish ensues, complicated here and there by a contaminated snake made deadly by toxic cancer-infested rats!</div>
+					<div className="description">{webinar.description}</div>
 				</div>
 			</div>
 		);
@@ -161,7 +187,6 @@ export default class WebinarOverviewEditor extends React.Component {
 		const {selectedSection, selectedRank, img, webinar} = this.state;
 
 		if(onAddToLesson) {
-			// gather up state from position select and anything else?
 			onAddToLesson(selectedSection, selectedRank, img, webinar);
 		}
 	}

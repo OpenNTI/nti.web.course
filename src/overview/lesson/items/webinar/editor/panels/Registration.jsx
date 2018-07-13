@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
@@ -12,12 +12,14 @@ const t = scoped('course.overview.lesson.items.webinar.editor.panels.Registratio
 	step2: 'Find the webinar you want to add',
 	step3: 'Click "Share"',
 	step4: 'Click "Copy Registration Link"',
-	placeholder: 'Enter or paste a webinar key'
+	placeholder: 'Enter or paste a webinar key',
+	webinarLinkDesc: 'Find a webinar by browsing',
+	pasteLink: 'Click Here'
 });
 
 export default class WebinarRegistrationEditor extends React.Component {
 	static propTypes = {
-
+		onLinkClick: PropTypes.func
 	}
 
 	state = {}
@@ -49,11 +51,21 @@ export default class WebinarRegistrationEditor extends React.Component {
 	render () {
 		return (
 			<div className="webinar-registration-editor">
-				<div className="title">{t('title')}</div>
-				<div className="description">{t('description')}</div>
-				{!this.state.learnMoreExpanded && <div onClick={this.showMoreInfo} className="learn-more">{t('learnMore')}</div>}
-				{this.state.learnMoreExpanded && this.renderSteps()}
-				<Input.Text value={this.state.key} onChange={this.onTextChange} placeholder={t('placeholder')}/>
+				<div className="link-bar">
+					<span>{t('webinarLinkDesc')}</span>
+					<span className="go-to-link" onClick={() => {
+						if(this.props.onLinkClick) {
+							this.props.onLinkClick();
+						}
+					}}>{t('pasteLink')}</span>
+				</div>
+				<div className="contents">
+					<div className="title">{t('title')}</div>
+					<div className="description">{t('description')}</div>
+					{!this.state.learnMoreExpanded && <div onClick={this.showMoreInfo} className="learn-more">{t('learnMore')}</div>}
+					{this.state.learnMoreExpanded && this.renderSteps()}
+					<Input.Text value={this.state.key} onChange={this.onTextChange} placeholder={t('placeholder')}/>
+				</div>
 			</div>
 		);
 	}
