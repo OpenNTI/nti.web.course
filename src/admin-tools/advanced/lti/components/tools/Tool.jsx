@@ -78,7 +78,7 @@ export default class Tool extends Component {
 		const { showEditor } = this.state;
 
 		return (
-			<HOC.ItemChanges item={item} onItemChange={this.onItemChange}>
+			<HOC.ItemChanges item={item} onItemChanged={this.onItemChange}>
 				<li className="lti-configured-tool">
 					<div className="lti-tool-title">{item.title}</div>
 					{this.renderOptions()}
