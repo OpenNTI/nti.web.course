@@ -6,7 +6,7 @@ import Registry from '../Registry';
 
 export default
 @Registry.register('application/vnd.nextthought.webinarasset')
-class OverviewItemView extends React.Component {
+class LessonOverviewWebinarAsset extends React.Component {
 
 	static propTypes = {
 		item: PropTypes.object,
