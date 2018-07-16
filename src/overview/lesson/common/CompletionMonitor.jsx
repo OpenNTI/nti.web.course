@@ -10,7 +10,7 @@ class CompletionMonitor extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		readOnly: PropTypes.bool,
-		component: PropTypes.node
+		component: PropTypes.any.isRequired
 	}
 
 	afterBatchEvents (events) {
