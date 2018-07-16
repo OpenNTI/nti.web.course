@@ -148,9 +148,10 @@ export default class CourseInfo extends React.Component {
 		Store.removeChangeListener(this.onStoreChange);
 	}
 
-	componentWillReceiveProps (newProps) {
-		if(newProps.catalogEntry !== this.props.catalogEntry) {
-			this.setState({catalogEntry : newProps.catalogEntry});
+	componentDidUpdate (prevProps) {
+		const {catalogEntry} = this.props;
+		if(prevProps.catalogEntry !== catalogEntry) {
+			this.setState({catalogEntry});
 		}
 	}
 

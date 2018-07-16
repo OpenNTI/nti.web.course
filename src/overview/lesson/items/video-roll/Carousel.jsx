@@ -47,16 +47,14 @@ export default class VideoRollCarousel extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (nextProps.item !== this.props.item) {
-			this.getDataIfNeeded(nextProps);
-		}
-	}
-
-
-	componentDidUpdate () {
+	componentDidUpdate (prevProps) {
 		const {videos, state: {offsetWidth}} = this;
 		const renderedOffsetWidth = videos && videos.offsetWidth;
+
+		if (prevProps.item !== this.props.item) {
+			this.getDataIfNeeded(this.props);
+		}
+
 		if (offsetWidth !== renderedOffsetWidth) {
 			this.setState({offsetWidth: renderedOffsetWidth});//eslint-disable-line react/no-did-update-set-state
 		}

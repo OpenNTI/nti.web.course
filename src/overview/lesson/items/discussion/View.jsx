@@ -70,18 +70,19 @@ class LessonOverviewDiscussion extends React.Component {
 
 	state = {}
 
-	componentWillReceiveProps (nextProps) {
-		const {item:nextItem, course:nextCourse} = nextProps;
-		const {item:oldItem, course:oldCourse} = this.props;
-
-		if (nextItem !== oldItem || nextCourse !== oldCourse) {
-			this.setupFor(nextProps);
-		}
-	}
-
 
 	componentDidMount () {
 		this.setupFor(this.props);
+	}
+
+
+	componentDidUpdate (prevProps) {
+		const {item:nextItem, course:nextCourse} = this.props;
+		const {item:oldItem, course:oldCourse} = prevProps;
+
+		if (nextItem !== oldItem || nextCourse !== oldCourse) {
+			this.setupFor(this.props);
+		}
 	}
 
 

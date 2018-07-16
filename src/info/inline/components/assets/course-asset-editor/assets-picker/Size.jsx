@@ -15,18 +15,18 @@ export default class AssetPickerSize extends React.Component {
 
 	state = {}
 
-	componentWillReceiveProps (newProps) {
-		const {asset:newAsset, formatting: newFormatting} = newProps;
-		const {asset:oldAsset, formatting: oldFormatting} = this.props;
-
-		if (newAsset !== oldAsset || newFormatting !== oldFormatting) {
-			this.loadSrcFor(newProps);
-		}
+	componentDidMount () {
+		this.loadSrcFor();
 	}
 
 
-	componentDidMount () {
-		this.loadSrcFor();
+	componentDidUpdate (prevProps) {
+		const {asset:newAsset, formatting: newFormatting} = this.props;
+		const {asset:oldAsset, formatting: oldFormatting} = prevProps;
+
+		if (newAsset !== oldAsset || newFormatting !== oldFormatting) {
+			this.loadSrcFor();
+		}
 	}
 
 

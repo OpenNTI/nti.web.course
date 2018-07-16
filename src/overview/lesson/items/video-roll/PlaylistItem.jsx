@@ -28,9 +28,9 @@ export default class PlaylistItem extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (this.props.item !== nextProps.item) {
-			this.resolveDuration(nextProps);
+	componentDidUpdate (prevProps) {
+		if (this.props.item !== prevProps.item) {
+			this.resolveDuration();
 		}
 	}
 

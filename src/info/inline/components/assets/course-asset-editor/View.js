@@ -38,12 +38,12 @@ export default class CourseAssetEditor extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {catalogEntry:newEntry} = nextProps;
-		const {catalogEntry:oldEntry} = this.props;
+	componentDidUpdate (prevProps) {
+		const {catalogEntry:newEntry} = this.props;
+		const {catalogEntry:oldEntry} = prevProps;
 
 		if (newEntry !== oldEntry) {
-			this.setupFor(nextProps);
+			this.setupFor(this.props);
 		}
 	}
 
@@ -220,4 +220,3 @@ export default class CourseAssetEditor extends React.Component {
 		);
 	}
 }
-

@@ -50,9 +50,9 @@ class CourseRosterView extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {course:nextCourse} = nextProps;
-		const {course:oldCourse} = this.props;
+	componentDidUpdate (prevProps) {
+		const {course:nextCourse} = this.props;
+		const {course:oldCourse} = prevProps;
 
 		if (nextCourse !== oldCourse) {
 			store.loadCourse(nextCourse);

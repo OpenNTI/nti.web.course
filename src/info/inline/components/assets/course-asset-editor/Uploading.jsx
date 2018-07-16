@@ -38,17 +38,18 @@ export default class CourseAssetUploading extends React.Component {
 	state = {}
 
 
-	componentWillReceiveProps (nextProps) {
-		const {uploadProgress:newProgress, uploaded: newUploaded, uploadError: newError} = nextProps;
-		const {uploadProgress:oldProgress, uploaded: oldUploaded, uploadError: oldError} = this.props;
-
-		if (newProgress !== oldProgress || newUploaded !== oldUploaded || newError !== oldError) {
-			this.setupFor(nextProps);
-		}
-	}
-
 	componentDidMount () {
 		this.setupFor(this.props);
+	}
+
+
+	componentDidUpdate (prevProps) {
+		const {uploadProgress:newProgress, uploaded: newUploaded, uploadError: newError} = this.props;
+		const {uploadProgress:oldProgress, uploaded: oldUploaded, uploadError: oldError} = prevProps;
+
+		if (newProgress !== oldProgress || newUploaded !== oldUploaded || newError !== oldError) {
+			this.setupFor(this.props);
+		}
 	}
 
 

@@ -13,14 +13,6 @@ export default class LessonOverviewVideoListItem extends React.Component {
 
 	state = {poster: null}
 
-	componentWillReceiveProps (nextProps) {
-		const {item:nextItem} = nextProps;
-		const {item:oldItem} = this.props;
-
-		if (nextItem !== oldItem) {
-			this.setupFor(nextProps);
-		}
-	}
 
 	componentDidMount () {
 		this.setupFor(this.props);
@@ -30,6 +22,16 @@ export default class LessonOverviewVideoListItem extends React.Component {
 	componentWillUnmount () {
 		this.unmounted = this;
 		this.setState = () => {};
+	}
+
+
+	componentDidUpdate (prevProps) {
+		const {item:nextItem} = this.props;
+		const {item:oldItem} = prevProps;
+
+		if (nextItem !== oldItem) {
+			this.setupFor(this.props);
+		}
 	}
 
 

@@ -54,9 +54,8 @@ class PackageWizard extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		const { bundle } = this.props;
-		const nextBundle = nextProps.bundle;
+	componentDidUpdate ({bundle}) {
+		const {bundle: nextBundle} = this.props;
 
 		if (bundle.getID() !== nextBundle.getID()) {
 			this.hasScormPackage = nextBundle.Metadata && nextBundle.Metadata.getLink('LaunchSCORM');

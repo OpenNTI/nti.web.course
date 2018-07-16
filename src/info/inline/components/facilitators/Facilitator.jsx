@@ -61,12 +61,12 @@ export default class Facilitator extends React.Component {
 		}
 	}
 
-	componentWillReceiveProps (nextProps) {
-		if(this.props.facilitator.imageUrl !== nextProps.facilitator.imageUrl) {
+	componentDidUpdate (prevProps) {
+		if(this.props.facilitator.imageUrl !== prevProps.facilitator.imageUrl) {
 			this.setState({
 				validImage: false
 			}, () => {
-				this.validateImage(nextProps);
+				this.validateImage(this.props);
 			});
 		}
 	}

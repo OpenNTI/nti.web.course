@@ -53,8 +53,8 @@ export default class BasicTabPanel extends React.Component {
 		this.loadAccessCode(props);
 	}
 
-	componentWillReceiveProps (nextProps) {
-		this.loadAccessCode(nextProps);
+	componentDidUpdate () {
+		this.loadAccessCode(this.props);
 	}
 
 	loadAccessCode (props) {

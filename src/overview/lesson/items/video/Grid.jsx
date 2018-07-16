@@ -51,12 +51,12 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	}
 
 
-	componentWillReceiveProps (nextProps) {
-		if (this.getID() !== this.getID(nextProps)) {
-			this.fillInVideo(nextProps);
+	componentDidUpdate (prevProps) {
+		if (this.getID() !== this.getID(prevProps)) {
+			this.fillInVideo(this.props);
 		}
 
-		if (this.props.activeIndex !== nextProps.activeIndex) {
+		if (this.props.activeIndex !== prevProps.activeIndex) {
 			this.setState({interacted: false, playing: false});
 		}
 	}
