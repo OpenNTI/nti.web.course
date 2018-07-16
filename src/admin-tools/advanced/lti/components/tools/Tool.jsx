@@ -32,7 +32,10 @@ export default class Tool extends Component {
 	}
 
 	onShowEditor = () => {
-		this.flyout.dismiss();
+		if (this.flyout) {
+			this.flyout.dismiss();
+		}
+
 		this.setState({ showEditor: true });
 	}
 
