@@ -5,7 +5,7 @@ import { List } from '../../Constants';
 import Registry from '../Registry';
 
 export default
-@Registry.register('application/vnd.nextthought.webinar')
+@Registry.register('application/vnd.nextthought.webinarasset')
 class OverviewItemView extends React.Component {
 
 	static propTypes = {
