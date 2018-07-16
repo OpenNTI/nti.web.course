@@ -51,6 +51,14 @@ export default class WebinarEditor extends React.Component {
 				{/* {!this.props.activePanel && <div onClick={this.togglePanel}>Toggle</div>} */}
 				{this.state.activePanel === REGISTRATION && (
 					<Registration
+						onWebinarSelected={(selectedWebinar) => {
+							this.setState({activePanel: OVERVIEW, webinar: selectedWebinar});
+						}}
+						onAddAsExternalLink={(url) => {
+							// what to do here
+							console.log(url);
+						}}
+						context={course}
 						onLinkClick={() => {
 							this.setState({activePanel: BROWSE_LIST});
 						}}

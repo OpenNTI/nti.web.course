@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Input} from '@nti/web-commons';
+import {GotoWebinar} from '@nti/web-integrations';
+import cx from 'classnames';
 
 const t = scoped('course.overview.lesson.items.webinar.editor.panels.Registration', {
 	title: 'Paste or Enter a Registration Link',
@@ -14,12 +15,18 @@ const t = scoped('course.overview.lesson.items.webinar.editor.panels.Registratio
 	step4: 'Click "Copy Registration Link"',
 	placeholder: 'Enter or paste a webinar key',
 	webinarLinkDesc: 'Find a webinar by browsing',
-	pasteLink: 'Click Here'
+	pasteLink: 'Click Here',
+	addAsResourceTitle: 'Add as web resource instead?',
+	addAsResourceDesc: 'Reporting, completion controls, and other benefits of our webinar integration will not be available.',
+	addAsResourceLink: 'Yes, add anyway.'
 });
 
 export default class WebinarRegistrationEditor extends React.Component {
 	static propTypes = {
-		onLinkClick: PropTypes.func
+		context: PropTypes.object.isRequired,
+		onLinkClick: PropTypes.func,
+		onWebinarSelected: PropTypes.func,
+		onAddAsExternalLink: PropTypes.func
 	}
 
 	state = {}
@@ -44,13 +51,43 @@ export default class WebinarRegistrationEditor extends React.Component {
 		this.setState({learnMoreExpanded: true});
 	}
 
-	onTextChange = (val) => {
-		this.setState({key: val});
+	onSuccess = (webinar) => {
+		const {onWebinarSelected} = this.props;
+
+		if(onWebinarSelected) {
+			onWebinarSelected(webinar);
+		}
+	}
+
+	onFailure = (e, inputValue) => {
+		// TODO: Test inputValue against a URL pattern
+
+		this.setState({error: e, externalLink: inputValue});
+	}
+
+	renderAddAsResource () {
+		return (
+			<div className="add-as-resource">
+				<div className="title">{t('addAsResourceTitle')}</div>
+				<div className="description">{t('addAsResourceDesc')}</div>
+				<div className="add-link" onClick={() => {
+					const {onAddAsExternalLink} = this.props;
+
+					if(onAddAsExternalLink) {
+						onAddAsExternalLink(this.state.externalLink);
+					}
+				}}>{t('addAsResourceLink')}</div>
+			</div>
+		);
 	}
 
 	render () {
+		const {error, externalLink} = this.state;
+
+		const cls = cx('webinar-registration-editor', {error: Boolean(error)});
+
 		return (
-			<div className="webinar-registration-editor">
+			<div className={cls}>
 				<div className="link-bar">
 					<span>{t('webinarLinkDesc')}</span>
 					<span className="go-to-link" onClick={() => {
@@ -64,7 +101,9 @@ export default class WebinarRegistrationEditor extends React.Component {
 					<div className="description">{t('description')}</div>
 					{!this.state.learnMoreExpanded && <div onClick={this.showMoreInfo} className="learn-more">{t('learnMore')}</div>}
 					{this.state.learnMoreExpanded && this.renderSteps()}
-					<Input.Text value={this.state.key} onChange={this.onTextChange} placeholder={t('placeholder')}/>
+					<GotoWebinar.Input.Text context={this.props.context} onSuccess={this.onSuccess} onFailure={this.onFailure}/>
+					{error && <div className="error">{error}</div>}
+					{error && externalLink && this.renderAddAsResource()}
 				</div>
 			</div>
 		);

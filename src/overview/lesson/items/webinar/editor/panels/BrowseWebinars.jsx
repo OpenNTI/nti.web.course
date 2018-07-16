@@ -45,17 +45,19 @@ export default class BrowseWebinars extends React.Component {
 
 	render () {
 		return (
-			<div className="webinar-browse-webinars">
-				<div className="link-bar">
-					<span>{t('webinarLinkDesc')}</span>
-					<span className="go-to-link" onClick={() => {
-						if(this.props.onLinkClick) {
-							this.props.onLinkClick();
-						}
-					}}>{t('pasteLink')}</span>
+			<GotoWebinar.IfConnected>
+				<div className="webinar-browse-webinars">
+					<div className="link-bar">
+						<span>{t('webinarLinkDesc')}</span>
+						<span className="go-to-link" onClick={() => {
+							if(this.props.onLinkClick) {
+								this.props.onLinkClick();
+							}
+						}}>{t('pasteLink')}</span>
+					</div>
+					<GotoWebinar.UpcomingWebinars context={this.props.course}/>
 				</div>
-				<GotoWebinar.UpcomingWebinars context={this.props.course}/>
-			</div>
+			</GotoWebinar.IfConnected>
 		);
 	}
 }
