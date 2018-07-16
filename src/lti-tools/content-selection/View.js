@@ -20,11 +20,11 @@ class ContentSelection extends Component {
 	}
 
 	componentDidMount () {
-		window.addEventListener('message', this.selectedContent, false);
+		global.addEventListener('message', this.selectedContent, false);
 	}
 
 	componentWillUnmount () {
-		window.removeEventListener('message', this.selectedContent);
+		global.removeEventListener('message', this.selectedContent);
 	}
 
 	selectedContent = ({ data }) => {

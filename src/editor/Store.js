@@ -17,7 +17,7 @@ function init (instance) {
 
 	});
 
-	window.CourseEditorStore = instance;
+	global.CourseEditorStore = instance;
 }
 
 class Store extends StorePrototype {

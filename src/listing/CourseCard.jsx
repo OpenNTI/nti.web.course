@@ -63,7 +63,7 @@ export default class CourseCard extends React.Component {
 		if(course.hasLink('Export')) {
 			this.optionsFlyout && this.optionsFlyout.dismiss();
 
-			window.location.href = course.getLink('Export');
+			global.location.href = course.getLink('Export');
 		}
 	}
 

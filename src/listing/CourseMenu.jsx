@@ -75,7 +75,7 @@ export default class CourseMenu extends React.Component {
 	}
 
 	launchSupportRequest () {
-		window.location.href = 'mailto:support@nextthought.com?subject=Support%20Request';
+		global.location.href = 'mailto:support@nextthought.com?subject=Support%20Request';
 	}
 
 	renderSupportLink () {
