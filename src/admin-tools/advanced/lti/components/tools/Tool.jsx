@@ -31,7 +31,8 @@ export default class Tool extends Component {
 		this.setState({ showEditor: false });
 	}
 
-	showEditor = () => {
+	onShowEditor = () => {
+		this.flyout.dismiss();
 		this.setState({ showEditor: true });
 	}
 
@@ -60,7 +61,7 @@ export default class Tool extends Component {
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 			>
 				<React.Fragment>
-					<div className="lti-configured-tool-edit" onClick={this.showEditor}>
+					<div className="lti-configured-tool-edit" onClick={this.onShowEditor}>
 						<i className="icon-edit" />
 						{t('edit')}
 					</div>
