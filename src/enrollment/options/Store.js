@@ -34,7 +34,7 @@ export default class CourseEnrollmentOptionsStore extends Stores.SimpleStore {
 
 	async load (catalogEntry) {
 		if (catalogEntry === this.get('catalogEntry')) { return; }
-		catalogEntry.addListener('change', this.setup);
+
 		this.set('catalogEntry', catalogEntry);
 		this.set('loading', true);
 		this.emitChange('loading', 'catalogEntry');
