@@ -16,9 +16,11 @@ export default class WebinarEditor extends React.Component {
 		course: PropTypes.object.isRequired,
 		lessonOverview: PropTypes.object.isRequired,
 		overviewGroup: PropTypes.object.isRequired,
+		webinar: PropTypes.object,
 		onCancel: PropTypes.func,
 		onAddToLesson: PropTypes.func,
-		onAddAsExternalLink: PropTypes.func
+		onAddAsExternalLink: PropTypes.func,
+		onDelete: PropTypes.func
 	}
 
 	state = {
@@ -26,8 +28,13 @@ export default class WebinarEditor extends React.Component {
 	}
 
 	componentDidMount () {
-		if(this.props.activePanel) {
-			this.setState({activePanel: this.props.activePanel});
+		const {webinar: webinarAsset, activePanel} = this.props;
+
+		if(webinarAsset) {
+			this.setState({activePanel: OVERVIEW, webinar: webinarAsset.webinar});
+		}
+		else if(activePanel) {
+			this.setState({activePanel: activePanel});
 		}
 	}
 
@@ -44,7 +51,7 @@ export default class WebinarEditor extends React.Component {
 	}
 
 	render () {
-		const {onCancel, onAddToLesson, lessonOverview, overviewGroup, course} = this.props;
+		const {onCancel, onAddToLesson, onDelete, lessonOverview, overviewGroup, course} = this.props;
 		const {webinar} = this.state;
 
 		return (
@@ -84,6 +91,7 @@ export default class WebinarEditor extends React.Component {
 						webinar={webinar}
 						onCancel={onCancel}
 						onAddToLesson={onAddToLesson}
+						onDelete={onDelete}
 					/>
 				)}
 			</div>

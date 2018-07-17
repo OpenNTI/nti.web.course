@@ -154,6 +154,18 @@
 		padding-left: 80px;
 		padding-bottom: 70px;
 
+		.delete-button {
+			background-color: $primary-red;
+			color: white;
+			line-height: 36px;
+			padding: 0 2rem;
+			border-radius: 3px;
+			text-align: center;
+			display: inline-block;
+			margin-top: 1rem;
+			cursor: pointer;
+		}
+
 		.section-title {
 			padding-top: 20px;
 			font-size: 16px;

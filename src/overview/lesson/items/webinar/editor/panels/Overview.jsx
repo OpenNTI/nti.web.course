@@ -16,7 +16,8 @@ const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', 
 	autoCompletionDesc: 'Define what is required for learners to complete this webinar.',
 	requiredSubmissions: 'Required Submissions',
 	minimumPercentWatched: 'Minimum Percent Watched',
-	infoTip: 'Guarantee all learners have access to your content by reviewing your GoToWebinar registration and attendee limits.'
+	infoTip: 'Guarantee all learners have access to your content by reviewing your GoToWebinar registration and attendee limits.',
+	delete: 'Delete'
 });
 
 export default class WebinarOverviewEditor extends React.Component {
@@ -25,7 +26,8 @@ export default class WebinarOverviewEditor extends React.Component {
 		overviewGroup: PropTypes.object.isRequired,
 		webinar: PropTypes.object.isRequired,
 		onCancel: PropTypes.func,
-		onAddToLesson: PropTypes.func
+		onAddToLesson: PropTypes.func,
+		onDelete: PropTypes.func
 	}
 
 	state = {}
@@ -166,9 +168,12 @@ export default class WebinarOverviewEditor extends React.Component {
 	// }
 
 	renderOtherInfo () {
+		const {onDelete} = this.props;
+
 		return (
 			<div className="other-info">
 				{this.renderPosition()}
+				{onDelete && <div className="delete-button" onClick={() => { onDelete(); }}>{t('delete')}</div>}
 				{/* {this.renderAutoCompletion()} */}
 			</div>
 		);
