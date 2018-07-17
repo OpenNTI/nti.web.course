@@ -131,7 +131,6 @@ class Base extends Component {
 		return (
 			<Dialog closeOnMaskClick onBeforeDismiss={this.onBeforeDismiss}>
 				<div className="lti-base-tool-editing">
-					{loading && <Loading.Mask maskScreen message="Loading..." />}
 					<Panels.TitleBar title={title} iconAction={this.onBeforeDismiss} />
 					{error && <span className="lti-base-tool-error">{error}</span>}
 					<Label className="config-type-label" label="Configuration Type">
@@ -143,6 +142,7 @@ class Base extends Component {
 					</Label>
 					{this.renderForm()}
 					<DialogButtons className="lti-base-add-controls" buttons={buttons} />
+					{loading && <Loading.Mask maskScreen message="Loading..." />}
 				</div>
 			</Dialog>
 		);
