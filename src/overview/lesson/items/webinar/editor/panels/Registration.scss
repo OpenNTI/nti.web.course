@@ -1,0 +1,122 @@
+@import '~@nti/style-common';
+
+.webinar-registration-editor {
+	.link-bar {
+		background-color: #fafafa;
+		font-size: 12px;
+		line-height: 30px;
+		padding-left: 1.5rem;
+
+		.go-to-link {
+			color: $primary-blue;
+			margin-left: 0.5rem;
+			cursor: pointer;
+		}
+	}
+
+	.contents {
+		padding: 0 1.5rem;
+		width: 430px;
+		margin: 0 auto;
+
+		.title {
+			font-size: 24px;
+			font-weight: 300;
+			line-height: 33px;
+			color: $primary-grey;
+			margin-bottom: 15px;
+		}
+
+		.description {
+			font-size: 14px;
+			color: $secondary-grey;
+			line-height: 22px;
+			margin-bottom: 5px;
+		}
+
+		.learn-more {
+			color: $tertiary-grey;
+			font-size: 14px;
+			line-height: 22px;
+			font-weight: 300;
+			cursor: pointer;
+		}
+
+		.error {
+			color: $primary-red;
+			font-size: 14px;
+			margin-top: 0.5rem;
+		}
+
+		.nti-text-input {
+			width: 430px;
+			margin-top: 32px;
+		}
+
+		.learn-more-content {
+			.steps-title {
+				font-size: 10px;
+				color: $tertiary-grey;
+				text-transform: uppercase;
+				font-weight: bold;
+				margin-top: 20px;
+				margin-bottom: 18px;
+			}
+
+			.step {
+				display: flex;
+				color: $secondary-grey;
+				font-size: 14px;
+				line-height: 32px;
+				margin-bottom: 10px;
+
+				.step-number {
+					border-radius: 32px;
+					width: 32px;
+					height: 32px;
+					line-height: 32px;
+					font-size: 12px;
+					text-align: center;
+					color: $tertiary-grey;
+					border: solid 1px $tertiary-grey;
+					margin-right: 10px;
+				}
+			}
+		}
+
+		.add-as-resource {
+			box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+			border-radius: 3px;
+			background-color: #fbfbfb;
+			border: 1px solid #e2e2e2;
+			padding: 10px 14px;
+			margin-top: 15px;
+			width: 430px;
+
+			.title {
+				color: $primary-grey;
+				font-size: 16px;
+				margin-bottom: 5px;
+			}
+
+			.description {
+				color: $secondary-grey;
+				font-size: 14px;
+				margin-bottom: 5px;
+				font-weight: 300;
+			}
+
+			.add-link {
+				color: $primary-blue;
+				cursor: pointer;
+				font-size: 14px;
+			}
+		}
+	}
+
+	&.error {
+		.nti-text-input {
+			border: solid 1px $primary-red;
+		}
+	}
+}

@@ -1,0 +1,16 @@
+@import '~@nti/style-common';
+
+.webinar-browse-webinars {
+	.link-bar {
+		background-color: #fafafa;
+		font-size: 12px;
+		line-height: 30px;
+		padding-left: 1.5rem;
+
+		.go-to-link {
+			color: $primary-blue;
+			margin-left: 0.5rem;
+			cursor: pointer;
+		}
+	}
+}

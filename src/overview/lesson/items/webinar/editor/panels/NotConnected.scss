@@ -1,0 +1,45 @@
+@import '~@nti/style-common';
+
+.webinar-not-connected {
+	text-align: center;
+	width: 375px;
+
+	.icon {
+		width: 100px;
+		height: 100px;
+		margin: 0 auto;
+		margin-top: 40px;
+		margin-bottom: 30px;
+		background-color: #bed6e2;
+		box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+		border-radius: 100px;
+	}
+
+	.title {
+		font-size: 24px;
+		font-weight: 300;
+		line-height: 33px;
+		color: $primary-grey;
+		margin-bottom: 15px;
+		padding: 0 30px;
+	}
+
+	.description {
+		font-size: 14px;
+		color: $secondary-grey;
+		line-height: 22px;
+		margin-bottom: 30px;
+	}
+
+	.connect-button {
+		color: white;
+		background-color: $primary-blue;
+		font-size: 14px;
+		line-height: 40px;
+		width: 150px;
+		height: 40px;
+		margin: 0 auto;
+		border-radius: 4px;
+		cursor: pointer;
+	}
+}

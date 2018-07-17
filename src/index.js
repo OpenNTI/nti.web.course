@@ -16,3 +16,5 @@ export * as Overview from './overview';
 export * from './scorm';
 export * as Templates from './editor/templates';
 export * from './lti-tools';
+export WebinarEditor from './overview/lesson/items/webinar/editor';
+export * as WebinarPanels from './overview/lesson/items/webinar/editor/panels';
