@@ -8,6 +8,7 @@ import Store from './Store';
 import Administrating from './parts/administrating';
 import Enrolled from './parts/enrolled';
 import NotEnrolled from './parts/not-enrolled';
+import NotAvailable from './parts/not-available';
 import Gifting from './parts/gifting';
 
 const t = scoped('course.enrollment.options', {
@@ -115,8 +116,7 @@ export default class CourseEnrollmentOptions extends React.Component {
 		if (administrative) {
 			Cmp = Administrating;
 		} else if (!options || !options.length) {
-			//TODO: render something here
-			return null;
+			Cmp = NotAvailable;
 		} else if (enrolled) {
 			Cmp = Enrolled;
 		} else {
