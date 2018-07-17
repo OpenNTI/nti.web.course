@@ -1,0 +1,86 @@
+@import '~@nti/style-common';
+
+.webinar-base-item {
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.13);
+	background-color: #fcfcfc;
+	border-radius: 5px;
+	border: 1px solid #e2e2e2;
+	padding: 14px 20px 17px 0;
+	margin: 0.9375rem 0;
+	position: relative;
+	min-height: 70px;
+
+	.contents {
+		padding-left: 90px;
+
+		.header {
+			.title {
+				font-size: 18px;
+				color: black;
+				margin-bottom: 6px;
+			}
+
+			.time-info {
+				font-size: 10px;
+				text-transform: uppercase;
+				color: $tertiary-grey;
+				margin-top: 4px;
+			}
+		}
+
+		.image-and-description {
+			display: flex;
+			margin-top: 16px;
+
+			.image {
+				height: 117px;
+				min-width: 208px;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				margin-right: 15px;
+			}
+
+			.description {
+				color: $secondary-grey;
+				font-size: 14px;
+				max-height: 114px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+	}
+
+	.date {
+		position: absolute;
+		left: 34px;
+		top: 17px;
+		text-align: center;
+
+		.month {
+			text-transform: uppercase;
+			color: $primary-red;
+			font-weight: bold;
+			font-size: 10px;
+			line-height: 14px;
+		}
+
+		.day {
+			font-size: 28px;
+			color: $primary-grey;
+		}
+	}
+
+	&.minimal {
+		.date {
+			top: 12px;
+		}
+
+		.contents {
+			.header {
+				.title {
+					font-weight: 300;
+					font-size: 16px;
+				}
+			}
+		}
+	}
+}

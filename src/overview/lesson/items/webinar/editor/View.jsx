@@ -17,7 +17,8 @@ export default class WebinarEditor extends React.Component {
 		lessonOverview: PropTypes.object.isRequired,
 		overviewGroup: PropTypes.object.isRequired,
 		onCancel: PropTypes.func,
-		onAddToLesson: PropTypes.func
+		onAddToLesson: PropTypes.func,
+		onAddAsExternalLink: PropTypes.func
 	}
 
 	state = {
@@ -55,8 +56,9 @@ export default class WebinarEditor extends React.Component {
 							this.setState({activePanel: OVERVIEW, webinar: selectedWebinar});
 						}}
 						onAddAsExternalLink={(url) => {
-							// what to do here
-							console.log(url);
+							const {onAddAsExternalLink} = this.props;
+
+							onAddAsExternalLink(url);
 						}}
 						context={course}
 						onLinkClick={() => {

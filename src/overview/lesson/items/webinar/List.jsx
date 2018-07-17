@@ -1,9 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-import Base from '../../common/BaseListItem';
+import PaddedContainer from '../../common/PaddedContainer';
 
-export default function WebinarListItem (props) {
+import BaseItem from './BaseItem';
+
+WebinarListItem.propTypes = {
+	item: PropTypes.object.isRequired,
+	course: PropTypes.object.isRequired
+};
+export default function WebinarListItem ({ item, course }) {
 	return (
-		<Base {...props} />
+		<PaddedContainer>
+			<BaseItem item={item} course={course} isMinimal/>
+		</PaddedContainer>
 	);
 }

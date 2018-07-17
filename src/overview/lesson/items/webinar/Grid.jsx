@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import PaddedContainer from '../../common/PaddedContainer';
 
+import BaseItem from './BaseItem';
+
 WebinarGridItem.propTypes = {
 	item: PropTypes.object.isRequired,
 	course: PropTypes.object.isRequired
@@ -10,7 +12,7 @@ WebinarGridItem.propTypes = {
 export default function WebinarGridItem ({ item, course }) {
 	return (
 		<PaddedContainer>
-			<div>Webinar item</div>
+			<BaseItem item={item} course={course}/>
 		</PaddedContainer>
 	);
 }

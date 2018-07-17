@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { List } from '../../Constants';
 import Registry from '../Registry';
 
+import GridCmp from './Grid';
+import ListCmp from './List';
+
 export default
 @Registry.register('application/vnd.nextthought.webinarasset')
 class LessonOverviewWebinarAsset extends React.Component {
@@ -14,14 +17,12 @@ class LessonOverviewWebinarAsset extends React.Component {
 	}
 
 	render () {
-		const { layout } = this.props;
+		const { layout, ...otherProps } = this.props;
 
-		const minimal = layout === List;
+		const Cmp = layout === List ? ListCmp : GridCmp;
 
 		return (
-			<div>
-				Webinar {minimal}
-			</div>
+			<Cmp layout={layout} {...otherProps}/>
 		);
 	}
 }
