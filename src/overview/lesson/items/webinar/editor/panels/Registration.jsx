@@ -51,11 +51,11 @@ export default class WebinarRegistrationEditor extends React.Component {
 		this.setState({learnMoreExpanded: true});
 	}
 
-	onSuccess = (webinar) => {
+	onSuccess = (webinars) => {
 		const {onWebinarSelected} = this.props;
 
 		if(onWebinarSelected) {
-			onWebinarSelected(webinar);
+			onWebinarSelected(webinars[0]);
 		}
 	}
 

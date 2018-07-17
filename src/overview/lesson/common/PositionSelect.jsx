@@ -50,19 +50,36 @@ export default class LessonOverviewPositionSelect extends React.Component {
 	static propTypes = {
 		lessonOverview: PropTypes.object.isRequired,
 		overviewGroup: PropTypes.object.isRequired,
+		item: PropTypes.object,
 		onChange: PropTypes.func
 	}
 
 	state = {}
 
 	componentDidMount () {
-		const providedOverviewGroup = this.props.lessonOverview.Items.filter(x=>x.getID() === this.props.overviewGroup.getID())[0];
+		const {lessonOverview, overviewGroup, onChange, item} = this.props;
+
+		const providedOverviewGroup = lessonOverview.Items.filter(x=>x.getID() === overviewGroup.getID())[0];
+
+		let selectedRank = (providedOverviewGroup.Items || []).length + 1;
+
+		if(item) {
+			(providedOverviewGroup.Items || []).forEach((i, index) => {
+				if(i.NTIID === item.NTIID) {
+					selectedRank = index + 1;
+				}
+			});
+		}
 
 		// initial state is the last position of the provided overview group
 		this.setState({
-			selectedRank: (providedOverviewGroup.Items || []).length + 1,
+			selectedRank,
 			selectedSection: providedOverviewGroup
 		});
+
+		if(onChange) {
+			onChange(providedOverviewGroup, selectedRank);
+		}
 	}
 
 	renderSectionInfo (section) {
@@ -268,7 +285,11 @@ export default class LessonOverviewPositionSelect extends React.Component {
 
 		let availableRanks = Items.map((val, i) => i);
 
-		availableRanks.push(availableRanks.length);
+		if(!this.props.item) {
+			// if we're editing, the extra position option doesn't make sense
+			// so only append this option when there is no provided item
+			availableRanks.push(availableRanks.length);
+		}
 
 		return (
 			<Flyout.Triggered

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DialogButtons, RemoveButton, DateTime} from '@nti/web-commons';
+import {DialogButtons, RemoveButton, DateTime, Prompt} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {ImageEditor} from '@nti/web-whiteboard';
 
@@ -9,7 +9,8 @@ import PositionSelect from '../../../../common/PositionSelect';
 import EditImage from './EditImage';
 
 const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', {
-	save: 'Add to Lesson',
+	addToLesson: 'Add to Lesson',
+	save: 'Save',
 	cancel: 'Cancel',
 	position: 'Position',
 	autoCompletion: 'Auto Completion',
@@ -22,6 +23,7 @@ const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', 
 
 export default class WebinarOverviewEditor extends React.Component {
 	static propTypes = {
+		item: PropTypes.object,
 		lessonOverview: PropTypes.object.isRequired,
 		overviewGroup: PropTypes.object.isRequired,
 		webinar: PropTypes.object.isRequired,
@@ -143,7 +145,7 @@ export default class WebinarOverviewEditor extends React.Component {
 		return (
 			<div className="position-section">
 				<div className="section-title">{t('position')}</div>
-				<PositionSelect lessonOverview={this.props.lessonOverview} overviewGroup={this.state.selectedSection} onChange={this.onPositionChange}/>
+				<PositionSelect item={this.props.item} lessonOverview={this.props.lessonOverview} overviewGroup={this.state.selectedSection} onChange={this.onPositionChange}/>
 			</div>
 		);
 	}
@@ -166,6 +168,15 @@ export default class WebinarOverviewEditor extends React.Component {
 	// 		</div>
 	// 	);
 	// }
+
+
+	onDelete = () => {
+		const {onDelete} = this.props;
+
+		Prompt.areYouSure('Do you want to remove this webinar from the lesson?').then(() => {
+			onDelete();
+		});
+	}
 
 	renderOtherInfo () {
 		const {onDelete} = this.props;
@@ -205,7 +216,7 @@ export default class WebinarOverviewEditor extends React.Component {
 						onClick: this.onCancel,
 					},
 					{
-						label: t('save'),
+						label: this.props.item ? t('save') : t('addToLesson'),
 						onClick: this.onSave
 					}
 				]}

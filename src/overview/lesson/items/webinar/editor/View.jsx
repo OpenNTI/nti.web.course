@@ -51,7 +51,7 @@ export default class WebinarEditor extends React.Component {
 	}
 
 	render () {
-		const {onCancel, onAddToLesson, onDelete, lessonOverview, overviewGroup, course} = this.props;
+		const {onCancel, onAddToLesson, onDelete, lessonOverview, overviewGroup, webinar: webinarAsset, course} = this.props;
 		const {webinar} = this.state;
 
 		return (
@@ -89,6 +89,7 @@ export default class WebinarEditor extends React.Component {
 						lessonOverview={lessonOverview}
 						overviewGroup={overviewGroup}
 						webinar={webinar}
+						item={webinarAsset}
 						onCancel={onCancel}
 						onAddToLesson={onAddToLesson}
 						onDelete={onDelete}
