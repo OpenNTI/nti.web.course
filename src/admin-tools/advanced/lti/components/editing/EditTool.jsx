@@ -18,16 +18,18 @@ export default class EditTool extends Component {
 	}
 
 	state = {
-		error: null
+		error: null,
+		loading: false
 	}
 
 	onSubmit = async (updatedItem) => {
 		const { onBeforeDismiss, item } = this.props;
-
+		this.setState({ loading: true });
 		try {
 			await item.save(updatedItem);
+			this.setState({ loading: false });
 		} catch (error) {
-			this.setState({ error });
+			this.setState({ error, loading: false });
 		}
 
 		onBeforeDismiss();
@@ -35,9 +37,10 @@ export default class EditTool extends Component {
 
 	render () {
 		const { onBeforeDismiss, item } = this.props;
-		const { error } = this.state;
+		const { error, loading } = this.state;
+
 		return (
-			<Base item={item} onSubmit={this.onSubmit} title={t('title')} onBeforeDismiss={onBeforeDismiss} submitLabel={t('submitLabel')} error={error} />
+			<Base item={item} onSubmit={this.onSubmit} title={t('title')} onBeforeDismiss={onBeforeDismiss} submitLabel={t('submitLabel')} error={error} loading={loading} />
 		);
 	}
 

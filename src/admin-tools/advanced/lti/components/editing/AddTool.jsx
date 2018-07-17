@@ -17,21 +17,35 @@ export default class AddTool extends Component {
 		onBeforeDismiss: PropTypes.func.isRequired
 	}
 
+	state = {
+		loading: false,
+		error: null
+	}
+
 	onSubmit = async (item) => {
 		const { onBeforeDismiss } = this.props;
-		const store = Store.getInstance();
 
-		const successful = await store.addItem(item);
+		this.setState({ loading: true });
 
-		if (successful) {
-			onBeforeDismiss(item);
+		try {
+			const store = Store.getInstance();
+			const successful = await store.addItem(item);
+			this.setState({ loading: false });
+
+			if (successful) {
+				onBeforeDismiss(item);
+			}
+		} catch (error) {
+			this.setState({ error, loading: false });
 		}
 	}
 
 	render () {
 		const { onBeforeDismiss } = this.props;
+		const { loading, error } = this.state;
+
 		return (
-			<Base onSubmit={this.onSubmit} title={t('title')} onBeforeDismiss={onBeforeDismiss} />
+			<Base onSubmit={this.onSubmit} title={t('title')} onBeforeDismiss={onBeforeDismiss} loading={loading} error={error} />
 		);
 	}
 
