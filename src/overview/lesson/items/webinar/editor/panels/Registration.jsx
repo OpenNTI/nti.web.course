@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
+import {DateTime} from '@nti/web-commons';
 import {GotoWebinar} from '@nti/web-integrations';
 import cx from 'classnames';
+
+import BaseItem from '../../BaseItem';
 
 const t = scoped('course.overview.lesson.items.webinar.editor.panels.Registration', {
 	title: 'Paste or Enter a Registration Link',
@@ -18,7 +21,8 @@ const t = scoped('course.overview.lesson.items.webinar.editor.panels.Registratio
 	pasteLink: 'Click Here',
 	addAsResourceTitle: 'Add as web resource instead?',
 	addAsResourceDesc: 'Reporting, completion controls, and other benefits of our webinar integration will not be available.',
-	addAsResourceLink: 'Yes, add anyway.'
+	addAsResourceLink: 'Yes, add anyway.',
+	multipleInstances: 'There is more than one occurrence of this webinar.  Please choose one.'
 });
 
 export default class WebinarRegistrationEditor extends React.Component {
@@ -54,6 +58,12 @@ export default class WebinarRegistrationEditor extends React.Component {
 	onSuccess = (webinars) => {
 		const {onWebinarSelected} = this.props;
 
+		if(webinars && webinars.length > 1) {
+			this.setState({webinars});
+
+			return;
+		}
+
 		if(onWebinarSelected) {
 			onWebinarSelected(webinars[0]);
 		}
@@ -81,8 +91,49 @@ export default class WebinarRegistrationEditor extends React.Component {
 		);
 	}
 
-	render () {
+	renderPasteForm () {
 		const {error, externalLink} = this.state;
+
+		return (
+			<div className="paste-form">
+				<div className="title">{t('title')}</div>
+				<div className="description">{t('description')}</div>
+				{!this.state.learnMoreExpanded && <div onClick={this.showMoreInfo} className="learn-more">{t('learnMore')}</div>}
+				{this.state.learnMoreExpanded && this.renderSteps()}
+				<GotoWebinar.Input.Text context={this.props.context} onSuccess={this.onSuccess} onFailure={this.onFailure}/>
+				{error && <div className="error">{error}</div>}
+				{error && externalLink && this.renderAddAsResource()}
+			</div>
+		);
+	}
+
+	renderWebinarOption = (webinar) => {
+		const {onWebinarSelected} = this.props;
+
+		const item = { webinar };
+
+		return (
+			<div className="webinar-option" onClick={() => {
+				if(onWebinarSelected) {
+					onWebinarSelected(webinar);
+				}
+			}}><BaseItem item={item} isMinimal hideControls/></div>
+		);
+	}
+
+
+	renderChooseWebinar () {
+		return (
+			<div className="choose-webinar">
+				<div className="title">{this.state.webinars[0].subject}</div>
+				<div className="info">{t('multipleInstances')}</div>
+				<div className="webinar-options">{this.state.webinars.map(this.renderWebinarOption)}</div>
+			</div>
+		);
+	}
+
+	render () {
+		const {error, webinars} = this.state;
 
 		const cls = cx('webinar-registration-editor', {error: Boolean(error)});
 
@@ -97,13 +148,8 @@ export default class WebinarRegistrationEditor extends React.Component {
 					}}>{t('pasteLink')}</span>
 				</div>
 				<div className="contents">
-					<div className="title">{t('title')}</div>
-					<div className="description">{t('description')}</div>
-					{!this.state.learnMoreExpanded && <div onClick={this.showMoreInfo} className="learn-more">{t('learnMore')}</div>}
-					{this.state.learnMoreExpanded && this.renderSteps()}
-					<GotoWebinar.Input.Text context={this.props.context} onSuccess={this.onSuccess} onFailure={this.onFailure}/>
-					{error && <div className="error">{error}</div>}
-					{error && externalLink && this.renderAddAsResource()}
+					{webinars && this.renderChooseWebinar()}
+					{!webinars && this.renderPasteForm()}
 				</div>
 			</div>
 		);

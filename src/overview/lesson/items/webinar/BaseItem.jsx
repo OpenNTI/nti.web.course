@@ -8,7 +8,8 @@ export default class WebinarBaseItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired,
 		course: PropTypes.object.isRequired,
-		isMinimal: PropTypes.bool
+		isMinimal: PropTypes.bool,
+		hideControls: PropTypes.bool
 	}
 
 
@@ -43,12 +44,12 @@ export default class WebinarBaseItem extends React.Component {
 
 
 	renderContents () {
-		const {item, isMinimal} = this.props;
+		const {item, isMinimal, hideControls} = this.props;
 		const {webinar} = item;
 		const nearestSession = webinar.getNearestSession();
 
 		const timeDisplay = DateTime.format(nearestSession.getStartTime(), '[Available] dddd [from] hh:mm a')
-			+ ' - ' + DateTime.format(nearestSession.getEndTime(), 'dddd [from] hh:mm a z');
+			+ ' - ' + DateTime.format(nearestSession.getEndTime(), 'hh:mm a z');
 
 		return (
 			<div className="contents">
@@ -56,7 +57,7 @@ export default class WebinarBaseItem extends React.Component {
 					<div className="title">{webinar.subject}</div>
 					<div className="time-info">{timeDisplay}</div>
 				</div>
-				{this.renderButton()}
+				{!hideControls && this.renderButton()}
 				{!isMinimal && this.renderImageAndDescription()}
 			</div>
 		);

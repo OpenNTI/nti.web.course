@@ -84,6 +84,34 @@
 			}
 		}
 
+		.choose-webinar {
+			.info {
+				font-size: 14px;
+				color: $secondary-grey;
+			}
+
+			.webinar-options {
+				max-height: 20rem;
+				overflow-y: auto;
+
+				.webinar-option {
+					cursor: pointer;
+
+					.webinar-base-item {
+						.contents {
+							padding-left: 80px;
+
+							.header {
+								.title {
+									line-height: 14px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
 		.add-as-resource {
 			box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 			border-radius: 3px;
