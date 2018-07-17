@@ -19,9 +19,24 @@ export default class LessonOverviewItem extends React.Component {
 		readOnly: PropTypes.bool
 	}
 
+	state = {}
+
+	componentDidCatch (error) {
+		this.setState({error});
+	}
 
 	render () {
-		const {item, index, itemRef, readOnly, ...otherProps} = this.props;
+		const {
+			props: {item, index, itemRef, readOnly, ...otherProps},
+			state: {error}
+		} = this;
+
+		if (error) {
+			return (
+				<div>There was an error attempting to render: {(item || {}).MimeType || 'Unknown Item'}</div>
+			);
+		}
+
 		const Cmp = registry.getItemFor(item.MimeType);
 
 		if (itemRef) {
