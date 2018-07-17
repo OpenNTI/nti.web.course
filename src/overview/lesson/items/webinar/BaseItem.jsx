@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DateTime} from '@nti/web-commons';
+import {GotoWebinar} from '@nti/web-integrations';
 import cx from 'classnames';
 
 export default class WebinarBaseItem extends React.Component {
@@ -9,6 +10,10 @@ export default class WebinarBaseItem extends React.Component {
 		course: PropTypes.object.isRequired,
 		isMinimal: PropTypes.bool
 	}
+
+
+	state = {}
+
 
 	renderDate () {
 		const {item} = this.props;
@@ -23,6 +28,7 @@ export default class WebinarBaseItem extends React.Component {
 		);
 	}
 
+
 	renderImageAndDescription () {
 		const {item} = this.props;
 		const {webinar} = item;
@@ -34,6 +40,7 @@ export default class WebinarBaseItem extends React.Component {
 			</div>
 		);
 	}
+
 
 	renderContents () {
 		const {item, isMinimal} = this.props;
@@ -49,10 +56,44 @@ export default class WebinarBaseItem extends React.Component {
 					<div className="title">{webinar.subject}</div>
 					<div className="time-info">{timeDisplay}</div>
 				</div>
+				{this.renderButton()}
 				{!isMinimal && this.renderImageAndDescription()}
 			</div>
 		);
 	}
+
+
+	renderButton () {
+		//TODO: Render different buttons based on webinar state...
+		//TODO: Render null if expired
+		//TODO:  Join button if registeded
+		//TODO:  Register button if not registered
+		return this.renderRegisterButton();
+	}
+
+
+	renderJoinButton () {
+		// Join button is disabled if not available yet,
+		// renders a timer when within 1hour of expiry
+	}
+
+
+	renderRegisterButton () {
+		const {props: {item}, state: {register}} = this;
+		const toggle = x => this.setState({register: !!x});
+		const open = () => toggle(true);
+		const close = () => toggle(false);
+
+		return (
+			<React.Fragment>
+				<button onClick={open} disabled={register}>Register</button>
+				{register && (
+					<GotoWebinar.Registration item={item} onBeforeDismiss={close}/>
+				)}
+			</React.Fragment>
+		);
+	}
+
 
 	render () {
 		const cls = cx('webinar-base-item', {minimal: this.props.isMinimal});
