@@ -1,28 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import PaddedContainer from '../../common/PaddedContainer';
 import { List } from '../../Constants';
 import Registry from '../Registry';
 
-import GridCmp from './Grid';
-import ListCmp from './List';
+import BaseItem from './BaseItem';
 
 export default
 @Registry.register('application/vnd.nextthought.webinarasset')
 class LessonOverviewWebinarAsset extends React.Component {
 
 	static propTypes = {
-		item: PropTypes.object,
+		course: PropTypes.object.isRequired,
+		item: PropTypes.object.isRequired,
 		layout: PropTypes.any
 	}
 
 	render () {
 		const { layout, ...otherProps } = this.props;
 
-		const Cmp = layout === List ? ListCmp : GridCmp;
-
 		return (
-			<Cmp layout={layout} {...otherProps}/>
+			<PaddedContainer>
+				<BaseItem {...otherProps} isMinimal={layout === List}/>
+			</PaddedContainer>
 		);
 	}
 }
