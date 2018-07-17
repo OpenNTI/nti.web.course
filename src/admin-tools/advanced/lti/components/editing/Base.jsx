@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Panels, DialogButtons, Prompt, Select, Input } from '@nti/web-commons';
+import { Panels, DialogButtons, Prompt, Select, Input, Loading } from '@nti/web-commons';
 
 const { Label } = Input;
 const { Dialog } = Prompt;
@@ -37,6 +37,7 @@ class Base extends Component {
 		submitLabel: PropTypes.string.isRequired,
 		error: PropTypes.string,
 		store: PropTypes.object,
+		loading: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -119,17 +120,18 @@ class Base extends Component {
 
 
 	render () {
-		const { title, submitLabel = 'Create', error } = this.props;
+		const { title, submitLabel = 'Create', error, loading } = this.props;
 		const { item: { formselector } } = this.state;
 
 		const buttons = [
 			{ label: 'Cancel', onClick: this.onBeforeDismiss },
-			{ label: submitLabel, onClick: this.onSubmit }
+			{ label: submitLabel, onClick: this.onSubmit, disabled: loading }
 		];
 
 		return (
 			<Dialog closeOnMaskClick onBeforeDismiss={this.onBeforeDismiss}>
 				<div className="lti-base-tool-editing">
+					{loading && <Loading.Mask maskScreen message="Loading..." />}
 					<Panels.TitleBar title={title} iconAction={this.onBeforeDismiss} />
 					{error && <span className="lti-base-tool-error">{error}</span>}
 					<Label className="config-type-label" label="Configuration Type">
