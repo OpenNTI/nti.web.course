@@ -16,6 +16,9 @@
 
 	.dialog-buttons {
 		background: white;
+		button {
+			border: none;
+		}
 	}
 
 	.lti-base-tool-error {

@@ -1,7 +1,9 @@
 @import '~@nti/style-common';
 
 .lti-base-form {
-	padding: 10px 20px 20px 20px;
+	.lti-base-fields {
+		padding: 10px 20px 20px 20px;
+	}
 
 	.nti-text-input {
 		width: 100%;
