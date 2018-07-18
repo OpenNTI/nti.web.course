@@ -94,9 +94,10 @@ class Base extends Component {
 		this.setState({ item: { ...item, [name]: value } });
 	}
 
-	onSubmit = () => {
+	onSubmit = (e) => {
 		const { item } = this.state;
 		const { onSubmit } = this.props;
+		e.preventDefault();
 
 		onSubmit(item);
 	}
@@ -109,24 +110,35 @@ class Base extends Component {
 
 	renderForm () {
 		const { item } = this.state;
+		const { submitLabel = 'Create', loading } = this.props;
+
 		const { formselector } = item;
 		let Form = Manual;
 
 		if (formselector === MODES.XML) { Form = ByXML; }
 		else if (formselector === MODES.URL) { Form = ByURL; }
 
-		return <Form onSubmit={this.onSubmit} onChange={this.onChange} item={item} />;
+		const buttons = [
+			{ label: 'Cancel', onClick: this.onBeforeDismiss },
+			{ label: submitLabel, type: 'submit', disabled: loading, tag: 'button' }
+		];
+
+		return (
+			<Form
+				onSubmit={this.onSubmit}
+				onChange={this.onChange}
+				item={item}
+				renderButtons={
+					<DialogButtons className="lti-base-add-controls" buttons={buttons} />
+				}
+			/>
+		);
 	}
 
 
 	render () {
-		const { title, submitLabel = 'Create', error, loading } = this.props;
+		const { title, error, loading } = this.props;
 		const { item: { formselector } } = this.state;
-
-		const buttons = [
-			{ label: 'Cancel', onClick: this.onBeforeDismiss },
-			{ label: submitLabel, onClick: this.onSubmit, disabled: loading }
-		];
 
 		return (
 			<Dialog closeOnMaskClick onBeforeDismiss={this.onBeforeDismiss}>
@@ -141,7 +153,6 @@ class Base extends Component {
 						</Select>
 					</Label>
 					{this.renderForm()}
-					<DialogButtons className="lti-base-add-controls" buttons={buttons} />
 					{loading && <Loading.Mask maskScreen message="Loading..." />}
 				</div>
 			</Dialog>

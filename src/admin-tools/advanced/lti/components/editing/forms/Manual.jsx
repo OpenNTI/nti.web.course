@@ -16,26 +16,27 @@ const DEFAULT_TEXT = {
 
 const t = scoped('nti-web-course.admin-tools.advanced.lti.editing.forms.Manual', DEFAULT_TEXT);
 
-const Manual = ({ onChange, onSubmit, item }) => (
-	<BaseForm onChange={onChange} onSubmit={onSubmit} item={item}>
+const Manual = ({ onChange, onSubmit, item, renderButtons }) => (
+	<BaseForm onChange={onChange} onSubmit={onSubmit} item={item} renderButtons={renderButtons}>
 		<Label label={t('title')}>
-			<Text value={item.title} onChange={value => onChange('title', value)} placeholder={t('title')} />
+			<Text required value={item.title} onChange={value => onChange('title', value)} placeholder={t('title')} />
 		</Label>
 		<Label label={t('desc')}>
 			<Text value={item.description} onChange={value => onChange('description', value)} placeholder={t('desc')} />
 		</Label>
 		<div className="split-input">
 			<Label label={t('launch')}>
-				<Text value={item['launch_url']} onChange={(value) => onChange('launch_url', value)} placeholder={t('launch')} />
+				<Text required value={item['launch_url']} onChange={(value) => onChange('launch_url', value)} placeholder={t('launch')} />
 			</Label>
 			<Label label={t('secureUrl')}>
-				<Text value={item['secure_launch_url']} onChange={(value) => onChange('secure_launch_url', value)} placeholder={t('secureUrl')} />
+				<Text required value={item['secure_launch_url']} onChange={(value) => onChange('secure_launch_url', value)} placeholder={t('secureUrl')} />
 			</Label>
 		</div>
 	</BaseForm>
 );
 
 Manual.propTypes = {
+	renderButtons: PropTypes.node,
 	onChange: PropTypes.func.isRequired,
 	onSubmit: PropTypes.func.isRequired,
 	item: PropTypes.shape({
