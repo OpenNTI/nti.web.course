@@ -17,7 +17,7 @@ const BaseForm = ({ item, onChange, children, onSubmit, renderButtons}) => (
 		<div className="lti-base-fields">
 			<div className="split-input">
 				<Label label={t('consumerKey')}>
-					<Text required value={item['consumer_key']} onChange={value => onChange('consumer_key', value)} className="lti-tool-'consumer_key'" placeholder={t('consumerKey')} />
+					<Text value={item['consumer_key']} onChange={value => onChange('consumer_key', value)} className="lti-tool-'consumer_key'" placeholder={t('consumerKey')} />
 				</Label>
 				<Label label={t('secret')}>
 					<Text value={item.secret} onChange={value => onChange('secret', value)} className="lti-tool-Scret" placeholder={t('secret')} type="password" />
