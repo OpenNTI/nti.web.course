@@ -152,13 +152,9 @@ class EnrollmentOptions extends React.Component {
 	toggleExternalEnrollment = () => {
 		const {availableOptions, enrollmentOptions} = this.props;
 
-		let customExternalOption = null;
-
-		if(availableOptions) {
-			customExternalOption =
+		const customExternalOption =
 				((availableOptions || []).concat(enrollmentOptions || []))
 					.filter(x => x.MimeType.match(/ensyncimisexternalenrollmentoption/))[0];
-		}
 
 		if(!customExternalOption) {
 			return;
