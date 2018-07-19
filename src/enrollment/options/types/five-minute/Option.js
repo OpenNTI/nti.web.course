@@ -17,7 +17,9 @@ const t = scoped('course.enrollment.types.five-minute', {
 			'notArchived-startDate': 'Class begins %(fullStartDate)s and will be conducted fully online.',
 			'notAcrhived-noStartDate': 'Class will be conducted fully online.'
 		},
-		buttonLabel: ''
+		buttonLabel: '',
+		getAcquainted: 'Get Acquainted with the Platform',
+		completeProfile: 'Complete Your Profile'
 	},
 	notEnrolled: {
 		title: 'For Credit',
@@ -152,5 +154,14 @@ export default class FiveMinuteEnrollmentOption extends Base {
 
 	getDropInfoDescription () {
 		return getTranslationFor(this.getString, 'dropInfo.description', this.catalogEntry, this.option, this.access);
+	}
+
+
+	getGetAcquaintedWith () {
+		return getTranslationFor(this.getString, 'enrolled.getAcquainted', this.catalogEntry, this.option, this.access);
+	}
+
+	getCopmleteProfile () {
+		return getTranslationFor(this.getString, 'enrolled.completeProfile', this.catalogEntry, this.option, this.access);
 	}
 }

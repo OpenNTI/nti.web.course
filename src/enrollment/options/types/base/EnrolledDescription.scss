@@ -1,0 +1,17 @@
+@import '~@nti/style-common';
+
+.nti-course-enrollment-option-base-enrolled-description {
+	.nti-course-enrollment-description + .link {
+		margin-top: 1rem;
+	}
+
+	.link {
+		padding-top: 0;
+		font: normal 400 0.875rem/1.3 $body-font-family;
+		color: $primary-blue;
+
+		a {
+			cursor: pointer;
+		}
+	}
+}

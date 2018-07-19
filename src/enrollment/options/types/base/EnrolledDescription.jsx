@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {LinkTo} from '@nti/web-routing';
 
 import Description from '../../common/Description';
+import PaddedContainer from '../../common/PaddedContainer';
 
 export default class BaseEnrolledDescription extends React.Component {
 	static propTypes = {
@@ -14,9 +16,25 @@ export default class BaseEnrolledDescription extends React.Component {
 		const {option} = this.props;
 
 		return (
-			<Description>
-				{option.getEnrolledDescription()}
-			</Description>
+			<div className="nti-course-enrollment-option-base-enrolled-description">
+				<Description>
+					{option.getEnrolledDescription()}
+				</Description>
+				{option.getGetAcquaintedWith && (
+					<PaddedContainer className="link">
+						<LinkTo.Object object={option.option} context="get-acquainted">
+							{option.getGetAcquaintedWith()}
+						</LinkTo.Object>
+					</PaddedContainer>
+				)}
+				{option.getCopmleteProfile && (
+					<PaddedContainer className="link">
+						<LinkTo.Object object={option.option} context="complete-profile">
+							{option.getCopmleteProfile()}
+						</LinkTo.Object>
+					</PaddedContainer>
+				)}
+			</div>
 		);
 	}
 }
