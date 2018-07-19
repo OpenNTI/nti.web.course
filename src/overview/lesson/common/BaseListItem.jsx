@@ -102,7 +102,7 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 	renderIcon () {
 		const {renderIcon, item} = this.props;
 		const {icon} = this.state;
-		const type = [item.type, item.targetMimeType].filter(x => x);
+		const type = [item.type || item.MimeType, item.targetMimeType].filter(x => x);
 
 		if (renderIcon) { return renderIcon(); }
 
