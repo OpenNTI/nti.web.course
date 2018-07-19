@@ -7,9 +7,10 @@ import PaddedContainer from '../../common/PaddedContainer';
 
 LTIExternalToolAssetGridItem.propTypes = {
 	item: PropTypes.object.isRequired,
-	course: PropTypes.object.isRequired
+	course: PropTypes.object.isRequired,
+	requiredLabel: PropTypes.node
 };
-export default function LTIExternalToolAssetGridItem ({ item, course }) {
+export default function LTIExternalToolAssetGridItem ({ item, requiredLabel, course }) {
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item}>
@@ -17,6 +18,7 @@ export default function LTIExternalToolAssetGridItem ({ item, course }) {
 					data-ntiid={item.NTIID}
 					item={item}
 					contentPackage={course}
+					labels={[requiredLabel]}
 				/>
 			</LinkTo.Object>
 		</PaddedContainer>
