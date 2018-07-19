@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DateTime} from '@nti/web-commons';
-import {GotoWebinar} from '@nti/web-integrations';
+import {GotoWebinar} from '@nti/web-integrations'; //eslint-disable-line
 import cx from 'classnames';
 
 export default class WebinarBaseItem extends React.Component {

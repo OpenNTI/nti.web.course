@@ -9,6 +9,7 @@ import './topic';
 import './video';
 import './video-roll';
 import './lti';
-import './webinar';
+
+// export Webinar from './webinar';
 
 export default from './View';
