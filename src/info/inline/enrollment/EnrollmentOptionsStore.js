@@ -17,7 +17,7 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 		try {
 			await option.delete();
 
-			this.loadEnrollmentOptions(this.catalogEntry);
+			this.loadEnrollmentOptions(this.catalogEntry, this.courseInstance);
 		}
 		catch (e) {
 			this.set('error', e.message);
@@ -35,7 +35,7 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 		try {
 			await this.catalogEntry.putToLink('EnrollmentOptions', params);
 
-			await this.loadEnrollmentOptions(this.catalogEntry);
+			await this.loadEnrollmentOptions(this.catalogEntry, this.courseInstance);
 		}
 		catch (e) {
 			this.set('error', e.message);
@@ -52,7 +52,7 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 		try {
 			await option.save(params);
 
-			this.loadEnrollmentOptions(this.catalogEntry);
+			this.loadEnrollmentOptions(this.catalogEntry, this.courseInstance);
 		}
 		catch (e) {
 			this.set('error', e.message);
