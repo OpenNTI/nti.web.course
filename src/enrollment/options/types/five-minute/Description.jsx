@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {LinkTo} from '@nti/web-routing';
 
 import Title from '../../common/Title';
 import Description from '../../common/Description';
