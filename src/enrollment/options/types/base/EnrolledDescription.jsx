@@ -21,14 +21,14 @@ export default class BaseEnrolledDescription extends React.Component {
 					{option.getEnrolledDescription()}
 				</Description>
 				{option.getGetAcquaintedWith && (
-					<PaddedContainer className="link">
+					<PaddedContainer className="link get-acquainted">
 						<LinkTo.Object object={option.option} context="get-acquainted">
 							{option.getGetAcquaintedWith()}
 						</LinkTo.Object>
 					</PaddedContainer>
 				)}
 				{option.getCopmleteProfile && (
-					<PaddedContainer className="link">
+					<PaddedContainer className="link complete-profile">
 						<LinkTo.Object object={option.option} context="complete-profile">
 							{option.getCopmleteProfile()}
 						</LinkTo.Object>
