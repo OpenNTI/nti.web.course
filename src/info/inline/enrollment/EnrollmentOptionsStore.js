@@ -133,9 +133,9 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 				return x;
 			});
 
-		const availableOptionsFiltered = availableOptions.filter(x => !existingTypes.includes(x.MimeType)); // don't allow adding types that already exist
+		const availableOptionsFiltered = (availableOptions || []).filter(x => !existingTypes.includes(x.MimeType)); // don't allow adding types that already exist
 
-		const openEnroll = enrollmentOptions.filter(x => x.MimeType.match(/openenrollment/));
+		const openEnroll = (enrollmentOptions || []).filter(x => x.MimeType.match(/openenrollment/));
 		const allowOpenEnrollment = openEnroll[0] && openEnroll[0].enabled;
 
 		if(allowOpenEnrollment && this.catalogEntry.isHidden) {
