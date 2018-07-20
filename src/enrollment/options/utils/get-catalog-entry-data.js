@@ -7,12 +7,15 @@ export default function getCatalogEntryData (catalogEntry, option) {
 	const startDate = catalogEntry.getStartDate();
 	const endDate = catalogEntry.getEndDate();
 	const enrollCutOffDate = option && option.getEnrollCutOffDate && option.getEnrollCutOffDate();
+	const price = option && option.getPrice && option.getPrice();
+	const priceDisplay = option && option.getPriceDisplay && option.getPriceDisplay();
 
 	return {
 		fullStartDate: startDate && DateTime.format(startDate, FULL_FORMAT),
 		fullEndDate: endDate && DateTime.format(endDate, FULL_FORMAT),
 		title: catalogEntry.title,
-		price: option && option.getPrice && option.getPrice(),
+		price,
+		priceDisplay,
 		enrollCutOffDate: enrollCutOffDate && DateTime.format(enrollCutOffDate, M_D_Y_FORMAT)
 	};
 }

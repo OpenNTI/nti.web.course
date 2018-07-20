@@ -29,7 +29,7 @@ export default class BaseEnrollmentListItem extends React.Component {
 		return (
 			<ListItem
 				title={option.getTitle()}
-				price={option.getPrice()}
+				price={option.getPriceDisplay && option.getPriceDisplay()}
 				enrolled={option.isEnrolled()}
 				selected={selected}
 				onSelect={this.onSelect}

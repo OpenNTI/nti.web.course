@@ -1,4 +1,4 @@
-import {scoped} from '@nti/lib-locale';
+import {scoped, getLocalizedCurrencyString} from '@nti/lib-locale';
 import {getAppUser} from '@nti/web-client';
 
 import {getTranslationFor} from '../../utils';
@@ -90,6 +90,13 @@ export default class FiveMinuteEnrollmentOption extends Base {
 	getPrice () {
 		return this.option.OU_Price;
 	}
+
+
+	getPriceDisplay () {
+		// specific case where we can assume USD
+		return getLocalizedCurrencyString(this.getPrice(), 'USD');
+	}
+
 
 	getEnrollCutOffDate () {
 		return this.option.getEnrollCutOffDate && this.option.getEnrollCutOffDate();

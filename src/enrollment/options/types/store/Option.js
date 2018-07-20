@@ -1,4 +1,4 @@
-import {scoped} from '@nti/lib-locale';
+import {scoped, getLocalizedCurrencyString} from '@nti/lib-locale';
 
 import {getTranslationFor} from '../../utils';
 import Base from '../base';
@@ -19,7 +19,7 @@ const t = scoped('course.enrollment.types.store', {
 		title: 'Premium',
 		description: 'Complete access to interact with all of the content.',
 		buttonLabel: {
-			hasPrice: 'Buy for $%(price)s',
+			hasPrice: 'Buy for %(priceDisplay)s',
 			noPrice: 'Purchase'
 		}
 	},
@@ -47,6 +47,16 @@ export default class StoreEnrollmentOption extends Base {
 
 	getPrice () {
 		return this.purchasable ? this.purchasable.amount : null;
+	}
+
+
+	getCurrency () {
+		return this.purchasable && this.purchasable.currency;
+	}
+
+
+	getPriceDisplay () {
+		return getLocalizedCurrencyString(this.getPrice(), this.getCurrency());
 	}
 
 

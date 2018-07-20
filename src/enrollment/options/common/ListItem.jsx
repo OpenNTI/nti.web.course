@@ -7,7 +7,7 @@ const t = scoped('course.enrollment.options.common.ListItem', {
 	metaSeparator: '-',
 	price: {
 		free: 'Free',
-		cost: '$%(price)s'
+		cost: '%(price)s'
 	},
 	enrolled: 'Currently Enrolled In'
 });
