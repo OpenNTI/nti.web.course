@@ -10,6 +10,6 @@ import './video';
 import './video-roll';
 import './lti';
 
-// export Webinar from './webinar';
+export * as Webinar from './webinar';
 
 export default from './View';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {GotoWebinar} from '@nti/web-integrations'; //eslint-disable-line
+import {GotoWebinar} from '@nti/web-integrations';
 import cx from 'classnames';
 
 import BaseItem from '../../BaseItem';
