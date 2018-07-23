@@ -4,7 +4,7 @@ import {Loading} from '@nti/web-commons';
 import {getService} from '@nti/web-client';
 import cx from 'classnames';
 
-import {AdminTools} from '../../';
+import {InfoPanel} from '../../admin-tools';
 import Store from '../../editor/Store';
 import {
 	COURSE_SAVING,
@@ -379,7 +379,7 @@ export default class CourseInfo extends React.Component {
 						hideDeleteBlock/>
 				</div>
 				<TechSupport />
-				{hasAdminToolsAccess && <AdminTools.InfoPanel {...this.props}/>}
+				{hasAdminToolsAccess && <InfoPanel {...this.props}/>}
 			</div>
 		);
 	}
