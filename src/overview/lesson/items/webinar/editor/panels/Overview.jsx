@@ -10,6 +10,7 @@ import EditImage from './EditImage';
 
 const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', {
 	addToLesson: 'Add to Lesson',
+	addAnImage: 'Add an Image',
 	save: 'Save',
 	cancel: 'Cancel',
 	position: 'Position',
@@ -106,7 +107,7 @@ export default class WebinarOverviewEditor extends React.Component {
 					<ImageEditor.Editor onChange={this.onImageUpload}/>
 					<div className="content">
 						<i className="icon-upload"/>
-						<div className="text">Add an Image</div>
+						<div className="text">{t('addAnImage')}</div>
 					</div>
 				</div>
 			);

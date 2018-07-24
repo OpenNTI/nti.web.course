@@ -43,9 +43,22 @@
 			font-weight: 600;
 			line-height: 1.375;
 			padding: 7px 24px 9px;
+			cursor: pointer;
+
+			&.join {
+				padding: 0;
+			}
 
 			&:disabled {
 				background-color: $tertiary-grey;//#B8B8B8;
+				pointer-events: none;
+			}
+
+			a {
+				color: white;
+				text-decoration: none;
+				padding: 7px 24px 9px;
+				display: inline-block;
 			}
 		}
 
@@ -60,6 +73,15 @@
 				min-width: 208px;
 				border: 1px solid rgba(0, 0, 0, 0.1);
 				margin-right: 15px;
+
+				div {
+					padding-top: 38px;
+					font-weight: 600;
+					color: $tertiary-grey;
+					font-size: 24px;
+					text-align: center;
+					opacity: 0.5;
+				}
 			}
 
 			.description {
