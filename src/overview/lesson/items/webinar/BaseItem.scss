@@ -33,8 +33,13 @@
 			}
 		}
 
+		a.button,
 		button {
+			display: inline-block;
 			flex: 0 0 auto;
+		}
+
+		button {
 			border-radius: 4px;
 			background-color: $primary-green;//#3fb34f;
 			color: #fff;
@@ -44,21 +49,11 @@
 			line-height: 1.375;
 			padding: 7px 24px 9px;
 			cursor: pointer;
-
-			&.join {
-				padding: 0;
-			}
+			text-decoration: none;
 
 			&:disabled {
 				background-color: $tertiary-grey;//#B8B8B8;
 				pointer-events: none;
-			}
-
-			a {
-				color: white;
-				text-decoration: none;
-				padding: 7px 24px 9px;
-				display: inline-block;
 			}
 		}
 

@@ -88,7 +88,7 @@ export default class WebinarBaseItem extends React.Component {
 		const nearestSession = webinar.getNearestSession();
 
 		// nearest session start time is in the past, assume it's expired and show nothing
-		if(!nearestSession || nearestSession.getStartTime().getTime() < Date.now()) {
+		if(!nearestSession || nearestSession.getStartTime() < Date.now()) {
 			return null;
 		}
 
@@ -106,15 +106,21 @@ export default class WebinarBaseItem extends React.Component {
 		// TODO: Join button is disabled if not available yet,
 		// TODO: render a timer when within 1hour of expiry
 
-		const {item} = this.props;
-		const {webinar} = item;
+		const {item: {webinar}} = this.props;
 
 		// check if the webinar is currently active.  Enable button if so, disable if not available yet.
-		const nearestSession = webinar.getNearestSession();
+		// TODO: move into model to be something like isJoinable or isAvailable(date = now)
 		const now = Date.now();
-		const enabled = nearestSession && nearestSession.getStartTime().getTime() <= now && nearestSession.getEndTime().getTime() >= now;
+		const enabled = (x => x && x.getStartTime() <= now && x.getEndTime() >= now)(webinar.getNearestSession());
 
-		return <button className="join" disabled={!enabled}><a rel="noopener noreferrer" target="_blank" href={webinar.getLink('JoinWebinar')}>{t('join')}</a></button>;
+		return (
+			<a target="_blank"
+				rel="noopener noreferrer"
+				href={enabled ? webinar.getLink('JoinWebinar') : null}
+			>
+				<button disabled={!enabled}>{t('join')}</button>
+			</a>
+		);
 	}
 
 
