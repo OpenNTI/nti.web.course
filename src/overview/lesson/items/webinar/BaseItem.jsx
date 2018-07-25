@@ -196,7 +196,7 @@ export default class WebinarBaseItem extends React.Component {
 
 		const isModifierOn = x => /^shift$/i.test((keysDown || []).join('-'));
 
-		if(webinar) {
+		if(webinar && !webinar.isExpired()) {
 			// user has already registered for the webinar, show join button
 			if(webinar.isJoinable()) {
 
