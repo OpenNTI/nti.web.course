@@ -45,7 +45,9 @@ export default class WebinarOverviewEditor extends React.Component {
 			endDate: nearestSession && nearestSession.getEndTime(),
 			selectedSection: props.overviewGroup,
 			selectedRank: (props.overviewGroup.Items || []).length + 1,
-			webinar: props.webinar
+			webinar: props.webinar,
+			// check icon for null string.  if we remove an icon and PUT to the record, it won't be null, but "null"
+			img: props.item && props.item.icon && props.item.icon !== 'null' && {src: props.item.icon}
 		};
 	}
 
@@ -64,16 +66,18 @@ export default class WebinarOverviewEditor extends React.Component {
 		const img = await ImageEditor.getImageForEditorState(editorState);
 
 		this.setState({editorState: img}, () => {
-			EditImage.show(ImageEditor.getEditorState(img, {crop: {width: img.naturalWidth, height: img.naturalHeight}})).then((newImg) => {
-				this.onImageCropperSave(newImg);
+			EditImage.show(ImageEditor.getEditorState(img, {crop: {width: img.naturalWidth, height: img.naturalHeight}})).then((newEditorState) => {
+				ImageEditor.getImageForEditorState(newEditorState).then(newImg => {
+					this.onImageCropperSave(newImg, newEditorState);
+				});
 			}).catch(() => {
 				this.setState({editorState: null});
 			});
 		});
 	}
 
-	onImageCropperSave = async (img) => {
-		this.setState({img});
+	onImageCropperSave = async (img, croppedImageState) => {
+		this.setState({img, croppedImageState});
 	}
 
 	renderWebinarInfo () {
@@ -201,10 +205,14 @@ export default class WebinarOverviewEditor extends React.Component {
 
 	onSave = () => {
 		const {onAddToLesson} = this.props;
-		const {selectedSection, selectedRank, img, webinar} = this.state;
+		const {selectedSection, selectedRank, croppedImageState, webinar} = this.state;
 
 		if(onAddToLesson) {
-			onAddToLesson(selectedSection, selectedRank, img, webinar);
+			const request = croppedImageState ? ImageEditor.getBlobForEditorState(croppedImageState) : Promise.resolve();
+
+			request.then(dataBlob => {
+				onAddToLesson(selectedSection, selectedRank, dataBlob, webinar);
+			});
 		}
 	}
 

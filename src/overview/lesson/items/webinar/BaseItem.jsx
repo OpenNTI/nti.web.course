@@ -47,9 +47,10 @@ export default class WebinarBaseItem extends React.Component {
 		const {item} = this.props;
 		const {webinar} = item;
 
+		// check icon for null string.  if we remove an icon and PUT to the record, it won't be null, but "null"
 		return (
 			<div className="image-and-description">
-				<div className="image"><div>No Image</div></div>
+				<div className="image">{item.icon && item.icon !== 'null' ? <img src={item.icon}/> : <div>No Image</div>}</div>
 				<div className="description">{webinar.description}</div>
 			</div>
 		);

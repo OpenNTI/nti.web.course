@@ -47,9 +47,7 @@ export default class EditImage extends React.Component {
 			onDismiss();
 		}
 
-		const img = await ImageEditor.getImageForEditorState(this.state.editorState);
-
-		return this.props.onSave(img);
+		return this.props.onSave(this.state.editorState);
 	}
 
 	onCancel = () => {
