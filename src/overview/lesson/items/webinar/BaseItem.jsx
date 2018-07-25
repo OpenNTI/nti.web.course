@@ -5,6 +5,9 @@ import {GotoWebinar} from '@nti/web-integrations';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 
+import RequirementControl from '../../../../progress/widgets/RequirementControl';
+import Required from '../../common/Required';
+
 const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
 	register: 'Register',
 	unregister: 'Un-Register',
@@ -18,7 +21,8 @@ export default class WebinarBaseItem extends React.Component {
 		course: PropTypes.object.isRequired,
 		isMinimal: PropTypes.bool,
 		hideControls: PropTypes.bool,
-		editMode: PropTypes.bool
+		editMode: PropTypes.bool,
+		onRequirementChange: PropTypes.func
 	}
 
 
@@ -271,12 +275,21 @@ export default class WebinarBaseItem extends React.Component {
 
 
 	render () {
-		const cls = cx('webinar-base-item', {minimal: this.props.isMinimal, unavailable: !this.props.item || !this.props.item.webinar});
+		const {item, isMinimal, onRequirementChange} = this.props;
+
+		const cls = cx('webinar-base-item', {minimal: isMinimal, unavailable: !item || !item.webinar});
+
+		const required = item.CompletionRequired;
 
 		return (
 			<div className={cls}>
 				{this.renderDate()}
 				{this.renderContents()}
+				{item && item.isCompletable && item.isCompletable() && onRequirementChange ? (
+					<RequirementControl record={item} onChange={onRequirementChange}/>
+				) : required && (
+					<Required key="required-label"/>
+				)}
 			</div>
 		);
 	}

@@ -10,6 +10,18 @@
 	position: relative;
 	min-height: 70px;
 
+	.require-control-value {
+		margin-left: 90px;
+		margin-top: 1rem;
+		text-transform: uppercase;
+		line-height: 22px;
+	}
+
+	.lesson-overview-item-required-label {
+		margin-left: 90px;
+		margin-top: 1rem;
+	}
+
 	.contents {
 		display: flex;
 		flex-wrap: wrap;
@@ -51,7 +63,7 @@
 						font-size: 24px;
 						line-height: 0;
 						position: absolute;
-						right: 0px;
+						right: 0;
 						padding-left: -1px;
 						top: 8px;
 					}
