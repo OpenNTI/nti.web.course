@@ -205,13 +205,22 @@ export default class WebinarOverviewEditor extends React.Component {
 
 	onSave = () => {
 		const {onAddToLesson} = this.props;
-		const {selectedSection, selectedRank, croppedImageState, webinar} = this.state;
+		const {selectedSection, selectedRank, croppedImageState, img, webinar} = this.state;
 
 		if(onAddToLesson) {
 			const request = croppedImageState ? ImageEditor.getBlobForEditorState(croppedImageState) : Promise.resolve();
 
 			request.then(dataBlob => {
-				onAddToLesson(selectedSection, selectedRank, dataBlob, webinar);
+				let blobValue = null;
+
+				if(img && !dataBlob) {
+					blobValue = undefined; // an image was provided, but no changes were made
+				}
+				else {
+					blobValue = dataBlob || null;
+				}
+
+				onAddToLesson(selectedSection, selectedRank, blobValue, webinar);
 			});
 		}
 	}
