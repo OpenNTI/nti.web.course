@@ -55,6 +55,10 @@
 				background-color: $tertiary-grey;//#B8B8B8;
 				pointer-events: none;
 			}
+
+			&.cation {
+				background-color: $border-red;
+			}
 		}
 
 		.image-and-description {

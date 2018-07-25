@@ -7,6 +7,7 @@ import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
 	register: 'Register',
+	unregister: 'Un-Register',
 	join: 'Join',
 	noLongerAvailable: 'This webinar is no longer available'
 });
@@ -22,6 +23,37 @@ export default class WebinarBaseItem extends React.Component {
 
 
 	state = {}
+
+
+	componentDidMount () {
+		this.unsubscribe = () => {};
+
+		if (typeof document !== 'undefined') {
+			document.addEventListener('keydown', this.onGlobalKeyPress);
+			document.addEventListener('keyup', this.onGlobalKeyPress);
+			this.unsubscribe = () => {
+				document.removeEventListener('keydown', this.onGlobalKeyPress);
+				document.removeEventListener('keyup', this.onGlobalKeyPress);
+			};
+		}
+	}
+
+
+	componentWillUnmount () {
+		this.unsubscribe();
+	}
+
+
+	onGlobalKeyPress = ({type, key}) => {
+
+		const keys = new Set([...(this.state.keysDown || [])]);
+
+		const keysDown = [... keys[type === 'keydown' ? 'add' : 'delete'](key)].sort();
+
+		this.setState({
+			keysDown
+		});
+	}
 
 
 	renderDate () {
@@ -47,10 +79,9 @@ export default class WebinarBaseItem extends React.Component {
 		const {item} = this.props;
 		const {webinar} = item;
 
-		// check icon for null string.  if we remove an icon and PUT to the record, it won't be null, but "null"
 		return (
 			<div className="image-and-description">
-				<div className="image">{item.icon && item.icon !== 'null' ? <img src={item.icon}/> : <div>No Image</div>}</div>
+				<div className="image"><div>No Image</div></div>
 				<div className="description">{webinar.description}</div>
 			</div>
 		);
@@ -79,27 +110,39 @@ export default class WebinarBaseItem extends React.Component {
 
 
 	renderButton () {
-		const {item} = this.props;
-		const {webinar} = item;
+		const {
+			props: {
+				item: {
+					webinar
+				}
+			},
+			state: {
+				keysDown
+			}
+		} = this;
 
-		if(!webinar) {
-			return null;
+		const isModifierOn = x => /^shift$/i.test((keysDown || []).join('-'));
+
+		if(webinar) {
+			// user has already registered for the webinar, show join button
+			if(webinar.isJoinable()) {
+
+				if (webinar.hasLink('WebinarUnRegister') && isModifierOn(keysDown)) {
+					return this.renderUnRegisterButton();
+				}
+
+
+				return this.renderJoinButton();
+			}
+
+			else if (webinar.hasLink('WebinarRegistrationFields')) {
+				// user has not registered, show register button
+				return this.renderRegisterButton();
+			}
 		}
 
-		const nearestSession = webinar.getNearestSession();
 
-		// nearest session start time is in the past, assume it's expired and show nothing
-		if(!nearestSession || nearestSession.getStartTime() < Date.now()) {
-			return null;
-		}
-
-		// user has already registered for the webinar, show join button
-		if(webinar.hasLink('JoinWebinar')) {
-			return this.renderJoinButton();
-		}
-
-		// user has not registered, show register button
-		return this.renderRegisterButton();
+		return null;
 	}
 
 
@@ -109,10 +152,7 @@ export default class WebinarBaseItem extends React.Component {
 
 		const {item: {webinar}} = this.props;
 
-		// check if the webinar is currently active.  Enable button if so, disable if not available yet.
-		// TODO: move into model to be something like isJoinable or isAvailable(date = now)
-		const now = Date.now();
-		const enabled = (x => x && x.getStartTime() <= now && x.getEndTime() >= now)(webinar.getNearestSession());
+		const enabled = webinar.isAvailable();
 
 		return (
 			<a target="_blank"
@@ -138,6 +178,21 @@ export default class WebinarBaseItem extends React.Component {
 					<GotoWebinar.Registration item={item} onBeforeDismiss={close}/>
 				)}
 			</React.Fragment>
+		);
+	}
+
+
+	renderUnRegisterButton () {
+		const unregister = () => {
+			const {webinar} = this.props.item;
+			webinar.requestLink('WebinarUnRegister', 'delete')
+				.then(() => webinar.refresh())
+				.then(() => this.forceUpdate());
+		};
+
+
+		return (
+			<button className="cation" onClick={unregister}>{t('unregister')}</button>
 		);
 	}
 
