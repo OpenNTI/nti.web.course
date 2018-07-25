@@ -74,20 +74,24 @@ export default class WebinarBaseItem extends React.Component {
 		);
 	}
 
-
-	renderDuration () {
-		const { item: {webinar}} = this.props;
-
-		const duration = webinar.getDuration();
-
+	getDurationObject (duration) {
 		const hours = Math.floor((duration / 1000) / 60 / 60);
 
 		const minutes = ((duration) - (hours * 60 * 60 * 1000)) / 1000 / 60;
 
+		return {hours, minutes};
+	}
+
+
+	renderDuration () {
+		const { item: {webinar}} = this.props;
+
+		const duration = this.getDurationObject(webinar.getDuration());
+
 		return (
 			<span className="duration">
-				<span className="hour">{hours}HR</span>
-				{minutes > 0 && <span className="minutes">{minutes}MIN</span>}
+				{duration.hours > 0 && <span className="hour">{duration.hours}h</span>}
+				{duration.minutes > 0 && <span className={cx('minutes', {solo: duration.hours === 0})}>{duration.minutes}m</span>}
 			</span>
 		);
 	}
@@ -122,20 +126,54 @@ export default class WebinarBaseItem extends React.Component {
 		);
 	}
 
+	isToday (a, b) {
+		return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
+	}
 
-	renderContents () {
-		const {item, isMinimal, hideControls, editMode} = this.props;
-		const {webinar} = item;
+	renderAvailability () {
+		const {item, isMinimal, item: {webinar}} = this.props;
 		const nearestSession = webinar && webinar.getNearestSession();
 
-		const timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Available] dddd [from] hh:mm a')
+		const now = Date.now();
+
+		// default case, render 'Available [day] from [startTime] - [endTime]'
+		let timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Available] dddd [from] hh:mm a')
 			+ ' - ' + DateTime.format(nearestSession.getEndTime(), 'hh:mm a z');
+
+		if(webinar.isExpired()) {
+			// render 'Expired [day] at [time]'
+			timeDisplay = nearestSession && DateTime.format(nearestSession.getEndTime(), '[Expired] dddd [at] hh:mm a z');
+		}
+		else {
+			const currDate = new Date(now);
+
+			// determine if it's today
+			if(this.isToday(currDate, nearestSession.getStartTime())) {
+				const msUntilExpiration = nearestSession.getEndTime() - now;
+
+				if(msUntilExpiration <= 60 * 60 * 1000) {
+					// expires within an hour, render 'Expires Today at [time]'
+					timeDisplay = nearestSession && DateTime.format(nearestSession.getEndTime(), '[Expires Today at] hh:mm a z');
+				}
+				else {
+					// render 'Available Today at [time]'
+					timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Available Today at] hh:mm a z');
+				}
+			}
+		}
+
+		return <div className="availability-info">{(!item.icon || isMinimal) && this.renderDuration(webinar.getDuration())}{timeDisplay}</div>;
+	}
+
+
+	renderContents () {
+		const {item: {webinar}, isMinimal, hideControls, editMode} = this.props;
 
 		return (
 			<div className="contents">
 				<div className="header">
 					<div className="title">{webinar ? webinar.subject : t('noLongerAvailable')}</div>
-					<div className="time-info">{timeDisplay}</div>
+					{this.renderAvailability()}
 				</div>
 				{!hideControls && !editMode && this.renderButton()}
 				{webinar && !isMinimal && this.renderImageAndDescription()}
