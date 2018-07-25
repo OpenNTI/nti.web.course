@@ -75,13 +75,48 @@ export default class WebinarBaseItem extends React.Component {
 	}
 
 
+	renderDuration () {
+		const { item: {webinar}} = this.props;
+
+		const duration = webinar.getDuration();
+
+		const hours = Math.floor((duration / 1000) / 60 / 60);
+
+		const minutes = ((duration) - (hours * 60 * 60 * 1000)) / 1000 / 60;
+
+		return (
+			<span className="duration">
+				<span className="hour">{hours}HR</span>
+				{minutes > 0 && <span className="minutes">{minutes}MIN</span>}
+			</span>
+		);
+	}
+
+
+	renderStatus () {
+		const { item: {webinar}} = this.props;
+
+		if(!webinar) {
+			return null;
+		}
+
+		const isAvailable = webinar.isAvailable();
+
+		return (
+			<div className="status">
+				{isAvailable && <div className="live">Live</div>}
+				<div className={cx('duration-container', {'is-active': isAvailable})}>{this.renderDuration()}</div>
+			</div>
+		);
+	}
+
 	renderImageAndDescription () {
 		const {item} = this.props;
 		const {webinar} = item;
 
 		return (
 			<div className="image-and-description">
-				<div className="image"><div>No Image</div></div>
+				{item.icon && item.icon !== 'null' && <div className="image"><img src={item.icon}/>{this.renderStatus()}</div>}
 				<div className="description">{webinar.description}</div>
 			</div>
 		);
