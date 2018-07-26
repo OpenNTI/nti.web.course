@@ -30,7 +30,8 @@ export default class WebinarOverviewEditor extends React.Component {
 		webinar: PropTypes.object.isRequired,
 		onCancel: PropTypes.func,
 		onAddToLesson: PropTypes.func,
-		onDelete: PropTypes.func
+		onDelete: PropTypes.func,
+		saveDisabled: PropTypes.bool
 	}
 
 	state = {}
@@ -227,6 +228,8 @@ export default class WebinarOverviewEditor extends React.Component {
 	}
 
 	renderButtons () {
+		const {saveDisabled} = this.props;
+
 		return (
 			<DialogButtons
 				buttons={[
@@ -236,6 +239,7 @@ export default class WebinarOverviewEditor extends React.Component {
 					},
 					{
 						label: this.props.item ? t('save') : t('addToLesson'),
+						disabled: saveDisabled,
 						onClick: this.onSave
 					}
 				]}
