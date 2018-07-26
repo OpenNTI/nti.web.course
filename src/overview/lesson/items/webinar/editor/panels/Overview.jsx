@@ -66,7 +66,8 @@ export default class WebinarOverviewEditor extends React.Component {
 		const img = await ImageEditor.getImageForEditorState(editorState);
 
 		this.setState({editorState: img}, () => {
-			EditImage.show(ImageEditor.getEditorState(img, {crop: {width: img.naturalWidth, height: img.naturalHeight}})).then((newEditorState) => {
+			// match aspectRatio to the dimensions of the image in webinar overview list items
+			EditImage.show(ImageEditor.getEditorState(img, {crop: {aspectRatio: 208 / 117, width: img.naturalWidth, height: img.naturalHeight}})).then((newEditorState) => {
 				ImageEditor.getImageForEditorState(newEditorState).then(newImg => {
 					this.onImageCropperSave(newImg, newEditorState);
 				});
