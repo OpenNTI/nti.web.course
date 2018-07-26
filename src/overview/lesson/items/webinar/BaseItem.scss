@@ -1,5 +1,10 @@
 @import '~@nti/style-common';
 
+$header-ranges: (
+	short: (null, 4500px),
+	wide: (500px, null)
+);
+
 .webinar-base-item {
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.13);
 	background-color: #fcfcfc;
@@ -100,10 +105,20 @@
 		}
 
 		.image-and-description {
-			flex: none;
 			width: 100%;
-			display: flex;
 			margin-top: 16px;
+
+			@include responsive-range(wide, $header-ranges) {
+				display: flex;
+				flex: none;
+			}
+
+			@include responsive-range(short, $header-ranges) {
+				.image {
+					max-width: 208px;
+					margin-bottom: 1rem;
+				}
+			}
 
 			.image {
 				position: relative;
@@ -169,11 +184,13 @@
 			}
 
 			.description {
+				@include limit-lines($lines: 7);
+
 				color: $secondary-grey;
 				font-size: 14px;
-				max-height: 114px;
-				text-overflow: ellipsis;
-				overflow: hidden;
+				font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+				white-space: pre-wrap;
+				margin: 0;
 			}
 		}
 	}

@@ -125,7 +125,7 @@ export default class WebinarBaseItem extends React.Component {
 		return (
 			<div className="image-and-description">
 				{item.icon && item.icon !== 'null' && <div className="image"><img src={item.icon}/>{this.renderStatus()}</div>}
-				<div className="description">{webinar.description}</div>
+				<pre className="description">{webinar.description}</pre>
 			</div>
 		);
 	}
