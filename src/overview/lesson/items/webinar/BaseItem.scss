@@ -93,6 +93,7 @@ $header-ranges: (
 			padding: 7px 24px 9px;
 			cursor: pointer;
 			text-decoration: none;
+			min-width: 110px;
 
 			&:disabled {
 				background-color: $tertiary-grey;//#B8B8B8;
@@ -101,6 +102,42 @@ $header-ranges: (
 
 			&.cation {
 				background-color: $border-red;
+			}
+
+			&.expiring {
+				font-size: 14px;
+				padding-top: 3px;
+				padding-bottom: 3px;
+
+				.remaining {
+					font-size: 10px;
+					text-transform: uppercase;
+					font-weight: bold;
+				}
+			}
+
+			&.starting {
+				padding-left: 12px;
+				font-size: 14px;
+
+				& > span {
+					position: relative;
+
+					.timer {
+						position: absolute;
+						left: 0;
+						top: 0;
+						height: 20px;
+						width: 20px;
+						display: inline-block;
+						margin-right: 0.5rem;
+						background-image: url('./assets/timer.svg');
+					}
+
+					.remaining {
+						padding-left: 26px;
+					}
+				}
 			}
 		}
 
@@ -161,9 +198,6 @@ $header-ranges: (
 					}
 
 					.live {
-						// position: absolute;
-						// right: 36px;
-						// bottom: 0;
 						background-color: $primary-red;
 						padding: 5px 10px 5px 17px;
 						border-radius: 3px 0 0 3px;
@@ -177,7 +211,7 @@ $header-ranges: (
 							line-height: 0;
 							position: absolute;
 							left: 8px;
-							top: 10px;
+							top: 12px;
 						}
 					}
 				}

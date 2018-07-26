@@ -8,6 +8,8 @@ import {scoped} from '@nti/lib-locale';
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';
 
+import Button from './Button';
+
 const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
 	register: 'Register',
 	unregister: 'Un-Register',
@@ -207,26 +209,14 @@ export default class WebinarBaseItem extends React.Component {
 				if (webinar.hasLink('WebinarUnRegister') && isModifierOn(keysDown)) {
 					return this.renderUnRegisterButton();
 				}
-
-
-				return this.renderJoinButton();
-			}
-
-			else if (webinar.hasLink('WebinarRegistrationFields')) {
-				// user has not registered, show register button
-				return this.renderRegisterButton();
 			}
 		}
 
-
-		return null;
+		return <Button item={this.props.item}/>;
 	}
 
 
 	renderJoinButton () {
-		// TODO: Join button is disabled if not available yet,
-		// TODO: render a timer when within 1hour of expiry
-
 		const {item: {webinar}} = this.props;
 
 		const enabled = webinar.isAvailable();
@@ -236,7 +226,9 @@ export default class WebinarBaseItem extends React.Component {
 				rel="noopener noreferrer"
 				href={enabled ? webinar.getLink('JoinWebinar') : null}
 			>
-				<button disabled={!enabled}>{t('join')}</button>
+				<button disabled={!enabled}>
+					<Button webinar={webinar}/>
+				</button>
 			</a>
 		);
 	}
