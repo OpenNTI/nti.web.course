@@ -1,7 +1,7 @@
 @import '~@nti/style-common';
 
 $header-ranges: (
-	short: (null, 4500px),
+	short: (null, 500px),
 	wide: (500px, null)
 );
 
@@ -28,19 +28,33 @@ $header-ranges: (
 	}
 
 	.contents {
-		display: flex;
-		flex-wrap: wrap;
 		align-items: center;
 		padding-left: 90px;
 
+		@include responsive-range(wide, $header-ranges) {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		@include responsive-range(short, $header-ranges) {
+			.header {
+				margin-bottom: 0.5rem;
+				max-width: 100% !important;
+			}
+		}
 
 		.header {
 			flex: 1 1 auto;
+			max-width: calc(100% - 8rem);
+			margin-right: 0.5rem;
 
 			.title {
 				font-size: 18px;
 				color: black;
 				margin-bottom: 6px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.availability-info {
@@ -48,6 +62,9 @@ $header-ranges: (
 				text-transform: uppercase;
 				color: $tertiary-grey;
 				margin-top: 4px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 
 				.webinar-duration {
 					position: relative;
