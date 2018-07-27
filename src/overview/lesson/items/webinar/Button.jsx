@@ -7,19 +7,22 @@ import {scoped} from '@nti/lib-locale';
 const t = scoped('course.overview.lesson.items.webinar.Button', {
 	register: 'Register',
 	unregister: 'Un-Register',
-	join: 'Join'
+	join: 'Join',
+	starting: 'Starting'
 });
 
 const States = {
 	Unregistered: 'unregistered',
 	RegisteredInactive: 'registered-inactive',
 	RegisteredStartingSoon: 'registered-starting-soon',
+	RegisteredStartingInMinute: 'registered-starting-in-minute',
 	RegisteredActive: 'registered-active',
 	RegisteredExpiringSoon: 'registered-expiring-soon',
 	Expired: 'expired'
 };
 
 const COUNTDOWN_THRESHOLD = 1000 * 60 * 60; // one hour
+const MINUTE_THRESHOLD = 1000 * 60;
 
 export default class Button extends React.Component {
 
@@ -44,6 +47,13 @@ export default class Button extends React.Component {
 
 		if(webinar && !webinar.isExpired() && !webinar.isJoinable() && webinar.hasLink('WebinarRegistrationFields')) {
 			currentState = States.Unregistered;
+		}
+		else if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - MINUTE_THRESHOLD) < now) {
+			currentState = States.RegisteredStartingInMinute;
+
+			setTimeout(() => {
+				this.setupFor(this.props);
+			}, Math.min(MINUTE_THRESHOLD, nearestSession.getStartTime() - now));
 		}
 		else if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - COUNTDOWN_THRESHOLD) >= now) {
 			currentState = States.RegisteredInactive;
@@ -89,7 +99,7 @@ export default class Button extends React.Component {
 
 		const remainingTime = targetTime - clock.current;
 
-		if(remainingTime <= 0) {
+		if(remainingTime <= 0 || (this.state.currentState === States.RegisteredStartingSoon && remainingTime <= MINUTE_THRESHOLD)) {
 			this.setupFor(this.props);
 		}
 		else {
@@ -104,6 +114,13 @@ export default class Button extends React.Component {
 			return (
 				<button className="join" disabled={!enabled}>
 					<span>{t('join')}</span>
+				</button>
+			);
+		}
+		else if(currentState === States.RegisteredStartingInMinute) {
+			return (
+				<button className="join starting" disabled={!enabled}>
+					<span>{t('starting')}</span>
 				</button>
 			);
 		}
