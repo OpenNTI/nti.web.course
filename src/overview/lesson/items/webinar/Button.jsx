@@ -46,16 +46,20 @@ export default class Button extends React.Component {
 		let remainingTime = 0;
 
 		if(webinar && !webinar.isExpired() && !webinar.isJoinable() && webinar.hasLink('WebinarRegistrationFields')) {
+			// the webinar hasn't expired and has registration fields, meaning we it's available for registration
 			currentState = States.Unregistered;
 		}
 		else if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - MINUTE_THRESHOLD) < now) {
+			// the webinar hasn't started and is within the threshold of showing a 'Starting' label
 			currentState = States.RegisteredStartingInMinute;
 
+			// after the minute threshold has passed before starting, trigger a recalculation
 			setTimeout(() => {
 				this.setupFor(this.props);
 			}, Math.min(MINUTE_THRESHOLD, nearestSession.getStartTime() - now));
 		}
 		else if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - COUNTDOWN_THRESHOLD) >= now) {
+			// the webinar hasn't started and we're still too far out of the range for showing the countdown
 			currentState = States.RegisteredInactive;
 
 			const timeoutLength = nearestSession.getStartTime() - COUNTDOWN_THRESHOLD - now;
@@ -66,17 +70,21 @@ export default class Button extends React.Component {
 			}, timeoutLength);
 		}
 		else if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - COUNTDOWN_THRESHOLD) < now) {
+			// the webinar hasn't started but we're within the countdown threshold, so show the countdown timer on the button
 			currentState = States.RegisteredStartingSoon;
 			remainingTime = nearestSession.getStartTime() - now;
 		}
 		else if(nearestSession.getEndTime() < now) {
+			// the webinar has expired
 			currentState = States.Expired;
 		}
 		else if(nearestSession.getEndTime() - COUNTDOWN_THRESHOLD < now) {
+			// the webinar's end time is within the countdown threshold, so show the countdown to expiration timer on the button
 			currentState = States.RegisteredExpiringSoon;
 			remainingTime = nearestSession.getEndTime() - now;
 		}
 		else if(nearestSession.getStartTime() < now && (nearestSession.getEndTime() - COUNTDOWN_THRESHOLD) > now) {
+			// the webinar's end time is still too far out of the range for showing the countdown, so just show a 'Join' label in the meantime
 			currentState = States.RegisteredActive;
 
 			const timeoutLength = nearestSession.getEndTime() - COUNTDOWN_THRESHOLD - now;
