@@ -153,7 +153,15 @@ export default class Button extends React.Component {
 		const {props: {item}, state: {register}} = this;
 		const toggle = x => this.setState({register: !!x});
 		const open = () => toggle(true);
-		const close = () => toggle(false);
+		const close = () => {
+			toggle(false);
+
+			// might be nicer to have a hook in the registration form that is called only on successful
+			// registration so that we only refresh/setup on registration, not just close.  But this isn't too expensive for now
+			this.props.item.refresh().then(() => {
+				this.setupFor(this.props);
+			});
+		};
 
 		return (
 			<React.Fragment>
