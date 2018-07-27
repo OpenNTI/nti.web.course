@@ -46,6 +46,25 @@
 				color: $tertiary-grey;
 				margin-bottom: 16px;
 				text-align: left;
+
+				> span {
+					margin-right: 2px;
+				}
+
+				.date {
+					position: relative;
+					padding-left: 12px;
+
+					&::before {
+						content: "·";
+						margin-right: 2px;
+						font-size: 20px;
+						line-height: 0;
+						position: absolute;
+						left: 2px;
+						top: 8px;
+					}
+				}
 			}
 
 			.image-and-description {

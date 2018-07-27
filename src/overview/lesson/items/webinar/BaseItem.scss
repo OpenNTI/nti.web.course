@@ -33,15 +33,6 @@ $header-ranges: (
 		align-items: center;
 		padding-left: 90px;
 
-		.duration {
-			.minutes {
-				margin-left: 0.25rem;
-
-				&.solo {
-					margin-left: 0;
-				}
-			}
-		}
 
 		.header {
 			flex: 1 1 auto;
@@ -58,7 +49,7 @@ $header-ranges: (
 				color: $tertiary-grey;
 				margin-top: 4px;
 
-				.duration {
+				.webinar-duration {
 					position: relative;
 					padding-right: 10px;
 

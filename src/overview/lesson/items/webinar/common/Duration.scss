@@ -1,0 +1,9 @@
+.webinar-duration {
+	.minutes {
+		margin-left: 0.25rem;
+
+		&.solo {
+			margin-left: 0;
+		}
+	}
+}

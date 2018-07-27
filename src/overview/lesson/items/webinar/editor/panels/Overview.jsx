@@ -5,6 +5,7 @@ import {scoped} from '@nti/lib-locale';
 import {ImageEditor} from '@nti/web-whiteboard';
 
 import PositionSelect from '../../../../common/PositionSelect';
+import Duration from '../../common/Duration';
 
 import EditImage from './EditImage';
 
@@ -84,20 +85,17 @@ export default class WebinarOverviewEditor extends React.Component {
 
 	renderWebinarInfo () {
 		const {webinar} = this.props;
-		const {startDate, endDate} = this.state;
-
-		let info = '';
-
-		if(startDate && endDate) {
-			const timeDiff = (endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60;
-
-			info = timeDiff + 'HR';
-		}
+		const {startDate} = this.state;
 
 		return (
 			<div className="webinar-info">
 				<div className="title">{webinar.subject}</div>
-				<div className="time-info">Live {info} Webinar {DateTime.format(startDate, 'dddd [at] hh:mm a z')}</div>
+				<div className="time-info">
+					<span>Live</span>
+					<Duration webinar={webinar} longAbbreviations/>
+					<span>Webinar</span>
+					<span className="date">{DateTime.format(startDate, 'dddd [at] hh:mm a z')}</span>
+				</div>
 				<div className="image-and-description">
 					{this.renderImage()}
 					<div className="description">{webinar.description}</div>

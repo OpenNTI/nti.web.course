@@ -9,6 +9,7 @@ import RequirementControl from '../../../../progress/widgets/RequirementControl'
 import Required from '../../common/Required';
 
 import Button from './Button';
+import Duration from './common/Duration';
 
 const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
 	register: 'Register',
@@ -80,29 +81,6 @@ export default class WebinarBaseItem extends React.Component {
 		);
 	}
 
-	getDurationObject (duration) {
-		const hours = Math.floor((duration / 1000) / 60 / 60);
-
-		const minutes = ((duration) - (hours * 60 * 60 * 1000)) / 1000 / 60;
-
-		return {hours, minutes};
-	}
-
-
-	renderDuration () {
-		const { item: {webinar}} = this.props;
-
-		const duration = this.getDurationObject(webinar.getDuration());
-
-		return (
-			<span className="duration">
-				{duration.hours > 0 && <span className="hour">{duration.hours}h</span>}
-				{duration.minutes > 0 && <span className={cx('minutes', {solo: duration.hours === 0})}>{duration.minutes}m</span>}
-			</span>
-		);
-	}
-
-
 	renderStatus () {
 		const { item: {webinar}} = this.props;
 
@@ -115,7 +93,7 @@ export default class WebinarBaseItem extends React.Component {
 		return (
 			<div className="status">
 				{isAvailable && <div className="live">Live</div>}
-				<div className={cx('duration-container', {'is-active': isAvailable})}>{this.renderDuration()}</div>
+				<div className={cx('duration-container', {'is-active': isAvailable})}><Duration webinar={webinar}/></div>
 			</div>
 		);
 	}
@@ -168,7 +146,7 @@ export default class WebinarBaseItem extends React.Component {
 			}
 		}
 
-		return <div className="availability-info">{(!item.icon || isMinimal) && this.renderDuration(webinar.getDuration())}{timeDisplay}</div>;
+		return <div className="availability-info">{(!item.icon || isMinimal) && <Duration webinar={webinar}/>}{timeDisplay}</div>;
 	}
 
 
