@@ -133,6 +133,10 @@ export default class WebinarBaseItem extends React.Component {
 
 			// determine if it's today
 			if(this.isToday(currDate, nearestSession.getStartTime())) {
+				timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Available Today at] hh:mm a z');
+
+				/*
+				// This is logic for the simulated live case which we aren't worrying about now
 				const msUntilExpiration = nearestSession.getEndTime() - now;
 
 				if(msUntilExpiration <= 60 * 60 * 1000) {
@@ -143,6 +147,7 @@ export default class WebinarBaseItem extends React.Component {
 					// render 'Available Today at [time]'
 					timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Available Today at] hh:mm a z');
 				}
+				*/
 			}
 		}
 
