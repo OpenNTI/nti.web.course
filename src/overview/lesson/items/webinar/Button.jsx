@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Timer, DateTime} from '@nti/web-commons';
+import {Timer, DateTime, Layouts} from '@nti/web-commons';
 import {GotoWebinar} from '@nti/web-integrations';
 import {scoped} from '@nti/lib-locale';
 
@@ -13,6 +13,7 @@ const t = scoped('course.overview.lesson.items.webinar.Button', {
 
 const States = {
 	Unregistered: 'unregistered',
+	UnregisteredStartingSoon: 'unregistered-starting-soon',
 	RegisteredInactive: 'registered-inactive',
 	RegisteredStartingSoon: 'registered-starting-soon',
 	RegisteredStartingInMinute: 'registered-starting-in-minute',
@@ -23,6 +24,7 @@ const States = {
 
 const COUNTDOWN_THRESHOLD = 1000 * 60 * 60; // one hour
 const MINUTE_THRESHOLD = 1000 * 60;
+const BUTTON_TRANSITION_TIME = 5000;
 
 export default class Button extends React.Component {
 
@@ -47,7 +49,22 @@ export default class Button extends React.Component {
 
 		if(webinar && !webinar.isExpired() && !webinar.isJoinable() && webinar.hasLink('WebinarRegistrationFields')) {
 			// the webinar hasn't expired and has registration fields, meaning we it's available for registration
-			currentState = States.Unregistered;
+			if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - COUNTDOWN_THRESHOLD) < now) {
+				// the webinar will start soon, show timer and Register label
+				currentState = States.UnregisteredStartingSoon;
+				remainingTime = nearestSession.getStartTime() - now;
+			}
+			else {
+				// the webinar will not start soon, just show Register label
+				currentState = States.Unregistered;
+
+				const timeoutLength = nearestSession.getStartTime() - COUNTDOWN_THRESHOLD - now;
+
+				// when the right amount of time has passed, recalculate the state as we should move us to the unregistered starting soon state
+				setTimeout(() => {
+					this.setupFor(this.props);
+				}, timeoutLength);
+			}
 		}
 		else if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - MINUTE_THRESHOLD) < now) {
 			// the webinar hasn't started and is within the threshold of showing a 'Starting' label
@@ -101,7 +118,7 @@ export default class Button extends React.Component {
 	onTick = (clock) => {
 		const {item:{webinar}} = this.props;
 
-		const targetTime = this.state.currentState === States.RegisteredStartingSoon
+		const targetTime = this.state.currentState === States.RegisteredStartingSoon || this.state.currentState === States.UnregisteredStartingSoon
 			? webinar.getNearestSession().getStartTime()
 			: webinar.getNearestSession().getEndTime();
 
@@ -135,12 +152,15 @@ export default class Button extends React.Component {
 		else if(currentState === States.RegisteredStartingSoon) {
 			return (
 				<button className="join starting" disabled={!enabled}>
-					<Timer onTick={this.onTick}>
-						<span>
-							<span className="timer"/>
-							<span className="remaining">{DateTime.getShortNaturalDuration(this.state.remainingTime)}</span>
-						</span>
-					</Timer>
+					<Layouts.Carousel transition={Layouts.Carousel.ROTATE_UP} interval={BUTTON_TRANSITION_TIME} active={0} wrap>
+						<Timer onTick={this.onTick}>
+							<span>
+								<span className="timer"/>
+								<span className="remaining">{DateTime.getShortNaturalDuration(this.state.remainingTime)}</span>
+							</span>
+						</Timer>
+						<span>{t('join')}</span>
+					</Layouts.Carousel>
 				</button>
 			);
 		}
@@ -188,6 +208,29 @@ export default class Button extends React.Component {
 			});
 		};
 
+		const {currentState} = this.state;
+
+		if(currentState === States.UnregisteredStartingSoon) {
+			return (
+				<React.Fragment>
+					<button onClick={open} disabled={register}>
+						<Layouts.Carousel transition={Layouts.Carousel.ROTATE_UP} interval={BUTTON_TRANSITION_TIME} active={0} wrap>
+							<Timer onTick={this.onTick}>
+								<span className="register-timer">
+									<span className="timer"/>
+									<span className="remaining">{DateTime.getShortNaturalDuration(this.state.remainingTime)}</span>
+								</span>
+							</Timer>
+							<span className="register-label">{t('register')}</span>
+						</Layouts.Carousel>
+					</button>
+					{register && (
+						<GotoWebinar.Registration item={item} onBeforeDismiss={close}/>
+					)}
+				</React.Fragment>
+			);
+		}
+
 		return (
 			<React.Fragment>
 				<button onClick={open} disabled={register}>{t('register')}</button>
@@ -201,7 +244,7 @@ export default class Button extends React.Component {
 	render () {
 		const {currentState} = this.state;
 
-		if(currentState === States.Unregistered) {
+		if(currentState === States.Unregistered || currentState === States.UnregisteredStartingSoon) {
 			return this.renderRegisterButton();
 		}
 		else if(currentState && currentState !== States.Expired) {
