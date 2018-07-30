@@ -2,11 +2,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-// import {getService} from '@nti/web-client';
+import {getService} from '@nti/web-client';
 import {Layouts} from '@nti/web-commons';
 // import {Tasks} from '@nti/lib-commons';
 
-import {Enrollment} from '../../src';
+// import Overview from '../../src/overview/lesson/Overview';
+import {Overview, Enrollment, WebinarPanels} from '../../src';
+import PositionSelect from '../../src/overview/lesson/common/PositionSelect';
+import Button from '../../src/overview/lesson/items/webinar/Button';
+import BaseItem from '../../src/overview/lesson/items/webinar/BaseItem';
 
 // import Picker from './PickCourse';
 
@@ -44,299 +48,6 @@ window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 // 	}
 // }
 
-const OPEN = 'application/vnd.nextthought.courseware.openenrollmentoption';
-const FIVE_MINUTE = 'application/vnd.nextthought.courseware.fiveminuteenrollmentoption';
-const STORE = 'application/vnd.nextthought.courseware.storeenrollmentoption';
-const IMIS = 'application/vnd.nextthought.courseware.ensyncimisexternalenrollmentoption';
-
-const YESTERDAY = (new Date()).setDate((new Date()).getDate() - 1);
-const TOMORROW = (new Date()).setDate((new Date()).getDate() + 1);
-
-function buildOption () {
-	let mimeType = '';
-	let isEnrolled = false;
-	let isAvailable = false;
-	let description = '';
-	let title = '';
-	let dropTitle = '';
-	let dropDescription = '';
-	let dropCutoff = null;
-	let enrollCutoff = null;
-	let ouPrice = null;
-	// let apiDown = false;
-	let purchasables = null;
-	let enrollmentURL = null;
-	let seatAvailable = null;
-
-	let o = {};
-
-	o.type = (m) => {
-		mimeType = m;
-		return o;
-	};
-
-	o.enrolled = (x) => {
-		isEnrolled = x;
-		return o;
-	};
-
-	o.available = (x) => {
-		isAvailable = x;
-		return o;
-	};
-
-	o.title = (x) => {
-		title = x;
-		return o;
-	};
-
-	o.description = (x) => {
-		description = x;
-		return o;
-	};
-
-	o.dropTitle = (x) => {
-		dropTitle = x;
-		return o;
-	};
-
-	o.dropDescription = (x) => {
-		dropDescription = x;
-		return o;
-	};
-
-	o.enrollmentCutoff = (x) => {
-		enrollCutoff = x;
-		return o;
-	};
-
-	o.dropCutoff = (x) => {
-		dropCutoff = x;
-		return o;
-	};
-
-	o.ouPrice = (x) => {
-		ouPrice = x;
-		return o;
-	};
-
-	// o.apiDown = (x) => {
-	// 	apiDown = x;
-	// 	return o;
-	// };
-
-	o.purchasables = (x) => {
-		purchasables = x;
-		return o;
-	};
-
-	o.enrollmentURL = (x) => {
-		enrollmentURL = x;
-		return o;
-	};
-
-
-	o.seatAvailable = (x) => {
-		seatAvailable = x;
-		return o;
-	};
-
-	o.build = () => {
-		return {
-			MimeType: mimeType,
-			enrolled: isEnrolled,
-			available: isAvailable,
-			description,
-			title,
-			'drop_description': dropDescription,
-			'drop_title': dropTitle,
-			'OU_DropCutOffDate': dropCutoff,
-			'OU_EnrollCutOffDate': enrollCutoff,
-			'OU_Price': ouPrice,
-			'Purchasables': purchasables,
-			enrollmentURL,
-			fetchLink: (link) => {
-				if (link === 'fmaep.course.details') {
-					if (seatAvailable) {
-						return {Course: {SeatAvailable: seatAvailable}};
-					}
-
-					throw new Error('Api Down');
-				}
-			},
-			getPurchasable () {
-				return purchasables && purchasables.Items[0];
-			},
-			getPurchasableForGifting () {
-				const item = purchasables && purchasables.Items[0];
-
-				return item && item.Giftable && item;
-			},
-			getPurchasableForRedeeming () {
-				const item = purchasables && purchasables.Items[0];
-
-				return item && item.Redeemable && item;
-			}
-		};
-	};
-
-	return o;
-}
-
-function buildPurchasable () {
-	let price = null;
-	let giftable = false;
-	let redeemable = false;
-
-	let p = {};
-
-	p.price = (x) => {
-		price = x;
-		return p;
-	};
-
-	p.giftable = (x) => {
-		giftable = x;
-		return p;
-	};
-
-	p.redeemable = (x) => {
-		redeemable = x;
-		return p;
-	};
-
-	p.build = () => {
-		const id = 'fakegiftid';
-
-		return {
-			DefaultGiftingNTIID: id,
-			DefaultPurchaseNTIID: id,
-			Items: [
-				{
-					Giftable: giftable,
-					Redeemable: redeemable,
-					amount: price
-				}
-			]
-		};
-	};
-
-	return p;
-}
-
-function buildCourse () {
-	let enrolled = false;
-	let admin = false;
-	let startDate = null;
-	let endDate = null;
-	let options = [];
-
-	let c = {};
-
-	c.addOption = (x) => {
-		options.push(x);
-		return c;
-	};
-
-	c.enrolled = (x) => {
-		enrolled = x;
-		return c;
-	};
-
-	c.admin = (x) => {
-		admin = x;
-		return c;
-	};
-
-
-	c.startDate = (x) => {
-		startDate = x;
-		return c;
-	};
-
-	c.endDate = (x) => {
-		endDate = x;
-		return c;
-	};
-
-	c.build = () => {
-		return {
-			getEnrollmentOptions () {
-				return options;
-			},
-
-			async fetchLinkParsed (rel) {
-				if (rel === 'UserCoursePreferredAccess') {
-					if (!enrolled && !admin) {
-						throw new Error('Not Enrolled');
-					} else {
-						return {
-							isAdministrative: admin,
-							getCreatedTime () {
-								return YESTERDAY;
-							}
-						};
-					}
-				}
-			},
-
-
-			getStartDate () {
-				return startDate;
-			},
-
-
-			getEndDate () {
-				return endDate;
-			}
-		};
-	};
-
-	return c;
-}
-
-const course = buildCourse()
-	.enrolled(false)
-	.startDate(TOMORROW)
-	// .endDate(YESTERDAY)
-	.addOption(
-		buildOption()
-			.type(OPEN)
-			.available(true)
-			.enrolled(false)
-			.build()
-	)
-	.addOption(
-		buildOption()
-			.type(FIVE_MINUTE)
-			.available(false)
-			.ouPrice(200)
-			.seatAvailable(10)
-			.build()
-	)
-	.addOption(
-		buildOption()
-			.type(STORE)
-			.available(true)
-			.purchasables(
-				buildPurchasable()
-					.price(100)
-					.giftable(true)
-					.redeemable(true)
-					.build()
-			)
-			.build()
-	)
-	.addOption(
-		buildOption()
-			.type(IMIS)
-			.available(false)
-			.enrollmentURL('http://www.google.com')
-			.build()
-	)
-	.build();
-
-
 
 class Test extends React.Component {
 	static propTypes = {
@@ -345,6 +56,54 @@ class Test extends React.Component {
 
 	static childContextTypes = {
 		router: PropTypes.object
+	}
+
+	// store enrollment 'tag:nextthought.com,2011-10:NTI-CourseInfo-DefaultAPIImported_NTI_2000_0'
+	// ims enrollment   'tag:nextthought.com,2011-10:NTI-CourseInfo-Fall2015_ECON_2843'
+	// basic course     'tag:nextthought.com,2011-10:OU-CourseInfo-9208505778827852429_4744113955624525798'
+
+	// async componentDidMount () {
+	// 	const courseId = 'tag:nextthought.com,2011-10:OU-CourseInfo-8288534153395311590_4744202394219581819';
+	// 	const service = await getService();
+	// 	const course = await service.getObject(courseId);
+	//
+	// 	this.setState({
+	// 		course
+	// 	});
+	// }
+	//
+	// "tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x399a3f:5573657273:PFDSPJBUzav"
+
+	// async componentDidMount () {
+	// 	const service = await getService();
+	//
+	// 	const courseId = 'tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x2eaf42:5573657273:Ny6JwyrF3en';
+	// 	const overview = await service.getObject('tag:nextthought.com,2011-10:OU-NTILessonOverview-8367419836827867652_4744132875403496067_cory_jones_nextthought_com_4744188594575707193_0_cory_jones_nextthought_com_4744188594587791830_0');
+	// 	const group = await service.getObject('tag:nextthought.com,2011-10:NTI-NTICourseOverviewGroup-system_20180709205503_623455_3389331819');
+	// 	const course = await service.getObject(courseId);
+	//
+	// 	this.setState({overview, group, course});
+	// }
+
+	async componentDidMount () {
+		this.now = Date.now();
+		const service = await getService();
+		const course = await service.getObject('tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x330b30:5573657273:baC0bEuPGke');
+		const outline = await course.getOutline();
+		const items = outline.getFlattenedList();
+		const contentItems = items.filter(item => item.hasLink('overview-content'));
+		const outlineNode = contentItems[0];
+
+		const overview = await outlineNode.getContent();
+
+		console.log(overview);
+
+		this.setState({
+			course,
+			outlineNode,
+			overview,
+			layout: Overview.Grid
+		});
 	}
 
 	getChildContext () {
@@ -373,16 +132,93 @@ class Test extends React.Component {
 
 	state = {}
 
+	selectGrid = () => {
+		this.setState({layout: Overview.Grid});
+	}
+
+	selectList = () => {
+		this.setState({layout: Overview.List});
+	}
+
+	toggleListType = () => {
+		const {layout} = this.state;
+
+		this.setState({layout: layout === Overview.Constants.List ? Overview.Constants.Grid : Overview.Constants.List});
+	}
+
+	onDelete = () => {
+		console.log('hey');
+	}
+
+	item = {
+		hasCompleted: () => {
+			return false;
+		},
+		webinar: {
+			subject: 'This is a webinar webinar webinar webinar webinar webinar webinar webinar webinarwebinarwebinar',
+			refresh: () => {
+				return Promise.resolve();
+			},
+			hasLink: (rel) => {
+				if(rel === 'JoinWebinar') {
+					return true;
+				}
+
+				if(rel === 'WebinarRegistrationFields') {
+					return false;
+				}
+
+				return true;
+			},
+			getLink: () => {
+				return 'test';
+			},
+			getDuration: () => {
+				return 1000 * 10;
+			},
+			isExpired: () => {
+				return Date.now() > this.now + (1000 * 30);
+			},
+			isJoinable: () => {
+				return false;
+			},
+			isAvailable: () => {
+				return Date.now() > this.now + (1000 * 20) && !(Date.now() > this.now + (1000 * 30));
+			},
+			getNearestSession: () => {
+				return {
+					getStartTime: () => {
+						return new Date(this.now + (1000 * 20));
+					},
+					getEndTime: () => {
+						return new Date(this.now + (1000 * 30));
+					}
+				};
+			}
+		}
+	}
 
 	render () {
-		//const {course} = this.state;
-		// const limit = localStorage.limit || 1;
+		if(!this.state.course) {
+			return <div>Loading overview...</div>;
+		}
 
-		if (!course) { return null; }
+		const {course, outlineNode, overview, layout} = this.state;
 
-		return (
-			<Enrollment.Options catalogEntry={course} />
-		);
+		return <BaseItem item={this.item}/>;
+
+		// return (
+		// 	<div>
+		// 		<div onClick={this.toggleListType}>Toggle</div>
+		// 		<Overview.OverviewContents course={course} outlineNode={outlineNode} overview={overview} layout={layout}/>
+		// 	</div>
+		// );
+		//
+		// return (
+		// 	<div>
+		// 		<Overview.Items.Webinar.Editor onDelete={this.onDelete} course={this.state.course} lessonOverview={this.state.overview} overviewGroup={this.state.group}/>
+		// 	</div>
+		// );
 
 		// return (
 		// 	<Info catalogEntry={course} editable/>

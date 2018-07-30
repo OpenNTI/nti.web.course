@@ -43,11 +43,11 @@ export default class Button extends React.Component {
 	state = {}
 
 	componentDidMount () {
-		this.setupFor(this.props);
+		this.calculateState();
 	}
 
 
-	setupFor (props) {
+	calculateState (props = this.props) {
 		const {item: {webinar}, onStatusChange} = props;
 
 		let newState = null;
@@ -92,7 +92,7 @@ export default class Button extends React.Component {
 
 			// after the minute threshold has passed before starting, trigger a recalculation
 			this.schedule(() => {
-				this.setupFor(this.props);
+				this.calculateState();
 			}, Math.min(MINUTE_THRESHOLD, nearestSession.getStartTime() - now));
 		}
 		else if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - COUNTDOWN_THRESHOLD) >= now) {
@@ -105,7 +105,7 @@ export default class Button extends React.Component {
 
 			// when the right amount of time has passed, recalculate the state as we should move us to the registered starting soon state
 			this.schedule(() => {
-				this.setupFor(this.props);
+				this.calculateState();
 			}, timeoutLength);
 		}
 		else if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - COUNTDOWN_THRESHOLD) < now) {
@@ -138,7 +138,7 @@ export default class Button extends React.Component {
 
 			// when the right amount of time has passed, recalculate the state as we should move us to the registered expiring soon state
 			this.schedule(() => {
-				this.setupFor(this.props);
+				this.calculateState();
 			}, timeoutLength);
 		}
 
@@ -166,7 +166,7 @@ export default class Button extends React.Component {
 
 			// after the minute threshold has passed before starting, trigger a recalculation
 			this.schedule(() => {
-				this.setupFor(this.props);
+				this.calculateState();
 			}, Math.min(MINUTE_THRESHOLD, nearestSession.getStartTime() - now));
 		}
 		else if(nearestSession.getStartTime() > now && (nearestSession.getStartTime() - COUNTDOWN_THRESHOLD) < now) {
@@ -186,7 +186,7 @@ export default class Button extends React.Component {
 
 			// when the right amount of time has passed, recalculate the state as we should move us to the unregistered starting soon state
 			this.schedule(() => {
-				this.setupFor(this.props);
+				this.calculateState();
 			}, timeoutLength);
 		}
 
@@ -208,7 +208,7 @@ export default class Button extends React.Component {
 				|| (currentState === States.RegisteredStartingSoon
 				|| currentState === States.UnregisteredStartingSoon
 				&& remainingTime <= MINUTE_THRESHOLD)) {
-			this.setupFor(this.props);
+			this.calculateState();
 		}
 		else {
 			this.setState({remainingTime: targetTime - clock.current});
@@ -284,7 +284,10 @@ export default class Button extends React.Component {
 		const {props: {item}, state: {register}} = this;
 		const toggle = x => this.setState({register: !!x});
 		const open = () => toggle(true);
-		const close = () => toggle(false);
+		const close = () => {
+			toggle(false);
+			this.calculateState();
+		};
 
 		const {currentState} = this.state;
 
