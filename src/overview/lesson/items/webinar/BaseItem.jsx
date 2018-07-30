@@ -18,7 +18,8 @@ const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
 	join: 'Join',
 	noLongerAvailable: 'This webinar is no longer available',
 	completed: 'Completed',
-	incomplete: 'Incomplete'
+	incomplete: 'Incomplete',
+	absent: 'Absent'
 });
 
 export default class WebinarBaseItem extends React.Component {
@@ -159,7 +160,7 @@ export default class WebinarBaseItem extends React.Component {
 			<div className="availability-info">
 				{item.hasCompleted() && !isMinimal && <CircularProgress width={20} height={20} isComplete/>}
 				{item.hasCompleted() && <div className="completion-label">{t('completed')}</div>}
-				{!item.hasCompleted() && webinar.isExpired() && <div className="incomplete-label">{t('incomplete')}</div>}
+				{!item.hasCompleted() && webinar.isExpired() && <div className="incomplete-label">{t('absent')}</div>}
 				{(!item.icon || isMinimal) && !webinar.isExpired() && <Duration webinar={webinar}/>}
 				<div className="time-display">{timeDisplay}</div>
 			</div>
@@ -180,6 +181,14 @@ export default class WebinarBaseItem extends React.Component {
 				{webinar && !isMinimal && this.renderImageAndDescription()}
 			</div>
 		);
+	}
+
+	onStatusChange = (status) => {
+		if(this.state.status !== status) {
+			this.props.item.webinar.refresh().then(() => {
+				this.setState({status});
+			});
+		}
 	}
 
 
@@ -207,7 +216,7 @@ export default class WebinarBaseItem extends React.Component {
 			}
 		}
 
-		return <Button item={this.props.item}/>;
+		return <Button item={this.props.item} onStatusChange={this.onStatusChange}/>;
 	}
 
 
@@ -264,7 +273,7 @@ export default class WebinarBaseItem extends React.Component {
 	render () {
 		const {item, isMinimal, onRequirementChange} = this.props;
 
-		const cls = cx('webinar-base-item', {minimal: isMinimal, unavailable: !item || !item.webinar});
+		const cls = cx('webinar-base-item', {expired: item.webinar.isExpired(), minimal: isMinimal, unavailable: !item || !item.webinar});
 
 		const required = item.CompletionRequired;
 

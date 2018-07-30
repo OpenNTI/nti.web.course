@@ -45,7 +45,7 @@ $header-ranges: (
 
 		.header {
 			flex: 1 1 auto;
-			max-width: calc(100% - 8rem);
+			max-width: calc(100% - 9rem);
 			margin-right: 0.5rem;
 
 			.title {
@@ -118,8 +118,8 @@ $header-ranges: (
 			padding: 7px 24px 9px;
 			cursor: pointer;
 			text-decoration: none;
-			min-width: 110px;
-			max-width: 110px;
+			min-width: 130px;
+			max-width: 130px;
 
 			&:disabled {
 				background-color: $tertiary-grey;//#B8B8B8;
@@ -303,6 +303,14 @@ $header-ranges: (
 				.title {
 					font-size: 16px;
 				}
+			}
+		}
+	}
+
+	&.expired {
+		.contents {
+			.header {
+				max-width: 100%;
 			}
 		}
 	}
