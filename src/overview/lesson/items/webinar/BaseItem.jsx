@@ -107,9 +107,11 @@ export default class WebinarBaseItem extends React.Component {
 		const {item} = this.props;
 		const {webinar} = item;
 
+		const hasIcon = item.icon && item.icon !== 'null';
+
 		return (
-			<div className="image-and-description">
-				{item.icon && item.icon !== 'null' && <div className="image"><img src={item.icon}/>{this.renderStatus()}</div>}
+			<div className={cx('image-and-description', {iconless: !hasIcon})}>
+				{hasIcon && <div className="image"><img src={item.icon}/>{this.renderStatus()}</div>}
 				<pre className="description">{webinar.description}</pre>
 			</div>
 		);
