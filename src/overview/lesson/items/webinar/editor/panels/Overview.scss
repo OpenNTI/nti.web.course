@@ -161,6 +161,8 @@
 				}
 
 				.description {
+					@include limit-lines($lines: 7, $line-height: 1.5);
+
 					line-height: 19px;
 					font-size: 14px;
 					color: $secondary-grey;
@@ -169,6 +171,8 @@
 					font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 					white-space: pre-wrap;
 					margin: 0;
+					display: block;
+					overflow: hidden;
 				}
 			}
 		}
