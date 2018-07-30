@@ -12,9 +12,7 @@ import Button from './Button';
 import Duration from './common/Duration';
 
 const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
-	register: 'Register',
 	unregister: 'Un-Register',
-	join: 'Join',
 	noLongerAvailable: 'This webinar is no longer available',
 	completed: 'Completed',
 	incomplete: 'Incomplete',
