@@ -34,6 +34,8 @@ $header-ranges: (
 		@include responsive-range(wide, $header-ranges) {
 			display: flex;
 			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
 		}
 
 		@include responsive-range(short, $header-ranges) {
@@ -44,9 +46,11 @@ $header-ranges: (
 		}
 
 		.header {
-			flex: 1 1 auto;
-			max-width: calc(100% - 9rem);
+			flex: 0 0 auto;
+			max-width: calc(100% - 150px);
 			margin-right: 0.5rem;
+			display: flex;
+			flex-direction: column;
 
 			.title {
 				font-size: 18px;
@@ -55,6 +59,7 @@ $header-ranges: (
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
+				width: 100%;
 			}
 
 			.availability-info {
@@ -66,6 +71,7 @@ $header-ranges: (
 				overflow: hidden;
 				text-overflow: ellipsis;
 				display: flex;
+				max-width: 100%;
 				line-height: 20px;
 				font-weight: bold;
 
@@ -118,8 +124,9 @@ $header-ranges: (
 			padding: 7px 24px 9px;
 			cursor: pointer;
 			text-decoration: none;
+			white-space: nowrap;
 			min-width: 130px;
-			max-width: 130px;
+			// max-width: 130px;
 
 			&:disabled {
 				background-color: $tertiary-grey;//#B8B8B8;
