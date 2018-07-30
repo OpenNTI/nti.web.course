@@ -156,7 +156,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 
 			const content = {
 				MimeType: 'application/vnd.nextthought.nticourseoverviewgroup',
-				accentColor: hexValue,
+				accentColor: hexValue && hexValue.replace(/#/g, ''),
 				title: sectionName
 			};
 
