@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {DateTime} from '@nti/web-commons';
 import {GotoWebinar} from '@nti/web-integrations';
+import {CircularProgress} from '@nti/web-charts';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 
@@ -15,7 +16,9 @@ const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
 	register: 'Register',
 	unregister: 'Un-Register',
 	join: 'Join',
-	noLongerAvailable: 'This webinar is no longer available'
+	noLongerAvailable: 'This webinar is no longer available',
+	completed: 'Completed',
+	incomplete: 'Incomplete'
 });
 
 export default class WebinarBaseItem extends React.Component {
@@ -64,7 +67,7 @@ export default class WebinarBaseItem extends React.Component {
 
 
 	renderDate () {
-		const {item} = this.props;
+		const {item, isMinimal} = this.props;
 		const {webinar} = item;
 
 		if(!webinar) {
@@ -77,6 +80,7 @@ export default class WebinarBaseItem extends React.Component {
 			<div className="date">
 				<div className="month">{DateTime.format(nearestSession.getStartTime(), 'MMM')}</div>
 				<div className="day">{nearestSession.getStartTime().getDate()}</div>
+				{item.hasCompleted() && isMinimal && <CircularProgress width={20} height={20} isComplete/>}
 			</div>
 		);
 	}
@@ -151,7 +155,15 @@ export default class WebinarBaseItem extends React.Component {
 			}
 		}
 
-		return <div className="availability-info">{(!item.icon || isMinimal) && <Duration webinar={webinar}/>}{timeDisplay}</div>;
+		return (
+			<div className="availability-info">
+				{item.hasCompleted() && !isMinimal && <CircularProgress width={20} height={20} isComplete/>}
+				{item.hasCompleted() && <div className="completion-label">{t('completed')}</div>}
+				{!item.hasCompleted() && webinar.isExpired() && <div className="incomplete-label">{t('incomplete')}</div>}
+				{(!item.icon || isMinimal) && !webinar.isExpired() && <Duration webinar={webinar}/>}
+				<div className="time-display">{timeDisplay}</div>
+			</div>
+		);
 	}
 
 
