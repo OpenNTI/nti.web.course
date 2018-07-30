@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DateTime} from '@nti/web-commons';
-import {GotoWebinar} from '@nti/web-integrations';
 import {CircularProgress} from '@nti/web-charts';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
@@ -219,41 +218,6 @@ export default class WebinarBaseItem extends React.Component {
 		}
 
 		return <Button item={this.props.item} onStatusChange={this.onStatusChange}/>;
-	}
-
-
-	renderJoinButton () {
-		const {item: {webinar}} = this.props;
-
-		const enabled = webinar.isAvailable();
-
-		return (
-			<a target="_blank"
-				rel="noopener noreferrer"
-				href={enabled ? webinar.getLink('JoinWebinar') : null}
-			>
-				<button disabled={!enabled}>
-					<Button webinar={webinar}/>
-				</button>
-			</a>
-		);
-	}
-
-
-	renderRegisterButton () {
-		const {props: {item}, state: {register}} = this;
-		const toggle = x => this.setState({register: !!x});
-		const open = () => toggle(true);
-		const close = () => toggle(false);
-
-		return (
-			<React.Fragment>
-				<button onClick={open} disabled={register}>{t('register')}</button>
-				{register && (
-					<GotoWebinar.Registration item={item} onBeforeDismiss={close}/>
-				)}
-			</React.Fragment>
-		);
 	}
 
 
