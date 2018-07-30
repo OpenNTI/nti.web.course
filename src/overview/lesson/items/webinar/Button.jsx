@@ -31,7 +31,7 @@ const UnregisteredStates = new Set([
 
 const COUNTDOWN_THRESHOLD = 1000 * 60 * 60; // one hour
 const MINUTE_THRESHOLD = 1000 * 60;
-const BUTTON_TRANSITION_TIME = 5000;
+const BUTTON_TRANSITION_TIME = 3000;
 
 export default class Button extends React.Component {
 
@@ -69,6 +69,12 @@ export default class Button extends React.Component {
 		}
 	}
 
+	// only allow one timeout any given time
+	schedule (fn, timeout) {
+		clearTimeout(this.timeout);
+
+		this.timeout = setTimeout(fn, timeout);
+	}
 
 	handleRegisteredStates (props) {
 		//TODO: We should find a way to simplify this.
@@ -85,7 +91,7 @@ export default class Button extends React.Component {
 			};
 
 			// after the minute threshold has passed before starting, trigger a recalculation
-			setTimeout(() => {
+			this.schedule(() => {
 				this.setupFor(this.props);
 			}, Math.min(MINUTE_THRESHOLD, nearestSession.getStartTime() - now));
 		}
@@ -98,7 +104,7 @@ export default class Button extends React.Component {
 			const timeoutLength = nearestSession.getStartTime() - COUNTDOWN_THRESHOLD - now;
 
 			// when the right amount of time has passed, recalculate the state as we should move us to the registered starting soon state
-			setTimeout(() => {
+			this.schedule(() => {
 				this.setupFor(this.props);
 			}, timeoutLength);
 		}
@@ -131,7 +137,7 @@ export default class Button extends React.Component {
 			const timeoutLength = nearestSession.getEndTime() - COUNTDOWN_THRESHOLD - now;
 
 			// when the right amount of time has passed, recalculate the state as we should move us to the registered expiring soon state
-			setTimeout(() => {
+			this.schedule(() => {
 				this.setupFor(this.props);
 			}, timeoutLength);
 		}
@@ -159,7 +165,7 @@ export default class Button extends React.Component {
 			//FIXME: all timeouts in this component should be tracked and canceled before new timeouts are issued.
 
 			// after the minute threshold has passed before starting, trigger a recalculation
-			setTimeout(() => {
+			this.schedule(() => {
 				this.setupFor(this.props);
 			}, Math.min(MINUTE_THRESHOLD, nearestSession.getStartTime() - now));
 		}
@@ -179,7 +185,7 @@ export default class Button extends React.Component {
 			const timeoutLength = nearestSession.getStartTime() - COUNTDOWN_THRESHOLD - now;
 
 			// when the right amount of time has passed, recalculate the state as we should move us to the unregistered starting soon state
-			setTimeout(() => {
+			this.schedule(() => {
 				this.setupFor(this.props);
 			}, timeoutLength);
 		}
@@ -190,14 +196,18 @@ export default class Button extends React.Component {
 
 	onTick = (clock) => {
 		const {item:{webinar}} = this.props;
+		const {currentState} = this.state;
 
-		const targetTime = this.state.currentState === States.RegisteredStartingSoon || this.state.currentState === States.UnregisteredStartingSoon
+		const targetTime = currentState === States.RegisteredStartingSoon || currentState === States.UnregisteredStartingSoon
 			? webinar.getNearestSession().getStartTime()
 			: webinar.getNearestSession().getEndTime();
 
 		const remainingTime = targetTime - clock.current;
 
-		if(remainingTime <= 0 || (this.state.currentState === States.RegisteredStartingSoon && remainingTime <= MINUTE_THRESHOLD)) {
+		if(remainingTime <= 0
+				|| (currentState === States.RegisteredStartingSoon
+				|| currentState === States.UnregisteredStartingSoon
+				&& remainingTime <= MINUTE_THRESHOLD)) {
 			this.setupFor(this.props);
 		}
 		else {
