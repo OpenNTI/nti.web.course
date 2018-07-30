@@ -98,7 +98,7 @@ export default class WebinarOverviewEditor extends React.Component {
 				</div>
 				<div className="image-and-description">
 					{this.renderImage()}
-					<div className="description">{webinar.description}</div>
+					<pre className="description">{webinar.description}</pre>
 				</div>
 			</div>
 		);
