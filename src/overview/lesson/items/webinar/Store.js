@@ -1,7 +1,7 @@
 import {Stores} from '@nti/lib-store';
 
-const COUNTDOWN_THRESHOLD = 1000 * 7; // one hour
-const MINUTE_THRESHOLD = 1000 * 4;
+const COUNTDOWN_THRESHOLD = 1000 * 60 * 60; // one hour
+const MINUTE_THRESHOLD = 1000 * 60;
 
 export const States = {
 	Unregistered: 'unregistered',
@@ -24,7 +24,7 @@ export default class WebinarStateStore extends Stores.SimpleStore {
 			: this.webinar.getNearestSession().getEndTime();
 
 		const remainingTime = targetTime - clock.current;
-		const needsToRecalculate = currentState === (States.RegisteredStartingSoon || currentState === States.UnregisteredStartingSoon)
+		const needsToRecalculate = currentState === States.RegisteredStartingSoon || currentState === States.UnregisteredStartingSoon
 			&& remainingTime <= MINUTE_THRESHOLD;
 
 		if(remainingTime <= 0 || needsToRecalculate) {
