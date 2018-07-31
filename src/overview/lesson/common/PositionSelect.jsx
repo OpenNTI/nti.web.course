@@ -134,15 +134,15 @@ export default class LessonOverviewPositionSelect extends React.Component {
 		const {lessonOverview} = this.props;
 		const {sectionName, hexValue} = this.state;
 
-		this.setState({error: null, errorField: null});
+		this.setState({savingSection: true, error: null, errorField: null});
 
 		if(!sectionName) {
-			this.setState({error: t('missingRequired'), errorField: 'sectionName'});
+			this.setState({savingSection: false, error: t('missingRequired'), errorField: 'sectionName'});
 			return;
 		}
 
 		if(!hexValue || !isValidHexColor(hexValue)) {
-			this.setState({error: t('invalidColor')});
+			this.setState({savingSection: false, error: t('invalidColor')});
 			return;
 		}
 
@@ -166,10 +166,10 @@ export default class LessonOverviewPositionSelect extends React.Component {
 
 			this.updateValues(newSection, 1);
 
-			this.setState({inCreationMode: false, hexValue: null, sectionName: null});
+			this.setState({savingSection: false, inCreationMode: false, hexValue: null, sectionName: null});
 		}
 		catch (e) {
-			this.setState({error: e.message || e});
+			this.setState({savingSection: false, error: e.message || e});
 		}
 	}
 
@@ -194,7 +194,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 	}
 
 	renderCreateNewSection () {
-		const {error, errorField} = this.state;
+		const {error, errorField, savingSection} = this.state;
 
 		const sectionNameInputCls = cx('name-input', {invalid: errorField === 'sectionName'});
 
@@ -217,6 +217,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 						},
 						{
 							label: t('save'),
+							disabled: savingSection,
 							onClick: this.onSave
 						}
 					]}
