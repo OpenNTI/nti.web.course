@@ -109,7 +109,10 @@ export default class WebinarRegistrationEditor extends React.Component {
 	renderWebinarOption = (webinar) => {
 		const {onWebinarSelected} = this.props;
 
-		const item = { webinar };
+		const item = {
+			hasCompleted: () => false,
+			webinar
+		};
 
 		return (
 			<div className="webinar-option" onClick={() => {
