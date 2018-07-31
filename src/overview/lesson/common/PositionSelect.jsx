@@ -56,7 +56,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 
 	state = {}
 
-	componentDidMount () {
+	async componentDidMount () {
 		const {lessonOverview, overviewGroup, onChange, item} = this.props;
 
 		const providedOverviewGroup = lessonOverview.Items.filter(x=>x.getID() === overviewGroup.getID())[0];
@@ -71,10 +71,13 @@ export default class LessonOverviewPositionSelect extends React.Component {
 			});
 		}
 
+		const service = await getService();
+
 		// initial state is the last position of the provided overview group
 		this.setState({
 			selectedRank,
-			selectedSection: providedOverviewGroup
+			selectedSection: providedOverviewGroup,
+			canInputColor: service.capabilities.canDoAdvancedEditing
 		});
 
 		if(onChange) {
@@ -194,7 +197,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 	}
 
 	renderCreateNewSection () {
-		const {error, errorField, savingSection} = this.state;
+		const {error, errorField, savingSection, canInputColor} = this.state;
 
 		const sectionNameInputCls = cx('name-input', {invalid: errorField === 'sectionName'});
 
@@ -204,7 +207,8 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				<div className="contents">
 					<Input.Text className={sectionNameInputCls} value={this.state.sectionName} onChange={this.sectionNameChange} placeholder={t('sectionName')}/>
 					<div className="label">{t('chooseColor')}</div>
-					<span>#</span><Input.Text value={this.state.hexValue} onChange={this.hexValueChange} className="hex-input"/>
+					{canInputColor && <span>#</span>}
+					{canInputColor && <Input.Text value={this.state.hexValue} onChange={this.hexValueChange} className="hex-input"/>}
 					<ul className="color-samples">
 						{COLOR_CHOICES.map(this.renderColorPreview)}
 					</ul>
