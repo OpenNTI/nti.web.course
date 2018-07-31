@@ -1,7 +1,7 @@
-import {Stores} from '@nti/lib-store';
+import {EventEmitter} from 'events';
 
-const COUNTDOWN_THRESHOLD = 1000 * 60 * 60; // one hour
-const MINUTE_THRESHOLD = 1000 * 60;
+const COUNTDOWN_THRESHOLD = 1000 * 12; // one hour
+const MINUTE_THRESHOLD = 1000 * 6;
 
 export const States = {
 	Unregistered: 'unregistered',
@@ -15,9 +15,21 @@ export const States = {
 	Expired: 'expired'
 };
 
-export default class WebinarStateStore extends Stores.SimpleStore {
+export default class WebinarStateManager extends EventEmitter {
+	constructor (webinar, onStatusChange) {
+		super();
+
+		if(webinar) {
+			this.webinar = webinar;
+		}
+
+		if(onStatusChange) {
+			this.onStatusChange = onStatusChange;
+		}
+	}
+
 	onTick = (clock) => {
-		const currentState = this.get('currentState');
+		const currentState = this.currentState;
 
 		const targetTime = currentState === States.RegisteredStartingSoon || currentState === States.UnregisteredStartingSoon
 			? this.webinar.getNearestSession().getStartTime()
@@ -31,9 +43,9 @@ export default class WebinarStateStore extends Stores.SimpleStore {
 			this.calculateState();
 		}
 		else {
-			this.set('remainingTime',  targetTime - clock.current);
+			this.remainingTime = targetTime - clock.current;
 
-			this.emitChange('remainingTime');
+			this.emit('change', this);
 		}
 	}
 
@@ -64,16 +76,8 @@ export default class WebinarStateStore extends Stores.SimpleStore {
 		return session.getStartTime() < now && (session.getEndTime() - COUNTDOWN_THRESHOLD) >= now;
 	}
 
-	calculateState (webinar, onStatusChange) {
+	calculateState () {
 		let newState = null;
-
-		if(webinar) {
-			this.webinar = webinar;
-		}
-
-		if(onStatusChange) {
-			this.onStatusChange = onStatusChange;
-		}
 
 		const nearestSession = this.webinar.getNearestSession();
 		const now = Date.now();
@@ -122,10 +126,10 @@ export default class WebinarStateStore extends Stores.SimpleStore {
 				this.onStatusChange(newState.currentState);
 			}
 
-			this.set('currentState', newState.currentState);
-			this.set('remainingTime', newState.remainingTime);
+			this.currentState = newState.currentState;
+			this.remainingTime = newState.remainingTime;
 
-			this.emitChange('currentState', 'remainingTime');
+			this.emit('change', this);
 		}
 	}
 }

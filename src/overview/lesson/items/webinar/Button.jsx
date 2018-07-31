@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Timer, DateTime, Layouts} from '@nti/web-commons';
+import {Timer, DateTime, Layouts, HOC} from '@nti/web-commons';
 import {GotoWebinar} from '@nti/web-integrations';
 import {scoped} from '@nti/lib-locale';
 import cx from 'classnames';
 
-import StateStore, {States} from './Store';
+import StateManager, {States} from './StateManager';
 
 const t = scoped('course.overview.lesson.items.webinar.Button', {
 	register: 'Register',
@@ -28,40 +28,34 @@ const TimedStates = new Set([
 
 const BUTTON_TRANSITION_TIME = 3000;
 
-export default
-@StateStore.connect({
-	currentState: 'currentState',
-	remainingTime: 'remainingTime'
-})
-class Button extends React.Component {
+export default class Button extends React.Component {
 
 	static propTypes = {
 		item: PropTypes.object.isRequired,
-		onStatusChange: PropTypes.func,
-		store: PropTypes.object,
-		remainingTime: PropTypes.number,
-		currentState: PropTypes.string
+		onStatusChange: PropTypes.func
 	}
 
 	state = {}
 
+	constructor (props) {
+		super(props);
+
+		this.stateManager = new StateManager(props.item.webinar, props.onStatusChange);
+	}
+
 
 	componentDidMount () {
-		const {store, onStatusChange, item: {webinar}} = this.props;
-
-		store.calculateState(webinar, onStatusChange);
+		this.stateManager.calculateState();
 	}
 
 
 	onTick = (clock) => {
-		const {store} = this.props;
-
-		store.onTick(clock);
+		this.stateManager.onTick(clock);
 	}
 
 
 	renderJoinContents (enabled) {
-		const {currentState, remainingTime} = this.props;
+		const {currentState, remainingTime} = this.state;
 
 		let buttonContents = (<span>{t('join')}</span>);
 		let additionalCls = null;
@@ -130,10 +124,10 @@ class Button extends React.Component {
 		const open = () => toggle(true);
 		const close = () => {
 			toggle(false);
-			this.props.store.calculateState();
+			this.stateManager.calculateState();
 		};
 
-		const {currentState, remainingTime} = this.props;
+		const {currentState, remainingTime} = this.state;
 
 		let buttonLabel = t('register');
 
@@ -172,25 +166,39 @@ class Button extends React.Component {
 	}
 
 	renderTimerIfNecessary () {
-		if(TimedStates.has(this.props.currentState)) {
+		if(TimedStates.has(this.state.currentState)) {
 			return (
 				<Timer onTick={this.onTick}/>
 			);
 		}
 	}
 
+	onManagerChange = () => {
+		this.setState({
+			currentState: this.stateManager.currentState,
+			remainingTime: this.stateManager.remainingTime
+		});
+	}
+
 
 	render () {
-		const {currentState} = this.props;
+		const {currentState} = this.state;
+
+		let body = null;
 
 		if(UnregisteredStates.has(currentState)) {
-			return this.renderRegisterButton();
+			body = this.renderRegisterButton();
 		}
 		else if(currentState && currentState !== States.Expired) {
-			return this.renderJoinButton();
+			body = this.renderJoinButton();
 		}
 
-		// didn't match a state or is expired, show nothing
-		return null;
+		return (
+			<span>
+				{this.renderTimerIfNecessary()}
+				<HOC.ItemChanges item={this.stateManager} onItemChanged={this.onManagerChange}/>
+				{body}
+			</span>
+		);
 	}
 }

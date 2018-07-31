@@ -186,6 +186,9 @@ export default class WebinarBaseItem extends React.Component {
 		if(this.state.status !== status) {
 			this.props.item.webinar.refresh().then(() => {
 				this.setState({status});
+			}).catch(() => {
+				// need to do anything on failure?  We need to set the state so we don't keep trying to refresh
+				this.setState({status});
 			});
 		}
 	}
