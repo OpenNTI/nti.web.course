@@ -1,7 +1,7 @@
 import {EventEmitter} from 'events';
 
-const COUNTDOWN_THRESHOLD = 1000 * 12; // one hour
-const MINUTE_THRESHOLD = 1000 * 6;
+const COUNTDOWN_THRESHOLD = 1000 * 60 * 60; // one hour
+const MINUTE_THRESHOLD = 1000 * 60;
 
 export const States = {
 	Unregistered: 'unregistered',
