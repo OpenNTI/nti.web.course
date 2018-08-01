@@ -151,8 +151,8 @@ $header-ranges: (
 			}
 
 			&.starting {
-				padding-left: 12px;
-				font-size: 14px;
+				padding-left: 0;
+				padding-right: 0;
 
 				& > span {
 					position: relative;
@@ -172,11 +172,6 @@ $header-ranges: (
 						padding-left: 26px;
 					}
 				}
-			}
-
-			&.starting {
-				padding-left: 0;
-				padding-right: 0;
 			}
 		}
 
