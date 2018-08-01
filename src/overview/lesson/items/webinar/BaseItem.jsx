@@ -124,8 +124,8 @@ export default class WebinarBaseItem extends React.Component {
 
 		const now = Date.now();
 
-		// default case, render 'Available [day] from [startTime] - [endTime]'
-		let timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Available] dddd [from] hh:mm a')
+		// default case, render 'Starts [day] from [startTime] - [endTime]'
+		let timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Starts] dddd [from] hh:mm a')
 			+ ' - ' + DateTime.format(nearestSession.getEndTime(), 'hh:mm a z');
 
 		if(webinar.isExpired()) {
@@ -137,7 +137,7 @@ export default class WebinarBaseItem extends React.Component {
 
 			// determine if it's today
 			if(this.isToday(currDate, nearestSession.getStartTime())) {
-				timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Available Today at] hh:mm a z');
+				timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Starts Today at] hh:mm a z');
 
 				/*
 				// This is logic for the simulated live case which we aren't worrying about now
