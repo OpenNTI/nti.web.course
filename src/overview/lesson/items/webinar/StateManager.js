@@ -83,7 +83,12 @@ export default class WebinarStateManager extends EventEmitter {
 		const now = Date.now();
 		const isUnregistered = this.webinar && !this.webinar.isExpired() && !this.webinar.isJoinable() && this.webinar.hasLink('WebinarRegistrationFields');
 
-		if(this.webinar.isExpired()) {
+		// unjoinable means the webinar is 'available' (not expired), but has neither the join nor registration fields links.  This can happen if
+		// one GoToWebinar account was used to add webinars to a lesson, then the site is connected to a different GoToWebinar account,
+		// leaving those previously added webinars in this unjoinable state
+		const unJoinable = !this.webinar || (!this.webinar.isExpired() && !this.webinar.hasLink('JoinWebinar') && !this.webinar.hasLink('WebinarRegistrationFields'));
+
+		if(this.webinar.isExpired() || unJoinable) {
 			newState = { currentState: States.Expired };
 		}
 		else if(this.isSessionStartingWithinMinute(nearestSession, now)) {
