@@ -236,7 +236,6 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				className="section-select"
 				trigger={<div className="section-trigger">{this.renderSectionInfo(this.state.selectedSection || {})}<i className="icon-chevron-down"/></div>}
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-				verticalAlign={Flyout.ALIGNMENTS.BOTTOM}
 				sizing={Flyout.SIZES.MATCH_SIDE}
 				ref={this.attachSectionFlyoutRef}
 			>

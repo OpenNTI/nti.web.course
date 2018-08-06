@@ -248,12 +248,14 @@ export default class WebinarOverviewEditor extends React.Component {
 	render () {
 		return (
 			<div className="webinar-overview-editor">
-				<div className="header-info">
-					{this.renderDate()}
-					{this.renderWebinarInfo()}
+				<div className="contents">
+					<div className="header-info">
+						{this.renderDate()}
+						{this.renderWebinarInfo()}
+					</div>
+					{this.renderInfoBanner()}
+					{this.renderOtherInfo()}
 				</div>
-				{this.renderInfoBanner()}
-				{this.renderOtherInfo()}
 				{this.renderButtons()}
 			</div>
 		);

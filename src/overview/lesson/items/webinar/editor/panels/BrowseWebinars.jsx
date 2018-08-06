@@ -45,7 +45,7 @@ export default class BrowseWebinars extends React.Component {
 
 	render () {
 		return (
-			<GotoWebinar.IfConnected>
+			<GotoWebinar.IfConnected context={this.props.course}>
 				<div className="webinar-browse-webinars">
 					<div className="link-bar">
 						<span>{t('webinarLinkDesc')}</span>
