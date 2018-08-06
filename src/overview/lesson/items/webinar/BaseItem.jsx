@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { isFlag } from '@nti/web-client';
-import {DateTime} from '@nti/web-commons';
-import {CircularProgress} from '@nti/web-charts';
-import {scoped} from '@nti/lib-locale';
+import { DateTime } from '@nti/web-commons';
+import { CircularProgress } from '@nti/web-charts';
+import { scoped } from '@nti/lib-locale';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';
