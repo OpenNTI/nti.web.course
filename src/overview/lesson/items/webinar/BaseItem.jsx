@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+import { isFlag } from '@nti/web-client';
 import {DateTime} from '@nti/web-commons';
 import {CircularProgress} from '@nti/web-charts';
-import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
@@ -36,7 +37,7 @@ export default class WebinarBaseItem extends React.Component {
 	componentDidMount () {
 		this.unsubscribe = () => {};
 
-		if (typeof document !== 'undefined') {
+		if (typeof document !== 'undefined' && isFlag('webinar-unregister-shiftkey')) {
 			document.addEventListener('keydown', this.onGlobalKeyPress);
 			document.addEventListener('keyup', this.onGlobalKeyPress);
 			this.unsubscribe = () => {
