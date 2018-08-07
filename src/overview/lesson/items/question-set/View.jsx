@@ -65,6 +65,10 @@ class LessonOverviewQuestionSet extends React.Component {
 		const {item, course} = this.props;
 		const target = item['Target-NTIID'] || (item.getID ? item.getID() : item.NTIID);
 
+		if (item.MimeType === 'application/vnd.nextthought.assignmentref') {
+			return this.setupAssignmentRef(target, course);
+		}
+
 		try {
 			const collection = await course.getAssignments();
 
@@ -75,6 +79,32 @@ class LessonOverviewQuestionSet extends React.Component {
 			}
 		} catch (e) {
 			//TODO: figure out what to do here is anything
+		}
+	}
+
+
+	async setupAssignmentRef (id, course) {
+		try {
+			const assignment = await course.getAssignment(id);
+
+			this.setState({
+				assignment,
+				networkError: false
+			});
+
+			try {
+				const history = await assignment.loadHistory();
+
+				this.setState({
+					assignmentHistory: history
+				});
+			} catch (e) {
+				if (isNetworkError(e)) {
+					this.setNetworkError();
+				}
+			}
+		} catch (e) {
+			//TODO: figure out if/how we need to handle this case
 		}
 	}
 
