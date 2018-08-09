@@ -1,0 +1,20 @@
+@import "~@nti/style-common";
+
+.nti-course-card-title {
+	.provider-unique-id {
+		font: normal 700 0.625rem/2.5 $body-font-family;
+		text-transform: uppercase;
+		color: $tertiary-grey;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.title {
+		font: normal 700 1rem/1.3 $header-font-family;
+		color: $primary-grey;
+		text-transform: uppercase;
+
+		@include limit-lines($lines: 2, $line-height: 1.3);
+	}
+}

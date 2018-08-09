@@ -1,0 +1,13 @@
+@import '~@nti/style-common';
+
+.nti-course-card-image {
+	overflow: hidden;
+
+	img {
+		display: block;
+		max-width: 100%;
+		transform: scale(1);
+		opacity: 1;
+		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+	}
+}

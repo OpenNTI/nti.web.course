@@ -1,0 +1,65 @@
+@import '~@nti/style-common';
+
+.nti-course-card-container {
+	&.card {
+		background: white;
+		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+		position: relative;
+		height: 290px;
+		width: 242px;
+		padding: 5px;
+		cursor: pointer;
+
+		.nti-course-card-image {
+			width: 100%;
+		}
+
+		.meta {
+			padding: 0 5px;
+
+			.nti-course-card-authors {
+				margin-top: 10px;
+			}
+		}
+
+		.no-touch &:hover {
+			.nti-course-card-image img {
+				opacity: 0.7;
+				transform: scale(1.05, 1.05);
+			}
+		}
+	}
+
+	&.list {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+
+		.nti-course-card-image {
+			width: 100px;
+			flex: 0 0 auto;
+		}
+
+		.meta {
+			flex: 1 1 auto;
+			padding: 0 10px;
+
+			.nti-course-card-title {
+				.provider-unique-id {
+					line-height: 1.5;
+				}
+
+				.title {
+					font-weight: 400;
+					height: 2.6em;
+				}
+			}
+
+			.nti-course-card-authors {
+				margin-top: 5px;
+			}
+		}
+
+	}
+
+}
