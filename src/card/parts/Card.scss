@@ -19,6 +19,23 @@ $CUSTOM_RANGES: (
 		width: 100%;
 	}
 
+	.badges {
+		list-style: none;
+		padding: 5px;
+		margin: 0;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		display: flex;
+		flex-diection: row;
+		align-items: center;
+
+		li {
+			flex: 0 0 auto;
+		}
+	}
+
 	.meta {
 		padding: 0 5px;
 
@@ -39,6 +56,10 @@ $CUSTOM_RANGES: (
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+
+	.badges {
+		display: none;
+	}
 
 	.nti-course-card-image {
 		width: 100px;
