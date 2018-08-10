@@ -5,7 +5,8 @@
 
 	img {
 		display: block;
-		max-width: 100%;
+		width: auto;
+		height: 100%;
 		transform: scale(1);
 		opacity: 1;
 		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
