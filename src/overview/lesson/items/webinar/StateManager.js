@@ -76,7 +76,10 @@ export default class WebinarStateManager extends EventEmitter {
 		return session.getStartTime() < now && (session.getEndTime() - COUNTDOWN_THRESHOLD) >= now;
 	}
 
-	calculateState () {
+	async calculateState () {
+		// the links can change on state changes (Join becomes available or unavailable, for example)
+		await this.webinar.refresh();
+
 		let newState = null;
 
 		const nearestSession = this.webinar.getNearestSession();

@@ -107,7 +107,7 @@ export default class Button extends React.Component {
 	renderJoinButton () {
 		const {item: {webinar}} = this.props;
 
-		const enabled = webinar.isAvailable();
+		const enabled = webinar.isJoinable();
 
 		return (
 			<a target="_blank" rel="noopener noreferrer" href={enabled ? webinar.getLink('JoinWebinar') : null}>
