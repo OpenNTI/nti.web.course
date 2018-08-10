@@ -17,7 +17,7 @@ CourseCard.propTypes = {
 };
 export default function CourseCard ({className, course, badges, card = true, list, collapseToList}) {
 	return (
-		<div className={cx(className, 'nti-course-card-container', {card: card && !list, list, 'collapse-to-list': collapseToList})}>
+		<div className={cx(className, 'nti-course-card-container', {card: card && !list && !collapseToList, list, 'collapse-to-list': collapseToList})}>
 			{badges && (
 				<ul className="badges">
 					{badges.map((badge, key) => {

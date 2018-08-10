@@ -1,61 +1,92 @@
 @import '~@nti/style-common';
 
-.nti-course-card-container {
-	&.card {
-		background: white;
-		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-		position: relative;
-		height: 290px;
-		width: 242px;
-		padding: 5px;
-		cursor: pointer;
+//TODO: figure out how not to have this be specific to the catalog...
+$CUSTOM_RANGES: (
+	mobile: (null, 736px),
+	portraitTablet: (737px, 1023px)
+);
 
-		.nti-course-card-image {
-			width: 100%;
-		}
+@mixin card-layout {
+	background: white;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+	position: relative;
+	height: 290px;
+	width: 242px;
+	padding: 5px;
+	cursor: pointer;
 
-		.meta {
-			padding: 0 5px;
+	.nti-course-card-image {
+		width: 100%;
+	}
 
-			.nti-course-card-authors {
-				margin-top: 10px;
-			}
-		}
+	.meta {
+		padding: 0 5px;
 
-		.no-touch &:hover {
-			.nti-course-card-image img {
-				opacity: 0.7;
-				transform: scale(1.05, 1.05);
-			}
+		.nti-course-card-authors {
+			margin-top: 10px;
 		}
 	}
 
-	&.list {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-
-		.nti-course-card-image {
-			width: 100px;
-			flex: 0 0 auto;
+	.no-touch &:hover {
+		.nti-course-card-image img {
+			opacity: 0.7;
+			transform: scale(1.05, 1.05);
 		}
+	}
+}
 
-		.meta {
-			flex: 1 1 auto;
-			padding: 0 10px;
+@mixin list-layout {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 
-			.nti-course-card-title {
-				.provider-unique-id {
-					line-height: 1.5;
-				}
+	.nti-course-card-image {
+		width: 100px;
+		flex: 0 0 auto;
+	}
 
-				.title {
-					font-weight: 400;
-					height: 2.6em;
-				}
+	.meta {
+		flex: 1 1 auto;
+		padding: 0 10px;
+
+		.nti-course-card-title {
+			.provider-unique-id {
+				line-height: 1.5;
+			}
+
+			.title {
+				font-weight: 400;
+				height: 2.6em;
 			}
 		}
 
+		.nti-course-card-authors {
+			margin-top: 0;
+		}
+	}
+}
+
+.nti-course-card-container {
+	&.card {
+		@include card-layout;
+	}
+
+	&.list {
+		@include list-layout;
+	}
+
+	&.collapse-to-list {
+		@include card-layout;
+
+		@include responsive-range(mobile, $CUSTOM_RANGES) {
+			@include list-layout;
+
+			//override card styles
+			width: initial;
+			height: initial;
+			box-shadow: none;
+			background: none;
+		}
 	}
 
 }
