@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {LinkTo} from '@nti/web-routing';
 
 import Card from '../parts/Card';
 
@@ -16,7 +17,9 @@ export default class CatalogEntryType extends React.Component {
 		const {course, ...otherProps} = this.props;
 
 		return (
-			<Card course={course} {...otherProps} />
+			<LinkTo.Object object={course}>
+				<Card course={course} {...otherProps} />
+			</LinkTo.Object>
 		);
 	}
 }
