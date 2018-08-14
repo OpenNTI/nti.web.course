@@ -106,8 +106,9 @@ export default class Button extends React.Component {
 
 	renderJoinButton () {
 		const {item: {webinar}} = this.props;
+		const {currentState} = this.state;
 
-		const enabled = webinar.isJoinable();
+		const enabled = currentState !== States.RegisteredInactive && webinar.isJoinable();
 
 		return (
 			<a target="_blank" rel="noopener noreferrer" href={enabled ? webinar.getLink('JoinWebinar') : null}>
