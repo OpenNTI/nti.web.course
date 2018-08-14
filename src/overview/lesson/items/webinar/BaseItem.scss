@@ -132,6 +132,10 @@ $header-ranges: (
 			&:disabled {
 				background-color: $tertiary-grey;//#B8B8B8;
 				pointer-events: none;
+
+				&.clickable {
+					pointer-events: all;
+				}
 			}
 
 			&.cation {

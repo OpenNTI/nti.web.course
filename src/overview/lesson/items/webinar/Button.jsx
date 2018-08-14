@@ -54,7 +54,7 @@ export default class Button extends React.Component {
 	}
 
 
-	renderJoinContents (enabled) {
+	renderJoinContents (enabled, disabledButNotReally) {
 		const {currentState, remainingTime} = this.state;
 
 		let buttonContents = (<span>{t('join')}</span>);
@@ -97,7 +97,7 @@ export default class Button extends React.Component {
 		}
 
 		return (
-			<button className={cx('join', additionalCls)} disabled={!enabled}>
+			<button className={cx('join', additionalCls, { clickable: disabledButNotReally })} disabled={!enabled}>
 				{buttonContents}
 			</button>
 		);
@@ -109,11 +109,12 @@ export default class Button extends React.Component {
 		const {currentState} = this.state;
 
 		const enabled = currentState !== States.RegisteredInactive && webinar.isJoinable();
+		const disabledButNotReally = currentState === States.RegisteredInactive;
 
 		return (
-			<a target="_blank" rel="noopener noreferrer" href={enabled ? webinar.getLink('JoinWebinar') : null}>
+			<a target="_blank" rel="noopener noreferrer" href={enabled || disabledButNotReally ? webinar.getLink('JoinWebinar') : null}>
 				{this.renderTimerIfNecessary()}
-				{this.renderJoinContents(enabled)}
+				{this.renderJoinContents(enabled, disabledButNotReally)}
 			</a>
 		);
 	}
