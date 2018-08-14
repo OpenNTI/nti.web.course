@@ -18,7 +18,11 @@ const t = scoped('course.card.type.catalogEntry', {
 	finished: 'Finished %(date)s'
 });
 
-@Registry.register('application/vnd.nextthought.courses.coursecataloglegacyentry')
+@Registry.register([
+	'application/vnd.nextthought.courses.coursecataloglegacyentry',
+	'application/vnd.nextthought.courseware.coursecataloglegacyentry',
+	'application/vnd.nextthought.courses.catalogentry'
+])
 export default class CatalogEntryType extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired
