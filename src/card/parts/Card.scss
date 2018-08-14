@@ -66,6 +66,11 @@ $CUSTOM_RANGES: (
 		width: 100px;
 		height: 61px;
 		flex: 0 0 auto;
+
+		img {
+			width: 100%;
+			height: auto;
+		}
 	}
 
 	.meta {
