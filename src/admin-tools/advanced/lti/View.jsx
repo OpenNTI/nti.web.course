@@ -89,7 +89,7 @@ class LTITools extends Component {
 			<div className="lti-tools-config">
 				<div className="lti-tools-config-headerBar">
 					<div className="lti-tools-config-header">{t('header')}</div>
-					<Button className="lti-tools-add" onClick={this.onAddTool}>{t('add')}</Button>
+					{!error && <Button className="lti-tools-add" onClick={this.onAddTool}>{t('add')}</Button>}
 				</div>
 				{error && <span className="lti-tools-config-error">{ error }</span>}
 				{loading && <Loading.Spinner size={40} />}

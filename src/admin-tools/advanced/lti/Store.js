@@ -55,7 +55,7 @@ export default class LTIStore extends Stores.SimpleStore {
 			this.set('items', items);
 			this.emitChange('loading', 'items');
 		} catch (error) {
-			this.set('error', error);
+			this.set('error', error.Message || 'Could not load LTI tools');
 			this.set('loading', false);
 			this.emitChange('error', 'loading');
 		}
