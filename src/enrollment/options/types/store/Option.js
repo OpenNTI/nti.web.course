@@ -26,7 +26,7 @@ const t = scoped('course.enrollment.types.store', {
 	gifting: {
 		giftable: {
 			title: 'Give This Course as a Gift',
-			label: 'Lifelong Leaner Only'
+			label: 'Lifelong Learner Only'
 		},
 		redeemable: {
 			title: 'Redeem a Gift'
