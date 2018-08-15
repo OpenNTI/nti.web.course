@@ -57,6 +57,7 @@ $CUSTOM_RANGES: (
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	overflow: hidden;
 
 	.badges {
 		display: none;
@@ -76,6 +77,7 @@ $CUSTOM_RANGES: (
 	.meta {
 		flex: 1 1 auto;
 		padding: 0 10px;
+		overflow: hidden;
 
 		.nti-course-card-title {
 			.provider-unique-id {
@@ -83,13 +85,17 @@ $CUSTOM_RANGES: (
 			}
 
 			.title {
+				display: block;
 				font-weight: 400;
-				height: 2.6em;
+				margin-bottom: 0.5rem;
+				white-space: nowrap;
 			}
 		}
 
 		.nti-course-card-authors {
 			margin-top: 0;
+			display: block;
+			white-space: nowrap;
 		}
 	}
 }

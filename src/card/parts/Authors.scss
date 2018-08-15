@@ -4,4 +4,6 @@
 	font: normal 700 0.625rem/1.4 $body-font-family;
 	color: $primary-blue;
 	text-transform: uppercase;
+
+	@include limit-lines($lines: 2, $line-height: 1.4);
 }
