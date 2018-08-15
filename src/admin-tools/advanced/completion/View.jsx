@@ -27,10 +27,13 @@ export default class CourseAdminCompletion extends React.Component {
 		const {course} = this.props;
 
 		if(course.CompletionPolicy) {
+			const {CatalogEntry} = course;
+
 			this.setState({
 				completable: true,
 				certificationPolicy: Boolean(course.CompletionPolicy.offersCompletionCertificate),
-				percentage: (course.CompletionPolicy.percentage || 0) * 100
+				percentage: (course.CompletionPolicy.percentage || 0) * 100,
+				disabled: !CatalogEntry || !CatalogEntry.hasLink('edit')
 			});
 		}
 	}
@@ -44,10 +47,14 @@ export default class CourseAdminCompletion extends React.Component {
 
 
 	renderCompletableToggle () {
+		const {completable, disabled: nonEditor} = this.state;
+		const disabled = !completable || nonEditor;
+		const className = cx('completion-control', {disabled});
+
 		return (
-			<div className="completion-control">
+			<div className={className}>
 				<div className="label">{t('completable')}</div>
-				<div className="control"><Input.Toggle value={this.state.completable} onChange={this.onCompletionPolicyChange}/></div>
+				<div className="control"><Input.Toggle disabled={disabled} value={completable} onChange={this.onCompletionPolicyChange}/></div>
 			</div>
 		);
 	}
@@ -57,13 +64,14 @@ export default class CourseAdminCompletion extends React.Component {
 	}
 
 	renderCertificateToggle () {
-		const disabled = !this.state.completable;
+		const {completable, disabled: nonEditor} = this.state;
+		const disabled = !completable || nonEditor;
 		const className = cx('completion-control', {disabled});
 
 		return (
 			<div className={className}>
 				<div className="label">{t('certificates')}</div>
-				<div className="control"><Input.Toggle disabled={!this.state.completable} value={this.state.certificationPolicy} onChange={this.onCertificationChange}/></div>
+				<div className="control"><Input.Toggle disabled={disabled} value={this.state.certificationPolicy} onChange={this.onCertificationChange}/></div>
 			</div>
 		);
 	}
@@ -74,7 +82,8 @@ export default class CourseAdminCompletion extends React.Component {
 
 
 	renderPercentage () {
-		const disabled = !this.state.completable;
+		const {completable, disabled: nonEditor} = this.state;
+		const disabled = !completable || nonEditor;
 		const className = cx('completion-control', {disabled});
 
 		return (
@@ -111,7 +120,7 @@ export default class CourseAdminCompletion extends React.Component {
 
 
 	renderBottomControls () {
-		if(!this.props.course) {
+		if(!this.props.course || this.state.disabled) {
 			return null;
 		}
 
