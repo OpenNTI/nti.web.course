@@ -97,7 +97,7 @@ export default class Button extends React.Component {
 		}
 
 		return (
-			<button className={cx('join', additionalCls, { clickable: disabledButNotReally })} disabled={!enabled}>
+			<button className={cx('join', additionalCls, { clickable: disabledButNotReally, disabled: !enabled })}>
 				{buttonContents}
 			</button>
 		);

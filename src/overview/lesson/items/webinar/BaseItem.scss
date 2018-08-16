@@ -129,7 +129,7 @@ $header-ranges: (
 			max-height: 40px;
 			// max-width: 130px;
 
-			&:disabled {
+			&.disabled {
 				background-color: $tertiary-grey;//#B8B8B8;
 				pointer-events: none;
 
