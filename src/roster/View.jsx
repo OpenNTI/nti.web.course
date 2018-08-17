@@ -13,7 +13,6 @@ const t = scoped('course.roster.View', {
 	error: 'Unable to load students.'
 });
 
-const store = Store.getInstance();
 const propMap = {
 	items: 'items',
 	loading: 'loading',
@@ -26,13 +25,15 @@ const propMap = {
 
 export default
 @contextual(t('roster'))
-@searchable(store, propMap)
+@searchable
+@Store.connect(propMap)
 class CourseRosterView extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
 		renderRoster: PropTypes.func.isRequired,
 
 		//store props
+		store: PropTypes.object,
 		searchTerm: PropTypes.string,
 		items: PropTypes.array,
 		loading: PropTypes.bool,
@@ -44,14 +45,14 @@ class CourseRosterView extends React.Component {
 
 
 	componentDidMount () {
-		const {course} = this.props;
+		const {store, course} = this.props;
 
 		store.loadCourse(course);
 	}
 
 
 	componentDidUpdate (prevProps) {
-		const {course:nextCourse} = this.props;
+		const {course:nextCourse, store} = this.props;
 		const {course:oldCourse} = prevProps;
 
 		if (nextCourse !== oldCourse) {
@@ -61,7 +62,7 @@ class CourseRosterView extends React.Component {
 
 
 	loadNextPage = () => {
-		const {hasNextPage} = this.props;
+		const {hasNextPage, store} = this.props;
 
 		if (hasNextPage) {
 			store.loadNextPage();
@@ -70,7 +71,7 @@ class CourseRosterView extends React.Component {
 
 
 	loadPrevPage = () => {
-		const {hasPrevPage} = this.props;
+		const {hasPrevPage, store} = this.props;
 
 		if (hasPrevPage) {
 			store.loadPrevPage();

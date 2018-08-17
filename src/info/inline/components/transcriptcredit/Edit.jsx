@@ -6,7 +6,7 @@ import {getService} from '@nti/web-client';
 import AddButton from '../../widgets/AddButton';
 import CreditViewContents from '../credit/Contents';
 
-import CreditTypeStore from './managetypes/CreditTypesStore';
+import Store from './managetypes/CreditTypesStore';
 import CreditEntry from './CreditEntry';
 import AddCreditType from './AddCreditType';
 
@@ -20,8 +20,15 @@ const t = scoped('course.info.inline.components.transcriptcredit.edit', {
 	noTypesCantAdd: 'There are no credit types defined'
 });
 
-export default class TranscriptCreditEdit extends React.Component {
+export default
+@Store.connect({
+	loading: 'loading',
+	types: 'types',
+	error: 'error'
+})
+class TranscriptCreditEdit extends React.Component {
 	static propTypes = {
+		store: PropTypes.object.isRequired,
 		catalogEntry: PropTypes.object.isRequired,
 		enrollmentAccess: PropTypes.object,
 		onValueChange: PropTypes.func
@@ -31,8 +38,6 @@ export default class TranscriptCreditEdit extends React.Component {
 
 	constructor (props) {
 		super(props);
-
-		this.creditTypeStore = CreditTypeStore.getInstance();
 
 		// in this context, we are using type to indicate the type reference that we change
 		this.state = {
@@ -51,9 +56,11 @@ export default class TranscriptCreditEdit extends React.Component {
 	}
 
 	async loadTypes () {
-		await this.creditTypeStore.loadAllTypes();
+		const {store} = this.props;
 
-		this.setState({creditTypes: this.creditTypeStore.getTypes()}, () => {
+		await store.loadAllTypes();
+
+		this.setState({creditTypes: store.getTypes()}, () => {
 			this.determineRemainingTypes();
 		});
 	}
@@ -138,13 +145,14 @@ export default class TranscriptCreditEdit extends React.Component {
 	}
 
 	onNewTypeAdded = async (newType) => {
+		const {store} = this.props;
 		const {creditTypes} = this.state;
 
-		const newCreditTypes = this.creditTypeStore.getTypes();
+		const newCreditTypes = store.getTypes();
 
 		const newlyAdded = newCreditTypes.filter(x => !creditTypes.map(y => y.NTIID).includes(x.NTIID))[0];
 
-		this.setState({creditTypes: this.creditTypeStore.getTypes()}, () => {
+		this.setState({creditTypes: store.getTypes()}, () => {
 			this.afterUpdate();
 		});
 
@@ -155,6 +163,7 @@ export default class TranscriptCreditEdit extends React.Component {
 		return (
 			<CreditEntry
 				key={this.getEffectiveId(entry)}
+				store={this.props.store}
 				entry={entry}
 				onRemove={this.removeEntry}
 				onChange={this.onEntryChange}
@@ -187,7 +196,7 @@ export default class TranscriptCreditEdit extends React.Component {
 	}
 
 	launchAddTypeDialog = () => {
-		AddCreditType.show().then(savedType => {
+		AddCreditType.show(this.props.store).then(savedType => {
 			this.onNewTypeAdded(savedType).then((newTypeDef) => {
 				this.addEntry(newTypeDef);
 			});

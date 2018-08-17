@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import {Input, Prompt} from '@nti/web-commons';
 import cx from 'classnames';
 
-import Store from './CreditTypesStore';
-
 export default class CreditType extends React.Component {
 	static propTypes = {
+		store: PropTypes.object.isRequired,
 		type: PropTypes.object.isRequired,
 		onChange: PropTypes.func,
 		onRemove: PropTypes.func,
@@ -22,8 +21,6 @@ export default class CreditType extends React.Component {
 
 	constructor () {
 		super();
-
-		this.store = Store.getInstance();
 	}
 
 	componentDidMount () {
@@ -92,19 +89,20 @@ export default class CreditType extends React.Component {
 	}
 
 	onConfirm = async () => {
+		const {store} = this.props;
 		const {definition} = this.state;
 
 		if(definition.addedRow || this.typesAreDifferent(this.props.type, definition)) {
-			await this.store.saveValues([definition]);
+			await store.saveValues([definition]);
 
-			const error = this.store.getError();
+			const error = store.getError();
 
 			if(error) {
 				this.setState({error});
 				return;
 			}
 
-			await this.store.loadAllTypes();
+			await store.loadAllTypes();
 		}
 
 		this.exitEdit();

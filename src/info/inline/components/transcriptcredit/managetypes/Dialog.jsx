@@ -11,7 +11,13 @@ const t = scoped('course.info.inline.components.transcriptcredit.managetypes.Dia
 	done: 'Save',
 });
 
-export default class ManageCreditTypesDialog extends React.Component {
+export default
+@Store.connect({
+	loading: 'loading',
+	types: 'types',
+	error: 'error'
+})
+class ManageCreditTypesDialog extends React.Component {
 	static show (onClose) {
 		return new Promise((fulfill, reject) => {
 			Prompt.modal(
@@ -27,32 +33,26 @@ export default class ManageCreditTypesDialog extends React.Component {
 	}
 
 	static propTypes = {
+		store: PropTypes.object.isRequired,
 		onClose: PropTypes.func,
 		onSave: PropTypes.func,
 		onDismiss: PropTypes.func,
 		dialog: PropTypes.bool
 	}
 
-	constructor (props) {
-		super(props);
-
-		this.store = Store.getInstance();
-	}
-
-
 	state = {}
 
 
 	onSave = async () => {
-		const {onSave, onDismiss} = this.props;
+		const {onSave, onDismiss, store} = this.props;
 
 		this.setState({loading: true});
 
-		await this.store.removeValues(this.state.flaggedForRemoval);
+		await store.removeValues(this.state.flaggedForRemoval);
 
-		await this.store.saveValues(this.state.values);
+		await store.saveValues(this.state.values);
 
-		await this.store.loadAllTypes();
+		await store.loadAllTypes();
 
 		if(onSave) {
 			onSave();
@@ -88,7 +88,7 @@ export default class ManageCreditTypesDialog extends React.Component {
 					</div>
 				)}
 				<div className="content">
-					<ManageCreditTypes onValuesUpdated={this.onValuesUpdated}/>
+					<ManageCreditTypes store={this.props.store} onValuesUpdated={this.onValuesUpdated}/>
 				</div>
 			</div>
 		);

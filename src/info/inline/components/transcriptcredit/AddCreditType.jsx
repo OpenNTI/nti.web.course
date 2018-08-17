@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Prompt, Input, DialogButtons, Panels, ConflictResolution} from '@nti/web-commons';
 
-import CreditTypeStore from './managetypes/CreditTypesStore';
-
 const t = scoped('course.info.inline.components.transcriptcredit.AddCreditType', {
 	addNewType: 'Add New Type...',
 	title: 'Add New Credit Type',
@@ -13,10 +11,11 @@ const t = scoped('course.info.inline.components.transcriptcredit.AddCreditType',
 });
 
 export default class AddCreditType extends React.Component {
-	static show (existingTypes) {
+	static show (store, existingTypes) {
 		return new Promise((fulfill, reject) => {
 			Prompt.modal(
 				<AddCreditType
+					store={store}
 					existingTypes={existingTypes}
 					onSave={fulfill}
 					onCancel={reject}
@@ -27,14 +26,13 @@ export default class AddCreditType extends React.Component {
 	}
 
 	static propTypes = {
+		store: PropTypes.object.isRequired,
 		existingTypes: PropTypes.arrayOf(PropTypes.object),
 		onSave: PropTypes.func,
 		onDismiss: PropTypes.func
 	}
 
 	componentDidMount () {
-		this.creditTypeStore = CreditTypeStore.getInstance();
-
 		ConflictResolution.registerHandler('DuplicateCreditDefinitionError', this.saveConflictHandler);
 	}
 
@@ -52,15 +50,15 @@ export default class AddCreditType extends React.Component {
 	state = {}
 
 	onSave = async () => {
-		const {onDismiss} = this.props;
+		const {onDismiss, store} = this.props;
 		const {unit, type} = this.state;
 
 		try {
-			await this.creditTypeStore.saveValues([{type, unit}]);
+			await store.saveValues([{type, unit}]);
 
-			await this.creditTypeStore.loadAllTypes();
+			await store.loadAllTypes();
 
-			const error = this.creditTypeStore.getError();
+			const error = store.getError();
 
 			if(error) {
 				this.setState({error});
