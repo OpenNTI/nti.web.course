@@ -4,7 +4,6 @@ import { Flyout, HOC } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import EditTool from '../editing/EditTool';
-import Store from '../../Store';
 
 const DEFAULT_TEXT = {
 	edit: 'Edit',
@@ -15,6 +14,7 @@ const t = scoped('nti-web-course.admin-tools.advanced.lti.tools.Tool', DEFAULT_T
 
 export default class Tool extends Component {
 	static propTypes = {
+		store: PropTypes.object.isRequired,
 		item: PropTypes.shape({
 			title: PropTypes.string.isRequired,
 			delete: PropTypes.func.isRequired
@@ -40,12 +40,12 @@ export default class Tool extends Component {
 	}
 
 	delete = () => {
-		const store = Store.getInstance();
+		const {store} = this.props;
 		store.deleteItem(this.props.item);
 	}
 
 	onItemChange = () => {
-		const store = Store.getInstance();
+		const {store} = this.props;
 		store.itemChange(this.props.item);
 	}
 

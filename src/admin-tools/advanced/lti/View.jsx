@@ -78,7 +78,7 @@ class LTITools extends Component {
 
 	render () {
 		const { addIsVisible } = this.state;
-		const { course, items, loading, error } = this.props;
+		const { course, items, loading, error, store } = this.props;
 		const hasLTI = course.hasLink('lti-configured-tools');
 
 		if (!hasLTI) {
@@ -93,8 +93,8 @@ class LTITools extends Component {
 				</div>
 				{error && <span className="lti-tools-config-error">{ error }</span>}
 				{loading && <Loading.Spinner size={40} />}
-				{Array.isArray(items) && <ToolList items={items} />}
-				{addIsVisible && <AddTool onBeforeDismiss={this.onAddDismiss} />}
+				{Array.isArray(items) && <ToolList items={items} store={store}/>}
+				{addIsVisible && <AddTool onBeforeDismiss={this.onAddDismiss} store={this.props.store}/>}
 			</div>
 		);
 	}
