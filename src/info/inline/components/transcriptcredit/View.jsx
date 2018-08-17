@@ -4,6 +4,7 @@ import {scoped} from '@nti/lib-locale';
 
 import CreditViewContents from '../credit/Contents';
 
+import Store from './managetypes/CreditTypesStore';
 import CreditEntry from './CreditEntry';
 
 
@@ -15,8 +16,15 @@ const t = scoped('course.info.inline.components.transcriptcredit.view', {
 	noCredit: '(No Credit)'
 });
 
-export default class TranscriptCreditView extends React.Component {
+export default
+@Store.connect({
+	loading: 'loading',
+	types: 'types',
+	error: 'error'
+})
+class TranscriptCreditView extends React.Component {
 	static propTypes = {
+		store: PropTypes.object.isRequired,
 		catalogEntry: PropTypes.object.isRequired,
 		enrollmentAccess: PropTypes.object
 	}
@@ -34,6 +42,7 @@ export default class TranscriptCreditView extends React.Component {
 	renderEntry = (entry) => {
 		return (
 			<CreditEntry
+				store={this.props.store}
 				key={entry.creditDefinition.type + ' ' + entry.creditDefinition.unit}
 				entry={entry}
 			/>

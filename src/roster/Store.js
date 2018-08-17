@@ -1,5 +1,6 @@
 import {getService} from '@nti/web-client';
-import {Stores} from '@nti/lib-store';
+
+import PagedBatchStore from './PagedBatchStore';
 
 const DEFAULT_SIZE = 20;
 
@@ -9,7 +10,7 @@ function transformBatch (batch) {
 	return batch;
 }
 
-export default class CourseRosterStore extends Stores.PagedBatchStore {
+export default class CourseRosterStore extends PagedBatchStore {
 	constructor () {
 		super();
 

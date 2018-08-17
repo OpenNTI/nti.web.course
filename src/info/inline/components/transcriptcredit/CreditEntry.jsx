@@ -15,6 +15,7 @@ const t = scoped('course.info.inline.components.transcriptcredit.CreditEntry', {
 
 export default class TranscriptCreditEntry extends React.Component {
 	static propTypes = {
+		store: PropTypes.object.isRequired,
 		entry: PropTypes.object.isRequired,
 		allTypes: PropTypes.arrayOf(PropTypes.object),
 		remainingTypes: PropTypes.arrayOf(PropTypes.object),
@@ -119,7 +120,7 @@ export default class TranscriptCreditEntry extends React.Component {
 	}
 
 	launchAddTypeDialog = () => {
-		AddCreditType.show(this.props.allTypes).then(savedType => {
+		AddCreditType.show(this.props.store, this.props.allTypes).then(savedType => {
 			const {onNewTypeAdded} = this.props;
 
 			if(onNewTypeAdded) {

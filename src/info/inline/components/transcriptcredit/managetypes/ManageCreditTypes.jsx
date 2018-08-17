@@ -5,7 +5,6 @@ import {scoped} from '@nti/lib-locale';
 
 import AddButton from '../../../widgets/AddButton';
 
-import Store from './CreditTypesStore';
 import CreditType from './CreditType';
 
 const t = scoped('course.info.inline.components.transcriptcredit.managetypes.ManageCreditTypes', {
@@ -14,13 +13,7 @@ const t = scoped('course.info.inline.components.transcriptcredit.managetypes.Man
 	unit: 'Unit'
 });
 
-export default
-@Store.connect({
-	loading: 'loading',
-	types: 'types',
-	error: 'error'
-})
-class ManageCreditTypes extends React.Component {
+export default class ManageCreditTypes extends React.Component {
 	static propTypes = {
 		loading: PropTypes.bool,
 		types: PropTypes.arrayOf(PropTypes.object),
@@ -136,6 +129,7 @@ class ManageCreditTypes extends React.Component {
 		return (
 			<CreditType
 				key={this.getEffectiveId(type)}
+				store={this.props.store}
 				type={type}
 				onEnterEditMode={this.onEnterEditMode}
 				onExitEditMode={this.onExitEditMode}
