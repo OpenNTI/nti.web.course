@@ -25,7 +25,7 @@ const propMap = {
 
 export default
 @contextual(t('roster'))
-@searchable
+@searchable()
 @Store.connect(propMap)
 class CourseRosterView extends React.Component {
 	static propTypes = {
