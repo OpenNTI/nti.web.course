@@ -61,7 +61,7 @@ export default class PublishCourse extends React.Component {
 			};
 		}
 
-		this.optionsStore = Store.getInstance();
+		this.optionsStore = Store.getStore();
 	}
 
 	attachFlyoutRef = x => this.flyout = x

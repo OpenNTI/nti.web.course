@@ -1,6 +1,8 @@
 import {Stores} from '@nti/lib-store';
 
 export default class EnrollmentOptionsStore extends Stores.SimpleStore {
+	static Singleton = true
+
 	constructor () {
 		super();
 

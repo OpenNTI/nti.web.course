@@ -24,7 +24,7 @@ export default class EnrollmentCard extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.store = Store.getInstance();
+		this.store = Store.getStore();
 	}
 
 	state = {}
