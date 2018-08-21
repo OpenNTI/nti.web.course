@@ -29,7 +29,7 @@ $CUSTOM_RANGES: (
 		left: 0;
 		width: 100%;
 		display: flex;
-		flex-diection: row;
+		flex-direction: row;
 		align-items: center;
 
 		li {
@@ -49,6 +49,10 @@ $CUSTOM_RANGES: (
 		.nti-course-card-image img {
 			opacity: 0.7;
 			transform: scale(1.05, 1.05);
+		}
+
+		.nti-course-card-badge.settings {
+			opacity: 1;
 		}
 	}
 }
@@ -122,5 +126,4 @@ $CUSTOM_RANGES: (
 			background: none;
 		}
 	}
-
 }
