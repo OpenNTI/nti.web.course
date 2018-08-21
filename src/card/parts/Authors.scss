@@ -4,6 +4,15 @@
 	font: normal 700 0.6rem/1.4 $body-font-family;
 	color: $primary-blue;
 	text-transform: uppercase;
+	overflow: hidden;
+	text-overflow: ellipsis;
 
 	@include limit-lines($lines: 2, $line-height: 1.4);
+
+	@include respond-to(handhelds) {
+		font-weight: 400;
+		margin-top: 5px;
+		white-space: normal;
+		display: block;
+	}
 }

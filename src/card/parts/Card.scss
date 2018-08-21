@@ -55,6 +55,32 @@ $CUSTOM_RANGES: (
 			opacity: 1;
 		}
 	}
+
+	@include respond-to(handhelds) {
+		height: 250px;
+		width: 185px;
+		padding: 0;
+
+		.meta {
+			padding: 0 15px;
+
+			.nti-course-card-authors {
+				margin-top: 5px;
+			}
+		}
+
+		.nti-course-card-badge.settings {
+			opacity: 1;
+		}
+
+		.badges {
+			height: 44px;
+		}
+
+		.nti-course-card-image {
+			height: 150px;
+		}
+	}
 }
 
 @mixin list-layout {
