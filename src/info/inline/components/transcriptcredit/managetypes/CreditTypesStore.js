@@ -14,6 +14,8 @@ const FIELD_MAP = {
 };
 
 export default class CreditTypesStore extends Stores.SimpleStore {
+	static Singleton = true
+
 	constructor () {
 		super();
 
