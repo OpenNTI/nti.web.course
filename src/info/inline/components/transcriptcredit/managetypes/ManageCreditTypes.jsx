@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {ConflictResolution} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
+import {Connectors} from '@nti/lib-store';
 
 import AddButton from '../../../widgets/AddButton';
 
@@ -13,7 +14,13 @@ const t = scoped('course.info.inline.components.transcriptcredit.managetypes.Man
 	unit: 'Unit'
 });
 
-export default class ManageCreditTypes extends React.Component {
+export default
+@Connectors.Any.connect({
+	loading: 'loading',
+	types: 'types',
+	error: 'error'
+})
+class ManageCreditTypes extends React.Component {
 	static propTypes = {
 		loading: PropTypes.bool,
 		types: PropTypes.arrayOf(PropTypes.object),
