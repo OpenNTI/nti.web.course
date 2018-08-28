@@ -83,17 +83,22 @@ class PagedBatchStore extends Stores.BoundStore {
 		this.set('loading', true);
 		this.emitChange('loading');
 
+		const searchTerm = this.searchTerm;
+
 		try {
 			const batch = await this.loadBatch(href, options);
 
+			if(this.searchTerm !== searchTerm) {
+				return;
+			}
+
 			this.set('batch', batch);
-			this.emitChange('items', 'hasNextPage', 'hasPrevPage');
+			this.set('loading', false);
+			this.emitChange('items', 'hasNextPage', 'hasPrevPage', 'loading');
 		} catch (e) {
 			this.set('error', e);
-			this.emitChange('error');
-		} finally {
 			this.set('loading', false);
-			this.emitChange('loading');
+			this.emitChange('error', 'loading');
 		}
 	}
 
