@@ -1,8 +1,11 @@
-import {Stores} from '@nti/lib-store';
+import {Stores, Mixins} from '@nti/lib-store';
+import {mixin} from '@nti/lib-decorators';
 
 const Load = Symbol('load');
 
-export default class PagedBatchStore extends Stores.SimpleStore {
+export default
+@mixin(Mixins.Searchable)
+class PagedBatchStore extends Stores.BoundStore {
 	constructor () {
 		super();
 
