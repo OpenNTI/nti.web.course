@@ -17,7 +17,8 @@ const t = scoped('course.enrollment.types.five-minute', {
 			'notArchived-startDate': 'Class begins %(fullStartDate)s and will be conducted fully online.',
 			'notAcrhived-noStartDate': 'Class will be conducted fully online.'
 		},
-		buttonLabel: '',
+		dropLabel: '',
+		openLabel: 'Open',
 		getAcquainted: 'Get Acquainted with the Platform',
 		completeProfile: 'Complete Your Profile'
 	},

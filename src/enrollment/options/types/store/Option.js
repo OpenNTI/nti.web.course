@@ -13,7 +13,8 @@ const t = scoped('course.enrollment.types.store', {
 			'notArchived-startDate-notStarted': 'The course begins on %(fullStartDate)s and will be conducted fully online.',
 			'notAcrhived-noStartDate-notStarted': 'The course will be conducted fully online.'
 		},
-		buttonLabel: ''
+		dropLabel: '',
+		openLabel: 'Open'
 	},
 	notEnrolled: {
 		title: 'Premium',

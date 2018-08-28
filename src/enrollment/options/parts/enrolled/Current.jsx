@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
 import PaddedContainer from '../../common/PaddedContainer';
+import ActionItem from '../../common/ActionItem';
 
 const t = scoped('course.enrollment.options.parts.enrolled.Current', {
 	label: 'Enrolled',
@@ -35,7 +36,8 @@ export default class CourseEnrollmentOptionsEnrolledCurrent extends React.Compon
 		const {
 			EnrolledTitle,
 			EnrolledDescription,
-			DropButton
+			DropButton,
+			OpenButton
 		} = option;
 
 		return (
@@ -48,12 +50,13 @@ export default class CourseEnrollmentOptionsEnrolledCurrent extends React.Compon
 					<EnrolledTitle option={option} />
 					<EnrolledDescription option={option} />
 					{hasUpdates && (
-						<PaddedContainer className="upgrade" onClick={this.onUpgrade}>
+						<ActionItem className="upgrade" onClick={this.onUpgrade}>
 							{t('upgrade')}
-						</PaddedContainer>
+						</ActionItem>
 					)}
 				</div>
 				{DropButton && (<DropButton option={option} />)}
+				{OpenButton && (<OpenButton option={option} />)}
 			</div>
 		);
 	}

@@ -21,7 +21,8 @@ const propMap = {
 	error: 'error',
 	enrolled: 'enrolled',
 	administrative: 'administrative',
-	options: 'options'
+	options: 'options',
+	access: 'access'
 };
 
 @Store.connect(propMap)
@@ -39,7 +40,8 @@ export default class CourseEnrollmentOptions extends React.Component {
 		error: PropTypes.any,
 		enrolled: PropTypes.bool,
 		administrative: PropTypes.bool,
-		options: PropTypes.array
+		options: PropTypes.array,
+		access: PropTypes.object
 	}
 
 
@@ -108,7 +110,8 @@ export default class CourseEnrollmentOptions extends React.Component {
 			enrolled,
 			administrative,
 			catalogEntry,
-			options
+			options,
+			access
 		} = this.props;
 
 		let Cmp = null;
@@ -124,7 +127,7 @@ export default class CourseEnrollmentOptions extends React.Component {
 		}
 
 		return (
-			<Cmp options={options} catalogEntry={catalogEntry} />
+			<Cmp options={options} catalogEntry={catalogEntry} access={access} />
 		);
 	}
 

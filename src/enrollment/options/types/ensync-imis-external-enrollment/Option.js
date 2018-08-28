@@ -12,7 +12,8 @@ const t = scoped('course.enrollment.types.ensync-imis', {
 			'archived-endDate': 'The course ended on %(fullEndDate)s. The content of this course will remain available for you to review at any time.',
 			'archived-noEndDate': 'The content of this course will remain available for you to review at any time'
 		},
-		buttonLabel: ''
+		dropLabel: '',
+		openLabel: 'Open'
 	},
 	notEnrolled: {
 		title: 'IMIS',

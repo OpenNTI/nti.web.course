@@ -6,6 +6,7 @@ import EnrollButton from './EnrollButton';
 import EnrolledTitle from './EnrolledTitle';
 import EnrolledDescription from './EnrolledDescription';
 import ListItem from './ListItem';
+import OpenButton from './OpenButton';
 
 export default class BaseEnrollment {
 	static async load (option, access, catalogEntry) {
@@ -25,6 +26,7 @@ export default class BaseEnrollment {
 	Description = Description
 	EnrollButton = EnrollButton
 	DropButton = DropButton
+	OpenButton = OpenButton
 
 
 	constructor (option, access, catalogEntry) {
@@ -130,6 +132,17 @@ export default class BaseEnrollment {
 
 		//TODO: Check the option for the drop button label
 
-		return getTranslationFor(this.getString, 'enrolled.buttonLabel', this.catalogEntry, this, this.access);
+		return getTranslationFor(this.getString, 'enrolled.dropLabel', this.catalogEntry, this, this.access);
+	}
+
+
+	getOpenButtonLabel () {
+		if (!this.getString) {
+			return `!! Missing Open Button label for ${this.opeion.Class}!!`;
+		}
+
+		//TODO: Check the option for the open button label
+
+		return getTranslationFor(this.getString, 'enrolled.openLabel', this.catalogEntry, this, this.access);
 	}
 }

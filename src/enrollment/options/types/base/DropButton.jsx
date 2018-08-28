@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {LinkTo} from '@nti/web-routing';
 
-import Button from '../../common/Button';
+import ActionItem from '../../common/ActionItem';
 
-export default class CourseEnrollmentBaseTypeEnrollButton extends React.Component {
+export default class CourseEnrollmentBaseTypeDropButton extends React.Component {
 	static propTypes = {
 		option: PropTypes.shape({
 			option: PropTypes.object.isRequired,
@@ -16,13 +16,13 @@ export default class CourseEnrollmentBaseTypeEnrollButton extends React.Componen
 		const {option} = this.props;
 		const label = option.getDropButtonLabel && option.getDropButtonLabel();
 
-		if (!label) { return null; }
+		if (!label) { return (<div className="course-enrollment-options-base-type-drop-button" />); }
 
 		return (
-			<LinkTo.Object object={option.option} context="drop">
-				<Button caution>
+			<LinkTo.Object className="course-enrollment-options-base-type-drop-button" object={option.option} context="drop">
+				<ActionItem>
 					{label}
-				</Button>
+				</ActionItem>
 			</LinkTo.Object>
 		);
 	}
