@@ -1,7 +1,7 @@
 import {Stores} from '@nti/lib-store';
 
 import {sortOptions} from './utils';
-import {getTypeFor} from './types';
+import {getTypeFor, Unknown} from './types';
 
 async function getPreferredAccess (catalogEntry) {
 	try {
@@ -55,10 +55,18 @@ export default class CourseEnrollmentOptionsStore extends Stores.SimpleStore {
 					})
 					.filter(x => !!x)
 			);
+			const hasEnrolledOption = options.some(x => x.isEnrolled());
+
+			if (access && !hasEnrolledOption) {
+				const unknown = await Unknown.load(null, access, catalogEntry);
+
+				options.push(unknown);
+			}
 
 
 			this.set('enrolled', !!access);
 			this.set('administrative', access && access.isAdministrative);
+			this.set('access', access);
 			this.set('options', sortOptions(options));
 			this.set('loading', false);
 			this.emitChange('loading', 'options', 'isAdministrative', 'enrolled');
