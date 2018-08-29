@@ -48,7 +48,7 @@ export default class CourseAdminCompletion extends React.Component {
 
 	renderCompletableToggle () {
 		const {completable, disabled: nonEditor} = this.state;
-		const disabled = !completable || nonEditor;
+		const disabled = nonEditor;
 		const className = cx('completion-control', {disabled});
 
 		return (
