@@ -9,8 +9,29 @@
 	padding: 0 10px;
 	margin: 5px 0 5px 5px;
 
+	span {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
 	&.green {
 		background-color: $primary-green;
+
+		.completed-check {
+			display: inline-block;
+			border: 2px solid white;
+			border-radius: 18px;
+			width: 18px;
+			height: 18px;
+			text-align: center;
+			font-size: 0.875rem;
+			line-height: 0.875rem;
+			vertical-align: middle;
+		}
+
+		span {
+			margin-left: 0.3rem;
+		}
 	}
 
 	&.blue {
@@ -44,12 +65,15 @@
 		vertical-align: middle;
 	}
 
-	span {
-		display: inline-block;
-		vertical-align: middle;
-	}
-
 	@include respond-to(handhelds) {
 		font-size: 8px;
+
+		.completed-check.completed-check {
+			border-radius: 14px;
+			width: 14px;
+			height: 14px;
+			font-size: 10px;
+			line-height: 10px;
+		}
 	}
 }

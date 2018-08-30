@@ -11,7 +11,8 @@ import Badge from '../parts/Badge';
 import Registry from './Registry';
 
 const t = scoped('course.card.type.sdministering', {
-	starting: 'preview'
+	starting: 'preview',
+	completed: 'completed'
 });
 
 @Registry.register('application/vnd.nextthought.courseware.courseinstanceenrollment')
@@ -24,10 +25,11 @@ export default class EnrollmentCard extends React.Component {
 		const {course, ...otherProps} = this.props;
 		const startDate = course.getStartDate();
 		const endDate = course.getEndDate();
+		const completed = course.CourseProgress && course.CourseProgress.Completed;
+		const progress = course.CourseProgress && course.CourseProgress.PercentageProgress;
 		const preview = course.CatalogEntry.Preview;
 		const now = new Date();
 		const badges = [];
-
 		const starting = startDate && startDate > now;
 		const finished = endDate && endDate < now;
 
@@ -35,6 +37,15 @@ export default class EnrollmentCard extends React.Component {
 			badges.push((
 				<Badge orange>
 					{t('starting')}
+				</Badge>
+			));
+		}
+
+		if(completed) {
+			badges.push((
+				<Badge green>
+					<i className="icon-check completed-check"/>
+					<span>{t('completed')}</span>
 				</Badge>
 			));
 		}
@@ -63,6 +74,7 @@ export default class EnrollmentCard extends React.Component {
 					{...otherProps}
 					course={course.CatalogEntry}
 					badges={badges}
+					progress={progress}
 				/>
 			</LinkTo.Object>
 		);

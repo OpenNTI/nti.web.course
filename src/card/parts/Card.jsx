@@ -13,9 +13,10 @@ CourseCard.propTypes = {
 	badges: PropTypes.arrayOf(PropTypes.node),
 	card: PropTypes.bool,
 	list: PropTypes.bool,
-	collapseToList: PropTypes.bool
+	collapseToList: PropTypes.bool,
+	progress: PropTypes.number
 };
-export default function CourseCard ({className, course, badges, card = true, list, collapseToList}) {
+export default function CourseCard ({className, course, badges, card = true, list, collapseToList, progress}) {
 	return (
 		<div className={cx(className, 'nti-course-card-container', {card: card && !list && !collapseToList, list, 'collapse-to-list': collapseToList})}>
 			<Image course={course} />
@@ -34,6 +35,10 @@ export default function CourseCard ({className, course, badges, card = true, lis
 					})}
 				</ul>
 			)}
+
+			{progress &&
+				<div className="progress" style={{width: progress * 100 + '%'}} />
+			}
 		</div>
 	);
 }
