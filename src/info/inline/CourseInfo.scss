@@ -7,6 +7,12 @@
 	max-width: 768px;
 	text-align: center;
 
+	&.loading {
+		min-height: 200px;
+		background-color: white;
+		position: relative;
+	}
+
 	&.view-only {
 		.course-tags .tag {
 			background-color: $primary-blue;
