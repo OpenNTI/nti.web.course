@@ -23,7 +23,7 @@ export default class Administrative extends React.Component {
 		const {course, ...otherProps} = this.props;
 		const startDate = course.getStartDate();
 		const endDate = course.getEndDate();
-		const preview = course.CatalogEntry.PreviewRawValue;
+		const preview = course.CatalogEntry.Preview;
 		const now = new Date();
 		const badges = [];
 
