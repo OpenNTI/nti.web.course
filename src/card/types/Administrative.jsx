@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
+import {DateTime} from '@nti/web-commons';
 
 import {getSemesterBadge} from '../../utils/Semester';
 import Card from '../parts/Card';
@@ -30,10 +31,18 @@ export default class Administrative extends React.Component {
 		const starting = startDate && startDate > now;
 		const finished = endDate && endDate < now;
 
-		if (starting || preview) {
+		if (preview) {
 			badges.push((
 				<Badge orange>
 					{t('starting')}
+				</Badge>
+			));
+		}
+
+		if (starting) {
+			badges.push((
+				<Badge blue>
+					{DateTime.format(startDate)}
 				</Badge>
 			));
 		} else if (finished) {
