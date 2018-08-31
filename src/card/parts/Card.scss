@@ -61,6 +61,10 @@ $CUSTOM_RANGES: (
 
 		.nti-course-card-badge.settings {
 			opacity: 1;
+
+			.icon-settings {
+				opacity: 0.5;
+			}
 		}
 	}
 

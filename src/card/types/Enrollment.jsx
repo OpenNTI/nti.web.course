@@ -65,7 +65,9 @@ export default class EnrollmentCard extends React.Component {
 		}
 
 		badges.push((
-			<Badge black settings />
+			<Badge black settings>
+				<i className="icon-settings" />
+			</Badge>
 		));
 
 		return (
