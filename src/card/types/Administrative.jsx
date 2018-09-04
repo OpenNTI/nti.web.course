@@ -48,6 +48,7 @@ export default class Administrative extends React.Component {
 		} else if (finished) {
 			badges.push((
 				<Badge black>
+					<i className="icon-clock-archive" />
 					{getSemesterBadge(course)}
 				</Badge>
 			));

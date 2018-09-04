@@ -59,6 +59,7 @@ export default class EnrollmentCard extends React.Component {
 		} else if (finished) {
 			badges.push((
 				<Badge black>
+					<i className="icon-clock-archive" />
 					{getSemesterBadge(course)}
 				</Badge>
 			));

@@ -40,6 +40,15 @@ $CUSTOM_RANGES: (
 		flex-direction: row;
 		align-items: center;
 
+		.icon-clock-archive {
+			margin-right: 3px;
+			margin-left: -3px;
+		}
+
+		.icon-clock-archive::before {
+			color: white;
+		}
+
 		li {
 			flex: 0 0 auto;
 		}
