@@ -20,7 +20,8 @@ const t = scoped('course.card.type.administering', {
 @Registry.register('application/vnd.nextthought.courseware.courseinstanceadministrativerole')
 export default class Administrative extends React.Component {
 	static propTypes = {
-		course: PropTypes.object.isRequired
+		course: PropTypes.object.isRequired,
+		onModification: PropTypes.func
 	}
 
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
