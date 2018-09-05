@@ -1,0 +1,64 @@
+@import "~@nti/style-common";
+
+.course-settings-menu-flyout {
+	width: 308px;
+
+	.header {
+		background-color: white;
+		border-bottom: solid 1px #eaeaea;
+		padding: 15px;
+		display: flex;
+
+		.registered-icon {
+			background-image: url(../assets/circle-check.svg);
+			width: 30px;
+			min-width: 30px;
+			height: 29px;
+			margin: 4px 10px 0 0;
+		}
+
+		.course-name {
+			color: #888;
+			font-size: 12px;
+			line-height: 17px;
+			font-weight: 400;
+			max-width: 240px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.course-status {
+			font-size: 18px;
+			color: black;
+			font-weight: 400;
+			line-height: 24px;
+		}
+	}
+
+	.option {
+		font-size: 14px;
+		font-weight: 400;
+		line-height: 19px;
+		padding: 15px;
+		cursor: pointer;
+		color: black;
+		border-bottom: solid 1px #eaeaea;
+		background-color: #f7f7f7;
+
+		&.delete-course {
+			color: red;
+
+			i {
+				margin-right: 10px;
+			}
+		}
+	}
+
+	.support {
+		display: block;
+		cursor: pointer;
+		color: #3fb3f6;
+		font-size: 0.8em;
+		text-decoration: none;
+	}
+}
