@@ -1,17 +1,21 @@
-const months = [
-	'January',
-	'February',
-	'March',
-	'April',
-	'May',
-	'June',
-	'July',
-	'August',
-	'September',
-	'October',
-	'November',
-	'December'
-];
+import {scoped} from '@nti/lib-locale';
+
+const t = scoped('course.utils.Semester', {
+	months: [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December'
+	]
+});
 
 export function getEffectiveDate (course) {
 	// if there is no start date, but we have an end date, consider that end date
@@ -23,7 +27,7 @@ export function getEffectiveDate (course) {
 export function getSemester (course) {
 	let start = getEffectiveDate(course),
 		month = start && start.getMonth(),
-		s = start && months[month];
+		s = start && t('months')[month];
 	return s || '';
 }
 
