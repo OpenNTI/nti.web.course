@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {rawContent} from '@nti/lib-commons';
 
 import Button from '../../common/Button';
 import EnrollLink from '../../common/EnrollmentLink';
@@ -20,9 +21,7 @@ export default class CourseEnrollmentBaseTypeEnrollButton extends React.Componen
 
 		return (
 			<EnrollLink option={option}>
-				<Button>
-					{label}
-				</Button>
+				<Button {...rawContent(label)} />
 			</EnrollLink>
 		);
 	}

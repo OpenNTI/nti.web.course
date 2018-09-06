@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {rawContent} from '@nti/lib-commons';
 
 import PaddedContainer from '../../common/PaddedContainer';
 
@@ -17,8 +18,8 @@ export default class CourseEnrollmentOptionsFiveminuteDropButton extends React.C
 
 		return (
 			<PaddedContainer className="nti-course-enrollment-options-five-minute-drop">
-				<div className="title">{option.getDropInfoTitle()}</div>
-				<div className="description">{option.getDropInfoDescription()}</div>
+				<div className="title" {...rawContent(option.getDropInfoTitle())} />
+				<div className="description" {...rawContent(option.getDropInfoDescription())} />
 			</PaddedContainer>
 		);
 	}

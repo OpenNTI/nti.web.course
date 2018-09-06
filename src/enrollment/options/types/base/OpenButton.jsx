@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {LinkTo} from '@nti/web-routing';
+import {rawContent} from '@nti/lib-commons';
 
 import Button from '../../common/Button';
 
@@ -20,9 +21,7 @@ export default class CourseEnrollmentBaseTypeOpenButton extends React.Component 
 
 		return (
 			<LinkTo.Object object={option.access} context="open">
-				<Button>
-					{label}
-				</Button>
+				<Button {...rawContent(label)} />
 			</LinkTo.Object>
 		);
 	}

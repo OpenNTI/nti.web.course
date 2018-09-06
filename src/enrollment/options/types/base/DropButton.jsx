@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {LinkTo} from '@nti/web-routing';
+import {rawContent} from '@nti/lib-commons';
 
 import ActionItem from '../../common/ActionItem';
 
@@ -20,9 +21,7 @@ export default class CourseEnrollmentBaseTypeDropButton extends React.Component 
 
 		return (
 			<LinkTo.Object className="course-enrollment-options-base-type-drop-button" object={option.option} context="drop">
-				<ActionItem>
-					{label}
-				</ActionItem>
+				<ActionItem {...rawContent(label)} />
 			</LinkTo.Object>
 		);
 	}

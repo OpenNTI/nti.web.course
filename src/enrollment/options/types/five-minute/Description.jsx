@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {rawContent} from '@nti/lib-commons';
 
 import Title from '../../common/Title';
 import Description from '../../common/Description';
@@ -45,12 +46,8 @@ export default class CourseEnrollmentOptionsFiveMinuteDescription extends React.
 
 		return (
 			<React.Fragment>
-				<PaddedContainer className="label">
-					{option.getPendingLabel()}
-				</PaddedContainer>
-				<Description>
-					{option.getPendingDescription()}
-				</Description>
+				<PaddedContainer className="label" {...rawContent(option.getPendingLabel())} />
+				<Description {...rawContent(option.getPendingDescription())} />
 			</React.Fragment>
 		);
 	}
@@ -61,12 +58,8 @@ export default class CourseEnrollmentOptionsFiveMinuteDescription extends React.
 
 		return (
 			<React.Fragment>
-				<Title className="title">
-					{option.getRejectedTitle()}
-				</Title>
-				<Description>
-					{option.getRejectedDescription()}
-				</Description>
+				<Title className="title" {...rawContent(option.getRejectedTitle())} />
+				<Description {...rawContent(option.getRejectedDescription())} />
 			</React.Fragment>
 		);
 	}
@@ -77,9 +70,7 @@ export default class CourseEnrollmentOptionsFiveMinuteDescription extends React.
 
 		return (
 			<React.Fragment>
-				<Description>
-					{option.getApiDownDescription()}
-				</Description>
+				<Description {...rawContent(option.getApiDownDescription())} />
 			</React.Fragment>
 		);
 	}
@@ -91,9 +82,7 @@ export default class CourseEnrollmentOptionsFiveMinuteDescription extends React.
 		return (
 			<React.Fragment>
 				{option.getAvailableSeats() <= 10 && (
-					<PaddedContainer className="seats-available label">
-						{option.getAvailabelSeatsLabel()}
-					</PaddedContainer>
+					<PaddedContainer className="seats-available label" {...rawContent(option.getAvailabelSeatsLabel())} />
 				)}
 				<OptionDescription {...this.props} />
 			</React.Fragment>
