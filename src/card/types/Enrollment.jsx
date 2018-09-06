@@ -27,7 +27,10 @@ export default class EnrollmentCard extends React.Component {
 
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
 
-	doRequestSupport = () => {
+	doRequestSupport = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
 		global.location.href = 'mailto:support@nextthought.com?subject=Support%20Request';
 	}
 
