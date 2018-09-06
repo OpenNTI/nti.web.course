@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {rawContent} from '@nti/lib-commons';
 
 import Description from '../../common/Description';
 
@@ -15,9 +16,7 @@ export default class CourseEnrollmentBaseTypeDescription extends React.Component
 		const {option} = this.props;
 
 		return (
-			<Description>
-				{option.getDescription()}
-			</Description>
+			<Description {...rawContent(option.getDescription())} />
 		);
 	}
 }
