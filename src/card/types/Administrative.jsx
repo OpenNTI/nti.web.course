@@ -53,7 +53,10 @@ export default class Administrative extends React.Component {
 		});
 	};
 
-	doRequestSupport = () => {
+	doRequestSupport = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
 		global.location.href = 'mailto:support@nextthought.com?subject=Support%20Request';
 	}
 
@@ -63,7 +66,10 @@ export default class Administrative extends React.Component {
 		onEdit && this.context.router.routeTo.object(course);
 	}
 
-	doExport = () => {
+	doExport = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
 		const { course } = this.props;
 
 		if(course.CatalogEntry.hasLink('Export')) {
