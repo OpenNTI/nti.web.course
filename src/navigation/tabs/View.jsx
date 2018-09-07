@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import RouteCache from './RouteCache';
 import Store from './Store';
 
 export default
@@ -25,6 +26,38 @@ class CourseTabs extends React.Component {
 		router: PropTypes.object
 	}
 
+	get router () {
+		return this.context.router;
+	}
+
+
+	get baseRoute () {
+		if (!this.router) {
+			return '';
+		}
+
+		return this.router.baseroute;
+	}
+
+	get activeRoute () {
+		if (!this.router) {
+			return '';
+		}
+
+		return this.router.route.location.pathname;
+	}
+
+
+	getRouteForTab (tabID) {
+		if (!this.router) {
+			return '';
+		}
+
+		const {course} = this.props;
+
+		return this.router.getRouteFor(course, tabID);
+	}
+
 	render () {
 		const {tabs} = this.props;
 
@@ -37,19 +70,25 @@ class CourseTabs extends React.Component {
 		);
 	}
 
-
 	renderTab (tab) {
-		const {course} = this.props;
+		const {baseRoute, activeRoute} = this;
 		const {id, isRootRoute} = tab;
-		const baseRoute = this.context.router.baseroute;
-		const activeRoute = this.context.router.route.location.pathname;
-		const route = this.context.router.getRouteFor(course, id);
+		const tabRoot = this.getRouteForTab(id);
 
-		const isActive = activeRoute.indexOf(route) === 0 || (isRootRoute && activeRoute === baseRoute);
+		const isActive = activeRoute.indexOf(tabRoot) === 0 || (isRootRoute && activeRoute === baseRoute);
+
+		let route = null;
+
+		if (isActive) {
+			RouteCache.set(tabRoot, activeRoute);
+			route = tabRoot;
+		} else {
+			route = RouteCache.get(tabRoot);
+		}
 
 		return (
-			<div key={id}>
-				{`${route}-${isActive ? 'active' : 'not-active'}`}
+			<div>
+				{`${route} ${isActive ? 'active' : ''}`}
 			</div>
 		);
 	}
