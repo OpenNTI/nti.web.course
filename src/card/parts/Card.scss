@@ -20,12 +20,15 @@ $CUSTOM_RANGES: (
 		height: 170px;
 	}
 
-	.progress {
+	.progress.progress {
 		position: absolute;
 		bottom: 0;
 		left: 0;
 		background: #3fb34f;
 		height: 0.5rem;
+		margin-bottom: 0;
+		padding: 0;
+		border: none;
 	}
 
 	.badges {
