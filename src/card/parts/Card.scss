@@ -154,6 +154,12 @@ $CUSTOM_RANGES: (
 	}
 }
 
+@include respond-to(handhelds) {
+	.no-padding.nti-course-card-container.card {
+		padding: 0;
+	}
+}
+
 .nti-course-card-container {
 	&.card {
 		@include card-layout;

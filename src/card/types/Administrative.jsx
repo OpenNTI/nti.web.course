@@ -136,6 +136,7 @@ export default class Administrative extends React.Component {
 					{...otherProps}
 					course={course.CatalogEntry}
 					badges={badges}
+					className="no-padding"
 				/>
 				{this.renderOptions()}
 			</LinkTo.Object>

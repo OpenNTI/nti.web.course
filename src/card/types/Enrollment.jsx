@@ -133,6 +133,7 @@ export default class EnrollmentCard extends React.Component {
 					course={course.CatalogEntry}
 					badges={badges}
 					progress={progress}
+					className="no-padding"
 				/>
 				{this.renderOptions()}
 			</LinkTo.Object>
