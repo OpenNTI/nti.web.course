@@ -83,7 +83,7 @@ $CUSTOM_RANGES: (
 	@include respond-to(handhelds) {
 		height: 250px;
 		width: 185px;
-		padding: 0;
+		padding: 4px 0;
 
 		.meta {
 			padding: 0 15px;
