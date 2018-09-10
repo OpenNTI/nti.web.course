@@ -1,18 +1,19 @@
 import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.utils.Semester.months', {
-	0: 'January',
-	1: 'February',
-	2: 'March',
-	3: 'April',
-	4: 'May',
-	5: 'June',
-	6: 'July',
-	7: 'August',
-	8: 'September',
-	9: 'October',
-	10: 'November',
-	11: 'December'
+	0: 'January %(year)s',
+	1: 'February %(year)s',
+	2: 'March %(year)s',
+	3: 'April %(year)s',
+	4: 'May %(year)s',
+	5: 'June %(year)s',
+	6: 'July %(year)s',
+	7: 'August %(year)s',
+	8: 'September %(year)s',
+	9: 'October %(year)s',
+	10: 'November %(year)s',
+	11: 'December %(year)s',
+	'not-set': ''
 });
 
 export function getEffectiveDate (course) {
@@ -25,18 +26,17 @@ export function getEffectiveDate (course) {
 export function getSemester (course) {
 	let start = getEffectiveDate(course),
 		month = start && start.getMonth(),
-		s = start && t(month.toString());
+		s = start && t(month.toString(), {year: start.getFullYear().toString()});
 	return s || '';
 }
 
 export function  getSemesterBadge (course) {
 	let start = getEffectiveDate(course),
-		year = start && start.getFullYear(),
 		semester = getSemester(course);
 
 	if (!start) {
 		return '';
 	}
 
-	return semester + ' ' + year;
+	return semester;
 }
