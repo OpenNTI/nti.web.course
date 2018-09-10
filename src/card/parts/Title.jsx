@@ -12,10 +12,7 @@ CourseCardTitle.propTypes = {
 };
 
 export default function CourseCardTitle ({course}) {
-	const endDate = course.getEndDate();
-	const now = new Date();
-	const finished = endDate && endDate < now;
-	const dateText = (finished && getSemesterBadge(course)) || '';
+	const dateText = getSemesterBadge(course);
 
 	return (
 		<div className="nti-course-card-title">
