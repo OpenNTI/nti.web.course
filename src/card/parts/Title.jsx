@@ -16,7 +16,10 @@ export default function CourseCardTitle ({course}) {
 
 	return (
 		<div className="nti-course-card-title">
-			<div className="provider-unique-id">{course.ProviderUniqueID + ' ' + dateText}</div>
+			<div className="provider-unique-id">{course.ProviderUniqueID}</div>
+			{dateText &&
+				<div className="course-date">{dateText}</div>
+			}
 			<div className="title">{course.Title}</div>
 		</div>
 	);
