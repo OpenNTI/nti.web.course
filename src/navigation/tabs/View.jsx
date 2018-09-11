@@ -1,8 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Navigation} from '@nti/web-commons';
 
 import RouteCache from './RouteCache';
 import Store from './Store';
+
+function isSameRoute (a, b) {
+	const trim = route => route.replace(/\/$/, '');
+
+	return trim(a) === trim(b);
+}
 
 export default
 @Store.connect(['tabs'])
@@ -19,6 +26,9 @@ class CourseTabs extends React.Component {
 				id: PropTypes.string,
 				hide: PropTypes.bool
 			})
+		),
+		exclude: PropTypes.arrayOf(
+			PropTypes.string
 		)
 	}
 
@@ -59,23 +69,29 @@ class CourseTabs extends React.Component {
 	}
 
 	render () {
-		const {tabs} = this.props;
+		const {tabs, exclude} = this.props;
 
 		if (!tabs) { return null; }
 
+		let visibleTabs = tabs;
+
+		if (exclude) {
+			visibleTabs = visibleTabs.filter(tab => exclude.indexOf(tab.id) === -1);
+		}
+
 		return (
-			<div>
-				{tabs.map(tab => this.renderTab(tab))}
-			</div>
+			<Navigation.Tabs>
+				{visibleTabs.map(tab => this.renderTab(tab))}
+			</Navigation.Tabs>
 		);
 	}
 
 	renderTab (tab) {
 		const {baseRoute, activeRoute} = this;
-		const {id, isRootRoute} = tab;
+		const {id, label, isRootRoute} = tab;
 		const tabRoot = this.getRouteForTab(id);
 
-		const isActive = activeRoute.indexOf(tabRoot) === 0 || (isRootRoute && activeRoute === baseRoute);
+		const isActive = isSameRoute(activeRoute, tabRoot) || activeRoute.indexOf(tabRoot) === 0 || (isRootRoute && isSameRoute(activeRoute, baseRoute));
 
 		let route = null;
 
@@ -87,9 +103,12 @@ class CourseTabs extends React.Component {
 		}
 
 		return (
-			<div>
-				{`${route} ${isActive ? 'active' : ''}`}
-			</div>
+			<Navigation.Tabs.Tab
+				key={id}
+				route={route}
+				label={label}
+				active={isActive}
+			/>
 		);
 	}
 }
