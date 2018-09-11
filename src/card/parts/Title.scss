@@ -1,6 +1,9 @@
 @import "~@nti/style-common";
 
 .nti-course-card-title {
+	overflow: hidden;
+	margin-top: 4px;
+
 	.provider-unique-id, .course-date {
 		font: normal 700 0.625rem/2.5 $body-font-family;
 		text-transform: uppercase;
@@ -8,11 +11,12 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		display: inline;
+		display: inline-block;
+		line-height: 1.2rem;
 	}
 
-	.course-date {
-		margin-left: 3px;
+	.provider-unique-id {
+		margin-right: 3px;
 	}
 
 	.title {
@@ -27,7 +31,7 @@
 
 	@include respond-to(handhelds) {
 		.provider-unique-id, .course-date {
-			line-height: 2;
+			line-height: 1;
 		}
 
 		.title {
