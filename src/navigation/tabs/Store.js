@@ -2,7 +2,7 @@ import path from 'path';
 
 import {Stores} from '@nti/lib-store';
 import {scoped} from '@nti/lib-locale';
-import {isFlag, getService} from '@nti/web-client';
+import {getService} from '@nti/web-client';
 
 const t = scoped('course.navigation.tabs', {
 	activity: 'Activity',
@@ -10,14 +10,14 @@ const t = scoped('course.navigation.tabs', {
 	scorm: 'Content',
 	assignments: 'Assignments',
 	discussions: 'Discussions',
-	courseInfo: 'Course Info'
+	info: 'Course Info'
 });
 
 
 const DEFAULT_ORDER = ['activity', 'lessons', 'scorm', 'assignments', 'discussions', 'info'];
 const TABS = {
 	'activity': {
-		shouldShow: course => isFlag('course-activity') && course.hasOutline() && !course.CatalogEntry.Preview
+		shouldShow: course => course.hasOutline() && !course.CatalogEntry.Preview
 	},
 	'lessons': {
 		shouldShow: course => course.hasOutline(),
