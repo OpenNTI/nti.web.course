@@ -58,7 +58,8 @@
     "@nti/web-whiteboard": "0.x.x",
     "classnames": "^2.0.0",
     "prop-types": "^15.5.8",
-    "react-day-picker": "^7.1.9"
+    "react-day-picker": "^7.1.9",
+    "react-test-renderer": "^16.5.0"
   },
   "devDependencies": {
     "@nti/cmp-scripts": "^2.0.0",

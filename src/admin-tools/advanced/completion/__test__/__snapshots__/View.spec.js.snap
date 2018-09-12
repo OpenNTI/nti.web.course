@@ -1,0 +1,704 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course admin advanced completion test (no assignments) renders completable, certificate, percentage, default required 1`] = `
+<div
+  className="course-admin-completion"
+>
+  <div
+    className="content"
+  >
+    <div
+      className="error"
+    >
+      
+    </div>
+    <div
+      className="inputs"
+    >
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Completable
+        </div>
+        <div
+          className="control"
+        >
+          <div
+            className="nti-toggle-input"
+          >
+            <div
+              className="toggler-container"
+            >
+              <div
+                className="toggle-label on"
+              >
+                On
+              </div>
+              <div
+                className="toggler on"
+              >
+                <input
+                  checked={true}
+                  disabled={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  className="toggle-button on"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Award Certificate on Completion
+        </div>
+        <div
+          className="control"
+        >
+          <div
+            className="nti-toggle-input"
+          >
+            <div
+              className="toggler-container"
+            >
+              <div
+                className="toggle-label on"
+              >
+                On
+              </div>
+              <div
+                className="toggler on"
+              >
+                <input
+                  checked={true}
+                  disabled={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  className="toggle-button on"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="default-required-container"
+      >
+        <div
+          className="header"
+        >
+          Required by Default
+        </div>
+        <div
+          className="items"
+        >
+          <div
+            className="completion-control"
+          >
+            <div
+              className="label"
+            >
+              Assignments
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off"
+                  >
+                    <input
+                      checked={false}
+                      disabled={false}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Percentage (1 to 100)
+        </div>
+        <div
+          className="control"
+        >
+          <input
+            className="number-input-component nti-number-input nti-text-input valid"
+            disabled={false}
+            max={100}
+            min={1}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            pattern="[0-9]*"
+            step={1}
+            type="text"
+            value="50"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course admin advanced completion test (with assignments) renders completable, certificate, percentage, default required 1`] = `
+<div
+  className="course-admin-completion"
+>
+  <div
+    className="content"
+  >
+    <div
+      className="error"
+    >
+      
+    </div>
+    <div
+      className="inputs"
+    >
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Completable
+        </div>
+        <div
+          className="control"
+        >
+          <div
+            className="nti-toggle-input"
+          >
+            <div
+              className="toggler-container"
+            >
+              <div
+                className="toggle-label on"
+              >
+                On
+              </div>
+              <div
+                className="toggler on"
+              >
+                <input
+                  checked={true}
+                  disabled={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  className="toggle-button on"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Award Certificate on Completion
+        </div>
+        <div
+          className="control"
+        >
+          <div
+            className="nti-toggle-input"
+          >
+            <div
+              className="toggler-container"
+            >
+              <div
+                className="toggle-label on"
+              >
+                On
+              </div>
+              <div
+                className="toggler on"
+              >
+                <input
+                  checked={true}
+                  disabled={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  className="toggle-button on"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="default-required-container"
+      >
+        <div
+          className="header"
+        >
+          Required by Default
+        </div>
+        <div
+          className="items"
+        >
+          <div
+            className="completion-control"
+          >
+            <div
+              className="label"
+            >
+              Assignments
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label on"
+                  >
+                    On
+                  </div>
+                  <div
+                    className="toggler on"
+                  >
+                    <input
+                      checked={true}
+                      disabled={false}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button on"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Percentage (1 to 100)
+        </div>
+        <div
+          className="control"
+        >
+          <input
+            className="number-input-component nti-number-input nti-text-input valid"
+            disabled={false}
+            max={100}
+            min={1}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            pattern="[0-9]*"
+            step={1}
+            type="text"
+            value="50"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course admin advanced completion test (with assignments) renders completable, no certificate, no percentage 1`] = `
+<div
+  className="course-admin-completion"
+>
+  <div
+    className="content"
+  >
+    <div
+      className="error"
+    >
+      
+    </div>
+    <div
+      className="inputs"
+    >
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Completable
+        </div>
+        <div
+          className="control"
+        >
+          <div
+            className="nti-toggle-input"
+          >
+            <div
+              className="toggler-container"
+            >
+              <div
+                className="toggle-label on"
+              >
+                On
+              </div>
+              <div
+                className="toggler on"
+              >
+                <input
+                  checked={true}
+                  disabled={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  className="toggle-button on"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Award Certificate on Completion
+        </div>
+        <div
+          className="control"
+        >
+          <div
+            className="nti-toggle-input"
+          >
+            <div
+              className="toggler-container"
+            >
+              <div
+                className="toggle-label off"
+              >
+                Off
+              </div>
+              <div
+                className="toggler off"
+              >
+                <input
+                  checked={false}
+                  disabled={false}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  className="toggle-button off"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="default-required-container"
+      >
+        <div
+          className="header"
+        >
+          Required by Default
+        </div>
+        <div
+          className="items"
+        >
+          <div
+            className="completion-control"
+          >
+            <div
+              className="label"
+            >
+              Assignments
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label on"
+                  >
+                    On
+                  </div>
+                  <div
+                    className="toggler on"
+                  >
+                    <input
+                      checked={true}
+                      disabled={false}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button on"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Percentage (1 to 100)
+        </div>
+        <div
+          className="control"
+        >
+          <input
+            className="number-input-component nti-number-input nti-text-input invalid"
+            disabled={false}
+            max={100}
+            min={1}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            pattern="[0-9]*"
+            step={1}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course admin advanced completion test (with assignments) renders not completable 1`] = `
+<div
+  className="course-admin-completion"
+>
+  <div
+    className="content"
+  >
+    <div
+      className="error"
+    >
+      
+    </div>
+    <div
+      className="inputs"
+    >
+      <div
+        className="completion-control disabled"
+      >
+        <div
+          className="label"
+        >
+          Completable
+        </div>
+        <div
+          className="control"
+        >
+          <div
+            className="nti-toggle-input"
+          >
+            <div
+              className="toggler-container"
+            >
+              <div
+                className="toggle-label off"
+              >
+                Off
+              </div>
+              <div
+                className="toggler off disabled"
+              >
+                <input
+                  checked={false}
+                  disabled={true}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  className="toggle-button off"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="completion-control disabled"
+      >
+        <div
+          className="label"
+        >
+          Award Certificate on Completion
+        </div>
+        <div
+          className="control"
+        >
+          <div
+            className="nti-toggle-input"
+          >
+            <div
+              className="toggler-container"
+            >
+              <div
+                className="toggle-label off"
+              >
+                Off
+              </div>
+              <div
+                className="toggler off disabled"
+              >
+                <input
+                  checked={false}
+                  disabled={true}
+                  onChange={[Function]}
+                  type="checkbox"
+                />
+                <div
+                  className="toggle-button off"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="default-required-container disabled"
+      >
+        <div
+          className="header"
+        >
+          Required by Default
+        </div>
+        <div
+          className="items"
+        >
+          <div
+            className="completion-control disabled"
+          >
+            <div
+              className="label"
+            >
+              Assignments
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off disabled"
+                  >
+                    <input
+                      disabled={true}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="completion-control disabled"
+      >
+        <div
+          className="label"
+        >
+          Percentage (1 to 100)
+        </div>
+        <div
+          className="control"
+        >
+          <input
+            className="number-input-component nti-number-input nti-text-input invalid"
+            disabled={true}
+            max={100}
+            min={1}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            pattern="[0-9]*"
+            step={1}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

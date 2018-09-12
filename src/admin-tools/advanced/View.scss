@@ -1,6 +1,7 @@
 @import '~@nti/style-common';
 
 .course-admin-advanced-view {
-	background-color: white;
-	padding: 30px;
+	.nav-content-nav, .nav-content-content {
+		background-color: white;
+	}
 }

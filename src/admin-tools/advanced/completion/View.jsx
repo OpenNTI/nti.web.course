@@ -1,53 +1,70 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Input} from '@nti/web-commons';
+import {Input, Loading} from '@nti/web-commons';
 import {getService} from '@nti/web-client';
 import cx from 'classnames';
-import { scoped } from '@nti/lib-locale';
+import {scoped} from '@nti/lib-locale';
+
+import Store from './Store';
 
 const t = scoped('course.admin-tools.advanced.completion.View', {
 	cancel: 'Cancel',
 	save: 'Save',
 	completable: 'Completable',
 	certificates: 'Award Certificate on Completion',
-	percentage: 'Percentage (1 to 100)'
+	percentage: 'Percentage (1 to 100)',
+	defaultRequired: 'Required by Default',
+	assignments: 'Assignments'
 });
 
-export default class CourseAdminCompletion extends React.Component {
+export default
+@Store.connect({
+	loading: 'loading',
+	completable: 'completable',
+	certificationPolicy: 'certificationPolicy',
+	percentage: 'percentage',
+	disabled: 'disabled',
+	assignmentsDefault: 'assignmentsDefault',
+	error: 'error'
+})
+class CourseAdminCompletion extends React.Component {
 	static propTypes = {
-		course: PropTypes.object.isRequired
+		course: PropTypes.object.isRequired,
+		store: PropTypes.object.isRequired,
+		loading: PropTypes.bool,
+		completable: PropTypes.bool,
+		certificationPolicy: PropTypes.bool,
+		percentage: PropTypes.number,
+		disabled: PropTypes.bool,
+		assignmentsDefault: PropTypes.bool,
+		error: PropTypes.string
 	}
 
-	state = {
-		percentage: 0.0
-	}
-
+	state = {}
 
 	componentDidMount () {
-		const {course} = this.props;
+		const {course, store} = this.props;
 
-		if(course.CompletionPolicy) {
-			const {CatalogEntry} = course;
+		store.load(course);
+	}
 
+
+	componentDidUpdate (prevProps) {
+		if(prevProps.percentage !== this.props.percentage) {
 			this.setState({
-				completable: true,
-				certificationPolicy: Boolean(course.CompletionPolicy.offersCompletionCertificate),
-				percentage: (course.CompletionPolicy.percentage || 0) * 100,
-				disabled: !CatalogEntry || !CatalogEntry.hasLink('edit')
+				percentage: this.props.percentage
 			});
 		}
 	}
 
 
 	onCompletionPolicyChange = () => {
-		let state = {completable: !this.state.completable, certificationPolicy: !this.state.completable};
-
-		this.setState(state);
+		this.onSave(!this.props.completable, this.props.percentage, this.props.certificationPolicy);
 	}
 
 
 	renderCompletableToggle () {
-		const {completable, disabled: nonEditor} = this.state;
+		const {completable, disabled: nonEditor} = this.props;
 		const disabled = nonEditor;
 		const className = cx('completion-control', {disabled});
 
@@ -60,31 +77,78 @@ export default class CourseAdminCompletion extends React.Component {
 	}
 
 	onCertificationChange = () => {
-		this.setState({certificationPolicy: !this.state.certificationPolicy});
+		this.onSave(this.props.completable, this.props.percentage, !this.props.certificationPolicy);
 	}
 
 	renderCertificateToggle () {
-		const {completable, disabled: nonEditor} = this.state;
+		const {completable, disabled: nonEditor} = this.props;
 		const disabled = !completable || nonEditor;
 		const className = cx('completion-control', {disabled});
 
 		return (
 			<div className={className}>
 				<div className="label">{t('certificates')}</div>
-				<div className="control"><Input.Toggle disabled={disabled} value={this.state.certificationPolicy} onChange={this.onCertificationChange}/></div>
+				<div className="control"><Input.Toggle disabled={disabled} value={this.props.certificationPolicy} onChange={this.onCertificationChange}/></div>
 			</div>
 		);
 	}
 
 	onPercentageChange = (percentage) => {
-		this.setState({percentage});
+		if(this.percentageTimeout) {
+			clearTimeout(this.percentageTimeout);
+			delete this.percentageTimeout;
+		}
+
+		this.setState({percentage}, () => {
+			this.percentageTimeout = setTimeout(() => {
+				this.onSave(this.props.completable, percentage, this.props.certificationPolicy);
+			}, 500);
+		});
+	}
+
+	onAssignmentsDefaultChange = () => {
+		this.saveDefaultPolicy(!this.props.assignmentsDefault);
+	}
+
+	saveDefaultPolicy (assignmentsDefault) {
+		const {store} = this.props;
+
+		store.saveDefaultPolicy(assignmentsDefault);
+	}
+
+	renderDefaultRequiredToggle (label, value, onChange, disabled) {
+		const className = cx('completion-control', {disabled});
+
+		return (
+			<div className={className}>
+				<div className="label">{label}</div>
+				<div className="control"><Input.Toggle disabled={disabled} value={value} onChange={onChange}/></div>
+			</div>
+		);
+	}
+
+	renderDefaultRequiredSection () {
+		const {completable, disabled: nonEditor} = this.props;
+		const disabled = !completable || nonEditor;
+		const className = cx('default-required-container', {disabled});
+
+		return (
+			<div className={className}>
+				<div className="header">{t('defaultRequired')}</div>
+				<div className="items">
+					{this.renderDefaultRequiredToggle(t('assignments'), this.props.assignmentsDefault, this.onAssignmentsDefaultChange, disabled)}
+				</div>
+			</div>
+		);
 	}
 
 
 	renderPercentage () {
-		const {completable, disabled: nonEditor} = this.state;
+		const {completable, disabled: nonEditor} = this.props;
 		const disabled = !completable || nonEditor;
 		const className = cx('completion-control', {disabled});
+
+		console.log('percentage', this.state.percentage);
 
 		return (
 			<div className={className}>
@@ -95,54 +159,31 @@ export default class CourseAdminCompletion extends React.Component {
 	}
 
 
-	onSave = async () => {
-		const {completable, percentage, certificationPolicy} = this.state;
-		const {course} = this.props;
+	onSave (completable, percentage, certificationPolicy) {
+		const {store} = this.props;
 
-		const service = await getService();
-
-		if(completable) {
-			await service.put(course.getLink('CompletionPolicy'), {
-				MimeType: 'application/vnd.nextthought.completion.aggregatecompletionpolicy',
-				percentage: percentage ? percentage / 100.0 : 0,
-				'offers_completion_certificate': Boolean(certificationPolicy)
-			});
-		}
-		else {
-			// delete from CompletionPolicy?
-			const encodedID = encodeURIComponent(course.NTIID);
-
-			await service.delete(course.getLink('CompletionPolicy') + '/' + encodedID);
-		}
-
-		await course.refresh();
-	}
-
-
-	renderBottomControls () {
-		if(!this.props.course || this.state.disabled) {
-			return null;
-		}
-
-		return (
-			<div className="bottom-controls">
-				<div className="buttons">
-					<div className="save" onClick={this.onSave}>{t('save')}</div>
-				</div>
-			</div>
-		);
+		store.save(completable, percentage, certificationPolicy);
 	}
 
 
 	render () {
+		const {loading, error} = this.props;
+
 		return (
 			<div className="course-admin-completion">
-				<div className="inputs">
-					{this.renderCompletableToggle()}
-					{this.renderCertificateToggle()}
-					{this.renderPercentage()}
-				</div>
-				{this.renderBottomControls()}
+				{loading && <Loading.Ellipsis/>}
+				{!loading && (
+					<div className="content">
+						<div className="error">{error || ''}</div>
+						<div className="inputs">
+							{this.renderCompletableToggle()}
+							{this.renderCertificateToggle()}
+							{this.renderDefaultRequiredSection()}
+							{this.renderPercentage()}
+						</div>
+					</div>
+				)
+				}
 			</div>
 		);
 	}
