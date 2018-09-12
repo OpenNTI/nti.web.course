@@ -148,8 +148,6 @@ class CourseAdminCompletion extends React.Component {
 		const disabled = !completable || nonEditor;
 		const className = cx('completion-control', {disabled});
 
-		console.log('percentage', this.state.percentage);
-
 		return (
 			<div className={className}>
 				<div className="label">{t('percentage')}</div>

@@ -118,8 +118,6 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			state.completable = true;
 			state.certificationPolicy = Boolean(this.course.CompletionPolicy.offersCompletionCertificate);
 			state.percentage = (this.course.CompletionPolicy.percentage || 0) * 100;
-
-			console.log('setting state', state.percentage);
 		}
 
 		state.loading = false;
