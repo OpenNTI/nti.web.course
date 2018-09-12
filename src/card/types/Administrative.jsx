@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
 import { getService } from '@nti/web-client';
-import {DateTime, Prompt, Flyout} from '@nti/web-commons';
+import {DateTime, Prompt, Flyout, Layouts} from '@nti/web-commons';
 
 import {getSemesterBadge} from '../../utils/Semester';
 import Card from '../parts/Card';
@@ -11,6 +11,8 @@ import Badge from '../parts/Badge';
 import CourseMenu from '../parts/CourseSettingsMenu';
 
 import Registry from './Registry';
+
+const {Responsive} = Layouts;
 
 const t = scoped('course.card.type.administering', {
 	starting: 'preview',
@@ -138,7 +140,7 @@ export default class Administrative extends React.Component {
 					badges={badges}
 					className="no-padding"
 				/>
-				{this.renderOptions()}
+				{Responsive.isWebappContext() && this.renderOptions()}
 			</LinkTo.Object>
 		);
 	}
