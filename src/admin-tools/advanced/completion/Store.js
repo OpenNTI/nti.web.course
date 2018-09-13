@@ -3,8 +3,31 @@ import {getService} from '@nti/web-client';
 import {Models} from '@nti/lib-interfaces';
 
 const {Assignment, TimedAssignment, DiscussionAssignment} = Models.assessment.assignment;
+const {WebinarAsset} = Models.integrations;
+const {Video} = Models.media;
+const {VideoRoll} = Models.courses.overview;
+const {SurveyReference} = Models.assessment.survey;
+const {RelatedWorkReference, LTIExternalToolAsset} = Models.content;
 
-const ASSIGNMENT_MIME_TYPES = [Assignment.MimeType, TimedAssignment.MimeType, DiscussionAssignment.MimeType];
+const TYPES = {
+	ASSIGNMENTS: 'Assignments',
+	WEBINARS: 'Webinars',
+	VIDEOS: 'Videos',
+	VIDEO_ROLLS: 'Video Rolls',
+	SURVEYS: 'Surveys',
+	RELATED_WORK: 'Links',
+	LTI: 'LTI Tools'
+};
+
+const MIME_TYPES_MAP = {
+	[TYPES.ASSIGNMENTS]: [Assignment.MimeType, TimedAssignment.MimeType, DiscussionAssignment.MimeType],
+	[TYPES.RELATED_WORK]: [RelatedWorkReference.MimeType],
+	[TYPES.LTI]: [LTIExternalToolAsset.MimeType],
+	[TYPES.SURVEYS]: [SurveyReference.MimeType],
+	[TYPES.VIDEOS]: [...Video.MimeTypes],
+	[TYPES.VIDEO_ROLLS]: [VideoRoll.MimeType],
+	[TYPES.WEBINARS]: [WebinarAsset.MimeType]
+};
 
 export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 
@@ -12,25 +35,45 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		super();
 
 		this.set({
-			loading: true
+			loading: true,
+			defaultRequirables: Object.keys(MIME_TYPES_MAP).map(k => {
+				return {
+					label: k,
+					isDefault: false
+				};
+			})
 		});
 	}
 
-	async saveDefaultPolicy (assignmentsDefault) {
+	async saveDefaultPolicy (label, value) {
 		const service = await getService();
 
-		this.set({assignmentsDefault});
+		let defaultRequirables = [...(this.get('defaultRequirables') || [])];
 
-		let types = [];
-
-		if(assignmentsDefault) {
-			types = types.concat(ASSIGNMENT_MIME_TYPES);
+		for(let i in defaultRequirables) {
+			if(defaultRequirables[i].label === label) {
+				defaultRequirables[i].isDefault = value;
+			}
 		}
 
+		// this will emit the change so the widget updates immediately, but if there is an error, the widget will revert
+		this.set('defaultRequirables', defaultRequirables);
+
 		try {
+			let types = defaultRequirables.reduce((acc, a) => acc.concat(a.isDefault ? MIME_TYPES_MAP[a.label] : []), []);
+
 			const resp = await service.putParseResponse(this.course.CompletionPolicy.getLink('DefaultRequiredPolicy'), { 'mime_types': types });
 
-			this.set('assignmentsDefault', this.isAssignmentsDefault(resp));
+			let newDefaultRequirables = [];
+
+			for(let k of Object.keys(MIME_TYPES_MAP)) {
+				newDefaultRequirables.push({
+					label: k,
+					isDefault: this.isTypeDefault(resp, k)
+				});
+			}
+
+			this.set('defaultRequirables', newDefaultRequirables);
 		}
 		catch (e) {
 			this.set('error', e.message || e);
@@ -74,18 +117,18 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		}
 	}
 
-	isAssignmentsDefault (obj) {
-		let assignmentsDefault = true;
+	isTypeDefault (obj, type) {
+		let isDefault = true;
 
 		const mimeTypes = obj.mimeTypes || obj['mime_types'];
 
-		for(let type of ASSIGNMENT_MIME_TYPES) {
+		for(let t of MIME_TYPES_MAP[type]) {
 			if(type) {
-				assignmentsDefault = assignmentsDefault && mimeTypes.includes(type);
+				isDefault = isDefault && mimeTypes.includes(t);
 			}
 		}
 
-		return assignmentsDefault;
+		return isDefault;
 	}
 
 	async load (course, skipLoad) {
@@ -112,7 +155,16 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			if(this.course.CompletionPolicy.hasLink('DefaultRequiredPolicy')) {
 				const policy = await service.get(this.course.CompletionPolicy.getLink('DefaultRequiredPolicy'));
 
-				state.assignmentsDefault = this.isAssignmentsDefault(policy);
+				let defaultRequirables = [];
+
+				for(let k of Object.keys(MIME_TYPES_MAP)) {
+					defaultRequirables.push({
+						label: k,
+						isDefault: this.isTypeDefault(policy, k)
+					});
+				}
+
+				state.defaultRequirables = defaultRequirables;
 			}
 
 			state.completable = true;

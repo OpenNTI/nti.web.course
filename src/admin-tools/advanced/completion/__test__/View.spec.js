@@ -28,10 +28,16 @@ const onAfter = () => {
 const flushPromises = () => new Promise(resolve => setImmediate(resolve));
 
 /* eslint-env jest */
-describe('Course admin advanced completion test (with assignments)', () => {
+describe('Course admin advanced completion test (with requirables)', () => {
 	beforeEach(() => onBefore(['application/vnd.nextthought.assessment.assignment',
 		'application/vnd.nextthought.assessment.timedassignment',
-		'application/vnd.nextthought.assessment.discussionassignment']));
+		'application/vnd.nextthought.assessment.discussionassignment',
+		'application/vnd.nextthought.webinarasset',
+		'application/vnd.nextthought.ntivideo',
+		'application/vnd.nextthought.videoroll',
+		'application/vnd.nextthought.surveyref',
+		'application/vnd.nextthought.relatedworkref',
+		'application/vnd.nextthought.ltiexternaltoolasset']));
 	afterEach(onAfter);
 
 	test('renders completable, certificate, percentage, default required', async () => {
@@ -100,7 +106,7 @@ describe('Course admin advanced completion test (with assignments)', () => {
 	});
 });
 
-describe('Course admin advanced completion test (no assignments)', () => {
+describe('Course admin advanced completion test (no requirables)', () => {
 	beforeEach(() => onBefore([]));
 	afterEach(onAfter);
 

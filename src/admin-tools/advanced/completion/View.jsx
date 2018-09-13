@@ -24,7 +24,7 @@ export default
 	certificationPolicy: 'certificationPolicy',
 	percentage: 'percentage',
 	disabled: 'disabled',
-	assignmentsDefault: 'assignmentsDefault',
+	defaultRequirables: 'defaultRequirables',
 	error: 'error'
 })
 class CourseAdminCompletion extends React.Component {
@@ -36,7 +36,7 @@ class CourseAdminCompletion extends React.Component {
 		certificationPolicy: PropTypes.bool,
 		percentage: PropTypes.number,
 		disabled: PropTypes.bool,
-		assignmentsDefault: PropTypes.bool,
+		defaultRequirables: PropTypes.array,
 		error: PropTypes.string
 	}
 
@@ -106,29 +106,34 @@ class CourseAdminCompletion extends React.Component {
 		});
 	}
 
-	onAssignmentsDefaultChange = () => {
-		this.saveDefaultPolicy(!this.props.assignmentsDefault);
-	}
-
-	saveDefaultPolicy (assignmentsDefault) {
+	saveDefaultPolicy (label, value) {
 		const {store} = this.props;
 
-		store.saveDefaultPolicy(assignmentsDefault);
+		store.saveDefaultPolicy(label, value);
 	}
 
-	renderDefaultRequiredToggle (label, value, onChange, disabled) {
+	renderDefaultRequiredToggle = (defaultRequirable, disabled) => {
 		const className = cx('completion-control', {disabled});
+		const {label, isDefault} = defaultRequirable;
 
 		return (
-			<div className={className}>
+			<div className={className} key={label}>
 				<div className="label">{label}</div>
-				<div className="control"><Input.Toggle disabled={disabled} value={value} onChange={onChange}/></div>
+				<div className="control">
+					<Input.Toggle
+						disabled={disabled}
+						value={isDefault}
+						onChange={() => {
+							this.saveDefaultPolicy(label, !isDefault);
+						}}
+					/>
+				</div>
 			</div>
 		);
 	}
 
 	renderDefaultRequiredSection () {
-		const {completable, disabled: nonEditor} = this.props;
+		const {completable, defaultRequirables, disabled: nonEditor} = this.props;
 		const disabled = !completable || nonEditor;
 		const className = cx('default-required-container', {disabled});
 
@@ -136,7 +141,8 @@ class CourseAdminCompletion extends React.Component {
 			<div className={className}>
 				<div className="header">{t('defaultRequired')}</div>
 				<div className="items">
-					{this.renderDefaultRequiredToggle(t('assignments'), this.props.assignmentsDefault, this.onAssignmentsDefaultChange, disabled)}
+					{defaultRequirables.map((defaultRequirable) => this.renderDefaultRequiredToggle(defaultRequirable, disabled))}
+					{/* {this.renderDefaultRequiredToggle(t('assignments'), this.props.assignmentsDefault, this.onAssignmentsDefaultChange, disabled)} */}
 				</div>
 			</div>
 		);
