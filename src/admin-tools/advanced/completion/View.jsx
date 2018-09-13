@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Input, Loading} from '@nti/web-commons';
-import {getService} from '@nti/web-client';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 
@@ -142,7 +141,6 @@ class CourseAdminCompletion extends React.Component {
 				<div className="header">{t('defaultRequired')}</div>
 				<div className="items">
 					{defaultRequirables.map((defaultRequirable) => this.renderDefaultRequiredToggle(defaultRequirable, disabled))}
-					{/* {this.renderDefaultRequiredToggle(t('assignments'), this.props.assignmentsDefault, this.onAssignmentsDefaultChange, disabled)} */}
 				</div>
 			</div>
 		);
