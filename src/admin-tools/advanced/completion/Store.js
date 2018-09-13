@@ -61,18 +61,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		try {
 			let types = defaultRequirables.reduce((acc, a) => acc.concat(a.isDefault ? MIME_TYPES_MAP[a.label] : []), []);
 
-			const resp = await service.putParseResponse(this.course.CompletionPolicy.getLink('DefaultRequiredPolicy'), { 'mime_types': types });
-
-			let newDefaultRequirables = [];
-
-			for(let k of Object.keys(MIME_TYPES_MAP)) {
-				newDefaultRequirables.push({
-					label: k,
-					isDefault: this.isTypeDefault(resp, k)
-				});
-			}
-
-			this.set('defaultRequirables', newDefaultRequirables);
+			await service.putParseResponse(this.course.CompletionPolicy.getLink('DefaultRequiredPolicy'), { 'mime_types': types });
 		}
 		catch (e) {
 			this.set('error', e.message || e);
@@ -105,8 +94,6 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			}
 
 			await this.course.refresh();
-
-			this.load(this.course, true);
 		}
 		catch (e) {
 			this.set('error', e.message || e);
