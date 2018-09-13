@@ -45,8 +45,6 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 	}
 
 	async saveDefaultPolicy (label, value) {
-		const service = await getService();
-
 		let defaultRequirables = [...(this.get('defaultRequirables') || [])];
 
 		for(let i in defaultRequirables) {
