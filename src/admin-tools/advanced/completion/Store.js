@@ -61,7 +61,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		try {
 			let types = defaultRequirables.reduce((acc, a) => acc.concat(a.isDefault ? MIME_TYPES_MAP[a.label] : []), []);
 
-			await service.putParseResponse(this.course.CompletionPolicy.getLink('DefaultRequiredPolicy'), { 'mime_types': types });
+			await this.course.CompletionPolicy.putToLink('DefaultRequiredPolicy', { 'mime_types': types });
 		}
 		catch (e) {
 			this.set('error', e.message || e);
