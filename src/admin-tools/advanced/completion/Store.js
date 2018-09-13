@@ -4,7 +4,6 @@ import {Models} from '@nti/lib-interfaces';
 
 const {Assignment, TimedAssignment, DiscussionAssignment} = Models.assessment.assignment;
 const {WebinarAsset} = Models.integrations;
-const {Video} = Models.media;
 const {VideoRoll} = Models.courses.overview;
 const {SurveyReference} = Models.assessment.survey;
 const {RelatedWorkReference, LTIExternalToolAsset} = Models.content;
@@ -24,7 +23,7 @@ const MIME_TYPES_MAP = {
 	[TYPES.RELATED_WORK]: [RelatedWorkReference.MimeType],
 	[TYPES.LTI]: [LTIExternalToolAsset.MimeType],
 	[TYPES.SURVEYS]: [SurveyReference.MimeType],
-	[TYPES.VIDEOS]: [...Video.MimeTypes],
+	[TYPES.VIDEOS]: ['application/vnd.nextthought.ntivideo', 'application/vnd.nextthought.video'], // Can't spread Video.MimeTypes?
 	[TYPES.VIDEO_ROLLS]: [VideoRoll.MimeType],
 	[TYPES.WEBINARS]: [WebinarAsset.MimeType]
 };
