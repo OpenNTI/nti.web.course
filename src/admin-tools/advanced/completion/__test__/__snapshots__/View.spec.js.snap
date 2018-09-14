@@ -149,7 +149,7 @@ exports[`Course admin advanced completion test (no requirables) renders completa
             <div
               className="label"
             >
-              Links
+              External Links and Uploads
             </div>
             <div
               className="control"
@@ -189,6 +189,45 @@ exports[`Course admin advanced completion test (no requirables) renders completa
               className="label"
             >
               LTI Tools
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off"
+                  >
+                    <input
+                      checked={false}
+                      disabled={false}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="completion-control"
+          >
+            <div
+              className="label"
+            >
+              Readings
             </div>
             <div
               className="control"
@@ -267,45 +306,6 @@ exports[`Course admin advanced completion test (no requirables) renders completa
               className="label"
             >
               Videos
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Video Rolls
             </div>
             <div
               className="control"
@@ -559,7 +559,7 @@ exports[`Course admin advanced completion test (with requirables) renders comple
             <div
               className="label"
             >
-              Links
+              External Links and Uploads
             </div>
             <div
               className="control"
@@ -625,6 +625,45 @@ exports[`Course admin advanced completion test (with requirables) renders comple
                     />
                     <div
                       className="toggle-button on"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="completion-control"
+          >
+            <div
+              className="label"
+            >
+              Readings
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off"
+                  >
+                    <input
+                      checked={false}
+                      disabled={false}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
                     />
                   </div>
                 </div>
@@ -703,45 +742,6 @@ exports[`Course admin advanced completion test (with requirables) renders comple
                     />
                     <div
                       className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Video Rolls
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
                     />
                   </div>
                 </div>
@@ -969,7 +969,7 @@ exports[`Course admin advanced completion test (with requirables) renders comple
             <div
               className="label"
             >
-              Links
+              External Links and Uploads
             </div>
             <div
               className="control"
@@ -1035,6 +1035,45 @@ exports[`Course admin advanced completion test (with requirables) renders comple
                     />
                     <div
                       className="toggle-button on"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="completion-control"
+          >
+            <div
+              className="label"
+            >
+              Readings
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off"
+                  >
+                    <input
+                      checked={false}
+                      disabled={false}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
                     />
                   </div>
                 </div>
@@ -1113,45 +1152,6 @@ exports[`Course admin advanced completion test (with requirables) renders comple
                     />
                     <div
                       className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Video Rolls
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
                     />
                   </div>
                 </div>
@@ -1379,7 +1379,7 @@ exports[`Course admin advanced completion test (with requirables) renders not co
             <div
               className="label"
             >
-              Links
+              External Links and Uploads
             </div>
             <div
               className="control"
@@ -1419,6 +1419,45 @@ exports[`Course admin advanced completion test (with requirables) renders not co
               className="label"
             >
               LTI Tools
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off disabled"
+                  >
+                    <input
+                      checked={false}
+                      disabled={true}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="completion-control disabled"
+          >
+            <div
+              className="label"
+            >
+              Readings
             </div>
             <div
               className="control"
@@ -1497,45 +1536,6 @@ exports[`Course admin advanced completion test (with requirables) renders not co
               className="label"
             >
               Videos
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Video Rolls
             </div>
             <div
               className="control"

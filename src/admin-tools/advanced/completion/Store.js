@@ -6,7 +6,8 @@ const {Assignment, TimedAssignment, DiscussionAssignment} = Models.assessment.as
 const {WebinarAsset} = Models.integrations;
 const {VideoRoll} = Models.courses.overview;
 const {SurveyReference} = Models.assessment.survey;
-const {RelatedWorkReference, LTIExternalToolAsset} = Models.content;
+const {RelatedWorkReference, LTIExternalToolAsset, Package, RenderablePackage} = Models.content;
+const {Video} = Models.media;
 
 const TYPES = {
 	ASSIGNMENTS: 'Assignments',
@@ -14,17 +15,18 @@ const TYPES = {
 	VIDEOS: 'Videos',
 	VIDEO_ROLLS: 'Video Rolls',
 	SURVEYS: 'Surveys',
-	RELATED_WORK: 'Links',
-	LTI: 'LTI Tools'
+	RELATED_WORK: 'External Links and Uploads',
+	LTI: 'LTI Tools',
+	READINGS: 'Readings'
 };
 
 const MIME_TYPES_MAP = {
 	[TYPES.ASSIGNMENTS]: [Assignment.MimeType, TimedAssignment.MimeType, DiscussionAssignment.MimeType],
 	[TYPES.RELATED_WORK]: [RelatedWorkReference.MimeType],
 	[TYPES.LTI]: [LTIExternalToolAsset.MimeType],
+	[TYPES.READINGS]: ['application/vnd.nextthought.persistentcontentpackage', Package.MimeType, RenderablePackage.MimeType],
 	[TYPES.SURVEYS]: [SurveyReference.MimeType],
-	[TYPES.VIDEOS]: ['application/vnd.nextthought.ntivideo', 'application/vnd.nextthought.video'], // Can't spread Video.MimeTypes?
-	[TYPES.VIDEO_ROLLS]: [VideoRoll.MimeType],
+	[TYPES.VIDEOS]: [VideoRoll.MimeType, ...Video.MimeTypes],
 	[TYPES.WEBINARS]: [WebinarAsset.MimeType]
 };
 
