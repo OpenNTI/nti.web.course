@@ -17,7 +17,9 @@ const {Responsive} = Layouts;
 const t = scoped('course.card.type.Enrollment', {
 	starting: 'preview',
 	completed: 'completed',
-	confirmDrop: 'Dropping %(course)s will remove it from your library and you will no longer have access to the course materials.'
+	confirmDrop: 'Dropping %(course)s will remove it from your library and you will no longer have access to the course materials.',
+	unenrolled: 'You are no longer enrolled in %(course)s.',
+	done: 'Done'
 });
 
 @Registry.register('application/vnd.nextthought.courseware.courseinstanceenrollment')
@@ -53,6 +55,8 @@ export default class EnrollmentCard extends React.Component {
 					return enrollmentService.dropCourse(course.CatalogEntry.CourseNTIID);
 				}).then(() => {
 					onModification && onModification();
+
+					Prompt.alert(t('unenrolled', {course: course.CatalogEntry.title}), t('done'), {confirmButtonClass: 'ok-button', iconClass: 'done-icon'});
 				}).catch((err) => {
 					console.error(err); //eslint-disable-line
 					// timeout here because there is a 500 ms delay on the areYouSure dialog being dismissed
