@@ -49,7 +49,10 @@ class CourseAdminCompletion extends React.Component {
 
 
 	componentDidUpdate (prevProps) {
-		if(prevProps.percentage !== this.props.percentage) {
+		if(this.props.course.getID() !== prevProps.course.getID()) {
+			this.props.store.load(this.props.course);
+		}
+		else if(prevProps.percentage !== this.props.percentage) {
 			this.setState({
 				percentage: this.props.percentage
 			});
