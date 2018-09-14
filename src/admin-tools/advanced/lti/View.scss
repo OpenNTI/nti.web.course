@@ -1,9 +1,9 @@
 @import '~@nti/style-common';
 
 .lti-tools-config {
-	max-width: 700px;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	padding: 1rem;
 
 	.lti-tools-config-headerBar {
 		display: flex;
