@@ -10,11 +10,12 @@ const t = scoped('course.navigation.tabs', {
 	scorm: 'Content',
 	assignments: 'Assignments',
 	discussions: 'Discussions',
-	info: 'Course Info'
+	info: 'Course Info',
+	videos: 'Videos'
 });
 
 
-const DEFAULT_ORDER = ['activity', 'lessons', 'scorm', 'assignments', 'discussions', 'info'];
+const DEFAULT_ORDER = ['activity', 'lessons', 'scorm', 'assignments', 'discussions', 'info', 'videos'];
 const TABS = {
 	'activity': {
 		shouldShow: course => course.hasOutline() && !course.CatalogEntry.Preview
@@ -34,6 +35,9 @@ const TABS = {
 		shouldShow: course => course.hasDiscussions()
 	},
 	'info': {
+		shouldShow: () => true
+	},
+	'videos': {
 		shouldShow: () => true
 	}
 };
