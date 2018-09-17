@@ -29,7 +29,8 @@ class CourseTabs extends React.Component {
 		),
 		exclude: PropTypes.arrayOf(
 			PropTypes.string
-		)
+		),
+		expandTabs: PropTypes.bool
 	}
 
 	static contextTypes = {
@@ -69,7 +70,7 @@ class CourseTabs extends React.Component {
 	}
 
 	render () {
-		const {tabs, exclude} = this.props;
+		const {tabs, exclude, expandTabs} = this.props;
 
 		if (!tabs) { return null; }
 
@@ -79,8 +80,9 @@ class CourseTabs extends React.Component {
 			visibleTabs = visibleTabs.filter(tab => exclude.indexOf(tab.id) === -1);
 		}
 
+
 		return (
-			<Navigation.Tabs>
+			<Navigation.Tabs expandTabs={expandTabs}>
 				{visibleTabs.map(tab => this.renderTab(tab))}
 			</Navigation.Tabs>
 		);
