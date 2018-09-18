@@ -5,7 +5,7 @@ import {Models} from '@nti/lib-interfaces';
 const {Assignment, TimedAssignment, DiscussionAssignment} = Models.assessment.assignment;
 const {WebinarAsset} = Models.integrations;
 const {VideoRoll} = Models.courses.overview;
-const {SurveyReference} = Models.assessment.survey;
+const {SurveyReference, Survey} = Models.assessment.survey;
 const {RelatedWorkReference, LTIExternalToolAsset, Package, RenderablePackage} = Models.content;
 const {Video} = Models.media;
 
@@ -25,7 +25,7 @@ const MIME_TYPES_MAP = {
 	[TYPES.RELATED_WORK]: [RelatedWorkReference.MimeType],
 	[TYPES.LTI]: [LTIExternalToolAsset.MimeType],
 	[TYPES.READINGS]: ['application/vnd.nextthought.persistentcontentpackage', Package.MimeType, RenderablePackage.MimeType],
-	[TYPES.SURVEYS]: [SurveyReference.MimeType],
+	[TYPES.SURVEYS]: [SurveyReference.MimeType, Survey.MimeType],
 	[TYPES.VIDEOS]: [VideoRoll.MimeType, ...Video.MimeTypes],
 	[TYPES.WEBINARS]: [WebinarAsset.MimeType]
 };

@@ -36,6 +36,7 @@ describe('Course admin advanced completion test (with requirables)', () => {
 		'application/vnd.nextthought.ntivideo',
 		'application/vnd.nextthought.videoroll',
 		'application/vnd.nextthought.surveyref',
+		'application/vnd.nextthought.nasurvey',
 		'application/vnd.nextthought.relatedworkref',
 		'application/vnd.nextthought.ltiexternaltoolasset']));
 	afterEach(onAfter);
