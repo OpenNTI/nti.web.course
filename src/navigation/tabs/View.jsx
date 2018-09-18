@@ -11,6 +11,11 @@ function isSameRoute (a, b) {
 	return trim(a) === trim(b);
 }
 
+function isRouteActive (route, activeRoute) {
+	return isSameRoute(route, activeRoute) || activeRoute.indexOf(route) === 0;
+}
+
+
 export default
 @Store.connect(['tabs'])
 class CourseTabs extends React.Component {
@@ -24,7 +29,9 @@ class CourseTabs extends React.Component {
 			PropTypes.shape({
 				label: PropTypes.string,
 				id: PropTypes.string,
-				hide: PropTypes.bool
+				hide: PropTypes.bool,
+				isRootRoute: PropTypes.bool,
+				subRoutes: PropTypes.arrayOf(PropTypes.string)
 			})
 		),
 		exclude: PropTypes.arrayOf(
@@ -90,14 +97,15 @@ class CourseTabs extends React.Component {
 
 	renderTab (tab) {
 		const {baseRoute, activeRoute} = this;
-		const {id, label, isRootRoute} = tab;
+		const {id, label, subRoutes, isRootRoute} = tab;
 		const tabRoot = this.getRouteForTab(id);
 
-		const isActive = isSameRoute(activeRoute, tabRoot) || activeRoute.indexOf(tabRoot) === 0 || (isRootRoute && isSameRoute(activeRoute, baseRoute));
+		const isActive = isRouteActive(tabRoot, activeRoute) || (isRootRoute && isSameRoute(activeRoute, baseRoute));
+		const isSubActive = (subRoutes || []).filter(subRoute => isRouteActive(this.getRouteForTab(subRoute), activeRoute)).length > 0;
 
 		let route = null;
 
-		if (isActive) {
+		if (isActive || isSubActive) {
 			RouteCache.set(tabRoot, activeRoute);
 			route = tabRoot;
 		} else {
@@ -109,7 +117,7 @@ class CourseTabs extends React.Component {
 				key={id}
 				route={route}
 				label={label}
-				active={isActive}
+				active={isActive || isSubActive}
 			/>
 		);
 	}

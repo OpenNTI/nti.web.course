@@ -22,6 +22,7 @@ const TABS = {
 	},
 	'lessons': {
 		shouldShow: course => course.hasOutline(),
+		subRoutes: ['content'],
 		isRootRoute: true
 	},
 	'scorm': {
@@ -49,10 +50,13 @@ function formatTabs (course, overrides = {}) {
 	return order
 		.filter(key => TABS[key] && TABS[key].shouldShow(course))
 		.map((key) => {
+			const tab = TABS[key];
+
 			return {
 				id: key,
 				label: labels[key] != null ? labels[key] : t(key),
-				isRootRoute: TABS[key] && TABS[key].isRootRoute
+				isRootRoute: tab && tab.isRootRoute,
+				subRoutes: tab && tab.subRoutes
 			};
 		});
 }
