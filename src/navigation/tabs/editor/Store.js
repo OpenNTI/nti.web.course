@@ -1,7 +1,7 @@
 import {Stores} from '@nti/lib-store';
 import {wait} from '@nti/lib-commons';
 
-import {getDefaultTabLabel, TABS, DEFAULT_ORDER} from '../Constants';
+import {getDefaultTabLabel, TABS, DEFAULT_ORDER, triggerUpdate} from '../Constants';
 
 const MIN_SAVING_TIME = 300;
 
@@ -124,6 +124,8 @@ export default class TabNameStore extends Stores.BoundStore {
 			const overrides = await course.putToLink('UpdateCourseTabPreferences', data);
 			const newTabs = formatTabs(course, overrides);
 			const duration = (new Date()) - started;
+
+			triggerUpdate(course);
 
 			await wait(Math.max(0, MIN_SAVING_TIME - duration));
 

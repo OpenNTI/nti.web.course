@@ -1,6 +1,12 @@
 import {Stores} from '@nti/lib-store';
 
-import {getDefaultTabLabel, TABS, DEFAULT_ORDER} from './Constants';
+import {
+	getDefaultTabLabel,
+	TABS,
+	DEFAULT_ORDER,
+	addUpdateListener,
+	removeUpdateListener
+} from './Constants';
 
 
 function shouldShowTab (key, course) {
@@ -29,6 +35,17 @@ function formatTabs (course, overrides = {}) {
 }
 
 export default class CourseTabStore extends Stores.BoundStore {
+	constructor () {
+		super();
+
+		addUpdateListener(this.onTabUpdate);
+	}
+
+
+	cleanup () {
+		removeUpdateListener(this.onTabUpdate);
+	}
+
 	async load () {
 		if (!this.binding) { return; }
 
@@ -45,5 +62,10 @@ export default class CourseTabStore extends Stores.BoundStore {
 				tabs: formatTabs(course)
 			});
 		}
+	}
+
+
+	onTabUpdate = () => {
+		this.load();
 	}
 }

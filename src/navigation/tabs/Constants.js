@@ -1,4 +1,7 @@
+import EventEmitter from 'events';
+
 import {scoped} from '@nti/lib-locale';
+
 const t = scoped('course.navigation.tabs', {
 	activity: 'Activity',
 	lessons: 'Lessons',
@@ -41,3 +44,17 @@ export const TABS = {
 };
 
 export const DEFAULT_ORDER = ['activity', 'lessons', 'scorm', 'assignments', 'discussions', 'info', 'videos'];
+
+const UPDATE_BUS = new EventEmitter();
+
+export const triggerUpdate = (course) => {
+	UPDATE_BUS.emit('course-tabs-updated', course);
+};
+
+export const addUpdateListener = (fn) => {
+	UPDATE_BUS.addListener('course-tabs-updated', fn);
+};
+
+export const removeUpdateListener = (fn) => {
+	UPDATE_BUS.removeListener('course-tabs-updated', fn);
+};
