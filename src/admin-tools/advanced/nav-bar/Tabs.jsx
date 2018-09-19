@@ -13,6 +13,7 @@ const t = scoped('web-course.admin-tools.advanced.nav-bar.Tabs', DEFAULT_TEXT);
 
 export default function CourseAdminAdvancedTabs ({ course }) {
 	const hasLTI = course.hasLink('lti-configured-tools');
+	const canEditTabs = course.hasLink('UpdateCourseTabPreferences');
 
 	return (
 		<ul className="course-admin-advanced-tabs">
@@ -24,9 +25,11 @@ export default function CourseAdminAdvancedTabs ({ course }) {
 					<LinkTo.Path to="./lti" activeClassName="active">{t('lti')}</LinkTo.Path>
 				</li>
 			)}
-			<li>
-				<LinkTo.Path to="./tab-names" activeClassName="active">{t('tabNames')}</LinkTo.Path>
-			</li>
+			{ canEditTabs && (
+				<li>
+					<LinkTo.Path to="./tab-names" activeClassName="active">{t('tabNames')}</LinkTo.Path>
+				</li>
+			)}
 		</ul>
 	);
 }
