@@ -1,0 +1,60 @@
+@import '~@nti/style-common';
+
+.nti-course-tab-editor {
+	position: relative;
+	padding: 2rem;
+
+	.saving-container {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(255, 255, 255, 0.9);
+		z-index: 1;
+	}
+
+	.loading-error {
+		text-align: center;
+		color: $primary-red;
+	}
+
+	.saving-error {
+		color: $primary-red;
+		margin-bottom: 1rem;
+		font: normal 400 0.875rem/1.3 $body-font-family;
+	}
+
+	.title {
+		font: normal 600 1.25rem/1.3 $body-font-family;
+		color: $primary-grey;
+		margin-bottom: 0.5rem;
+	}
+
+	.description {
+		font: normal 400 0.875rem/1.3 $body-font-family;
+		color: $secondary-grey;
+		margin-bottom: 1rem;
+	}
+
+	ul {
+		list-style: none;
+		margin: 2rem 0;
+		padding: 0;
+		box-shadow: 0 -1px 0 0 $border-grey-light;
+
+		li {
+			margin-top: 0;
+			margin-bottom: 0;
+		}
+	}
+
+	.controls {
+		@include clearfix();
+
+		.save, .cancel {
+			float: right;
+			margin-left: 0.5rem;
+		}
+	}
+}

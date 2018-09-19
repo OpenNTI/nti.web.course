@@ -6,12 +6,14 @@ import PropTypes from 'prop-types';
 const DEFAULT_TEXT = {
 	completion: 'Completion',
 	lti: 'LTI Tools',
+	tabNames: 'Tab Names'
 };
 
 const t = scoped('web-course.admin-tools.advanced.nav-bar.Tabs', DEFAULT_TEXT);
 
 export default function CourseAdminAdvancedTabs ({ course }) {
 	const hasLTI = course.hasLink('lti-configured-tools');
+
 	return (
 		<ul className="course-admin-advanced-tabs">
 			<li>
@@ -22,6 +24,9 @@ export default function CourseAdminAdvancedTabs ({ course }) {
 					<LinkTo.Path to="./lti" activeClassName="active">{t('lti')}</LinkTo.Path>
 				</li>
 			)}
+			<li>
+				<LinkTo.Path to="./tab-names" activeClassName="active">{t('tabNames')}</LinkTo.Path>
+			</li>
 		</ul>
 	);
 }

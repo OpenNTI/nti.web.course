@@ -1,2 +1,2 @@
 export CourseNavMenu from './CourseNavMenu';
-export Tabs from './tabs';
+export {View as Tabs, Editor as TabsEditor} from './tabs';
