@@ -86,7 +86,7 @@ class PagedBatchStore extends Stores.BoundStore {
 		const searchTerm = this.searchTerm;
 
 		try {
-			const batch = await this.loadBatch(href, options);
+			const batch = href ? await this.loadBatch(href, options) : { Items: [] };
 
 			if(this.searchTerm !== searchTerm) {
 				return;
