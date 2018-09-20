@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course Navigation Tabs Editor Tab snapshot 1`] = `
+<div
+  className="nti-course-navigation-tabs-editor-tab"
+>
+  <div
+    className="input-container"
+  >
+    <input
+      className="nti-text-input"
+      onChange={[Function]}
+      placeholder="Activity"
+      type="text"
+      value="Stream"
+    />
+    <div
+      className="error-container"
+    >
+      
+    </div>
+  </div>
+  <div
+    className="description"
+  >
+    This tab displays a summary of social activity and content arranged on a convenient week-by-week timeline.
+  </div>
+</div>
+`;
