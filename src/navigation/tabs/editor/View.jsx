@@ -23,9 +23,10 @@ export default
 	'saving',
 	'savingError',
 	'canEdit',
+	'hasChanged',
+	'valid',
 	'tabs',
 	'updateTabLabel',
-	'hasChanged',
 	'cancelChanges',
 	'saveChanges'
 ])
@@ -43,6 +44,7 @@ class CourseNavigationTabsEditor extends React.Component {
 		hasChanged: PropTypes.bool,
 		saving: PropTypes.bool,
 		savingError: PropTypes.any,
+		valid: PropTypes.bool,
 		tabs: PropTypes.arrayOf(
 			PropTypes.shape({
 				id: PropTypes.string,
@@ -109,7 +111,7 @@ class CourseNavigationTabsEditor extends React.Component {
 
 
 	renderTabs () {
-		const {tabs, canEdit, hasChanged, savingError} = this.props;
+		const {tabs, canEdit, valid, hasChanged, savingError} = this.props;
 
 		if (!tabs) { return null; }
 
@@ -135,7 +137,7 @@ class CourseNavigationTabsEditor extends React.Component {
 				</ul>
 				{canEdit && (
 					<div className="controls">
-						<Button className="save" rounded onClick={this.onSave} disabled={!hasChanged}>{t('save')}</Button>
+						<Button className="save" rounded onClick={this.onSave} disabled={!hasChanged || !valid}>{t('save')}</Button>
 						{hasChanged && (<Button className="cancel" secondary rounded onClick={this.onCancel}>{t('cancel')}</Button>)}
 					</div>
 				)}

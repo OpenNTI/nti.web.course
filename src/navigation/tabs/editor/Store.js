@@ -3,6 +3,8 @@ import {wait} from '@nti/lib-commons';
 
 import {getDefaultTabLabel, TABS, DEFAULT_ORDER, triggerUpdate} from '../Constants';
 
+import {isValidTab} from './utils';
+
 const MIN_SAVING_TIME = 300;
 
 function formatTabs (course, overrides = {}) {
@@ -47,6 +49,23 @@ export default class TabNameStore extends Stores.BoundStore {
 		return false;
 	}
 
+
+	get valid () {
+		const tabs = this.get('tabs');
+
+		if (!tabs) { return true; }
+
+		debugger;
+
+		for (let tab of tabs) {
+			if (!isValidTab(tab)) { debugger; return false; }
+		}
+
+		debugger;
+		return true;
+	}
+
+
 	async load () {
 		if (!this.binding) { return; }
 
@@ -85,7 +104,7 @@ export default class TabNameStore extends Stores.BoundStore {
 		const newTabs = tabs.map(tab => {
 			if (tab.id !== id) { return tab; }
 
-			return {...tab, label};
+			return {...tab,	label};
 		});
 
 		this.setImmediate({
@@ -101,7 +120,7 @@ export default class TabNameStore extends Stores.BoundStore {
 
 
 	async saveChanges () {
-		if (!this.binding) { return; }
+		if (!this.binding || !this.valid) { return; }
 
 		const course = this.binding;
 		const tabs = this.get('tabs');
@@ -117,7 +136,6 @@ export default class TabNameStore extends Stores.BoundStore {
 				if (tab.label !== tab.default) {
 					acc.names[tab.id] = tab.label;
 				}
-
 				return acc;
 			}, {names: {}, order: []});
 
