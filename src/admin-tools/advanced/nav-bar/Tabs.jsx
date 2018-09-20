@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 const DEFAULT_TEXT = {
 	completion: 'Completion',
 	lti: 'LTI Tools',
-	tabNames: 'Tab Names'
+	tabNames: 'Navigation'
 };
 
 const t = scoped('web-course.admin-tools.advanced.nav-bar.Tabs', DEFAULT_TEXT);
