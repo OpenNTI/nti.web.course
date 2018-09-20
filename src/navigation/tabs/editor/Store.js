@@ -55,13 +55,10 @@ export default class TabNameStore extends Stores.BoundStore {
 
 		if (!tabs) { return true; }
 
-		debugger;
-
 		for (let tab of tabs) {
-			if (!isValidTab(tab)) { debugger; return false; }
+			if (!isValidTab(tab)) { return false; }
 		}
 
-		debugger;
 		return true;
 	}
 
