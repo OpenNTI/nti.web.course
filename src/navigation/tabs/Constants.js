@@ -20,7 +20,7 @@ export const TABS = {
 		doNotShowInPreview: true
 	},
 	'lessons': {
-		hasAccess: course => course.hasOutline(),
+		hasAccess: course => course.hasOutline() && !course.isScormInstance,
 		subRoutes: ['content'],
 		isRootRoute: true
 	},
