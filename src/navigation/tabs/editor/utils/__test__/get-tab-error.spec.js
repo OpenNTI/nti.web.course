@@ -15,7 +15,7 @@ describe('getTabError', () => {
 			if (tab.id === 'tooLong') {
 				expect(getTabError(tab)).toEqual('Must be less than 20 characters');
 			} else if (tab.id === 'blank') {
-				expect(getTabError(tab)).toEqual('Cannot be blank')
+				expect(getTabError(tab)).toEqual('Cannot be blank');
 			}
 		}
 	});
