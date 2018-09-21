@@ -13,7 +13,9 @@ describe('getTabError', () => {
 	test('returns error if label is longer than 20 characters', () => {
 		for (let tab of INVALID_TABS) {
 			if (tab.id === 'tooLong') {
-				expect(getTabError(tab)).toEqual('Must be less than 20 characters.');
+				expect(getTabError(tab)).toEqual('Must be less than 20 characters');
+			} else if (tab.id === 'blank') {
+				expect(getTabError(tab)).toEqual('Cannot be blank')
 			}
 		}
 	});
