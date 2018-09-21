@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
+import DropCourseButton from '../../enrollment/DropCourseButton';
 
 const t = scoped('course.components.card.parts.CourseSettingsMenu', {
 	edit: 'Edit Course Information',
 	export: 'Export',
 	delete: 'Delete Course',
-	drop: 'Drop Course',
 	registered: 'You\'re Registered'
 });
 
@@ -17,9 +17,9 @@ export default class CourseMenu extends React.Component {
 		doEdit: PropTypes.func,
 		doExport: PropTypes.func,
 		doDelete: PropTypes.func,
-		doDrop: PropTypes.func,
 		doRequestSupport: PropTypes.func,
-		registered: PropTypes.bool
+		registered: PropTypes.bool,
+		admin: PropTypes.bool
 	}
 
 	renderRegisteredIcon () {
@@ -58,13 +58,7 @@ export default class CourseMenu extends React.Component {
 		}
 	}
 
-	renderDrop () {
-		const { doDrop } = this.props;
 
-		if(doDrop) {
-			return (<div onClick={doDrop} className="option delete-course"><span className="label">{t('drop')}</span></div>);
-		}
-	}
 
 	renderDelete () {
 		const { doDelete } = this.props;
@@ -90,6 +84,8 @@ export default class CourseMenu extends React.Component {
 	}
 
 	render () {
+		const { course, admin } = this.props;
+
 		return (
 			<div className="course-settings-menu-flyout">
 				{this.renderOptionsHeader()}
@@ -97,7 +93,9 @@ export default class CourseMenu extends React.Component {
 				{this.renderExport()}
 				{this.renderSupportLink()}
 				{this.renderDelete()}
-				{this.renderDrop()}
+				{!admin &&
+					<DropCourseButton course={course} />
+				}
 			</div>
 		);
 	}
