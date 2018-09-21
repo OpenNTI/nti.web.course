@@ -2,10 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
-import { getService } from '@nti/web-client';
-import {DateTime, Prompt, Flyout, Layouts} from '@nti/web-commons';
+import {DateTime, Flyout, Layouts} from '@nti/web-commons';
 
-import Store from '../../enrollment/options/Store';
 import {getSemesterBadge} from '../../utils/Semester';
 import Card from '../parts/Card';
 import Badge from '../parts/Badge';
@@ -17,18 +15,10 @@ const {Responsive} = Layouts;
 
 const t = scoped('course.card.type.Enrollment', {
 	starting: 'preview',
-	completed: 'completed',
-	confirmDrop: 'Dropping %(course)s will remove it from your library and you will no longer have access to the course materials.',
-	unenrolled: 'You are no longer enrolled in %(course)s.',
-	done: 'Done'
+	completed: 'completed'
 });
 
-const propMap = {
-	options: 'options'
-};
-
 @Registry.register('application/vnd.nextthought.courseware.courseinstanceenrollment')
-@Store.connect(propMap)
 export default class EnrollmentCard extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -41,16 +31,6 @@ export default class EnrollmentCard extends React.Component {
 
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
 
-	componentDidMount () {
-		this.setupFor(this.props);
-	}
-
-	setupFor (props) {
-		const {course, store} = props;
-
-		store.load(course.CatalogEntry);
-	}
-
 	doRequestSupport = (e) => {
 		e.stopPropagation();
 		e.preventDefault();
@@ -58,46 +38,11 @@ export default class EnrollmentCard extends React.Component {
 		global.location.href = 'mailto:support@nextthought.com?subject=Support%20Request';
 	}
 
-	async getEnrollmentService () {
-		const service = await getService();
-		return service.getEnrollment();
-	}
-
-	doDrop = (e) => {
-		const { course, onModification } = this.props;
-
-		e.stopPropagation();
-		e.preventDefault();
-
-		Prompt.areYouSure(t('confirmDrop', {course: course.CatalogEntry.title})).then(() => {
-			this.setState( { loading: true }, () => {
-				this.getEnrollmentService().then((enrollmentService) => {
-					return enrollmentService.dropCourse(course.CatalogEntry.CourseNTIID);
-				}).then(() => {
-					onModification && onModification();
-
-					Prompt.alert(t('unenrolled', {course: course.CatalogEntry.title}), t('done'), {confirmButtonClass: 'ok-button', iconClass: 'done-icon'});
-				}).catch((err) => {
-					console.error(err); //eslint-disable-line
-					// timeout here because there is a 500 ms delay on the areYouSure dialog being dismissed
-					// so if the dropping fails too fast, we risk automatically dismissing this alert dialog
-					// when the areYouSure dialog is dismissed
-					setTimeout(() => {
-						Prompt.alert('Error dropping this course');
-					}, 505);
-				});
-			});
-		});
-	}
-
 	renderOptionsButton () {
 		return (<div className="nti-course-card-badge black settings"><i className="icon-settings"/></div>);
 	}
 
 	renderOptions () {
-		const { options } = this.props;
-		const enrolledOption = options && options.find(x => x.isEnrolled());
-		const drop = (enrolledOption && enrolledOption.getDropButtonLabel()) ? this.doDrop : null;
 
 		return (
 			<Flyout.Triggered
@@ -106,7 +51,7 @@ export default class EnrollmentCard extends React.Component {
 				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
 				ref={this.attachOptionsFlyoutRef}
 			>
-				<CourseMenu course={this.props.course} doRequestSupport={this.doRequestSupport} doDrop={drop} registered />
+				<CourseMenu course={this.props.course} doRequestSupport={this.doRequestSupport} registered />
 			</Flyout.Triggered>
 		);
 	}

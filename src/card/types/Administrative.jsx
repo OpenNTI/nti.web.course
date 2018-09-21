@@ -93,7 +93,7 @@ export default class Administrative extends React.Component {
 				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
 				ref={this.attachOptionsFlyoutRef}
 			>
-				<CourseMenu course={this.props.course} doEdit={this.doEdit} doExport={this.doExport} doDelete={this.deleteCourse} doRequestSupport={this.doRequestSupport} registered />
+				<CourseMenu course={this.props.course} doEdit={this.doEdit} doExport={this.doExport} doDelete={this.deleteCourse} doRequestSupport={this.doRequestSupport} registered admin />
 			</Flyout.Triggered>
 		);
 	}
