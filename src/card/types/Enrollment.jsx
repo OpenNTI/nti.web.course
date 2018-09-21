@@ -22,11 +22,7 @@ const t = scoped('course.card.type.Enrollment', {
 export default class EnrollmentCard extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
-		onModification: PropTypes.func,
-		store: PropTypes.shape({
-			load: PropTypes.func
-		}),
-		options: PropTypes.array
+		onModification: PropTypes.func
 	}
 
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
