@@ -5,6 +5,7 @@ import {LinkTo} from '@nti/web-routing';
 import { getService } from '@nti/web-client';
 import {DateTime, Prompt, Flyout, Layouts} from '@nti/web-commons';
 
+import Store from '../../enrollment/options/Store';
 import {getSemesterBadge} from '../../utils/Semester';
 import Card from '../parts/Card';
 import Badge from '../parts/Badge';
@@ -22,14 +23,33 @@ const t = scoped('course.card.type.Enrollment', {
 	done: 'Done'
 });
 
+const propMap = {
+	options: 'options'
+};
+
 @Registry.register('application/vnd.nextthought.courseware.courseinstanceenrollment')
+@Store.connect(propMap)
 export default class EnrollmentCard extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
-		onModification: PropTypes.func
+		onModification: PropTypes.func,
+		store: PropTypes.shape({
+			load: PropTypes.func
+		}),
+		options: PropTypes.array
 	}
 
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
+
+	componentDidMount () {
+		this.setupFor(this.props);
+	}
+
+	setupFor (props) {
+		const {course, store} = props;
+
+		store.load(course.CatalogEntry);
+	}
 
 	doRequestSupport = (e) => {
 		e.stopPropagation();
@@ -75,6 +95,10 @@ export default class EnrollmentCard extends React.Component {
 	}
 
 	renderOptions () {
+		const { options } = this.props;
+		const enrolledOption = options && options.find(x => x.isEnrolled());
+		const drop = (enrolledOption && enrolledOption.getDropButtonLabel()) ? this.doDrop : null;
+
 		return (
 			<Flyout.Triggered
 				className="admin-course-options"
@@ -82,7 +106,7 @@ export default class EnrollmentCard extends React.Component {
 				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
 				ref={this.attachOptionsFlyoutRef}
 			>
-				<CourseMenu course={this.props.course} doRequestSupport={this.doRequestSupport} doDrop={this.doDrop} registered />
+				<CourseMenu course={this.props.course} doRequestSupport={this.doRequestSupport} doDrop={drop} registered />
 			</Flyout.Triggered>
 		);
 	}
