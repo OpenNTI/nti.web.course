@@ -41,9 +41,10 @@ export default class LessonOverviewVideoListItem extends React.Component {
 		try {
 			const v = item.sources != null ? item : (await course.getVideoIndex()).get(item.getID());
 			const thumb = await v.getThumbnail();
+			const poster = await v.getPoster();
 			const duration = await v.getDuration();
 
-			this.setState({thumb, duration});
+			this.setState({thumb: thumb || poster, duration});
 		} catch (e) {
 			//Its alright if it fails. Nothing to do here
 		}
