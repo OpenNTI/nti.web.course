@@ -39,7 +39,8 @@ export const TABS = {
 	},
 	'videos': {
 		hasAccess: () => true,
-		notEditable: true
+		notEditable: true,
+		doNotShowInPreview: true
 	}
 };
 
