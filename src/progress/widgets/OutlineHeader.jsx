@@ -65,17 +65,22 @@ class OutlineHeader extends React.Component {
 	}
 
 	async loadAdminProgress (course) {
-		const courseProgress = await course.fetchLink('ProgressStats');
+		try {
+			const courseProgress = await course.fetchLink('ProgressStats');
 
-		const studentsFinished = courseProgress.CountCompleted || 0;
+			const studentsFinished = courseProgress.CountCompleted || 0;
 
-		const subLabel = studentsFinished === 1 ? '1 Student Finished' : studentsFinished + ' Students Finished';
+			const subLabel = studentsFinished === 1 ? '1 Student Finished' : studentsFinished + ' Students Finished';
 
-		this.setState({
-			...this.getStateValues(courseProgress),
-			subLabel,
-			type: ADMIN
-		});
+			this.setState({
+				...this.getStateValues(courseProgress),
+				subLabel,
+				type: ADMIN
+			});
+		}
+		catch (e) {
+			// course no longer exists?
+		}
 	}
 
 	isStudent (course) {
