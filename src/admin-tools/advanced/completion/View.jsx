@@ -23,6 +23,7 @@ export default
 	certificationPolicy: 'certificationPolicy',
 	percentage: 'percentage',
 	disabled: 'disabled',
+	defaultRequiredDisabled: 'defaultRequiredDisabled',
 	defaultRequirables: 'defaultRequirables',
 	error: 'error'
 })
@@ -35,6 +36,7 @@ class CourseAdminCompletion extends React.Component {
 		certificationPolicy: PropTypes.bool,
 		percentage: PropTypes.number,
 		disabled: PropTypes.bool,
+		defaultRequiredDisabled: PropTypes.bool,
 		defaultRequirables: PropTypes.array,
 		error: PropTypes.string
 	}
@@ -135,8 +137,8 @@ class CourseAdminCompletion extends React.Component {
 	}
 
 	renderDefaultRequiredSection () {
-		const {completable, defaultRequirables, disabled: nonEditor} = this.props;
-		const disabled = !completable || nonEditor;
+		const {completable, defaultRequirables, disabled: nonEditor, defaultRequiredDisabled} = this.props;
+		const disabled = !completable || nonEditor || defaultRequiredDisabled;
 		const className = cx('default-required-container', {disabled});
 
 		return (

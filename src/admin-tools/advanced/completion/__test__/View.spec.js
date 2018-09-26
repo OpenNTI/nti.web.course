@@ -108,6 +108,30 @@ describe('Course admin advanced completion test (with requirables)', () => {
 
 		expect(tree).toMatchSnapshot();
 	});
+
+	test('renders completable, no certificate, no percentage, default required disabled', async () => {
+		const course = {
+			CatalogEntry: {
+				hasLink: () => true
+			},
+			CompletionPolicy: {
+				hasLink: (l) => l !== 'UpdateDefaultRequiredPolicy',
+				getLink: () => 'mockLink',
+				offersCompletionCertificate: false,
+			},
+			getID: () => 'testCourse'
+		};
+
+		const cmp = renderer.create(<View course={course}/>);
+
+		jest.runAllTimers();
+		await flushPromises();
+		jest.runAllTimers();
+
+		const tree = cmp.toJSON();
+
+		expect(tree).toMatchSnapshot();
+	});
 });
 
 describe('Course admin advanced completion test (no requirables)', () => {

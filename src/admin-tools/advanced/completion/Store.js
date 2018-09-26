@@ -9,6 +9,11 @@ const {SurveyReference, Survey} = Models.assessment.survey;
 const {RelatedWorkReference, LTIExternalToolAsset, Package, RenderablePackage} = Models.content;
 const {Video} = Models.media;
 
+const DEFAULT_REQUIRED_POLICY_LINKS = {
+	FETCH: 'GetDefaultRequiredPolicy',
+	UPDATE: 'UpdateDefaultRequiredPolicy'
+};
+
 const TYPES = {
 	ASSIGNMENTS: 'Assignments',
 	WEBINARS: 'Webinars',
@@ -61,7 +66,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		try {
 			let types = defaultRequirables.reduce((acc, a) => acc.concat(a.isDefault ? MIME_TYPES_MAP[a.label] : []), []);
 
-			await this.course.CompletionPolicy.putToLink('DefaultRequiredPolicy', { 'mime_types': types });
+			await this.course.CompletionPolicy.putToLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATE, { 'mime_types': types });
 		}
 		catch (e) {
 			this.set('error', e.message || e);
@@ -134,12 +139,13 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			completable: false,
 			certificationPolicy: false,
 			percentage: 0.0,
-			disabled: !CatalogEntry || !CatalogEntry.hasLink('edit')
+			disabled: !CatalogEntry || !CatalogEntry.hasLink('edit'),
+			defaultRequiredDisabled: false
 		};
 
 		if(this.course.CompletionPolicy) {
-			if(this.course.CompletionPolicy.hasLink('DefaultRequiredPolicy')) {
-				const policy = await service.get(this.course.CompletionPolicy.getLink('DefaultRequiredPolicy'));
+			if(this.course.CompletionPolicy.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.FETCH)) {
+				const policy = await service.get(this.course.CompletionPolicy.getLink(DEFAULT_REQUIRED_POLICY_LINKS.FETCH));
 
 				let defaultRequirables = [];
 
@@ -151,6 +157,10 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 				}
 
 				state.defaultRequirables = defaultRequirables;
+			}
+
+			if(!this.course.CompletionPolicy.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATE)) {
+				state.defaultRequiredDisabled = true;
 			}
 
 			state.completable = true;
