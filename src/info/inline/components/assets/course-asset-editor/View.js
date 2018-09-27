@@ -144,6 +144,8 @@ export default class CourseAssetEditor extends React.Component {
 			try {
 				const resp = await Upload(catalogEntry, images, onProgress);
 
+				await catalogEntry.refresh(JSON.parse(resp));
+
 				this.setState({
 					uploaded: resp
 				});
