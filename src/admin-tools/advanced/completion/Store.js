@@ -99,6 +99,8 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			}
 
 			await this.course.refresh();
+
+			this.load(this.course, true);
 		}
 		catch (e) {
 			this.set('error', e.message || e);
@@ -166,6 +168,19 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			state.completable = true;
 			state.certificationPolicy = Boolean(this.course.CompletionPolicy.offersCompletionCertificate);
 			state.percentage = (this.course.CompletionPolicy.percentage || 0) * 100;
+		}
+		else {
+			// no completion policy, no default requirables either
+			let defaultRequirables = [];
+
+			for(let k of Object.keys(MIME_TYPES_MAP)) {
+				defaultRequirables.push({
+					label: k,
+					isDefault: false
+				});
+			}
+
+			state.defaultRequirables = defaultRequirables;
 		}
 
 		state.loading = false;
