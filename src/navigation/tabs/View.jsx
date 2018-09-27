@@ -37,7 +37,8 @@ class CourseTabs extends React.Component {
 		exclude: PropTypes.arrayOf(
 			PropTypes.string
 		),
-		expandTabs: PropTypes.bool
+		expandTabs: PropTypes.bool,
+		shadowRoots: PropTypes.object
 	}
 
 	static contextTypes = {
@@ -71,7 +72,12 @@ class CourseTabs extends React.Component {
 			return '';
 		}
 
-		const {course} = this.props;
+		const {course, shadowRoots} = this.props;
+		const {activeRoute} = this;
+
+		const shadowRoot = shadowRoots && shadowRoots[tabID];
+
+		if (shadowRoot && !isSameRoute(shadowRoot, activeRoute)) { return shadowRoot; }
 
 		return this.router.getRouteFor(course, tabID);
 	}
