@@ -72,15 +72,21 @@ class CourseTabs extends React.Component {
 			return '';
 		}
 
-		const {course, shadowRoots} = this.props;
+		const {course} = this.props;
+
+		return this.router.getRouteFor(course, tabID);
+	}
+
+
+	getShadowRootForTab (tabID) {
+		const {shadowRoots} = this.props;
 		const {activeRoute} = this;
 
 		const shadowRoot = shadowRoots && shadowRoots[tabID];
 
-		if (shadowRoot && !isSameRoute(shadowRoot, activeRoute)) { return shadowRoot; }
-
-		return this.router.getRouteFor(course, tabID);
+		return shadowRoot && !isSameRoute(shadowRoot, activeRoute) ? shadowRoot : null;
 	}
+
 
 	render () {
 		const {tabs, exclude, expandTabs} = this.props;
@@ -105,6 +111,8 @@ class CourseTabs extends React.Component {
 		const {baseRoute, activeRoute} = this;
 		const {id, label, subRoutes, isRootRoute} = tab;
 		const tabRoot = this.getRouteForTab(id);
+		const shadowRoot = this.getShadowRootForTab(id);
+		const practicalRoot = shadowRoot || tabRoot;
 
 		const isActive = isRouteActive(tabRoot, activeRoute) || (isRootRoute && isSameRoute(activeRoute, baseRoute));
 		const isSubActive = (subRoutes || []).filter(subRoute => isRouteActive(this.getRouteForTab(subRoute), activeRoute)).length > 0;
@@ -113,7 +121,7 @@ class CourseTabs extends React.Component {
 
 		if (isActive || isSubActive) {
 			RouteCache.set(tabRoot, activeRoute);
-			route = tabRoot;
+			route = practicalRoot;
 		} else {
 			route = RouteCache.get(tabRoot);
 		}
