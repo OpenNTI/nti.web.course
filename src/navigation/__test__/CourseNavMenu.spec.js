@@ -77,7 +77,9 @@ describe('CourseNavMenu test', () => {
 				recentCourses={recentCourses}
 				onItemClick={onItemClick}
 				goToEditor={goToEditor}
-				isAdministrator/>
+				isAdministrator
+				isEditor
+			/>
 		);
 
 		verifyContents(cmp);
