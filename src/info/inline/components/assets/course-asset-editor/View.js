@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Prompt, Switch, Loading, Presentation} from '@nti/web-commons';
+import { dispatch } from '@nti/lib-dispatcher';
 
 import BaseAssetPicker from './BaseAssetPicker';
 import AssetCropping from './AssetCropping';
@@ -145,6 +146,8 @@ export default class CourseAssetEditor extends React.Component {
 				const resp = await Upload(catalogEntry, images, onProgress);
 
 				await catalogEntry.refresh(JSON.parse(resp));
+
+				dispatch('COURSE_ASSET_UPLOAD', { id: catalogEntry.CourseNTIID });
 
 				this.setState({
 					uploaded: resp
