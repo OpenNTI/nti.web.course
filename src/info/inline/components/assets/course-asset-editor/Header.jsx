@@ -38,7 +38,7 @@ export default class CourseAssetEditorHeader extends React.Component {
 			<div className="course-asset-editor-header">
 				{onBack && (<i className={cx('icon-chevronup-25', {disabled: backDisabled})} onClick={this.onBack} />)}
 				<div className="meta">
-					{subTitle && (<span className="sub-title">{subTitle}</span>)}
+					{subTitle && (<span className={cx('sub-title', {disabled: backDisabled, 'sub-back': onBack})} onClick={onBack && this.onBack}>{subTitle}</span>)}
 					{title && (<span className="title">{title}</span>)}
 				</div>
 				{onCancel && (<i className={cx('icon-light-x', {disabled: cancelDisabled})} onClick={this.onCancel} />)}

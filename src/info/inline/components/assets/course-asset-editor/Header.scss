@@ -12,14 +12,13 @@
 
 	i.disabled {
 		opacity: 0.5;
-		pointer-events: none
+		pointer-events: none;
 	}
 
 	i.icon-chevronup-25 {
 		color: $tertiary-grey;
 		transform: rotate(-90deg);
 		font-size: 2rem;
-
 	}
 
 	.meta {
@@ -31,6 +30,10 @@
 			display: block;
 			color: $tertiary-grey;
 			font: normal 300 0.875rem/1.5 $body-font-family;
+		}
+
+		.sub-back {
+			cursor: pointer;
 		}
 
 		.title {
