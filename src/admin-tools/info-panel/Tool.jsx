@@ -18,7 +18,7 @@ const Tool = ({ title, bundle, subtitle, icon, link }) => (
 Tool.propTypes = {
 	title: PropTypes.string.isRequired,
 	subtitle: PropTypes.string.isRequired,
-	icon: PropTypes.oneOf([PropTypes.string, PropTypes.element]),
+	icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
 	link: PropTypes.string.isRequired,
 	bundle: PropTypes.object.isRequired
 };
