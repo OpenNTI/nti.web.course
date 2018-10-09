@@ -170,8 +170,8 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		const late = dueDate && completedDate >= dueDate;
 		const qtip = t('completed.submittedAt', {date: formatDate(completedDate, 'h:mm A M/D/YYYY')});
 
-		const overtime = maxTime && duration && duration > maxTime ? t('completed.overTimeTip', {time: getNaturalDuration(duration - maxTime, 1)}) : null;
-		const overdue = late ? t('completed.overDueTip', {time: getNaturalDuration(completedDate.getTime() - dueDate.getTime())}) : null;
+		const overtime = !isNoSubmit && maxTime && duration && duration > maxTime ? t('completed.overTimeTip', {time: getNaturalDuration(duration - maxTime, 1)}) : null;
+		const overdue = late && !isNoSubmit ? t('completed.overDueTip', {time: getNaturalDuration(completedDate.getTime() - dueDate.getTime())}) : null;
 
 		return (
 			<span className={cx('completed', {late, ontime: !late})}>
