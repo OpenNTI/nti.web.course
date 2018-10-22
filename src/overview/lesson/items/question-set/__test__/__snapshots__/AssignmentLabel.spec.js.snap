@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course overview assignment label test Completable, optional, editable 1`] = `
+<ul
+  className="nti-separated-inline-list lesson-overview-assignment-status"
+>
+  <li>
+    <div
+      className="require-control-value flyout-closed"
+      onClick={[Function]}
+    >
+      <span>
+        Optional
+      </span>
+      <i
+        className="icon-chevron-down"
+      />
+    </div>
+  </li>
+  <li>
+    <span
+      className="due late"
+    >
+      Due Monday, October 30 12:00 AM CDT
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Course overview assignment label test Completable, required, not editable 1`] = `
+<ul
+  className="nti-separated-inline-list lesson-overview-assignment-status"
+>
+  <li>
+    <div
+      className="lesson-overview-item-required-label"
+    >
+      Required
+    </div>
+  </li>
+  <li>
+    <span
+      className="due late"
+    >
+      Due Monday, October 30 12:00 AM CDT
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Course overview assignment label test Completed but late 1`] = `
+<ul
+  className="nti-separated-inline-list lesson-overview-assignment-status"
+>
+  <li>
+    <span
+      className="completed late"
+    >
+      <span
+        className="status-label"
+        data-qtip="Submitted At 12:00 AM 10/25/2017"
+      >
+        graded 
+      </span>
+      <time
+        className="date"
+        dateTime="2017-10-25T00:00:00-05:00"
+      >
+        Wednesday, October 25
+      </time>
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Course overview assignment label test Completed on time 1`] = `
+<ul
+  className="nti-separated-inline-list lesson-overview-assignment-status"
+>
+  <li>
+    <span
+      className="completed ontime"
+    >
+      <span
+        className="status-label"
+        data-qtip="Submitted At 12:00 AM 10/25/2017"
+      >
+        graded 
+      </span>
+      <time
+        className="date"
+        dateTime="2017-10-25T00:00:00-05:00"
+      >
+        Wednesday, October 25
+      </time>
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Course overview assignment label test Draft 1`] = `
+<ul
+  className="nti-separated-inline-list lesson-overview-assignment-status"
+>
+  <li>
+    <span
+      className="draft"
+    >
+      Draft
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Course overview assignment label test Not completed, but excused 1`] = `
+<ul
+  className="nti-separated-inline-list lesson-overview-assignment-status"
+>
+  <li>
+    <span
+      className="due late"
+    >
+      Due Monday, October 30 12:00 AM CDT
+    </span>
+  </li>
+  <li>
+    <span
+      className="excused"
+      data-qtip="This assignment will NOT count towards your grade"
+    >
+      Excused Grade
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Course overview assignment label test Not completed, overdue 1`] = `
+<ul
+  className="nti-separated-inline-list lesson-overview-assignment-status"
+>
+  <li>
+    <span
+      className="due late"
+    >
+      Due Monday, October 30 12:00 AM CDT
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Course overview assignment label test Not completed, overdue, but is no submit assignment 1`] = `
+<ul
+  className="nti-separated-inline-list lesson-overview-assignment-status"
+>
+  <li>
+    <span
+      className="due"
+    >
+      Due Monday, October 30 12:00 AM CDT
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`Course overview assignment label test With duration 1`] = `
+<ul
+  className="nti-separated-inline-list lesson-overview-assignment-status"
+>
+  <li>
+    <span
+      className="duration overtime"
+    >
+      16 Minutes, 40 Seconds
+    </span>
+  </li>
+  <li>
+    <span
+      className="due"
+    >
+      Available Now
+    </span>
+  </li>
+</ul>
+`;
