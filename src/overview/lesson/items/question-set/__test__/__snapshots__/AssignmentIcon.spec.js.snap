@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course overview assignment icon test Completed on time 1`] = `
+<div
+  className="lesson-overview-assignment-icon on-time"
+/>
+`;
+
+exports[`Course overview assignment icon test Completed, late 1`] = `
+<div
+  className="lesson-overview-assignment-icon late"
+/>
+`;
+
+exports[`Course overview assignment icon test Non submit 1`] = `
+<div
+  className="lesson-overview-assignment-icon no-submit"
+/>
+`;

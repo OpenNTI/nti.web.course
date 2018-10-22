@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course overview assignment title test Title only 1`] = `
+<span
+  className="lesson-overview-assignment-title"
+>
+  <span
+    className="title"
+  >
+    My Assignment
+  </span>
+</span>
+`;
+
+exports[`Course overview assignment title test Title with totalPoints 1`] = `
+<span
+  className="lesson-overview-assignment-title"
+>
+  <span
+    className="title"
+  >
+    My Assignment
+  </span>
+  <span
+    className="points"
+  >
+    5pts.
+  </span>
+</span>
+`;
