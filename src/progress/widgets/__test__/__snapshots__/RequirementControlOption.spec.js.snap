@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Progress widgets requirement control option test Not selected 1`] = `
+<div
+  className="require-control-option"
+  onClick={[Function]}
+>
+  Option 1
+</div>
+`;
+
+exports[`Progress widgets requirement control option test Selected 1`] = `
+<div
+  className="require-control-option"
+  onClick={[Function]}
+>
+  <i
+    className="icon-check"
+  />
+  Option 1
+</div>
+`;

@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Progress widgets requirement control test Default (optional) 1`] = `
+<div
+  className="require-control-value flyout-closed"
+  onClick={[Function]}
+>
+  <span>
+    Default (Optional)
+  </span>
+  <i
+    className="icon-chevron-down"
+  />
+</div>
+`;
+
+exports[`Progress widgets requirement control test Default (required) 1`] = `
+<div
+  className="require-control-value flyout-closed"
+  onClick={[Function]}
+>
+  <span>
+    Default (Required)
+  </span>
+  <i
+    className="icon-chevron-down"
+  />
+</div>
+`;
+
+exports[`Progress widgets requirement control test Optional 1`] = `
+<div
+  className="require-control-value flyout-closed"
+  onClick={[Function]}
+>
+  <span>
+    Optional
+  </span>
+  <i
+    className="icon-chevron-down"
+  />
+</div>
+`;
+
+exports[`Progress widgets requirement control test Required 1`] = `
+<div
+  className="require-control-value flyout-closed"
+  onClick={[Function]}
+>
+  <span>
+    Required
+  </span>
+  <i
+    className="icon-chevron-down"
+  />
+</div>
+`;

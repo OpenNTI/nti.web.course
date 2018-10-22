@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Progress widgets user grade card test With grade 1`] = `
+<div
+  className="user-grade-card"
+>
+  <div
+    className="avatar-container"
+  >
+    <div
+      className="grade-container"
+    >
+      <div
+        className="grade"
+      >
+        76
+      </div>
+    </div>
+  </div>
+  <div
+    className="user-name"
+  />
+  <div
+    className="sub-info"
+  >
+    testuser
+  </div>
+</div>
+`;
+
+exports[`Progress widgets user grade card test Without grade 1`] = `
+<div
+  className="user-grade-card"
+>
+  <div
+    className="avatar-container"
+  >
+    <div
+      className="grade-container"
+    >
+      <div
+        className="grade"
+      >
+        -
+      </div>
+    </div>
+  </div>
+  <div
+    className="user-name"
+  />
+  <div
+    className="sub-info"
+  >
+    testuser
+  </div>
+</div>
+`;
