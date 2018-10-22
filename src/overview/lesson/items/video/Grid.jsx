@@ -152,17 +152,10 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	}
 
 
-	onTouchMove = () => {
-		this.setState({playing: false});
-		this.updateCompletedState();
-	}
-
-
 	render () {
 		const {
 			activeIndex,
 			index,
-			touching,
 			onRequirementChange,
 			item,
 		} = this.props;
@@ -180,9 +173,11 @@ export default class LessonOverviewVideoGrid extends React.Component {
 
 		const style = poster && { backgroundImage: 'url(' + poster + ')' };
 
-		let renderVideoFully = !touching;
+
+		let renderVideoFully = true;
+
 		if (activeIndex != null) {
-			renderVideoFully = (!touching && activeIndex === index);
+			renderVideoFully = activeIndex === index;
 		}
 
 
@@ -196,7 +191,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const label = item.title || item.label;
 
 		return (
-			<div className="lesson-overview-video-container" onTouchMove={this.onTouchMove} data-ntiid={item.NTIID}>
+			<div className="lesson-overview-video-container" data-ntiid={item.NTIID}>
 				{error && (
 					<ErrorWidget error={{ message: 'Unable to load video.' }}/>
 				)}
