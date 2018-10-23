@@ -52,7 +52,8 @@ describe('Course enrollment store option test', () => {
 		// purchasable case, need to call load to setup purchasable
 		enrollment = new Option(optionWithPurchasables, null, basicCatalogEntry);
 		await enrollment.load();
-		expect(enrollment.getEnrollButtonLabel()).toEqual('Buy for $500');
+		expect(enrollment.getEnrollButtonLabel().indexOf('Buy for ')).toEqual(0);
+		expect(enrollment.getEnrollButtonLabel().indexOf('500') > 0).toBe(true);
 	});
 
 	test('Test getDropButtonLabel', () => {
