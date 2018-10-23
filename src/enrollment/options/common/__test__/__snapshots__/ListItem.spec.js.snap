@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course enrollment options common list item  Selected with no price, enrolled 1`] = `
+<div
+  className="nti-course-enrollment-option-list-item selected"
+  onClick={[Function]}
+>
+  <div
+    className="title"
+  >
+    my item
+  </div>
+  <div
+    className="meta"
+  >
+    <div
+      className="price"
+    >
+      Free
+    </div>
+    <div
+      className="separator"
+    >
+      -
+    </div>
+    <div
+      className="enrolled"
+    >
+      Currently Enrolled In
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course enrollment options common list item  Selected with price 1`] = `
+<div
+  className="nti-course-enrollment-option-list-item selected"
+  onClick={[Function]}
+>
+  <div
+    className="title"
+  >
+    my item
+  </div>
+  <div
+    className="meta"
+  >
+    <div
+      className="price"
+    >
+      50
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course enrollment options common list item  Title only 1`] = `
+<div
+  className="nti-course-enrollment-option-list-item"
+  onClick={[Function]}
+>
+  <div
+    className="title"
+  >
+    my item
+  </div>
+  <div
+    className="meta"
+  >
+    <div
+      className="price"
+    >
+      Free
+    </div>
+  </div>
+</div>
+`;

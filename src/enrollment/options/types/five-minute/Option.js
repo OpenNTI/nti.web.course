@@ -15,7 +15,7 @@ const t = scoped('course.enrollment.types.five-minute', {
 		description: {
 			'archived': 'Thanks for your participation! The content of this course will remain available for you to review at any time.',
 			'notArchived-startDate': 'Class begins %(fullStartDate)s and will be conducted fully online.',
-			'notAcrhived-noStartDate': 'Class will be conducted fully online.'
+			'notArchived-noStartDate': 'Class will be conducted fully online.'
 		},
 		dropLabel: '',
 		openLabel: 'Open',

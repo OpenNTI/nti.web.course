@@ -138,7 +138,7 @@ export default class BaseEnrollment {
 
 	getOpenButtonLabel () {
 		if (!this.getString) {
-			return `!! Missing Open Button label for ${this.opeion.Class}!!`;
+			return `!! Missing Open Button label for ${this.option.Class} !!`;
 		}
 
 		//TODO: Check the option for the open button label

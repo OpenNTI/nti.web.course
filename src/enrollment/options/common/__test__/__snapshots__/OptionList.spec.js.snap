@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course enrollment options common option list  Two items, second selected 1`] = `
+<ul
+  className="nti-course-enrollment-option-list selected"
+>
+  <li
+    className=""
+  >
+    <div>
+      <div>
+        Option 
+        1
+      </div>
+    </div>
+  </li>
+  <li
+    className="selected"
+  >
+    <div>
+      <div>
+        Option 
+        2
+      </div>
+      <div>
+        Selected
+      </div>
+    </div>
+  </li>
+</ul>
+`;

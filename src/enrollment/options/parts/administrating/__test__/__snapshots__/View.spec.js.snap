@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course enrollment administering view Test with access 1`] = `
+<div
+  className="nti-course-enrollment-options-administrating"
+>
+  <div
+    className="nti-course-enrollment-padded-container nti-course-enrollment-title"
+  >
+    Administrating
+  </div>
+  <div
+    className="nti-course-enrollment-padded-container nti-course-enrollment-description description"
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "You are administering this course. Class begins October 22nd, 12:00 AM CDT and will be conducted fully online.",
+      }
+    }
+  />
+  <div
+    className="nti-link-to-path"
+    to="#"
+  >
+    <div
+      className="nti-course-enrollment-option-button"
+    >
+      Open
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course enrollment administering view Test with no access 1`] = `
+<div
+  className="nti-course-enrollment-options-administrating"
+>
+  <div
+    className="nti-course-enrollment-padded-container nti-course-enrollment-title"
+  >
+    Administrating
+  </div>
+  <div
+    className="nti-course-enrollment-padded-container nti-course-enrollment-description description"
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "You are administering this course. Class begins October 22nd, 12:00 AM CDT and will be conducted fully online.",
+      }
+    }
+  />
+</div>
+`;

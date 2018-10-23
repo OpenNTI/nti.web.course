@@ -1,0 +1,149 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course enrollment enrolled view No options 1`] = `
+<div
+  className="nti-course-enrollment-options-enrolled"
+/>
+`;
+
+exports[`Course enrollment enrolled view One option, enrolled, upgrade available 1`] = `
+<div
+  className="nti-course-enrollment-options-enrolled"
+>
+  <div
+    className="nti-course-enrollment-options-enrolled-current"
+  >
+    <div
+      className="nti-course-enrollment-padded-container title"
+    >
+      <i
+        className="icon-check"
+      />
+      <span>
+        Enrolled
+      </span>
+    </div>
+    <div
+      className="contents"
+    >
+      <div
+        className="nti-course-enrollment-padded-container nti-course-enrollment-title"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Archived",
+          }
+        }
+      />
+      <div
+        className="nti-course-enrollment-option-base-enrolled-description"
+      >
+        <div
+          className="nti-course-enrollment-padded-container nti-course-enrollment-description"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "The course ended on October 31st, 12:00 AM CDT. The content of this course will remain available for you to review at any time.",
+            }
+          }
+        />
+      </div>
+    </div>
+    <div
+      className="nti-link-to-path course-enrollment-options-base-type-drop-button"
+      to="#"
+    >
+      <div
+        className="nti-course-enrollment-padded-container course-enrollment-options-action-item"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Remove",
+          }
+        }
+      />
+    </div>
+    <div
+      className="nti-link-to-path"
+      to="#"
+    >
+      <div
+        className="nti-course-enrollment-option-button"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Open",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course enrollment enrolled view Two options, second enrolled 1`] = `
+<div
+  className="nti-course-enrollment-options-enrolled"
+>
+  <div
+    className="nti-course-enrollment-options-enrolled-current"
+  >
+    <div
+      className="nti-course-enrollment-padded-container title"
+    >
+      <i
+        className="icon-check"
+      />
+      <span>
+        Enrolled
+      </span>
+    </div>
+    <div
+      className="contents"
+    >
+      <div
+        className="nti-course-enrollment-padded-container nti-course-enrollment-title"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Archived",
+          }
+        }
+      />
+      <div
+        className="nti-course-enrollment-option-base-enrolled-description"
+      >
+        <div
+          className="nti-course-enrollment-padded-container nti-course-enrollment-description"
+          dangerouslySetInnerHTML={
+            Object {
+              "__html": "The course ended on October 31st, 12:00 AM CDT. The content of this course will remain available for you to review at any time.",
+            }
+          }
+        />
+      </div>
+    </div>
+    <div
+      className="nti-link-to-path course-enrollment-options-base-type-drop-button"
+      to="#"
+    >
+      <div
+        className="nti-course-enrollment-padded-container course-enrollment-options-action-item"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Remove",
+          }
+        }
+      />
+    </div>
+    <div
+      className="nti-link-to-path"
+      to="#"
+    >
+      <div
+        className="nti-course-enrollment-option-button"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "Open",
+          }
+        }
+      />
+    </div>
+  </div>
+</div>
+`;
