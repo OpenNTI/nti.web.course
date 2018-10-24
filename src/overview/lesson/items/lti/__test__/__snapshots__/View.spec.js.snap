@@ -1,0 +1,434 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course overview LTI item test Grid item with 5 comments, completable, required 1`] = `
+<div
+  className="lesson-overview-padded-container"
+>
+  <div
+    className="nti-link-to-path"
+    to="#"
+  >
+    <div
+      className="content-link related-work-ref external"
+      target="_blank"
+    >
+      <div
+        className="file-type icon fallback www"
+        style={Object {}}
+      >
+        <div
+          className="external"
+        />
+      </div>
+      <h5
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "LTI item 1",
+          }
+        }
+      />
+      <div
+        className="label"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "By Ref Creator",
+          }
+        }
+      />
+      <div
+        className="description"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "this is a test LTI overview item",
+          }
+        }
+      />
+      <ul
+        className="nti-separated-inline-list extra-labels"
+      >
+        <li>
+          <div
+            className="lesson-overview-item-required-label"
+          >
+            Required
+          </div>
+        </li>
+        <li>
+          <div
+            className="nti-link-to-path comment-count"
+            to="#"
+          >
+            5 Comments
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course overview LTI item test Grid item with no comments, completable, not required 1`] = `
+<div
+  className="lesson-overview-padded-container"
+>
+  <div
+    className="nti-link-to-path"
+    to="#"
+  >
+    <div
+      className="content-link related-work-ref external"
+      target="_blank"
+    >
+      <div
+        className="file-type icon fallback www"
+        style={Object {}}
+      >
+        <div
+          className="external"
+        />
+      </div>
+      <h5
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "LTI item 1",
+          }
+        }
+      />
+      <div
+        className="label"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "By Ref Creator",
+          }
+        }
+      />
+      <div
+        className="description"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "this is a test LTI overview item",
+          }
+        }
+      />
+      <ul
+        className="nti-separated-inline-list extra-labels"
+      >
+        <li>
+          <div
+            className="nti-link-to-path comment-count"
+            to="#"
+          >
+            View Comments
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course overview LTI item test Grid item with no comments, completable, requirement editable 1`] = `
+<div
+  className="lesson-overview-padded-container"
+>
+  <div
+    className="nti-link-to-path"
+    to="#"
+  >
+    <div
+      className="content-link related-work-ref external"
+      target="_blank"
+    >
+      <div
+        className="file-type icon fallback www"
+        style={Object {}}
+      >
+        <div
+          className="external"
+        />
+      </div>
+      <h5
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "LTI item 1",
+          }
+        }
+      />
+      <div
+        className="label"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "By Ref Creator",
+          }
+        }
+      />
+      <div
+        className="description"
+        dangerouslySetInnerHTML={
+          Object {
+            "__html": "this is a test LTI overview item",
+          }
+        }
+      />
+      <ul
+        className="nti-separated-inline-list extra-labels"
+      >
+        <li>
+          <div
+            className="require-control-value flyout-closed"
+            onClick={[Function]}
+          >
+            <span>
+              Optional
+            </span>
+            <i
+              className="icon-chevron-down"
+            />
+          </div>
+        </li>
+        <li>
+          <div
+            className="nti-link-to-path comment-count"
+            to="#"
+          >
+            View Comments
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course overview LTI item test List item with 5 comments, completable, required 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
+>
+  <div
+    className="lesson-overview-base-list-item-table-row"
+  >
+    <div
+      className="lesson-overview-base-list-item-table-info-cell"
+    >
+      <div
+        className="nti-link-to-path lesson-overview-base-list-item-link"
+        to="#"
+      >
+        <div
+          className="lesson-overview-base-list-item"
+        >
+          <div
+            className="icon-container"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="file-type icon fallback www lesson-overview-base-list-item-icon"
+                style={Object {}}
+              >
+                <div
+                  className="external"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="right"
+          >
+            <div
+              className="title plain"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "LTI item 1",
+                }
+              }
+            />
+            <div
+              className="labels"
+            >
+              <ul
+                className="nti-separated-inline-list"
+              >
+                <li>
+                  <div
+                    className="lesson-overview-item-required-label"
+                  >
+                    Required
+                  </div>
+                </li>
+                <li>
+                  By Ref Creator
+                </li>
+                <li>
+                  <div
+                    className="nti-link-to-path comment-count"
+                    to="#"
+                  >
+                    5 Comments
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course overview LTI item test List item with no comments, completable, not required 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
+>
+  <div
+    className="lesson-overview-base-list-item-table-row"
+  >
+    <div
+      className="lesson-overview-base-list-item-table-info-cell"
+    >
+      <div
+        className="nti-link-to-path lesson-overview-base-list-item-link"
+        to="#"
+      >
+        <div
+          className="lesson-overview-base-list-item"
+        >
+          <div
+            className="icon-container"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="file-type icon fallback www lesson-overview-base-list-item-icon"
+                style={Object {}}
+              >
+                <div
+                  className="external"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="right"
+          >
+            <div
+              className="title plain"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "LTI item 1",
+                }
+              }
+            />
+            <div
+              className="labels"
+            >
+              <ul
+                className="nti-separated-inline-list"
+              >
+                <li>
+                  By Ref Creator
+                </li>
+                <li>
+                  <div
+                    className="nti-link-to-path comment-count"
+                    to="#"
+                  >
+                    View Comments
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course overview LTI item test List item with no comments, completable, requirement editable 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
+>
+  <div
+    className="lesson-overview-base-list-item-table-row"
+  >
+    <div
+      className="lesson-overview-base-list-item-table-info-cell"
+    >
+      <div
+        className="nti-link-to-path lesson-overview-base-list-item-link"
+        to="#"
+      >
+        <div
+          className="lesson-overview-base-list-item"
+        >
+          <div
+            className="icon-container"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="file-type icon fallback www lesson-overview-base-list-item-icon"
+                style={Object {}}
+              >
+                <div
+                  className="external"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            className="right"
+          >
+            <div
+              className="title plain"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "LTI item 1",
+                }
+              }
+            />
+            <div
+              className="labels"
+            >
+              <ul
+                className="nti-separated-inline-list"
+              >
+                <li>
+                  <div
+                    className="require-control-value flyout-closed"
+                    onClick={[Function]}
+                  >
+                    <span>
+                      Optional
+                    </span>
+                    <i
+                      className="icon-chevron-down"
+                    />
+                  </div>
+                </li>
+                <li>
+                  By Ref Creator
+                </li>
+                <li>
+                  <div
+                    className="nti-link-to-path comment-count"
+                    to="#"
+                  >
+                    View Comments
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

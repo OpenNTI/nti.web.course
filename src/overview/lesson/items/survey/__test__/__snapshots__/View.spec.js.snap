@@ -1,0 +1,815 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Course overview survey item test Grid item closed 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
+>
+  <div
+    className="container status-closed"
+  >
+    <div
+      className="nti-link-to-path"
+      to="#"
+    >
+      <div
+        className="target"
+      >
+        <div
+          className="icon-container"
+        >
+          <div
+            className="icon"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+                large={true}
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="info-container"
+        >
+          <div
+            className="title-container"
+          >
+            <span
+              className="title"
+            >
+              Survey item 1
+            </span>
+          </div>
+          <div
+            className="labels-container"
+          >
+            <ul
+              className="nti-separated-inline-list lesson-overview-survey-label"
+            >
+              <li>
+                <span
+                  className="question-count"
+                >
+                  0 Questions
+                </span>
+              </li>
+              <li>
+                <span
+                  className="submissions"
+                >
+                  0 Submissions
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          className="button-container"
+        >
+          <a
+            className="nti-button primary rounded"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            role="button"
+            tabIndex="0"
+          >
+            Closed
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      className="editor-container"
+    />
+  </div>
+</div>
+`;
+
+exports[`Course overview survey item test Grid item submitted 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
+>
+  <div
+    className="container status-closed"
+  >
+    <div
+      className="nti-link-to-path"
+      to="#"
+    >
+      <div
+        className="target"
+      >
+        <div
+          className="icon-container"
+        >
+          <div
+            className="icon"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+                large={true}
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="info-container"
+        >
+          <div
+            className="title-container"
+          >
+            <span
+              className="title"
+            >
+              Survey item 1
+            </span>
+          </div>
+          <div
+            className="labels-container"
+          >
+            <ul
+              className="nti-separated-inline-list lesson-overview-survey-label"
+            >
+              <li>
+                <span
+                  className="question-count"
+                >
+                  0 Questions
+                </span>
+              </li>
+              <li>
+                <span
+                  className="submissions"
+                >
+                  0 Submissions
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          className="button-container"
+        >
+          <a
+            className="nti-button primary rounded"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            role="button"
+            tabIndex="0"
+          >
+            Review
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      className="editor-container"
+    />
+  </div>
+</div>
+`;
+
+exports[`Course overview survey item test Grid item with 3 questions, 4 submissions 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
+>
+  <div
+    className="container status-closed"
+  >
+    <div
+      className="nti-link-to-path"
+      to="#"
+    >
+      <div
+        className="target"
+      >
+        <div
+          className="icon-container"
+        >
+          <div
+            className="icon"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+                large={true}
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="info-container"
+        >
+          <div
+            className="title-container"
+          >
+            <span
+              className="title"
+            >
+              Survey item 1
+            </span>
+          </div>
+          <div
+            className="labels-container"
+          >
+            <ul
+              className="nti-separated-inline-list lesson-overview-survey-label"
+            >
+              <li>
+                <span
+                  className="question-count"
+                >
+                  3 Questions
+                </span>
+              </li>
+              <li>
+                <span
+                  className="submissions"
+                >
+                  4 Submissions
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          className="button-container"
+        >
+          <a
+            className="nti-button primary rounded"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            role="button"
+            tabIndex="0"
+          >
+            Take
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      className="editor-container"
+    />
+  </div>
+</div>
+`;
+
+exports[`Course overview survey item test Grid item with 5 comments, completable, required, no questions or submissions 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
+>
+  <div
+    className="container status-closed"
+  >
+    <div
+      className="nti-link-to-path"
+      to="#"
+    >
+      <div
+        className="target"
+      >
+        <div
+          className="icon-container"
+        >
+          <div
+            className="icon"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+                large={true}
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="info-container"
+        >
+          <div
+            className="title-container"
+          >
+            <span
+              className="title"
+            >
+              Survey item 1
+            </span>
+          </div>
+          <div
+            className="labels-container"
+          >
+            <ul
+              className="nti-separated-inline-list lesson-overview-survey-label"
+            >
+              <li>
+                <div
+                  className="lesson-overview-item-required-label"
+                >
+                  Required
+                </div>
+              </li>
+              <li>
+                <span
+                  className="question-count"
+                >
+                  0 Questions
+                </span>
+              </li>
+              <li>
+                <span
+                  className="submissions"
+                >
+                  0 Submissions
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          className="button-container"
+        >
+          <a
+            className="nti-button primary rounded"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            role="button"
+            tabIndex="0"
+          >
+            Take
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      className="editor-container"
+    />
+  </div>
+</div>
+`;
+
+exports[`Course overview survey item test Grid item with 5 comments, completable, requirement editable 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
+>
+  <div
+    className="container status-closed"
+  >
+    <div
+      className="nti-link-to-path"
+      to="#"
+    >
+      <div
+        className="target"
+      >
+        <div
+          className="icon-container"
+        >
+          <div
+            className="icon"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+                large={true}
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="info-container"
+        >
+          <div
+            className="title-container"
+          >
+            <span
+              className="title"
+            >
+              Survey item 1
+            </span>
+          </div>
+          <div
+            className="labels-container"
+          >
+            <ul
+              className="nti-separated-inline-list lesson-overview-survey-label"
+            >
+              <li>
+                <div
+                  className="require-control-value flyout-closed"
+                  onClick={[Function]}
+                >
+                  <span>
+                    Required
+                  </span>
+                  <i
+                    className="icon-chevron-down"
+                  />
+                </div>
+              </li>
+              <li>
+                <span
+                  className="question-count"
+                >
+                  0 Questions
+                </span>
+              </li>
+              <li>
+                <span
+                  className="submissions"
+                >
+                  0 Submissions
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          className="button-container"
+        >
+          <a
+            className="nti-button primary rounded"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            role="button"
+            tabIndex="0"
+          >
+            Take
+          </a>
+        </div>
+      </div>
+    </div>
+    <div
+      className="editor-container"
+    />
+  </div>
+</div>
+`;
+
+exports[`Course overview survey item test List item closed 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
+>
+  <div
+    className="lesson-overview-base-list-item-table-row"
+  >
+    <div
+      className="lesson-overview-base-list-item-table-info-cell"
+    >
+      <div
+        className="nti-link-to-path lesson-overview-base-list-item-link"
+        to="#"
+      >
+        <div
+          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
+        >
+          <div
+            className="icon-container"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+              />
+            </div>
+          </div>
+          <div
+            className="right"
+          >
+            <div
+              className="title plain"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Survey item 1",
+                }
+              }
+            />
+            <div
+              className="labels"
+            >
+              <ul
+                className="nti-separated-inline-list lesson-overview-survey-label"
+              >
+                <li>
+                  <span
+                    className="question-count"
+                  >
+                    0 Questions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="submissions"
+                  >
+                    0 Submissions
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course overview survey item test List item submitted 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
+>
+  <div
+    className="lesson-overview-base-list-item-table-row"
+  >
+    <div
+      className="lesson-overview-base-list-item-table-info-cell"
+    >
+      <div
+        className="nti-link-to-path lesson-overview-base-list-item-link"
+        to="#"
+      >
+        <div
+          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
+        >
+          <div
+            className="icon-container"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+              />
+            </div>
+          </div>
+          <div
+            className="right"
+          >
+            <div
+              className="title plain"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Survey item 1",
+                }
+              }
+            />
+            <div
+              className="labels"
+            >
+              <ul
+                className="nti-separated-inline-list lesson-overview-survey-label"
+              >
+                <li>
+                  <span
+                    className="question-count"
+                  >
+                    0 Questions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="submissions"
+                  >
+                    0 Submissions
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course overview survey item test List item with 3 questions, 4 submissions 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
+>
+  <div
+    className="lesson-overview-base-list-item-table-row"
+  >
+    <div
+      className="lesson-overview-base-list-item-table-info-cell"
+    >
+      <div
+        className="nti-link-to-path lesson-overview-base-list-item-link"
+        to="#"
+      >
+        <div
+          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
+        >
+          <div
+            className="icon-container"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+              />
+            </div>
+          </div>
+          <div
+            className="right"
+          >
+            <div
+              className="title plain"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Survey item 1",
+                }
+              }
+            />
+            <div
+              className="labels"
+            >
+              <ul
+                className="nti-separated-inline-list lesson-overview-survey-label"
+              >
+                <li>
+                  <span
+                    className="question-count"
+                  >
+                    3 Questions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="submissions"
+                  >
+                    4 Submissions
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course overview survey item test List item with 5 comments, completable, required, no questions or submissions 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
+>
+  <div
+    className="lesson-overview-base-list-item-table-row"
+  >
+    <div
+      className="lesson-overview-base-list-item-table-info-cell"
+    >
+      <div
+        className="nti-link-to-path lesson-overview-base-list-item-link"
+        to="#"
+      >
+        <div
+          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
+        >
+          <div
+            className="icon-container"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+              />
+            </div>
+          </div>
+          <div
+            className="right"
+          >
+            <div
+              className="title plain"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Survey item 1",
+                }
+              }
+            />
+            <div
+              className="labels"
+            >
+              <ul
+                className="nti-separated-inline-list lesson-overview-survey-label"
+              >
+                <li>
+                  <div
+                    className="lesson-overview-item-required-label"
+                  >
+                    Required
+                  </div>
+                </li>
+                <li>
+                  <span
+                    className="question-count"
+                  >
+                    0 Questions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="submissions"
+                  >
+                    0 Submissions
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Course overview survey item test List item with 5 comments, completable, requirement editable 1`] = `
+<div
+  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
+>
+  <div
+    className="lesson-overview-base-list-item-table-row"
+  >
+    <div
+      className="lesson-overview-base-list-item-table-info-cell"
+    >
+      <div
+        className="nti-link-to-path lesson-overview-base-list-item-link"
+        to="#"
+      >
+        <div
+          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
+        >
+          <div
+            className="icon-container"
+          >
+            <div
+              className="icon"
+            >
+              <div
+                className="lesson-overview-survey-icon"
+              />
+            </div>
+          </div>
+          <div
+            className="right"
+          >
+            <div
+              className="title plain"
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": "Survey item 1",
+                }
+              }
+            />
+            <div
+              className="labels"
+            >
+              <ul
+                className="nti-separated-inline-list lesson-overview-survey-label"
+              >
+                <li>
+                  <div
+                    className="lesson-overview-item-required-label"
+                  >
+                    Required
+                  </div>
+                </li>
+                <li>
+                  <span
+                    className="question-count"
+                  >
+                    0 Questions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="submissions"
+                  >
+                    0 Submissions
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
