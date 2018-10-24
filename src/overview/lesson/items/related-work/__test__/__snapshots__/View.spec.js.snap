@@ -261,7 +261,7 @@ exports[`Course overview related work ref item test Grid item with no comments, 
         >
           <li>
             <div
-              className="require-control-value flyout-closed"
+              className="flyout-trigger require-control-value require-control flyout-closed"
               onClick={[Function]}
             >
               <span>
@@ -570,7 +570,7 @@ exports[`Course overview related work ref item test List item with no comments, 
               >
                 <li>
                   <div
-                    className="require-control-value flyout-closed"
+                    className="flyout-trigger require-control-value require-control flyout-closed"
                     onClick={[Function]}
                   >
                     <span>

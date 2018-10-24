@@ -2,7 +2,7 @@
 
 exports[`Progress widgets requirement control test Default (optional) 1`] = `
 <div
-  className="require-control-value flyout-closed"
+  className="flyout-trigger require-control-value require-control flyout-closed"
   onClick={[Function]}
 >
   <span>
@@ -16,7 +16,7 @@ exports[`Progress widgets requirement control test Default (optional) 1`] = `
 
 exports[`Progress widgets requirement control test Default (required) 1`] = `
 <div
-  className="require-control-value flyout-closed"
+  className="flyout-trigger require-control-value require-control flyout-closed"
   onClick={[Function]}
 >
   <span>
@@ -30,7 +30,7 @@ exports[`Progress widgets requirement control test Default (required) 1`] = `
 
 exports[`Progress widgets requirement control test Optional 1`] = `
 <div
-  className="require-control-value flyout-closed"
+  className="flyout-trigger require-control-value require-control flyout-closed"
   onClick={[Function]}
 >
   <span>
@@ -44,7 +44,7 @@ exports[`Progress widgets requirement control test Optional 1`] = `
 
 exports[`Progress widgets requirement control test Required 1`] = `
 <div
-  className="require-control-value flyout-closed"
+  className="flyout-trigger require-control-value require-control flyout-closed"
   onClick={[Function]}
 >
   <span>

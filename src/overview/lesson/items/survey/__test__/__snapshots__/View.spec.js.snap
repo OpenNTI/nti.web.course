@@ -405,7 +405,7 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
             >
               <li>
                 <div
-                  className="require-control-value flyout-closed"
+                  className="flyout-trigger require-control-value require-control flyout-closed"
                   onClick={[Function]}
                 >
                   <span>
