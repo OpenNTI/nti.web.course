@@ -61,7 +61,7 @@ export default class WebinarStateManager extends EventEmitter {
 	}
 
 	isSessionStartingInMoreThanAMinute (session, now) {
-		return session.getStartTime() > now && (session.getStartTime() - COUNTDOWN_THRESHOLD) < now;
+		return !this.isSessionStartingWithinMinute(session, now) && session.getStartTime() > now && (session.getStartTime() - COUNTDOWN_THRESHOLD) < now;
 	}
 
 	isSessionFarFromStarting (session, now) {
@@ -69,7 +69,7 @@ export default class WebinarStateManager extends EventEmitter {
 	}
 
 	isSessionExpiringSoon (session, now) {
-		return session.getEndTime() - COUNTDOWN_THRESHOLD <= now;
+		return session.getEndTime() >= now && session.getEndTime() - COUNTDOWN_THRESHOLD <= now;
 	}
 
 	isSessionActive (session, now) {
