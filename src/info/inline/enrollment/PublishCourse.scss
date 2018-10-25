@@ -91,8 +91,13 @@
 			cursor: pointer;
 
 			.preview-option {
-				padding: 10px;
 				width: 218px;
+			}
+
+			&:not(.flyout-trigger) {
+				.preview-option {
+					padding: 10px;
+				}
 			}
 		}
 
