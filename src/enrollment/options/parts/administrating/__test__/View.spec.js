@@ -11,7 +11,7 @@ const catalogEntry = {
 /* eslint-env jest */
 describe('Course enrollment administering view', () => {
 	test('Test with access', async () => {
-		const cmp = renderer.create(<View catalogEntry={catalogEntry} access/>);
+		const cmp = renderer.create(<View catalogEntry={catalogEntry} access={{}}/>);
 
 		const tree = cmp.toJSON();
 

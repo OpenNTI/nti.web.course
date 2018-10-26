@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import renderer from 'react-test-renderer';
 import { Summary } from '@nti/lib-interfaces';
 
@@ -72,12 +73,30 @@ function itemBuilder () {
 	};
 }
 
+class ContextProvider extends React.Component {
+	static propTypes = {
+		children: PropTypes.any
+	}
+
+	static childContextTypes = {
+		analyticsManager: PropTypes.object,
+	}
+
+	getChildContext = () => ({
+		analyticsManager: {}
+	})
+
+	render () {
+		return this.props.children;
+	}
+}
+
 /* eslint-env jest */
 describe('Course overview related work ref item test', () => {
 	test('Grid item with 5 comments, completable, required', async () => {
 		const item = itemBuilder().commentCount(5).completable().required().build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid}/>);
+		const cmp = renderer.create(<ContextProvider><View item={item} layout={Grid}/></ContextProvider>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -86,7 +105,7 @@ describe('Course overview related work ref item test', () => {
 	test('Grid item with no comments, completable, not required', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid}/>);
+		const cmp = renderer.create(<ContextProvider><View item={item} layout={Grid}/></ContextProvider>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -95,7 +114,7 @@ describe('Course overview related work ref item test', () => {
 	test('Grid item with no comments, completable, requirement editable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<View item={item} onRequirementChange={()=>{}} layout={Grid}/>);
+		const cmp = renderer.create(<ContextProvider><View item={item} onRequirementChange={()=>{}} layout={Grid}/></ContextProvider>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -104,7 +123,7 @@ describe('Course overview related work ref item test', () => {
 	test('Grid item unpublished', async () => {
 		const item = itemBuilder().unpublished().build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid}/>);
+		const cmp = renderer.create(<ContextProvider><View item={item} layout={Grid}/></ContextProvider>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -113,7 +132,7 @@ describe('Course overview related work ref item test', () => {
 	test('List item with 5 comments, completable, required', async () => {
 		const item = itemBuilder().commentCount(5).completable().required().build();
 
-		const cmp = renderer.create(<View item={item} layout={List}/>);
+		const cmp = renderer.create(<ContextProvider><View item={item} layout={List}/></ContextProvider>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -122,7 +141,7 @@ describe('Course overview related work ref item test', () => {
 	test('List item with no comments, completable, not required', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<View item={item} layout={List}/>);
+		const cmp = renderer.create(<ContextProvider><View item={item} layout={List}/></ContextProvider>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -131,7 +150,7 @@ describe('Course overview related work ref item test', () => {
 	test('List item unpublished', async () => {
 		const item = itemBuilder().unpublished().build();
 
-		const cmp = renderer.create(<View item={item} layout={List}/>);
+		const cmp = renderer.create(<ContextProvider><View item={item} layout={List}/></ContextProvider>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -140,7 +159,7 @@ describe('Course overview related work ref item test', () => {
 	test('List item with no comments, completable, requirement editable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<View item={item} onRequirementChange={()=>{}} layout={List}/>);
+		const cmp = renderer.create(<ContextProvider><View item={item} onRequirementChange={()=>{}} layout={List}/></ContextProvider>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();

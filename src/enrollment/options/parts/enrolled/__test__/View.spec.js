@@ -10,6 +10,10 @@ const catalogEntry = {
 	getEndDate: () => new Date('10/31/2017')
 };
 
+const access = {
+	getCreatedTime: () => new Date('10/21/2017')
+};
+
 /* eslint-env jest */
 describe('Course enrollment enrolled view', () => {
 	test('No options', async () => {
@@ -24,7 +28,7 @@ describe('Course enrollment enrolled view', () => {
 
 	test('One option, enrolled, upgrade available', async () => {
 		const options = [
-			new Open({ enrolled: true, available: true }, null, catalogEntry)
+			new Open({ enrolled: true, available: true }, access, catalogEntry)
 		];
 
 		const cmp = renderer.create(<View catalogEntry={catalogEntry} options={options}/>);
@@ -36,8 +40,8 @@ describe('Course enrollment enrolled view', () => {
 
 	test('Two options, second enrolled', async () => {
 		const options = [
-			new Open({ enrolled: true }, null, catalogEntry),
-			new FiveMinute({ enrolled: false}, null, catalogEntry)
+			new Open({ enrolled: true }, access, catalogEntry),
+			new FiveMinute({ enrolled: false}, access, catalogEntry)
 		];
 
 		const cmp = renderer.create(<View catalogEntry={catalogEntry} options={options}/>);

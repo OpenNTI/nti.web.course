@@ -5,6 +5,8 @@ import { Summary } from '@nti/lib-interfaces';
 import View from '../View';
 import { List, Grid } from '../../../Constants';
 
+const course = {};
+
 function itemBuilder () {
 	return {
 		_id: 'item1',
@@ -74,7 +76,7 @@ describe('Course overview timeline item test', () => {
 	test('Grid item with 5 comments, completable, required', async () => {
 		const item = itemBuilder().commentCount(5).completable().required().build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid}/>);
+		const cmp = renderer.create(<View item={item} layout={Grid} course={course}/>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -83,7 +85,7 @@ describe('Course overview timeline item test', () => {
 	test('Grid item completable, requirement edtiable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid} onRequirementChange={()=>{}}/>);
+		const cmp = renderer.create(<View item={item} layout={Grid} onRequirementChange={()=>{}} course={course}/>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -92,7 +94,7 @@ describe('Course overview timeline item test', () => {
 	test('List item with 5 comments, completable, required', async () => {
 		const item = itemBuilder().commentCount(5).completable().required().build();
 
-		const cmp = renderer.create(<View item={item} layout={List}/>);
+		const cmp = renderer.create(<View item={item} layout={List} course={course}/>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -101,7 +103,7 @@ describe('Course overview timeline item test', () => {
 	test('List item completable, requirement edtiable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<View item={item} layout={List} onRequirementChange={()=>{}}/>);
+		const cmp = renderer.create(<View item={item} layout={List} onRequirementChange={()=>{}} course={course}/>);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();

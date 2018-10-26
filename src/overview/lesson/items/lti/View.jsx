@@ -57,7 +57,10 @@ class LTIExternalToolAsset extends React.Component {
 		const required = item.CompletionRequired;
 
 		const requiredLabel = item && item.isCompletable && item.isCompletable() && onRequirementChange ? (
-			<RequirementControl record={item} onChange={onRequirementChange}/>
+			<RequirementControl
+				key={item.getID() + '-requirement'}
+				record={item}
+				onChange={onRequirementChange}/>
 		) : required && (
 			<Required key="required-label"/>
 		);
