@@ -10,7 +10,13 @@ describe('Scorm view test', () => {
 			getScormCourse: () => {},
 			getID: () => {},
 			getLink: () => {},
-			fetchLink: () => {},
+			fetchLink: (rel) => {
+				if(rel === 'ProgressStats') {
+					return Promise.resolve({
+						PercentageProgress: 0.5
+					});
+				}
+			},
 			hasLink: (rel) => {
 				return canImport && rel === 'ImportScorm';
 			},
@@ -21,6 +27,11 @@ describe('Scorm view test', () => {
 				},
 				getLink: () => {
 					return '';
+				}
+			},
+			PreferredAccess: {
+				CourseProgress: {
+					getCompletedDate: () => new Date('10/22/2017')
 				}
 			}
 		};
