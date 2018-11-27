@@ -1,0 +1,325 @@
+@import '~@nti/style-common';
+
+$header-ranges: (
+	short: (null, 500px),
+	wide: (500px, null)
+);
+
+.event-base-item {
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.13);
+	background-color: #fcfcfc;
+	border-radius: 5px;
+	border: 1px solid #e2e2e2;
+	padding: 14px 20px 17px 0;
+	margin: 0.9375rem 0;
+	position: relative;
+	min-height: 70px;
+
+	.require-control-value {
+		margin-left: 90px;
+		margin-top: 1rem;
+		text-transform: uppercase;
+		line-height: 22px;
+	}
+
+	.lesson-overview-item-required-label {
+		margin-left: 90px;
+		margin-top: 1rem;
+	}
+
+	.contents {
+		align-items: center;
+		padding-left: 90px;
+
+		@include responsive-range(wide, $header-ranges) {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		@include responsive-range(short, $header-ranges) {
+			.header {
+				margin-bottom: 0.5rem;
+				max-width: 100% !important;
+			}
+		}
+
+		.header {
+			flex: 0 0 auto;
+			max-width: calc(100% - 150px);
+			margin-right: 0.5rem;
+			display: flex;
+			flex-direction: column;
+
+			.title {
+				font-size: 18px;
+				color: black;
+				margin-bottom: 6px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				width: 100%;
+			}
+
+			.availability-info {
+				font-size: 10px;
+				text-transform: uppercase;
+				color: $tertiary-grey;
+				margin-top: 4px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: flex;
+				max-width: 100%;
+				line-height: 20px;
+				font-weight: bold;
+
+				.circular-progress {
+					margin-right: 5px;
+					line-height: 18px;
+				}
+
+				.completion-label {
+					color: $primary-green;
+				}
+
+				.incomplete-label {
+					color: $primary-red;
+				}
+
+				.event-duration, .incomplete-label, .completion-label {
+					position: relative;
+					padding-right: 12px;
+					margin-right: 2px;
+
+					&::after {
+						content: "·";
+						margin-right: 2px;
+						font-size: 20px;
+						line-height: 0;
+						position: absolute;
+						right: 0;
+						top: 10px;
+						color: $tertiary-grey;
+					}
+				}
+			}
+		}
+
+		a.button,
+		button {
+			display: inline-block;
+			flex: 0 0 auto;
+		}
+
+		button {
+			border-radius: 4px;
+			background-color: $primary-green;//#3fb34f;
+			color: #fff;
+			font-family: $body-font-family;
+			font-size: 16px;
+			font-weight: 600;
+			line-height: 1.375;
+			padding: 7px 24px 9px;
+			cursor: pointer;
+			text-decoration: none;
+			white-space: nowrap;
+			min-width: 130px;
+			max-height: 40px;
+			// max-width: 130px;
+
+			&.disabled {
+				background-color: $tertiary-grey;//#B8B8B8;
+				pointer-events: none;
+
+				&.clickable {
+					pointer-events: all;
+				}
+			}
+
+			&.cation {
+				background-color: $border-red;
+			}
+
+			&.expiring {
+				font-size: 14px;
+				padding-top: 3px;
+				padding-bottom: 3px;
+
+				.remaining {
+					font-size: 10px;
+					text-transform: uppercase;
+					font-weight: bold;
+				}
+			}
+
+			&.starting {
+				padding-left: 0;
+				padding-right: 0;
+
+				& > span {
+					position: relative;
+
+					.timer {
+						position: absolute;
+						left: 0;
+						top: 0;
+						height: 20px;
+						width: 20px;
+						display: inline-block;
+						margin-right: 0.5rem;
+						background-image: url('./assets/timer.svg');
+					}
+
+					.remaining {
+						padding-left: 26px;
+					}
+				}
+			}
+		}
+
+		.image-and-description {
+			width: 100%;
+			margin-top: 16px;
+
+			@include responsive-range(wide, $header-ranges) {
+				display: flex;
+				flex: none;
+			}
+
+			@include responsive-range(short, $header-ranges) {
+				.image {
+					max-width: 208px;
+					margin-bottom: 1rem;
+				}
+			}
+
+			.image {
+				position: relative;
+				height: 117px;
+				min-width: 208px;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				margin-right: 15px;
+
+				// div {
+				// 	padding-top: 38px;
+				// 	font-weight: 600;
+				// 	color: $tertiary-grey;
+				// 	font-size: 24px;
+				// 	text-align: center;
+				// 	opacity: 0.5;
+				// }
+
+				img {
+					background-size: cover;
+					width: 100%;
+					height: 100%;
+				}
+
+				.status {
+					position: absolute;
+					right: 5px;
+					bottom: 5px;
+					font-size: 10px;
+					color: white;
+					display: flex;
+
+					.duration-container {
+						padding: 5px 10px 5px 10px;
+						border-radius: 3px;
+						background-color: rgba(0, 0, 0, 0.6);
+
+						&.is-active {
+							border-radius: 0 3px 3px 0;
+						}
+					}
+
+					.live {
+						background-color: $primary-red;
+						padding: 5px 10px 5px 17px;
+						border-radius: 3px 0 0 3px;
+						text-transform: uppercase;
+						position: relative;
+
+						&::before {
+							content: "·";
+							margin-right: 4px;
+							font-size: 24px;
+							line-height: 0;
+							position: absolute;
+							left: 8px;
+							top: 12px;
+						}
+					}
+				}
+			}
+
+			.description {
+				@include limit-lines($lines: 6, $line-height: 1.4);
+
+				color: $secondary-grey;
+				font-size: 14px;
+				line-height: 19px;
+				font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+				white-space: pre-wrap;
+				margin: 0;
+			}
+		}
+	}
+
+	.date {
+		position: absolute;
+		left: 34px;
+		top: 17px;
+		text-align: center;
+
+		.month {
+			text-transform: uppercase;
+			color: $primary-red;
+			font-weight: bold;
+			font-size: 10px;
+			line-height: 14px;
+		}
+
+		.day {
+			font-size: 28px;
+			color: $primary-grey;
+		}
+
+		.circular-progress {
+			line-height: 18px;
+			position: absolute;
+			bottom: -6px;
+			right: -14px;
+			border: solid 2px white;
+			border-radius: 40px;
+		}
+	}
+
+	&.minimal {
+		box-shadow: inset 0 -1px 0 0 #e2e2e2;
+		border: none;
+		background-color: white;
+
+		.date {
+			top: 12px;
+		}
+
+		.contents {
+			.header {
+				.title {
+					font-size: 16px;
+				}
+			}
+		}
+	}
+
+	&.expired {
+		.contents {
+			.header {
+				max-width: 100%;
+			}
+		}
+	}
+}

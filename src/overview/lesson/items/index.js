@@ -11,5 +11,6 @@ import './video-roll';
 import './lti';
 
 export * as Webinar from './webinar';
+export * as Event from './event';
 
 export default from './View';

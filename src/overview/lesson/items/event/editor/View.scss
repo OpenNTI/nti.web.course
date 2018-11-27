@@ -1,0 +1,36 @@
+@import '~@nti/style-common';
+
+.event-editor {
+	background-color: white;
+
+	.event-browser {
+		.toolbar {
+			height: 60px;
+			position: relative;
+			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+
+			.create-new {
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				color: white;
+				background-color: $primary-blue;
+				cursor: pointer;
+				text-align: center;
+				padding-top: 10px;
+				box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.3);
+			}
+		}
+
+		.empty-state {
+			.add-new {
+				color: $primary-blue;
+				cursor: pointer;
+				margin-top: 10px;
+			}
+		}
+	}
+}

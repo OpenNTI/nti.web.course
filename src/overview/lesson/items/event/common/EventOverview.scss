@@ -1,0 +1,287 @@
+@import '~@nti/style-common';
+
+.event-overview-editor {
+	text-align: center;
+	width: 810px;
+
+	.error {
+		background-color: $primary-red;
+		color: white;
+		text-align: center;
+		min-height: 40px;
+		line-height: 40px;
+		font-size: 14px;
+	}
+
+	.contents {
+		max-height: calc(100vh - 215px);
+		overflow-y: auto;
+
+		.header-info {
+			display: flex;
+			padding-top: 30px;
+			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+
+			.date {
+				min-width: 80px;
+				text-align: center;
+
+				.month {
+					text-transform: uppercase;
+					color: $primary-red;
+					font-weight: bold;
+					font-size: 10px;
+					line-height: 14px;
+				}
+
+				.day {
+					font-size: 28px;
+					color: $primary-grey;
+				}
+			}
+
+			.event-info {
+				padding-right: 40px;
+				margin-bottom: 16px;
+				width: 100%;
+
+				.title {
+					font-size: 18px;
+					line-height: 20px;
+					color: black;
+					text-align: left;
+					margin-bottom: 5px;
+
+					input {
+						width: 100%;
+						background-color: white;
+						font-size: 18px;
+						height: 40px;
+						color: $primary-grey;
+					}
+				}
+
+				.time-info {
+					line-height: 14px;
+					font-size: 10px;
+					font-weight: bold;
+					text-transform: uppercase;
+					color: $tertiary-grey;
+					margin-bottom: 16px;
+					text-align: left;
+
+					> span {
+						margin-right: 2px;
+					}
+				}
+
+				.image-and-description {
+					display: flex;
+
+					.image-upload {
+						background-color: #fbfbfb;
+						min-width: 210px;
+						height: 122px;
+						border-radius: 5px;
+						border: 1.5px dashed #e2e2e2;
+					}
+
+					.image-preview {
+						position: relative;
+
+						img {
+							width: 200px;
+							border: 1px solid rgba(0, 0, 0, 0.1);
+						}
+
+						.remove-image {
+							position: absolute;
+							top: 10px;
+							right: 10px;
+
+							.nt-remove-button i {
+								border: solid 2px white;
+							}
+						}
+					}
+
+					.image-upload-container {
+						width: 200px;
+						max-height: 132px;
+						position: relative;
+						margin: 0;
+
+						.nti-image-editor {
+							max-width: 200px;
+
+							.nti-image-editor-upload {
+								height: 132px;
+								width: 200px;
+								padding: 1.625rem 0;
+
+								input {
+									z-index: 10;
+								}
+
+								.container {
+									i {
+										margin-top: 0;
+										opacity: 0;
+									}
+
+									.title {
+										display: none;
+									}
+
+									.choose-container {
+										display: none;
+									}
+
+									.error-container {
+										margin-top: 2.25rem;
+										font-size: 12px;
+									}
+								}
+
+								.nti-image-editor-upload .container i {
+									margin-top: 0;
+								}
+							}
+						}
+
+						.content {
+							position: absolute;
+							bottom: 38px;
+							width: 200px;
+							text-align: center;
+							color: $secondary-grey;
+							z-index: 0;
+
+							i {
+								font-size: 36px;
+							}
+
+							.text {
+								margin-top: 14px;
+								font-size: 14px;
+							}
+						}
+					}
+
+					.textarea-container {
+						width: 100%;
+						margin-left: 10px;
+						background-color: white;
+					}
+
+					.description {
+						@include limit-lines($lines: 7, $line-height: 1.5);
+
+						line-height: 19px;
+						font-size: 14px;
+						color: $secondary-grey;
+						text-align: left;
+						padding-left: 20px;
+						font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+						white-space: pre-wrap;
+						margin: 0;
+						display: block;
+						overflow: hidden;
+					}
+				}
+			}
+		}
+
+		.other-info {
+			text-align: left;
+			padding-left: 80px;
+			padding-bottom: 30px;
+			max-height: 500px;
+			overflow: auto;
+
+			i.icon-chevron-down {
+				color: #b8b8b8;
+				font-size: 12px;
+				top: 14px !important;
+			}
+
+			.location {
+				input {
+					background-color: white;
+					width: 440px;
+					height: 40px;
+					box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+					border: none;
+				}
+			}
+
+			.flyout-trigger {
+				color: $secondary-grey;
+				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+			}
+
+			.event-date-input {
+				height: 40px;
+				line-height: 40px;
+				width: 300px;
+				font-size: 14px;
+				padding-left: 10px;
+				position: relative;
+				cursor: pointer;
+
+				i {
+					position: absolute;
+					right: 8px;
+					top: 12px;
+				}
+			}
+
+			.delete-button {
+				background-color: $primary-red;
+				color: white;
+				line-height: 36px;
+				padding: 0 2rem;
+				border-radius: 3px;
+				text-align: center;
+				display: inline-block;
+				margin-top: 1rem;
+				cursor: pointer;
+			}
+
+			.section-title {
+				padding-top: 20px;
+				font-size: 16px;
+				color: $primary-grey;
+				margin-bottom: 10px;
+			}
+
+			.section-description {
+				font-size: 14px;
+				color: $secondary-grey;
+				margin-top: 5px;
+				margin-bottom: 16px;
+			}
+
+			.options {
+				display: flex;
+
+				.submissions {
+					width: 310px;
+				}
+
+				.subsection-title {
+					font-size: 10px;
+					color: $tertiary-grey;
+					text-transform: uppercase;
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+	.dialog-buttons {
+		.disabled {
+			pointer-events: none;
+		}
+	}
+}
