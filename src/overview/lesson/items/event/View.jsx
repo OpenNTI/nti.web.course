@@ -9,7 +9,7 @@ import Registry from '../Registry';
 import BaseItem from './BaseItem';
 
 export default
-@Registry.register(Models.calendar.CalendarEventRef)
+@Registry.register(Models.calendar.CalendarEventRef.MimeType)
 class LessonOverviewEvent extends React.Component {
 
 	static propTypes = {

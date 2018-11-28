@@ -1,17 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-// import { isFlag } from '@nti/web-client';
 import { DateTime } from '@nti/web-commons';
-import { scoped } from '@nti/lib-locale';
-
-// import Button from './Button';
-// import Duration from './common/Duration';
-
-const t = scoped('course.overview.lesson.items.event.BaseItem', {
-	completed: 'Completed',
-	incomplete: 'Incomplete'
-});
 
 export default class EventBaseItem extends React.Component {
 	static propTypes = {
@@ -28,7 +18,7 @@ export default class EventBaseItem extends React.Component {
 
 	renderDate () {
 		const {item} = this.props;
-		const {event} = item;
+		const {CalendarEvent: event} = item;
 
 		if(!event) {
 			return null;
@@ -44,7 +34,7 @@ export default class EventBaseItem extends React.Component {
 
 	renderImageAndDescription () {
 		const {item} = this.props;
-		const {event} = item;
+		const {CalendarEvent: event} = item;
 
 		const hasIcon = event.icon && event.icon !== 'null';
 
@@ -61,26 +51,13 @@ export default class EventBaseItem extends React.Component {
 	}
 
 	renderAvailability () {
-		const {item: {event}} = this.props;
+		const {item: {CalendarEvent: event}} = this.props;
 
-		const now = Date.now();
+		// const now = Date.now();
 
 		// default case, render 'Starts [day] from [startTime] - [endTime]'
 		let timeDisplay = DateTime.format(event.getStartTime(), '[Starts] dddd [from] hh:mm a')
 			+ ' - ' + DateTime.format(event.getEndTime(), 'hh:mm a z');
-
-		if(event.isExpired()) {
-			// render 'Expired [day] at [time]'
-			timeDisplay = DateTime.format(event.getEndTime(), '[Expired] dddd [at] hh:mm a z');
-		}
-		else {
-			const currDate = new Date(now);
-
-			// determine if it's today
-			if(this.isToday(currDate, event.getStartTime())) {
-				timeDisplay = DateTime.format(event.getStartTime(), '[Starts Today at] hh:mm a z');
-			}
-		}
 
 		return (
 			<div className="availability-info">
@@ -91,12 +68,12 @@ export default class EventBaseItem extends React.Component {
 
 
 	renderContents () {
-		const {item: {event}, isMinimal, hideControls, editMode} = this.props;
+		const {item: {CalendarEvent: event}, isMinimal, hideControls, editMode} = this.props;
 
 		return (
 			<div className="contents">
 				<div className="header">
-					<div className="title">{event.subject}</div>
+					<div className="title">{event.title}</div>
 					{this.renderAvailability()}
 				</div>
 				{!hideControls && !editMode && this.renderButton()}
