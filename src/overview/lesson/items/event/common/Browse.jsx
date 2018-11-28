@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Loading} from '@nti/web-commons';
+import {Loading, DateTime} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {Connectors} from '@nti/lib-store';
 
@@ -20,6 +20,20 @@ class BrowseEvents extends React.Component {
 
 	state = {}
 
+	renderEvent = (event) => {
+		return (
+			<div key={event.getID()} className="event" onClick={() => this.props.onSelect(event)}>
+				<div className="icon">
+					<img src={event.icon}/>
+				</div>
+				<div className="info">
+					<div className="title">{event.title}</div>
+					<div className="date">{DateTime.format(event.getStartTime(), 'LL [at] h:mm a')}</div>
+				</div>
+			</div>
+		);
+	}
+
 	renderEventList () {
 		const {events} = this.props;
 
@@ -31,6 +45,8 @@ class BrowseEvents extends React.Component {
 				</div>
 			);
 		}
+
+		return <div className="event-list">{events.map(this.renderEvent)}</div>;
 	}
 
 	render () {

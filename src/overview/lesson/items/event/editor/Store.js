@@ -16,15 +16,13 @@ class CourseEventsStore extends Stores.BoundStore {
 		});
 	}
 
-	async createEvent (course, title, description, location, startDate, endDate, img) {
+	async createEvent (course, event, title, description, location, startDate, endDate, img) {
 		this.set({
 			loading: true,
 			createError: null
 		});
 
 		try {
-			// const calendarLink = course.Links.filter(x=>x.rel === 'CourseCalendar')[0];
-
 			const calendar = await course.fetchLinkParsed('CourseCalendar');
 			const service = await getService();
 			const formData = new FormData();
@@ -40,7 +38,14 @@ class CourseEventsStore extends Stores.BoundStore {
 				formData.append('icon', img || null);
 			}
 
-			const calendarEvent = await service.postParseResponse(calendar.getLink('create_calendar_event'), formData);
+			let calendarEvent;
+
+			if(event) {
+				calendarEvent = await calendarEvent.save(formData);
+			}
+			else {
+				calendarEvent = await service.postParseResponse(calendar.getLink('create_calendar_event'), formData);
+			}
 
 			// on successful event creation, call load to resync with server?
 

@@ -36,7 +36,7 @@ class EventOverviewEditor extends React.Component {
 		item: PropTypes.object,
 		lessonOverview: PropTypes.object.isRequired,
 		overviewGroup: PropTypes.object.isRequired,
-		event: PropTypes.object.isRequired,
+		event: PropTypes.object,
 		onCancel: PropTypes.func,
 		onAddToLesson: PropTypes.func,
 		onDelete: PropTypes.func,
@@ -60,8 +60,8 @@ class EventOverviewEditor extends React.Component {
 		defaultStartDate.setMinutes(0);
 
 		this.state = {
-			startDate: event ? event.getStartDate() : defaultStartDate,
-			endDate: event ? event.getEndDate() : new Date(defaultStartDate.getTime() + (60 * 60 * 1000)),
+			startDate: event ? event.getStartTime() : defaultStartDate,
+			endDate: event ? event.getEndTime() : new Date(defaultStartDate.getTime() + (60 * 60 * 1000)),
 			title: event && event.title,
 			description: event && event.description,
 			location: event && event.location,
@@ -227,11 +227,11 @@ class EventOverviewEditor extends React.Component {
 	}
 
 	onSave = async () => {
-		const {onAddToLesson, course, createEvent} = this.props;
+		const {onAddToLesson, course, event, createEvent} = this.props;
 		const {selectedSection, selectedRank, title, description, location, startDate, endDate} = this.state;
 
 		const blobValue = await this.getBlobForImage();
-		const calendarEvent = await createEvent(course, title, description, location, startDate, endDate);
+		const calendarEvent = await createEvent(course, event, title, description, location, startDate, endDate, blobValue);
 
 		onAddToLesson(selectedSection, selectedRank, blobValue, calendarEvent);
 	}
