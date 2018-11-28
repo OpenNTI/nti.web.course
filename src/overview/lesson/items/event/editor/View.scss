@@ -32,9 +32,15 @@
 				padding: 5px;
 				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
 				cursor: pointer;
+				height: 78px;
 
 				.icon {
-					width: 50px;
+					width: 120px;
+					margin-right: 10px;
+
+					img {
+						width: 100%;
+					}
 				}
 
 				.info {

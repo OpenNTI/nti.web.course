@@ -37,11 +37,14 @@ class CourseEventsStore extends Stores.BoundStore {
 			if(img !== undefined) {
 				formData.append('icon', img || null);
 			}
+			else if (event && event.icon) {
+				formData.append('icon', event.icon);
+			}
 
 			let calendarEvent;
 
 			if(event) {
-				calendarEvent = await service.postParseResponse(calendar.getLink('edit'), formData);
+				calendarEvent = await service.putParseResponse(calendar.getLink('edit'), formData);
 			}
 			else {
 				calendarEvent = await service.postParseResponse(calendar.getLink('create_calendar_event'), formData);

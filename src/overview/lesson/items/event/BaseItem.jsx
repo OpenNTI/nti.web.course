@@ -40,7 +40,7 @@ export default class EventBaseItem extends React.Component {
 
 		return (
 			<div className={cx('image-and-description', {iconless: !hasIcon})}>
-				{hasIcon && <div className="image"><img src={event.icon}/>{this.renderStatus()}</div>}
+				{hasIcon && <div className="image"><img src={event.icon}/></div>}
 				<pre className="description">{event.description}</pre>
 			</div>
 		);
