@@ -40,7 +40,7 @@ class EventEditor extends React.Component {
 		const {event, activePanel} = this.props;
 
 		if(event) {
-			this.setState({activePanel: OVERVIEW, event: event});
+			this.setState({activePanel: OVERVIEW, event: event.CalendarEvent});
 		}
 		else if(activePanel) {
 			this.setState({activePanel: activePanel});

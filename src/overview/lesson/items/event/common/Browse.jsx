@@ -24,7 +24,7 @@ class BrowseEvents extends React.Component {
 		return (
 			<div key={event.getID()} className="event" onClick={() => this.props.onSelect(event)}>
 				<div className="icon">
-					<img src={event.icon}/>
+					{event.icon ? <img src={event.icon}/> : <div className="no-icon"/>}
 				</div>
 				<div className="info">
 					<div className="title">{event.title}</div>

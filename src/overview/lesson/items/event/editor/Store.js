@@ -41,7 +41,7 @@ class CourseEventsStore extends Stores.BoundStore {
 			let calendarEvent;
 
 			if(event) {
-				calendarEvent = await calendarEvent.save(formData);
+				calendarEvent = await service.postParseResponse(calendar.getLink('edit'), formData);
 			}
 			else {
 				calendarEvent = await service.postParseResponse(calendar.getLink('create_calendar_event'), formData);
