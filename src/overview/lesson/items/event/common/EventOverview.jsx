@@ -235,7 +235,9 @@ class EventOverviewEditor extends React.Component {
 		const blobValue = await this.getBlobForImage();
 		const calendarEvent = await createEvent(course, event, title, description, location, startDate, endDate, blobValue);
 
-		onAddToLesson(selectedSection, selectedRank, blobValue, calendarEvent);
+		if(calendarEvent) {
+			onAddToLesson(selectedSection, selectedRank, blobValue, calendarEvent);
+		}
 	}
 
 	renderButtons () {

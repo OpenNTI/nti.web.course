@@ -35,11 +35,26 @@ export default class CourseEventsStore extends Stores.BoundStore {
 			const formData = new FormData();
 
 			formData.append('MimeType', Models.calendar.CourseCalendarEvent.MimeType);
-			formData.append('title', title);
-			formData.append('description', description);
-			formData.append('location', location);
-			formData.append('start_time', startDate.toISOString());
-			formData.append('end_time', endDate.toISOString());
+
+			if(title) {
+				formData.append('title', title);
+			}
+
+			if(description) {
+				formData.append('description', description);
+			}
+
+			if(location) {
+				formData.append('location', location);
+			}
+
+			if(startDate) {
+				formData.append('start_time', startDate.toISOString());
+			}
+
+			if(endDate) {
+				formData.append('end_time', endDate.toISOString());
+			}
 
 			if(img !== undefined) {
 				formData.append('icon', img || null);
@@ -66,10 +81,19 @@ export default class CourseEventsStore extends Stores.BoundStore {
 			return calendarEvent;
 		}
 		catch (e) {
+			let createError = e.message || e;
+
+			if(e.code === 'RequiredMissing') {
+				createError = 'Missing required field: ' + e.field;
+			}
+
 			this.set({
 				loading: false,
-				createError: e.message || e
+				saving: false,
+				createError
 			});
+
+			return null;
 		}
 	}
 
