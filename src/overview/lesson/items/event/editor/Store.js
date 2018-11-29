@@ -1,11 +1,12 @@
 import {getService} from '@nti/web-client';
-import {Stores, Mixins} from '@nti/lib-store';
-import {mixin} from '@nti/lib-decorators';
+import {Stores} from '@nti/lib-store';
 import {Models} from '@nti/lib-interfaces';
 
-export default
-@mixin(Mixins.Searchable)
-class CourseEventsStore extends Stores.BoundStore {
+function safeContains (fieldValue, target) {
+	return fieldValue && fieldValue.toLowerCase().indexOf(target.toLowerCase()) >= 0;
+}
+
+export default class CourseEventsStore extends Stores.BoundStore {
 	constructor () {
 		super();
 
@@ -16,9 +17,15 @@ class CourseEventsStore extends Stores.BoundStore {
 		});
 	}
 
+	async deleteEvent (event) {
+		await event.delete();
+
+		await this.load();
+	}
+
 	async createEvent (course, event, title, description, location, startDate, endDate, img) {
 		this.set({
-			loading: true,
+			saving: true,
 			createError: null
 		});
 
@@ -44,7 +51,7 @@ class CourseEventsStore extends Stores.BoundStore {
 			let calendarEvent;
 
 			if(event) {
-				calendarEvent = await service.putParseResponse(calendar.getLink('edit'), formData);
+				calendarEvent = await service.putParseResponse(event.getLink('edit'), formData);
 			}
 			else {
 				calendarEvent = await service.postParseResponse(calendar.getLink('create_calendar_event'), formData);
@@ -53,7 +60,7 @@ class CourseEventsStore extends Stores.BoundStore {
 			// on successful event creation, call load to resync with server?
 
 			this.set({
-				loading: false
+				saving: false
 			});
 
 			return calendarEvent;
@@ -66,11 +73,36 @@ class CourseEventsStore extends Stores.BoundStore {
 		}
 	}
 
-	async load () {
+	doSearch (term) {
+		this.searchTerm = term;
+		this.set({searchTerm: term, loading: true});
+
+		this.searchTimeout = setTimeout(() => {
+			if(this.searchTerm !== term) {
+				return;
+			}
+
+			this.load(term);
+		}, 500);
+	}
+
+	async load (searchTerm) {
 		const {course} = this.binding;
 
 		const calendar = await course.fetchLinkParsed('CourseCalendar');
-		const contents = await calendar.fetchLinkParsed('contents');
+		let contents = await calendar.fetchLinkParsed('contents');
+
+		if(this.searchTerm && this.searchTerm !== searchTerm) {
+			return;
+		}
+
+		if(this.searchTerm) {
+			contents = contents.filter(i => {
+				return safeContains(i.title, this.searchTerm)
+					|| safeContains(i.description, this.searchTerm)
+					|| safeContains(i.location, this.searchTerm);
+			});
+		}
 
 		// get list of events from the server
 		this.set({

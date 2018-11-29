@@ -255,15 +255,24 @@ $header-ranges: (
 				}
 			}
 
-			.description {
-				@include limit-lines($lines: 6, $line-height: 1.4);
+			.event-info {
+				.location {
+					margin-bottom: 10px;
+					font-size: 12px;
+					font-weight: bold;
+					color: $secondary-grey;
+				}
 
-				color: $secondary-grey;
-				font-size: 14px;
-				line-height: 19px;
-				font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-				white-space: pre-wrap;
-				margin: 0;
+				.description {
+					@include limit-lines($lines: 6, $line-height: 1.4);
+
+					color: $secondary-grey;
+					font-size: 14px;
+					line-height: 19px;
+					font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+					white-space: pre-wrap;
+					margin: 0;
+				}
 			}
 		}
 	}

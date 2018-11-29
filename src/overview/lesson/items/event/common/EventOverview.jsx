@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DialogButtons, RemoveButton, DateTime, Prompt, Input} from '@nti/web-commons';
+import {DialogButtons, RemoveButton, DateTime, Prompt, Input, Loading} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {ImageEditor} from '@nti/web-whiteboard';
 import {Connectors} from '@nti/lib-store';
@@ -29,7 +29,7 @@ const t = scoped('course.overview.lesson.items.event.common.Overview', {
 });
 
 export default
-@Connectors.Any.connect(['createEvent', 'createError'])
+@Connectors.Any.connect(['createEvent', 'createError', 'saving'])
 class EventOverviewEditor extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -42,7 +42,8 @@ class EventOverviewEditor extends React.Component {
 		onDelete: PropTypes.func,
 		createEvent: PropTypes.func,
 		createError: PropTypes.string,
-		saveDisabled: PropTypes.bool
+		saveDisabled: PropTypes.bool,
+		saving: PropTypes.bool
 	}
 
 	attachDateFlyoutRef = x => this.dateFlyout = x
@@ -268,6 +269,7 @@ class EventOverviewEditor extends React.Component {
 		return (
 			<div className="event-overview-editor">
 				{this.renderError()}
+				{this.props.saving && <Loading.Mask/>}
 				<div className="contents">
 					<div className="header-info">
 						{this.renderDate()}
