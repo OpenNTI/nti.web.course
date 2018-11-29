@@ -257,6 +257,8 @@ $header-ranges: (
 
 			.event-info {
 				.location {
+					@include limit-lines($lines: 1, $line-height: 1.4);
+
 					margin-bottom: 10px;
 					font-size: 12px;
 					font-weight: bold;
@@ -264,7 +266,7 @@ $header-ranges: (
 				}
 
 				.description {
-					@include limit-lines($lines: 6, $line-height: 1.4);
+					@include limit-lines($lines: 5, $line-height: 1.4);
 
 					color: $secondary-grey;
 					font-size: 14px;
