@@ -62,7 +62,7 @@ export default class EventBaseItem extends React.Component {
 
 		if(!isToday(event.getStartTime(), event.getEndTime())) {
 			timeDisplay = DateTime.format(event.getStartTime(), '[Starts] dddd [at] hh:mm a')
-				+ ' - ' + DateTime.format(event.getEndTime(), '[Ends] dddd [at] hh:mm a z');
+				+ ' - ' + DateTime.format(event.getEndTime(), '[Ends] dddd LL [at] hh:mm a z');
 		}
 
 		return (
