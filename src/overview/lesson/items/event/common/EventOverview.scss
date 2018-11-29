@@ -4,6 +4,11 @@
 	text-align: center;
 	width: 810px;
 
+	&.saving {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
 	.error {
 		background-color: $primary-red;
 		color: white;

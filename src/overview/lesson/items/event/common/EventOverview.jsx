@@ -4,6 +4,7 @@ import {DialogButtons, RemoveButton, DateTime, Prompt, Input, Loading} from '@nt
 import {scoped} from '@nti/lib-locale';
 import {ImageEditor} from '@nti/web-whiteboard';
 import {Connectors} from '@nti/lib-store';
+import cx from 'classnames';
 
 import PositionSelect from '../../../common/PositionSelect';
 
@@ -196,7 +197,7 @@ class EventOverviewEditor extends React.Component {
 				{this.renderPosition()}
 				{this.renderLocation()}
 				{this.renderDateInputs()}
-				{onDelete && <div className="delete-button" onClick={() => { onDelete(); }}>{t('delete')}</div>}
+				{onDelete && <div className="delete-button" onClick={() => { this.onDelete(); }}>{t('delete')}</div>}
 			</div>
 		);
 	}
@@ -266,10 +267,14 @@ class EventOverviewEditor extends React.Component {
 	}
 
 	render () {
+		const {saving, saveDisabled} = this.props;
+
+		const cls = cx('event-overview-editor', {saving: saving || saveDisabled});
+
 		return (
-			<div className="event-overview-editor">
+			<div className={cls}>
 				{this.renderError()}
-				{this.props.saving && <Loading.Mask/>}
+				{saving && <Loading.Mask/>}
 				<div className="contents">
 					<div className="header-info">
 						{this.renderDate()}
