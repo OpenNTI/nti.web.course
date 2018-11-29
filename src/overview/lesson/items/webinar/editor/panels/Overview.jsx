@@ -6,8 +6,7 @@ import {ImageEditor} from '@nti/web-whiteboard';
 
 import PositionSelect from '../../../../common/PositionSelect';
 import Duration from '../../common/Duration';
-
-import EditImage from './EditImage';
+import EditImage from '../../../event/common/EditImage';
 
 const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', {
 	addToLesson: 'Add to Lesson',

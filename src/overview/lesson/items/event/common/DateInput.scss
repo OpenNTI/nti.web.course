@@ -1,0 +1,52 @@
+@import '~@nti/style-common';
+
+.event-date-input-container {
+	margin-bottom: 10px;
+	display: flex;
+
+	.date-info {
+		.label {
+			min-width: 56px;
+			display: inline-block;
+			font-size: 10px;
+			padding-left: 12px;
+			text-transform: uppercase;
+			font-weight: bold;
+			color: $tertiary-grey;
+		}
+	}
+
+	.time-value {
+		color: $secondary-grey;
+		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+		height: 40px;
+		position: relative;
+		line-height: 40px;
+		font-size: 14px;
+		width: 125px;
+		margin-left: 15px;
+		padding-left: 15px;
+		text-transform: uppercase;
+
+		i {
+			position: absolute;
+			right: 8px;
+			top: 12px;
+		}
+	}
+}
+
+.flyout.event-time-input {
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+	max-height: 200px;
+	overflow: auto;
+
+	.available-time {
+		color: $secondary-grey;
+		font-size: 14px;
+		padding-left: 15px;
+		text-transform: uppercase;
+		line-height: 24px;
+		cursor: pointer;
+	}
+}

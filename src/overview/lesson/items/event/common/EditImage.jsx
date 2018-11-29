@@ -4,7 +4,7 @@ import {scoped} from '@nti/lib-locale';
 import {Prompt, DialogButtons} from '@nti/web-commons';
 import {ImageEditor} from '@nti/web-whiteboard';
 
-const t = scoped('course.overview.lesson.items.webinar.editor.panels.EditImage', {
+const t = scoped('course.overview.lesson.items.event.common.EditImage', {
 	cancel: 'Cancel',
 	save: 'Save'
 });
@@ -27,7 +27,7 @@ export default class EditImage extends React.Component {
 					onSave={fulfill}
 					onCancel={reject}
 				/>,
-				'webinar-overview-edit-image'
+				'event-overview-edit-image'
 			);
 		});
 	}
@@ -67,7 +67,7 @@ export default class EditImage extends React.Component {
 		}
 
 		return (
-			<div className="webinar-edit-image">
+			<div className="event-edit-image">
 				<ImageEditor.Editor editorState={this.state.editorState} onChange={this.onImageCrop}/>
 				<DialogButtons
 					buttons={[

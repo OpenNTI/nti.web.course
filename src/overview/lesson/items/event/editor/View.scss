@@ -1,0 +1,105 @@
+@import '~@nti/style-common';
+
+.event-editor {
+	background-color: white;
+
+	.event-browser {
+		.toolbar {
+			height: 60px;
+			position: relative;
+			box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+			padding-top: 12px;
+
+			.create-new {
+				position: absolute;
+				right: 10px;
+				top: 10px;
+				height: 40px;
+				width: 40px;
+				border-radius: 40px;
+				color: white;
+				background-color: $primary-blue;
+				cursor: pointer;
+				text-align: center;
+				padding-top: 10px;
+				box-shadow: 0 3px 11px 0 rgba(0, 0, 0, 0.3);
+			}
+
+			.search {
+				width: 100%;
+				text-align: center;
+				position: relative;
+
+				input {
+					width: 300px;
+				}
+
+				i {
+					color: #b8b8b8;
+					margin-left: 6px;
+					font-size: 20px;
+					position: absolute;
+					right: 262px;
+					top: 7px;
+				}
+			}
+		}
+
+		.event-list {
+			overflow: auto;
+
+			.event {
+				display: flex;
+				margin: 10px 10px 0 10px;
+				padding: 5px;
+				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+				cursor: pointer;
+				height: 78px;
+				position: relative;
+
+				.icon {
+					width: 120px;
+					margin-right: 10px;
+
+					img {
+						width: 100%;
+					}
+				}
+
+				.info {
+					.date {
+						color: $tertiary-grey;
+						font-size: 10px;
+						text-transform: uppercase;
+					}
+				}
+
+				.remove {
+					position: absolute;
+					top: 6px;
+					right: 6px;
+					color: white;
+					text-align: center;
+					background-color: #f35252;
+					box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.3);
+					width: 30px;
+					height: 30px;
+					border-radius: 30px;
+					padding-top: 5px;
+				}
+			}
+		}
+
+		.loading {
+			padding-top: 60px;
+		}
+
+		.empty-state {
+			.add-new {
+				color: $primary-blue;
+				cursor: pointer;
+				margin-top: 10px;
+			}
+		}
+	}
+}
