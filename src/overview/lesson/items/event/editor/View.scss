@@ -46,6 +46,8 @@
 		}
 
 		.event-list {
+			padding-bottom: 20px;
+
 			.event {
 				display: flex;
 				margin: 10px 10px 0 10px;
@@ -61,6 +63,18 @@
 
 					img {
 						width: 100%;
+					}
+
+					.no-icon {
+						color: #ddd;
+						height: 100%;
+						font-weight: 600;
+						font-size: 22px;
+						text-align: center;
+						padding: 16px 10px 0 10px;
+						background-color: #fafafafa;
+						border: solid 1px #eee;
+						border-radius: 3px;
 					}
 				}
 

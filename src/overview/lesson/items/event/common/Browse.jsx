@@ -9,7 +9,8 @@ const t = scoped('course.overview.lesson.items.event.common.Browse', {
 	noEventsForFilter: 'There are no events that match this search term.',
 	addNew: 'Create an Event',
 	deleteConfirmation: 'Removing this event will also remove it from any other lessons.',
-	searchPlaceholder: 'Search events...'
+	searchPlaceholder: 'Search events...',
+	noIcon: 'No Icon'
 });
 
 export default
@@ -30,7 +31,7 @@ class BrowseEvents extends React.Component {
 		return (
 			<div key={event.getID()} className="event" onClick={() => this.props.onSelect(event)}>
 				<div className="icon">
-					{event.icon && event.icon !== 'null' ? <img src={event.icon}/> : <div className="no-icon"/>}
+					{event.icon && event.icon !== 'null' ? <img src={event.icon}/> : <div className="no-icon">{t('noIcon')}</div>}
 				</div>
 				<div className="info">
 					<div className="title">{event.title}</div>
