@@ -91,7 +91,7 @@ class EventOverviewEditor extends React.Component {
 
 		this.setState({editorState: img}, () => {
 			// match aspectRatio to the dimensions of the image in event overview list items
-			EditImage.show(ImageEditor.getEditorState(img, {crop: {aspectRatio: 208 / 127, width: img.naturalWidth, height: img.naturalHeight}})).then((newEditorState) => {
+			EditImage.show(ImageEditor.getEditorState(img, {crop: {aspectRatio: 208 / 117, width: img.naturalWidth, height: img.naturalHeight}})).then((newEditorState) => {
 				ImageEditor.getImageForEditorState(newEditorState).then(newImg => {
 					this.onImageCropperSave(newImg, newEditorState);
 				});
