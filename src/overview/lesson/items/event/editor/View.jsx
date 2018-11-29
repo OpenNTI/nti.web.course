@@ -57,7 +57,7 @@ class EventEditor extends React.Component {
 	}
 
 	render () {
-		const {course, onCancel, onAddToLesson, onDelete, lessonOverview, overviewGroup, saveDisabled} = this.props;
+		const {course, onCancel, onAddToLesson, onDelete, lessonOverview, overviewGroup, saveDisabled, event: eventRef} = this.props;
 		const {event} = this.state;
 
 		return (
@@ -75,7 +75,7 @@ class EventEditor extends React.Component {
 						lessonOverview={lessonOverview}
 						overviewGroup={overviewGroup}
 						event={event}
-						item={event}
+						item={eventRef}
 						course={course}
 						onCancel={onCancel}
 						onAddToLesson={onAddToLesson}

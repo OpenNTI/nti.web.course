@@ -71,7 +71,7 @@ class EventOverviewEditor extends React.Component {
 			selectedRank: (props.overviewGroup.Items || []).length + 1,
 			event: props.event,
 			// check icon for null string.  if we remove an icon and PUT to the record, it won't be null, but "null"
-			img: props.item && props.item.icon && props.item.icon !== 'null' && {src: props.item.icon}
+			img: props.event && props.event.icon && props.event.icon !== 'null' && {src: props.event.icon}
 		};
 	}
 
