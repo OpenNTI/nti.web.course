@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DayPicker, Flyout, DateTime} from '@nti/web-commons';
+import cx from 'classnames';
 
 const MINUTES_INCREMENT = 15;
 
@@ -40,7 +41,11 @@ export default class EventDateInput extends React.Component {
 			startOfDay = new Date(currTime + (MINUTES_INCREMENT * 60 * 1000));
 		} while (!(startOfDay.getHours() === 0 && startOfDay.getMinutes() === 0));
 
-		this.setState({availableTimes: availableTimes.map(t=>new Date(t))});
+		this.setState({availableTimes: availableTimes.map(t=>new Date(t))}, () => {
+			if(availableTimes.length) {
+				this.props.onChange(this.state.availableTimes[0]);
+			}
+		});
 	}
 
 	componentDidMount () {
@@ -63,11 +68,11 @@ export default class EventDateInput extends React.Component {
 		return <div className="date-info"><span className="label">{this.props.label}</span>{DateTime.format(this.props.date, 'MMMM DD, YYYY')}<i className="icon-chevron-down"/></div>;
 	}
 
-	renderTimeTrigger () {
+	renderTimeTrigger (disabled) {
 		const {date} = this.props;
 
 		return (
-			<div className="time-value">
+			<div className={cx('time-value', {disabled})}>
 				{DateTime.format(date, 'hh:mm a')}
 				<i className="icon-chevron-down"/>
 			</div>
@@ -91,9 +96,15 @@ export default class EventDateInput extends React.Component {
 	}
 
 	renderTime () {
+		const {availableTimes} = this.state;
+		if(!availableTimes || !availableTimes.length) {
+			// disabled since there are no available times to choose from
+			return this.renderTimeTrigger(true);
+		}
+
 		return (
 			<Flyout.Triggered
-				className="event-time-input"
+				className="time-input"
 				trigger={this.renderTimeTrigger()}
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 				sizing={Flyout.SIZES.MATCH_SIDE}
@@ -117,7 +128,7 @@ export default class EventDateInput extends React.Component {
 
 	render () {
 		return (
-			<div className="event-date-input-container">
+			<div className="date-input-container">
 				<Flyout.Triggered
 					className="event-date-input"
 					trigger={this.renderDateTrigger()}
@@ -130,7 +141,6 @@ export default class EventDateInput extends React.Component {
 					</div>
 				</Flyout.Triggered>
 				{this.renderTime()}
-				{/* <TimePicker value={this.state.startDate} onChange={this.updateStartTime}/> */}
 			</div>
 		);
 	}
