@@ -42,9 +42,9 @@ export default class EventDateInput extends React.Component {
 		} while (!(startOfDay.getHours() === 0 && startOfDay.getMinutes() === 0));
 
 		this.setState({availableTimes: availableTimes.map(t=>new Date(t))}, () => {
-			if(availableTimes.length) {
-				this.props.onChange(this.state.availableTimes[0]);
-			}
+			// if(availableTimes.length) {
+			// 	this.props.onChange(this.state.availableTimes[0]);
+			// }
 		});
 	}
 

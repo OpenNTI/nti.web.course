@@ -46,8 +46,6 @@ class EventOverviewEditor extends React.Component {
 		saving: PropTypes.bool
 	}
 
-	attachDateFlyoutRef = x => this.dateFlyout = x
-
 	state = {}
 
 	constructor (props) {
