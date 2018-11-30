@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {DialogButtons, RemoveButton, DateTime, Prompt} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
-import {ImageEditor} from '@nti/web-whiteboard';
+import {ImageUpload} from '@nti/web-whiteboard';
 
 import PositionSelect from '../../../../common/PositionSelect';
 import Duration from '../../common/Duration';
-import EditImage from '../../../event/common/EditImage';
 
 const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', {
 	addToLesson: 'Add to Lesson',
@@ -63,28 +62,9 @@ export default class WebinarOverviewEditor extends React.Component {
 		);
 	}
 
-	onImageUpload = async (editorState) => {
-		const img = await ImageEditor.getImageForEditorState(editorState);
-
-		this.setState({editorState: img}, () => {
-			// match aspectRatio to the dimensions of the image in webinar overview list items
-			EditImage.show(ImageEditor.getEditorState(img, {crop: {aspectRatio: 208 / 117, width: img.naturalWidth, height: img.naturalHeight}})).then((newEditorState) => {
-				ImageEditor.getImageForEditorState(newEditorState).then(newImg => {
-					this.onImageCropperSave(newImg, newEditorState);
-				});
-			}).catch(() => {
-				this.setState({editorState: null});
-			});
-		});
-	}
-
-	onImageCropperSave = async (img, croppedImageState) => {
-		this.setState({img, croppedImageState});
-	}
-
 	renderWebinarInfo () {
 		const {webinar} = this.props;
-		const {startDate} = this.state;
+		const {startDate, img} = this.state;
 
 		return (
 			<div className="webinar-info">
@@ -96,36 +76,11 @@ export default class WebinarOverviewEditor extends React.Component {
 					<span className="date">{DateTime.format(startDate, 'dddd [at] hh:mm a z')}</span>
 				</div>
 				<div className="image-and-description">
-					{this.renderImage()}
+					<ImageUpload img={img} onChange={imgBlob => this.setState({imgBlob})}/>
 					<pre className="description">{webinar.description}</pre>
 				</div>
 			</div>
 		);
-	}
-
-	renderImage () {
-		if(!this.state.img && !this.state.editorState) {
-			return (
-				<div className="image-upload-container">
-					<ImageEditor.Editor onChange={this.onImageUpload}/>
-					<div className="content">
-						<i className="icon-upload"/>
-						<div className="text">{t('addAnImage')}</div>
-					</div>
-				</div>
-			);
-		}
-
-		if(this.state.img) {
-			return (
-				<div className="image-preview">
-					<img src={this.state.img.src}/>
-					<div className="remove-image">
-						<RemoveButton onRemove={() => {this.setState({img: null, editorState: null});}}/>
-					</div>
-				</div>
-			);
-		}
 	}
 
 	renderInfoBanner () {
@@ -204,23 +159,19 @@ export default class WebinarOverviewEditor extends React.Component {
 
 	onSave = () => {
 		const {onAddToLesson} = this.props;
-		const {selectedSection, selectedRank, croppedImageState, img, webinar} = this.state;
+		const {selectedSection, selectedRank, img, webinar, imgBlob} = this.state;
 
 		if(onAddToLesson) {
-			const request = croppedImageState ? ImageEditor.getBlobForEditorState(croppedImageState) : Promise.resolve();
+			let blobValue = null;
 
-			request.then(dataBlob => {
-				let blobValue = null;
+			if(img && !imgBlob) {
+				blobValue = undefined; // an image was provided, but no changes were made
+			}
+			else {
+				blobValue = imgBlob || null;
+			}
 
-				if(img && !dataBlob) {
-					blobValue = undefined; // an image was provided, but no changes were made
-				}
-				else {
-					blobValue = dataBlob || null;
-				}
-
-				onAddToLesson(selectedSection, selectedRank, blobValue, webinar);
-			});
+			onAddToLesson(selectedSection, selectedRank, blobValue, webinar);
 		}
 	}
 
