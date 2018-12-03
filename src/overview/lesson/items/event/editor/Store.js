@@ -111,14 +111,14 @@ export default class CourseEventsStore extends Stores.BoundStore {
 	}
 
 	async load (searchTerm) {
-		const {course} = this.binding;
-
-		const calendar = await course.fetchLinkParsed('CourseCalendar');
-		let contents = await calendar.fetchLinkParsed('contents');
 
 		if(this.searchTerm && this.searchTerm !== searchTerm) {
 			return;
 		}
+
+		const {course} = this.binding;
+		const calendar = await course.fetchLinkParsed('CourseCalendar');
+		let contents = await calendar.fetchLinkParsed('contents');
 
 		if(this.searchTerm) {
 			contents = contents.filter(i => {
