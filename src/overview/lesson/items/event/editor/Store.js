@@ -116,22 +116,31 @@ export default class CourseEventsStore extends Stores.BoundStore {
 			return;
 		}
 
-		const {course} = this.binding;
-		const calendar = await course.fetchLinkParsed('CourseCalendar');
-		let contents = await calendar.fetchLinkParsed('contents');
+		let events, error;
 
-		if(this.searchTerm) {
-			contents = contents.filter(i => {
-				return safeContains(i.title, this.searchTerm)
+		try {
+			const {course} = this.binding;
+			const calendar = await course.fetchLinkParsed('CourseCalendar');
+			events = await calendar.fetchLinkParsed('contents');
+
+			if(this.searchTerm) {
+				events = events.filter(i => {
+					return safeContains(i.title, this.searchTerm)
 					|| safeContains(i.description, this.searchTerm)
 					|| safeContains(i.location, this.searchTerm);
-			});
+				});
+			}
+
+		}
+		catch (e) {
+			error = e;
 		}
 
-		// get list of events from the server
 		this.set({
 			loading: false,
-			events: contents
+			events,
+			error
 		});
+
 	}
 }
