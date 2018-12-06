@@ -25,12 +25,13 @@ const t = scoped('course.card.type.catalogEntry', {
 ])
 export default class CatalogEntryType extends React.Component {
 	static propTypes = {
-		course: PropTypes.object.isRequired
+		course: PropTypes.object.isRequired,
+		onClick: PropTypes.func
 	}
 
 
 	render () {
-		const {course, ...otherProps} = this.props;
+		const {course, onClick, ...otherProps} = this.props;
 		const {IsAdmin:isAdmin, IsEnrolled:isEnrolled} = course;
 		const startDate = course.getStartDate();
 		const endDate = course.getEndDate();
@@ -73,7 +74,7 @@ export default class CatalogEntryType extends React.Component {
 
 
 		return (
-			<LinkTo.Object object={course}>
+			<LinkTo.Object object={course} onClick={onClick}>
 				<Card
 					{...otherProps}
 					course={course}

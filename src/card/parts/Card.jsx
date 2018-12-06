@@ -14,11 +14,15 @@ CourseCard.propTypes = {
 	card: PropTypes.bool,
 	list: PropTypes.bool,
 	collapseToList: PropTypes.bool,
-	progress: PropTypes.number
+	progress: PropTypes.number,
+	onClick: PropTypes.func
 };
-export default function CourseCard ({className, course, badges, card = true, list, collapseToList, progress}) {
+export default function CourseCard ({className, course, badges, card = true, list, collapseToList, progress, onClick}) {
 	return (
-		<div className={cx(className, 'nti-course-card-container', {card: card && !list && !collapseToList, list, 'collapse-to-list': collapseToList})}>
+		<div
+			onClick={onClick}
+			className={cx(className, 'nti-course-card-container', {card: card && !list && !collapseToList, list, 'collapse-to-list': collapseToList})}
+		>
 			<Image course={course} />
 			<div className="meta">
 				<Title course={course} />

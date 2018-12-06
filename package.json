@@ -49,6 +49,7 @@
     "@nti/web-commons": "0.x.x",
     "@nti/web-content": "^1.17.1",
     "@nti/web-integrations": "*",
+    "@nti/web-profiles": "^1.13.0",
     "@nti/web-reports": "0.x.x",
     "@nti/web-routing": "0.x.x",
     "@nti/web-search": "0.x.x",
