@@ -53,7 +53,8 @@ export default class WebinarStateManager extends EventEmitter {
 	schedule (timeout) {
 		clearTimeout(this.timeout);
 
-		this.timeout = setTimeout(() => { this.calculateState(); }, timeout);
+		// prevent overly large timeout values, which would cause us to try to recalculate the state (and refresh the webinar asset) repeatedly
+		this.timeout = setTimeout(() => { this.calculateState(); }, Math.min(timeout, 24 * 60 * 60 * 1000));
 	}
 
 	isSessionStartingWithinMinute (session, now) {
