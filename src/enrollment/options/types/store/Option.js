@@ -43,6 +43,7 @@ function handles (option) {
 @Registry.register(handles)
 export default class StoreEnrollmentOption extends Base {
 	ORDER = 2
+	SCOPE = 'Purchased'
 
 	getString = t
 

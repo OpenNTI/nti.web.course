@@ -19,6 +19,7 @@ export default class BaseEnrollment {
 	}
 
 	ORDER = 100
+	SCOPE = null
 
 	EnrolledTitle = EnrolledTitle
 	EnrolledDescription = EnrolledDescription
@@ -69,6 +70,11 @@ export default class BaseEnrollment {
 
 	isRedeemable () {
 		return false;
+	}
+
+
+	getScope () {
+		return this.SCOPE;
 	}
 
 

@@ -17,3 +17,4 @@ export * as Overview from './overview';
 export * from './scorm';
 export * as Templates from './editor/templates';
 export * from './lti-tools';
+export Selector from './selector';

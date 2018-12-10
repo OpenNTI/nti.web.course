@@ -24,7 +24,8 @@ const getStages = () => ([
 export default class CourseEnrollmentAdmin extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
-		user: PropTypes.object
+		user: PropTypes.object,
+		enrollment: PropTypes.object
 	}
 
 	state = {}
@@ -46,7 +47,10 @@ export default class CourseEnrollmentAdmin extends React.Component {
 
 
 	setupFor (props = this.props) {
-		const {course, user} = this.props;
+		const {course:courseProp, user:userProp, enrollment} = props;
+
+		const course = enrollment ? enrollment.CatalogEntry : courseProp;
+		const user = enrollment ? enrollment.Username : userProp;
 
 		const state = {course, user};
 		const stages = getStages();
@@ -110,8 +114,10 @@ export default class CourseEnrollmentAdmin extends React.Component {
 
 
 	renderManageEnrollment (user, course) {
+		const {enrollment} = this.props;
+
 		return (
-			<MangaeEnrollment user={user} course={course} />
+			<MangaeEnrollment user={user} course={course} enrollment={enrollment} />
 		);
 	}
 

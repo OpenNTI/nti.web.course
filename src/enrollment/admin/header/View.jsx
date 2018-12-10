@@ -8,7 +8,7 @@ export default class CourseEnrollmentAdminHeader extends React.Component {
 	static propTypes = {
 		stages: PropTypes.array,
 		course: PropTypes.object,
-		user: PropTypes.object
+		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 	}
 
 

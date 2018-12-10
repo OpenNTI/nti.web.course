@@ -36,6 +36,7 @@ function handles (option) {
 @Registry.register(handles)
 export default class OpenEnrollmentOption extends Base {
 	ORDER = 1
+	SCOPE = 'Public'
 
 	getString = t
 

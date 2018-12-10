@@ -1,43 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 import {Loading, EmptyState} from '@nti/web-commons';
 
 import Store from './Store';
-import Enrolled from './Enrolled';
-import NotEnrolled from './NotEnrolled';
+import Option from './Option';
 
 const t = scoped('course.enrollment.admin.manage-enrollment', {
-	notAuthorized: 'You do not have permission to edit this users enrollment.'
+	notAuthorized: 'You do not have permission to edit this users enrollment.',
+	enrolled: 'Enrolled',
+	notEnrolled: 'Not Enrolled'
 });
 
 export default
-@Store.connect(['loading', 'record', 'notAuthorized'])
+@Store.connect(['loading', 'error', 'record', 'notAuthorized', 'options', 'enrollInOption', 'dropCourse'])
 class CourseEnrollmentAdminManageEnrollment extends React.Component {
 	static deriveBindingFromProps (props) {
-		return {course: props.course, user: props.user};
+		return {course: props.course, user: props.user, enrollment: props.enrollment};
 	}
 
 	static propTypes = {
-		user: PropTypes.object.isRequired,
+		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
 		course: PropTypes.object.isRequired,
 		enrollment: PropTypes.object,
 
 		loading: PropTypes.bool,
 		record: PropTypes.object,
-		notAuthorized: PropTypes.bool
+		error: PropTypes.object,
+		options: PropTypes.array,
+		notAuthorized: PropTypes.bool,
+		enrollInOption: PropTypes.func,
+		dropCourse: PropTypes.func
 	}
 
 
 	render () {
-		const {loading, notAuthorized, record} = this.props;
+		const {loading, notAuthorized, record, error} = this.props;
 
 		return (
 			<div className="course-enrollment-admin-manage-enrollment">
 				{loading && (<Loading.Mask />)}
+				{!loading && error && this.renderError(error)}
 				{!loading && notAuthorized && this.renderNotAuthorized()}
 				{!loading && !notAuthorized && this.renderRecord(record)}
 			</div>
+		);
+	}
+
+
+	renderError (error) {
+		return (
+			<span className="error">
+				{(error && (error.message || error.Message)) || t('notAuthorized')}
+			</span>
 		);
 	}
 
@@ -48,12 +64,27 @@ class CourseEnrollmentAdminManageEnrollment extends React.Component {
 		);
 	}
 
-
 	renderRecord (record) {
-		const {course, user} = this.props;
+		const {options, enrollInOption, dropCourse} = this.props;
+		const listOptions = record ? options.filter(o => o.isEnrolled()) : options;
 
-		return record ?
-			(<Enrolled enrollment={record} course={course} user={user} />) :
-			(<NotEnrolled course={course} user={user}/>);
+		return (
+			<div>
+				<div className={cx('enrolled-header', {enrolled: !!record})}>
+					{record && (<i className="icon-check" />)}
+					{!record && (<i className="icon-bold-x" />)}
+					<span className="label">{record ? t('enrolled') : t('notEnrolled')}</span>
+				</div>
+				<ul className="enrollment-options">
+					{listOptions.map((option, index) => {
+						return (
+							<li key={index}>
+								<Option option={option} enrollInOption={enrollInOption} dropCourse={dropCourse}/>
+							</li>
+						);
+					})}
+				</ul>
+			</div>
+		);
 	}
 }

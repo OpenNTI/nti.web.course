@@ -63,6 +63,7 @@ function handles (option) {
 @Registry.register(handles)
 export default class FiveMinuteEnrollmentOption extends Base {
 	ORDER = 3
+	SCOPE = 'ForCredit'
 
 	getString = t
 

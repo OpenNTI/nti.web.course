@@ -9,7 +9,7 @@ const t = scoped('course.enrollment.admin.header.User', {
 
 export default class CourseEnrollmentAdminHeaderUserItem extends React.Component {
 	static propTypes = {
-		user: PropTypes.object
+		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
 	}
 
 
