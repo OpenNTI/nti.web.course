@@ -7,6 +7,15 @@
 		}
 	}
 
+	&.disclosure {
+		.info {
+			.nti-button {
+				pointer-events: none;
+				visibility: hidden;
+			}
+		}
+	}
+
 
 	.info {
 		display: flex;
@@ -45,6 +54,7 @@
 		margin: 1rem -0.625rem;
 		box-shadow: 0 0 0 1px $border-grey;
 		border-radius: 4px;
+		background: white;
 
 		&.not-available {
 			.icon-alert {

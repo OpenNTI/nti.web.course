@@ -8,7 +8,7 @@ import Store from './Store';
 import Option from './Option';
 
 const t = scoped('course.enrollment.admin.manage-enrollment', {
-	notAuthorized: 'You do not have permission to edit this users enrollment.',
+	notAuthorized: 'You do not have permission to edit this user\'s enrollment.',
 	enrolled: 'Enrolled',
 	notEnrolled: 'Not Enrolled'
 });

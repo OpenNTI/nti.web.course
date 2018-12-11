@@ -1,0 +1,18 @@
+@import '~@nti/style-common';
+
+.nti-course-enrollment-admin-prompt {
+	width: 750px;
+	max-width: 98vw;
+	background: white;
+
+	.panel-title-bar {
+		border-bottom: 1px solid $border-grey;
+	}
+
+	.contents-container {
+		height: calc(90vh - 90px);
+		overflow: auto;
+		padding-bottom: 4rem;
+		background: $panel-background;
+	}
+}

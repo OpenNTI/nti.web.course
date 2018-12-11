@@ -1,2 +1,2 @@
 export Options from './options';
-export Admin from './admin';
+export * as Admin from './admin';

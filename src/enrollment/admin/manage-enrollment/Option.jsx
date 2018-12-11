@@ -120,7 +120,7 @@ export default class CourseEnrollmentAdminManageEnrollmentOption extends React.C
 						{this.renderTitle(option)}
 						{this.renderDescription(option)}
 					</div>
-					{!disclosure && this.renderButton(option)}
+					{this.renderButton(option)}
 				</div>
 				{disclosure && this.renderDisclosure(disclosure)}
 			</div>
