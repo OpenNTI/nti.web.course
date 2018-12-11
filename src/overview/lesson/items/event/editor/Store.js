@@ -121,7 +121,7 @@ export default class CourseEventsStore extends Stores.BoundStore {
 		try {
 			const {course} = this.binding;
 			const calendar = await course.fetchLinkParsed('CourseCalendar');
-			events = await calendar.fetchLinkParsed('contents');
+			events = await calendar.fetchLinkParsed('contents', {'exclude_dynamic_events': true});
 
 			if(this.searchTerm) {
 				events = events.filter(i => {
