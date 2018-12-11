@@ -127,6 +127,11 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 				record: null,
 				options
 			});
+
+			if (this.binding.onChange) {
+				this.binding.onChange();
+			}
+
 		} catch (e) {
 			this.set({
 				loading: false,
@@ -168,6 +173,11 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 				record: enrollment,
 				options
 			});
+
+			if (this.binding.onChange) {
+				this.binding.onChange();
+			}
+
 		} catch (e) {
 			this.set({
 				loading: false,

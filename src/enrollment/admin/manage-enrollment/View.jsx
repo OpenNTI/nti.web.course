@@ -17,13 +17,14 @@ export default
 @Store.connect(['loading', 'error', 'record', 'notAuthorized', 'options', 'enrollInOption', 'dropCourse'])
 class CourseEnrollmentAdminManageEnrollment extends React.Component {
 	static deriveBindingFromProps (props) {
-		return {course: props.course, user: props.user, enrollment: props.enrollment};
+		return {course: props.course, user: props.user, enrollment: props.enrollment, onChange: props.onChange};
 	}
 
 	static propTypes = {
 		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
 		course: PropTypes.object.isRequired,
 		enrollment: PropTypes.object,
+		onChange: PropTypes.func,
 
 		loading: PropTypes.bool,
 		record: PropTypes.object,

@@ -17,6 +17,7 @@ const propMap = {
 	items: 'items',
 	loading: 'loading',
 	error: 'error',
+	reload: 'reload',
 	loadingNextPage: 'loadingNextPage',
 	hasNextPage: 'hasNextPage',
 	hasPrevPage: 'hasPrevPage',
@@ -38,6 +39,7 @@ class CourseRosterView extends React.Component {
 		items: PropTypes.array,
 		loading: PropTypes.bool,
 		error: PropTypes.any,
+		reload: PropTypes.func,
 		hasNextPage: PropTypes.bool,
 		hasPrevPage: PropTypes.bool,
 		hasCourse: PropTypes.bool
@@ -61,6 +63,15 @@ class CourseRosterView extends React.Component {
 	}
 
 
+	reload () {
+		const {reload} = this.props;
+
+		if (reload) {
+			reload();
+		}
+	}
+
+
 	loadNextPage = () => {
 		const {hasNextPage, store} = this.props;
 
@@ -80,7 +91,7 @@ class CourseRosterView extends React.Component {
 
 
 	getComponentProps () {
-		const {items, loading, error, searchTerm, hasNextPage, hasPrevPage} = this.props;
+		const {items, loading, error, reload, searchTerm, hasNextPage, hasPrevPage} = this.props;
 
 		return {
 			loading,
@@ -89,6 +100,7 @@ class CourseRosterView extends React.Component {
 			searchTerm,
 			hasNextPage,
 			hasPrevPage,
+			reload,
 			loadNextPage: hasNextPage && this.loadNextPage,
 			loadPrevPage: hasPrevPage && this.loadPrevPage
 		};

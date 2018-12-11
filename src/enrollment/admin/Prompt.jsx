@@ -10,18 +10,70 @@ const t = scoped('course.enrollment.admin.Prompt', {
 	done: 'Done'
 });
 
-export default class CourseEnrollmentAdminPrompt extends React.Component {
+class CourseEnrollmentPromptTrigger extends React.Component {
 	static propTypes = {
-		onBeforeDismiss: PropTypes.func.isRequired
+		children: PropTypes.node
+	}
+
+
+	state = {}
+
+
+	onClick = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		this.setState({
+			visible: true
+		});
 	}
 
 
 	onBeforeDismiss = () => {
-		const {onBeforeDismiss} = this.props;
+		this.setState({
+			visible: false
+		});
+	}
+
+
+	render () {
+		const {children, ...otherProps} = this.props;
+		const {visible} = this.state;
+
+		return (
+			<div className="nti-course-enrollment-admin-prompt-trigger" onClick={this.onClick}>
+				{children}
+				{visible && (<CourseEnrollmentAdminPrompt {...otherProps} onBeforeDismiss={this.onBeforeDismiss} />)}
+			</div>
+		);
+	}
+}
+
+
+export default class CourseEnrollmentAdminPrompt extends React.Component {
+	static Trigger = CourseEnrollmentPromptTrigger
+
+	static propTypes = {
+		onBeforeDismiss: PropTypes.func.isRequired,
+		onChange: PropTypes.func
+	}
+
+
+	onBeforeDismiss = () => {
+		const {onBeforeDismiss, onChange} = this.props;
 
 		if (onBeforeDismiss) {
 			onBeforeDismiss();
 		}
+
+		if (onChange && this.changed) {
+			onChange();
+		}
+	}
+
+
+	onChange = () => {
+		this.changed = true;
 	}
 
 
@@ -43,7 +95,7 @@ export default class CourseEnrollmentAdminPrompt extends React.Component {
 				<div className="nti-course-enrollment-admin-prompt">
 					<Panels.TitleBar title={t('title')} iconAction={this.onBeforeDismiss} />
 					<div className="contents-container">
-						<View {...props} />
+						<View {...props} onChange={this.onChange} />
 					</div>
 					<DialogButtons buttons={buttons} />
 				</div>

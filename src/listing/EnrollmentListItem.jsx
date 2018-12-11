@@ -4,6 +4,8 @@ import cx from 'classnames';
 import {Presentation, DateTime} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
+import {Admin as EnrollmentAdmin} from '../enrollment';
+
 const t = scoped('course.listing.EnrollmentListItem', {
 	completed: 'Completed on %(date)s'
 });
@@ -13,7 +15,8 @@ const DATE_FORMAT = 'MMMM D, YYYY';
 export default class CourseEnrollmentListItem extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
-		enrollment: PropTypes.object.isRequired
+		enrollment: PropTypes.object.isRequired,
+		onChange: PropTypes.func,
 	}
 
 
@@ -24,6 +27,7 @@ export default class CourseEnrollmentListItem extends React.Component {
 			<div className={cx('nti-course-enrollment-list-item', className)} {...otherProps}>
 				{this.renderIcon(enrollment)}
 				{this.renderMeta(enrollment)}
+				{this.renderControls(enrollment)}
 			</div>
 		);
 	}
@@ -75,6 +79,21 @@ export default class CourseEnrollmentListItem extends React.Component {
 				{!CompletedDate && (
 					<progress max={1} value={PercentageProgress || 0} />
 				)}
+			</div>
+		);
+	}
+
+
+	renderControls (enrollment) {
+		if (enrollment.isAdministrative || !enrollment.hasLink('CourseDrop')) { return null; }
+
+		const {onChange} = this.props;
+
+		return (
+			<div className="course-enrollment-controls">
+				<EnrollmentAdmin.Prompt.Trigger enrollment={enrollment} onChange={onChange}>
+					<i className="icon-edit" />
+				</EnrollmentAdmin.Prompt.Trigger>
 			</div>
 		);
 	}

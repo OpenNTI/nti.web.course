@@ -25,7 +25,8 @@ export default class CourseEnrollmentAdmin extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
 		user: PropTypes.object,
-		enrollment: PropTypes.object
+		enrollment: PropTypes.object,
+		onChange: PropTypes.func
 	}
 
 	state = {}
@@ -114,10 +115,10 @@ export default class CourseEnrollmentAdmin extends React.Component {
 
 
 	renderManageEnrollment (user, course) {
-		const {enrollment} = this.props;
+		const {enrollment, onChange} = this.props;
 
 		return (
-			<MangaeEnrollment user={user} course={course} enrollment={enrollment} />
+			<MangaeEnrollment user={user} course={course} enrollment={enrollment} onChange={onChange} />
 		);
 	}
 

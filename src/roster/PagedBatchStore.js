@@ -108,6 +108,13 @@ class PagedBatchStore extends Stores.BoundStore {
 	}
 
 
+	reload () {
+		const batch = this.get('batch');
+
+		this[Load](batch.href);
+	}
+
+
 	loadNextPage () {
 		if (!this.hasNextPage) { return; }
 
