@@ -22,7 +22,7 @@ class CourseEnrollmentAdminManageEnrollment extends React.Component {
 
 	static propTypes = {
 		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
-		course: PropTypes.object.isRequired,
+		course: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
 		enrollment: PropTypes.object,
 		onChange: PropTypes.func,
 

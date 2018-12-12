@@ -23,8 +23,8 @@ const getStages = () => ([
 
 export default class CourseEnrollmentAdmin extends React.Component {
 	static propTypes = {
-		course: PropTypes.object,
-		user: PropTypes.object,
+		course: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 		enrollment: PropTypes.object,
 		onChange: PropTypes.func
 	}

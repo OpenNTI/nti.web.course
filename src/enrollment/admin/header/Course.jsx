@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {getService} from '@nti/web-client';
 import {Presentation} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -9,12 +10,52 @@ const t = scoped('course.enrollment.admin.header.Course', {
 
 export default class CourseEnrollmentAdminHeaderCourseItem extends React.Component {
 	static propTypes = {
-		course: PropTypes.object
+		course: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+	}
+
+	state = {}
+
+	componentDidMount () {
+		this.setupFor(this.props);
 	}
 
 
-	render () {
+	componentDidUpdate (prevProps) {
 		const {course} = this.props;
+		const {course: prevCourse} = prevProps;
+
+		if (course !== prevCourse) {
+			this.setupFor(this.props);
+		}
+	}
+
+
+	async setupFor (props) {
+		const {course} = props;
+
+		if (course && typeof course !== 'string') {
+			this.setState({course});
+			return;
+		}
+
+		try {
+			const service = await getService();
+			const resolved = await service.getObject(course);
+
+			this.setState({
+				course: resolved
+			});
+		} catch (e) {
+			this.setState({
+				course: null
+			});
+		}
+	}
+
+
+
+	render () {
+		const {course} = this.state;
 
 		return (
 			<div className="course-enrollment-admin-header-course-item">

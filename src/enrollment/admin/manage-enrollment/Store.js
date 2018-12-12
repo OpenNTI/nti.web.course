@@ -11,6 +11,21 @@ async function resolveUser (user) {
 	}
 }
 
+async function resolveCourse (course) {
+	if (course && typeof course !== 'string') {
+		return course;
+	}
+
+	try {
+		const service = await getService();
+		const resolved = await service.getObject(course);
+
+		return resolved;
+	} catch (e) {
+		return null;
+	}
+}
+
 async function getUserEnrollment (user, course) {
 	try {
 		const enrollments = await user.fetchLinkParsed('UserEnrollments');
@@ -62,7 +77,7 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 	async load () {
 		if (this.binding.course === this.course && this.binding.user === this.user) { return; }
 
-		this.course = this.binding.course;
+		this.course = await resolveCourse(this.binding.course);
 		this.user = await resolveUser(this.binding.user);
 		this.enrollment = this.binding.enrollment;
 
