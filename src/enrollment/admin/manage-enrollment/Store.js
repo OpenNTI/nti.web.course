@@ -81,7 +81,7 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 		this.user = await resolveUser(this.binding.user);
 		this.enrollment = this.binding.enrollment;
 
-		if (!this.user || !this.user.hasLink('EnrollUser') || !this.user.hasLink('UserEnrollments')) {
+		if (!this.user || !this.user.hasLink('EnrollUser')) {
 			this.set({
 				loading: false,
 				record: null,
