@@ -6,6 +6,7 @@ import {Loading, EmptyState} from '@nti/web-commons';
 
 import Store from './Store';
 import Option from './Option';
+import Advanced from './Advanced';
 
 const t = scoped('course.enrollment.admin.manage-enrollment', {
 	notAuthorized: 'You do not have permission to edit this user\'s enrollment.',
@@ -14,7 +15,7 @@ const t = scoped('course.enrollment.admin.manage-enrollment', {
 });
 
 export default
-@Store.connect(['loading', 'error', 'record', 'notAuthorized', 'options', 'enrollInOption', 'dropCourse'])
+@Store.connect(['loading', 'error', 'record', 'notAuthorized', 'options', 'enrollInOption', 'dropCourse', 'enrollInScope'])
 class CourseEnrollmentAdminManageEnrollment extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {course: props.course, user: props.user, enrollment: props.enrollment, onChange: props.onChange};
@@ -31,6 +32,7 @@ class CourseEnrollmentAdminManageEnrollment extends React.Component {
 		error: PropTypes.object,
 		options: PropTypes.array,
 		notAuthorized: PropTypes.bool,
+		enrollInScope: PropTypes.func,
 		enrollInOption: PropTypes.func,
 		dropCourse: PropTypes.func
 	}
@@ -66,7 +68,7 @@ class CourseEnrollmentAdminManageEnrollment extends React.Component {
 	}
 
 	renderRecord (record) {
-		const {options, enrollInOption, dropCourse} = this.props;
+		const {options, enrollInOption, dropCourse, enrollInScope} = this.props;
 		const listOptions = record ? options.filter(o => o.isEnrolled()) : options;
 
 		return (
@@ -85,6 +87,7 @@ class CourseEnrollmentAdminManageEnrollment extends React.Component {
 						);
 					})}
 				</ul>
+				<Advanced enrollInScope={enrollInScope} />
 			</div>
 		);
 	}

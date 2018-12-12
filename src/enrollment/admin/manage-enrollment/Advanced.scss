@@ -1,0 +1,75 @@
+@import '~@nti/style-common';
+
+.nti-course-enrollment-admin-manage-advanced {
+	margin-top: 2rem;
+	border-style: solid;
+	border-width: 0;
+	border-top-width: 1px;
+	border-color: $border-grey-light;
+	padding: 1.25rem;
+
+	.heading {
+		font-size: 0.875rem;
+		color: $secondary-grey;
+
+		span, i {
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		i {
+			font-size: 0.75rem;
+			font-weight: 700;
+			margin-right: 0.3rem;
+			transition: transform 0.3s;
+		}
+	}
+
+	.content {
+		overflow: hidden;
+		height: 0px;
+		transition: height 0.3s;
+	}
+
+
+	&.showing {
+		.heading {
+			i {
+				transform: rotate(180deg);
+			}
+		}
+
+		.content {
+			height: 80px;
+		}
+	}
+
+
+	.manual-scope {
+		display: flex;
+		flex-direction: row;
+		align-items: flex-end;
+
+		.nti-labeled-input {
+			flex: 1 1 auto;
+			margin-right: 1rem;
+
+			.nti-clearable-input {
+				width: 100%;
+
+				.nti-text-input {
+					width: 100%;
+					padding-top: 0.25rem;
+					padding-bottom: 0.25rem;
+					height: rem-calc(40px);
+				}
+			}
+		}
+
+		.nti-button {
+			flex: 0 0 auto;
+			width: 150px;
+			text-align: center;
+		}
+	}
+}

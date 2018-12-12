@@ -156,13 +156,12 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 	}
 
 
-	async enrollInOption (option) {
+	async enrollInScope (scope) {
 		const {course, user} = this;
 
 		this.set({loading: true, error: null});
 
 		const params = {ntiid: course.NTIID};
-		const scope = option && option.getScope();
 
 		if (scope) {
 			params.scope = scope;
@@ -192,12 +191,16 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 			if (this.binding.onChange) {
 				this.binding.onChange();
 			}
-
 		} catch (e) {
 			this.set({
 				loading: false,
 				error: e
 			});
 		}
+	}
+
+
+	enrollInOption (option) {
+		return this.enrollInScope(option && option.getScope());
 	}
 }
