@@ -1,6 +1,7 @@
 import {getService} from '@nti/web-client';
 import {Stores} from '@nti/lib-store';
 import {Models} from '@nti/lib-interfaces';
+import AppDispatcher from '@nti/lib-dispatcher';
 
 function safeContains (fieldValue, target) {
 	return fieldValue && fieldValue.toLowerCase().indexOf(target.toLowerCase()) >= 0;
@@ -19,6 +20,13 @@ export default class CourseEventsStore extends Stores.BoundStore {
 
 	async deleteEvent (event) {
 		await event.delete();
+
+		AppDispatcher.handleRequestAction({
+			type: 'Calendar-Event-Deleted',
+			data: {
+				calendarEvent: event
+			}
+		});
 
 		await this.load();
 	}
@@ -64,8 +72,10 @@ export default class CourseEventsStore extends Stores.BoundStore {
 			}
 
 			let calendarEvent;
+			let type = 'Calendar-Event-Created';
 
 			if(event) {
+				type = 'Calendar-Event-Changed';
 				calendarEvent = await service.putParseResponse(event.getLink('edit'), formData);
 			}
 			else {
@@ -76,6 +86,13 @@ export default class CourseEventsStore extends Stores.BoundStore {
 
 			this.set({
 				saving: false
+			});
+
+			AppDispatcher.handleRequestAction({
+				type,
+				data: {
+					calendarEvent
+				}
 			});
 
 			return calendarEvent;
