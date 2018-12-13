@@ -87,7 +87,7 @@ class CourseEnrollmentAdminManageEnrollment extends React.Component {
 						);
 					})}
 				</ul>
-				<Advanced enrollInScope={enrollInScope} />
+				{!record && <Advanced enrollInScope={enrollInScope} />}
 			</div>
 		);
 	}
