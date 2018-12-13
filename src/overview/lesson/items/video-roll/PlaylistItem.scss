@@ -41,7 +41,8 @@ $text-color: #ebebeb;
 		font-size: rem-calc(10px);
 		font-weight: 700;
 		line-height: 1.3;
-		color: $secondary-grey;
+		color: white;
+		opacity: 0.6;
 		text-transform: uppercase;
 	}
 
@@ -50,11 +51,6 @@ $text-color: #ebebeb;
 
 		&, a {
 			cursor: default;
-		}
-
-		.meta {
-			color: white;
-			opacity: 0.6;
 		}
 	}
 
