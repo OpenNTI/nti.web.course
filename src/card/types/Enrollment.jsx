@@ -76,7 +76,7 @@ export default class EnrollmentCard extends React.Component {
 		if(completed) {
 			badges.push((
 				<Badge green>
-					<i className="icon-check completed-check"/>
+					<i className="icon-check-10 completed-check"/>
 					<span>{t('completed')}</span>
 				</Badge>
 			));
