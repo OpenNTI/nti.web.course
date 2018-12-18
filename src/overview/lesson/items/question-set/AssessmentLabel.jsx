@@ -39,7 +39,7 @@ export default function LessonOverviewQuestionSetAssessmentLabel ({assessment, a
 			{assessmentSubmission && (
 				<div className="submitted">
 					<span className="correct">
-						<i className="icon-check" />
+						<i className="icon-check-10" />
 						<span>{t('correct', {correct})}</span>
 					</span>
 					<span className="incorrect">
