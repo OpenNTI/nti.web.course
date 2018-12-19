@@ -43,6 +43,18 @@ class CourseSelectorStore extends Stores.BoundStore {
 		try {
 			const service = await getService();
 			const catalog = service.getCollection('Courses', 'Catalog');
+
+			if(!catalog) {
+				this.set({
+					loading: false,
+					courses: [],
+					loadMoreLink: false,
+					hasMore: false
+				});
+
+				return;
+			}
+
 			const batch = await service.getBatch(catalog.href, params);
 
 			//if the search term has changed out from under us
