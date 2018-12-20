@@ -58,6 +58,8 @@
 				position: relative;
 
 				.title {
+					hyphens: auto;
+
 					@include limit-lines($lines: 2, $line-height: 1.4);
 				}
 
@@ -84,6 +86,8 @@
 				}
 
 				.info {
+					max-width: 550px;
+
 					.date {
 						color: $tertiary-grey;
 						font-size: 10px;
