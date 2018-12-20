@@ -26,7 +26,10 @@ export default class CourseEnrollmentAdminManageAdvanced extends React.Component
 	}
 
 
-	onScopeChange = (scope) => {
+	onScopeChange = (scope, e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
 		this.setState({
 			scope
 		});
