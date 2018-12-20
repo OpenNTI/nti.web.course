@@ -57,8 +57,13 @@
 				height: 78px;
 				position: relative;
 
+				.title {
+					@include limit-lines($lines: 2, $line-height: 1.4);
+				}
+
 				.icon {
 					width: 120px;
+					min-width: 120px;
 					margin-right: 10px;
 
 					img {
