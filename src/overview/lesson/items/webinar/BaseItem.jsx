@@ -27,6 +27,7 @@ export default class WebinarBaseItem extends React.Component {
 		isMinimal: PropTypes.bool,
 		hideControls: PropTypes.bool,
 		editMode: PropTypes.bool,
+		readOnly: PropTypes.bool,
 		onRequirementChange: PropTypes.func
 	}
 
@@ -169,7 +170,7 @@ export default class WebinarBaseItem extends React.Component {
 
 
 	renderContents () {
-		const {item: {webinar}, isMinimal, hideControls, editMode} = this.props;
+		const {item: {webinar}, isMinimal, hideControls, editMode, readOnly} = this.props;
 
 		return (
 			<div className="contents">
@@ -177,7 +178,7 @@ export default class WebinarBaseItem extends React.Component {
 					<div className="title">{webinar ? webinar.subject : t('noLongerAvailable')}</div>
 					{this.renderAvailability()}
 				</div>
-				{!hideControls && !editMode && this.renderButton()}
+				{!readOnly && !hideControls && !editMode && this.renderButton()}
 				{webinar && !isMinimal && this.renderImageAndDescription()}
 			</div>
 		);
