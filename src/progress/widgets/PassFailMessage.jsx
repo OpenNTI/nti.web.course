@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import cx from 'classnames';
 
-import {RequirementDetails} from '../../pass-fail/requirement-details';
+import {RequirementDetails} from '../../pass-fail';
 
 const t = scoped('course.progress.widgets.PassFailMessage', {
 	successCongratulations: 'Congratulations!',
@@ -14,6 +14,7 @@ const t = scoped('course.progress.widgets.PassFailMessage', {
 
 export default class PassFailMessage extends React.Component {
 	static propTypes = {
+		course: PropTypes.object.isRequired,
 		requirementsMet: PropTypes.bool
 	}
 
@@ -44,13 +45,18 @@ export default class PassFailMessage extends React.Component {
 	}
 
 	render () {
-		const {requirementsMet} = this.props;
+		const {requirementsMet, course} = this.props;
 		const {viewDetails} = this.state;
 
 		return (
 			<div className={cx('pass-fail-message', { success: requirementsMet })}>
 				{requirementsMet ? this.renderPassInfo() : this.renderFailInfo()}
-				{viewDetails && <RequirementDetails onBeforeDismiss={() => this.setState({viewDetails: false})}/>}
+				{viewDetails && (
+					<RequirementDetails
+						course={course}
+						onBeforeDismiss={() => this.setState({viewDetails: false})}
+					/>
+				)}
 			</div>
 		);
 	}

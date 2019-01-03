@@ -5,7 +5,6 @@ import {CircularProgress} from '@nti/web-charts';
 import {Hooks} from '@nti/web-session';
 import {HOC, Iframe, Prompt} from '@nti/web-commons';
 import {getService} from '@nti/web-client';
-import cx from 'classnames';
 
 import PassFailMessage from './PassFailMessage';
 
@@ -218,10 +217,11 @@ class OutlineHeader extends React.Component {
 	}
 
 	renderPassFailInfo () {
+		const {course} = this.props;
 		const {type, requirementsMet} = this.state;
 
 		if(type === STUDENT) {
-			return <PassFailMessage requirementsMet={requirementsMet}/>;
+			return <PassFailMessage course={course} requirementsMet={requirementsMet}/>;
 		}
 	}
 
