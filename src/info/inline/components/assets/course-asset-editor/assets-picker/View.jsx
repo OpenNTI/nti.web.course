@@ -53,7 +53,7 @@ const getSizes = () => {
 export default class AssetsPicker extends React.Component {
 	static propTypes = {
 		asset: PropTypes.object.isRequired,
-
+		baseAsset: PropTypes.object,
 		onSave: PropTypes.func,
 		onCancel: PropTypes.func,
 		onBack: PropTypes.func

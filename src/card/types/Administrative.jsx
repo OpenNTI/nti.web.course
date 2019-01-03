@@ -23,6 +23,7 @@ const t = scoped('course.card.type.administering', {
 export default class Administrative extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
+		onEdit: PropTypes.func,
 		onModification: PropTypes.func
 	}
 
