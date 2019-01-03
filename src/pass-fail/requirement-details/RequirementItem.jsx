@@ -8,11 +8,12 @@ export default class RequirementItem extends React.Component {
 
 	render () {
 		const { item } = this.props;
+		const { grade } = item;
 		return (
 			<div className="requirement-item req-row">
 				<div className="req-col req-item-title">{item.title}</div>
-				<div className="req-col req-item-score">{item.score}%</div>
-				<div className="req-col req-item-target-score">{item.targetScore}%</div>
+				<div className="req-col req-item-score">{grade && grade.value.replace('-', '')}%</div>
+				<div className="req-col req-item-target-score">%</div>
 			</div>
 		);
 	}

@@ -13,15 +13,26 @@ const t = scoped('course.pass-fail.requirement-details', {
 	message: 'The following items did not meet the requirements to complete this course yet.'
 });
 
-const items = [
-	{ title: 'The Basics Of Buying A Telescope', score: 80, targetScore: 90, getID () { return '1'; } },
-	{ title: 'Astronomy Or Astrology', score: 80, targetScore: 90, getID () { return '2'; } },
-	{ title: 'Asteroids', score: 80, targetScore: 90, getID () { return '3'; } },
-];
-
 export default class RequirementDetails extends React.Component {
 	static propTypes = {
-		onBeforeDismiss: PropTypes.func.isRequired
+		onBeforeDismiss: PropTypes.func.isRequired,
+		course: PropTypes.shape({
+			getAssignments: PropTypes.func.isRequired
+		}).isRequired
+	}
+
+	state = {
+		items: []
+	}
+
+	async componentDidMount () {
+		if (this.props.course) {
+			const assignments = await this.props.course.getAssignments();
+			const summary = await assignments.getStudentSummaryWithHistory();
+			const items = summary && summary.items.filter(x => x.grade);
+
+			this.setState({ items });
+		}
 	}
 
 	onBeforeDismiss = () => {
@@ -33,6 +44,7 @@ export default class RequirementDetails extends React.Component {
 	}
 
 	render () {
+		const { items } = this.state;
 		const buttons = [
 			{ label: t('cancel'), onClick: this.onBeforeDismiss },
 			{ label: t('done'), onClick: this.onBeforeDismiss },
