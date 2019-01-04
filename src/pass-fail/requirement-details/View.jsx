@@ -28,8 +28,8 @@ export default class RequirementDetails extends React.Component {
 	async componentDidMount () {
 		if (this.props.course) {
 			const assignments = await this.props.course.getAssignments();
-			const summary = await assignments.getStudentSummaryWithHistory();
-			const items = summary && summary.items.filter(x => x.grade);
+			const summary = assignments.getStudentSummaryWithHistory && await assignments.getStudentSummaryWithHistory();
+			const items = summary && summary.items.filter(x => x.grade && x.totalPoints && x.passingScore);
 
 			this.setState({ items });
 		}
