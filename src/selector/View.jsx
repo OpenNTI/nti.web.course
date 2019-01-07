@@ -36,7 +36,7 @@ class CourseSelector extends React.Component {
 	}
 
 	static propTypes = {
-		collection: PropTypes.oneOf(['catalog']),
+		collection: PropTypes.oneOf(['catalog', 'AdministeredCourses']),
 		selected: PropTypes.array,
 		onSelect: PropTypes.func,
 

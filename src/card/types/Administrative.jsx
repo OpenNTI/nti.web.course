@@ -24,7 +24,8 @@ export default class Administrative extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		onEdit: PropTypes.func,
-		onModification: PropTypes.func
+		onModification: PropTypes.func,
+		onClick: PropTypes.func
 	}
 
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
@@ -100,7 +101,7 @@ export default class Administrative extends React.Component {
 	}
 
 	render () {
-		const {course, ...otherProps} = this.props;
+		const {course, onClick, ...otherProps} = this.props;
 		const startDate = course.CatalogEntry.getStartDate();
 		const endDate = course.CatalogEntry.getEndDate();
 		const preview = course.CatalogEntry.Preview;
@@ -134,7 +135,7 @@ export default class Administrative extends React.Component {
 		}
 
 		return (
-			<LinkTo.Object object={course}>
+			<LinkTo.Object object={course} onClick={onClick}>
 				<Card
 					{...otherProps}
 					course={course.CatalogEntry}

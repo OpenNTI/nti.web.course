@@ -42,7 +42,8 @@ class CourseSelectorStore extends Stores.BoundStore {
 
 		try {
 			const service = await getService();
-			const catalog = service.getCollection('Courses', 'Catalog');
+			const collection = this.binding;
+			const catalog = service.getCollection(collection, 'Courses');
 
 			if(!catalog) {
 				this.set({

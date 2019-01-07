@@ -29,7 +29,7 @@ export default class CourseSelectorListItem extends React.Component {
 		return (
 			<CourseCard
 				className={cx('nti-course-selector-list-item', {selected})}
-				course={course}
+				course={course.CatalogEntry || course}
 				onClick={this.onClick}
 				list
 			/>

@@ -18,7 +18,7 @@ export default class EnrollmentAdminPickCourse extends React.Component {
 
 	render () {
 		return (
-			<CourseSelector onSelect={this.onSelect} />
+			<CourseSelector onSelect={this.onSelect} collection="AdministeredCourses" />
 		);
 	}
 }
