@@ -13,7 +13,7 @@ async function resolveUser (user) {
 
 async function resolveCourse (course) {
 	if (course && typeof course !== 'string') {
-		return course;
+		return course.CatalogEntry || course;
 	}
 
 	try {
