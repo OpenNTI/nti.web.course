@@ -28,6 +28,10 @@ export default class Administrative extends React.Component {
 		onClick: PropTypes.func
 	}
 
+	static contextTypes = {
+		router: PropTypes.object
+	}
+
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
 
 	deleteCourse = (e) => {
@@ -64,10 +68,19 @@ export default class Administrative extends React.Component {
 		global.location.href = 'mailto:support@nextthought.com?subject=Support%20Request';
 	}
 
-	doEdit = () => {
+	doEdit = (e) => {
 		const { onEdit, course } = this.props;
 
-		onEdit && this.context.router.routeTo.object(course);
+		if (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
+		if (onEdit) {
+			onEdit(course);
+		} else if (this.context.router) {
+			this.context.router.routeTo.object(course, 'edit');
+		}
 	}
 
 	doExport = (e) => {
