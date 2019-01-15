@@ -58,8 +58,10 @@ class Scorm extends Component {
 	}
 
 	isCompletableCourse () {
+		const {bundle} = this.props;
+
 		// drive this by CompletionPolicy or CourseProgress
-		return Object.keys(this.props.bundle).includes('CompletionPolicy');
+		return Object.keys(bundle).includes('CompletionPolicy') && Boolean(bundle.CompletionPolicy);
 	}
 
 	renderInstructor = () => {
