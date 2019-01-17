@@ -60,6 +60,32 @@ exports[`Course admin advanced completion test (no requirables) renders completa
         <div
           className="label"
         >
+          Percentage (1 to 100)
+        </div>
+        <div
+          className="control"
+        >
+          <input
+            className="number-input-component nti-number-input nti-text-input valid"
+            disabled={false}
+            max={100}
+            min={1}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            pattern="[0-9]*"
+            step={1}
+            type="text"
+            value="50"
+          />
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
           Award Certificate on Completion
         </div>
         <div
@@ -377,32 +403,6 @@ exports[`Course admin advanced completion test (no requirables) renders completa
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input valid"
-            disabled={false}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value="50"
-          />
         </div>
       </div>
     </div>
@@ -470,6 +470,32 @@ exports[`Course admin advanced completion test (with requirables) renders comple
         <div
           className="label"
         >
+          Percentage (1 to 100)
+        </div>
+        <div
+          className="control"
+        >
+          <input
+            className="number-input-component nti-number-input nti-text-input valid"
+            disabled={false}
+            max={100}
+            min={1}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            pattern="[0-9]*"
+            step={1}
+            type="text"
+            value="50"
+          />
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
           Award Certificate on Completion
         </div>
         <div
@@ -787,32 +813,6 @@ exports[`Course admin advanced completion test (with requirables) renders comple
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input valid"
-            disabled={false}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value="50"
-          />
         </div>
       </div>
     </div>
@@ -880,6 +880,32 @@ exports[`Course admin advanced completion test (with requirables) renders comple
         <div
           className="label"
         >
+          Percentage (1 to 100)
+        </div>
+        <div
+          className="control"
+        >
+          <input
+            className="number-input-component nti-number-input nti-text-input invalid"
+            disabled={false}
+            max={100}
+            min={1}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            pattern="[0-9]*"
+            step={1}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
           Award Certificate on Completion
         </div>
         <div
@@ -1199,32 +1225,6 @@ exports[`Course admin advanced completion test (with requirables) renders comple
           </div>
         </div>
       </div>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input invalid"
-            disabled={false}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -1282,6 +1282,32 @@ exports[`Course admin advanced completion test (with requirables) renders comple
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        className="completion-control"
+      >
+        <div
+          className="label"
+        >
+          Percentage (1 to 100)
+        </div>
+        <div
+          className="control"
+        >
+          <input
+            className="number-input-component nti-number-input nti-text-input invalid"
+            disabled={false}
+            max={100}
+            min={1}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            pattern="[0-9]*"
+            step={1}
+            type="text"
+            value=""
+          />
         </div>
       </div>
       <div
@@ -1609,32 +1635,6 @@ exports[`Course admin advanced completion test (with requirables) renders comple
           </div>
         </div>
       </div>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input invalid"
-            disabled={false}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value=""
-          />
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -1692,6 +1692,32 @@ exports[`Course admin advanced completion test (with requirables) renders not co
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        className="completion-control disabled"
+      >
+        <div
+          className="label"
+        >
+          Percentage (1 to 100)
+        </div>
+        <div
+          className="control"
+        >
+          <input
+            className="number-input-component nti-number-input nti-text-input invalid"
+            disabled={true}
+            max={100}
+            min={1}
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            onKeyPress={[Function]}
+            pattern="[0-9]*"
+            step={1}
+            type="text"
+            value=""
+          />
         </div>
       </div>
       <div
@@ -2017,32 +2043,6 @@ exports[`Course admin advanced completion test (with requirables) renders not co
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div
-        className="completion-control disabled"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input invalid"
-            disabled={true}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value=""
-          />
         </div>
       </div>
     </div>
