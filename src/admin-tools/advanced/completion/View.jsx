@@ -63,7 +63,9 @@ class CourseAdminCompletion extends React.Component {
 
 
 	onCompletionPolicyChange = () => {
-		this.onSave(!this.props.completable, this.props.percentage, this.props.certificationPolicy);
+		const isCompletable = !this.props.completable;	// toggle the old value
+
+		this.onSave(isCompletable, isCompletable ? 100 : this.props.percentage, this.props.certificationPolicy);
 	}
 
 
@@ -184,9 +186,9 @@ class CourseAdminCompletion extends React.Component {
 						<div className="error">{error || ''}</div>
 						<div className="inputs">
 							{this.renderCompletableToggle()}
+							{this.renderPercentage()}
 							{this.renderCertificateToggle()}
 							{this.renderDefaultRequiredSection()}
-							{this.renderPercentage()}
 						</div>
 					</div>
 				)
