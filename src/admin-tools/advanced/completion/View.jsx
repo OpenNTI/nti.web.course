@@ -17,16 +17,18 @@ const t = scoped('course.admin-tools.advanced.completion.View', {
 });
 
 export default
-@Store.connect({
-	loading: 'loading',
-	completable: 'completable',
-	certificationPolicy: 'certificationPolicy',
-	percentage: 'percentage',
-	disabled: 'disabled',
-	defaultRequiredDisabled: 'defaultRequiredDisabled',
-	defaultRequirables: 'defaultRequirables',
-	error: 'error'
-})
+@Store.connect([
+	'loading',
+	'completable',
+	'certificationPolicy',
+	'percentage',
+	'disabled',
+	'defaultRequiredDisabled',
+	'defaultRequirables',
+	'completableToggleDisabled',
+	'percentageDisabled',
+	'error'
+])
 class CourseAdminCompletion extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -38,6 +40,8 @@ class CourseAdminCompletion extends React.Component {
 		disabled: PropTypes.bool,
 		defaultRequiredDisabled: PropTypes.bool,
 		defaultRequirables: PropTypes.array,
+		completableToggleDisabled: PropTypes.bool,
+		percentageDisabled: PropTypes.bool,
 		error: PropTypes.string
 	}
 
@@ -70,8 +74,8 @@ class CourseAdminCompletion extends React.Component {
 
 
 	renderCompletableToggle () {
-		const {completable, disabled: nonEditor} = this.props;
-		const disabled = nonEditor;
+		const {completable, disabled: nonEditor, completableToggleDisabled} = this.props;
+		const disabled = nonEditor || completableToggleDisabled;
 		const className = cx('completion-control', {disabled});
 
 		return (
@@ -155,8 +159,8 @@ class CourseAdminCompletion extends React.Component {
 
 
 	renderPercentage () {
-		const {completable, disabled: nonEditor} = this.props;
-		const disabled = !completable || nonEditor;
+		const {completable, disabled: nonEditor, percentageDisabled} = this.props;
+		const disabled = !completable || nonEditor || percentageDisabled;
 		const className = cx('completion-control', {disabled});
 
 		return (
