@@ -11,7 +11,9 @@ const {Video} = Models.media;
 
 const DEFAULT_REQUIRED_POLICY_LINKS = {
 	FETCH: 'GetDefaultRequiredPolicy',
-	UPDATE: 'UpdateDefaultRequiredPolicy'
+	UPDATEDEFAULT: 'UpdateDefaultRequiredPolicy',
+	UPDATE: 'UpdateCompletionPolicy',
+	RESET: 'ResetCompletionPolicy'
 };
 
 const TYPES = {
@@ -66,7 +68,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		try {
 			let types = defaultRequirables.reduce((acc, a) => acc.concat(a.isDefault ? MIME_TYPES_MAP[a.label] : []), []);
 
-			await this.course.CompletionPolicy.putToLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATE, { 'mime_types': types });
+			await this.course.CompletionPolicy.putToLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATEDEFAULT, { 'mime_types': types });
 		}
 		catch (e) {
 			this.set('error', e.message || e);
@@ -142,7 +144,9 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			certificationPolicy: false,
 			percentage: 0.0,
 			disabled: !CatalogEntry || !CatalogEntry.hasLink('edit'),
-			defaultRequiredDisabled: false
+			defaultRequiredDisabled: false,
+			completableToggleDisabled: !this.course.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.RESET),
+			percentageDisabled: !this.course.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATE)
 		};
 
 		if(this.course.CompletionPolicy) {
@@ -161,7 +165,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 				state.defaultRequirables = defaultRequirables;
 			}
 
-			if(!this.course.CompletionPolicy.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATE)) {
+			if(!this.course.CompletionPolicy.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATEDEFAULT)) {
 				state.defaultRequiredDisabled = true;
 			}
 
