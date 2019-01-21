@@ -1,0 +1,21 @@
+.requirement {
+	.requirement-header {
+		display: flex;
+
+		.req-col {
+			flex: 1;
+		}
+
+		.requirement-main.req-col {
+			flex: 2;
+		}
+
+		.requirement-main, .score, .target-score {
+			color: #b8b8b8;
+			font-size: 10px;
+			font-weight: bold;
+			line-height: 14px;
+			text-transform: uppercase;
+		}
+	}
+}

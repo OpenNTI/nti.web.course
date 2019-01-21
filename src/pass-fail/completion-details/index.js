@@ -1,0 +1,1 @@
+export CompletionDetails from './View';

@@ -6,7 +6,9 @@ import {Hooks} from '@nti/web-session';
 import {HOC, Iframe, Prompt} from '@nti/web-commons';
 import {getService} from '@nti/web-client';
 
-const t = scoped('course.components.GradeCard', {
+import PassFailMessage from './PassFailMessage';
+
+const t = scoped('course.progress.widgets.OutlineHeader', {
 	courseProgress: 'Course Progress',
 	outline: 'Outline',
 	getCertificate: 'View Certificate',
@@ -102,7 +104,8 @@ class OutlineHeader extends React.Component {
 			...this.getStateValues(courseProgress),
 			completedDate,
 			isCompleted,
-			type: STUDENT
+			type: STUDENT,
+			requirementsMet: false	// TODO: Determine this from course
 		});
 	}
 
@@ -213,6 +216,15 @@ class OutlineHeader extends React.Component {
 		);
 	}
 
+	renderPassFailInfo () {
+		const {course} = this.props;
+		const {type, requirementsMet} = this.state;
+
+		if(type === STUDENT) {
+			return <PassFailMessage course={course} requirementsMet={requirementsMet}/>;
+		}
+	}
+
 	render () {
 		if(!this.state.courseProgress || this.state.showDefaultHeader) {
 			return <div className="default-outline-header">{t('outline')}</div>;
@@ -220,9 +232,12 @@ class OutlineHeader extends React.Component {
 
 		return (
 			<HOC.ItemChanges item={this.props.course.PreferredAccess} onItemChange={this.onPreferredAccessChange}>
-				<div className="outline-progress-header">
-					<CircularProgress width={38} height={38} value={this.state.pctComplete} showPctSymbol={false} deficitFillColor="#b8b8b8"/>
-					{this.renderLabel()}
+				<div className="outline-header">
+					<div className="outline-progress-header">
+						<CircularProgress width={38} height={38} value={this.state.pctComplete} showPctSymbol={false} deficitFillColor="#b8b8b8"/>
+						{this.renderLabel()}
+					</div>
+					{this.renderPassFailInfo()}
 				</div>
 			</HOC.ItemChanges>
 		);

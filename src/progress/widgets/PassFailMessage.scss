@@ -1,0 +1,38 @@
+@import "~@nti/style-common";
+
+.pass-fail-message {
+	border-bottom: solid 3px #ddd;
+	border-top: solid 1px #ddd;
+	padding: 10px 20px;
+	font-size: 14px;
+	background-color: #fffafa;
+
+	&.success {
+		background-color: #fafffa;
+	}
+
+	.success-message {
+		.congratulations {
+			color: $primary-green;
+			line-height: 19px;
+			font-weight: 600;
+		}
+
+		.message {
+			margin-top: 10px;
+		}
+	}
+
+	.fail-message {
+		.message {
+			margin-bottom: 10px;
+		}
+
+		.details-link {
+			line-height: 19px;
+			color: $primary-red;
+			font-weight: 600;
+			cursor: pointer;
+		}
+	}
+}

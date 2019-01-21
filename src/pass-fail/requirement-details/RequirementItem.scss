@@ -1,0 +1,13 @@
+.requirement-item {
+	display: flex;
+	padding: 15px 0;
+	border-bottom: 1px solid #f0f0f0;
+
+	.req-col {
+		flex: 1;
+	}
+
+	.req-item-title.req-col {
+		flex: 2;
+	}
+}

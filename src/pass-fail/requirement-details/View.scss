@@ -1,0 +1,26 @@
+.requirement-details-prompt {
+	height: 500px;
+	min-width: 768px;
+
+	.panel-title-bar {
+		background: #fbfbfb;
+		border-bottom: 1px solid #e2e2e2;
+	}
+
+	.contents-container {
+		background: white;
+		padding: 25px;
+		height: 100%;
+		color: #494949;
+
+		.req-message {
+			padding-bottom: 30px;
+			color: #494949;
+			font-size: 14px;
+		}
+	}
+
+	.dialog-buttons {
+		background: white;
+	}
+}

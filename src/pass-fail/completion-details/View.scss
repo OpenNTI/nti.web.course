@@ -1,0 +1,56 @@
+@import "~@nti/style-common";
+
+.completion-details-prompt {
+	height: 500px;
+	min-width: 768px;
+
+	.contents-container {
+		background: white;
+		padding: 25px;
+		height: 100%;
+		color: #494949;
+		text-align: center;
+
+		.completion-image {
+			.icon {
+				height: 144px;
+				width: 148px;
+				margin: 0 auto;
+			}
+
+			.certificate-link {
+				color: $tertiary-grey;
+				line-height: 29px;
+				cursor: pointer;
+				text-decoration: none;
+				margin-bottom: 20px;
+			}
+
+			margin-bottom: 30px;
+		}
+
+		.congratulations {
+			font-size: 32px;
+			margin-bottom: 20px;
+		}
+
+		.message {
+			line-height: 29px;
+		}
+
+		.dismiss {
+			cursor: pointer;
+			text-align: center;
+			width: 10rem;
+			height: 36px;
+			line-height: 36px;
+			margin: 50px auto 0 auto;
+			border-radius: 3px;
+			border: solid 1px #ddd;
+		}
+	}
+
+	.dialog-buttons {
+		background: white;
+	}
+}
