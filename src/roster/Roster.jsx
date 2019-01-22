@@ -5,6 +5,7 @@ import {Loading, Table as T} from '@nti/web-commons';
 
 import columnsFor from './columns';
 import styles from './Roster.css';
+import Header from './Header';
 
 const cx = classnames.bind(styles);
 
@@ -25,7 +26,7 @@ export default class Roster extends React.Component {
 
 	render () {
 		const {items, loading, course} = this.props;
-		const isEmpty = !(items && items.length);
+		const empty = !(items && items.length);
 		const columns = columnsFor(course);
 
 		return (
@@ -35,11 +36,9 @@ export default class Roster extends React.Component {
 						? <Loading.Spinner />
 						: (
 							<>
-								<header>
-									
-								</header>
-								<div className={cx('content')}>
-									<T.Table className={cx('table')} columns={columns} items={items} />
+								<Header />
+								<div className={cx('content', {empty})}>
+									{ !empty && <T.Table className={cx('table')} columns={columns} items={items} />}
 								</div>
 							</>
 						)
