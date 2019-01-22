@@ -52,7 +52,8 @@ describe('Course admin advanced completion test (with requirables)', () => {
 				offersCompletionCertificate: true,
 				percentage: 0.5
 			},
-			getID: () => 'testCourse'
+			getID: () => 'testCourse',
+			hasLink: () => true
 		};
 
 		const cmp = renderer.create(<View course={course}/>);
@@ -71,7 +72,8 @@ describe('Course admin advanced completion test (with requirables)', () => {
 			CatalogEntry: {
 				hasLink: () => false
 			},
-			getID: () => 'testCourse'
+			getID: () => 'testCourse',
+			hasLink: () => false
 		};
 
 		const cmp = renderer.create(<View course={course}/>);
@@ -95,7 +97,8 @@ describe('Course admin advanced completion test (with requirables)', () => {
 				getLink: () => 'mockLink',
 				offersCompletionCertificate: false,
 			},
-			getID: () => 'testCourse'
+			getID: () => 'testCourse',
+			hasLink: () => true
 		};
 
 		const cmp = renderer.create(<View course={course}/>);
@@ -119,7 +122,8 @@ describe('Course admin advanced completion test (with requirables)', () => {
 				getLink: () => 'mockLink',
 				offersCompletionCertificate: false,
 			},
-			getID: () => 'testCourse'
+			getID: () => 'testCourse',
+			hasLink: () => true
 		};
 
 		const cmp = renderer.create(<View course={course}/>);
@@ -149,7 +153,8 @@ describe('Course admin advanced completion test (no requirables)', () => {
 				offersCompletionCertificate: true,
 				percentage: 0.5
 			},
-			getID: () => 'testCourse'
+			getID: () => 'testCourse',
+			hasLink: () => true
 		};
 
 		const cmp = renderer.create(<View course={course}/>);
