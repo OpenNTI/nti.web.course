@@ -44,6 +44,13 @@ class PagedBatchStore extends Stores.BoundStore {
 		return batch ? batch.Items : null;
 	}
 
+	get sortedOn () {
+		return (this.get('options') || {}).sortOn;
+	}
+
+	get sortedOrder () {
+		return (this.get('options') || {}).sortOrder;
+	}
 
 	setHref (href) {
 		this.set('href', href);

@@ -1,0 +1,18 @@
+@import "~@nti/style-common/variables.css";
+
+.header {
+	font: normal 700 0.6em/3 "Open Sans", sans-serif;
+	text-transform: uppercase;
+}
+
+.header:not(.sorted) {
+	color: var(--tertiary-grey, #b8b8b8);
+}
+
+.sorted.asc::after {
+	content: 'asc';
+}
+
+.sorted.desc::after {
+	content: 'desc';
+}

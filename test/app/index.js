@@ -7,10 +7,15 @@ import {Layouts} from '@nti/web-commons';
 // import {Tasks} from '@nti/lib-commons';
 
 // import Overview from '../../src/overview/lesson/Overview';
-import {Overview, Enrollment, WebinarPanels} from '../../src';
-import PositionSelect from '../../src/overview/lesson/common/PositionSelect';
-import Button from '../../src/overview/lesson/items/webinar/Button';
-import BaseItem from '../../src/overview/lesson/items/webinar/BaseItem';
+import {
+	Overview,
+	// Enrollment,
+	// WebinarPanels
+} from '../../src';
+// import PositionSelect from '../../src/overview/lesson/common/PositionSelect';
+// import Button from '../../src/overview/lesson/items/webinar/Button';
+// import BaseItem from '../../src/overview/lesson/items/webinar/BaseItem';
+import {View as RosterView, Roster} from '../../src/roster';
 
 // import Picker from './PickCourse';
 
@@ -88,7 +93,8 @@ class Test extends React.Component {
 	async componentDidMount () {
 		this.now = Date.now();
 		const service = await getService();
-		const course = await service.getObject('tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x330b30:5573657273:baC0bEuPGke');
+		// const course = await service.getObject('tag:nextthought.com,2011-10:cory.jones@nextthought.com-OID-0x330b30:5573657273:baC0bEuPGke');
+		const course = await service.getObject('tag:nextthought.com,2011-10:ray.hatfield@nextthought.com-OID-0x13086e:5573657273:kE0RxGafqhJ');
 		const outline = await course.getOutline();
 		const items = outline.getFlattenedList();
 		const contentItems = items.filter(item => item.hasLink('overview-content'));
@@ -198,6 +204,8 @@ class Test extends React.Component {
 		}
 	}
 
+	renderRoster = props => <Roster {...props} />
+
 	render () {
 		if(!this.state.course) {
 			return <div>Loading overview...</div>;
@@ -205,7 +213,7 @@ class Test extends React.Component {
 
 		const {course, outlineNode, overview, layout} = this.state;
 
-		return <BaseItem item={this.item}/>;
+		return <RosterView course={course} renderRoster={this.renderRoster} />;
 
 		// return (
 		// 	<div>

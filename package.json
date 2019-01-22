@@ -62,7 +62,7 @@
     "react-day-picker": "^7.1.9"
   },
   "devDependencies": {
-    "@nti/cmp-scripts": "^2.0.0",
+    "@nti/cmp-scripts": "^2.5.0",
     "@nti/style-common": "^1.4.5",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",

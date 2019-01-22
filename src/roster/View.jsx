@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {searchable, contextual} from '@nti/web-search';
 import {scoped} from '@nti/lib-locale';
+import {SortOrder} from '@nti/lib-interfaces';
 
 import Store from './Store';
 
@@ -21,7 +22,8 @@ const propMap = {
 	loadingNextPage: 'loadingNextPage',
 	hasNextPage: 'hasNextPage',
 	hasPrevPage: 'hasPrevPage',
-	hasCourse: 'hasCourse'
+	hasCourse: 'hasCourse',
+	options: 'options'
 };
 
 export default
@@ -42,7 +44,8 @@ class CourseRosterView extends React.Component {
 		reload: PropTypes.func,
 		hasNextPage: PropTypes.bool,
 		hasPrevPage: PropTypes.bool,
-		hasCourse: PropTypes.bool
+		hasCourse: PropTypes.bool,
+		options: PropTypes.object
 	}
 
 
@@ -89,11 +92,34 @@ class CourseRosterView extends React.Component {
 		}
 	}
 
+	setSort = (sortOn, sortOrder = SortOrder.ASC) => {
+		const {store} = this.props;
 
-	getComponentProps () {
-		const {items, loading, error, reload, searchTerm, hasNextPage, hasPrevPage} = this.props;
+		store.addOptions({
+			sortOn,
+			sortOrder
+		});
+	}
+
+
+	getComponentProps = () => {
+		const {
+			course,
+			items,
+			loading,
+			error,
+			reload,
+			searchTerm,
+			hasNextPage,
+			hasPrevPage,
+			options: {
+				sortOn: sortedOn,
+				sortOrder: sortedOrder
+			} = {},
+		} = this.props;
 
 		return {
+			course,
 			loading,
 			items,
 			error,
@@ -102,7 +128,10 @@ class CourseRosterView extends React.Component {
 			hasPrevPage,
 			reload,
 			loadNextPage: hasNextPage && this.loadNextPage,
-			loadPrevPage: hasPrevPage && this.loadPrevPage
+			loadPrevPage: hasPrevPage && this.loadPrevPage,
+			setSort: this.setSort,
+			sortedOn,
+			sortedOrder
 		};
 	}
 

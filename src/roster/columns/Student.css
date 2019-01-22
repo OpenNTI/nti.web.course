@@ -1,0 +1,16 @@
+.student {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	min-height: 60px;
+}
+
+.student > * {
+	flex: 0 0 auto;
+}
+
+.avatar {
+	width: 60px;
+	height: 60px;
+	margin-right: 1em;
+}
