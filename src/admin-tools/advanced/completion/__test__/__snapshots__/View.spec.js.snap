@@ -410,6 +410,20 @@ exports[`Course admin advanced completion test (no requirables) renders completa
 </div>
 `;
 
+exports[`Course admin advanced completion test (no requirables) renders completable, certificate, percentage, default required 2`] = `
+<div
+  className="course-admin-completion"
+>
+  <ul
+    className="tinyloader"
+  >
+    <li />
+    <li />
+    <li />
+  </ul>
+</div>
+`;
+
 exports[`Course admin advanced completion test (with requirables) renders completable, certificate, percentage, default required 1`] = `
 <div
   className="course-admin-completion"
@@ -1230,6 +1244,20 @@ exports[`Course admin advanced completion test (with requirables) renders comple
 </div>
 `;
 
+exports[`Course admin advanced completion test (with requirables) renders completable, no certificate, no percentage 2`] = `
+<div
+  className="course-admin-completion"
+>
+  <ul
+    className="tinyloader"
+  >
+    <li />
+    <li />
+    <li />
+  </ul>
+</div>
+`;
+
 exports[`Course admin advanced completion test (with requirables) renders completable, no certificate, no percentage, default required disabled 1`] = `
 <div
   className="course-admin-completion"
@@ -1640,6 +1668,20 @@ exports[`Course admin advanced completion test (with requirables) renders comple
 </div>
 `;
 
+exports[`Course admin advanced completion test (with requirables) renders completable, no certificate, no percentage, default required disabled 2`] = `
+<div
+  className="course-admin-completion"
+>
+  <ul
+    className="tinyloader"
+  >
+    <li />
+    <li />
+    <li />
+  </ul>
+</div>
+`;
+
 exports[`Course admin advanced completion test (with requirables) renders not completable 1`] = `
 <div
   className="course-admin-completion"
@@ -2047,5 +2089,19 @@ exports[`Course admin advanced completion test (with requirables) renders not co
       </div>
     </div>
   </div>
+</div>
+`;
+
+exports[`Course admin advanced completion test (with requirables) renders not completable 2`] = `
+<div
+  className="course-admin-completion"
+>
+  <ul
+    className="tinyloader"
+  >
+    <li />
+    <li />
+    <li />
+  </ul>
 </div>
 `;
