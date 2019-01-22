@@ -1,2 +1,8 @@
 @import "~normalize.css";
 @import "~@nti/style-common/all.scss";
+
+#content {
+	min-height: 100vh;
+	background: linear-gradient(90deg, #037d9a, #18347c);
+	padding-top: 4rem;
+}

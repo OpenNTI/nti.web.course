@@ -1,0 +1,18 @@
+.percent-complete-container {
+	display: flex;
+	align-items: center;
+	color: var(--tertiary-grey, #b8b8b8);
+	font-weight: 300;
+}
+
+.percent-complete-container svg {
+	margin-right: 0.5em;
+}
+
+.percent-complete-container > * {
+	flex: 0 0 auto;
+}
+
+.positive .text {
+	color: var(--secondary-green, #3fb34f);
+}
