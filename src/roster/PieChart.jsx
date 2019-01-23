@@ -6,6 +6,7 @@ import styles from './PieChart.css';
 
 const cx = classnames.bind(styles);
 
+// sample/test data
 const data = Array.from({length: 4}).reduce((acc, _, i, {length}) => {
 	const percent = i === length - 1 ? acc.remaining : Math.random() * acc.remaining;
 	acc.remaining -= percent;
@@ -16,34 +17,91 @@ const data = Array.from({length: 4}).reduce((acc, _, i, {length}) => {
 	return acc;
 }, { remaining: 1, result: [] }).result;
 
-// const data = Array.from({length: 5}, () => ({percent: 0.2}));
-
+// convert between radians and degrees
 const d2r = d => d * (Math.PI / 180);
 const r2d = r => r / (Math.PI / 180);
 
-// find the angle that will produce an arc of a given length at a given radius
-// using this to allow for gaps between the segments. returns angle in radians
-// arcLength = radius * angleInRadians
+/**
+ * find the angle that will produce an arc of a given length at a given radius
+ * using this to allow for gaps between the segments. returns angle in radians
+ * arcLength = radius * angleInRadians
+ * 
+ * @param {number} arcLength - the sought arc length in local coordinate space
+ * @param {number} atRadius - the radius of the arc
+ * @returns {number} - the angle in radians of an arc of the given length at the given radius
+ */
 const angleForArcLength = (arcLength, atRadius) => arcLength / atRadius;
 
+/**
+ * The viewBox size. Coordinates are computed within this coordinate space
+ */
 const size = 100;
+
+/**
+ * The center of the viewBox, center of the chart
+ */
 const center = size / 2;
+
+/**
+ * The diameter of the chart's inner hole in local coordinate space units
+ */
 const hole = 40;
+
+/**
+ * The thickness of the chart segments for the given size and hole
+ */
 const thickness = (size - hole) / 2;
-const radius = (size - thickness) / 2;
+
+/**
+ * The outer radius of the chart
+ */
 const radiusOuter = size / 2;
+
+/**
+ * The inner radius of the chart
+ */
 const radiusInner = radiusOuter - thickness;
+
+/**
+ * The size of the gap between chart segments, in local coordinate space units
+ */
 const gapSize = 1;
+
+/**
+ * Compute the angle offset required to establish the gaps between segments at the inner edge
+ */
 const gapAngleOffsetInner = r2d(angleForArcLength(gapSize, radiusInner));
+
+/**
+ * Compute the angle offset required to establish the gaps between segments at the outer edge
+ */
 const gapAngleOffsetOuter = r2d(angleForArcLength(gapSize, radiusOuter));
+
+/**
+ * The minimum angle that won't be swallowed by the gap offsets at the inner edge.
+ * Used to compute the minimum value that won't get swallowed (minimumValue defined below)
+ */
 const minimumAngleDeg = r2d(angleForArcLength(gapSize * 2, radiusInner));
+
+/**
+ * The minimum value that won't get swallowed by the gap offsets at the inner edge, according to the 
+ */
 const minimumValue = minimumAngleDeg / 360;
+
+/**
+ * Colors to cycle through for the chart segments
+ */
 const colors = [
 	'red', 'green', 'blue', 'grey', 'black'
 ];
 
-
-const coords = (deg, r = radius) => {
+/**
+ * Computes an x/y coordinate for the given angle and radius
+ * @param {number} deg - The angle in degrees
+ * @param {number} r  - The radius
+ * @returns {Array} - An x/y coordinate for the point at the given angle and radius
+ */
+const coords = (deg, r) => {
 	const rad = d2r(deg);
 
 	return [
@@ -55,72 +113,57 @@ const coords = (deg, r = radius) => {
 
 export default class PieChart extends React.Component {
 
-	makePath = ({paths, subtotal: prevSubtotal}, {percent}, i) => {
-		const startAngle = prevSubtotal * 360 + 90;
+	makeSegment ({paths, subtotal}, {percent}, i) {
+		const startAngle = subtotal * 360 + 90; // +90 so we start at 12 o'clock
 		const endAngle = startAngle + (percent * 360);
-		const subtotal = prevSubtotal + percent;
 
-		const [x1, y1] = coords(startAngle);
-		const [x2, y2] = coords(endAngle);
+		// no gaps for values beneath the minimum threshold
+		const useGap = percent >= minimumValue;
+		const innerGap = useGap ? gapAngleOffsetInner : 0;
+		const outerGap = useGap ? gapAngleOffsetOuter : 0;
 
-		const largeArc = percent > 0.5 ? 1 : 0;
-		const sweep = 1;
+		const startAngleInner = startAngle + innerGap;
+		const startAngleOuter = startAngle + outerGap;
+		const endAngleInner = endAngle - innerGap;
+		const endAngleOuter = endAngle - outerGap;
 
-		paths.push(
-			<path
-				fill="none"
-				stroke={colors[i % colors.length]}
-				strokeWidth={thickness}
-				d={`
-					M${x1} ${y1}
-					A ${radius} ${radius} 0 ${largeArc} ${sweep} ${x2} ${y2}
-				`}
-			/>
-		);
-		return {
-			paths,
-			subtotal
-		};
-	}
-
-	makeSegment ({paths, subtotal: prevSubtotal}, {percent}, i) {
-		const startAngle = prevSubtotal * 360 + 90;
-		const endAngle = startAngle + (percent * 360);
-		const subtotal = prevSubtotal + percent;
-		const innerAngleOffset = percent >= minimumValue ? gapAngleOffsetInner : 0;
-		const outerAngleOffset = percent >= minimumValue ? gapAngleOffsetOuter : 0;
-
-		const startAngleInner = startAngle + innerAngleOffset;
-		const startAngleOuter = startAngle + outerAngleOffset;
-		const endAngleInner = endAngle - innerAngleOffset;
-		const endAngleOuter = endAngle - outerAngleOffset;
-
-		const [x1, y1] = coords(startAngleInner, radiusInner);
-		const [x2, y2] = coords(startAngleOuter, radiusOuter);
-		const [x3, y3] = coords(endAngleOuter, radiusOuter);
-		const [x4, y4] = coords(endAngleInner, radiusInner);
+		const [x1, y1] = coords(startAngleInner, radiusInner); // start point on inner circle
+		const [x2, y2] = coords(startAngleOuter, radiusOuter); // start point on outer circle
+		const [x3, y3] = coords(endAngleOuter, radiusOuter); // end point on outer circle
+		const [x4, y4] = coords(endAngleInner, radiusInner); // end point on inner circle
 
 		const largeArc = percent > 0.5 ? 1 : 0;
 		const sweepOuter = 1;
 		const sweepInner = 0;
 
+		const commands = [
+			// move to start angle coordinate, inner radius
+			`M${ x1 } ${ y1 }`,
+
+			// line to start angle coordinate, outer radius
+			`L${ x2 } ${ y2 }`,
+
+			// arc to end angle coordinate, outer radius
+			`A${ radiusOuter } ${ radiusOuter } 0 ${ largeArc } ${ sweepOuter } ${ x3 } ${ y3 }`,
+
+			// line to end angle coordinate, inner radius
+			`L${ x4 } ${ y4 }`,
+
+			// arc back to start angle coordinate, inner radius
+			`A${ radiusInner } ${ radiusInner } 0 ${ largeArc } ${ sweepInner } ${ x1 } ${ y1 }`
+		];
+		
 		paths.push(
 			<path
 				fill={colors[i % colors.length]}
 				stroke="none"
-				d={`
-					M${x1} ${y1}
-					L${x2} ${y2}
-					A ${radiusOuter} ${radiusOuter} 0 ${largeArc} ${sweepOuter} ${x3} ${y3}
-					L${x4} ${y4}
-					A ${radiusInner} ${radiusInner} 0 ${largeArc} ${sweepInner} ${x1} ${y1}
-				`}
+				d={commands.join(' ')}
 			/>
 		);
 
 		return {
 			paths,
-			subtotal
+			subtotal: subtotal + percent
 		};
 	}
 
