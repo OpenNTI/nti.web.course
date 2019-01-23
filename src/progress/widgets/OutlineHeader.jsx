@@ -94,18 +94,18 @@ class OutlineHeader extends React.Component {
 
 	loadStudentProgress (course) {
 		const {PreferredAccess} = course;
+		const {CourseProgress} = PreferredAccess || {};
+		const {CompletedItem} = CourseProgress || {};
 
-		const courseProgress = PreferredAccess.CourseProgress;
-
-		const completedDate = courseProgress && courseProgress.getCompletedDate();
+		const completedDate = CourseProgress && CourseProgress.getCompletedDate();
 		const isCompleted = Boolean(completedDate);
 
 		this.setState({
-			...this.getStateValues(courseProgress),
+			...this.getStateValues(CourseProgress),
 			completedDate,
 			isCompleted,
 			type: STUDENT,
-			requirementsMet: false	// TODO: Determine this from course
+			requirementsMet: CompletedItem && CompletedItem.Success
 		});
 	}
 
@@ -218,9 +218,9 @@ class OutlineHeader extends React.Component {
 
 	renderPassFailInfo () {
 		const {course} = this.props;
-		const {type, requirementsMet} = this.state;
+		const {type, isCompleted, requirementsMet} = this.state;
 
-		if(type === STUDENT) {
+		if(type === STUDENT && isCompleted) {
 			return <PassFailMessage course={course} requirementsMet={requirementsMet}/>;
 		}
 	}
