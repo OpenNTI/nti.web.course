@@ -42,7 +42,8 @@ class CourseAdminCompletion extends React.Component {
 		defaultRequirables: PropTypes.array,
 		completableToggleDisabled: PropTypes.bool,
 		percentageDisabled: PropTypes.bool,
-		error: PropTypes.string
+		error: PropTypes.string,
+		onChange: PropTypes.func
 	}
 
 	state = {}
@@ -116,10 +117,14 @@ class CourseAdminCompletion extends React.Component {
 		});
 	}
 
-	saveDefaultPolicy (label, value) {
-		const {store} = this.props;
+	async saveDefaultPolicy (label, value) {
+		const {store, onChange} = this.props;
 
-		store.saveDefaultPolicy(label, value);
+		const savedCourse = await store.saveDefaultPolicy(label, value);
+
+		if(onChange) {
+			onChange(savedCourse);
+		}
 	}
 
 	renderDefaultRequiredToggle = (defaultRequirable, disabled) => {
@@ -172,10 +177,14 @@ class CourseAdminCompletion extends React.Component {
 	}
 
 
-	onSave (completable, percentage, certificationPolicy) {
-		const {store} = this.props;
+	async onSave (completable, percentage, certificationPolicy) {
+		const {store, onChange} = this.props;
 
-		store.save(completable, percentage, certificationPolicy);
+		const savedCourse = await store.save(completable, percentage, certificationPolicy);
+
+		if(onChange) {
+			onChange(savedCourse);
+		}
 	}
 
 
