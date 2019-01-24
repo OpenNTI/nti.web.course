@@ -3,6 +3,10 @@ import {mixin} from '@nti/lib-decorators';
 
 const Load = Symbol('load');
 
+const OPTIONS = 'options';
+const FILTER = 'filter';
+const BATCH_START = 'batchStart';
+
 export default
 @mixin(Mixins.Searchable)
 class PagedBatchStore extends Stores.BoundStore {
@@ -10,16 +14,21 @@ class PagedBatchStore extends Stores.BoundStore {
 		super();
 
 		this.set('batch', null);
-		this.set('options', {});
+		this.set(OPTIONS, {});
 		this.set('href', null);
 
 		this.set('loading', false);
 		this.set('error', null);
 	}
 
+	static KEYS = {
+		OPTIONS,
+		FILTER,
+		BATCH_START
+	}
 
 	get batchSize () {
-		const options = this.get('options');
+		const options = this.get(OPTIONS);
 
 		return options.batchSize;
 	}
@@ -45,11 +54,11 @@ class PagedBatchStore extends Stores.BoundStore {
 	}
 
 	get sortedOn () {
-		return (this.get('options') || {}).sortOn;
+		return (this.get(OPTIONS) || {}).sortOn;
 	}
 
 	get sortedOrder () {
-		return (this.get('options') || {}).sortOrder;
+		return (this.get(OPTIONS) || {}).sortOrder;
 	}
 
 	setHref (href) {
@@ -63,9 +72,9 @@ class PagedBatchStore extends Stores.BoundStore {
 
 
 	addOptions (newOptions) {
-		const options = this.get('options');
+		const options = this.get(OPTIONS);
 
-		this.set('options', {...options, ...newOptions});
+		this.set(OPTIONS, {...options, ...newOptions});
 
 		//If we already have a batch re-load
 		if (this.get('batch')) {
@@ -75,7 +84,7 @@ class PagedBatchStore extends Stores.BoundStore {
 
 
 	removeOption (option) {
-		const options = this.get('options');
+		const options = this.get(OPTIONS);
 
 		delete options[option];
 

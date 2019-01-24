@@ -10,25 +10,35 @@ function transformBatch (batch) {
 	return batch;
 }
 
+export const KEYS = {
+	...PagedBatchStore.KEYS,
+	SEARCH_TERM: 'searchTerm',
+	COURSE: 'course',
+	ROSTER_SUMMARY: 'rosterSummary',
+	ROSTER_SUMMARY_ERROR: 'rosterSummaryError',
+	LOADING: 'loading'
+};
+
 export default class CourseRosterStore extends PagedBatchStore {
 	constructor () {
 		super();
 
-		this.set('searchTerm', null);
+		this.set(KEYS.SEARCH_TERM, null);
 	}
 
 	get hasCourse () {
-		return !!this.get('course');
+		return !!this.get(KEYS.COURSE);
 	}
 
 	loadCourse (course) {
-		if (this.get('course') === course) { return; }
+		if (this.get(KEYS.COURSE) === course) { return; }
 
-		this.set('course', course);
+		this.set(KEYS.COURSE, course);
 
 		this.setHref(course.getLink('CourseEnrollmentRoster'));
 		this.addOptions({batchSize: DEFAULT_SIZE, batchStart: 0});
 
+		this.loadSummary();
 		this.load();
 	}
 
@@ -38,11 +48,23 @@ export default class CourseRosterStore extends PagedBatchStore {
 		return service.getBatch(href, options, transformBatch);
 	}
 
+	async loadSummary () {
+		const course = this.get(KEYS.COURSE);
+
+		try {
+			const summary = await course.getRosterSummary();
+			this.set(KEYS.ROSTER_SUMMARY, summary);
+		}
+		catch (e) {
+			this.set(KEYS.ROSTER_SUMMARY_ERROR, e);
+		}
+	}
+
 
 	updateSearchTerm (term) {
-		this.set('searchTerm', term);
-		this.set('loading', true);
-		this.emitChange('loading', 'searchTerm');
+		this.set(KEYS.SEARCH_TERM, term);
+		this.set(KEYS.LOADING, true);
+		this.emitChange(KEYS.LOADING, KEYS.SEARCH_TERM);
 
 		clearTimeout(this.doSearchTimeout);
 
