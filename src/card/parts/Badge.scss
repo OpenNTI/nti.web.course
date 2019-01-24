@@ -50,6 +50,11 @@
 		background-color: #ffa500;
 	}
 
+	&.white {
+		background-color: #fff;
+		color: $secondary-grey;
+	}
+
 	&.settings {
 		opacity: 0;
 		position: absolute;

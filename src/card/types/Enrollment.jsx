@@ -4,10 +4,12 @@ import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
 import {DateTime, Flyout, Layouts} from '@nti/web-commons';
 
+
 import {getSemesterBadge} from '../../utils/Semester';
 import Card from '../parts/Card';
 import Badge from '../parts/Badge';
 import CourseMenu from '../parts/CourseSettingsMenu';
+import {RequirementDetails} from '../../pass-fail';
 
 import Registry from './Registry';
 
@@ -15,7 +17,8 @@ const {Responsive} = Layouts;
 
 const t = scoped('course.card.type.Enrollment', {
 	starting: 'preview',
-	completed: 'completed'
+	completed: 'completed',
+	viewDetails: 'View Details'
 });
 
 @Registry.register('application/vnd.nextthought.courseware.courseinstanceenrollment')
@@ -26,6 +29,8 @@ export default class EnrollmentCard extends React.Component {
 	}
 
 	attachOptionsFlyoutRef = x => this.optionsFlyout = x
+
+	state = {}
 
 	doRequestSupport = (e) => {
 		e.stopPropagation();
@@ -52,9 +57,16 @@ export default class EnrollmentCard extends React.Component {
 		);
 	}
 
+	viewDetails = (e) => {
+		e.stopPropagation();
+		e.preventDefault();
+
+		this.setState({showDetails: true});
+	}
 
 	render () {
 		const {course, ...otherProps} = this.props;
+		const {showDetails} = this.state;
 		const startDate = course.getStartDate();
 		const endDate = course.getEndDate();
 		const completed = course.CourseProgress && course.CourseProgress.Completed;
@@ -74,12 +86,26 @@ export default class EnrollmentCard extends React.Component {
 		}
 
 		if(completed) {
-			badges.push((
-				<Badge green>
-					<i className="icon-check-10 completed-check"/>
-					<span>{t('completed')}</span>
-				</Badge>
-			));
+			const CompletedItem = (course.CourseProgress || {}).CompletedItem || {};
+
+			if(CompletedItem.Success) {
+				badges.push((
+					<Badge green>
+						<i className="icon-check-10 completed-check"/>
+						<span>{t('completed')}</span>
+					</Badge>
+				));
+			}
+			else {
+				badges.push((
+					<Badge white>
+						<div onClick={this.viewDetails}>
+							<span className="warning"/>
+							<span>{t('viewDetails')}</span>
+						</div>
+					</Badge>
+				));
+			}
 		}
 
 		if (starting) {
@@ -107,6 +133,7 @@ export default class EnrollmentCard extends React.Component {
 					className="no-padding"
 				/>
 				{Responsive.isWebappContext() && this.renderOptions()}
+				{showDetails && <RequirementDetails course={{PreferredAccess: course}} onBeforeDismiss={() => this.setState({showDetails: false})}/>}
 			</LinkTo.Object>
 		);
 	}

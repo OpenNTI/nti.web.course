@@ -16,9 +16,7 @@ const t = scoped('course.pass-fail.requirement-details', {
 export default class RequirementDetails extends React.Component {
 	static propTypes = {
 		onBeforeDismiss: PropTypes.func.isRequired,
-		course: PropTypes.shape({
-			getAssignments: PropTypes.func.isRequired
-		}).isRequired
+		course: PropTypes.object.isRequired
 	}
 
 	state = {

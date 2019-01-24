@@ -55,6 +55,13 @@ $CUSTOM_RANGES: (
 		li {
 			flex: 0 0 auto;
 		}
+
+		.warning {
+			background-image: url(../../assets/warning.svg);
+			height: 16px;
+			width: 16px;
+			margin-right: 5px;
+		}
 	}
 
 	.meta {
