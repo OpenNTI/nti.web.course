@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import styles from './PieChart.css';
@@ -7,15 +7,18 @@ import styles from './PieChart.css';
 const cx = classnames.bind(styles);
 
 // sample/test data
-const data = Array.from({length: 4}).reduce((acc, _, i, {length}) => {
-	const percent = i === length - 1 ? acc.remaining : Math.random() * acc.remaining;
-	acc.remaining -= percent;
-	acc.result.push({
-		label: `Item ${i}`,
-		percent
-	});
-	return acc;
-}, { remaining: 1, result: [] }).result;
+// const data = Array.from({length: 5}).reduce((acc, _, i, {length}) => {
+// 	const percent = i === length - 1 ? acc.remaining : Math.random() * acc.remaining;
+// 	acc.remaining -= percent;
+// 	acc.result.push({
+// 		label: `Item ${i}`,
+// 		percent
+// 	});
+// 	return acc;
+// }, { remaining: 1, result: [] }).result;
+
+// const length = 12;
+// const data = Array.from({length}, () => ({percent: 1 / length}));
 
 // convert between radians and degrees
 const d2r = d => d * (Math.PI / 180);
@@ -84,16 +87,10 @@ const gapAngleOffsetOuter = r2d(angleForArcLength(gapSize, radiusOuter));
 const minimumAngleDeg = r2d(angleForArcLength(gapSize * 2, radiusInner));
 
 /**
- * The minimum value that won't get swallowed by the gap offsets at the inner edge, according to the 
+ * The minimum value that won't get swallowed by the gap offsets at the inner edge
  */
 const minimumValue = minimumAngleDeg / 360;
 
-/**
- * Colors to cycle through for the chart segments
- */
-const colors = [
-	'red', 'green', 'blue', 'grey', 'black'
-];
 
 /**
  * Computes an x/y coordinate for the given angle and radius
@@ -113,7 +110,21 @@ const coords = (deg, r) => {
 
 export default class PieChart extends React.Component {
 
-	makeSegment ({paths, subtotal}, {percent}, i) {
+	static propTypes = {
+		series: PropTypes.arrayOf(
+			PropTypes.shape({
+				value: PropTypes.number.isRequired,
+				label: PropTypes.string,
+				color: PropTypes.string
+			})
+		),
+		colors: PropTypes.arrayOf(
+			PropTypes.string
+		)
+	}
+
+	makeSegment = ({paths, subtotal}, {percent, color}, i) => {
+		const {colors = []} = this.props;
 		const startAngle = subtotal * 360 + 90; // +90 so we start at 12 o'clock
 		const endAngle = startAngle + (percent * 360);
 
@@ -153,9 +164,13 @@ export default class PieChart extends React.Component {
 			`A${ radiusInner } ${ radiusInner } 0 ${ largeArc } ${ sweepInner } ${ x1 } ${ y1 }`
 		];
 		
+		const fill = color || colors[i % colors.length];
+		const fillProp = fill ? {fill} : {};
+
 		paths.push(
 			<path
-				fill={colors[i % colors.length]}
+				className={cx('segment')}
+				{...fillProp}
 				stroke="none"
 				d={commands.join(' ')}
 			/>
@@ -167,12 +182,28 @@ export default class PieChart extends React.Component {
 		};
 	}
 
+	computePercentages () {
+		const {series} = this.props;
+
+		// eliminate values of zero or less; protects against division by zero when computing percentages
+		const filtered = (series || []).filter(({value}) => value > 0);
+		const total = filtered.reduce((t, {value = 0}) => t + value, 0);
+
+		return filtered.map(item => ({
+			...item,
+			percent: item.value / total
+		}));
+	}
+
 	render () {
-		return (
-			<div className={cx('pie-chart')}>
+		const {className} = this.props;
+		const items = this.computePercentages();
+
+		return !(items || []).length ? null : (
+			<div className={cx('pie-chart', className)}>
 				<svg width="250" height="250" viewBox={`0 0 ${size} ${size}`}>
 					{
-						data.reduce(this.makeSegment, {paths: [], subtotal: 0}).paths
+						items.reduce(this.makeSegment, {paths: [], subtotal: 0}).paths
 					}
 				</svg>
 			</div>
