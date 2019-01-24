@@ -1,0 +1,23 @@
+.header {
+	position: relative;
+	height: 200px;
+	background: #fbfbfb;
+	box-shadow:
+		0 1px 0 0 #e0e0e0,
+		0 0 5px 0 rgba(0, 0, 0, 0.2);
+	line-height: 0;
+	clip: rect(0, auto, 215px, 0);
+}
+
+.header::after {
+	content: '';
+	box-shadow: 0 -5px 15px 5px rgba(0, 0, 0, 0.2);
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	height: 100px;
+	clip: rect(100px, auto, 150px, auto);
+	background: #ddd;
+	border-radius: 40em / 10px;
+}

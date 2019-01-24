@@ -1,0 +1,12 @@
+.enrollment-breakdown {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	width: 224px;
+	box-shadow: 1px 0 0 #eaeaea;
+}
+
+.enrollment-breakdown > * {
+	flex: 1 1 auto;
+}
