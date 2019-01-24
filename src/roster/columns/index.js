@@ -5,13 +5,19 @@ import Progress from './Progress';
 import ParticipationReport from './ParticipationReport';
 
 const columns = [
-	Student,
-	Username,
-	Enrollment,
-	Progress,
-	ParticipationReport,
+	{ component: Student },
+	{ component: Username },
+	{ component: Enrollment },
+	{ component: Progress },
+	{
+		component: ParticipationReport,
+		predicate: course => !!(course || {}).CompletionPolicy
+	},
 ];
 
 export default function columnsFor (course) {
-	return columns;
+	return columns
+		.filter(({predicate}) => !predicate || predicate(course))
+		.map(({component}) => component)
+		.filter(Boolean);
 }
