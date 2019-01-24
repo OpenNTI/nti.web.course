@@ -25,7 +25,7 @@ export default class Requirement extends React.Component {
 					<div className="req-col target-score">{t('targetScore')}</div>
 				</header>
 				<div className="requirement-contents">
-					{items && items.map(x => <RequirementItem key={x.grade.getID()} item={x} />)}
+					{items && items.map(x => <RequirementItem key={x.AssignmentNTIID} item={x} />)}
 				</div>
 			</div>
 		);

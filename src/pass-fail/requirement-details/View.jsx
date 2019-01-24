@@ -26,12 +26,16 @@ export default class RequirementDetails extends React.Component {
 	}
 
 	async componentDidMount () {
-		if (this.props.course) {
-			const assignments = await this.props.course.getAssignments();
-			const summary = assignments.getStudentSummaryWithHistory && await assignments.getStudentSummaryWithHistory();
-			const items = summary && summary.items.filter(x => x.grade && x.totalPoints && x.passingScore);
+		const {course} = this.props;
 
-			this.setState({ items });
+		if (course) {
+			const CompletionMetadata = (((course.PreferredAccess || {}).CourseProgress || {}).CompletedItem || {}).CompletionMetadata;
+
+			if(CompletionMetadata && CompletionMetadata.Items) {
+				const failedItems = CompletionMetadata.Items.filter(item => !item.Success);
+
+				this.setState({items: failedItems});
+			}
 		}
 	}
 
