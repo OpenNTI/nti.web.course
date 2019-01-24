@@ -6,6 +6,7 @@ import {Loading, Table as T} from '@nti/web-commons';
 import columnsFor from './columns';
 import styles from './Roster.css';
 import Header from './Header';
+import Toolbar from './Toolbar';
 
 const cx = classnames.bind(styles);
 
@@ -31,18 +32,16 @@ export default class Roster extends React.Component {
 
 		return (
 			<section className={cx('course-roster')}>
-				{
-					loading
+				<Header />
+				<Toolbar />
+				<div className={cx('content', {empty})}>
+					{ loading
 						? <Loading.Spinner />
-						: (
-							<>
-								<Header />
-								<div className={cx('content', {empty})}>
-									{ !empty && <T.Table className={cx('table')} columns={columns} items={items} />}
-								</div>
-							</>
+						: !empty && (
+							<T.Table className={cx('table')} columns={columns} items={items} />
 						)
-				}
+					}
+				</div>
 			</section>
 		);
 	}
