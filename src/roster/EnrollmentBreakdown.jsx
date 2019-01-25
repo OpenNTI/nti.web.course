@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {PieChart} from '@nti/web-charts';
 
 import {default as Store, KEYS} from './Store';
-import Pie from './PieChart';
 import styles from './EnrollmentBreakdown.css';
 
 const cx = classnames.bind(styles);
@@ -32,7 +32,7 @@ class EnrollmentBreakdown extends React.Component {
 			.sort(({value: a = 0}, {value: b = 0}) => b - a);
 
 		return (
-			<Pie series={series} className={cx('enrollment-breakdown')} />
+			<PieChart series={series} className={cx('enrollment-breakdown')} />
 		);
 	}
 }
