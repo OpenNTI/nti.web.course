@@ -6,7 +6,7 @@
 	color: $tertiary-grey;
 
 	.completed {
-		&.ontime .status-label {
+		&.ontime:not(.submission-failed) .status-label {
 			color: $secondary-green;
 			background: none;
 			padding-left: 0;
@@ -42,6 +42,10 @@
 	}
 
 	.excused {
+		color: $primary-red;
+	}
+
+	.failed {
 		color: $primary-red;
 	}
 }

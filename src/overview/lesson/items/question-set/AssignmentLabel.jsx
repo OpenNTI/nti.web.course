@@ -10,6 +10,7 @@ import RequirementControl from '../../../../progress/widgets/RequirementControl'
 const t = scoped('course.overview.lesson.overview.question-set.AssignmentLabel', {
 	draft: 'Draft',
 	maxTime: '%(maxTime)s time limit',
+	failed: 'Not Satisfactory',
 	completed: {
 		label: 'completed ',
 		graded: 'graded ',
@@ -90,7 +91,9 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			isSubmitted: h && h.isSubmitted(),
 			completedDate: !canEdit && h && h.Submission && h.Submission.getCreatedTime(),
 			isExcused: h && h.grade && h.grade.isExcused(),
-			assignmentModified: a.getLastModified().getTime()
+			assignmentModified: a.getLastModified().getTime(),
+
+			failed: a && a.CompletedItem && !a.CompletedItem.Success
 		};
 
 		this.setState(state);
@@ -102,6 +105,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		return (
 			<List.SeparatedInline className="lesson-overview-assignment-status">
 				{this.renderRequired()}
+				{this.renderFailed()}
 				{this.renderDraft()}
 				{this.renderTimed()}
 				{this.renderCompletion()}
@@ -130,6 +134,19 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		return isDraft ?
 			(<span className="draft">{t('draft')}</span>) :
 			null;
+	}
+
+
+	renderFailed () {
+		const {failed} = this.state;
+
+		if (!failed) { return null; }
+
+		return (
+			<span className="failed">
+				{t('failed')}
+			</span>
+		);
 	}
 
 
@@ -163,7 +180,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 
 	renderCompletion () {
-		const {completedDate, isNoSubmit, dueDate, maxTime, duration} = this.state;
+		const {completedDate, isNoSubmit, dueDate, maxTime, duration, failed} = this.state;
 
 		if (!completedDate) { return null; }
 
@@ -174,7 +191,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		const overdue = late && !isNoSubmit ? t('completed.overDueTip', {time: getNaturalDuration(completedDate.getTime() - dueDate.getTime())}) : null;
 
 		return (
-			<span className={cx('completed', {late, ontime: !late})}>
+			<span className={cx('completed', {late, ontime: !late, 'submission-failed': failed})}>
 				<span className="status-label" data-qtip={qtip}>{isNoSubmit ? t('completed.graded') : t('completed.label')}</span>
 				{(overtime != null || overdue != null) && (
 					<React.Fragment>

@@ -12,12 +12,14 @@ export default function LessonOverviewAssignmentIcon ({assignment, assignmentHis
 	const due = assignment.getDueDate();
 	const noSubmit = assignment.isNonSubmit();
 	const completed = assignmentHistory && assignmentHistory.Submission && assignmentHistory.Submission.getCreatedTime();
+	const failed = assignment && assignment.CompletedItem && !assignment.CompletedItem.Success;
 
 	let cls = '';
 
 	if (noSubmit) { cls = 'no-submit'; }
 	if (completed) { cls = completed > due ? 'late' : 'on-time'; }
 	if (due && due < now) { cls = 'late'; }
+	if (failed) { cls = 'failed'; }
 
 	return (
 		<div className={cx('lesson-overview-assignment-icon', cls, {large})} />

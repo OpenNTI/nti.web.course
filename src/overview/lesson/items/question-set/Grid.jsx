@@ -82,8 +82,9 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
 
 		const item = assignment || assessment;
+		const failed = item && item.CompletedItem && !item.CompletedItem.Success;
 
-		if(item && item.hasCompleted && item.hasCompleted()) {
+		if(item && item.hasCompleted && item.hasCompleted() && !failed) {
 			return (
 				<div className="completable">
 					<GridCompleteIcon/>

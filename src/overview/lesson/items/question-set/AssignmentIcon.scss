@@ -22,4 +22,8 @@
 	&.late {
 		background-image: url('../assets/assignment_late.png');
 	}
+
+	&.failed {
+		background-image: url('../assets/assignment_failed.svg');
+	}
 }
