@@ -1,3 +1,7 @@
+.student-cell {
+	width: 100%;
+}
+
 .student {
 	display: flex;
 	justify-content: flex-start;

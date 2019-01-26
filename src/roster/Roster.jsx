@@ -4,9 +4,9 @@ import classnames from 'classnames/bind';
 import {Loading, Table as T} from '@nti/web-commons';
 
 import columnsFor from './columns';
-import styles from './Roster.css';
 import Header from './Header';
 import Toolbar from './Toolbar';
+import styles from './Roster.css';
 
 const cx = classnames.bind(styles);
 
