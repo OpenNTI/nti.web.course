@@ -18,6 +18,8 @@ export default class Student extends React.Component {
 		<Sortable {...{setSort, sortedOn, sortedOrder}} sortOn="realname">{t('header')}</Sortable>
 	)
 
+	static cssClassName = cx('student-cell')
+
 	static propTypes = {
 		item: PropTypes.object.isRequired
 	}

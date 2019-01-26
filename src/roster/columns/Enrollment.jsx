@@ -2,9 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
+import classnames from 'classnames/bind';
 
 import Sortable from './SortableHeader';
+import styles from './Enrollment.css';
 
+
+const cx = classnames.bind(styles);
 const logger = Logger.get('roster.columns.enrollment');
 
 const localeScope = 'roster.columns.enrollment';
@@ -31,6 +35,7 @@ export default class Progress extends React.Component {
 	}
 
 	static HeaderComponent = props => <Sortable>Enrollment</Sortable>
+	static cssClassName = cx('enrollment-cell');
 
 	render () {
 		const {item: {status} = {}} = this.props;

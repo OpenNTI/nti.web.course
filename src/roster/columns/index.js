@@ -11,7 +11,7 @@ const columns = [
 	{ component: Progress },
 	{
 		component: ParticipationReport,
-		predicate: course => !!(course || {}).CompletionPolicy
+		// predicate: course => !!(course || {}).CompletionPolicy
 	},
 ];
 
