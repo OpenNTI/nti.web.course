@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {Prompt, Input, DialogButtons} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
-import {PlaintextEditor} from '@nti/web-editor';
+import {PlaintextEditor, Parsers} from '@nti/web-editor';
 
 import Header from './Header';
 import EmailsInput from './EmailsInput';
@@ -21,7 +21,8 @@ const t = scoped('course.enrollment.invite', {
 export default class View extends React.Component {
 
 	static propTypes = {
-		onClose: PropTypes.func,
+		onSuccess: PropTypes.func,
+		onCancel: PropTypes.func,
 		course: PropTypes.object.isRequired
 	}
 
@@ -52,27 +53,53 @@ export default class View extends React.Component {
 		this.setState({message});
 	}
 
-	onSend = () => {
-		console.log('send!');
+	onSend = async () => {
+		const {
+			props: {course, onSuccess},
+			state: {emails, message: draftState}
+		} = this;
+		let error;
+		const {PlainText} = Parsers;
+
+		this.setState({
+			error,
+			busy: true
+		});
+
+		const [message] = PlainText.fromDraftState(draftState);
+
+		try {
+			const result = await course.sendInvitations(emails, message);
+			return onSuccess(result);
+		}
+		catch (e) {
+			error = e;
+		}
+
+		this.setState({
+			error,
+			busy: false
+		});
 	}
 
 	render () {
 		const {
-			onClose,
-		} = this.props;
+			props: {course, onCancel},
+			state: {
+				emails = [],
+				file,
+				message = '',
+				error,
+				busy
+			}
+		} = this;
 
-		const {
-			emails = [],
-			file,
-			message = ''
-		} = this.state;
-
-		const canSend = !!emails.length;
+		const canSend = !!emails.length && (course || {}).canInvite;
 
 		const buttons = [
 			{
 				label: 'Cancel',
-				onClick: onClose
+				onClick: onCancel
 			},
 			{
 				label: 'Send',
@@ -82,15 +109,13 @@ export default class View extends React.Component {
 		];
 
 		return (
-			<Prompt.Dialog onBeforeDismiss={onClose}>
-				<section className={cx('invite-dialog-content')}>
-					<Header />
-					<EmailsInput value={emails} onChange={this.onEmailsChange} placeholder={t('placeholders.emails')} />
-					<Input.FileDrop allowedTypes={{'text/csv': true}} onChange={this.onFileChange} onError={this.onFileError} value={file} getString={t} />
-					<PlaintextEditor text={message} placeholder={t('placeholders.message')} onChange={this.onMessageChange} />
-					<DialogButtons buttons={buttons} />
-				</section>
-			</Prompt.Dialog>
+			<section className={cx('invitation-form')}>
+				<Header />
+				<EmailsInput value={emails} onChange={this.onEmailsChange} placeholder={t('placeholders.emails')} />
+				<Input.FileDrop allowedTypes={{'text/csv': true}} onChange={this.onFileChange} onError={this.onFileError} value={file} getString={t} />
+				<PlaintextEditor text={message} placeholder={t('placeholders.message')} onChange={this.onMessageChange} />
+				<DialogButtons buttons={buttons} />
+			</section>
 		);
 	}
 }

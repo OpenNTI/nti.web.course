@@ -1,11 +1,7 @@
-.invite-dialog-content {
+.invitation-form {
 	width: 100%;
 	min-width: 480px;
 	max-width: 640px;
 	margin: 0 auto;
 	background: white;
-}
-
-.invite-dialog-content > * {
-	flex: 1 1 auto;
 }

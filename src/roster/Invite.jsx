@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {Prompt} from '@nti/web-commons';
 
-import {Invite as EnrollmentInvite} from '../enrollment';
+import {Invite as InviteForm} from '../enrollment';
 
 import Store from './Store';
 import styles from './Invite.css';
@@ -29,13 +30,23 @@ class Invite extends React.Component {
 			state: {showDialog}
 		} = this;
 
-		return !course ? null : (
+		const {canInvite} = (course || {});
+
+		return !canInvite ? null : (
 			<>
 				<button className={cx('invite-link')} onClick={this.showDialog}>
 					<i className={cx('icon-addfriend')} /> Invite
 				</button>
 
-				{showDialog && <EnrollmentInvite course={course} onClose={this.hideDialog} />}
+				{showDialog && (
+					<Prompt.Dialog onBeforeDismiss={this.hideDialog}>
+						<InviteForm
+							course={course}
+							onSuccess={this.hideDialog}
+							onCancel={this.hideDialog}
+						/>
+					</Prompt.Dialog>
+				)}
 			</>
 		);
 	}
