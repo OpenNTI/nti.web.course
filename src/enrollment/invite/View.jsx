@@ -7,6 +7,7 @@ import {PlaintextEditor, Parsers} from '@nti/web-editor';
 
 import Header from './Header';
 import EmailsInput from './EmailsInput';
+import InvalidEmails from './InvalidEmails';
 import styles from './View.css';
 
 const cx = classnames.bind(styles);
@@ -36,11 +37,9 @@ export default class View extends React.Component {
 		const {course} = this.props;
 
 		try {
-			const {Items: emails, InvalidEmails: invalid} = await course.preflightInvitationsCsv(file);
-
-			this.setState({
-				emails: emails.map(({email}) => email)
-			});
+			const {Items: items, InvalidEmails: invalidEmails} = await course.preflightInvitationsCsv(file);
+			invalid = (invalidEmails || {}).Items;
+			emails = items.map(({email}) => email);
 		}
 		catch (e) {
 			console.error(e);
@@ -87,9 +86,9 @@ export default class View extends React.Component {
 			props: {course, onCancel},
 			state: {
 				emails = [],
-				file,
+				invalid,
 				message = '',
-				error,
+				// error,
 				busy
 			}
 		} = this;
@@ -111,8 +110,15 @@ export default class View extends React.Component {
 		return (
 			<section className={cx('invitation-form')}>
 				<Header />
-				<EmailsInput value={emails} onChange={this.onEmailsChange} placeholder={t('placeholders.emails')} />
-				<Input.FileDrop allowedTypes={{'text/csv': true}} onChange={this.onFileChange} onError={this.onFileError} value={file} getString={t} />
+				<EmailsInput
+					value={emails}
+					onChange={this.onEmailsChange}
+					placeholder={t('placeholders.emails')}
+					onFileChange={this.onFileChange}
+					uploadButtonLabel={t('uploadButtonLabel')}
+				/>
+				<InvalidEmails invalid={invalid} />
+				{/* <Input.FileDrop allowedTypes={{'text/csv': true}} onChange={this.onFileChange} onError={this.onFileError} value={file} getString={fileUploadStrings} /> */}
 				<PlaintextEditor text={message} placeholder={t('placeholders.message')} onChange={this.onMessageChange} />
 				<DialogButtons buttons={buttons} />
 			</section>
