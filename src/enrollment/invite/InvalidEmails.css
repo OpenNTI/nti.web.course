@@ -1,0 +1,39 @@
+.invalid-emails {
+	background: var(--primary-red, #f35252);
+	color: white;
+	padding: 0.625em;
+	font-size: 0.75rem;
+	font-weight: 300;
+	line-height: normal;
+	letter-spacing: 0.5px;
+}
+
+.invalid-emails .message {
+	display: inline-block;
+	margin-right: 0.5em;
+}
+
+.invalid-emails ul {
+	display: inline;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.invalid-emails li {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.invalid-emails li:not(:last-child)::after {
+	content: ',';
+	margin-right: 0.5em;
+}
+
+.invalid-emails li .email {} /* stylelint-disable-line*/ /* we don't currenty style these but we want the .email classname to get hashed to avoid collisions*/
+
+.invalid-emails li .count {
+	margin-left: 0.375em;
+	font-style: italic;
+	opacity: 0.5;
+}
