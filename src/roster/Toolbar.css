@@ -1,11 +1,25 @@
 .toolbar {
 	background: #f8f8f8;
-	padding: 15px 30px;
+	padding: 12px 30px;
 	border-bottom: 1px solid #ddd;
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 }
 
 .toolbar > * {
-	flex: 1 1 auto;
+	flex: 0 1 auto;
+}
+
+.manage-enrollment-button {
+	display: inline-block;
+}
+
+.enrollment-controls {
+	color: var(--primary-blue, #3fb3f6);
+	font-size: 0.875rem;
+}
+
+.enrollment-controls > * {
+	margin-left: 1em;
 }

@@ -33,7 +33,7 @@ export default class Roster extends React.Component {
 		return (
 			<section className={cx('course-roster')}>
 				<Header />
-				<Toolbar />
+				<Toolbar course={course} />
 				<div className={cx('content', {empty})}>
 					{ loading
 						? <Loading.Spinner />
