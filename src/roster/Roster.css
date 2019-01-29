@@ -9,6 +9,11 @@
 	padding: 0;
 	font-size: 0.875rem;
 	font-weight: 300;
+	padding-bottom: 1px; /* prevent loading spinner's bottom-margin from collapsing */
+}
+
+.content :global(.loading-spinner) {
+	margin: 5rem auto;
 }
 
 .table.table {
@@ -33,6 +38,7 @@
 .table.table th {
 	padding-top: 9px;
 	padding-bottom: 9px;
+	min-width: 100px;
 }
 
 .table.table td:not(:last-child) {

@@ -37,13 +37,9 @@ export default class Roster extends React.Component {
 			<section className={cx('course-roster')}>
 				<Header />
 				<Toolbar course={course} />
-				<div className={cx('content', {empty})}>
-					{ loading
-						? <Loading.Spinner />
-						: !empty && (
-							<T.Table className={cx('table')} columns={columns} items={items} onSortChange={setSort} sortOn={sortOn} sortDirection={sortDirection} />
-						)
-					}
+				<div className={cx('content', {empty, loading})}>
+					<T.Table className={cx('table')} columns={columns} items={loading ? [] : items || []} onSortChange={setSort} sortOn={sortOn} sortDirection={sortDirection} />
+					{loading && <Loading.Spinner />}
 				</div>
 			</section>
 		);
