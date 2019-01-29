@@ -1,7 +1,44 @@
 .invitation-form {
-	width: 100%;
-	min-width: 480px;
-	max-width: 640px;
+	width: 500px;
 	margin: 0 auto;
 	background: white;
+}
+
+.invitation-form a {
+	color: var(--primary-blue, #3fb3f6);
+}
+
+.invitation-form header {
+	font-size: 0.75rem;
+	background: #ededed;
+	border-bottom: 1px solid var(--border-grey-alt, #d8d8d8);
+	padding: 0.625rem;
+	line-height: normal;
+}
+
+.loading {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(255, 255, 255, 0.9);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	animation: invitation-busy 0.2s forwards;
+}
+
+.loading > * {
+	flex: 0 0 auto;
+}
+
+@keyframes invitation-busy {
+	0% {
+		opacity: 0.1;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }
