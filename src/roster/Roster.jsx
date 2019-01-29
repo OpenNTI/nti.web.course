@@ -22,11 +22,14 @@ export default class Roster extends React.Component {
 		hasPrevPage: PropTypes.bool,
 		hasCourse: PropTypes.bool,
 		loadNextPage: PropTypes.func,
-		loadPrevPage: PropTypes.func
+		loadPrevPage: PropTypes.func,
+		setSort: PropTypes.func,
+		sortedOn: PropTypes.string,
+		sortedOrder: PropTypes.string,
 	}
 
 	render () {
-		const {items, loading, course} = this.props;
+		const {items, loading, course, setSort, sortedOn: sortOn, sortedOrder: sortDirection} = this.props;
 		const empty = !(items && items.length);
 		const columns = columnsFor(course);
 
@@ -38,7 +41,7 @@ export default class Roster extends React.Component {
 					{ loading
 						? <Loading.Spinner />
 						: !empty && (
-							<T.Table className={cx('table')} columns={columns} items={items} />
+							<T.Table className={cx('table')} columns={columns} items={items} onSortChange={setSort} sortOn={sortOn} sortDirection={sortDirection} />
 						)
 					}
 				</div>
