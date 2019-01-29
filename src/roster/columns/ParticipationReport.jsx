@@ -1,6 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {Prompt} from '@nti/web-commons';
+import {Viewer as ReportViewer} from '@nti/web-reports';
 
 import styles from './ParticipationReport.css';
 
@@ -11,9 +13,41 @@ export default class ParticipationReport extends React.Component {
 	
 	static cssClassName = cx('participation-report-cell')
 
+	static propTypes = {
+		item: PropTypes.object
+	}
+
+	state = {}
+
+	showReport = () => {
+		const [report] = this.getReports();
+
+		if (report) {
+			this.setState({report});
+		}
+	}
+
+	hideReport = () => {
+		this.setState({report: undefined});
+	}
+
+	getReports = () => {
+		const {item: {reports} = {}} = this.props;
+		return reports;
+	}
+
 	render () {
-		return (
-			<div className={cx('participation-report')}><i className={cx('icon-report')} /></div>
+		const {report} = this.state;
+
+		return (this.getReports() || []).length === 0 ? null : (
+			<>
+				<div className={cx('participation-report')} onClick={this.showReport}><i className={cx('icon-report')} /></div>
+				{report && (
+					<Prompt.Dialog onBeforeDismiss={this.hideReport}>
+						<ReportViewer report={report} />
+					</Prompt.Dialog>
+				)}
+			</>
 		);
 	}
 }
