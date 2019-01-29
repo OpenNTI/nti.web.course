@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Prompt, Input, DialogButtons} from '@nti/web-commons';
+import {DialogButtons, Loading} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {PlaintextEditor, Parsers} from '@nti/web-editor';
 
@@ -10,12 +10,15 @@ import EmailsInput from './EmailsInput';
 import InvalidEmails from './InvalidEmails';
 import styles from './View.css';
 
+const BASE_LOCALE_SCOPE = 'course.enrollment.invite';
+
 const cx = classnames.bind(styles);
-const t = scoped('course.enrollment.invite', {
+const t = scoped(BASE_LOCALE_SCOPE, {
 	placeholders: {
 		emails: 'Add an email address',
 		message: '(Optional) Type a message…'
-	}
+	},
+	uploadButtonLabel: 'Bulk'
 });
 
 
@@ -35,6 +38,14 @@ export default class View extends React.Component {
 
 	onFileChange = async file => {
 		const {course} = this.props;
+		let {emails} = this.state;
+		let error, invalid;
+
+		this.setState({
+			error,
+			invalid,
+			busy: true
+		});
 
 		try {
 			const {Items: items, InvalidEmails: invalidEmails} = await course.preflightInvitationsCsv(file);
@@ -42,10 +53,15 @@ export default class View extends React.Component {
 			emails = items.map(({email}) => email);
 		}
 		catch (e) {
-			console.error(e);
+			error = e;
 		}
 
-		this.setState({file});
+		this.setState({
+			emails,
+			error,
+			invalid,
+			busy: false
+		});
 	}
 	
 	onMessageChange = message => {
@@ -109,7 +125,7 @@ export default class View extends React.Component {
 
 		return (
 			<section className={cx('invitation-form')}>
-				<Header />
+				<Header course={course} />
 				<EmailsInput
 					value={emails}
 					onChange={this.onEmailsChange}
@@ -121,6 +137,11 @@ export default class View extends React.Component {
 				{/* <Input.FileDrop allowedTypes={{'text/csv': true}} onChange={this.onFileChange} onError={this.onFileError} value={file} getString={fileUploadStrings} /> */}
 				<PlaintextEditor text={message} placeholder={t('placeholders.message')} onChange={this.onMessageChange} />
 				<DialogButtons buttons={buttons} />
+				{busy && (
+					<div className={cx('loading')}>
+						<Loading.Spinner />
+					</div>
+				)}
 			</section>
 		);
 	}

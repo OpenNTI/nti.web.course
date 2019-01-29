@@ -1,3 +1,36 @@
-.invite-emails-input {
+.emails-input-container {
 	background: var(--quad-grey, #f1f1f1);
+	position: relative;
+}
+
+.email-tokens-input {
+	min-height: 3rem;
+	max-height: 12em;
+	overflow: auto;
+}
+
+.email-tokens-input input {
+	width: auto;
+}
+
+/* .email-tokens-input:not(:focus-within) {
+	max-height: 4em;
+}
+
+.email-tokens-input:not(:focus-within) :global(.token) {
+	border: none;
+	background: none;
+	font-size: 0.75rem;
+	padding: 0;
+} */
+
+.file-input {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 1em;
+}
+
+.file-input :global(span.file-picker.button > span) {
+	padding: 0.25em 1em;
 }
