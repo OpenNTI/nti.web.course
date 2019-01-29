@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {scoped} from '@nti/lib-locale';
 import {Prompt} from '@nti/web-commons';
 
 import {Invite as InviteForm} from '../enrollment';
@@ -9,6 +10,9 @@ import Store from './Store';
 import styles from './Invite.css';
 
 const cx = classnames.bind(styles);
+const t = scoped('course.roster.invite', {
+	buttonLabel: 'Invite'
+});
 
 export default
 @Store.monitor({
@@ -34,8 +38,8 @@ class Invite extends React.Component {
 
 		return !canInvite ? null : (
 			<>
-				<button className={cx('invite-link')} onClick={this.showDialog}>
-					<i className={cx('icon-addfriend')} /> Invite
+				<button className={cx('invite-button')} onClick={this.showDialog}>
+					<i className={cx('icon-addfriend')} /> {t('buttonLabel')}
 				</button>
 
 				{showDialog && (

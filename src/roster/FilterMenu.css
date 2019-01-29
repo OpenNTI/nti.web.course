@@ -1,0 +1,16 @@
+.filter-menu [role=presentation] { /* target value/placeholder, chevron */
+	color: var(--primary-blue, #3fb3f6);
+	font-size: 1.08rem; /* lifted from legacy style */
+	font-style: normal; /* override default placeholder italicization */
+	font-weight: 300;
+}
+
+.filter-menu :global(.nti-select-native-wrapper) {
+	border: none;
+	box-shadow: none;
+	background: none;
+}
+
+.filter-menu :global(.nti-select-value) {
+	padding-left: 2px; /* left-align with table content */
+}

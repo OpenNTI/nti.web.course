@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Select} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
+import classnames from 'classnames/bind';
 
 import {default as Store, KEYS} from './Store';
+import styles from './FilterMenu.css';
+
+const cx = classnames.bind(styles);
 
 const t = scoped('roster.component.filter-menu', {
 	'no-filter': 'All Students',
@@ -40,6 +44,7 @@ class FilterMenu extends React.Component {
 
 	render () {
 		const {
+			className,
 			options: {filter} = {},
 			summary: {
 				TotalEnrollmentsByScope: scopes = {},
@@ -56,10 +61,12 @@ class FilterMenu extends React.Component {
 			));
 
 		return (options || []).length === 0 ? null : (
-			<Select onChange={this.onChange} value={filter || ''}>
-				<option value="">{t('no-filter')} ({total})</option>
-				{options}
-			</Select>
+			<div className={cx('filter-menu', className)}>
+				<Select onChange={this.onChange} value={filter || ''}>
+					<option value="">{t('no-filter')} ({total})</option>
+					{options}
+				</Select>
+			</div>
 		);
 	}
 }
