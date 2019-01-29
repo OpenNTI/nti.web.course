@@ -7,6 +7,7 @@ import {PlaintextEditor, Parsers} from '@nti/web-editor';
 
 import Header from './Header';
 import EmailsInput from './EmailsInput';
+import Error from './Error';
 import InvalidEmails from './InvalidEmails';
 import styles from './View.css';
 
@@ -37,6 +38,10 @@ export default class View extends React.Component {
 	}
 
 	onFileChange = async file => {
+		if (!file) {
+			return;
+		}
+
 		const {course} = this.props;
 		let {emails} = this.state;
 		let error, invalid;
@@ -104,7 +109,7 @@ export default class View extends React.Component {
 				emails = [],
 				invalid,
 				message = '',
-				// error,
+				error,
 				busy
 			}
 		} = this;
@@ -133,6 +138,7 @@ export default class View extends React.Component {
 					onFileChange={this.onFileChange}
 					uploadButtonLabel={t('uploadButtonLabel')}
 				/>
+				<Error error={error} />
 				<InvalidEmails invalid={invalid} />
 				{/* <Input.FileDrop allowedTypes={{'text/csv': true}} onChange={this.onFileChange} onError={this.onFileError} value={file} getString={fileUploadStrings} /> */}
 				<PlaintextEditor text={message} placeholder={t('placeholders.message')} onChange={this.onMessageChange} />
