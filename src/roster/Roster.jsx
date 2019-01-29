@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {Loading, Table as T} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 
 import columnsFor from './columns';
 import Header from './Header';
 import Toolbar from './Toolbar';
 import styles from './Roster.css';
+
+const t = scoped('course.roster.component', {
+	emptyMessage: 'No enrollees found'
+});
 
 const cx = classnames.bind(styles);
 
@@ -30,7 +35,7 @@ export default class Roster extends React.Component {
 
 	render () {
 		const {items, loading, course, setSort, sortedOn: sortOn, sortedOrder: sortDirection} = this.props;
-		const empty = !(items && items.length);
+		const empty = !loading && !(items && items.length);
 		const columns = columnsFor(course);
 
 		return (
@@ -40,6 +45,9 @@ export default class Roster extends React.Component {
 				<div className={cx('content', {empty, loading})}>
 					<T.Table className={cx('table')} columns={columns} items={loading ? [] : items || []} onSortChange={setSort} sortOn={sortOn} sortDirection={sortDirection} />
 					{loading && <Loading.Spinner />}
+					{empty && (
+						<div className={cx('empty-message')}>{t('emptyMessage')}</div>
+					)}
 				</div>
 			</section>
 		);

@@ -16,6 +16,15 @@
 	margin: 5rem auto;
 }
 
+.empty-message {
+	font-size: 1.625rem;
+	color: var(--tertiery-grey, #d8d8d8);
+	font-weight: 300;
+	font-style: italic;
+	text-align: center;
+	padding: 4rem;
+}
+
 .table.table {
 	width: 100%;
 	table-layout: auto;
