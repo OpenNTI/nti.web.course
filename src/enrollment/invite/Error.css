@@ -1,0 +1,9 @@
+.error {
+	background: var(--primary-red, #f35252);
+	color: white;
+	padding: 0.625em;
+	font-size: 0.75rem;
+	font-weight: 300;
+	line-height: normal;
+	letter-spacing: 0.5px;
+}

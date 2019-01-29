@@ -31,6 +31,11 @@
 	right: 1em;
 }
 
+.file-input :global(.file-select-filename),
+.file-input :global(.file-select-reset) {
+	display: none;
+}
+
 .file-input :global(span.file-picker.button > span) {
 	padding: 0.25em 1em;
 }
