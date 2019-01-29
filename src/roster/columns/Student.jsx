@@ -5,7 +5,6 @@ import {scoped} from '@nti/lib-locale';
 import classnames from 'classnames/bind';
 
 import styles from './Student.css';
-import Sortable from './SortableHeader';
 
 const t = scoped('roster.columns.student', {
 	header: 'Student'
@@ -14,10 +13,8 @@ const cx = classnames.bind(styles);
 
 export default class Student extends React.Component {
 
-	static HeaderComponent = ({setSort, sortedOn, sortedOrder} = {}) => (
-		<Sortable {...{setSort, sortedOn, sortedOrder}} sortOn="realname">{t('header')}</Sortable>
-	)
-
+	static SortKey = 'realname'
+	static Name = t('header')
 	static cssClassName = cx('student-cell')
 
 	static propTypes = {

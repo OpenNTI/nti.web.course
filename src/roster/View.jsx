@@ -92,8 +92,16 @@ class CourseRosterView extends React.Component {
 		}
 	}
 
-	setSort = (sortOn, sortOrder = SortOrder.ASC) => {
-		const {store} = this.props;
+	setSort = (sortOn, sortDir) => {
+		const {store, store: {sortedOn, sortedOrder = SortOrder.ASC}} = this.props;
+
+		const sortOrder = sortDir || (
+			sortedOn === sortOn
+				? sortedOrder === SortOrder.ASC
+					? SortOrder.DESC
+					: SortOrder.ASC
+				: SortOrder.ASC
+		);
 
 		store.addOptions({
 			sortOn,

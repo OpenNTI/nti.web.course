@@ -4,7 +4,6 @@ import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
 import classnames from 'classnames/bind';
 
-import Sortable from './SortableHeader';
 import styles from './Enrollment.css';
 
 
@@ -34,7 +33,7 @@ export default class Progress extends React.Component {
 		item: PropTypes.object
 	}
 
-	static HeaderComponent = props => <Sortable>Enrollment</Sortable>
+	static Name = t('header')
 	static cssClassName = cx('enrollment-cell');
 
 	render () {

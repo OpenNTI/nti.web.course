@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Prompt, Panels, DialogButtons} from '@nti/web-commons';
+import cx from 'classnames';
 
 import View from './View';
 
@@ -37,11 +38,11 @@ class CourseEnrollmentPromptTrigger extends React.Component {
 
 
 	render () {
-		const {children, ...otherProps} = this.props;
+		const {children, className, ...otherProps} = this.props;
 		const {visible} = this.state;
 
 		return (
-			<div className="nti-course-enrollment-admin-prompt-trigger" onClick={this.onClick}>
+			<div className={cx('nti-course-enrollment-admin-prompt-trigger', className)} onClick={this.onClick}>
 				{children}
 				{visible && (<CourseEnrollmentAdminPrompt {...otherProps} onBeforeDismiss={this.onBeforeDismiss} />)}
 			</div>
