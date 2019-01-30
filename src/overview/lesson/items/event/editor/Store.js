@@ -7,6 +7,44 @@ function safeContains (fieldValue, target) {
 	return fieldValue && fieldValue.toLowerCase().indexOf(target.toLowerCase()) >= 0;
 }
 
+function getFormDataForCreation (data) {
+	const formData = new FormData();
+	const keys = Object.keys(data);
+
+	for (let key of keys) {
+		const value = data[key];
+
+		if (value != null) {
+			formData.append(key, value);
+		}
+	}
+
+	return formData;
+}
+
+function getFormDataForUpdate (newData, oldData) {
+	const formData = new FormData();
+
+	const maybeAdd = (key) => {
+		if (newData[key] !== oldData[key]) {
+			formData.append(key, newData[key]);
+		}
+	};
+
+	if (newData.icon !== undefined) {
+		formData.append('icon', newData.icon);
+	}
+
+	maybeAdd('MimeType');
+	maybeAdd('title');
+	maybeAdd('description');
+	maybeAdd('location');
+	maybeAdd('start_time');
+	maybeAdd('end_time');
+
+	return formData;
+}
+
 export default class CourseEventsStore extends Stores.BoundStore {
 	constructor () {
 		super();
@@ -40,36 +78,24 @@ export default class CourseEventsStore extends Stores.BoundStore {
 		try {
 			const calendar = await course.fetchLinkParsed('CourseCalendar');
 			const service = await getService();
-			const formData = new FormData();
-
-			formData.append('MimeType', Models.calendar.CourseCalendarEvent.MimeType);
-
-			if(title) {
-				formData.append('title', title);
-			}
-
-			if(description) {
-				formData.append('description', description);
-			}
-
-			if(location) {
-				formData.append('location', location);
-			}
-
-			if(startDate) {
-				formData.append('start_time', startDate.toISOString());
-			}
-
-			if(endDate) {
-				formData.append('end_time', endDate.toISOString());
-			}
-
-			if(img !== undefined) {
-				formData.append('icon', img || null);
-			}
-			else if (event && event.icon) {
-				formData.append('icon', event.icon);
-			}
+			const newData = {
+				MimeType: Models.calendar.CourseCalendarEvent.MimeType,
+				title, description, location,
+				icon: img,
+				'start_time': startDate && startDate.toISOString(),
+				'end_time': endDate && endDate.toISOString()
+			};
+			const oldData = !event ? null :
+				{
+					MimeType: event.MimeType,
+					title: event.title,
+					description: event.description,
+					location: event.location,
+					icon: event.icon,
+					'start_time': event.getStartTime() && event.getStartTime().toISOString(),
+					'end_time': event.getEndTime() && event.getEndTime().toISOString()
+				};
+			const formData = oldData ? getFormDataForUpdate(newData, oldData) : getFormDataForCreation(newData);
 
 			let calendarEvent;
 			let type = 'Calendar-Event-Created';
