@@ -2,11 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {PieChart} from '@nti/web-charts';
+import {scoped} from '@nti/lib-locale';
 
 import {default as Store, KEYS} from './Store';
 import styles from './EnrollmentBreakdown.css';
 
 const cx = classnames.bind(styles);
+const classes = {
+	container: cx('chart-container'),
+	chart: cx('chart-chart'),
+	legend: cx('chart-legend'),
+};
+
+const t = scoped('course.roster.enrollment-breakdown', {
+	title: 'Enrollment Breakdown',
+	scopes: {
+		ForCredit: 'Credit',
+		ForCreditDegree: 'Credit (Degree)',
+		ForCreditNonDegree: 'Credit (Non-Degree)',
+		Public: 'Public',
+		Purchased: 'Purchased',
+	}
+});
 
 export default
 @Store.monitor({
@@ -28,11 +45,20 @@ class EnrollmentBreakdown extends React.Component {
 		} = this.props;
 
 		const series = Object.entries(scopes)
-			.map(([label, value]) => ({label, value}))
+			.map(([label, value]) => (
+				{
+					label: t(['scopes', label], {fallback: label}),
+					value
+				})
+			)
 			.sort(({value: a = 0}, {value: b = 0}) => b - a);
 
 		return (
-			<PieChart series={series} className={cx('enrollment-breakdown')} />
+			<div className={cx('enrollment-breakdown-wrapper')}>
+				<div className={cx('enrollment-breakdown')}>
+					<PieChart title={t('title')}classes={classes} series={series} />
+				</div>
+			</div>
 		);
 	}
 }
