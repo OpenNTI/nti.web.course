@@ -1,12 +1,26 @@
-.enrollment-breakdown {
-	display: flex;
-	height: 100%;
-	align-items: center;
-	justify-content: center;
+.enrollment-breakdown-wrapper {
 	width: 224px;
 	box-shadow: 1px 0 0 #eaeaea;
+	height: 100%;
+	display: flex;
 }
 
-.enrollment-breakdown > * {
+.enrollment-breakdown {
 	flex: 1 1 auto;
+	display: flex;
+	justify-content: center;
+}
+
+.chart-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 0.6rem;
+	align-self: stretch;
+	align-items: center;
+}
+
+.chart-chart {
+	max-width: 113px;
+	margin: 0 auto;
 }
