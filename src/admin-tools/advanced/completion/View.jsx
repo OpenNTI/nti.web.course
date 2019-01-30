@@ -26,7 +26,7 @@ export default
 	'defaultRequiredDisabled',
 	'defaultRequirables',
 	'completableToggleDisabled',
-	'percentageDisabled',
+	'updateDisabled',
 	'error'
 ])
 class CourseAdminCompletion extends React.Component {
@@ -41,7 +41,7 @@ class CourseAdminCompletion extends React.Component {
 		defaultRequiredDisabled: PropTypes.bool,
 		defaultRequirables: PropTypes.array,
 		completableToggleDisabled: PropTypes.bool,
-		percentageDisabled: PropTypes.bool,
+		updateDisabled: PropTypes.bool,
 		error: PropTypes.string,
 		onChange: PropTypes.func
 	}
@@ -92,8 +92,8 @@ class CourseAdminCompletion extends React.Component {
 	}
 
 	renderCertificateToggle () {
-		const {completable, disabled: nonEditor} = this.props;
-		const disabled = !completable || nonEditor;
+		const {completable, disabled: nonEditor, updateDisabled} = this.props;
+		const disabled = !completable || nonEditor || updateDisabled;
 		const className = cx('completion-control', {disabled});
 
 		return (
@@ -164,8 +164,8 @@ class CourseAdminCompletion extends React.Component {
 
 
 	renderPercentage () {
-		const {completable, disabled: nonEditor, percentageDisabled} = this.props;
-		const disabled = !completable || nonEditor || percentageDisabled;
+		const {completable, disabled: nonEditor, updateDisabled} = this.props;
+		const disabled = !completable || nonEditor || updateDisabled;
 		const className = cx('completion-control', {disabled});
 
 		return (

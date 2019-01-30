@@ -146,7 +146,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			disabled: !CatalogEntry || !CatalogEntry.hasLink('edit'),
 			defaultRequiredDisabled: false,
 			completableToggleDisabled: !this.course.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.RESET),
-			percentageDisabled: !this.course.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATE)
+			updateDisabled: !this.course.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATE)
 		};
 
 		if(this.course.CompletionPolicy) {
