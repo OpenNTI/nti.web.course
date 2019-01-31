@@ -56,7 +56,7 @@ class EnrollmentBreakdown extends React.Component {
 		return (
 			<div className={cx('enrollment-breakdown-wrapper')}>
 				<div className={cx('enrollment-breakdown')}>
-					<PieChart title={t('title')}classes={classes} series={series} />
+					<PieChart title={t('title')} classes={classes} series={series} />
 				</div>
 			</div>
 		);
