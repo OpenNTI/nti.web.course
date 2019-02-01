@@ -9,7 +9,8 @@ export default class RosterTest extends React.Component {
 
 	async componentDidMount () {
 		const service = await getService();
-		const course = await service.getObject('tag:nextthought.com,2011-10:ray.hatfield@nextthought.com-OID-0x538f:5573657273:eu8UzG0R2Ad');
+		// const course = await service.getObject('tag:nextthought.com,2011-10:ray.hatfield@nextthought.com-OID-0x538f:5573657273:eu8UzG0R2Ad');
+		const course = await service.getObject('tag:nextthought.com,2011-10:ray.hatfield@nextthought.com-OID-0x13086e:5573657273:kE0RxGafqhJ');
 
 		this.setState({
 			course
