@@ -11,7 +11,7 @@ const triggersReload = ['sortOn', 'sortOrder'];
 
 export default
 @mixin(Mixins.Searchable)
-class PagedBatchStore extends Stores.BoundStore {
+class StreamedBatchStore extends Stores.BoundStore {
 	constructor () {
 		super();
 
