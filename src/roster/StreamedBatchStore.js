@@ -7,13 +7,15 @@ const OPTIONS = 'options';
 const FILTER = 'filter';
 const BATCH_START = 'batchStart';
 
+const triggersReload = ['sortOn', 'sortOrder'];
+
 export default
 @mixin(Mixins.Searchable)
 class PagedBatchStore extends Stores.BoundStore {
 	constructor () {
 		super();
 
-		this.set('batch', null);
+		this.set('batches', null);
 		this.set(OPTIONS, {});
 		this.set('href', null);
 
@@ -33,24 +35,33 @@ class PagedBatchStore extends Stores.BoundStore {
 		return options.batchSize;
 	}
 
+	get firstBatch () {
+		const [batch] = (this.get('batches') || []);
+		return batch;
+	}
+
+	get lastBatch () {
+		const [batch] = (this.get('batches') || []).slice(-1);
+		return batch;
+	}
 
 	get hasNextPage () {
-		const {batchSize, items} = this;
+		const {batchSize, lastBatch, lastBatch: {Items: items} = {}} = this;
 
-		//If we have items, check that there are as many items as we requested
-		return (items && items.length >= batchSize) && !!getNextLink(this.get('batch'));
+		//If we have items, check that the last batch has as many items as we requested
+		return (items && items.length >= batchSize) && !!getNextLink(lastBatch);
 	}
 
 
 	get hasPrevPage () {
-		return !!getPrevLink(this.get('batch'));
+		return !!getPrevLink(this.firstBatch);
 	}
 
 
 	get items () {
-		const batch = this.get('batch');
+		const batches = this.get('batches');
 
-		return batch ? batch.Items : null;
+		return batches ? batches.reduce((r, {Items}) => [...r, ...Items], []) : null;
 	}
 
 	get sortedOn () {
@@ -65,7 +76,7 @@ class PagedBatchStore extends Stores.BoundStore {
 		this.set('href', href);
 
 		//If we already have a batch re-load
-		if (this.get('batch')) {
+		if (this.lastBatch) {
 			this.load();
 		}
 	}
@@ -73,23 +84,45 @@ class PagedBatchStore extends Stores.BoundStore {
 
 	addOptions (newOptions) {
 		const options = this.get(OPTIONS);
+		const reload = this.requiresReload(newOptions);
 
 		this.set(OPTIONS, {...options, ...newOptions});
-
+		
 		//If we already have a batch re-load
-		if (this.get('batch')) {
+		if (this.lastBatch) {
+			if (reload) {
+				this.clearBatches();
+			}
 			this.load();
 		}
 	}
 
+	requiresReload (newOptions) {
+		const options = this.get(OPTIONS);
+		return triggersReload.some(option => (
+			newOptions[option] != null // has an option that triggers a reload…
+			&& newOptions[option] !== options[option] // …and it's not the value we already have
+		));
+	}
+
+	clearBatches = () => {
+		this.set('batches', undefined);
+		this.addOptions({
+			[BATCH_START]: 0
+		});
+	}
 
 	removeOption (option) {
 		const options = this.get(OPTIONS);
 
+		if (options[option] != null && triggersReload.includes(option)) {
+			this.clearBatches();
+		}
+
 		delete options[option];
 
 		//If we already have a batch re-load
-		if (this.get('batch')) {
+		if (this.lastBatch) {
 			this.load();
 		}
 	}
@@ -98,6 +131,7 @@ class PagedBatchStore extends Stores.BoundStore {
 	async [Load] (href, options = {}) {
 		this.set('loading', true);
 		this.emitChange('loading');
+		const batches = this.get('batches');
 
 		const searchTerm = this.searchTerm;
 
@@ -108,9 +142,9 @@ class PagedBatchStore extends Stores.BoundStore {
 				return;
 			}
 
-			this.set('batch', batch);
+			this.set('batches', [...(batches || []), batch]);
 			this.set('loading', false);
-			this.emitChange('items', 'hasNextPage', 'hasPrevPage', 'loading');
+			this.emitChange('items', 'hasNextPage', 'loading');
 		} catch (e) {
 			this.set('error', e);
 			this.set('loading', false);
@@ -124,25 +158,24 @@ class PagedBatchStore extends Stores.BoundStore {
 	}
 
 
-	reload () {
-		const batch = this.get('batch');
-
-		this[Load](batch.href);
-	}
+	// reload () {
+	// 	this.set('batches', undefined);
+	// 	this[Load]();
+	// }
 
 
 	loadNextPage () {
 		if (!this.hasNextPage) { return; }
 
-		this[Load](getNextLink(this.get('batch')));
+		this[Load](getNextLink(this.lastBatch));
 	}
 
 
-	loadPrevPage () {
-		if (!this.hasPrevPage) { return; }
+	// loadPrevPage () {
+	// 	if (!this.hasPrevPage) { return; }
 
-		this[Load](getPrevLink(this.get('batch')));
-	}
+	// 	this[Load](getPrevLink(this.get('batch')));
+	// }
 
 
 	/**

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Loading, Table as T} from '@nti/web-commons';
+import {Loading, Scroll, Table as T} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import columnsFor from './columns';
@@ -22,15 +22,30 @@ export default class Roster extends React.Component {
 		items: PropTypes.array,
 		loading: PropTypes.bool,
 		error: PropTypes.any,
-		reload: PropTypes.func,
-		hasNextPage: PropTypes.bool,
-		hasPrevPage: PropTypes.bool,
 		hasCourse: PropTypes.bool,
 		loadNextPage: PropTypes.func,
-		loadPrevPage: PropTypes.func,
 		setSort: PropTypes.func,
 		sortedOn: PropTypes.string,
 		sortedOrder: PropTypes.string,
+		canScroll: PropTypes.func
+	}
+
+	onUpdate = (canScroll) => {
+		if (canScroll === false) {
+			this.loadMore();
+		}
+	}
+
+	loadMore = () => {
+		const {loadNextPage, loading} = this.props;
+		
+		if (!loading && loadNextPage) {
+			loadNextPage();
+		}
+	}
+
+	onScrolledBottom = () => {
+		this.loadMore();
 	}
 
 	render () {
@@ -39,17 +54,19 @@ export default class Roster extends React.Component {
 		const columns = columnsFor(course);
 
 		return (
-			<section className={cx('course-roster')}>
-				<Header />
-				<Toolbar course={course} />
-				<div className={cx('content', {empty, loading})}>
-					<T.Table className={cx('table')} columns={columns} items={loading ? [] : items || []} onSortChange={setSort} sortOn={sortOn} sortDirection={sortDirection} />
-					{loading && <Loading.Spinner />}
-					{empty && (
-						<div className={cx('empty-message')}>{t('emptyMessage')}</div>
-					)}
-				</div>
-			</section>
+			<Scroll.BoundaryMonitor window onBottom={this.onScrolledBottom} onUpdate={this.onUpdate}>
+				<section className={cx('course-roster')}>
+					<Header />
+					<Toolbar course={course} />
+					<div className={cx('content', {empty, loading})}>
+						<T.Table className={cx('table')} columns={columns} items={items || []} onSortChange={setSort} sortOn={sortOn} sortDirection={sortDirection} />
+						{loading && <Loading.Spinner />}
+						{empty && (
+							<div className={cx('empty-message')}>{t('emptyMessage')}</div>
+						)}
+					</div>
+				</section>
+			</Scroll.BoundaryMonitor>
 		);
 	}
 }
