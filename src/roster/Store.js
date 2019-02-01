@@ -1,6 +1,6 @@
 import {getService} from '@nti/web-client';
 
-import PagedBatchStore from './PagedBatchStore';
+import StreamedBatchStore from './StreamedBatchStore';
 
 const DEFAULT_SIZE = 20;
 
@@ -11,7 +11,7 @@ function transformBatch (batch) {
 }
 
 export const KEYS = {
-	...PagedBatchStore.KEYS,
+	...StreamedBatchStore.KEYS,
 	SEARCH_TERM: 'searchTerm',
 	COURSE: 'course',
 	ROSTER_SUMMARY: 'rosterSummary',
@@ -19,7 +19,7 @@ export const KEYS = {
 	LOADING: 'loading'
 };
 
-export default class CourseRosterStore extends PagedBatchStore {
+export default class CourseRosterStore extends StreamedBatchStore {
 	constructor () {
 		super();
 
@@ -33,6 +33,7 @@ export default class CourseRosterStore extends PagedBatchStore {
 	loadCourse (course) {
 		if (this.get(KEYS.COURSE) === course) { return; }
 
+		this.clearBatches();
 		this.set(KEYS.COURSE, course);
 
 		this.setHref(course.getLink('CourseEnrollmentRoster'));
@@ -78,28 +79,4 @@ export default class CourseRosterStore extends PagedBatchStore {
 			}, 300);
 		}
 	}
-
-	// async loadInitial () {
-	// 	const course = this.get('course');
-	// 	const service = await getService();
-	// 	const roster = await service.getBatch(course.getLink('CourseEnrollmentRoster'), {batchSize: DEFAULT_SIZE, batchStart: 0});
-
-	// 	return convertBatch(roster);
-	// }
-
-
-	// async loadSearchTerm (term) {
-	// 	const course = this.get('course');
-	// 	const service = await getService();
-	// 	const roster = await service.getBatch(
-	// 		course.getLink('CourseEnrollmentRoster'),
-	// 		{
-	// 			batchSize: DEFAULT_SIZE,
-	// 			batchStart: 0,
-	// 			usernameSearchTerm: encodeURIComponent(term)
-	// 		}
-	// 	);
-
-	// 	return convertBatch(roster);
-	// }
 }
