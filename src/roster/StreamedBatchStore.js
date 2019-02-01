@@ -7,7 +7,7 @@ const OPTIONS = 'options';
 const FILTER = 'filter';
 const BATCH_START = 'batchStart';
 
-const triggersReload = ['sortOn', 'sortOrder'];
+const triggersReload = ['sortOn', 'sortOrder', 'filter'];
 
 export default
 @mixin(Mixins.Searchable)
