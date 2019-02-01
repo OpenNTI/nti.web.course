@@ -24,14 +24,17 @@ function getFormDataForCreation (data) {
 
 function getFormDataForUpdate (newData, oldData) {
 	const formData = new FormData();
+	let didChange = false;
 
 	const maybeAdd = (key) => {
 		if (newData[key] !== oldData[key]) {
+			didChange = true;
 			formData.append(key, newData[key]);
 		}
 	};
 
 	if (newData.icon !== undefined) {
+		didChange = true;
 		formData.append('icon', newData.icon);
 	}
 
@@ -42,7 +45,7 @@ function getFormDataForUpdate (newData, oldData) {
 	maybeAdd('start_time');
 	maybeAdd('end_time');
 
-	return formData;
+	return didChange ? formData : null;
 }
 
 export default class CourseEventsStore extends Stores.BoundStore {
@@ -96,6 +99,10 @@ export default class CourseEventsStore extends Stores.BoundStore {
 					'end_time': event.getEndTime() && event.getEndTime().toISOString()
 				};
 			const formData = oldData ? getFormDataForUpdate(newData, oldData) : getFormDataForCreation(newData);
+
+			if (!formData && event) {
+				return event;
+			}
 
 			let calendarEvent;
 			let type = 'Calendar-Event-Created';
