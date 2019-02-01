@@ -4,6 +4,7 @@ import {searchable, contextual} from '@nti/web-search';
 import {scoped} from '@nti/lib-locale';
 import {SortOrder} from '@nti/lib-interfaces';
 
+import Roster from './Roster';
 import Store from './Store';
 
 
@@ -143,9 +144,10 @@ class CourseRosterView extends React.Component {
 		};
 	}
 
+	renderTable = props => <Roster {...props} />
 
 	render () {
-		const {hasCourse, renderRoster} = this.props;
+		const {hasCourse, renderRoster = this.renderTable} = this.props;
 
 		return hasCourse && renderRoster(this.getComponentProps());
 	}
