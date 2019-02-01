@@ -191,10 +191,10 @@ class StreamedBatchStore extends Stores.BoundStore {
 
 
 function getNextLink (batch) {
-	return batch && batch.getLink('batch-next');
+	return batch && batch.getLink && batch.getLink('batch-next');
 }
 
 
 function getPrevLink (batch) {
-	return batch && batch.getLink('batch-prev');
+	return batch && batch.getLink && batch.getLink('batch-prev');
 }
