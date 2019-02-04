@@ -25,7 +25,7 @@ export const TABS = {
 		isRootRoute: true
 	},
 	'scorm': {
-		hasAccess: course => course.isScormInstance,
+		hasAccess: (course) => course.isScormInstance && (course.hasLink('ImportScorm') || (course.Metadata && course.Metadata.hasLink('LaunchScorm'))),
 		isRootRoute: true
 	},
 	'assignments': {
