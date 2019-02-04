@@ -24,7 +24,13 @@ describe('Course Navigation Constants', () => {
 				});
 
 				test('Scorm course', () => {
-					expect(TABS.lessons.hasAccess({isScormInstance: true, hasOutline: () => true})).toBeFalsy();
+					const course = {
+						isScormInstance: true,
+						hasOutline: () => true,
+						hasLink: () => false
+					};
+
+					expect(TABS.lessons.hasAccess(course)).toBeFalsy();
 				});
 			});
 
@@ -33,8 +39,37 @@ describe('Course Navigation Constants', () => {
 					expect(TABS.scorm.hasAccess({isScormInstance: false})).toBeFalsy();
 				});
 
-				test('scorm course', () => {
-					expect(TABS.scorm.hasAccess({isScormInstance: true})).toBeTruthy();
+				test('scorm course, no import or launch link', () => {
+					const course =  {
+						isScormInstance: true,
+						hasLink: () => false,
+						Metadata: {
+							hasLink: () => false
+						}
+					};
+
+					expect(TABS.scorm.hasAccess(course)).toBeFalsy();
+				});
+
+				test('scorm course, with import link', () => {
+					const course = {
+						isScormInstance: true,
+						hasLink: rel => rel === 'ImportScorm'
+					};
+
+					expect(TABS.scorm.hasAccess(course)).toBeTruthy();
+				});
+
+				test('scorm course, with launch link', () => {
+					const course = {
+						isScormInstance: true,
+						hasLink: () => false,
+						Metadata: {
+							hasLink: rel => rel === 'LaunchScorm'
+						}
+					};
+
+					expect(TABS.scorm.hasAccess(course)).toBeTruthy();
 				});
 			});
 
