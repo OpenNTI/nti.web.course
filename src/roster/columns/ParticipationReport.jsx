@@ -19,7 +19,11 @@ export default class ParticipationReport extends React.Component {
 
 	state = {}
 
-	showReport = () => {
+	showReport = (e) => {
+		if (e && e.stopPropagation) {
+			e.stopPropagation(); // suppress row click behavior
+		}
+
 		const [report] = this.getReports();
 
 		if (report) {

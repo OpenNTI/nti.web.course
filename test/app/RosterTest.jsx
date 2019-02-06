@@ -1,7 +1,22 @@
 import React from 'react';
 import {getService} from '@nti/web-client';
+import {Router, Route} from '@nti/web-routing';
+import {encodeForURI} from '@nti/lib-ntiids';
 
-import {View as RosterView, Roster} from '../../src/roster';
+import {default as RosterView} from '../../src/roster';
+
+const Routes = Router.for([
+	Route({
+		path: '/',
+		component: RosterView,
+		name: 'course-roster',
+		getRouteFor: (obj, context) => {
+			if ((obj || {}).getID) {
+				return `/path/to/object/${encodeForURI(obj.getID())}`;
+			}
+		}
+	}),
+]);
 
 export default class RosterTest extends React.Component {
 
@@ -17,8 +32,6 @@ export default class RosterTest extends React.Component {
 		});
 	}
 
-	renderRoster = props => <Roster {...props} />
-
 	render () {
 		const {course} = this.state;
 
@@ -27,7 +40,7 @@ export default class RosterTest extends React.Component {
 		}
 
 		return (
-			<RosterView course={course} renderRoster={this.renderRoster} />
+			<Routes course={course} />
 		);
 	}
 }

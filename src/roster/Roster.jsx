@@ -30,6 +30,14 @@ export default class Roster extends React.Component {
 		canScroll: PropTypes.func
 	}
 
+	static contextTypes = {
+		router: PropTypes.shape({
+			routeTo: PropTypes.shape({
+				object: PropTypes.func
+			}).isRequired
+		}).isRequired
+	}
+
 	onUpdate = (canScroll) => {
 		if (canScroll === false) {
 			this.loadMore();
@@ -48,6 +56,14 @@ export default class Roster extends React.Component {
 		this.loadMore();
 	}
 
+	onRowClick = (item, event) => {
+		const {context: {router} = {}} = this;
+		
+		if (router) {
+			router.routeTo.object(item);
+		}
+	}
+
 	render () {
 		const {items, loading, course, setSort, sortedOn: sortOn, sortedOrder: sortDirection} = this.props;
 		const empty = !loading && !(items && items.length);
@@ -59,7 +75,15 @@ export default class Roster extends React.Component {
 					<Header />
 					<Toolbar course={course} />
 					<div className={cx('content', {empty, loading})}>
-						<T.Table className={cx('table')} columns={columns} items={items || []} onSortChange={setSort} sortOn={sortOn} sortDirection={sortDirection} />
+						<T.Table
+							className={cx('table')}
+							columns={columns}
+							items={items || []}
+							onSortChange={setSort}
+							sortOn={sortOn}
+							sortDirection={sortDirection}
+							onRowClick={this.onRowClick}
+						/>
 						{loading && <Loading.Spinner />}
 						{empty && (
 							<div className={cx('empty-message')}>{t('emptyMessage')}</div>
