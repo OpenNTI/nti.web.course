@@ -21,7 +21,7 @@ export default class Progress extends React.Component {
 	static cssClassName = cx('progress-cell')
 
 	render () {
-		const {item: {CourseProgress: progress} = {}} = this.props;
+		const {item: {courseProgress: progress} = {}} = this.props;
 		const percentage = progress && progress.PercentageProgress != null ? progress.PercentageProgress : 0;
 		return (
 			<div><PercentComplete percentage={percentage} /></div>
