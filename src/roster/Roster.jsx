@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {Loading, Scroll, Table as T} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
+import Logger from '@nti/util-logger';
 
 import columnsFor from './columns';
 import Header from './Header';
 import Toolbar from './Toolbar';
 import styles from './Roster.css';
+
+const logger = Logger.get('course.roster.component');
 
 const t = scoped('course.roster.component', {
 	emptyMessage: 'No enrollees found'
@@ -59,8 +62,11 @@ export default class Roster extends React.Component {
 	onRowClick = (item, event) => {
 		const {context: {router} = {}} = this;
 		
-		if (router) {
+		if (router && router.routeTo && router.routeTo.object) {
 			router.routeTo.object(item);
+		}
+		else {
+			logger.warn('router.routeTo.object isn\'t available. Ignoring row click.');
 		}
 	}
 
