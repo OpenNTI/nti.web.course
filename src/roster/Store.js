@@ -12,7 +12,6 @@ function transformBatch (batch) {
 
 export const KEYS = {
 	...StreamedBatchStore.KEYS,
-	SEARCH_TERM: 'searchTerm',
 	COURSE: 'course',
 	ROSTER_SUMMARY: 'rosterSummary',
 	ROSTER_SUMMARY_ERROR: 'rosterSummaryError',
@@ -63,18 +62,15 @@ export default class CourseRosterStore extends StreamedBatchStore {
 
 
 	updateSearchTerm (term) {
-		this.set(KEYS.SEARCH_TERM, term);
-		this.set(KEYS.LOADING, true);
-		this.emitChange(KEYS.LOADING, KEYS.SEARCH_TERM);
 
 		clearTimeout(this.doSearchTimeout);
 
 		if (!term) {
-			this.removeOption('usernameSearchTerm');
+			this.removeOption(KEYS.SEARCH_TERM);
 		} else {
 			this.doSearchTimeout = setTimeout(() => {
 				this.addOptions({
-					usernameSearchTerm: encodeURIComponent(term)
+					[KEYS.SEARCH_TERM]: term
 				});
 			}, 300);
 		}

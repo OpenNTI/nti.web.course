@@ -6,8 +6,16 @@ const Load = Symbol('load');
 const OPTIONS = 'options';
 const FILTER = 'filter';
 const BATCH_START = 'batchStart';
+const SEARCH_TERM = 'usernameSearchTerm';
+const SORT_ON = 'sortOn';
+const SORT_ORDER = 'sortOrder';
 
-const triggersReload = ['sortOn', 'sortOrder', 'filter'];
+const triggersReload = [
+	FILTER,
+	SEARCH_TERM,
+	SORT_ON,
+	SORT_ORDER
+];
 
 export default
 @mixin(Mixins.Searchable)
@@ -26,13 +34,12 @@ class StreamedBatchStore extends Stores.BoundStore {
 	static KEYS = {
 		OPTIONS,
 		FILTER,
-		BATCH_START
+		BATCH_START,
+		SEARCH_TERM
 	}
 
 	get batchSize () {
-		const options = this.get(OPTIONS);
-
-		return options.batchSize;
+		return this.getOption('batchSize');
 	}
 
 	get firstBatch () {
@@ -65,11 +72,11 @@ class StreamedBatchStore extends Stores.BoundStore {
 	}
 
 	get sortedOn () {
-		return (this.get(OPTIONS) || {}).sortOn;
+		return this.getOption(SORT_ON);
 	}
 
 	get sortedOrder () {
-		return (this.get(OPTIONS) || {}).sortOrder;
+		return this.getOption(SORT_ORDER);
 	}
 
 	setHref (href) {
@@ -81,6 +88,7 @@ class StreamedBatchStore extends Stores.BoundStore {
 		}
 	}
 
+	getOption = key => (this.get(OPTIONS) || {})[key];
 
 	addOptions (newOptions) {
 		const options = this.get(OPTIONS);
@@ -88,11 +96,8 @@ class StreamedBatchStore extends Stores.BoundStore {
 
 		this.set(OPTIONS, {...options, ...newOptions});
 		
-		//If we already have a batch re-load
-		if (this.lastBatch) {
-			if (reload) {
-				this.clearBatches();
-			}
+		if (reload) {
+			this.clearBatches();
 			this.load();
 		}
 	}
@@ -115,15 +120,13 @@ class StreamedBatchStore extends Stores.BoundStore {
 	removeOption (option) {
 		const options = this.get(OPTIONS);
 
-		if (options[option] != null && triggersReload.includes(option)) {
-			this.clearBatches();
-		}
+		if (options[option] != null) {
+			delete options[option];
 
-		delete options[option];
-
-		//If we already have a batch re-load
-		if (this.lastBatch) {
-			this.load();
+			if (triggersReload.includes(option)) {
+				this.clearBatches();
+				this.load();
+			}
 		}
 	}
 
