@@ -34,7 +34,7 @@ export default
 class CourseRosterView extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
-		renderRoster: PropTypes.func.isRequired,
+		renderRoster: PropTypes.func,
 
 		//store props
 		store: PropTypes.object,
