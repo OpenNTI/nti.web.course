@@ -5,16 +5,16 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 	constructor () {
 		super();
 
-		this.set('loading', false);
-		this.set('error', null);
-		this.set('currentItem', null);
-
-		this.set('totalItems', null);
-		this.set('currentItemIndex', null);
-		this.set('hasNextItem', false);
-		this.set('hasPrevItem', false);
+		this.set({
+			loading: false,
+			error: null,
+			currentItem: null,
+			totalItems: null,
+			currentItemIndex: null,
+			hasNextItem: false,
+			hasPrevItem: false,
+		});
 	}
-
 
 	loadNextItem () {
 		if (this.nextLink) {
@@ -28,17 +28,17 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 		}
 	}
 
-
 	async loadBatchLink (batchLink) {
 		this.nextLink = null;
 		this.prevLink = null;
 
-		this.set('loading', true);
-		this.set('error', null);
-		this.set('currentItem', null);
-		this.set('hasNextItem', false);
-		this.set('hasPrevItem', false);
-		this.emitChange('loading');
+		this.set({
+			loading: true,
+			error: null,
+			currentItem: null,
+			hasNextItem: false,
+			hasPrevItem: false
+		});
 
 		try {
 			const service = await getService();
@@ -50,27 +50,30 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 			this.nextLink = batch.getLink('batch-next');
 			this.prevLink = batch.getLink('batch-prev');
 
-			this.set('loading', false);
-			this.set('currentItem', Items[0]);
-			this.set('currentItemIndex', BatchPage);
-			this.set('totalItems', total);
-			this.set('hasNextItem', !!this.nextLink && BatchPage < total);
-			this.set('hasPrevItem', !!this.prevLink);
-			this.emitChange('currentItem', 'currentItemIndex', 'totalItems', 'hasNextItem', 'hasPrevItem');
-		} catch (e) {
-			this.set('loading', false);
-			this.set('error', e);
-			this.emitChange('error', 'loading');
+			this.set({
+				loading: false,
+				currentItem: Items[0],
+				currentItemIndex: BatchPage,
+				totalItems: total,
+				hasNextItem: !!this.nextLink && BatchPage < total,
+				hasPrevItem: !!this.prevLink
+			});
+		}
+		catch (e) {
+			this.set({
+				loading: false,
+				error: e
+			});
 		}
 	}
 
-
 	loadCourse (enrollment, course) {
-		this.set('currentItem', enrollment);
-		this.set('currentItemIndex', 1);
-		this.set('totalItems', 1);
-		this.set('hasNextItem', false);
-		this.set('hasPrevItem', false);
-		this.emitChange('currentItem', 'currentItemIndex', 'totalItems', 'hasNextItem', 'hasPrevItem');
+		this.set({
+			currentItem: enrollment,
+			currentItemIndex: 1,
+			totalItems: 1,
+			hasNextItem: false,
+			hasPrevItem: false,
+		});
 	}
 }
