@@ -1,7 +1,7 @@
-import React from 'react';
-import { mount } from 'enzyme';
+// import React from 'react';
+// import { mount } from 'enzyme';
 
-import CourseInfo from '../CourseInfo';
+// import CourseInfo from '../CourseInfo';
 
 const redemptionCodes = [{Code: 'abc-def'}];
 
@@ -40,7 +40,7 @@ describe('CourseInfo test', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
-	const startDate = new Date('2016-06-13T05:00:00Z');
+	// const startDate = new Date('2016-06-13T05:00:00Z');
 
 	test('Test editable', () => {
 	// 	const title = 'a title';

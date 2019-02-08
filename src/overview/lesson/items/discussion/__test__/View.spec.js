@@ -4,7 +4,7 @@ import { Summary } from '@nti/lib-interfaces';
 import { TestUtils } from '@nti/web-client';
 
 import View from '../View';
-import { List, Grid } from '../../../Constants';
+import { Grid } from '../../../Constants';
 
 const { tearDownTestClient, setupTestClient } = TestUtils;
 
