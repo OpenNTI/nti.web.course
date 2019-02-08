@@ -114,11 +114,12 @@ export default class AssignmentHeader extends React.Component {
 		const hours = Math.floor(AVG_DURATION / 60);
 		const minutes = AVG_DURATION % 60;
 
-		return (<div className="statistics">
-			{this.renderStatistic(t('avgGrade'), t('grade', {grade: AVG_GRADE, letter}) + '%')}
-			{this.renderStatistic(t('avgDuration'), t('duration', { hours, minutes }))}
-			{this.renderStatistic(t('onTime'), ON_TIME_PCT)}
-		</div>
+		return (
+			<div className="statistics">
+				{this.renderStatistic(t('avgGrade'), t('grade', {grade: AVG_GRADE, letter}) + '%')}
+				{this.renderStatistic(t('avgDuration'), t('duration', { hours, minutes }))}
+				{this.renderStatistic(t('onTime'), ON_TIME_PCT)}
+			</div>
 		);
 	}
 

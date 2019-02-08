@@ -135,11 +135,12 @@ export default class CourseListing extends React.Component {
 	}
 
 	render () {
-		return (<div className="course-listing">
-			{this.renderLoading()}
-			{this.renderToolbar()}
-			{this.renderCourses()}
-		</div>
+		return (
+			<div className="course-listing">
+				{this.renderLoading()}
+				{this.renderToolbar()}
+				{this.renderCourses()}
+			</div>
 		);
 	}
 }

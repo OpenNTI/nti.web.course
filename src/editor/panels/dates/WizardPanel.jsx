@@ -67,19 +67,20 @@ export default class DatePickerWizardPanel extends React.Component {
 	};
 
 	render () {
-		return (<div className="course-panel-choosedates">
-			<div className="course-panel-content">
-				<DayPickerRange
-					startDate={this.state.startDate} endDate={this.state.endDate}
-					updateStartDate={this.updateStartDate}
-					updateEndDate={this.updateEndDate}
-				/>
+		return (
+			<div className="course-panel-choosedates">
+				<div className="course-panel-content">
+					<DayPickerRange
+						startDate={this.state.startDate} endDate={this.state.endDate}
+						updateStartDate={this.updateStartDate}
+						updateEndDate={this.updateEndDate}
+					/>
+				</div>
+				<div className="course-panel-controls">
+					{this.renderSaveCmp()}
+					{this.renderCancelCmp()}
+				</div>
 			</div>
-			<div className="course-panel-controls">
-				{this.renderSaveCmp()}
-				{this.renderCancelCmp()}
-			</div>
-		</div>
 		);
 	}
 }

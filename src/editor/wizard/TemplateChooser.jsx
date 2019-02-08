@@ -63,17 +63,18 @@ export default class TemplateChooser extends React.Component {
 	render () {
 		const { availableTemplates } = this.props;
 
-		return (<div className="course-panel-templatechooser">
-			<div className="course-panel-content">
-				<div className="options-container">
-					{(availableTemplates || []).map(this.renderItem)}
+		return (
+			<div className="course-panel-templatechooser">
+				<div className="course-panel-content">
+					<div className="options-container">
+						{(availableTemplates || []).map(this.renderItem)}
+					</div>
+				</div>
+				<div className="course-panel-controls">
+					{this.renderSaveCmp()}
+					{this.renderCancelCmp()}
 				</div>
 			</div>
-			<div className="course-panel-controls">
-				{this.renderSaveCmp()}
-				{this.renderCancelCmp()}
-			</div>
-		</div>
 		);
 	}
 }

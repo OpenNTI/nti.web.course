@@ -166,11 +166,12 @@ export default class SettingsTabPanel extends React.Component {
 	}
 
 	render () {
-		return (<div className="course-panel-settings">
-			<div className="course-panel-content">
-				{this.renderOptions()}
+		return (
+			<div className="course-panel-settings">
+				<div className="course-panel-content">
+					{this.renderOptions()}
+				</div>
 			</div>
-		</div>
 		);
 	}
 }

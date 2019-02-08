@@ -225,16 +225,17 @@ export default class DayTimeWizardPanel extends React.Component {
 	}
 
 	render () {
-		return (<div>
-			<div className="course-panel-content">
-				{this.renderDaySelection()}
-				{this.renderTimeSelection()}
+		return (
+			<div>
+				<div className="course-panel-content">
+					{this.renderDaySelection()}
+					{this.renderTimeSelection()}
+				</div>
+				<div className="course-panel-controls">
+					{this.renderSaveCmp()}
+					{this.renderCancelCmp()}
+				</div>
 			</div>
-			<div className="course-panel-controls">
-				{this.renderSaveCmp()}
-				{this.renderCancelCmp()}
-			</div>
-		</div>
 		);
 	}
 }
