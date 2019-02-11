@@ -145,13 +145,15 @@ class StreamedBatchStore extends Stores.BoundStore {
 				return;
 			}
 
-			this.set('batches', [...(batches || []), batch]);
-			this.set('loading', false);
-			this.emitChange('items', 'hasNextPage', 'loading');
+			this.set({
+				batches: [...(batches || []), batch],
+				loading: false
+			});
 		} catch (e) {
-			this.set('error', e);
-			this.set('loading', false);
-			this.emitChange('error', 'loading');
+			this.set({
+				error: e,
+				loading: false
+			});
 		}
 	}
 
