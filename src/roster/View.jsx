@@ -24,7 +24,8 @@ const propMap = {
 	hasNextPage: 'hasNextPage',
 	hasPrevPage: 'hasPrevPage',
 	hasCourse: 'hasCourse',
-	options: 'options'
+	options: 'options',
+	batchLinkFor: 'batchLinkFor'
 };
 
 export default
@@ -46,7 +47,8 @@ class CourseRosterView extends React.Component {
 		hasNextPage: PropTypes.bool,
 		hasPrevPage: PropTypes.bool,
 		hasCourse: PropTypes.bool,
-		options: PropTypes.object
+		options: PropTypes.object,
+		batchLinkFor: PropTypes.func.isRequired
 	}
 
 
@@ -125,6 +127,7 @@ class CourseRosterView extends React.Component {
 				sortOn: sortedOn,
 				sortOrder: sortedOrder
 			} = {},
+			batchLinkFor
 		} = this.props;
 
 		return {
@@ -140,7 +143,8 @@ class CourseRosterView extends React.Component {
 			loadPrevPage: hasPrevPage && this.loadPrevPage,
 			setSort: this.setSort,
 			sortedOn,
-			sortedOrder
+			sortedOrder,
+			batchLinkFor
 		};
 	}
 

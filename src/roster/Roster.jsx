@@ -5,7 +5,9 @@ import {Loading, Scroll, Table as T} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
 
+import {encodeBatchParams} from './util';
 import columnsFor from './columns';
+import Dialogs from './Dialogs';
 import Header from './Header';
 import Toolbar from './Toolbar';
 import styles from './Roster.css';
@@ -30,7 +32,8 @@ export default class Roster extends React.Component {
 		setSort: PropTypes.func,
 		sortedOn: PropTypes.string,
 		sortedOrder: PropTypes.string,
-		canScroll: PropTypes.func
+		canScroll: PropTypes.func,
+		batchLinkFor: PropTypes.func.isRequired
 	}
 
 	static contextTypes = {
@@ -60,13 +63,33 @@ export default class Roster extends React.Component {
 	}
 
 	onRowClick = (item, event) => {
-		const {context: {router} = {}} = this;
-		
-		if (router && router.routeTo && router.routeTo.object) {
-			router.routeTo.object(item);
+		const {
+			props: {batchLinkFor},
+			context: {router} = {}
+		} = this;
+
+		if (batchLinkFor && router && router.routeTo && router.routeTo.path) {
+			const batchLink = batchLinkFor(item);
+
+			if (batchLink) {
+				router.routeTo.path(`/progress/${encodeBatchParams(batchLink)}`);
+			}
 		}
 		else {
-			logger.warn('router.routeTo.object isn\'t available. Ignoring row click.');
+			logger.warn('Unable to route to student progress. Ignoring row click.');
+		}
+	}
+
+	closeDialog = () => {
+		const {
+			context: {router} = {}
+		} = this;
+
+		if (router && router.routeTo && router.routeTo.path) {
+			router.routeTo.path('/');
+		}
+		else {
+			global.history.go(-1);
 		}
 	}
 
@@ -74,6 +97,13 @@ export default class Roster extends React.Component {
 		const {items, loading, course, setSort, sortedOn: sortOn, sortedOrder: sortDirection} = this.props;
 		const empty = !loading && !(items && items.length);
 		const columns = columnsFor(course);
+
+		const dialogProps = {
+			course,
+			sortOn,
+			sortDirection,
+			onClose: this.closeDialog
+		};
 
 		return (
 			<Scroll.BoundaryMonitor window onBottom={this.onScrolledBottom} onUpdate={this.onUpdate}>
@@ -95,6 +125,7 @@ export default class Roster extends React.Component {
 							<div className={cx('empty-message')}>{t('emptyMessage')}</div>
 						)}
 					</div>
+					<Dialogs {...dialogProps} />
 				</section>
 			</Scroll.BoundaryMonitor>
 		);

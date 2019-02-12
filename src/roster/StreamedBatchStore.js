@@ -1,5 +1,7 @@
 import {Stores, Mixins} from '@nti/lib-store';
 import {mixin} from '@nti/lib-decorators';
+import {URL} from '@nti/lib-commons';
+import QS from 'query-string';
 
 const Load = Symbol('load');
 
@@ -69,6 +71,21 @@ class StreamedBatchStore extends Stores.BoundStore {
 		const batches = this.get('batches');
 
 		return batches ? batches.reduce((r, {Items}) => [...r, ...Items], []) : null;
+	}
+
+	batchLinkFor = item => {
+		const batch = (this.get('batches') || []).find(({Items: items} = []) => items.indexOf(item > -1));
+
+		if (batch) {
+			const {href, Items: items = []} = batch;
+			const index = items.indexOf(item);
+			const url = URL.parse(href);
+			const query = QS.parse(url.query);
+			query.batchStart = parseInt(query.batchStart || 0, 10) + index;
+			query.batchSize = 1;
+			const link = `${url.pathname}?${QS.stringify(query)}`;
+			return link;
+		}
 	}
 
 	get sortedOn () {
