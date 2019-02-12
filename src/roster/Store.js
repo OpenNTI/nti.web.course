@@ -60,19 +60,11 @@ export default class CourseRosterStore extends StreamedBatchStore {
 		}
 	}
 
-
 	updateSearchTerm (term) {
+		const {SEARCH_TERM: key} = KEYS;
 
-		clearTimeout(this.doSearchTimeout);
-
-		if (!term) {
-			this.removeOption(KEYS.SEARCH_TERM);
-		} else {
-			this.doSearchTimeout = setTimeout(() => {
-				this.addOptions({
-					[KEYS.SEARCH_TERM]: term
-				});
-			}, 300);
-		}
+		this.addOptionsBuffered({
+			[key]: term
+		});
 	}
 }

@@ -1,4 +1,4 @@
-import Store from '../Store';
+import {default as Store, KEYS} from '../Store';
 
 /* eslint-env jest */
 describe('Test roster store', () => {
@@ -23,14 +23,15 @@ describe('Test roster store', () => {
 	});
 
 	test('Test searchTerm', () => {
+		const {SEARCH_TERM: key} = KEYS;
 		const store = new Store();
 
 		const term = 'testSearch';
 
-		expect(store.get('searchTerm')).toBe(null);
+		expect(store.getOption(key)).toBeUndefined();
 
 		store.updateSearchTerm(term);
 
-		expect(store.get('searchTerm')).toBe(term);
+		expect(store.getOption(key)).toEqual(term);
 	});
 });

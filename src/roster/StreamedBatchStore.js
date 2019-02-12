@@ -105,7 +105,27 @@ class StreamedBatchStore extends Stores.BoundStore {
 		}
 	}
 
-	getOption = key => (this.get(OPTIONS) || {})[key];
+	getOption = key => {
+		const {pendingOptions} = this;
+		const source = pendingOptions && pendingOptions.hasOwnProperty(key)
+			? pendingOptions
+			: this.get(OPTIONS) || {};
+		return source[key];
+	}
+
+	addOptionsBuffered = options => {
+		this.pendingOptions = {
+			...this.pendingOptions,
+			...options
+		};
+
+		clearTimeout(this.pendingOptionsTimeout);
+
+		this.pendingOptionsTimeout = setTimeout(() => {
+			this.addOptions(this.pendingOptions);
+			delete this.pendingOptions;
+		}, 300);
+	}
 
 	addOptions (newOptions) {
 		const options = this.get(OPTIONS);
