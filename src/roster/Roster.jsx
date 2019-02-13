@@ -7,7 +7,6 @@ import Logger from '@nti/util-logger';
 
 import {encodeBatchParams} from './util';
 import columnsFor from './columns';
-import Dialogs from './Dialogs';
 import Header from './Header';
 import Toolbar from './Toolbar';
 import styles from './Roster.css';
@@ -72,7 +71,7 @@ export default class Roster extends React.Component {
 			const batchLink = batchLinkFor(item);
 
 			if (batchLink) {
-				router.routeTo.path(`/progress/${encodeBatchParams(batchLink)}`);
+				router.routeTo.path(`./progress/${encodeBatchParams(batchLink)}`);
 			}
 		}
 		else {
@@ -94,16 +93,9 @@ export default class Roster extends React.Component {
 	}
 
 	render () {
-		const {items, loading, course, setSort, sortedOn: sortOn, sortedOrder: sortDirection} = this.props;
+		const {items, loading, course, setSort, sortedOn: sortOn, sortedOrder: sortDirection, children} = this.props;
 		const empty = !loading && !(items && items.length);
 		const columns = columnsFor(course);
-
-		const dialogProps = {
-			course,
-			sortOn,
-			sortDirection,
-			onClose: this.closeDialog
-		};
 
 		return (
 			<Scroll.BoundaryMonitor window onBottom={this.onScrolledBottom} onUpdate={this.onUpdate}>
@@ -124,8 +116,8 @@ export default class Roster extends React.Component {
 						{empty && (
 							<div className={cx('empty-message')}>{t('emptyMessage')}</div>
 						)}
+						{children}
 					</div>
-					<Dialogs {...dialogProps} />
 				</section>
 			</Scroll.BoundaryMonitor>
 		);
