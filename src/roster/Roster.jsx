@@ -1,3 +1,5 @@
+import {join} from 'path';
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
@@ -71,7 +73,9 @@ export default class Roster extends React.Component {
 			const batchLink = batchLinkFor(item);
 
 			if (batchLink) {
-				router.routeTo.path(`./progress/${encodeBatchParams(batchLink)}`);
+				const subroute = `./progress/${encodeBatchParams(batchLink)}`;
+				const path = join(router.baseroute || '', subroute);
+				router.routeTo.path(path);
 			}
 		}
 		else {
