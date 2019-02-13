@@ -142,7 +142,7 @@ class StreamedBatchStore extends Stores.BoundStore {
 	requiresReload (newOptions) {
 		const options = this.get(OPTIONS);
 		return triggersReload.some(option => (
-			newOptions[option] != null // has an option that triggers a reload…
+			newOptions.hasOwnProperty(option) // has an option that triggers a reload…
 			&& newOptions[option] !== options[option] // …and it's not the value we already have
 		));
 	}
