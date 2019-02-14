@@ -29,14 +29,18 @@ export default class CourseRosterStore extends StreamedBatchStore {
 		return !!this.get(KEYS.COURSE);
 	}
 
-	loadCourse (course) {
+	loadCourse (course, options) {
 		if (this.get(KEYS.COURSE) === course) { return; }
 
 		this.clearBatches();
 		this.set(KEYS.COURSE, course);
 
 		this.setHref(course.getLink('CourseEnrollmentRoster'));
-		this.addOptions({batchSize: DEFAULT_SIZE, batchStart: 0});
+		this.addOptions({
+			batchSize: DEFAULT_SIZE,
+			batchStart: 0,
+			...(options || {})
+		});
 
 		this.loadSummary();
 		this.load();

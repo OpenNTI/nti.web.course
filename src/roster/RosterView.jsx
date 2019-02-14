@@ -6,6 +6,7 @@ import {SortOrder} from '@nti/lib-interfaces';
 
 import Roster from './Roster';
 import Store from './Store';
+import {parametersFromLink, decodeBatchLink} from './util/batch-link-encoding';
 
 
 const t = scoped('course.roster.View', {
@@ -35,6 +36,7 @@ export default
 class CourseRosterView extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
+		encodedBatchLink: PropTypes.string,
 		renderRoster: PropTypes.func,
 		children: PropTypes.any,
 
@@ -54,21 +56,36 @@ class CourseRosterView extends React.Component {
 
 
 	componentDidMount () {
-		const {store, course} = this.props;
+		const {course} = this.props;
 
-		store.loadCourse(course);
+		this.loadCourse(course);
 	}
 
 
 	componentDidUpdate (prevProps) {
-		const {course:nextCourse, store} = this.props;
-		const {course:oldCourse} = prevProps;
+		const {course: nextCourse} = this.props;
+		const {course: oldCourse} = prevProps;
 
 		if (nextCourse !== oldCourse) {
-			store.loadCourse(nextCourse);
+			this.loadCourse(nextCourse);
 		}
 	}
 
+	loadCourse = course => {
+		const {store, encodedBatchLink} = this.props;
+		let options;
+
+		if (encodedBatchLink) {
+			try {
+				options = parametersFromLink(decodeBatchLink(encodedBatchLink));
+			}
+			catch (e) {
+				//
+			}
+		}
+
+		store.loadCourse(course, options);
+	}
 
 	reload () {
 		const {reload} = this.props;
