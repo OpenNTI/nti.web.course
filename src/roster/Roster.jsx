@@ -7,7 +7,7 @@ import {Loading, Scroll, Table as T} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
 
-import {encodeBatchParams} from './util';
+import {encodeBatchLink} from './util';
 import columnsFor from './columns';
 import Header from './Header';
 import Toolbar from './Toolbar';
@@ -73,7 +73,7 @@ export default class Roster extends React.Component {
 			const batchLink = batchLinkFor(item);
 
 			if (batchLink) {
-				const subroute = `./progress/${encodeBatchParams(batchLink)}`;
+				const subroute = `./progress/${encodeBatchLink(batchLink)}`;
 				const path = join(router.baseroute || '', subroute);
 				router.routeTo.path(path);
 			}

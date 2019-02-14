@@ -1,4 +1,4 @@
 export {
-	encodeBatchParams,
-	decodeBatchParams
-} from './batch-param-encoding';
+	encodeBatchLink,
+	decodeBatchLink
+} from './batch-link-encoding';

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Overview from '../progress/overview';
 
-import {decodeBatchParams} from './util';
+import {decodeBatchLink} from './util';
 
 export default class Progress extends React.Component {
 	static propTypes = {
@@ -13,7 +13,7 @@ export default class Progress extends React.Component {
 
 	render () {
 		const {encodedBatchLink, onClose, ...props} = this.props;
-		const batchLink = decodeBatchParams(encodedBatchLink);
+		const batchLink = decodeBatchLink(encodedBatchLink);
 
 		return (
 			<Overview batchLink={batchLink} doClose={onClose} {...props} />
