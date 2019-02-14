@@ -8,7 +8,7 @@ const t = scoped('course.progress.overview.Header', {
 	page: '%(page)s of %(total)s'
 });
 
-export default class ProgressOverviewHEader extends React.Component {
+export default class ProgressOverviewHeader extends React.Component {
 	static propTypes = {
 		doClose: PropTypes.func,
 		singleItem: PropTypes.bool,
