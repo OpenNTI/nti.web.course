@@ -97,9 +97,18 @@ export default class Roster extends React.Component {
 	}
 
 	render () {
-		const {items, loading, course, setSort, sortedOn: sortOn, sortedOrder: sortDirection, children} = this.props;
+		const {
+			items,
+			loading,
+			course,
+			setSort,
+			sortedOn: sortOn,
+			sortedOrder: sortDirection,
+			children
+		} = this.props;
 		const empty = !loading && !(items && items.length);
 		const columns = columnsFor(course);
+		const onRowClick = (course || {}).CompletionPolicy ? this.onRowClick : null;
 
 		return (
 			<Scroll.BoundaryMonitor window onBottom={this.onScrolledBottom} onUpdate={this.onUpdate}>
@@ -114,7 +123,7 @@ export default class Roster extends React.Component {
 							onSortChange={setSort}
 							sortOn={sortOn}
 							sortDirection={sortDirection}
-							onRowClick={this.onRowClick}
+							onRowClick={onRowClick}
 						/>
 						{loading && <Loading.Spinner />}
 						{empty && (
