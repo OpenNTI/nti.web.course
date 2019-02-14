@@ -18,12 +18,15 @@ export default class Toolbar extends React.Component {
 	
 	render () {
 		const {course} = this.props;
+		const {canManageEnrollment} = course || {};
 
 		return (
 			<div className={cx('toolbar')}>
 				<FilterMenu />
 				<div className={cx('enrollment-controls')}>
-					<ManageEnrollment.Trigger course={course} className={cx('manage-enrollment-button')}>{t('manageEnrollments')}</ManageEnrollment.Trigger>
+					{ canManageEnrollment &&
+						<ManageEnrollment.Trigger course={course} className={cx('manage-enrollment-button')}>{t('manageEnrollments')}</ManageEnrollment.Trigger>
+					}
 					<Invite />
 				</div>
 			</div>
