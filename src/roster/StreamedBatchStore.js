@@ -141,7 +141,7 @@ class StreamedBatchStore extends Stores.BoundStore {
 		}
 	}
 
-	requiresReload (newOptions) {
+	requiresReload (newOptions = {}) {
 		const options = this.get(OPTIONS);
 		return triggersReload.some(option => (
 			newOptions.hasOwnProperty(option) // has an option that triggers a reload…
@@ -175,13 +175,15 @@ class StreamedBatchStore extends Stores.BoundStore {
 		this.set('loading', true);
 		this.emitChange('loading');
 		const batches = this.get('batches');
-
-		const searchTerm = this.searchTerm;
-
+		
 		try {
 			const batch = href ? await this.loadBatch(href, options) : { Items: [] };
-
-			if(this.searchTerm !== searchTerm) {
+			
+			// if options changed while we were awaiting the response, drop it on the floor.
+			// the second condition is a little backwards--it's testing whether the old options
+			// would trigger a reload, but it answers the question we're interested in.
+			const {pendingOptions} = this;
+			if (this.requiresReload(pendingOptions) || this.requiresReload(options)) {
 				return;
 			}
 
