@@ -3,6 +3,8 @@ import {mixin} from '@nti/lib-decorators';
 import {URL} from '@nti/lib-commons';
 import QS from 'query-string';
 
+import {stripEmptyProperties} from './util';
+
 const Load = Symbol('load');
 
 const OPTIONS = 'options';
@@ -131,7 +133,7 @@ class StreamedBatchStore extends Stores.BoundStore {
 		const options = this.get(OPTIONS);
 		const reload = this.requiresReload(newOptions);
 
-		this.set(OPTIONS, {...options, ...newOptions});
+		this.set(OPTIONS, stripEmptyProperties({...options, ...newOptions}));
 		
 		if (reload) {
 			this.clearBatches();
@@ -143,7 +145,8 @@ class StreamedBatchStore extends Stores.BoundStore {
 		const options = this.get(OPTIONS);
 		return triggersReload.some(option => (
 			newOptions.hasOwnProperty(option) // has an option that triggers a reload…
-			&& newOptions[option] !== options[option] // …and it's not the value we already have
+			&& newOptions[option] !== options[option] // …and it's not the value we already have…
+			&& !(newOptions[option] == null && options[option] == null) // …and they're not both null-ish
 		));
 	}
 
@@ -196,7 +199,7 @@ class StreamedBatchStore extends Stores.BoundStore {
 
 
 	load () {
-		this[Load](this.get('href'), this.get('options'));
+		this[Load](this.get('href'), this.get(OPTIONS));
 	}
 
 
