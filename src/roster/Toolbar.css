@@ -18,6 +18,7 @@
 .enrollment-controls {
 	color: var(--primary-blue, #3fb3f6);
 	font-size: 0.875rem;
+	margin-left: auto;
 }
 
 .enrollment-controls > * {

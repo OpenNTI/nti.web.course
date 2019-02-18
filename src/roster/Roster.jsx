@@ -113,7 +113,7 @@ export default class Roster extends React.Component {
 		return (
 			<Scroll.BoundaryMonitor window onBottom={this.onScrolledBottom} onUpdate={this.onUpdate}>
 				<section className={cx('course-roster')}>
-					<Header />
+					{!empty && <Header />}
 					<Toolbar course={course} />
 					<div className={cx('content', {empty, loading})}>
 						<T.Table
