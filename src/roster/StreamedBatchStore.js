@@ -90,6 +90,10 @@ class StreamedBatchStore extends Stores.BoundStore {
 		}
 	}
 
+	get filter () {
+		return this.getOption(FILTER);
+	}
+
 	get sortedOn () {
 		return this.getOption(SORT_ON);
 	}

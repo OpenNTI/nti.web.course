@@ -1,0 +1,8 @@
+.email-button {
+	display: inline-block;
+	border-radius: 3px;
+	background: var(--primary-blue, #3fb3f6);
+	padding: 0.625em 1.25em;
+	color: white;
+	font-weight: 600;
+}

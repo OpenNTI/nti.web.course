@@ -6,6 +6,7 @@ import classnames from 'classnames/bind';
 import ManageEnrollment from '../enrollment/admin/Prompt';
 
 import Invite from './Invite';
+import Mail from './Mail';
 import FilterMenu from './FilterMenu';
 import styles from './Toolbar.css';
 
@@ -28,6 +29,7 @@ export default class Toolbar extends React.Component {
 						<ManageEnrollment.Trigger course={course} className={cx('manage-enrollment-button')}>{t('manageEnrollments')}</ManageEnrollment.Trigger>
 					}
 					<Invite />
+					<Mail />
 				</div>
 			</div>
 		);
