@@ -40,6 +40,7 @@ describe('PublishCourse test', () => {
 				return Promise.resolve();
 			},
 			PreviewRawValue,
+			getStartDate: () => StartDate,
 			StartDate,
 			isHidden: isNonPublic,
 			Preview: PreviewRawValue ? true : false,
