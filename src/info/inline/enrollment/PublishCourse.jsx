@@ -131,8 +131,8 @@ export default class PublishCourse extends React.Component {
 	}
 
 	renderPreviewLabel () {
-		const { previewMode } = this.state;
-		const { StartDate } = this.state.catalogEntry;
+		const { previewMode, catalogEntry } = this.state;
+		const startDate = (catalogEntry || {}).getStartDate && catalogEntry.getStartDate();
 
 		let label = t('previewOff');
 		let desc = t('previewOffDesc');
@@ -140,9 +140,9 @@ export default class PublishCourse extends React.Component {
 
 		if(previewMode === null) {
 			label = t('nullPreview');
-			desc = StartDate ? DateTime.format(StartDate, 'MMMM Do YYYY, h:mm a') : t('noDateFound');
+			desc = startDate ? DateTime.format(startDate, 'MMMM Do YYYY, h:mm a') : t('noDateFound');
 
-			if(!StartDate) {
+			if(!startDate) {
 				warning = true;
 			}
 		}
@@ -197,7 +197,7 @@ export default class PublishCourse extends React.Component {
 
 	renderPreviewWidget () {
 		const { catalogEntry } = this.state;
-		const { StartDate } = catalogEntry;
+		const startDate = (catalogEntry || {}).getStartDate && catalogEntry.getStartDate();
 
 		return (
 			<Flyout.Triggered
@@ -209,7 +209,7 @@ export default class PublishCourse extends React.Component {
 				<div>
 					{this.renderPreviewOption(t('previewOn'), t('previewOnDesc'), false, this.enablePreviewMode)}
 					{this.renderPreviewOption(t('previewOff'), t('previewOffDesc'), false, this.disablePreviewMode)}
-					{this.renderPreviewOption(t('nullPreview'), StartDate ? DateTime.format(StartDate, 'MMMM Do YYYY, h:mm a') : t('noDateFound'), !StartDate, this.nullOutPreviewMode)}
+					{this.renderPreviewOption(t('nullPreview'), startDate ? DateTime.format(startDate, 'MMMM Do YYYY, h:mm a') : t('noDateFound'), !startDate, this.nullOutPreviewMode)}
 				</div>
 			</Flyout.Triggered>
 		);
