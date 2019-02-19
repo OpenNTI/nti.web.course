@@ -42,6 +42,7 @@
 .table.table tbody tr {
 	background: transparent;
 	transition: background 0.25s;
+	cursor: pointer;
 }
 
 .table.table tbody tr:hover {
