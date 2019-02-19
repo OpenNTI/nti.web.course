@@ -62,10 +62,10 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 	componentDidUpdate (prevProps) {
 		// TODO: We should check lastModified time to know if an update is even needed.  However, lastModified is not getting properly updated right now
 
-		const {assignment:newAssignment, assignmentHistory:newHistory} = this.props;
-		const {assignment:oldAssignment, assignmentHistory:oldHistory} = prevProps;
+		const {assignment:newAssignment, assignmentHistory:newHistory, statusExpanded} = this.props;
+		const {assignment:oldAssignment, assignmentHistory:oldHistory, statusExpanded:oldExpanded} = prevProps;
 
-		if (newAssignment !== oldAssignment || newHistory !== oldHistory || this.state.assignmentModified !== newAssignment.getLastModified().getTime()) {
+		if (newAssignment !== oldAssignment || newHistory !== oldHistory || statusExpanded !== oldExpanded) {
 			this.setupFor(this.props);
 		}
 
