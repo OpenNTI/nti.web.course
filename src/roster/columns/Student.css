@@ -7,6 +7,8 @@
 	justify-content: flex-start;
 	align-items: center;
 	min-height: 60px;
+	position: relative;
+	font-weight: 600;
 }
 
 .student > * {
@@ -17,4 +19,17 @@
 	width: 60px;
 	height: 60px;
 	margin-right: 1em;
+}
+
+.email-link-wrapper {
+	position: absolute;
+	left: calc(60px + 1em);
+	bottom: 0.25em;
+	color: var(--primary-blue, #3fb3f6);
+	font-weight: 500;
+	display: none;
+}
+
+tr:hover .student .email-link-wrapper {
+	display: block;
 }
