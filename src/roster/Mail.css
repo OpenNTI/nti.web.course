@@ -1,4 +1,4 @@
-.email-button {
+.email-button.email-button {
 	display: inline-block;
 	border-radius: 3px;
 	background: var(--primary-blue, #3fb3f6);
