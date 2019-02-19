@@ -65,7 +65,13 @@ export default class CourseEnrollmentAdmin extends React.Component {
 			if (aDone && !bDone) { return -1; }
 		});
 
-		this.setState({course, user, stages});
+		this.setState({
+			course,
+			user,
+			stages,
+			courseLocked: courseProp || enrollment,
+			userLocked: userProp || enrollment
+		});
 	}
 
 
@@ -80,7 +86,7 @@ export default class CourseEnrollmentAdmin extends React.Component {
 
 
 	render () {
-		const {stages, user, course} = this.state;
+		const {stages, user, course, courseLocked, userLocked} = this.state;
 		const active = (stages && stages.find(stage => !stage.isDone(this.state))) || {};
 
 		return (
@@ -88,7 +94,9 @@ export default class CourseEnrollmentAdmin extends React.Component {
 				<Header
 					stages={stages}
 					user={user}
+					userLocked={userLocked}
 					course={course}
+					courseLocked={courseLocked}
 					onCourseSelected={this.onCourseSelected}
 					onUserSelected={this.onUserSelected}
 				/>

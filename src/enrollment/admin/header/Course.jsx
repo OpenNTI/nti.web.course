@@ -10,7 +10,9 @@ const t = scoped('course.enrollment.admin.header.Course', {
 
 export default class CourseEnrollmentAdminHeaderCourseItem extends React.Component {
 	static propTypes = {
-		course: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+		course: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+		locked: PropTypes.bool,
+		onSelected: PropTypes.func
 	}
 
 	state = {}
@@ -53,6 +55,14 @@ export default class CourseEnrollmentAdminHeaderCourseItem extends React.Compone
 	}
 
 
+	onClear = () => {
+		const {onSelected} = this.props;
+
+		if (onSelected) {
+			onSelected(null);
+		}
+	}
+
 
 	render () {
 		const {course} = this.state;
@@ -75,6 +85,8 @@ export default class CourseEnrollmentAdminHeaderCourseItem extends React.Compone
 	}
 
 	renderCourse (course) {
+		const {locked} = this.props;
+
 		return (
 			<div className="course">
 				<Presentation.Asset contentPackage={course} propName="src" type="landing">
@@ -84,6 +96,11 @@ export default class CourseEnrollmentAdminHeaderCourseItem extends React.Compone
 					<span className="provider-id">{course.ProviderUniqueID}</span>
 					<span className="title">{course.title}</span>
 				</div>
+				{!locked && (
+					<div className="clear" onClick={this.onClear}>
+						<i className="icon-bold-x" />
+					</div>
+				)}
 			</div>
 		);
 	}

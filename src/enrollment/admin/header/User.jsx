@@ -9,7 +9,18 @@ const t = scoped('course.enrollment.admin.header.User', {
 
 export default class CourseEnrollmentAdminHeaderUserItem extends React.Component {
 	static propTypes = {
-		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+		locked: PropTypes.bool,
+		onSelected: PropTypes.func
+	}
+
+
+	onClear = () => {
+		const {onSelected} = this.props;
+
+		if (onSelected) {
+			onSelected(null);
+		}
 	}
 
 
@@ -35,10 +46,17 @@ export default class CourseEnrollmentAdminHeaderUserItem extends React.Component
 
 
 	renderUser (user) {
+		const {locked} = this.props;
+
 		return (
 			<div className="user">
 				<User.Avatar user={user} />
 				<User.DisplayName user={user} />
+				{!locked && (
+					<div className="clear" onClick={this.onClear}>
+						<i className="icon-bold-x" />
+					</div>
+				)}
 			</div>
 		);
 	}

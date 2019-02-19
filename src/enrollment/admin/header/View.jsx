@@ -8,7 +8,11 @@ export default class CourseEnrollmentAdminHeader extends React.Component {
 	static propTypes = {
 		stages: PropTypes.array,
 		course: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+		courseLocked: PropTypes.bool,
+		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+		userLocked: PropTypes.bool,
+		onUserSelected: PropTypes.func,
+		onCourseSelected: PropTypes.func
 	}
 
 
@@ -46,19 +50,19 @@ export default class CourseEnrollmentAdminHeader extends React.Component {
 
 
 	renderUser () {
-		const {user} = this.props;
+		const {user, userLocked, onUserSelected} = this.props;
 
 		return (
-			<User user={user} />
+			<User user={user} locked={userLocked} onSelected={onUserSelected}/>
 		);
 	}
 
 
 	renderCourse () {
-		const {course} = this.props;
+		const {course, courseLocked, onCourseSelected} = this.props;
 
 		return (
-			<Course course={course} />
+			<Course course={course} locked={courseLocked} onSelected={onCourseSelected} />
 		);
 	}
 }
