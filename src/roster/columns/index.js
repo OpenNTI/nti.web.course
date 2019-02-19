@@ -8,11 +8,11 @@ const columns = [
 	{ component: Student },
 	{ component: Username },
 	{ component: Enrollment },
-	{ component: Progress },
 	{
-		component: ParticipationReport,
+		component: Progress,
 		predicate: course => !!(course || {}).CompletionPolicy
 	},
+	{ component: ParticipationReport }
 ];
 
 export default function columnsFor (course) {
