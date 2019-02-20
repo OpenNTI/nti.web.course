@@ -4,4 +4,9 @@
 	.course-admin-course-overview {
 		width: 74%;
 	}
+
+	&.loading {
+		min-height: 200px;
+		background: white;
+	}
 }

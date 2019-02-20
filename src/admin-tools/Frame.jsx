@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Loading} from '@nti/web-commons';
+import cx from 'classnames';
 
 export default class CourseAdminView extends React.Component {
 	static propTypes = {
@@ -13,13 +14,15 @@ export default class CourseAdminView extends React.Component {
 		const {loading} = this.props;
 
 		return (
-			<div className="course-admin-tools-view">
-				{loading && (<Loading.Mask />)}
-				{!loading && this.renderCourse()}
+			<div className={cx('course-admin-tools-view', {loading})}>
+				{
+					loading
+						? <Loading.Mask />
+						: this.renderCourse()
+				}
 			</div>
 		);
 	}
-
 
 	renderCourse () {
 		const {course, children} = this.props;
