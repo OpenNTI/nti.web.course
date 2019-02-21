@@ -37,7 +37,8 @@ class Mail extends React.Component {
 		} = this.props;
 
 		// omit scopes with no students
-		const relevantScopes = Object.keys(scopes).filter(k => !!scopes[k]);
+		const filteredScopes = Object.keys(scopes).filter(k => !!scopes[k]);
+		const relevantScopes = filteredScopes.length > 1 ? filteredScopes : [];
 
 		const context = {
 			type: 'email',
