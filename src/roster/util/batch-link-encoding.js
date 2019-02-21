@@ -24,11 +24,12 @@ export function parametersFromLink (link) {
 	}
 }
 
-// btoa may choke on unicode chars, so…
+// encode; btoa may choke on unicode chars, so…
 function utoa (str) {
-	return global.btoa(unescape(encodeURIComponent(str)));
+	return encodeURIComponent(global.btoa(unescape(encodeURIComponent(str))));
 }
 
+// decode; utoa in reverse
 function atou (str) {
-	return decodeURIComponent(escape(global.atob(str)));
+	return decodeURIComponent(escape(global.atob(decodeURIComponent(str))));
 }
