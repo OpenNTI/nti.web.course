@@ -14,6 +14,8 @@ const t = scoped('course.info.inline.components.Section', {
 });
 
 function isEmpty (value) {
+	if (value instanceof Date) { return false; }
+
 	return !value || (Array.isArray(value) && value.length === 0) || (Object.keys(value).length === 0);
 }
 
