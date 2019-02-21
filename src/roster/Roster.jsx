@@ -34,7 +34,8 @@ export default class Roster extends React.Component {
 		sortedOn: PropTypes.string,
 		sortedOrder: PropTypes.string,
 		canScroll: PropTypes.func,
-		batchLinkFor: PropTypes.func.isRequired
+		batchLinkFor: PropTypes.func.isRequired,
+		summary: PropTypes.object
 	}
 
 	static contextTypes = {
@@ -99,6 +100,10 @@ export default class Roster extends React.Component {
 	render () {
 		const {
 			items,
+			summary: {
+				TotalEnrollmentsByScope: scopes = {},
+				TotalEnrollments: total = 0
+			} = {},
 			loading,
 			course,
 			setSort,
@@ -109,11 +114,16 @@ export default class Roster extends React.Component {
 		const empty = !loading && !(items && items.length);
 		const columns = columnsFor(course);
 		const onRowClick = (course || {}).CompletionPolicy ? this.onRowClick : null;
+		const showHeader = !empty
+			&& total > 1 // more than one student
+			&& Object.values(scopes)
+				.filter(v => v > 0)
+				.length > 1; // more than one non-empty scope
 
 		return (
 			<Scroll.BoundaryMonitor window onBottom={this.onScrolledBottom} onUpdate={this.onUpdate}>
 				<section className={cx('course-roster')}>
-					{!empty && <Header />}
+					{showHeader && <Header />}
 					<Toolbar course={course} />
 					<div className={cx('content', {empty, loading})}>
 						<T.Table

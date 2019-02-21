@@ -5,7 +5,7 @@ import {scoped} from '@nti/lib-locale';
 import {SortOrder} from '@nti/lib-interfaces';
 
 import Roster from './Roster';
-import Store from './Store';
+import {default as Store, KEYS} from './Store';
 import {parametersFromLink, decodeBatchLink} from './util/batch-link-encoding';
 
 
@@ -26,7 +26,8 @@ const propMap = {
 	hasPrevPage: 'hasPrevPage',
 	hasCourse: 'hasCourse',
 	options: 'options',
-	batchLinkFor: 'batchLinkFor'
+	batchLinkFor: 'batchLinkFor',
+	[KEYS.ROSTER_SUMMARY]: 'summary'
 };
 
 export default
@@ -51,7 +52,8 @@ class CourseRosterView extends React.Component {
 		hasPrevPage: PropTypes.bool,
 		hasCourse: PropTypes.bool,
 		options: PropTypes.object,
-		batchLinkFor: PropTypes.func.isRequired
+		batchLinkFor: PropTypes.func.isRequired,
+		summary: PropTypes.object
 	}
 
 
@@ -146,7 +148,8 @@ class CourseRosterView extends React.Component {
 				sortOn: sortedOn,
 				sortOrder: sortedOrder
 			} = {},
-			batchLinkFor
+			batchLinkFor,
+			summary
 		} = this.props;
 
 		return {
@@ -164,7 +167,8 @@ class CourseRosterView extends React.Component {
 			setSort: this.setSort,
 			sortedOn,
 			sortedOrder,
-			batchLinkFor
+			batchLinkFor,
+			summary
 		};
 	}
 

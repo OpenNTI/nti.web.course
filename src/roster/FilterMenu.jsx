@@ -60,7 +60,7 @@ class FilterMenu extends React.Component {
 				</option>
 			));
 
-		return (options || []).length === 0 ? null : (
+		return (options || []).length < 2 ? null : ( // omit menu if there's only one scope (or zero scopes)
 			<div className={cx('filter-menu', className)}>
 				<Select onChange={this.onChange} value={filter || ''}>
 					<option value="">{t('no-filter')} ({total})</option>
