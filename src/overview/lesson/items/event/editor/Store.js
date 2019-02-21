@@ -110,6 +110,8 @@ export default class CourseEventsStore extends Stores.BoundStore {
 			if(event) {
 				type = 'Calendar-Event-Changed';
 				calendarEvent = await service.putParseResponse(event.getLink('edit'), formData);
+				event.refresh(calendarEvent);
+				calendarEvent = event;
 			}
 			else {
 				calendarEvent = await service.postParseResponse(calendar.getLink('create_calendar_event'), formData);
