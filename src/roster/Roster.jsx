@@ -16,7 +16,7 @@ import styles from './Roster.css';
 const logger = Logger.get('course.roster.component');
 
 const t = scoped('course.roster.component', {
-	emptyMessage: 'No enrollees found'
+	emptyMessage: 'No learners found'
 });
 
 const cx = classnames.bind(styles);
