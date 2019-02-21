@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Header from './header';
 import PickUser from './pick-user';
 import PickCourse from './pick-course';
-import MangaeEnrollment from './manage-enrollment';
+import ManageEnrollment from './manage-enrollment';
 
 const getStages = () => ([
 	{
@@ -126,7 +126,7 @@ export default class CourseEnrollmentAdmin extends React.Component {
 		const {enrollment, onChange} = this.props;
 
 		return (
-			<MangaeEnrollment user={user} course={course} enrollment={enrollment} onChange={onChange} />
+			<ManageEnrollment user={user} course={course} enrollment={enrollment} onChange={onChange} />
 		);
 	}
 
