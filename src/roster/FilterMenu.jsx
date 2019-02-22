@@ -4,6 +4,8 @@ import {Select} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import classnames from 'classnames/bind';
 
+import {DEFAULT_ENROLLMENT_SCOPE_NAMES} from '../enrollment/Constants';
+
 import {default as Store, KEYS} from './Store';
 import styles from './FilterMenu.css';
 
@@ -11,11 +13,7 @@ const cx = classnames.bind(styles);
 
 const t = scoped('roster.component.filter-menu', {
 	'no-filter': 'All Students',
-	ForCredit: 'For Credit',
-	ForCreditDegree: 'For Credit (degree)',
-	ForCreditNonDegree: 'For Credit (non-degree)',
-	Public: 'Open',
-	Purchased: 'Purchased'
+	...DEFAULT_ENROLLMENT_SCOPE_NAMES
 });
 
 
@@ -24,12 +22,12 @@ export default
 	[KEYS.OPTIONS]: 'options',
 	[KEYS.BATCH_START]: 'batchStart',
 	[KEYS.FILTER]: 'filter',
-	[KEYS.ROSTER_SUMMARY]: 'summary'
+	[KEYS.ENROLLMENT_SCOPES]: 'scopes'
 })
 class FilterMenu extends React.Component {
 
 	static propTypes = {
-		summary: PropTypes.object,
+		scopes: PropTypes.object,
 		store: PropTypes.object.isRequired,
 		options: PropTypes.object,
 	}
@@ -46,14 +44,12 @@ class FilterMenu extends React.Component {
 		const {
 			className,
 			options: {filter} = {},
-			summary: {
-				TotalEnrollmentsByScope: scopes = {},
-				TotalEnrollments: total = 0
-			} = {}
+			scopes
 		} = this.props;
 		
-		const options = Object.entries(scopes)
-			.filter(([_, count]) => count) // filter out enrollment types with zero students
+		const total = Object.values(scopes || {}).reduce((a, v) => a + v, 0);
+
+		const options = Object.entries(scopes || {})
 			.map(([scope, count]) => (
 				<option key={scope} value={scope}>
 					{t(scope, {fallback: scope})} ({count})

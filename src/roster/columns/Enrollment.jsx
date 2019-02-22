@@ -4,8 +4,9 @@ import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
 import classnames from 'classnames/bind';
 
-import styles from './Enrollment.css';
+import {DEFAULT_ENROLLMENT_SCOPE_NAMES} from '../../enrollment/Constants';
 
+import styles from './Enrollment.css';
 
 const cx = classnames.bind(styles);
 const logger = Logger.get('roster.columns.enrollment');
@@ -14,13 +15,7 @@ const localeScope = 'roster.columns.enrollment';
 
 const t = scoped(localeScope, {
 	header: 'Enrollment',
-	status: {
-		'Public': 'Open',
-		'Purchased': 'Open',
-		'ForCredit': 'For Credit',
-		'ForCreditDegree': 'For Credit',
-		'ForCreditNonDegree': 'For Credit',
-	}
+	status: DEFAULT_ENROLLMENT_SCOPE_NAMES
 });
 
 const missingLocaleString = (fallback) => (key) => {

@@ -4,6 +4,8 @@ import classnames from 'classnames/bind';
 import {PieChart} from '@nti/web-charts';
 import {scoped} from '@nti/lib-locale';
 
+import {DEFAULT_ENROLLMENT_SCOPE_NAMES} from '../enrollment/Constants';
+
 import {default as Store, KEYS} from './Store';
 import styles from './EnrollmentBreakdown.css';
 
@@ -16,33 +18,23 @@ const classes = {
 
 const t = scoped('course.roster.enrollment-breakdown', {
 	title: 'Enrollment Breakdown',
-	scopes: {
-		ForCredit: 'Credit',
-		ForCreditDegree: 'Credit (Degree)',
-		ForCreditNonDegree: 'Credit (Non-Degree)',
-		Public: 'Public',
-		Purchased: 'Purchased',
-	}
+	scopes: DEFAULT_ENROLLMENT_SCOPE_NAMES
 });
 
 export default
 @Store.monitor({
-	[KEYS.ROSTER_SUMMARY]: 'summary'
+	[KEYS.ENROLLMENT_SCOPES]: 'scopes'
 })
 class EnrollmentBreakdown extends React.Component {
 
 	static propTypes = {
-		summary: PropTypes.shape({
+		scopes: PropTypes.shape({
 			TotalEnrollmentsByScope: PropTypes.object
 		})
 	}
 
 	render () {
-		const {
-			summary: {
-				TotalEnrollmentsByScope: scopes = {}
-			} = {}
-		} = this.props;
+		const {scopes} = this.props;
 
 		const series = Object.entries(scopes)
 			.map(([label, value]) => (

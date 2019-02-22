@@ -35,7 +35,7 @@ export default class Roster extends React.Component {
 		sortedOrder: PropTypes.string,
 		canScroll: PropTypes.func,
 		batchLinkFor: PropTypes.func.isRequired,
-		summary: PropTypes.object
+		scopes: PropTypes.object
 	}
 
 	static contextTypes = {
@@ -100,10 +100,7 @@ export default class Roster extends React.Component {
 	render () {
 		const {
 			items,
-			summary: {
-				TotalEnrollmentsByScope: scopes = {},
-				TotalEnrollments: total = 0
-			} = {},
+			scopes,
 			loading,
 			course,
 			setSort,
@@ -112,6 +109,7 @@ export default class Roster extends React.Component {
 			children
 		} = this.props;
 		const empty = !loading && !(items && items.length);
+		const total = Object.values(scopes || {}).reduce((a, v) => a + v, 0);
 		const columns = columnsFor(course);
 		const onRowClick = (course || {}).CompletionPolicy ? this.onRowClick : null;
 		const showHeader = !empty

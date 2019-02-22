@@ -27,7 +27,7 @@ const propMap = {
 	hasCourse: 'hasCourse',
 	options: 'options',
 	batchLinkFor: 'batchLinkFor',
-	[KEYS.ROSTER_SUMMARY]: 'summary'
+	[KEYS.ENROLLMENT_SCOPES]: 'scopes'
 };
 
 export default
@@ -53,7 +53,7 @@ class CourseRosterView extends React.Component {
 		hasCourse: PropTypes.bool,
 		options: PropTypes.object,
 		batchLinkFor: PropTypes.func.isRequired,
-		summary: PropTypes.object
+		scopes: PropTypes.object
 	}
 
 
@@ -149,7 +149,7 @@ class CourseRosterView extends React.Component {
 				sortOrder: sortedOrder
 			} = {},
 			batchLinkFor,
-			summary
+			scopes
 		} = this.props;
 
 		return {
@@ -168,7 +168,7 @@ class CourseRosterView extends React.Component {
 			sortedOn,
 			sortedOrder,
 			batchLinkFor,
-			summary
+			scopes
 		};
 	}
 

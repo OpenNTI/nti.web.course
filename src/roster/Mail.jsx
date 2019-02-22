@@ -16,14 +16,14 @@ export default
 @Store.monitor({
 	[KEYS.COURSE]: 'course',
 	[KEYS.FILTER]: 'filter',
-	[KEYS.ROSTER_SUMMARY]: 'summary'
+	[KEYS.ENROLLMENT_SCOPES]: 'scopes'
 })
 class Mail extends React.Component {
 
 	static propTypes = {
 		course: PropTypes.object,
 		filter: PropTypes.string,
-		summary: PropTypes.object
+		scopes: PropTypes.object
 	}
 
 	render () {
@@ -31,19 +31,15 @@ class Mail extends React.Component {
 			course,
 			course: {canEmailEnrollees} = {},
 			filter,
-			summary: {
-				TotalEnrollmentsByScope: scopes = {}
-			} = {},
+			scopes,
 		} = this.props;
 
-		// omit scopes with no students
-		const filteredScopes = Object.keys(scopes).filter(k => !!scopes[k]);
-		const relevantScopes = filteredScopes.length > 1 ? filteredScopes : [];
+		const scopeNames = Object.keys(scopes || {});
 
 		const context = {
 			type: 'email',
 			filter,
-			scopes: ['All', ...relevantScopes]
+			scopes: ['All', ...(scopeNames.length > 1 ? scopeNames : [])]
 		};
 
 		return !canEmailEnrollees ? null : (

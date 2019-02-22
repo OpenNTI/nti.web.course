@@ -13,10 +13,20 @@ function transformBatch (batch) {
 export const KEYS = {
 	...StreamedBatchStore.KEYS,
 	COURSE: 'course',
+	ENROLLMENT_SCOPES: 'enrollmentScopes',
 	ROSTER_SUMMARY: 'rosterSummary',
 	ROSTER_SUMMARY_ERROR: 'rosterSummaryError',
 	LOADING: 'loading'
 };
+
+// Map the enrollment count keys to the server-expected filter values.
+// note that this is NOT the final translation for display in the UI;
+// The value here will/should be localized by UI components
+const scopeNames = {
+	TotalLegacyForCreditEnrolledCount: 'ForCredit',
+	TotalLegacyOpenEnrolledCount: 'Public'
+};
+const mapScopeName = name => scopeNames[name] || name;
 
 export default class CourseRosterStore extends StreamedBatchStore {
 	constructor () {
@@ -58,6 +68,19 @@ export default class CourseRosterStore extends StreamedBatchStore {
 		try {
 			const summary = await course.getRosterSummary();
 			this.set(KEYS.ROSTER_SUMMARY, summary);
+
+			const {
+				TotalLegacyOpenEnrolledCount,
+				TotalLegacyForCreditEnrolledCount
+			} = summary || {};
+
+			// filter scopes with zero count and remap legacy scope names
+			const scopes = Object.entries({
+				TotalLegacyForCreditEnrolledCount,
+				TotalLegacyOpenEnrolledCount
+			}).reduce((acc, [scope, count]) => !count ? acc : {...acc, [mapScopeName(scope)]: count} , {});
+
+			this.set(KEYS.ENROLLMENT_SCOPES, scopes);
 		}
 		catch (e) {
 			this.set(KEYS.ROSTER_SUMMARY_ERROR, e);
