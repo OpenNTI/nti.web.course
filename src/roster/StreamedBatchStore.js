@@ -23,7 +23,7 @@ const triggersReload = [
 
 export default
 @mixin(Mixins.Searchable)
-class StreamedBatchStore extends Stores.SimpleStore {
+class StreamedBatchStore extends Stores.BoundStore {
 	constructor () {
 		super();
 
