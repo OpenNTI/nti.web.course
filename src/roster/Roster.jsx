@@ -112,8 +112,7 @@ export default class Roster extends React.Component {
 		const total = Object.values(scopes || {}).reduce((a, v) => a + v, 0);
 		const columns = columnsFor(course);
 		const onRowClick = (course || {}).CompletionPolicy ? this.onRowClick : null;
-		const showHeader = !empty
-			&& total > 1 // more than one student
+		const showHeader = total > 1 // more than one student
 			&& Object.values(scopes)
 				.filter(v => v > 0)
 				.length > 1; // more than one non-empty scope
