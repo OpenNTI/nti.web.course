@@ -5,6 +5,7 @@ import classnames from 'classnames/bind';
 
 import ManageEnrollment from '../enrollment/admin/Prompt';
 
+import Store from './Store';
 import Invite from './Invite';
 import Mail from './Mail';
 import FilterMenu from './FilterMenu';
@@ -15,19 +16,34 @@ const t = scoped('course.roster.toolbar', {
 	manageEnrollments: 'Manage Enrollment'
 });
 
-export default class Toolbar extends React.Component {
+
+
+export default
+@Store.monitor(['reload'])
+class Toolbar extends React.Component {
 	
+	static propTypes = {
+		course: PropTypes.object,
+		reload: PropTypes.func
+	}
+
 	render () {
-		const {course} = this.props;
+		const {course, reload} = this.props;
 		const {canManageEnrollment} = course || {};
 
 		return (
 			<div className={cx('toolbar')}>
 				<FilterMenu />
 				<div className={cx('enrollment-controls')}>
-					{ canManageEnrollment &&
-						<ManageEnrollment.Trigger course={course} className={cx('manage-enrollment-button')}>{t('manageEnrollments')}</ManageEnrollment.Trigger>
-					}
+					{ canManageEnrollment && (
+						<ManageEnrollment.Trigger
+							course={course}
+							className={cx('manage-enrollment-button')}
+							onChange={reload}
+						>
+							{t('manageEnrollments')}
+						</ManageEnrollment.Trigger>
+					)}
 					<Invite />
 					<Mail />
 				</div>
@@ -35,7 +51,3 @@ export default class Toolbar extends React.Component {
 		);
 	}
 }
-
-Toolbar.propTypes = {
-	course: PropTypes.object
-};

@@ -23,7 +23,7 @@ const triggersReload = [
 
 export default
 @mixin(Mixins.Searchable)
-class StreamedBatchStore extends Stores.BoundStore {
+class StreamedBatchStore extends Stores.SimpleStore {
 	constructor () {
 		super();
 
@@ -140,8 +140,7 @@ class StreamedBatchStore extends Stores.BoundStore {
 		this.set(OPTIONS, stripEmptyProperties({...options, ...newOptions}));
 		
 		if (reload) {
-			this.clearBatches();
-			this.load();
+			this.reload();
 		}
 	}
 
@@ -168,10 +167,14 @@ class StreamedBatchStore extends Stores.BoundStore {
 			delete options[option];
 
 			if (triggersReload.includes(option)) {
-				this.clearBatches();
-				this.load();
+				this.reload();
 			}
 		}
+	}
+
+	reload = () => {
+		this.clearBatches();
+		this.load();
 	}
 
 
