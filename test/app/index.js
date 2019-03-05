@@ -2,11 +2,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import RosterTest from './RosterTest';
+// import RosterTest from './RosterTest';
+import ContentPager from './content-pager';
 
 window.$AppConfig = window.$AppConfig || {server: '/dataserver2/'};
 
 ReactDOM.render(
-	<RosterTest />,
+	<ContentPager />,
 	document.getElementById('content')
 );

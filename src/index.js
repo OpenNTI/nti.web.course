@@ -1,5 +1,6 @@
 export Card from './card';
 export CourseCreateButton from './CreateButton';
+export * as Content from './content';
 export * as Editor from './editor';
 export Info from './info/inline/CourseInfo';
 export PublishCourse from './info/inline/enrollment/PublishCourse';
