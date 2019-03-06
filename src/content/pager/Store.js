@@ -107,7 +107,9 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 		if (lesson !== this[LESSON]) {
 			this[LESSON] = lesson;
-			this[LESSON_NODE] = courseTree.find(buildIsSameContentOutlineNode(lesson));
+			this[LESSON_NODE] = courseTree
+				.find(buildIsSameContentOutlineNode(lesson))
+				.find(isOverview);
 		}
 
 		return this[LESSON_NODE];
@@ -150,13 +152,18 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 			const lessonInfo = await this.getLessonInfo(courseTree, lessonNode, selectionNodes);
 			const selectionInfo = await this.getSelectionInfo(courseTree, lessonNode, selectionNodes);
+			const pagingInfo = await this.getPagingInfo(courseTree, lessonNode, selectionNodes);
+
+			debugger;
 
 			this.set({
 				loading: false,
 				...lessonInfo,
-				...selectionInfo
+				...selectionInfo,
+				...pagingInfo
 			});
 		} catch (e) {
+			debugger;
 			this.set({
 				loading: true,
 				error: e
@@ -170,7 +177,7 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 		if (isEmpty) { throw new Error('Unable to find lesson.'); }
 
-		const lesson = await lessonNode.getItem();
+		const lessonOverview = await lessonNode.getItem();
 		const lessonWalker = lessonNode.createTreeWalker({
 			skip: isNotPageableContent
 		});
@@ -179,13 +186,13 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const selectedItem = selectedNode && await selectedNode.getItem();
 		const selectedItemID = selectedItem && selectedItem.getID();
 
-		const totalInLesson = await lessonWalker.getDescendantLength();
-		const indexInlesson = await lessonWalker.findIndexOfDescendant((item) => {
+		const totalInLesson = await lessonWalker.getNodeCount();
+		const indexInlesson = await lessonWalker.getIndexOf((item) => {
 			return item.getID() === selectedItemID;
 		});
 
 		return {
-			lesson,
+			lessonOverview,
 			totalInLesson,
 			indexInlesson
 		};
@@ -193,6 +200,45 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 
 	async getSelectionInfo (courseTree, lessonNode, selectionNodes) {
+		if (!selectionNodes || !selectionNodes.length) {
+			throw new Error('Unable to find selection');
+		}
 
+		const nodes = selectionNodes.slice(-2);//for now just look at the last two nodes...
+		const selection = nodes[nodes.length - 1];
+		const selectionItem = await selection.getItem();
+
+		if (nodes.length === 1) {
+			return {
+				selectedItem: selectionItem,
+				selectionTotal: 1,
+				selectionIndex: 1
+			};
+		}
+
+		debugger;
+	}
+
+
+	async getPagingInfo (courseTree, lessonNode, selectionNodes) {
+		if (!courseTree || !selectionNodes || !selectionNodes.length) {
+			throw new Error('Unable to find paging info.');
+		}
+
+		const selection = selectionNodes[selectionNodes.length - 1];
+		const courseWalker = selection.createTreeWalker(courseTree, {
+			skip: isNotPageableContent
+		});
+
+		const nextNode = await courseWalker.selectNext().getCurrentNode();
+		const prevNode = await courseWalker.selectPrev().getCurrentNode();
+
+		const next = await nextNode.getItem();
+		const prev = await prevNode.getItem();
+
+		return {
+			next,
+			prev
+		};
 	}
 }
