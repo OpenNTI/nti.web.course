@@ -73,7 +73,7 @@ function oneOf (...fns) {
 
 const isNotPageableContent = oneOf(
 	//Its not pagable if its an outline node, but not a content outline node
-	combine(isOutlineNode, invert(isContentOutlineNode)),
+	isOutlineNode,
 	isOverview,
 	isOverviewGroup,
 	isVideoRoll
@@ -83,9 +83,15 @@ const isNotPageableContent = oneOf(
 export default class ContentPagerStore extends Stores.BoundStore {
 
 	needsReload () {
-		const {course, lesson, selection} = this.binding;
+		const {course} = this.binding;
 
-		return course !== this[COURSE] || lesson !== this[LESSON] || selection !== this[SELECTION];
+		return course !== this[COURSE];
+	}
+
+	needsUpdate () {
+		const {selection, lesson} = this.binding;
+
+		return selection !== this[SELECTION] || lesson !== this[LESSON];
 	}
 
 
@@ -139,11 +145,20 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 
 	async load () {
-		if (!this.needsReload()) { return; }
+		const needsReload = this.needsReload();
+		const needsUpdate = this.needsUpdate();
 
-		this.set({
-			loading: true
-		});
+		if (!needsReload && !needsUpdate) { return; }
+
+		if (needsReload) {
+			this.set({
+				loading: true,
+				location: null,
+				lessonInfo: null,
+				next: null,
+				prev: null
+			});
+		}
 
 		try {
 			const courseTree = this.getCourseContentTree();
@@ -151,19 +166,16 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			const selectionNodes = this.getSelectionNodes();
 
 			const lessonInfo = await this.getLessonInfo(courseTree, lessonNode, selectionNodes);
-			const selectionInfo = await this.getSelectionInfo(courseTree, lessonNode, selectionNodes);
+			const location = await this.getLocationInfo(courseTree, lessonNode, selectionNodes);
 			const pagingInfo = await this.getPagingInfo(courseTree, lessonNode, selectionNodes);
-
-			debugger;
 
 			this.set({
 				loading: false,
-				...lessonInfo,
-				...selectionInfo,
+				lessonInfo,
+				location,
 				...pagingInfo
 			});
 		} catch (e) {
-			debugger;
 			this.set({
 				loading: true,
 				error: e
@@ -177,46 +189,89 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 		if (isEmpty) { throw new Error('Unable to find lesson.'); }
 
-		const lessonOverview = await lessonNode.getItem();
+		const overview = await lessonNode.getItem();
 		const lessonWalker = lessonNode.createTreeWalker({
 			skip: isNotPageableContent
 		});
 
 		const selectedNode = selectionNodes && selectionNodes[selectionNodes.length - 1];
 		const selectedItem = selectedNode && await selectedNode.getItem();
-		const selectedItemID = selectedItem && selectedItem.getID();
+		const selectedItemId = selectedItem && selectedItem.getID();
 
-		const totalInLesson = await lessonWalker.getNodeCount();
-		const indexInlesson = await lessonWalker.getIndexOf((item) => {
-			return item.getID() === selectedItemID;
+		const totalItems = await lessonWalker.getNodeCount();
+		const currentItemIndex = await lessonWalker.getIndexOf((item) => {
+			return item.getID() === selectedItemId;
+		});
+		const remainingItems = await lessonWalker.getNodesAfter((item) => {
+			return item.getID() === selectedItemId;
 		});
 
 		return {
-			lessonOverview,
-			totalInLesson,
-			indexInlesson
+			title: overview.title,
+			totalItems,
+			currentItemIndex,
+			remainingItems
 		};
 	}
 
 
-	async getSelectionInfo (courseTree, lessonNode, selectionNodes) {
+	async getLocationInfo (courseTree, lessonNode, selectionNodes) {
 		if (!selectionNodes || !selectionNodes.length) {
 			throw new Error('Unable to find selection');
 		}
 
-		const nodes = selectionNodes.slice(-2);//for now just look at the last two nodes...
-		const selection = nodes[nodes.length - 1];
-		const selectionItem = await selection.getItem();
-
-		if (nodes.length === 1) {
-			return {
-				selectedItem: selectionItem,
-				selectionTotal: 1,
-				selectionIndex: 1
-			};
+		if (selectionNodes.length === 1) {
+			return this.getFlatLocationInfo(selectionNodes[0]);
 		}
 
-		debugger;
+		return this.getHierarchyLocationInfo(selectionNodes);
+	}
+
+	async getFlatLocationInfo (selectionNode) {
+		const item = await selectionNode.getItem();
+
+		if (!item) {
+			throw new Error('Unable to find single selection.');
+		}
+
+		const selectionWalker = selectionNode.createTreeWalker({
+			skip: isNotPageableContent
+		});
+
+		const total = await selectionWalker.getNodeCount();
+
+		return {
+			item,
+			totalPages: total,
+			currentPage: 0
+		};
+	}
+
+	async getHierarchyLocationInfo (selectionNodes) {
+		const parent = selectionNodes[0];
+		const child = selectionNodes[selectionNodes.length - 1];
+
+		const item = await child.getItem();
+
+		if (!item) {
+			throw new Error('Unable to find hierarchy selection.');
+		}
+
+		const itemId = item && item.getID();
+		const selectionWalker = parent.createTreeWalker({
+			skip: isNotPageableContent
+		});
+
+		const total = await selectionWalker.getNodeCount();
+		const index = await selectionWalker.getIndexOf((n) => {
+			return n.getID() === itemId;
+		});
+
+		return {
+			item: item,
+			totalPages: total,
+			currentPage: index
+		};
 	}
 
 
@@ -234,11 +289,11 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const prevNode = await courseWalker.selectPrev().getCurrentNode();
 
 		const next = await nextNode.getItem();
-		const prev = await prevNode.getItem();
+		const previous = await prevNode.getItem();
 
 		return {
 			next,
-			prev
+			previous
 		};
 	}
 }
