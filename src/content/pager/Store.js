@@ -39,6 +39,10 @@ function isVideoRoll (item) {
 	return item && item.MimeType === 'application/vnd.nextthought.videoroll';
 }
 
+function isRelatedWorkRef (item) {
+	return item && item.MimeType === 'application/vnd.nextthought.relatedworkref';
+}
+
 function buildIsSameOverviewItem (node) {
 	const id = node.getID ? node.getID() : node;
 
@@ -191,7 +195,8 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 		const overview = await lessonNode.getItem();
 		const lessonWalker = lessonNode.createTreeWalker({
-			skip: isNotPageableContent
+			skip: isNotPageableContent,
+			ignoreChildren: isRelatedWorkRef
 		});
 
 		const selectedNode = selectionNodes && selectionNodes[selectionNodes.length - 1];
