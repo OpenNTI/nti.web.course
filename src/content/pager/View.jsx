@@ -1,10 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Viewer from '../viewer';
+
 import Store from './Store';
 
 export default
-@Store.connect()
+@Store.connect([
+	'loading',
+	'error',
+
+	'location',
+	'lessonInfo',
+
+	'next',
+	'previous'
+])
 class ContentPager extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -16,10 +27,10 @@ class ContentPager extends React.Component {
 
 	static propTypes = {
 		course: PropTypes.object.isRequired,
-		lesson: PropTypes.oneOfType(
+		lesson: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.object
-		).isRequired,
+		]).isRequired,
 		selection: PropTypes.oneOfType([
 			PropTypes.string,
 			PropTypes.object,
@@ -34,10 +45,13 @@ class ContentPager extends React.Component {
 
 
 	render () {
+		const {course, ...otherProps} = this.props;
+
+		delete otherProps.lesson;
+		delete otherProps.selection;
+
 		return (
-			<div>
-				Content Pager
-			</div>
+			<Viewer course={course} {...otherProps} />
 		);
 	}
 }

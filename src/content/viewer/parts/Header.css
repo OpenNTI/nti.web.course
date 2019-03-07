@@ -1,0 +1,126 @@
+.container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	position: relative;
+	margin-bottom: 2px;
+	border-bottom: 1px solid var(--border-grey);
+
+	--header-padding: 0.75rem;
+}
+
+/*Begin Close Button Style*/
+.close-button {
+	flex: 0 0 auto;
+	position: relative;
+	font-size: 1.5rem;
+	color: var(--primary-grey);
+	padding: var(--header-padding, 0.5rem);
+	cursor: pointer;
+}
+
+.close-button::after {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0.5rem; bottom: 0.5rem;
+	left: auto; right: 0;
+	width: 1px;
+	background: var(--border-grey-light);
+}
+/*End Close Button Style*/
+
+/*Begin Lesson Styles*/
+.lesson-loading-skeleton,
+.lesson-container {
+	flex: 1 1 auto;
+	padding: 0 var(--header-padding, 0.5rem);
+}
+
+.lesson-title {
+	font: normal 300 1.25rem/1.35 var(--body-font-family);
+	color: var(--primary-grey);
+}
+
+.lesson-sub-title {
+	font: normal 600 0.625rem/1.4 var(--body-font-family);
+	color: var(--tertiary-grey);
+	text-transform: uppercase;
+}
+
+.lesson-loading-skeleton .lesson-title {
+	height: 20px;
+	margin: 3px 0 4px 0;
+	width: 300px;
+	background-color: var(--primary-grey);
+}
+
+.lesson-loading-skeleton .lesson-sub-title {
+	height: 10px;
+	margin: 2px 0;
+	width: 200px;
+	background-color: var(--tertiary-grey);
+}
+
+.lesson-progress {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	border-bottom: 2px solid var(--primary-green);
+}
+
+/*End Lesson Styles*/
+
+/*Begin Location Styles*/
+.location {
+	flex: 0 0 auto;
+	font: normal 600 0.75rem/1.3 var(--body-font-family);
+	color: var(--primary-grey);
+}
+
+.location-separator {
+	font-style: italic;
+	font-weight: 400;
+}
+/*End Location Styles*/
+
+
+/*Begin Pager Styles*/
+.paging {
+	flex: 0 0 auto;
+	display: flex;
+	flex-direction: row;
+}
+
+.next-link,
+.prev-link,
+.next-link-disabled,
+.prev-link-disabled {
+	flex: 1 1 auto;
+	font-size: 1.5rem;
+	padding: var(--header-padding);
+}
+
+.next-link,
+.next-link-disabled {
+	padding-left: 0.25rem;
+}
+
+.prev-link,
+.prev-link-disabled {
+	padding-right: 0.25rem;
+}
+
+
+.next-link,
+.prev-link {
+	color: var(--primary-blue);
+	cursor: pointer;
+}
+
+.next-link-disabled,
+.prev-link-disabled {
+	color: var(--tertiary-grey);
+}
+
+/*End Pager Styles*/

@@ -1,0 +1,21 @@
+.nti-course-content {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	max-width: 1000px;
+}
+
+.contents,
+.contents-error {
+	flex: 1 1 auto;
+	background: white;
+}
+
+.contents-error {
+	color: var(--primary-red);
+}
+
+.sidebar {
+	flex: 0 0 225px;
+	padding-left: 2px;
+}
