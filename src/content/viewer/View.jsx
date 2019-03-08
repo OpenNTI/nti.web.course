@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {Layouts} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
-import Store from './Store';
 import Styles from './View.css';
+import Content from './content-renderer';
 import Header from './parts/Header';
 import UpNext from './parts/UpNext';
 
+const {Aside} = Layouts;
 const cx = classnames.bind(Styles);
 const t = scoped('course.content.viewer.View', {
 	error: 'Unable to load content.'
 });
 
 export default
-@Store.connect(['sidebarCmp', 'sidebarProps'])
 class CourseContentViewer extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
@@ -23,26 +24,20 @@ class CourseContentViewer extends React.Component {
 			item: PropTypes.object,
 			totalPages: PropTypes.number,
 			currentPage: PropTypes.number
-		}),
-
-		sidebarCmp: PropTypes.object,
-		sidebarProps: PropTypes.object
+		})
 	}
 
 	render () {
 		const {
 			className,
 			error,
-			sidebarCmp:SidebarCmp,
-			sidebarProps,
 			location,
 			...otherProps
 		} = this.props;
-		const hasSidebar = !!SidebarCmp;
 		const loading = !location;
 
 		return (
-			<div className={cx('nti-course-content', className, {loading, sidebar: hasSidebar})}>
+			<Aside.Container className={cx('nti-course-content', className, {loading})}>
 				{error && (
 					<div className={cx('contents-error')}>
 						{t('error')}
@@ -51,15 +46,11 @@ class CourseContentViewer extends React.Component {
 				{!error && (
 					<div className={cx('contents')}>
 						<Header location={location} {...otherProps} />
-						Contents
+						<Content location={location} {...otherProps} />
 						<UpNext location={location} {...otherProps} />
 					</div>
 				)}
-				<div className={cx('sidebar')}>
-					Sidebar
-					{hasSidebar && (<SidebarCmp {...sidebarProps} />)}
-				</div>
-			</div>
+			</Aside.Container>
 		);
 	}
 }

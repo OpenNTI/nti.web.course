@@ -1,0 +1,15 @@
+.container {
+	min-height: 200px;
+	position: relative;
+
+	/*Center Text*/
+	display: flex;
+	align-item: center;
+	justify-content: center;
+
+}
+
+.missing-text {
+	min-height: auto;
+	color: var(--primary-red);
+}

@@ -9,6 +9,7 @@ import Styles from './Header.css';
 const cx = classnames.bind(Styles);
 const t = scoped('course.content.viewer.parts.Header', {
 	remaining: {
+		zero: 'All Most Done!',
 		one: '%(count)s item remaining in this lesson',
 		other: '%(count)s items remaining in this lesson'
 	},
@@ -18,7 +19,7 @@ const t = scoped('course.content.viewer.parts.Header', {
 
 export default class Header extends React.Component {
 	static propTypes = {
-		onDismiss: PropTypes.func,
+		dismissPath: PropTypes.string,
 		lessonInfo: PropTypes.shape({
 			title: PropTypes.string,
 			totalItems: PropTypes.number,
@@ -29,7 +30,9 @@ export default class Header extends React.Component {
 			currentPage: PropTypes.number
 		}),
 		next: PropTypes.object,
-		previous: PropTypes.object
+		nextLesson: PropTypes.object,
+		previous: PropTypes.object,
+		previousLesson: PropTypes.object
 	}
 
 
@@ -47,11 +50,17 @@ export default class Header extends React.Component {
 
 
 	renderClose () {
-		return (
-			<div className={cx('close-button')}>
-				<i className="icon-light-x" />
-			</div>
-		);
+		const {dismissPath} = this.props;
+
+		if (dismissPath) {
+			return (
+				<LinkTo.Path to={dismissPath} className={cx('close-button')}>
+					<i className="icon-light-x" />
+				</LinkTo.Path>
+			);
+		}
+
+		return null;
 	}
 
 
@@ -118,12 +127,16 @@ export default class Header extends React.Component {
 
 
 	renderPaging () {
-		const {next, previous} = this.props;
+		const {next, nextLesson, previous, previousLesson} = this.props;
 
 		return (
 			<div className={cx('paging')}>
 				{previous && (
-					<LinkTo.Object object={previous} className={cx('prev-link')}>
+					<LinkTo.Object
+						object={previous}
+						context={{lesson: previousLesson}}
+						className={cx('prev-link')}
+					>
 						<i className="icon-chevronup-25" />
 					</LinkTo.Object>
 				)}
@@ -134,7 +147,11 @@ export default class Header extends React.Component {
 				)}
 
 				{next && (
-					<LinkTo.Object object={next} className={cx('next-link')}>
+					<LinkTo.Object
+						object={next}
+						context={{lesson: nextLesson}}
+						className={cx('next-link')}
+					>
 						<i className="icon-chevrondown-25" />
 					</LinkTo.Object>
 				)}

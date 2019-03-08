@@ -14,7 +14,9 @@ export default
 	'lessonInfo',
 
 	'next',
-	'previous'
+	'nextLesson',
+	'previous',
+	'previousLesson'
 ])
 class ContentPager extends React.Component {
 	static deriveBindingFromProps (props) {

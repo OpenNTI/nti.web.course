@@ -9,13 +9,16 @@ const SELECTION = Symbol('Selection');
 const SELECTION_NODES = Symbol('Selection Nodes');
 
 
+function isCourse (item) {
+	return item && item.isCourse;
+}
+
 function isOutlineNode (item) {
 	return item && item.isOutlineNode;
 }
 
 function isContentOutlineNode (item) {
-	//TODO: remove the last condition, its just a way to work around my local content
-	return isOutlineNode && item.hasOverviewContent && item.label !== 'Reconstruction and The New South v1';
+	return isOutlineNode && item.hasOverviewContent;
 }
 
 function buildIsSameContentOutlineNode (node) {
@@ -76,7 +79,7 @@ function oneOf (...fns) {
 }
 
 const isNotPageableContent = oneOf(
-	//Its not pagable if its an outline node, but not a content outline node
+	isCourse,
 	isOutlineNode,
 	isOverview,
 	isOverviewGroup,
@@ -196,7 +199,7 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const overview = await lessonNode.getItem();
 		const lessonWalker = lessonNode.createTreeWalker({
 			skip: isNotPageableContent,
-			ignoreChildren: isRelatedWorkRef
+			ignoreChildren: isRelatedWorkRef //don't count sub pages in the lesson counts
 		});
 
 		const selectedNode = selectionNodes && selectionNodes[selectionNodes.length - 1];
@@ -293,12 +296,20 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const nextNode = await courseWalker.selectNext().getCurrentNode();
 		const prevNode = await courseWalker.selectPrev().getCurrentNode();
 
-		const next = await nextNode.getItem();
-		const previous = await prevNode.getItem();
+		const nextLessonNode = nextNode && await nextNode.findParent(isOutlineNode);
+		const prevLessonNode = prevNode && await prevNode.findParent(isOutlineNode);
+
+		const nextLesson = nextLessonNode && await nextLessonNode.getItem();
+		const prevLesson = prevLessonNode && await prevLessonNode.getItem();
+
+		const nextItem = nextNode && await nextNode.getItem();
+		const prevItem = prevNode && await prevNode.getItem();
 
 		return {
-			next,
-			previous
+			next: nextItem,
+			nextLesson: nextLesson,
+			previous: prevItem,
+			previousLesson: prevLesson
 		};
 	}
 }
