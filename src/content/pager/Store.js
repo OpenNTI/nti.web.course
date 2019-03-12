@@ -265,9 +265,9 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 	async getHierarchyLocationInfo (selectionNodes) {
 		const parent = selectionNodes[0];
-		const child = selectionNodes[selectionNodes.length - 1];
 
-		const item = await child.getItem();
+		const items = await Promise.all(selectionNodes.map(node => node.getItem()));
+		const item = items[items.length - 1];
 
 		if (!item) {
 			throw new Error('Unable to find hierarchy selection.');
@@ -284,7 +284,8 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		});
 
 		return {
-			item: item,
+			item,
+			items,
 			totalPages: total,
 			currentPage: index
 		};

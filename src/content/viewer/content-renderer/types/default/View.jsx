@@ -31,7 +31,7 @@ class CourseContentViewerDefaultType extends React.Component {
 		return (
 			<div className={cx('container')}>
 				<Aside component={Sidebar} />
-				{!location && (<Loading.Spinner size="100px" strokeWidth="2"/>)}
+				{!location && (<Loading.Spinner.Large />)}
 				{location && (
 					<span className={cx('missing-text')}>
 						{getMissingMessage(location)}
