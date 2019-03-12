@@ -163,7 +163,13 @@ export default class ContentPagerStore extends Stores.BoundStore {
 				location: null,
 				lessonInfo: null,
 				next: null,
-				prev: null
+				previous: null
+			});
+		} else {
+			this.set({
+				location: null,
+				next: null,
+				previous: null
 			});
 		}
 
@@ -202,7 +208,9 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			ignoreChildren: isRelatedWorkRef //don't count sub pages in the lesson counts
 		});
 
-		const selectedNode = selectionNodes && selectionNodes[selectionNodes.length - 1];
+		//the first item in the selection should be in a lesson (ex. [RelatedWorkRef, Sub-Page])
+		//most items should just be a list of one node.
+		const selectedNode = selectionNodes && selectionNodes[0];
 		const selectedItem = selectedNode && await selectedNode.getItem();
 		const selectedItemId = selectedItem && selectedItem.getID();
 
@@ -296,20 +304,27 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const nextNode = await courseWalker.selectNext().getCurrentNode();
 		const prevNode = await courseWalker.selectPrev().getCurrentNode();
 
-		const nextLessonNode = nextNode && await nextNode.findParent(isOutlineNode);
-		const prevLessonNode = prevNode && await prevNode.findParent(isOutlineNode);
+		const nextLessonNode = nextNode && nextNode.findParent(isOutlineNode);
+		const prevLessonNode = prevNode && prevNode.findParent(isOutlineNode);
 
 		const nextLesson = nextLessonNode && await nextLessonNode.getItem();
 		const prevLesson = prevLessonNode && await prevLessonNode.getItem();
 
+		const nextRelatedWorkRefNode = nextNode && nextNode.findParent(isRelatedWorkRef);
+		const prevRelatedWorkRefNode = prevNode && prevNode.findParent(isRelatedWorkRef);
+
+		const nextRelatedWorkRef = nextRelatedWorkRefNode && await nextRelatedWorkRefNode.getItem();
+		const prevRelatedWorkRef = prevRelatedWorkRefNode && await prevRelatedWorkRefNode.getItem();
+
 		const nextItem = nextNode && await nextNode.getItem();
 		const prevItem = prevNode && await prevNode.getItem();
 
+		const next = !nextItem ? null : { item: nextItem, lesson: nextLesson, relatedWorkRef: nextRelatedWorkRef };
+		const previous = !prevItem ? null : { item: prevItem, lesson: prevLesson, relatedWorkRef: prevRelatedWorkRef };
+
 		return {
-			next: nextItem,
-			nextLesson: nextLesson,
-			previous: prevItem,
-			previousLesson: prevLesson
+			next,
+			previous
 		};
 	}
 }

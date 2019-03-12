@@ -29,10 +29,17 @@ export default class Header extends React.Component {
 			totalPages: PropTypes.number,
 			currentPage: PropTypes.number
 		}),
-		next: PropTypes.object,
-		nextLesson: PropTypes.object,
-		previous: PropTypes.object,
-		previousLesson: PropTypes.object
+
+		next: PropTypes.shape({
+			item: PropTypes.object,
+			lesson: PropTypes.object,
+			relatedWorkRef: PropTypes.object
+		}),
+		previous: PropTypes.shape({
+			item: PropTypes.object,
+			lesson: PropTypes.object,
+			relatedWorkRef: PropTypes.object
+		}),
 	}
 
 
@@ -127,14 +134,14 @@ export default class Header extends React.Component {
 
 
 	renderPaging () {
-		const {next, nextLesson, previous, previousLesson} = this.props;
+		const {next, previous} = this.props;
 
 		return (
 			<div className={cx('paging')}>
 				{previous && (
 					<LinkTo.Object
-						object={previous}
-						context={{lesson: previousLesson}}
+						object={previous.item}
+						context={previous}
 						className={cx('prev-link')}
 					>
 						<i className="icon-chevronup-25" />
@@ -148,8 +155,8 @@ export default class Header extends React.Component {
 
 				{next && (
 					<LinkTo.Object
-						object={next}
-						context={{lesson: nextLesson}}
+						object={next.item}
+						context={next}
 						className={cx('next-link')}
 					>
 						<i className="icon-chevrondown-25" />
