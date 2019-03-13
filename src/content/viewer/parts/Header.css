@@ -6,7 +6,7 @@
 	align-items: center;
 	position: var(--course-content-viewer-header-position, relative);
 	top: var(--course-content-viewer-header-top, initial);
-	z-index: 1;
+	z-index: 5;
 	background: white;
 	border-bottom: 1px solid var(--border-grey);
 

@@ -49,6 +49,7 @@ class ContentPager extends React.Component {
 	render () {
 		const {course, ...otherProps} = this.props;
 
+		delete otherProps.loading;
 		delete otherProps.store;
 		delete otherProps.lesson;
 		delete otherProps.selection;
