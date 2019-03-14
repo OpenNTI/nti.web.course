@@ -3,6 +3,10 @@
 	background: white;
 }
 
+.contents {
+	padding-bottom: 2rem;
+}
+
 .contents-error {
 	color: var(--primary-red);
 }

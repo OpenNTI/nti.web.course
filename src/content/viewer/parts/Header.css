@@ -78,7 +78,7 @@
 	position: absolute;
 	top: 100%;
 	left: 0;
-	border-bottom: 2px solid var(--primary-green);
+	border-bottom: 2px solid var(--secondary-green);
 	width: 0;
 	transition: width 0.5s;
 }

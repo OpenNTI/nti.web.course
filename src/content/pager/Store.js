@@ -218,11 +218,16 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const currentItemIndex = await lessonWalker.getIndexOf((item) => {
 			return item.getID() === selectedItemId;
 		});
-		const remainingItems = await lessonWalker.getNodesAfter((item) => {
+
+		const remainingNodes = await lessonWalker.getNodesAfter((item) => {
 			return item.getID() === selectedItemId;
 		});
+		const remainingItems = await Promise.all(
+			remainingNodes.map(node => node.getItem())
+		);
 
 		return {
+			id: overview.getID(),
 			title: overview.title,
 			totalItems,
 			currentItemIndex,
@@ -320,8 +325,16 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const nextItem = nextNode && await nextNode.getItem();
 		const prevItem = prevNode && await prevNode.getItem();
 
-		const next = !nextItem ? null : { item: nextItem, lesson: nextLesson, relatedWorkRef: nextRelatedWorkRef };
-		const previous = !prevItem ? null : { item: prevItem, lesson: prevLesson, relatedWorkRef: prevRelatedWorkRef };
+		const next = !nextItem ? null : {
+			item: nextItem,
+			lesson: nextLesson,
+			relatedWorkRef: nextRelatedWorkRef
+		};
+		const previous = !prevItem ? null : {
+			item: prevItem,
+			lesson: prevLesson,
+			relatedWorkRef: prevRelatedWorkRef
+		};
 
 		return {
 			next,
