@@ -24,17 +24,22 @@ function isEndOfCourse (next) {
 
 function isEndOfLesson (next, lessonInfo) {
 	const {lesson} = next || {};
-	const {id: lessonId} = lessonInfo;
+	const {href, id:lessonId} = lessonInfo;
 
-	return lesson && !(lesson.getID() === lessonId || lesson['ContentNTIID'] === lessonId);
+	if (!lesson) { return false; }
+
+	const isSameLesson = lesson['NTIID'] === lessonId
+		|| lesson['ContentNTIID'] === lessonId
+		|| lesson.getLink('overview-content') === href;
+
+	return lesson && !isSameLesson;
 }
 
 function nextIsSubPage (next, lessonInfo) {
 	const {item} = next || {};
-	const {remainingItems} = lessonInfo || {};
-	const first = remainingItems && remainingItems[0];
+	const {nextItem} = lessonInfo || {};
 
-	return item && (!first || first.getID() !== item.getID());
+	return item && (!nextItem || nextItem.getID() !== item.getID());
 }
 
 
@@ -63,7 +68,7 @@ export default class UpNext extends React.Component {
 				{endOfCourse && this.renderEndOfCourse(next, lessonInfo)}
 				{!endOfCourse && endOfLesson && this.renderEndOfLesson(next, lessonInfo)}
 				{!endOfCourse && !endOfLesson && subPage && this.renderSubPage(next, lessonInfo)}
-				{!endOfCourse && !endOfLesson && !subPage && this.renderRemaining(next, lessonInfo)}
+				{!endOfCourse && !endOfLesson && !subPage && this.renderNextItem(next, lessonInfo)}
 			</div>
 		);
 	}
@@ -107,16 +112,15 @@ export default class UpNext extends React.Component {
 	}
 
 
-	renderRemaining (next, lessonInfo) {
-		const {course} = this.props;
-		const {remainingItems} = lessonInfo || {};
+	renderNextItem (next) {
+		if (!next || !next.item) { return null; }
 
-		if (!remainingItems || !remainingItems.length) { return null; }
+		const {course} = this.props;
 
 		return (
 			<div className={cx('remaining-items')}>
 				<div className={cx('title')}>{t('upNext')}</div>
-				<OverviewItems layout={Constants.List} items={remainingItems} course={course} />
+				<OverviewItems layout={Constants.List} items={[next.item]} course={course} />
 			</div>
 		);
 	}

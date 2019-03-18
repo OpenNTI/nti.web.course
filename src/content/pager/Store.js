@@ -219,19 +219,21 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			return item.getID() === selectedItemId;
 		});
 
-		const remainingNodes = await lessonWalker.getNodesAfter((item) => {
-			return item.getID() === selectedItemId;
-		});
-		const remainingItems = await Promise.all(
-			remainingNodes.map(node => node.getItem())
-		);
+		const nextNode = await lessonWalker
+			.selectDescendantMatching((item) => {
+				return item.getID() === selectedItemId;
+			})
+			.selectNext()
+			.getCurrentNode();
+		const nextItem = nextNode && await nextNode.getItem();
 
 		return {
+			href: overview.href,
 			id: overview.getID(),
 			title: overview.title,
 			totalItems,
 			currentItemIndex,
-			remainingItems
+			nextItem
 		};
 	}
 
