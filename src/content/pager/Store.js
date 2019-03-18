@@ -219,12 +219,10 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			return item.getID() === selectedItemId;
 		});
 
-		const nextNode = await lessonWalker
-			.selectDescendantMatching((item) => {
-				return item.getID() === selectedItemId;
-			})
-			.selectNext()
-			.getCurrentNode();
+		const remainingNodes = await lessonWalker.getNodesAfter((item) => {
+			return item.getID() === selectedItemId;
+		});
+		const nextNode = remainingNodes[0];
 		const nextItem = nextNode && await nextNode.getItem();
 
 		return {
