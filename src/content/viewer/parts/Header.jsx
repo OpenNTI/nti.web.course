@@ -9,7 +9,7 @@ import Styles from './Header.css';
 const cx = classnames.bind(Styles);
 const t = scoped('course.content.viewer.parts.Header', {
 	remaining: {
-		zero: 'All Most Done!',
+		zero: 'Almost Done!',
 		one: '%(count)s item remaining in this lesson',
 		other: '%(count)s items remaining in this lesson'
 	},
