@@ -76,10 +76,10 @@ class StreamedBatchStore extends Stores.BoundStore {
 	}
 
 	batchLinkFor = item => {
-		const batch = (this.get('batches') || []).find(({Items: items} = []) => items.indexOf(item > -1));
+		const batch = (this.get('batches') || []).find(({Items: items = []}) => items.includes(item));
 
 		if (batch) {
-			const {href, Items: items = []} = batch;
+			const {href, Items: items} = batch;
 			const index = items.indexOf(item);
 			const url = URL.parse(href);
 			const query = QS.parse(url.query);
