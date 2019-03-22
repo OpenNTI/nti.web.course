@@ -128,8 +128,8 @@
 }
 
 
-.next-link,
-.prev-link {
+.paging .next-link,
+.paging .prev-link {
 	color: var(--primary-blue);
 	cursor: pointer;
 }
