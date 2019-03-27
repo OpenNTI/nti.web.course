@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Layouts} from '@nti/web-commons';
+import {Layouts, Decorators} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import Styles from './View.css';
@@ -16,6 +16,7 @@ const t = scoped('course.content.viewer.View', {
 });
 
 export default
+@Decorators.addClassToRoot('nti-course-content-open')
 class CourseContentViewer extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
