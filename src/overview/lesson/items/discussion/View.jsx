@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getService} from '@nti/web-client';
 import {scoped} from '@nti/lib-locale';
 
 import {Grid, List} from '../../Constants';
@@ -8,7 +7,6 @@ import Registry from '../Registry';
 
 import ListCmp from './List';
 import GridCmp from './Grid';
-import {maybeFixNTIID} from './utils';
 
 const DEFAULT_TEXT = {
 	commentLabel: {
@@ -72,10 +70,8 @@ class LessonOverviewDiscussion extends React.Component {
 
 
 	async setupTopic (item, course) {
-		const ntiids = item.NTIID ? item.NTIID.split(' ') : [];
-
 		try {
-			const topic = await this.resolveTopic(ntiids, course);
+			const topic = await item.resolveTarget(course);
 			const isForum = topic.hasOwnProperty('TopicCount');
 
 			this.setState({
@@ -105,22 +101,6 @@ class LessonOverviewDiscussion extends React.Component {
 			});
 		} catch (e) {
 			//No need to do anything here
-		}
-	}
-
-
-	async resolveTopic (ntiids, course) {
-		const id = ntiids[0];
-
-		if (!id) { throw new Error('Unable to resolve topic'); }
-
-		try {
-			const service = await getService();
-			const topic = await service.getObject(maybeFixNTIID(id, course));
-
-			return topic;
-		} catch (e) {
-			return this.resolveTopic(ntiids.slice(1));
 		}
 	}
 

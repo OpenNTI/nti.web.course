@@ -54,8 +54,6 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 					renderLabels={this.renderLabels}
 					renderButton={this.renderButton}
 
-					linkToObject={assignment || assessment}
-
 					inlineEditorExpanded={inlineEditorExpanded}
 					onEditorDismiss={this.onEditorDismiss}
 				/>

@@ -17,7 +17,7 @@ export default class LessonOverviewDiscussionListItem extends React.Component {
 
 
 	render () {
-		const {item, title, commentLabel, disabled, topic, ...otherProps} = this.props;
+		const {item, title, commentLabel, disabled, ...otherProps} = this.props;
 
 		return (
 			<Base
@@ -28,8 +28,6 @@ export default class LessonOverviewDiscussionListItem extends React.Component {
 				labels={commentLabel ? [commentLabel] : []}
 				disabled={disabled}
 				renderIcon={this.renderIcon}
-
-				linkToObject={topic}
 			/>
 		);
 	}
