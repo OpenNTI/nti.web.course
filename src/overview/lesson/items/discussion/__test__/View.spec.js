@@ -75,7 +75,14 @@ function itemBuilder () {
 				CompletionRequired: this._CompletionRequired,
 				title: this._title,
 				description: this._description,
-				byline: this._byline
+				byline: this._byline,
+				resolveTarget: async () => {
+					return {
+						title: 'Topic 1',
+						TopicCount: 4,
+						PostCount: 5
+					};
+				}
 			};
 		}
 	};
