@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {LinkTo} from '@nti/web-routing';
-import {EmptyList} from '@nti/web-commons';
+import {EmptyList, FillToBottom} from '@nti/web-commons';
 import {NoteSummary} from '@nti/web-discussions';
 
 import styles from './Sidebar.css';
@@ -20,7 +20,7 @@ export default class Sidebar extends React.Component {
 		const empty = !(notes || []).length;
 
 		return (
-			<div>
+			<FillToBottom limit className={cx('sidebar-container')}>
 				{empty ? <EmptyList className={cx('empty')} type="user-generated-data" /> : (
 					<ul className={cx('note-list')}>
 						{notes.map(note => (
@@ -32,7 +32,7 @@ export default class Sidebar extends React.Component {
 						))}
 					</ul>
 				)}
-			</div>
+			</FillToBottom>
 		);
 	}
 }
