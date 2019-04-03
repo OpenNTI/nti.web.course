@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {TranscriptedVideo} from '@nti/web-content';
+import {Notes} from '@nti/web-discussions';
 
 import TypeRegistry from '../Registry';
-
-import Sidebar from './Sidebar';
 
 const MIME_TYPES = {
 	'application/vnd.nextthought.ntivideo': true
@@ -34,7 +33,7 @@ class CourseContentViewerRendererVideo extends React.Component {
 		if (!item) { return null; }
 
 		return (
-			<TranscriptedVideo course={course} videoId={item.getID()} sidebar={Sidebar} />
+			<TranscriptedVideo course={course} videoId={item.getID()} sidebar={Notes.Sidebar} />
 		);
 	}
 }
