@@ -4,6 +4,8 @@ import {TranscriptedVideo} from '@nti/web-content';
 
 import TypeRegistry from '../Registry';
 
+import Sidebar from './Sidebar';
+
 const MIME_TYPES = {
 	'application/vnd.nextthought.ntivideo': true
 };
@@ -14,12 +16,6 @@ const handles = (obj) => {
 
 	return item && MIME_TYPES[item.MimeType];
 };
-
-class Noop extends React.Component {
-	render () {
-		return null;
-	}
-}
 
 export default
 @TypeRegistry.register(handles)
@@ -38,7 +34,7 @@ class CourseContentViewerRendererVideo extends React.Component {
 		if (!item) { return null; }
 
 		return (
-			<TranscriptedVideo course={course} videoId={item.getID()} sidebar={Noop} />
+			<TranscriptedVideo course={course} videoId={item.getID()} sidebar={Sidebar} />
 		);
 	}
 }
