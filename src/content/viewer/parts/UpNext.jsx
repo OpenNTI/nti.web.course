@@ -24,12 +24,17 @@ function isEndOfCourse (next) {
 
 function isEndOfLesson (next, lessonInfo) {
 	const {lesson} = next || {};
-	const {href, id:lessonId} = lessonInfo;
+	const {href, id:lessonId, outlineNodeId} = lessonInfo;
 
 	if (!lesson) { return false; }
 
-	const isSameLesson = lesson['NTIID'] === lessonId
-		|| lesson['ContentNTIID'] === lessonId
+	const idsToCheckMap = {
+		[lessonId]: true,
+		[outlineNodeId]: true
+	};
+
+	const isSameLesson = idsToCheckMap[lesson.NTIID]
+		|| idsToCheckMap[lesson.ContentNTIID]
 		|| lesson.getLink('overview-content') === href;
 
 	return lesson && !isSameLesson;

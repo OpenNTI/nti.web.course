@@ -208,6 +208,9 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			ignoreChildren: isRelatedWorkRef //don't count sub pages in the lesson counts
 		});
 
+		const outlineNode = lessonNode && lessonNode.findParent(isOutlineNode);
+		const outline = lessonNode && await outlineNode.getItem();
+
 		//the first item in the selection should be in a lesson (ex. [RelatedWorkRef, Sub-Page])
 		//most items should just be a list of one node.
 		const selectedNode = selectionNodes && selectionNodes[0];
@@ -229,6 +232,7 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			href: overview.href,
 			id: overview.getID(),
 			title: overview.title,
+			outlineNodeId: outline && outline.getID(),
 			totalItems,
 			currentItemIndex,
 			nextItem
