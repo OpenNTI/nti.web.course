@@ -47,9 +47,19 @@ function isRelatedWorkRef (item) {
 }
 
 function buildIsSameOverviewItem (node) {
-	const id = node.getID ? node.getID() : node;
+	const id = node.isVideo ?
+		node.getLinkProperty('ref', 'RefNTIID') :
+		(node.getID ? node.getID() : node);
 
-	return (item) => item && (item.getID() === id || item['target-NTIID'] === id || item['Target-NTIID'] === id);
+	return (item) => {
+		if (item.isVideo) {
+			const refID = item.getLinkProperty('ref', 'RefNTIID');
+
+			if (refID === id) { return true; }
+		}
+
+		return item && (item.getID() === id || item.target === id || item['target-NTIID'] === id || item['Target-NTIID'] === id);
+	};
 }
 
 function invert (fn) {
@@ -215,16 +225,12 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		//most items should just be a list of one node.
 		const selectedNode = selectionNodes && selectionNodes[0];
 		const selectedItem = selectedNode && await selectedNode.getItem();
-		const selectedItemId = selectedItem && selectedItem.getID();
+		const isSameSelectedItem = buildIsSameOverviewItem(selectedItem);
 
 		const totalItems = await lessonWalker.getNodeCount();
-		const currentItemIndex = await lessonWalker.getIndexOf((item) => {
-			return item.getID() === selectedItemId;
-		});
+		const currentItemIndex = await lessonWalker.getIndexOf(isSameSelectedItem);
 
-		const remainingNodes = await lessonWalker.getNodesAfter((item) => {
-			return item.getID() === selectedItemId;
-		});
+		const remainingNodes = await lessonWalker.getNodesAfter(isSameSelectedItem);
 		const nextNode = remainingNodes[0];
 		const nextItem = nextNode && await nextNode.getItem();
 
