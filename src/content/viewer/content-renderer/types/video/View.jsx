@@ -33,7 +33,7 @@ class CourseContentViewerRendererVideo extends React.Component {
 		if (!item) { return null; }
 
 		return (
-			<TranscriptedVideo course={course} videoId={item.getID()} sidebar={Notes.Sidebar} />
+			<TranscriptedVideo course={course} videoId={item.getID()} />
 		);
 	}
 }
