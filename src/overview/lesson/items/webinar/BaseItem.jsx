@@ -5,6 +5,7 @@ import {isFlag} from '@nti/web-client';
 import {Calendar} from '@nti/web-commons';
 import {CircularProgress} from '@nti/web-charts';
 import {scoped} from '@nti/lib-locale';
+import {LinkTo} from '@nti/web-routing';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';
@@ -202,7 +203,7 @@ export default class WebinarBaseItem extends React.Component {
 		const required = item.CompletionRequired;
 
 		return (
-			<div className={cls}>
+			<LinkTo.Object object={item} className={cls}>
 				{this.renderDate()}
 				{this.renderContents()}
 				{item && item.isCompletable && item.isCompletable() && onRequirementChange ? (
@@ -210,7 +211,7 @@ export default class WebinarBaseItem extends React.Component {
 				) : required && (
 					<Required key="required-label"/>
 				)}
-			</div>
+			</LinkTo.Object>
 		);
 	}
 }

@@ -14,6 +14,7 @@ $header-ranges: (
 	margin: 0.9375rem 0;
 	position: relative;
 	min-height: 70px;
+	display: block;
 
 	.require-control-value {
 		margin-left: 90px;
@@ -217,7 +218,7 @@ $header-ranges: (
 				color: $secondary-grey;
 				font-size: 14px;
 				line-height: 19px;
-				font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+				font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 				white-space: pre-wrap;
 				margin: 0;
 			}
