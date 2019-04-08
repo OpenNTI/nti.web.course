@@ -13,7 +13,7 @@ const cx = classnames.bind(Styles);
 
 const t = scoped('course.content.viewer.parts.UpNext', {
 	nextPage: 'Next Page',
-	lessonFinished: 'All done, keep going!',
+	lessonFinished: 'Next Lesson',
 	upNext: 'Up Next'
 });
 
