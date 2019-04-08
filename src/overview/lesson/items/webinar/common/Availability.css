@@ -1,0 +1,43 @@
+.availability-info {
+	font-size: 10px;
+	text-transform: uppercase;
+	color: var(--tertiary-grey);
+	margin-top: 4px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: flex;
+	max-width: 100%;
+	line-height: 20px;
+	font-weight: bold;
+}
+
+.circular-progress {
+	margin-right: 5px;
+	line-height: 18px;
+}
+
+.completion-label {
+	color: var(--primary-green);
+}
+
+.incomplete-label {
+	color: var(--primary-red);
+}
+
+.separator {
+	position: relative;
+	padding-right: 12px;
+	margin-right: 2px;
+}
+
+.separator::after {
+	content: "·";
+	margin-right: 2px;
+	font-size: 20px;
+	line-height: 0;
+	position: absolute;
+	right: 0;
+	top: 10px;
+	color: var(--tertiary-grey);
+}

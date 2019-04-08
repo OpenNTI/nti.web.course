@@ -61,50 +61,6 @@ $header-ranges: (
 				text-overflow: ellipsis;
 				width: 100%;
 			}
-
-			.availability-info {
-				font-size: 10px;
-				text-transform: uppercase;
-				color: $tertiary-grey;
-				margin-top: 4px;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				display: flex;
-				max-width: 100%;
-				line-height: 20px;
-				font-weight: bold;
-
-				.circular-progress {
-					margin-right: 5px;
-					line-height: 18px;
-				}
-
-				.completion-label {
-					color: $primary-green;
-				}
-
-				.incomplete-label {
-					color: $primary-red;
-				}
-
-				.webinar-duration, .incomplete-label, .completion-label {
-					position: relative;
-					padding-right: 12px;
-					margin-right: 2px;
-
-					&::after {
-						content: "·";
-						margin-right: 2px;
-						font-size: 20px;
-						line-height: 0;
-						position: absolute;
-						right: 0;
-						top: 10px;
-						color: $tertiary-grey;
-					}
-				}
-			}
 		}
 
 		a.button,

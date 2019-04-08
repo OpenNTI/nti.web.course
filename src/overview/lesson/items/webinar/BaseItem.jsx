@@ -10,14 +10,13 @@ import RequirementControl from '../../../../progress/widgets/RequirementControl'
 import Required from '../../common/Required';
 
 import Button from './Button';
+import Availability from './common/Availability';
 import Duration from './common/Duration';
 
 const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
 	unregister: 'Un-Register',
 	noLongerAvailable: 'This webinar is no longer available',
-	completed: 'Completed',
-	incomplete: 'Incomplete',
-	absent: 'Absent'
+	incomplete: 'Incomplete'
 });
 
 export default class WebinarBaseItem extends React.Component {
@@ -115,67 +114,23 @@ export default class WebinarBaseItem extends React.Component {
 		);
 	}
 
-	isToday (a, b) {
-		return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
-	}
-
-	renderAvailability () {
-		const {item, isMinimal, item: {webinar}} = this.props;
-		const nearestSession = webinar && webinar.getNearestSession();
-
-		const now = Date.now();
-
-		// default case, render 'Starts [day] from [startTime] - [endTime]'
-		let timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Starts] dddd [from] hh:mm a')
-			+ ' - ' + DateTime.format(nearestSession.getEndTime(), 'hh:mm a z');
-
-		if(webinar.isExpired()) {
-			// render 'Expired [day] at [time]'
-			timeDisplay = nearestSession && DateTime.format(nearestSession.getEndTime(), '[Expired] dddd [at] hh:mm a z');
-		}
-		else {
-			const currDate = new Date(now);
-
-			// determine if it's today
-			if(this.isToday(currDate, nearestSession.getStartTime())) {
-				timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Starts Today at] hh:mm a z');
-
-				/*
-				// This is logic for the simulated live case which we aren't worrying about now
-				const msUntilExpiration = nearestSession.getEndTime() - now;
-
-				if(msUntilExpiration <= 60 * 60 * 1000) {
-					// expires within an hour, render 'Expires Today at [time]'
-					timeDisplay = nearestSession && DateTime.format(nearestSession.getEndTime(), '[Expires Today at] hh:mm a z');
-				}
-				else {
-					// render 'Available Today at [time]'
-					timeDisplay = nearestSession && DateTime.format(nearestSession.getStartTime(), '[Available Today at] hh:mm a z');
-				}
-				*/
-			}
-		}
-
-		return (
-			<div className="availability-info">
-				{item.hasCompleted() && !isMinimal && <CircularProgress width={20} height={20} isComplete/>}
-				{item.hasCompleted() && <div className="completion-label">{t('completed')}</div>}
-				{!item.hasCompleted() && webinar.isExpired() && <div className="incomplete-label">{t('absent')}</div>}
-				{(!item.icon || isMinimal) && !webinar.isExpired() && <Duration webinar={webinar}/>}
-				<div className="time-display">{timeDisplay}</div>
-			</div>
-		);
-	}
-
-
 	renderContents () {
-		const {item: {webinar}, isMinimal, hideControls, editMode, readOnly} = this.props;
+		const {item, item: {webinar}, isMinimal, hideControls, editMode, readOnly} = this.props;
+		const nearestSession = webinar.getNearestSession();
+		const startDate = nearestSession && nearestSession.getStartTime();
+		const endDate = nearestSession && nearestSession.getEndTime();
 
 		return (
 			<div className="contents">
 				<div className="header">
 					<div className="title">{webinar ? webinar.subject : t('noLongerAvailable')}</div>
-					{this.renderAvailability()}
+					<Availability
+						startTime={startDate}
+						endTime={endDate}
+						icon={item.icon}
+						completed={item.hasCompleted()}
+						minimal={isMinimal}
+					/>
 				</div>
 				{!readOnly && !hideControls && !editMode && this.renderButton()}
 				{webinar && !isMinimal && this.renderImageAndDescription()}
