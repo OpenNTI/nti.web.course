@@ -9,17 +9,26 @@ import Styles from './Header.css';
 const cx = classnames.bind(Styles);
 const t = scoped('course.content.viewer.parts.Header', {
 	remaining: {
-		zero: 'Almost Done!',
-		one: '%(count)s item remaining in this lesson',
-		other: '%(count)s items remaining in this lesson'
+		requiredItems: {
+			one: '%(count)s Required Item',
+			other: '%(current)s of %(count)s Required Items'
+		},
+		allItems: {
+			one: '%(count)s Item',
+			other: '%(current)s of %(count)s Items'
+		}
 	},
-	totalSeparator: ' of '
+	paging: {
+		prefix: 'Page ',
+		separator: ' of '
+	}
 });
 
 
 export default class Header extends React.Component {
 	static propTypes = {
 		dismissPath: PropTypes.string,
+		requiredOnly: PropTypes.bool,
 		lessonInfo: PropTypes.shape({
 			title: PropTypes.string,
 			totalItems: PropTypes.number,
@@ -72,7 +81,7 @@ export default class Header extends React.Component {
 
 
 	renderLesson () {
-		const {lessonInfo} = this.props;
+		const {lessonInfo, requiredOnly} = this.props;
 
 		if (!lessonInfo) {
 			return (
@@ -83,7 +92,9 @@ export default class Header extends React.Component {
 			);
 		}
 
-		const remaining = lessonInfo.totalItems - lessonInfo.currentItemIndex - 1;
+		const localeKey = requiredOnly ? 'remaining.requiredItems' : 'remaining.allItems';
+		const current = lessonInfo.currentItemIndex + 1;
+		const count = lessonInfo.totalItems;
 
 		return (
 			<div className={cx('lesson-container')}>
@@ -91,7 +102,7 @@ export default class Header extends React.Component {
 					{lessonInfo.title}
 				</div>
 				<div className={cx('lesson-sub-title')}>
-					{t('remaining', {count: remaining})}
+					{t(localeKey, {current, count})}
 				</div>
 			</div>
 		);
@@ -119,11 +130,14 @@ export default class Header extends React.Component {
 
 		return (
 			<div className={cx('location')}>
+				<span className={cx('location-prefix')}>
+					{t('paging.prefix')}
+				</span>
 				<span className={cx('location-current-index')}>
 					{location.currentPage + 1}
 				</span>
 				<span className={cx('location-separator')}>
-					{t('totalSeparator')}
+					{t('paging.separator')}
 				</span>
 				<span className={cx('location-totalPages')}>
 					{location.totalPages}
