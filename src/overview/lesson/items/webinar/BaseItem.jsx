@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { isFlag } from '@nti/web-client';
-import { DateTime } from '@nti/web-commons';
-import { CircularProgress } from '@nti/web-charts';
-import { scoped } from '@nti/lib-locale';
+import {isFlag} from '@nti/web-client';
+import {Calendar} from '@nti/web-commons';
+import {CircularProgress} from '@nti/web-charts';
+import {scoped} from '@nti/lib-locale';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';
@@ -75,13 +75,12 @@ export default class WebinarBaseItem extends React.Component {
 		}
 
 		const nearestSession = webinar.getNearestSession();
+		const startDate = nearestSession.getStartTime();
 
 		return (
-			<div className="date">
-				<div className="month">{DateTime.format(nearestSession.getStartTime(), 'MMM')}</div>
-				<div className="day">{nearestSession.getStartTime().getDate()}</div>
+			<Calendar.DateIcon minimal className="date" date={startDate}>
 				{item.hasCompleted() && isMinimal && <CircularProgress width={20} height={20} isComplete/>}
-			</div>
+			</Calendar.DateIcon>
 		);
 	}
 
