@@ -46,6 +46,10 @@ function isRelatedWorkRef (item) {
 	return item && item.MimeType === 'application/vnd.nextthought.relatedworkref';
 }
 
+function isCompletionRequired (item) {
+	return item && item.CompletionRequired;
+}
+
 function buildIsSameOverviewItem (node) {
 	const id = node.isVideo ?
 		node.getLinkProperty('ref', 'RefNTIID') :
@@ -109,6 +113,25 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const {selection, lesson} = this.binding;
 
 		return selection !== this[SELECTION] || lesson !== this[LESSON];
+	}
+
+	get requiredOnly () {
+		const {course, requiredOnly} = this.binding;
+
+		return course && course.CompletionPolicy && requiredOnly;
+	}
+
+	get skipNodes () {
+		return this.requiredOnly ?
+			oneOf(isNotPageableContent, invert(isCompletionRequired)) :
+			isNotPageableContent;
+	}
+
+
+	get ignoreChildrenNodes () {
+		return this.requiredOnly ?
+			combine(invert(isNotPageableContent), invert(isCompletionRequired)) :
+			null;
 	}
 
 
@@ -214,7 +237,7 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 		const overview = await lessonNode.getItem();
 		const lessonWalker = lessonNode.createTreeWalker({
-			skip: isNotPageableContent,
+			skip: this.skipNodes,
 			ignoreChildren: isRelatedWorkRef //don't count sub pages in the lesson counts
 		});
 
@@ -314,7 +337,8 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 		const selection = selectionNodes[selectionNodes.length - 1];
 		const courseWalker = selection.createTreeWalker(courseTree, {
-			skip: isNotPageableContent
+			skip: this.skipNodes,
+			ignoreChildren: this.ignoreChildrenNodes
 		});
 
 		const nextNode = await courseWalker.selectNext().getCurrentNode();

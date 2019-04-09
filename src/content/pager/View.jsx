@@ -23,7 +23,8 @@ class ContentPager extends React.Component {
 		return {
 			course: props.course,
 			lesson: props.lesson,
-			selection: props.selection
+			selection: props.selection,
+			requiredOnly: props.requiredOnly
 		};
 	}
 
@@ -42,7 +43,8 @@ class ContentPager extends React.Component {
 					PropTypes.object
 				])
 			)
-		])
+		]),
+		requiredOnly: PropTypes.bool
 	}
 
 
