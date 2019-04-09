@@ -360,11 +360,13 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const prevItem = prevNode && await prevNode.getItem();
 
 		const next = !nextItem ? null : {
+			isNextLink: true,
 			item: nextItem,
 			lesson: nextLesson,
 			relatedWorkRef: nextRelatedWorkRef
 		};
 		const previous = !prevItem ? null : {
+			isPrevLink: true,
 			item: prevItem,
 			lesson: prevLesson,
 			relatedWorkRef: prevRelatedWorkRef
