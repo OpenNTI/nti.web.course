@@ -26,7 +26,8 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		activeIndex: PropTypes.number,
 		index: PropTypes.number,
 		touching: PropTypes.bool,
-		onRequirementChange: PropTypes.func
+		onRequirementChange: PropTypes.func,
+		doNotPlayVideosInline: PropTypes.bool
 	}
 
 	state = initialState
@@ -115,6 +116,10 @@ export default class LessonOverviewVideoGrid extends React.Component {
 
 
 	onPlayClicked = (e) => {
+		const {doNotPlayVideosInline} = this.props;
+
+		if (doNotPlayVideosInline) { return; }
+
 		block(e);
 		const {video} = this;
 		this.setState({interacted: true});
