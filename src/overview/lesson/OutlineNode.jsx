@@ -42,6 +42,10 @@ function setStoragePreference (key, value) {
 }
 
 export default class LessonView extends React.Component {
+	static isFilteredToRequired () {
+		return getStoragePreference(REQUIRED_STORAGE_KEY);
+	}
+
 	static propTypes = {
 		className: PropTypes.string,
 		outlineNode: PropTypes.object,
@@ -71,7 +75,6 @@ export default class LessonView extends React.Component {
 	componentDidMount () {
 		this.setupFor(this.props);
 	}
-
 
 	async setupFor (props = this.props) {
 		const {requiredOnly, layout} = this.state;
