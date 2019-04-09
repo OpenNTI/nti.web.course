@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {Event} from '@nti/web-calendar';
 import {isFlag} from '@nti/web-client';
-import {Calendar} from '@nti/web-commons';
+import {DateTime} from '@nti/web-commons';
 import {CircularProgress} from '@nti/web-charts';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
@@ -11,8 +12,6 @@ import RequirementControl from '../../../../progress/widgets/RequirementControl'
 import Required from '../../common/Required';
 
 import Button from './Button';
-import Availability from './common/Availability';
-import Duration from './common/Duration';
 
 const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
 	unregister: 'Un-Register',
@@ -21,6 +20,7 @@ const t = scoped('course.overview.lesson.items.webinar.BaseItem', {
 });
 
 export default class WebinarBaseItem extends React.Component {
+
 	static propTypes = {
 		item: PropTypes.object.isRequired,
 		course: PropTypes.object.isRequired,
@@ -78,9 +78,9 @@ export default class WebinarBaseItem extends React.Component {
 		const startDate = nearestSession.getStartTime();
 
 		return (
-			<Calendar.DateIcon minimal className="date" date={startDate}>
+			<DateTime.DateIcon minimal className="date" date={startDate}>
 				{item.hasCompleted() && isMinimal && <CircularProgress width={20} height={20} isComplete/>}
-			</Calendar.DateIcon>
+			</DateTime.DateIcon>
 		);
 	}
 
@@ -96,7 +96,7 @@ export default class WebinarBaseItem extends React.Component {
 		return (
 			<div className="status">
 				{isAvailable && <div className="live">Live</div>}
-				<div className={cx('duration-container', {'is-active': isAvailable})}><Duration webinar={webinar}/></div>
+				<div className={cx('duration-container', {'is-active': isAvailable})}><DateTime.Duration webinar={webinar}/></div>
 			</div>
 		);
 	}
@@ -125,7 +125,7 @@ export default class WebinarBaseItem extends React.Component {
 			<div className="contents">
 				<div className="header">
 					<div className="title">{webinar ? webinar.subject : t('noLongerAvailable')}</div>
-					<Availability
+					<Event.Availability
 						startTime={startDate}
 						endTime={endDate}
 						icon={item.icon}

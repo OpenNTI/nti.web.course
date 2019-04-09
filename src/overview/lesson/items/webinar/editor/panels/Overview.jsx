@@ -5,7 +5,6 @@ import {scoped} from '@nti/lib-locale';
 import {ImageUpload} from '@nti/web-whiteboard';
 
 import PositionSelect from '../../../../common/PositionSelect';
-import Duration from '../../common/Duration';
 
 const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', {
 	addToLesson: 'Add to Lesson',
@@ -71,7 +70,7 @@ export default class WebinarOverviewEditor extends React.Component {
 				<div className="title">{webinar.subject}</div>
 				<div className="time-info">
 					<span>Live</span>
-					<Duration webinar={webinar} longAbbreviations/>
+					<DateTime.Duration webinar={webinar} longAbbreviations/>
 					<span>Webinar</span>
 					<span className="date">{DateTime.format(startDate, 'dddd [at] hh:mm a z')}</span>
 				</div>

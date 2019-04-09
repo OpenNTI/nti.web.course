@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Calendar, DateTime} from '@nti/web-commons';
+import {DateTime} from '@nti/web-commons';
 
 function isToday (a, b) {
 	return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
@@ -29,7 +29,7 @@ export default class EventBaseItem extends React.Component {
 		}
 
 		return (
-			<Calendar.DateIcon minimal date={event.getStartTime()} className="date" />
+			<DateTime.DateIcon minimal date={event.getStartTime()} className="date" />
 		);
 	}
 

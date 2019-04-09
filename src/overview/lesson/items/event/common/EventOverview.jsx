@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Calendar, DialogButtons, DateTime, Prompt, Input, Loading} from '@nti/web-commons';
+import {DialogButtons, DateTime, Prompt, Input, Loading} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {ImageUpload} from '@nti/web-whiteboard';
 import {Connectors} from '@nti/lib-store';
@@ -76,7 +76,7 @@ class EventOverviewEditor extends React.Component {
 		const {startDate} = this.state;
 
 		return (
-			<Calendar.DateIcon minimal className="date" date={startDate} />
+			<DateTime.DateIcon minimal className="date" date={startDate} />
 		);
 	}
 

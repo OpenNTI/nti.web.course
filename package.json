@@ -44,6 +44,7 @@
     "@nti/lib-store": "^1.0.1",
     "@nti/util-logger": "^1.1.2",
     "@nti/web-assignment-editor": "^1.14.0",
+    "@nti/web-calendar": "^1.5.0",
     "@nti/web-charts": "0.x.x",
     "@nti/web-client": "^1.1.3",
     "@nti/web-commons": "0.x.x",
