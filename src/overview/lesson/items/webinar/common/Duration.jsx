@@ -7,7 +7,7 @@ import styles from './Duration.css';
 const cx = classnames.bind(styles);
 
 function getDuration (startTime, endTime) {
-	(startTime == null || endTime == null)
+	return (startTime == null || endTime == null)
 		? 0
 		: Math.max(endTime - startTime, 0);
 }
