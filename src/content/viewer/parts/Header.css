@@ -4,8 +4,8 @@
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	position: var(--course-content-viewer-header-position, relative);
-	top: var(--course-content-viewer-header-top, initial);
+	position: sticky;
+	top: var(--course-content-viewer-header-sticky-top, initial);
 
 	/*fight z-index in web app*/
 	z-index: 20;
