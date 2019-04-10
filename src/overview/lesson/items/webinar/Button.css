@@ -1,0 +1,64 @@
+button {
+	border-radius: 4px;
+	background-color: var(--secondary-green);
+	color: #fff;
+	font-family: var(--body-font-family);
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.375;
+	padding: 7px 24px 9px;
+	cursor: pointer;
+	text-decoration: none;
+	white-space: nowrap;
+	min-width: 130px;
+	max-height: 40px;
+}
+
+.disabled {
+	background-color: var(--tertiary-grey);
+	pointer-events: none;
+}
+
+.clickable {
+	pointer-events: all;
+}
+
+.caution {
+	background-color: var(--border-red);
+}
+
+.expiring {
+	font-size: 14px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.remaining {
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.starting {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.starting > span {
+	position: relative;
+}
+
+.starting .timer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	margin-right: 0.5rem;
+	background-image: url('./assets/timer.svg');
+}
+
+.starting .remaining {
+	padding-left: 26px;
+}

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {Event} from '@nti/web-calendar';
-import {isFlag} from '@nti/web-client';
 import {DateTime} from '@nti/web-commons';
 import {CircularProgress} from '@nti/web-charts';
 import {scoped} from '@nti/lib-locale';
@@ -34,36 +33,6 @@ export default class WebinarBaseItem extends React.Component {
 
 	state = {}
 
-
-	componentDidMount () {
-		this.unsubscribe = () => {};
-
-		if (typeof document !== 'undefined' && isFlag('webinar-unregister-shiftkey')) {
-			document.addEventListener('keydown', this.onGlobalKeyPress);
-			document.addEventListener('keyup', this.onGlobalKeyPress);
-			this.unsubscribe = () => {
-				document.removeEventListener('keydown', this.onGlobalKeyPress);
-				document.removeEventListener('keyup', this.onGlobalKeyPress);
-			};
-		}
-	}
-
-
-	componentWillUnmount () {
-		this.unsubscribe();
-	}
-
-
-	onGlobalKeyPress = ({type, key}) => {
-
-		const keys = new Set([...(this.state.keysDown || [])]);
-
-		const keysDown = [... keys[type === 'keydown' ? 'add' : 'delete'](key)].sort();
-
-		this.setState({
-			keysDown
-		});
-	}
 
 
 	renderDate () {
@@ -133,11 +102,13 @@ export default class WebinarBaseItem extends React.Component {
 						minimal={isMinimal}
 					/>
 				</div>
-				{!readOnly && !hideControls && !editMode && this.renderButton()}
+				{!readOnly && !hideControls && !editMode && <Button webinar={webinar} onStatusChange={this.onStatusChange} onUnregister={this.onUnregister} />}
 				{webinar && !isMinimal && this.renderImageAndDescription()}
 			</div>
 		);
 	}
+
+	onUnregister = () => this.forceUpdate()
 
 	onStatusChange = (status) => {
 		if(this.state.status !== status) {
@@ -150,50 +121,6 @@ export default class WebinarBaseItem extends React.Component {
 				});
 		}
 	}
-
-
-	renderButton () {
-		const {
-			props: {
-				item: {
-					webinar
-				}
-			},
-			state: {
-				keysDown
-			}
-		} = this;
-
-		const isModifierOn = x => /^shift$/i.test((keysDown || []).join('-'));
-
-		if(webinar && !webinar.isExpired()) {
-			// user has already registered for the webinar, show join button
-			if(webinar.isJoinable()) {
-
-				if (webinar.hasLink('WebinarUnRegister') && isModifierOn(keysDown)) {
-					return this.renderUnRegisterButton();
-				}
-			}
-		}
-
-		return <Button item={this.props.item} onStatusChange={this.onStatusChange}/>;
-	}
-
-
-	renderUnRegisterButton () {
-		const unregister = () => {
-			const {webinar} = this.props.item;
-			webinar.requestLink('WebinarUnRegister', 'delete')
-				.then(() => webinar.refresh())
-				.then(() => this.forceUpdate());
-		};
-
-
-		return (
-			<button className="cation" onClick={unregister}>{t('unregister')}</button>
-		);
-	}
-
 
 	render () {
 		const {item, isMinimal, onRequirementChange} = this.props;
