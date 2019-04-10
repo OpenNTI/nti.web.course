@@ -5,6 +5,7 @@
 
 .webinar-button-container button {
 	border-radius: 4px;
+	border: none;
 	background-color: var(--secondary-green);
 	color: #fff;
 	font-family: var(--body-font-family);
