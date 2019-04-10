@@ -13,6 +13,7 @@ const cx = classnames.bind(styles);
 
 const t = scoped('course.overview.lesson.items.webinar.Button', {
 	register: 'Register',
+	unregister: 'Un-Register',
 	join: 'Join',
 	starting: 'Starting',
 	expiresIn: 'Expires in %(timeLeft)s'
@@ -72,11 +73,10 @@ export default class Button extends React.Component {
 	onGlobalKeyPress = ({type, key}) => {
 
 		const keys = new Set([...(this.state.keysDown || [])]);
-
-		const keysDown = [... keys[type === 'keydown' ? 'add' : 'delete'](key)].sort();
+		keys[type === 'keydown' ? 'add' : 'delete'](key);
 
 		this.setState({
-			keysDown
+			keysDown: [...keys]
 		});
 	}
 
@@ -235,7 +235,7 @@ export default class Button extends React.Component {
 
 	render () {
 		const {
-			item: {webinar} = {},
+			props: {webinar} = {},
 			state: {currentState, keysDown}
 		} = this;
 		
@@ -243,23 +243,20 @@ export default class Button extends React.Component {
 
 		const isModifierOn = x => /^shift$/i.test((keysDown || []).join('-'));
 
-		if (webinar && !webinar.isExpired()) {
-			// user has already registered for the webinar, show join button
-			if(webinar.isJoinable()) {
-				if (webinar.hasLink('WebinarUnRegister') && isModifierOn(keysDown)) {
-					body = this.renderUnRegisterButton();
-				}
-			}
-		}
-		else if (UnregisteredStates.has(currentState)) {
+		if (UnregisteredStates.has(currentState)) {
 			body = this.renderRegisterButton();
 		}
 		else if (currentState && currentState !== States.Expired) {
-			body = this.renderJoinButton();
+			if (webinar.hasLink('WebinarUnRegister') && isModifierOn(keysDown)) {
+				body = this.renderUnRegisterButton();
+			}
+			else {
+				body = this.renderJoinButton();
+			}
 		}
 
 		return (
-			<span>
+			<span className={cx('webinar-button-container')}>
 				{this.renderTimerIfNecessary()}
 				<HOC.ItemChanges item={this.stateManager} onItemChanged={this.onManagerChange}/>
 				{body}
