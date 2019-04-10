@@ -1,3 +1,8 @@
+.webinar-button-container {
+	display: block;
+	overflow: hidden;
+}
+
 .webinar-button-container button {
 	border-radius: 4px;
 	background-color: var(--secondary-green);
@@ -27,7 +32,7 @@
 	background-color: var(--border-red);
 }
 
-.expiring {
+.expiring.expiring {
 	font-size: 14px;
 	padding-top: 3px;
 	padding-bottom: 3px;
