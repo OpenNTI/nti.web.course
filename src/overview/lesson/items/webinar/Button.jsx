@@ -208,9 +208,16 @@ export default class Button extends React.Component {
 	}
 
 	onManagerChange = () => {
+		const {
+			stateManager: {
+				currentState,
+				remainingTime
+			}
+		} = this;
+
 		this.setState({
-			currentState: this.stateManager.currentState,
-			remainingTime: this.stateManager.remainingTime
+			currentState,
+			remainingTime
 		});
 	}
 
