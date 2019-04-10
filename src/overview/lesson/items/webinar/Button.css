@@ -1,4 +1,4 @@
-button {
+.webinar-button-container button {
 	border-radius: 4px;
 	background-color: var(--secondary-green);
 	color: #fff;
