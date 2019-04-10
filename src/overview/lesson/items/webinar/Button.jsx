@@ -235,7 +235,7 @@ export default class Button extends React.Component {
 
 	render () {
 		const {
-			props: {webinar} = {},
+			props: {webinar, className} = {},
 			state: {currentState, keysDown}
 		} = this;
 		
@@ -256,7 +256,7 @@ export default class Button extends React.Component {
 		}
 
 		return (
-			<span className={cx('webinar-button-container')}>
+			<span className={cx('webinar-button-container', className)}>
 				{this.renderTimerIfNecessary()}
 				<HOC.ItemChanges item={this.stateManager} onItemChanged={this.onManagerChange}/>
 				{body}
