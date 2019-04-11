@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {getScrollParent} from '@nti/lib-dom';
 import {Layouts, Decorators} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -28,6 +29,22 @@ class CourseContentViewer extends React.Component {
 		})
 	}
 
+	constructor (props) {
+		super(props);
+		this.domNode = React.createRef();
+	}
+
+	componentDidUpdate ({location: prevLoc}) {
+		const {location} = this.props;
+
+		if (location !== prevLoc) {
+			const scroller = getScrollParent(this.domNode.current);
+			if (scroller && scroller.scrollTo) {
+				scroller.scrollTo(0, 0);
+			}
+		}
+	}
+
 	render () {
 		const {
 			className,
@@ -38,7 +55,7 @@ class CourseContentViewer extends React.Component {
 		const loading = !location;
 
 		return (
-			<Aside.Container className={cx('nti-course-content', className, {loading})}>
+			<Aside.Container ref={this.domNode} className={cx('nti-course-content', className, {loading})}>
 				{error && (
 					<div className={cx('contents-error')}>
 						{t('error')}
