@@ -11,6 +11,8 @@ export default class BaseAssessmentGridItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 
+		assignment: PropTypes.object,
+
 		renderTitle: PropTypes.func,
 		renderIcon: PropTypes.func,
 		renderLabels: PropTypes.func,
@@ -63,7 +65,7 @@ export default class BaseAssessmentGridItem extends React.Component {
 
 
 	render () {
-		const {item, linkToObject, linkToContext, inlineEditorExpanded} = this.props;
+		const {item, assignment, linkToObject, linkToContext, inlineEditorExpanded} = this.props;
 		const {editorTransitioning} = this.state;
 
 		const statusCls = inlineEditorExpanded ? 'status-open' : 'status-closed';
@@ -96,7 +98,7 @@ export default class BaseAssessmentGridItem extends React.Component {
 					</LinkTo.Object>
 					<div className="editor-container">
 						{(this.state.editorTransitioning || this.state.editorExpanded) && (
-							<InlineEditor assignment={linkToObject} assignmentRef={item} onDismiss={this.onEditorDismiss}/>
+							<InlineEditor assignment={assignment} assignmentRef={item} onDismiss={this.onEditorDismiss}/>
 						)}
 					</div>
 				</div>

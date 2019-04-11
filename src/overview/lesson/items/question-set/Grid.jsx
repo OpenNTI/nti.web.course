@@ -49,6 +49,8 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 					className={classname}
 					item={item}
 
+					assignment={assignment}
+
 					renderTitle={this.renderTitle}
 					renderIcon={this.renderIcon}
 					renderLabels={this.renderLabels}
