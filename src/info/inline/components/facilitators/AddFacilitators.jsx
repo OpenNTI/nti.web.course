@@ -204,10 +204,10 @@ export default class AddFacilitators extends React.Component {
 					<div className="field-label">{t('role')}</div>
 					<div className="role-select">{this.renderRoleSelect()}</div>
 				</div>
-				<div className="visibility">
+				<label className="visibility">
 					<input type="checkbox" checked={this.state.isVisible} onChange={this.onVisibilityChanged}/>
 					<span>{t('visible')}</span>
-				</div>
+				</label>
 			</div>
 		);
 	}
