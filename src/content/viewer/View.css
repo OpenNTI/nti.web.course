@@ -6,3 +6,7 @@
 .contents-error {
 	color: var(--primary-red);
 }
+
+:global(.nti-course-content-open body > .modal + .modal .modal-mask) {
+	background: rgba(0, 0, 0, 0.7);
+}
