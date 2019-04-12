@@ -9,4 +9,5 @@
 
 :global(.nti-course-content-open body > .modal + .modal .modal-mask) {
 	background: rgba(0, 0, 0, 0.7);
+	z-index: 1010; /* ugh. on top of ext .nti-course-content-open .window-container @ 1002. manifests when a webinar registration window is open on top of the lessson viewer. */
 }
