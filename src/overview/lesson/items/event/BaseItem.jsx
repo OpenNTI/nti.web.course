@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {DateTime} from '@nti/web-commons';
+import {LinkTo} from '@nti/web-routing';
 
 function isToday (a, b) {
 	return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
@@ -96,10 +97,10 @@ export default class EventBaseItem extends React.Component {
 		const cls = cx('event-base-item', {minimal: isMinimal, unavailable: !item || !item.event});
 
 		return (
-			<div className={cls}>
+			<LinkTo.Object object={item} className={cls}>
 				{this.renderDate()}
 				{this.renderContents()}
-			</div>
+			</LinkTo.Object>
 		);
 	}
 }
