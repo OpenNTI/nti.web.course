@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {getService} from '@nti/web-client';
+import {Events, Hooks} from '@nti/web-session';
 
 import {List, Grid} from '../../Constants';
 import Registry from '../Registry';
@@ -27,6 +28,10 @@ const HANDLES = [
 
 export default
 @Registry.register(HANDLES)
+@Hooks.onEvent({
+	[Events.ASSIGNMENT_SUBMITTED]: 'onAssignmentSubmitted',
+	[Events.ASSESSMENT_SUBMITTED]: 'onAssessmentSubmitted'
+})
 class LessonOverviewQuestionSet extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
@@ -38,6 +43,24 @@ class LessonOverviewQuestionSet extends React.Component {
 	}
 
 	state = {}
+
+
+	onAssignmentSubmitted (submitted) {
+		const {assignment} = this.state;
+
+		if (assignment && assignment.getID() === submitted.getID()) {
+			this.setupFor(this.props);
+		}
+	}
+
+
+	onAssessmentSubmitted (submitted) {
+		const {assessment} = this.state;
+
+		if (assessment && assessment.getID() === submitted.getID()) {
+			this.setupFor(this.props);
+		}
+	}
 
 
 	componentDidMount () {
@@ -61,8 +84,8 @@ class LessonOverviewQuestionSet extends React.Component {
 	}
 
 
-	async setupFor (props) {
-		const {item, course} = this.props;
+	async setupFor (props = this.props) {
+		const {item, course} = props;
 		const target = item['Target-NTIID'] || (item.getID ? item.getID() : item.NTIID);
 
 		if (item.MimeType === 'application/vnd.nextthought.assignmentref') {
