@@ -92,15 +92,17 @@ export default class EventBaseItem extends React.Component {
 
 
 	render () {
-		const {item, isMinimal} = this.props;
+		const {item, isMinimal, editMode} = this.props;
+
+		const Wrapper = editMode ? 'div' : props => <LinkTo.Object object={item} {...props} />;
 
 		const cls = cx('event-base-item', {minimal: isMinimal, unavailable: !item || !item.event});
 
 		return (
-			<LinkTo.Object object={item} className={cls}>
+			<Wrapper object={item} className={cls}>
 				{this.renderDate()}
 				{this.renderContents()}
-			</LinkTo.Object>
+			</Wrapper>
 		);
 	}
 }
