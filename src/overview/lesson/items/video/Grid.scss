@@ -149,7 +149,7 @@
 		display: block;
 		overflow: hidden;
 		vertical-align: bottom;
-		padding: 0 3.5em 0 0.5em;
+		padding: 0 1.5em 0 0.5em;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		color: #fff;
@@ -183,14 +183,5 @@
 		display: inline-block;
 		width: 43px;
 		height: 43px;
-	}
-
-	.player::before, .label::after {
-		@extend %icon-transcript;
-
-		content: '';
-		display: inline-block;
-		width: 42px;
-		height: 42px;
 	}
 }
