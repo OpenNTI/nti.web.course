@@ -123,14 +123,16 @@ export default class WebinarBaseItem extends React.Component {
 	}
 
 	render () {
-		const {item, isMinimal, onRequirementChange} = this.props;
+		const {item, isMinimal, onRequirementChange, editMode} = this.props;
 
 		const cls = cx('webinar-base-item', {expired: item.webinar.isExpired(), minimal: isMinimal, unavailable: !item || !item.webinar});
 
 		const required = item.CompletionRequired;
 
+		const Wrapper = editMode ? 'div' : props => <LinkTo.Object object={item} {...props} />;
+
 		return (
-			<LinkTo.Object object={item} className={cls}>
+			<Wrapper className={cls}>
 				{this.renderDate()}
 				{this.renderContents()}
 				{item && item.isCompletable && item.isCompletable() && onRequirementChange ? (
@@ -138,7 +140,7 @@ export default class WebinarBaseItem extends React.Component {
 				) : required && (
 					<Required key="required-label"/>
 				)}
-			</LinkTo.Object>
+			</Wrapper>
 		);
 	}
 }
