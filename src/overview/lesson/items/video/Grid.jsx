@@ -53,21 +53,26 @@ export default class LessonOverviewVideoGrid extends React.Component {
 
 
 	componentDidUpdate (prevProps) {
+		const {activeIndex: prevIndex} = prevProps;
+		const {activeIndex} = this.props;
+
 		if (this.getID() !== this.getID(prevProps)) {
 			this.fillInVideo(this.props);
 		}
 
-		if (this.props.activeIndex !== prevProps.activeIndex) {
-			this.setState({interacted: false, playing: false});
+		if (activeIndex !== prevIndex) {
+			this.setState({interacted: false, playing: false, error: null});
 		}
 	}
 
 
 	onError = (error) => {
-		this.setState({
-			...initialState,
-			error
-		});
+		if (!error.sourceWillChange) {
+			this.setState({
+				...initialState,
+				error
+			});
+		}
 	}
 
 
@@ -208,6 +213,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 						onError={this.onError}
 						onEnded={this.onStop}
 						onPlaying={this.onPlay}
+						onSourceChange={this.onSourceChange}
 						analyticsData={{
 							resourceId: video.getID(),
 							context
