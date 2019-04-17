@@ -37,7 +37,9 @@ class CourseContentViewer extends React.Component {
 	componentDidUpdate ({location: prevLoc}) {
 		const {location} = this.props;
 
-		if (location !== prevLoc) {
+		const i = x => (x || {}).item;
+
+		if (i(location) !== i(prevLoc)) {
 			const scroller = getScrollParent(this.domNode.current);
 			if (scroller && scroller.scrollTo) {
 				scroller.scrollTo(0, 0);
