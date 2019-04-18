@@ -21,7 +21,9 @@ const t = scoped('course.content.viewer.parts.Header', {
 	paging: {
 		prefix: 'Page ',
 		separator: ' of '
-	}
+	},
+	previousItem: 'Previous Item',
+	nextItem: 'Next Item'
 });
 
 
@@ -157,6 +159,7 @@ export default class Header extends React.Component {
 						object={previous.item}
 						context={previous}
 						className={cx('prev-link')}
+						title={t('previousItem')}
 					>
 						<i className="icon-chevronup-25" />
 					</LinkTo.Object>
@@ -172,6 +175,7 @@ export default class Header extends React.Component {
 						object={next.item}
 						context={next}
 						className={cx('next-link')}
+						title={t('nextItem')}
 					>
 						<i className="icon-chevrondown-25" />
 					</LinkTo.Object>
