@@ -43,7 +43,10 @@ function setStoragePreference (key, value) {
 
 export default class LessonView extends React.Component {
 	static isFilteredToRequired () {
-		return getStoragePreference(REQUIRED_STORAGE_KEY);
+		const requiredOnly = getStoragePreference(REQUIRED_STORAGE_KEY);
+		const layout = getStoragePreference(LAYOUT_STORAGE_KEY) || Grid;
+
+		return requiredOnly && layout !== Grid;
 	}
 
 	static propTypes = {

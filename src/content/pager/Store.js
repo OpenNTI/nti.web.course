@@ -56,7 +56,7 @@ function buildIsSameOverviewItem (node) {
 		(node.getID ? node.getID() : node);
 
 	return (item) => {
-		if (item.isVideo) {
+		if (item && item.isVideo) {
 			const refID = item.getLinkProperty('ref', 'RefNTIID');
 
 			if (refID === id) { return true; }
