@@ -17,11 +17,12 @@ export default class LessonOverviewDiscussionListItem extends React.Component {
 
 
 	render () {
-		const {item, title, commentLabel, disabled, ...otherProps} = this.props;
+		const {item, title, commentLabel, disabled, topic, ...otherProps} = this.props;
 
 		return (
 			<Base
 				{...otherProps}
+				linkToContext={{topic}}
 				className="lesson-overview-discussion-list-item"
 				item={item}
 				title={title}
