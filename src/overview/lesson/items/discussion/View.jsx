@@ -109,10 +109,6 @@ class LessonOverviewDiscussion extends React.Component {
 		const {layout, ...otherProps} = this.props;
 		const {state: {topic}} = this;
 
-		if (!topic) {
-			return null;
-		}
-
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
 		return (
