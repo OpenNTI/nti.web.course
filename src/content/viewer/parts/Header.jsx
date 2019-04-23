@@ -87,10 +87,7 @@ export default class Header extends React.Component {
 
 		if (!lessonInfo) {
 			return (
-				<div className={cx('lesson-loading-skeleton')}>
-					<div className={cx('lesson-title')} />
-					<div className={cx('lesson-sub-title')} />
-				</div>
+				<div className={cx('lesson-loading-skeleton')} />
 			);
 		}
 
