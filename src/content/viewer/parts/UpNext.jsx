@@ -110,8 +110,8 @@ export default class UpNext extends React.Component {
 
 		return (
 			<LinkTo.Object object={next.item} context={next} className={cx('next-page')}>
-				<span>{t('nextPage')}</span>
-				<i className="icon-chevron-down" />
+				<span className={cx('next-page-label')}>{t('nextPage')}</span>
+				<span className={cx('next-page-icon')} />
 			</LinkTo.Object>
 		);
 	}
@@ -123,10 +123,12 @@ export default class UpNext extends React.Component {
 		const {course} = this.props;
 
 		return (
-			<div className={cx('remaining-items')}>
-				<div className={cx('title')}>{t('upNext')}</div>
-				<OverviewItems layout={Constants.List} items={[next.item]} course={course} />
-			</div>
+			<LinkTo.Object object={next.item} className={cx('remaining-items-link')} >
+				<div className={cx('remaining-items')}>
+					<div className={cx('title')}>{t('upNext')}</div>
+					<OverviewItems layout={Constants.List} items={[next.item]} course={course} />
+				</div>
+			</LinkTo.Object>
 		);
 	}
 }
