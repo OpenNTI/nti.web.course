@@ -1,3 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Course overview discussion item test Grid item with 5 comments, completable, required 1`] = `null`;
+exports[`Course overview discussion item test Grid item with 5 comments, completable, required 1`] = `
+<div
+  className="nti-link-to-path lesson-overview-discussion-link"
+  to="#"
+>
+  <div
+    className="lesson-overview-discussion-grid-item"
+  >
+    <div
+      className="icon default"
+      style={null}
+    />
+    <div
+      className="wrap"
+    >
+      <div
+        className="title"
+      >
+        Discussion
+      </div>
+      <div
+        className="comments"
+      />
+    </div>
+  </div>
+</div>
+`;
