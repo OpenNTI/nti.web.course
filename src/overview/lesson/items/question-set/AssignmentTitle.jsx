@@ -15,12 +15,11 @@ LessonOverviewAssignmentTitle.propTypes = {
 	assignment: PropTypes.object
 };
 export default function LessonOverviewAssignmentTitle ({assignment}) {
-	const {title, totalPoints:points} = assignment;
+	const {title} = assignment;
 
 	return (
 		<span className="lesson-overview-assignment-title">
 			<span className="title">{t('assignmentTitle.title', {title})}</span>
-			{points && !isNaN(points) && points > 0 && (<span className="points">{t('assignmentTitle.points', {points})}</span>)}
 		</span>
 	);
 }
