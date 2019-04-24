@@ -21,10 +21,5 @@ exports[`Course overview assignment title test Title with totalPoints 1`] = `
   >
     My Assignment
   </span>
-  <span
-    className="points"
-  >
-    5pts.
-  </span>
 </span>
 `;
