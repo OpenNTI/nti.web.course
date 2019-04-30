@@ -26,7 +26,9 @@ class CourseContentViewer extends React.Component {
 			item: PropTypes.object,
 			totalPages: PropTypes.number,
 			currentPage: PropTypes.number
-		})
+		}),
+
+		noAside: PropTypes.bool
 	}
 
 	constructor (props) {
@@ -52,12 +54,14 @@ class CourseContentViewer extends React.Component {
 			className,
 			error,
 			location,
+			noAside,
 			...otherProps
 		} = this.props;
 		const loading = !location;
+		const Cmp = noAside ? 'div' : Aside.Container;
 
 		return (
-			<Aside.Container ref={this.domNode} className={cx('nti-course-content', className, {loading})}>
+			<Cmp ref={this.domNode} className={cx('nti-course-content', className, {loading})}>
 				{error && (
 					<div className={cx('contents-error')}>
 						{t('error')}
@@ -70,7 +74,7 @@ class CourseContentViewer extends React.Component {
 						<UpNext location={location} {...otherProps} />
 					</div>
 				)}
-			</Aside.Container>
+			</Cmp>
 		);
 	}
 }

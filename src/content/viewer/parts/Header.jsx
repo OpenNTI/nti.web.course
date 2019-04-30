@@ -51,17 +51,22 @@ export default class Header extends React.Component {
 			lesson: PropTypes.object,
 			relatedWorkRef: PropTypes.object
 		}),
+
+		noHeader: PropTypes.bool
 	}
 
 
 	render () {
+		const {noHeader} = this.props;
+		const fullHeader = !noHeader;
+
 		return (
 			<div className={cx('container')}>
-				{this.renderClose()}
-				{this.renderLesson()}
+				{fullHeader && this.renderClose()}
+				{fullHeader && this.renderLesson()}
 				{this.renderLessonProgress()}
-				{this.renderLocation()}
-				{this.renderPaging()}
+				{fullHeader && this.renderLocation()}
+				{fullHeader && this.renderPaging()}
 			</div>
 		);
 	}
