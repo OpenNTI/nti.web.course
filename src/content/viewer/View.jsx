@@ -19,6 +19,8 @@ const t = scoped('course.content.viewer.View', {
 export default
 @Decorators.addClassToRoot('nti-course-content-open')
 class CourseContentViewer extends React.Component {
+	static ContentTypes = Content.ContentTypes
+
 	static propTypes = {
 		className: PropTypes.string,
 		error: PropTypes.any,

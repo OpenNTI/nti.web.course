@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {getCmpFor} from './types';
+import {getCmpFor, TYPES} from './types';
 
 export default class ContentViewer extends React.Component {
+	static ContentTypes = TYPES
+
 	static propTypes = {
 		overrides: PropTypes.shape({
 			getItemFor: PropTypes.func
