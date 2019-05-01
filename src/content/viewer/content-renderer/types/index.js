@@ -1,4 +1,5 @@
 import './default';
+import './webinar';
 // import './video';
 
 import TypeRegistry from './Registry';
