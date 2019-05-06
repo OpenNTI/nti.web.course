@@ -27,7 +27,8 @@ export default
 @Hooks.afterBatchEvents()
 class OutlineHeader extends React.Component {
 	static propTypes = {
-		course: PropTypes.object.isRequired
+		course: PropTypes.object.isRequired,
+		noCertificateFrame: PropTypes.bool
 	}
 
 	state = {}
@@ -181,7 +182,7 @@ class OutlineHeader extends React.Component {
 
 
 	renderCertificateLink () {
-		const {course} = this.props;
+		const {course, noCertificateFrame} = this.props;
 		const {PreferredAccess} = course;
 		const certLink = PreferredAccess.getLink('Certificate');
 
@@ -189,9 +190,11 @@ class OutlineHeader extends React.Component {
 			return <div className="sub-label">{t('completed')}</div>;
 		}
 
+		const linkProps = noCertificateFrame ? {href: certLink, target: '_blank'} : {onClick: this.showCertificate};
+
 		return (
 			<div className="sub-label cert-link">
-				<a onClick={this.showCertificate}>{t('getCertificate')}</a>
+				<a {...linkProps}>{t('getCertificate')}</a>
 				{this.state.showCertificate && (
 					<Prompt.Dialog onBeforeDismiss={this.hideCertificate}>
 						<Iframe downloadable src={certLink} title={t('certificateTitle', {title: PreferredAccess.CatalogEntry.title})} />
