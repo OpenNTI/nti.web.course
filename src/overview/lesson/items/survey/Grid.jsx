@@ -19,6 +19,7 @@ const t = scoped('course.overview.lesson.items.survey.Grid', DEFAULT_TEXT);
 export default class LessonOverviewSurveyGridItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
+		noProgress: PropTypes.bool,
 		onRequirementChange: PropTypes.func
 	}
 
@@ -37,9 +38,9 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 
 
 	renderCompletedStatus () {
-		const {item} = this.props;
+		const {item, noProgress} = this.props;
 
-		if(item.hasCompleted && item.hasCompleted()) {
+		if(!noProgress && item.hasCompleted && item.hasCompleted()) {
 			return (
 				<div className="progress-icon">
 					<CircularProgress width={20} height={20} isComplete/>

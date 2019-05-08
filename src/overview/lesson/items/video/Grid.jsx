@@ -22,6 +22,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		course: PropTypes.object.isRequired,
 		// outlineNode: PropTypes.object.isRequired,
 		overview: PropTypes.object.isRequired,
+		noProgress: PropTypes.bool,
 
 		activeIndex: PropTypes.number,
 		index: PropTypes.number,
@@ -168,6 +169,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 			index,
 			onRequirementChange,
 			item,
+			noProgress
 		} = this.props;
 
 		const {
@@ -232,7 +234,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 								) : ((!viewed && required) && (
 									<Required className="badge"/>
 								))}
-								{viewed && <div className="badge viewed">Viewed</div>}
+								{viewed && !noProgress && <div className="badge viewed">Viewed</div>}
 							</div>
 							<div className="wrapper">
 								<div className="buttons">

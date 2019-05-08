@@ -27,6 +27,7 @@ export default class WebinarBaseItem extends React.Component {
 		hideControls: PropTypes.bool,
 		editMode: PropTypes.bool,
 		readOnly: PropTypes.bool,
+		noProgress: PropTypes.bool,
 		onRequirementChange: PropTypes.func
 	}
 
@@ -36,7 +37,7 @@ export default class WebinarBaseItem extends React.Component {
 
 
 	renderDate () {
-		const {item, isMinimal} = this.props;
+		const {item, isMinimal, noProgress} = this.props;
 		const {webinar} = item;
 
 		if(!webinar) {
@@ -48,7 +49,7 @@ export default class WebinarBaseItem extends React.Component {
 
 		return (
 			<DateTime.DateIcon minimal className="date" date={startDate}>
-				{item.hasCompleted() && isMinimal && <CircularProgress width={20} height={20} isComplete/>}
+				{item.hasCompleted() && !noProgress && isMinimal && <CircularProgress width={20} height={20} isComplete/>}
 			</DateTime.DateIcon>
 		);
 	}
@@ -85,7 +86,7 @@ export default class WebinarBaseItem extends React.Component {
 	}
 
 	renderContents () {
-		const {item, item: {webinar}, isMinimal, hideControls, editMode, readOnly} = this.props;
+		const {item, item: {webinar}, isMinimal, hideControls, noProgress, readOnly} = this.props;
 		const nearestSession = webinar.getNearestSession();
 		const startDate = nearestSession && nearestSession.getStartTime();
 		const endDate = nearestSession && nearestSession.getEndTime();
@@ -98,11 +99,11 @@ export default class WebinarBaseItem extends React.Component {
 						startTime={startDate}
 						endTime={endDate}
 						icon={item.icon}
-						completed={item.hasCompleted()}
+						completed={!noProgress && item.hasCompleted()}
 						minimal={isMinimal}
 					/>
 				</div>
-				{!readOnly && !hideControls && !editMode && <Button webinar={webinar} onStatusChange={this.onStatusChange} onUnregister={this.onUnregister} />}
+				{!readOnly && !hideControls && !noProgress && <Button webinar={webinar} onStatusChange={this.onStatusChange} onUnregister={this.onUnregister} />}
 				{webinar && !isMinimal && this.renderImageAndDescription()}
 			</div>
 		);

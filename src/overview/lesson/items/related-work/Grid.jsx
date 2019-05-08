@@ -37,8 +37,9 @@ LessonOverviewRelatedWorkGridItem.propTypes = {
 	requiredLabel: PropTypes.node,
 	publishLabel: PropTypes.node,
 	onClick: PropTypes.func,
+	noProgress: PropTypes.bool
 };
-export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel, requiredLabel, publishLabel, onClick}) {
+export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel, requiredLabel, publishLabel, onClick, noProgress}) {
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item} onClick={onClick}>
@@ -48,6 +49,7 @@ export default function LessonOverviewRelatedWorkGridItem ({item, course, commen
 						item={item}
 						contentPackage={course}
 						labels={[requiredLabel, commentLabel, publishLabel]}
+						noProgress={noProgress}
 					/>
 				</div>
 			</LinkTo.Object>

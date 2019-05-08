@@ -7,9 +7,10 @@ import PaddedContainer from '../../common/PaddedContainer';
 
 LessonOverviewTimelineGridItem.propTypes = {
 	item: PropTypes.object.isRequired,
-	course: PropTypes.object.isRequired
+	course: PropTypes.object.isRequired,
+	noProgress: PropTypes.bool
 };
-export default function LessonOverviewTimelineGridItem ({item, course}) {
+export default function LessonOverviewTimelineGridItem ({item, course, noProgress}) {
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item}>
@@ -17,6 +18,7 @@ export default function LessonOverviewTimelineGridItem ({item, course}) {
 					data-ntiid={item.NTIID}
 					item={item}
 					contentPackage={course}
+					noProgress={noProgress}
 					internalOverride
 				/>
 			</LinkTo.Object>

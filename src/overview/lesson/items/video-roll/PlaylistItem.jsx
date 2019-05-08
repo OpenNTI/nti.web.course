@@ -11,6 +11,7 @@ export default class PlaylistItem extends React.Component {
 		item: PropTypes.object,
 		onClick: PropTypes.func,
 		selected: PropTypes.bool,
+		noProgress: PropTypes.bool,
 		onRequirementChange: PropTypes.func
 	}
 
@@ -65,7 +66,7 @@ export default class PlaylistItem extends React.Component {
 
 	render () {
 		const {
-			props: {item, selected, onRequirementChange},
+			props: {item, selected, onRequirementChange, noProgress},
 			state: {duration}
 		} = this;
 
@@ -74,7 +75,7 @@ export default class PlaylistItem extends React.Component {
 		const formattedDuration = duration != null ? DateTime.formatDuration(duration) : '';
 
 		return (
-			<li className={cx('lesson-overview-video-roll-playlist-item', {selected, required, viewed})}  onClick={this.onClick} data-ntiid={item.NTIID}>
+			<li className={cx('lesson-overview-video-roll-playlist-item', {selected, required, viewed: viewed && !noProgress})}  onClick={this.onClick} data-ntiid={item.NTIID}>
 				<a href={item.getID()} onClick={this.onClick}>
 					<div className="label-container">
 						<div className="video-info">
@@ -83,7 +84,7 @@ export default class PlaylistItem extends React.Component {
 								<List.SeparatedInline>
 									{formattedDuration}
 									{item && item.isCompletable && item.isCompletable() && onRequirementChange ? <RequirementControl record={item} onChange={this.requirementChange}/> : required && ('Required')}
-									{viewed && ('Viewed')}
+									{viewed && !noProgress && ('Viewed')}
 								</List.SeparatedInline>
 							</span>
 						</div>
