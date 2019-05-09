@@ -8,7 +8,7 @@
 }
 
 .next-page {
-	padding: 2rem 3rem;
+	padding: var(--course-content-up-next-padding, 2rem 3rem);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -32,7 +32,7 @@
 
 .next-lesson {
 	display: block;
-	padding: 2rem 3rem;
+	padding: var(--course-content-up-next-padding, 2rem 3rem);
 }
 
 .next-lesson .sub-title,
@@ -87,7 +87,7 @@
 }
 
 .remaining-items-link {
-	padding: 2rem 3rem;
+	padding: var(--course-content-up-next-padding, 2rem 3rem);
 	display: block;
 }
 
