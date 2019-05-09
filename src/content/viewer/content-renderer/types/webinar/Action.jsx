@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {Event} from '@nti/web-calendar';
+// import {Event} from '@nti/web-calendar';
 import {scoped} from '@nti/lib-locale';
 
 import Button from '../../../../../overview/lesson/items/webinar/Button';
@@ -38,35 +38,48 @@ export default class WebinarSidebar extends React.Component {
 		const {
 			props: {
 				item: {
-					webinar,
-					completed,
-					expired
+					webinar
 				}
 			},
 			state: {status}
 		} = this;
 
-		const nearestSession = webinar.getNearestSession();
-		const startTime = nearestSession.getStartTime();
-		const endTime = nearestSession.getEndTime();
 
 		return (
 			<div className={cx('webinar-action')}>
 				<div className={cx('details')}>
 					<div className={cx('instructions')}>{textForStatus(status)}</div>
-					<Event.Availability
-						{...{
-							startTime,
-							endTime,
-							completed,
-							expired,
-							minimal: true,
-							className:  cx('availability')
-						}}
-					/>
 				</div>
 				<Button className={cx('registration-button')} webinar={webinar} onStatusChange={this.onStatusChange} />
 			</div>
 		);
+	}
+
+
+	renderAvailability () {
+		// const {
+		// 	props: {
+		// 		item: {
+		//	 		webinar
+		// 			completed,
+		// 			expired
+		// 		}
+		// 	}
+		// } = this;
+		// const nearestSession = webinar.getNearestSession();
+		// const startTime = nearestSession.getStartTime();
+		// const endTime = nearestSession.getEndTime();
+
+		//(<Event.Availability
+		//	{...{
+		//		startTime,
+		//		endTime,
+		//		completed,
+		//		expired,
+		//		minimal: true,
+		//		className:  cx('availability')
+		//	}}
+		///>)
+		return null;
 	}
 }
