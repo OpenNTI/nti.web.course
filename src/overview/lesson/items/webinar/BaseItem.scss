@@ -10,7 +10,7 @@ $header-ranges: (
 	background-color: #fcfcfc;
 	border-radius: 5px;
 	border: 1px solid #e2e2e2;
-	padding: 14px 20px 17px 0;
+	padding: var(--webinar-item-padding, 14px 20px 17px 0);
 	margin: 0.9375rem 0;
 	position: relative;
 	min-height: 70px;
