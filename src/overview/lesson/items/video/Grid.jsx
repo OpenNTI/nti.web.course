@@ -215,7 +215,6 @@ export default class LessonOverviewVideoGrid extends React.Component {
 						onError={this.onError}
 						onEnded={this.onStop}
 						onPlaying={this.onPlay}
-						onSourceChange={this.onSourceChange}
 						analyticsData={{
 							resourceId: video.getID(),
 							context
