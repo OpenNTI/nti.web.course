@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Flyout, Avatar} from '@nti/web-commons';
+import {Flyout, Avatar, Input} from '@nti/web-commons';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
@@ -241,16 +241,15 @@ export default class Facilitator extends React.Component {
 	}
 
 	renderTitle () {
-		const { facilitator } = this.props;
+		const { facilitator, editable } = this.props;
 
-		// if(facilitator.visible && editable) {
-		// 	return (
-		// 		<div className="title">
-		// 			<div className="label">Title</div>
-		// 			<Input.Text className="job-title-input" onChange={this.onTitleChange} value={facilitator.JobTitle}/>
-		// 		</div>
-		// 	);
-		// }
+		if(facilitator.visible && editable) {
+			return (
+				<div className="title">
+					<Input.Text className="job-title-input" onChange={this.onTitleChange} value={facilitator.JobTitle}/>
+				</div>
+			);
+		}
 
 		return (<div className="title">{facilitator.JobTitle}</div>);
 	}
