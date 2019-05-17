@@ -84,7 +84,7 @@ describe('Facilitator component test', () => {
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
 		expect(cmp.find('.role').first().text()).toEqual('Assistant');
-		expect(cmp.find('.title').first().text()).toEqual(title);
+		expect(cmp.find('.title .job-title-input').first().props().value).toEqual(title);
 
 		cmp.find('.delete-facilitator').first().simulate('click');
 
@@ -129,7 +129,7 @@ describe('Facilitator component test', () => {
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
 		expect(cmp.find('.role').first().text()).toEqual('Assistant');
-		expect(cmp.find('.title').first().text()).toEqual(title);
+		expect(cmp.find('.title .job-title-input').first().props().value).toEqual(title);
 
 		expect(cmp.find('.delete-facilitator').exists()).toBe(true);
 	});
