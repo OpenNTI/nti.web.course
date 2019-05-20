@@ -4,16 +4,6 @@ import {TABS} from '../Constants';
 describe('Course Navigation Constants', () => {
 	describe('TABS', () => {
 		describe('access', () => {
-			describe('activity', () => {
-				test('Course has an outline', () => {
-					expect(TABS.activity.hasAccess({hasOutline: () => true})).toBeTruthy();
-				});
-
-				test('Course does not have an outline', () => {
-					expect(TABS.activity.hasAccess({hasOutline: () => false})).toBeFalsy();
-				});
-			});
-
 			describe('lessons', () => {
 				test('Non-scorm course, has Outline', () => {
 					expect(TABS.lessons.hasAccess({isScormInstance: false, hasOutline: () => true})).toBeTruthy();
