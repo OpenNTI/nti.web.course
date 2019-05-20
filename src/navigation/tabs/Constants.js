@@ -15,10 +15,6 @@ const t = scoped('course.navigation.tabs', {
 export const getDefaultTabLabel = tab => t(tab);
 
 export const TABS = {
-	'activity': {
-		hasAccess: course => course.hasOutline(),
-		doNotShowInPreview: true
-	},
 	'lessons': {
 		hasAccess: course => course.hasOutline() && !course.isScormInstance,
 		subRoutes: ['content'],
@@ -44,7 +40,7 @@ export const TABS = {
 	}
 };
 
-export const DEFAULT_ORDER = ['activity', 'lessons', 'scorm', 'assignments', 'discussions', 'info', 'videos'];
+export const DEFAULT_ORDER = ['lessons', 'scorm', 'assignments', 'discussions', 'info', 'videos'];
 
 const UPDATE_BUS = new EventEmitter();
 
