@@ -88,9 +88,18 @@ class LessonOverviewQuestionSet extends React.Component {
 		const {item, course} = props;
 		const target = item['Target-NTIID'] || (item.getID ? item.getID() : item.NTIID);
 
+		this.setState({
+			assignment: null,
+			assignmentHistory: null,
+			assessment: null,
+			assessmentSubmission: null,
+			networkError: null
+		});
+
 		if (item.MimeType === 'application/vnd.nextthought.assignmentref') {
 			return this.setupAssignmentRef(target, course);
 		}
+
 
 		try {
 			const collection = await course.getAssignments();
