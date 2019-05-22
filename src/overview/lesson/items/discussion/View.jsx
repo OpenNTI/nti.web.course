@@ -107,7 +107,6 @@ class LessonOverviewDiscussion extends React.Component {
 
 	render () {
 		const {layout, ...otherProps} = this.props;
-		const {state: {topic}} = this;
 
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
