@@ -1,19 +1,32 @@
 import { getService } from '@nti/web-client';
 import { Presentation } from '@nti/web-commons';
 
+const ROLES = {
+	ASSISTANT: 'assistant',
+	EDITOR: 'editor',
+	INSTRUCTOR: 'instructor'
+};
+
+const roleDisplayName = role => role.charAt(0).toUpperCase() + role.slice(1);
+
 export function getAvailableRoles (courseInstance) {
 	let options = [];
 
-	if(courseInstance && courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors')) {
-		options.push('instructor');
-	}
-
-	if(courseInstance && courseInstance.hasLink('Editors')) {
-		options.push('editor');
-	}
-
-	if(courseInstance && courseInstance.hasLink('Instructors')) {
-		options.push('assistant');
+	if (courseInstance) {
+		const hasEditors = courseInstance.hasLink('Editors');
+		const hasInstructors = courseInstance.hasLink('Instructors');
+	
+		if (hasEditors && hasInstructors) {
+			options.push(ROLES.INSTRUCTOR);
+		}
+	
+		if (hasEditors) {
+			options.push(ROLES.EDITOR);
+		}
+	
+		if (hasInstructors) {
+			options.push(ROLES.ASSISTANT);
+		}
 	}
 
 	return options;
@@ -64,10 +77,10 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	// editor => Editors
 	// assistant => Instructors
 	// instructor => Editors + Instructors
-	const editorsToSave = facilitators.filter(x => x.role === 'editor' || x.role === 'instructor');
+	const editorsToSave = facilitators.filter(x => x.role === ROLES.EDITOR || x.role === 'instructor');
 	const instructorsToSave = facilitators.filter(x => x.role === 'assistant' || x.role === 'instructor');
 
-	const editorsToRemove = facilitators.filter(x => x.role !== 'editor' && x.role !== 'instructor');
+	const editorsToRemove = facilitators.filter(x => x.role !== ROLES.EDITOR && x.role !== 'instructor');
 	const instructorsToRemove = facilitators.filter(x => x.role !== 'assistant' && x.role !== 'instructor');
 
 	// do the POST/DELETE calls
@@ -120,95 +133,54 @@ function containsUser (list, userName) {
 export function mergeAllFacilitators (catalogInstructors, instructors, editors, catalogEntry) {
 	let aggregated = [];
 
+	function pushLegacyInstructorInfo (user, role) {
+		const {alias: Name, Username: username} = user;
+
+		// default to not visible because we've determined these aren't in catalog instructors
+		// and visibility is determined by being in the catalog instructors list
+		aggregated.push({
+			username,
+			role,
+			Name,
+			JobTitle: roleDisplayName(role),
+			visible: false,
+			MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+			Class: 'CourseCatalogInstructorLegacyInfo'
+		});
+	}
+
 	(catalogInstructors || []).forEach((x, index) => {
-		let role = 'assistant';
+		const inInstructors = containsUser(instructors, x.username);
+		const inEditors = containsUser(editors, x.username);
+
+		const role = inInstructors && inEditors
+			? ROLES.INSTRUCTOR
+			: inEditors
+				? ROLES.EDITOR
+				: ROLES.ASSISTANT;
 
 		const assetRoot = Presentation.Asset.getAssetRoot({ contentPackage: catalogEntry });
+		const imageUrl = assetRoot && assetRoot + '/instructor-photos/0' + (index + 1) + '.png';
 
-		let imageUrl;
-
-		if(assetRoot) {
-			imageUrl = assetRoot + '/instructor-photos/0' + (index + 1) + '.png';
-		}
-
-		if(containsUser(instructors, x.username)) {
-			if(containsUser(editors, x.username)) {
-				role = 'instructor';
-			}
-		}
-		else if(containsUser(editors, x.username)) {
-			role = 'editor';
-		}
-
-		const visible = true;
-
-		let newObject = {
+		aggregated.push({
 			role,
-			visible,
+			visible: true,
+			locked: !x.username,
+			imageUrl,
 			...x
-		};
-
-		if(imageUrl) {
-			newObject.imageUrl = imageUrl;
-		}
-
-		if(!x.username || x.username === '') {
-			newObject.locked = true;
-		}
-
-		aggregated.push(newObject);
-	});
-
-	(instructors || []).forEach(x => {
-		let role = 'assistant';
-
-		if(containsUser(editors, x.Username)) {
-			role = 'instructor';
-		}
-
-		if(containsUser(catalogInstructors, x.Username)) {
-			// already added catalog instructors
-			return;
-		}
-
-		// default to not visible because we've determined these aren't in catalog instructors
-		// and visibility is determined by being in the catalog instructors list
-		aggregated.push({
-			role,
-			visible: false,
-			Name: x.alias,
-			JobTitle: role.charAt(0).toUpperCase() + role.slice(1),
-			username: x.Username,
-			MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-			Class: 'CourseCatalogInstructorLegacyInfo'
 		});
 	});
 
-	(editors || []).forEach(x => {
-		let role = 'editor';
-
-		if(containsUser(instructors, x.Username)) {
-			// skip as we already added it from the instructors list
-			return;
-		}
-
-		if(containsUser(catalogInstructors, x.Username)) {
-			// already added catalog instructors
-			return;
-		}
-
-		// default to not visible because we've determined these aren't in catalog instructors
-		// and visibility is determined by being in the catalog instructors list
-		aggregated.push({
-			role,
-			visible: false,
-			Name: x.alias,
-			JobTitle: role.charAt(0).toUpperCase() + role.slice(1),
-			username: x.Username,
-			MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-			Class: 'CourseCatalogInstructorLegacyInfo'
+	(instructors || [])
+		.filter(x => !containsUser(aggregated, x.Username)) // filter out those we've already added
+		.forEach(user => {
+			const role = containsUser(editors, user.username) ? ROLES.INSTRUCTOR : ROLES.ASSISTANT;
+			pushLegacyInstructorInfo(user, role);
 		});
-	});
+
+	(editors || [])
+		.filter(({Username: username}) => !containsUser(aggregated, username)) // filter out those we've already added
+		.forEach(user => pushLegacyInstructorInfo(user, ROLES.EDITOR));
 
 	return aggregated;
 }
