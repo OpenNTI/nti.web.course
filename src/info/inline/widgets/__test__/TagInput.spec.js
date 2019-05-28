@@ -19,7 +19,7 @@ describe('TagInput test', () => {
 		}
 
 		// there should be an input representing the next token as the user types
-		const inputs = cmp.find('input.token');
+		const inputs = cmp.find('input');
 
 		expect(inputs.length).toEqual(1);
 	});
