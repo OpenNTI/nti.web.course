@@ -7,6 +7,7 @@ const ROLES = {
 	INSTRUCTOR: 'instructor'
 };
 
+const getUsername = x => x.Username || x.username;
 const roleDisplayName = role => role.charAt(0).toUpperCase() + role.slice(1);
 
 export function getAvailableRoles (courseInstance) {
@@ -77,11 +78,11 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	// editor => Editors
 	// assistant => Instructors
 	// instructor => Editors + Instructors
-	const editorsToSave = facilitators.filter(x => x.role === ROLES.EDITOR || x.role === 'instructor');
-	const instructorsToSave = facilitators.filter(x => x.role === 'assistant' || x.role === 'instructor');
+	const editorsToSave = facilitators.filter(x => x.role === ROLES.EDITOR || x.role === ROLES.INSTRUCTOR);
+	const instructorsToSave = facilitators.filter(x => x.role === ROLES.ASSISTANT || x.role === ROLES.INSTRUCTOR);
 
-	const editorsToRemove = facilitators.filter(x => x.role !== ROLES.EDITOR && x.role !== 'instructor');
-	const instructorsToRemove = facilitators.filter(x => x.role !== 'assistant' && x.role !== 'instructor');
+	const editorsToRemove = facilitators.filter(x => x.role !== ROLES.EDITOR && x.role !== ROLES.INSTRUCTOR);
+	const instructorsToRemove = facilitators.filter(x => x.role !== ROLES.ASSISTANT && x.role !== ROLES.INSTRUCTOR);
 
 	// do the POST/DELETE calls
 	instructorsToSave.forEach(x => {
@@ -150,8 +151,9 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 	}
 
 	(catalogInstructors || []).forEach((x, index) => {
-		const inInstructors = containsUser(instructors, x.username);
-		const inEditors = containsUser(editors, x.username);
+		const username = getUsername(x);
+		const inInstructors = containsUser(instructors, username);
+		const inEditors = containsUser(editors, username);
 
 		const role = inInstructors && inEditors
 			? ROLES.INSTRUCTOR
@@ -165,21 +167,21 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 		aggregated.push({
 			role,
 			visible: true,
-			locked: !x.username,
+			locked: !username,
 			imageUrl,
 			...x
 		});
 	});
 
 	(instructors || [])
-		.filter(x => !containsUser(aggregated, x.Username)) // filter out those we've already added
+		.filter(x => !containsUser(aggregated, getUsername(x))) // filter out those we've already added
 		.forEach(user => {
-			const role = containsUser(editors, user.username) ? ROLES.INSTRUCTOR : ROLES.ASSISTANT;
+			const role = containsUser(editors, getUsername(user)) ? ROLES.INSTRUCTOR : ROLES.ASSISTANT;
 			pushLegacyInstructorInfo(user, role);
 		});
 
 	(editors || [])
-		.filter(({Username: username}) => !containsUser(aggregated, username)) // filter out those we've already added
+		.filter(x => !containsUser(aggregated, getUsername(x))) // filter out those we've already added
 		.forEach(user => pushLegacyInstructorInfo(user, ROLES.EDITOR));
 
 	return aggregated;
