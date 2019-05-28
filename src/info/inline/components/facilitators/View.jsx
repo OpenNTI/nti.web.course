@@ -28,13 +28,9 @@ export default class FacilitatorsView extends React.Component {
 
 		return (
 			<div className="facilitators">
-				{(facilitators || []).filter(x => {
-					if(!x.role || x.role === '') {
-						return false;
-					}
-
-					return x.visible;
-				}).map(this.renderFacilitator)}
+				{(facilitators || [])
+					.filter(x => x.role && x.visible)
+					.map(this.renderFacilitator)}
 			</div>
 		);
 	}
