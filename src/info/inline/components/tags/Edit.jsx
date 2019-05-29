@@ -20,7 +20,7 @@ export default class TagsEdit extends React.Component {
 	constructor (props) {
 		super(props);
 
-		this.state = { values: props.catalogEntry[TagsEdit.FIELD_NAME] };
+		this.state = { values: props.catalogEntry[TagsEdit.FIELD_NAME].map(x => x.toUpperCase()) };
 	}
 
 	onChange = (values) => {

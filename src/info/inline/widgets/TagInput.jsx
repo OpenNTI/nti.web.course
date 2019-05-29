@@ -58,7 +58,7 @@ export default class CourseTagInput extends React.Component {
 
 		const suggestions = await collection.fetchLink(SUGGESTED_REL, match ? {filter: match} : null);
 
-		return suggestions ? suggestions.Items : null;
+		return suggestions ? suggestions.Items.map(s => s.toUpperCase()) : null;
 	}
 
 
@@ -70,6 +70,9 @@ export default class CourseTagInput extends React.Component {
 			isValid: valid.length === 0
 		};
 	}
+
+
+	inputTransform = value => value.toUpperCase()
 
 
 	render () {
@@ -92,6 +95,7 @@ export default class CourseTagInput extends React.Component {
 				getSuggestions={this.getSuggestions}
 				maxTokenLength={64}
 				validator={this.validateTag}
+				inputTransform={this.inputTransform}
 			/>
 		);
 	}
