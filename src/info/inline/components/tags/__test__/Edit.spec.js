@@ -19,7 +19,7 @@ describe('Tags edit test', () => {
 		expect(tokens.length).toEqual(3);
 
 		for(let i = 0; i < tags.length; i++) {
-			expect(tokens.at(i).text()).toEqual(tags[i]);
+			expect(tokens.at(i).text()).toEqual(tags[i].toUpperCase());
 		}
 
 		// there should be an input representing the next token as the user types
