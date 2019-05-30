@@ -3,6 +3,12 @@ import { mount } from 'enzyme';
 
 import Role from '../Role';
 
+const labels = {
+	'assistant': 'Grading Access',
+	'editor': 'Editing Access',
+	'instructor': 'Full Access',
+};
+
 /* eslint-env jest */
 describe('Role test', () => {
 	test('Test assistant', () => {
@@ -10,7 +16,7 @@ describe('Role test', () => {
 
 		const cmp = mount(<Role role="assistant" onClick={onClick}/>);
 
-		expect(cmp.text()).toEqual('Assistant');
+		expect(cmp.text()).toEqual(labels.assistant);
 
 		cmp.simulate('click');
 
@@ -22,7 +28,7 @@ describe('Role test', () => {
 
 		const cmp = mount(<Role role="editor" onClick={onClick}/>);
 
-		expect(cmp.text()).toEqual('Editor');
+		expect(cmp.text()).toEqual(labels.editor);
 
 		cmp.simulate('click');
 
@@ -34,7 +40,7 @@ describe('Role test', () => {
 
 		const cmp = mount(<Role role="instructor" onClick={onClick}/>);
 
-		expect(cmp.text()).toEqual('Instructor');
+		expect(cmp.text()).toEqual(labels.instructor);
 
 		cmp.simulate('click');
 
