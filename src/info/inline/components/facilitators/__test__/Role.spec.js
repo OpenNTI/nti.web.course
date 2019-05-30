@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 
 import Role from '../Role';
 
-const labels = {
+export const labels = {
 	'assistant': 'Grading Access',
 	'editor': 'Editing Access',
 	'instructor': 'Full Access',

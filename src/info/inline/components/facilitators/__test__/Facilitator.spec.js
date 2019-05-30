@@ -3,6 +3,8 @@ import { mount } from 'enzyme';
 
 import Facilitator from '../Facilitator';
 
+import {labels} from './Role.spec';
+
 const wait = x => new Promise(f => setTimeout(f, x));
 
 const mockService = () => ({
@@ -83,7 +85,7 @@ describe('Facilitator component test', () => {
 		const cmp = mount(<Facilitator facilitator={facilitator} courseInstance={courseInstance} onRemove={onRemove} editable/>);
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.role').first().text()).toEqual('Assistant');
+		expect(cmp.find('.role').first().text()).toEqual(labels.assistant);
 		expect(cmp.find('.title .job-title-input').first().props().value).toEqual(title);
 
 		cmp.find('.delete-facilitator').first().simulate('click');
@@ -128,7 +130,7 @@ describe('Facilitator component test', () => {
 		const cmp = mount(<Facilitator facilitator={myUser} courseInstance={courseInstance} editable/>);
 
 		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.role').first().text()).toEqual('Assistant');
+		expect(cmp.find('.role').first().text()).toEqual(labels.assistant);
 		expect(cmp.find('.title .job-title-input').first().props().value).toEqual(title);
 
 		expect(cmp.find('.delete-facilitator').exists()).toBe(true);

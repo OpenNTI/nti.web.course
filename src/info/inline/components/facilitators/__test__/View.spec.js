@@ -67,7 +67,7 @@ describe('Facilitators view test', () => {
 	test('Test editor view', () => {
 		const cmp = mount(<View facilitators={facilitators} courseInstance={courseInstance} editable/>);
 
-		const items = cmp.find('.facilitator-info');
+		const items = cmp.find('.facilitator');
 
 		expect(items.first().find('.name').first().text()).toEqual('Visible Assistant');
 		expect(items.first().find('.title').first().text()).toEqual('visible');
