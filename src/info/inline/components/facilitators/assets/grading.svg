@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55 (78076) - https://sketchapp.com -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" x="0" y="0" width="16" height="16"></rect>
+        <path d="M12.15,3.15 L12.15,1 L13.85,1 L13.85,3.15 L16,3.15 L16,4.85 L13.85,4.85 L13.85,7 L12.15,7 L12.15,4.85 L10,4.85 L10,3.15 L12.15,3.15 Z M8.84912109,12.6 L8.17626953,10.3910156 L4.79296875,10.3910156 L4.12011719,12.6 L2,12.6 L5.27539062,3.28164062 L7.68115234,3.28164062 L10.9692383,12.6 L8.84912109,12.6 Z M7.70654297,8.740625 C7.08446955,6.73898739 6.73429401,5.60700001 6.65600586,5.34462891 C6.57771771,5.0822578 6.5216473,4.87490311 6.48779297,4.72255859 C6.34814383,5.26422797 5.94824549,6.60357004 5.28808594,8.740625 L7.70654297,8.740625 Z" id="A+" fill="#3FB34F" fill-rule="nonzero"></path>
+    </g>
+</svg>

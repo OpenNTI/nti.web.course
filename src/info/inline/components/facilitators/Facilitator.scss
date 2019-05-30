@@ -8,7 +8,7 @@
 		padding: 5px;
 		cursor: pointer;
 	}
-
+	
 	.flyout-inner {
 		display: inline-block;
 	}
@@ -25,51 +25,193 @@
 }
 
 .facilitator {
-	display: flex;
+	// display: flex;
 	margin-top: 15px;
+	box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.18);
+	background: white;
+	
+	&.hidden {
+		> :not(.visibility-status) {
+			opacity: 0.3;
+		}
+	}
+	
+	.visibility-status {
+		float: right;
+		text-align: right;
+		font-size: 0.875rem;
+
+		.status {
+			line-height: 1.625;
+		}
+
+		.visibility-info {
+			font-size: 0.625rem;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			padding: 0.875em;
+			color: white;
+			background: #404040;
+		}
+	}
+	
+	// &.edit {
+	// 	border-radius: 3px;
+	// 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.26);
+		
+	// 	.role {
+	// 		.trigger {
+	// 			cursor: pointer;
+	// 		}
+	// 	}
+		
+	// 	input.job-title-input {
+	// 		width: 100%;
+	// 		border-color: #e9e9e9;
+	// 	}
+		
+	// 	input.suffix-input {
+	// 		width: 100%;
+	// 		border-color: #e9e9e9;
+	// 	}
+		
+	// 	textarea.nti-text-input.bio-input {
+	// 		margin: 0;
+	// 		width: 100%;
+	// 		height: 10em;
+	// 		box-shadow: none;
+	// 		border-color: #e9e9e9;
+	// 	}
+		
+	// 	.controls {
+	// 		display: flex;
+	// 		padding-top: 10px;
+			
+	// 		.visibility {
+	// 			font-size: 14px;
+	// 			font-weight: 300;
+	// 			color: #757474;
+	// 			cursor: pointer;
+				
+	// 			i {
+	// 				margin-left: 8px;
+	// 				font-size: 10px;
+	// 			}
+	// 		}
+			
+	// 		.delete-facilitator {
+	// 			color: white;
+	// 			background-color: #656565;
+	// 			height: 16px;
+	// 			width: 16px;
+	// 			border-radius: 25px;
+	// 			font-size: 8px;
+	// 			padding-left: 4px;
+	// 			padding-top: 3px;
+	// 			margin: 2px 0 0 10px;
+	// 			cursor: pointer;
+				
+	// 			i[class^="icon-"] {
+	// 				font-weight: 600 !important;
+	// 			}
+	// 		}
+	// 	}
+	// }
+	
+	.image {
+		width: 100px;
+		height: 100px;
+		min-width: 100px;
+		min-height: 100px;
+		background-color: #eee;
+		background-size: cover;
+		background-position: center center;
+	}
+	
+	// .facilitator-info {
+	// 	padding: 2px 0 0 20px;
+	// 	flex: 1 1 auto;
+	// 	padding-top: 10px;
+		
+	// 	.name {
+	// 		font-size: 1.125rem;
+	// 		margin-bottom: 6px;
+	// 		overflow: hidden;
+	// 		text-overflow: ellipsis;
+	// 	}
+		
+	// 	.role {
+	// 		font-size: 14px;
+	// 		font-weight: 300;
+	// 		color: $secondary-grey;
+			
+	// 		i {
+	// 			margin-left: 8px;
+	// 			font-size: 10px;
+	// 		}
+	// 	}
+		
+	// 	.title {
+	// 		font-size: 14px;
+	// 		color: $secondary-grey;
+	// 		font-weight: 300;
+	// 	}
+	// }
+}
+
+.facilitator {
+	display: block;
+	position: relative;
+	min-height: 100px;
+	padding: 1rem;
+	padding-left: 116px; // avatar width + 16
+	color: $primary-grey;
+
+	.image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100px;
+		height: 100px;
+	}
+
+	.name {
+		font-size: 1.125rem;
+		margin-bottom: 6px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.title {
+		font-size: 0.875rem;
+		color: $secondary-grey;
+		font-weight: 300;
+	}
+
+	&.admin {
+		grid-template-columns: [avatar] 100px [info] 1fr [visibilty] auto;
+	}
 
 	&.edit {
-		border-radius: 3px;
-		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.26);
+		display: grid;
+		grid-template-columns: [info] 1fr [controls] auto;
+		grid-template-areas: "name controls" "title title";
 
-		.role {
-			.trigger {
-				cursor: pointer;
+		.title {
+			grid-area: title;
+
+			input {
+				width: 100%;
 			}
 		}
 
-		input.job-title-input {
-			width: 100%;
-			border-color: #e9e9e9;
-		}
-
-		input.suffix-input {
-			width: 100%;
-			border-color: #e9e9e9;
-		}
-
-		textarea.nti-text-input.bio-input {
-			margin: 0;
-			width: 100%;
-			height: 10em;
-			box-shadow: none;
-			border-color: #e9e9e9;
-		}
-
 		.controls {
+			grid-area: controls;
 			display: flex;
-			padding-top: 10px;
+			font-size: 0.875rem;
 
-			.visibility {
-				font-size: 14px;
-				font-weight: 300;
-				color: #757474;
-				cursor: pointer;
-
-				i {
-					margin-left: 8px;
-					font-size: 10px;
-				}
+			> :not(:last-child) {
+				margin-right: 1.5em;
 			}
 
 			.delete-facilitator {
@@ -89,44 +231,7 @@
 				}
 			}
 		}
+
 	}
 
-	.image {
-		width: 100px;
-		height: 100px;
-		min-width: 100px;
-		min-height: 100px;
-		background-color: #eee;
-		background-size: cover;
-		background-position: center center;
-	}
-
-	.facilitator-info {
-		padding: 2px 0 0 20px;
-		width: 500px;
-		padding-top: 10px;
-
-		.name {
-			margin-bottom: 6px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-
-		.role {
-			font-size: 14px;
-			font-weight: 300;
-			color: #757474;
-
-			i {
-				margin-left: 8px;
-				font-size: 10px;
-			}
-		}
-
-		.title {
-			font-size: 14px;
-			color: #b8b8b8;
-			font-weight: 300;
-		}
-	}
 }

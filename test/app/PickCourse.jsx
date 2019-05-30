@@ -66,7 +66,7 @@ export default class PickCourse extends React.Component {
 		const select = (x) => (e) => (stop(e), this.select(x));
 
 		return (
-			<div key={record.getID()}>
+			<div key={record.getID() || record.getCourseId && record.getCourseId() || Math.random()}>
 				<a onClick={select(record)} href="#">
 					({record.ProviderUniqueID}) {record.title}{record.isAdministrative ? ' (Admin)' : ''}
 				</a>

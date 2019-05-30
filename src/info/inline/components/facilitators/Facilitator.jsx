@@ -5,16 +5,14 @@ import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
 
-import Role from './Role';
+import {default as Role, RoleLabel} from './Role';
 import {getAvailableRoles} from './utils';
 
 
 const t = scoped('course.info.inline.components.facilitators.Facilitator', {
 	visible: 'Visible',
 	hidden: 'Hidden',
-	editor: 'Editor',
-	instructor: 'Instructor',
-	assistant: 'Assistant'
+	hiddenInfo: 'Hidden From Learners',
 });
 
 export default class Facilitator extends React.Component {
@@ -119,7 +117,7 @@ export default class Facilitator extends React.Component {
 	renderRoleTrigger () {
 		const {role} = this.props.facilitator;
 
-		return <div className="trigger">{t(role)}<i className="icon-chevron-down"/></div>;
+		return <div className="trigger"><RoleLabel role={role} /><i className="icon-chevron-down"/></div>;
 	}
 
 	onRoleSelect = (role) => {
@@ -134,7 +132,7 @@ export default class Facilitator extends React.Component {
 	};
 
 	renderRoleOption = (role) => {
-		return <Role key={role} role={role} onClick={this.onRoleSelect}/>;
+		return <Role key={role} role={role} onClick={this.onRoleSelect} />;
 	}
 
 	renderRoleSelect (options) {
@@ -163,27 +161,18 @@ export default class Facilitator extends React.Component {
 		return (<div className="delete-facilitator" onClick={this.removeFacilitator}><i className="icon-light-x"/></div>);
 	}
 
-	renderName () {
-		const { facilitator } = this.props;
-
-		return <div className="name">{facilitator.Name}</div>;
-	}
-
 	renderControls () {
 		const { editable } = this.props;
 
-		if(editable) {
-			return (
-				<div className="controls">
-					<div className="visibility">
-						{this.renderVisibilitySelect()}
-					</div>
-					{this.renderDelete()}
+		return !editable ? null : (
+			<div className="controls">
+				{this.renderRole()}
+				<div className="visibility">
+					{this.renderVisibilitySelect()}
 				</div>
-			);
-		}
-
-		return null;
+				{this.renderDelete()}
+			</div>
+		);
 	}
 
 	canEdit () {
@@ -197,7 +186,7 @@ export default class Facilitator extends React.Component {
 
 		const options = getAvailableRoles(courseInstance);
 
-		// only allow selecting roles if there editable and there is more than one
+		// only allow selecting roles if they're editable and there is more than one
 		// option available to choose
 		if(editable && options && options.length > 1) {
 			return (
@@ -207,7 +196,7 @@ export default class Facilitator extends React.Component {
 			);
 		}
 
-		if(editable || adminView) {
+		if (editable || adminView) {
 			return (<div className="role">{facilitator.role && t(facilitator.role)}</div>);
 		}
 
@@ -217,6 +206,7 @@ export default class Facilitator extends React.Component {
 
 	renderImage () {
 		const { facilitator } = this.props;
+		const className = 'image';
 
 		if(facilitator.imageUrl && this.state.validImage) {
 			const style = {
@@ -224,11 +214,11 @@ export default class Facilitator extends React.Component {
 			};
 
 			return (
-				<div className="image" style={style}/>
+				<div className={className} style={style}/>
 			);
 		}
 
-		return <Avatar className="image" entity={facilitator.username}/>;
+		return <Avatar className={className} entity={facilitator.username}/>;
 	}
 
 	onTitleChange = (e) => {
@@ -241,17 +231,11 @@ export default class Facilitator extends React.Component {
 	}
 
 	renderTitle () {
-		const { facilitator, editable } = this.props;
+		const { facilitator: {JobTitle}, editable } = this.props;
 
-		if(facilitator.visible && editable) {
-			return (
-				<div className="title">
-					<Input.Text className="job-title-input" onChange={this.onTitleChange} value={facilitator.JobTitle}/>
-				</div>
-			);
-		}
-
-		return (<div className="title">{facilitator.JobTitle}</div>);
+		return editable
+			? <Input.Text className="job-title-input" onChange={this.onTitleChange} value={JobTitle}/>
+			: <span>{JobTitle}</span>;
 	}
 
 	// Are we going to support suffix editing/displaying?
@@ -305,20 +289,27 @@ export default class Facilitator extends React.Component {
 	// 	return null;
 	// }
 
-	render () {
-		const { editable } = this.props;
+	renderVisibilityStatus () {
+		return (
+			<div className="visibility-status">
+				<div className="status"><i className="icon-hide"/> {t('hidden')}</div>
+				<div className="visibility-info">{t('hiddenInfo')}</div>
+			</div>
+		);
+	}
 
-		const className = cx('facilitator', { 'edit': editable });
+	render () {
+		const { editable, facilitator: {Name, visible} } = this.props;
+
+		const className = cx('facilitator', { 'edit': editable, hidden: !visible });
 
 		return (
 			<div className={className}>
 				{this.renderImage()}
-				<div className="facilitator-info">
-					{this.renderName()}
-					{this.renderRole()}
-					{this.renderTitle()}
-				</div>
-				{this.renderControls()}
+				{!visible && !editable && this.renderVisibilityStatus()}
+				<div className="name">{Name}</div>
+				<div className="title">{this.renderTitle()}</div>
+				{editable && this.renderControls()}
 			</div>
 		);
 	}

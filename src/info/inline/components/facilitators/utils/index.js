@@ -1,7 +1,7 @@
 import { getService } from '@nti/web-client';
 import { Presentation } from '@nti/web-commons';
 
-const ROLES = {
+export const ROLES = {
 	ASSISTANT: 'assistant',
 	EDITOR: 'editor',
 	INSTRUCTOR: 'instructor'

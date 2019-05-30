@@ -6,17 +6,12 @@ import Facilitator from './Facilitator';
 export default class FacilitatorsView extends React.Component {
 	static propTypes = {
 		facilitators: PropTypes.arrayOf(PropTypes.object),
-		courseInstance: PropTypes.object.isRequired,
-		editable: PropTypes.bool
+		courseInstance: PropTypes.object.isRequired
 	}
 
 	static FIELD_NAME = 'Instructors';
 
-	constructor (props) {
-		super(props);
-
-		this.state = {};
-	}
+	state = {}
 
 	renderFacilitator = (facilitator) => {
 		// username can be blank, but a combination of username + Name is hopefully unique
@@ -29,7 +24,7 @@ export default class FacilitatorsView extends React.Component {
 		return (
 			<div className="facilitators">
 				{(facilitators || [])
-					.filter(x => x.role && x.visible)
+					.filter(x => x.role)
 					.map(this.renderFacilitator)}
 			</div>
 		);
