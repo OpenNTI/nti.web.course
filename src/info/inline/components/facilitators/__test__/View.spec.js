@@ -57,26 +57,19 @@ describe('Facilitators view test', () => {
 	test('Test non-editor view', () => {
 		const cmp = mount(<View facilitators={facilitators} courseInstance={courseInstance}/>);
 
-		const facilitatorInfos = cmp.find('.facilitator-info');
+		const items = cmp.find('.facilitator');
 
-		expect(facilitatorInfos.length).toBe(1); // only one visible, hidden should not show on non-editor view
-		expect(facilitatorInfos.first().find('.name').first().text()).toEqual('Visible Assistant');
-		expect(facilitatorInfos.first().find('.type').exists()).toBe(false); // view-only should not see role
-		expect(facilitatorInfos.first().find('.title').first().text()).toEqual('visible');
+		expect(items.first().find('.name').first().text()).toEqual('Visible Assistant');
+		expect(items.first().find('.type').exists()).toBe(false); // view-only should not see role
+		expect(items.first().find('.title').first().text()).toEqual('visible');
 	});
 
 	test('Test editor view', () => {
 		const cmp = mount(<View facilitators={facilitators} courseInstance={courseInstance} editable/>);
 
-		const facilitatorInfos = cmp.find('.facilitator-info');
+		const items = cmp.find('.facilitator-info');
 
-		expect(facilitatorInfos.length).toBe(1); // for now, hiding the hidden instructors, even for editor view mode
-		expect(facilitatorInfos.first().find('.name').first().text()).toEqual('Visible Assistant');
-		//expect(facilitatorInfos.first().find('.type').first().text()).toEqual('Assistant');
-		expect(facilitatorInfos.first().find('.title').first().text()).toEqual('visible');
-
-		// expect(facilitatorInfos.at(1).find('.name').first().text()).toEqual('Hidden Editor');
-		// expect(facilitatorInfos.at(1).find('.type').first().text()).toEqual('Editor');
-		// expect(facilitatorInfos.at(1).find('.title').first().text()).toEqual('hidden');
+		expect(items.first().find('.name').first().text()).toEqual('Visible Assistant');
+		expect(items.first().find('.title').first().text()).toEqual('visible');
 	});
 });
