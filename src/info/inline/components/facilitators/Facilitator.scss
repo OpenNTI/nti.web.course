@@ -108,14 +108,6 @@
 			line-height: 1.625;
 		}
 
-		.visibility-info {
-			font-size: 0.625rem;
-			text-transform: uppercase;
-			letter-spacing: 0.5px;
-			padding: 0.875em;
-			color: white;
-			background: #404040;
-		}
 	}
 	
 	.image {
@@ -127,6 +119,15 @@
 		background-size: cover;
 		background-position: center center;
 	}
+}
+
+.visibility-tooltip {
+	font-size: 0.625rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	padding: 0.875em;
+	color: white;
+	background: #404040;
 }
 
 .facilitator {

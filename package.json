@@ -42,6 +42,7 @@
     "@nti/lib-locale": "^1.0.9",
     "@nti/lib-ntiids": "^1.1.0",
     "@nti/lib-store": "^1.0.1",
+    "@nti/util-detection-touch": "^1.4.0",
     "@nti/util-logger": "^1.1.2",
     "@nti/web-assignment-editor": "^1.14.0",
     "@nti/web-calendar": "^1.5.0",

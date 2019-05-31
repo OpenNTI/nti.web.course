@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Avatar, Input} from '@nti/web-commons';
+import {Avatar, Input, Flyout} from '@nti/web-commons';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
+import isTouch from '@nti/util-detection-touch';
 
 import RoleSelect from './RoleSelect';
 import {getAvailableRoles} from './utils';
@@ -255,11 +256,19 @@ export default class Facilitator extends React.Component {
 	// }
 
 	renderVisibilityStatus () {
+		const trigger = (<div className="visibility-status-label"><i className="icon-hide"/> {t('hidden')}</div>);
+
 		return (
-			<div className="visibility-status">
-				<div className="status"><i className="icon-hide"/> {t('hidden')}</div>
-				<div className="visibility-info">{t('hiddenInfo')}</div>
-			</div>
+			<Flyout.Triggered
+				trigger={trigger}
+				className="visibility-status"
+				dark
+				hover={!isTouch}
+				verticalAlign={Flyout.Triggered.ALIGNMENTS.BOTTOM}
+				horizontalAlign={Flyout.Triggered.ALIGNMENTS.RIGHT}
+			>
+				<div className="visibility-tooltip">{t('hiddenInfo')}</div>
+			</Flyout.Triggered>
 		);
 	}
 
