@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TokenEditor, Avatar, Flyout, Prompt } from '@nti/web-commons';
+import { TokenEditor, Avatar, Prompt } from '@nti/web-commons';
 import { getService } from '@nti/web-client';
 import {scoped} from '@nti/lib-locale';
 import cx from 'classnames';
 
-import {default as Role, RoleLabel} from './Role';
+import RoleSelect from './RoleSelect';
 import {getAvailableRoles} from './utils';
 
 
@@ -30,8 +30,6 @@ export default class AddFacilitators extends React.Component {
 		onDismiss: PropTypes.func,
 		onConfirm: PropTypes.func
 	}
-
-	attachRoleFlyoutRef = x => this.roleFlyout = x
 
 	constructor (props) {
 		super(props);
@@ -145,49 +143,17 @@ export default class AddFacilitators extends React.Component {
 		);
 	}
 
-	renderRoleTrigger () {
-		const {selectedRole: role} = this.state;
-
-		return (
-			<div className="trigger">
-				<RoleLabel role={role} />
-				<div className="dropdown">
-					<i className="icon-chevron-down"/>
-				</div>
-			</div>
-		);
-	}
 
 	onRoleSelect = (role) => {
 		this.setState({selectedRole: role});
-
-		this.roleFlyout && this.roleFlyout.dismiss();
-	}
-
-	renderRoleOption = (role) => {
-		return <Role role={role} key={role} onClick={this.onRoleSelect}/>;
 	}
 
 	renderRoleSelect () {
-		const { options } = this.state;
+		const { options, selectedRole } = this.state;
 
-		if(!options || options.length <= 1) {
-			return (<div className="role-value">{this.state.options[0] && t(this.state.options[0])}</div>);
-		}
-
-		return (
-			<Flyout.Triggered
-				className="course-facilitator-role-flyout"
-				trigger={this.renderRoleTrigger()}
-				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-				sizing={Flyout.SIZES.MATCH_SIDE}
-				ref={this.attachRoleFlyoutRef}
-			>
-				<div>
-					{options.map(this.renderRoleOption)}
-				</div>
-			</Flyout.Triggered>
-		);
+		return (!options || options.length <= 1)
+			? <div className="role-value">{this.state.options[0] && t(this.state.options[0])}</div>
+			: <RoleSelect options={options} value={selectedRole} onChange={this.onRoleSelect} />;
 	}
 
 	onVisibilityChanged = (e) => {

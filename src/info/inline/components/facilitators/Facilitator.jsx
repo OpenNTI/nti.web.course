@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Flyout, Avatar, Input, Checkbox} from '@nti/web-commons';
+import {Avatar, Input} from '@nti/web-commons';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
 
-import {default as Role, RoleLabel} from './Role';
+import RoleSelect from './RoleSelect';
 import {getAvailableRoles} from './utils';
 
 
@@ -14,7 +14,6 @@ const t = scoped('course.info.inline.components.facilitators.Facilitator', {
 	hidden: 'Hidden',
 	hiddenInfo: 'Hidden From Learners',
 	titlePlaceholder: 'Add a title',
-	roleFlyoutHeading: 'Choose a Role'
 });
 
 export default class Facilitator extends React.Component {
@@ -90,14 +89,11 @@ export default class Facilitator extends React.Component {
 		const {facilitator: {visible}} = this.props;
 
 		return (
-			<Checkbox onChange={this.onVisibiltyChange} label={t('hidden')} checked={!visible} />
+			<label>
+				<input type="checkbox" onChange={this.onVisibiltyChange} checked={!visible} />
+				<span className="label-text">{t('hidden')}</span>
+			</label>
 		);
-	}
-
-	renderRoleTrigger () {
-		const {role} = this.props.facilitator;
-
-		return <div className="trigger"><RoleLabel role={role} /><i className="icon-chevron-down"/></div>;
 	}
 
 	onRoleSelect = (role) => {
@@ -111,24 +107,11 @@ export default class Facilitator extends React.Component {
 		this.roleFlyout && this.roleFlyout.dismiss();
 	};
 
-	renderRoleOption = (role) => {
-		return <Role key={role} role={role} onClick={this.onRoleSelect} />;
-	}
-
 	renderRoleSelect (options) {
+		const {facilitator: {role}} = this.props;
+
 		return (
-			<Flyout.Triggered
-				className="course-facilitator-role-flyout"
-				trigger={this.renderRoleTrigger()}
-				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-				sizing={Flyout.SIZES.MATCH_SIDE}
-				ref={this.attachRoleFlyoutRef}
-			>
-				<div>
-					<div className="facilitator-flyout-heading">{t('roleFlyoutHeading')}</div>
-					{options.map(this.renderRoleOption)}
-				</div>
-			</Flyout.Triggered>
+			<RoleSelect options={options} value={role} onChange={this.onRoleSelect} />
 		);
 	}
 
@@ -164,6 +147,7 @@ export default class Facilitator extends React.Component {
 
 	renderRole () {
 		const { editable, courseInstance, facilitator, adminView } = this.props;
+		const {role} = facilitator || {};
 
 		const options = getAvailableRoles(courseInstance);
 
@@ -172,13 +156,13 @@ export default class Facilitator extends React.Component {
 		if(editable && options && options.length > 1) {
 			return (
 				<div className="role">
-					{this.renderRoleSelect(options)}
+					<RoleSelect options={options} value={role} onChange={this.onRoleSelect} />
 				</div>
 			);
 		}
 
 		if (editable || adminView) {
-			return (<div className="role">{facilitator.role && t(facilitator.role)}</div>);
+			return (<div className="role">{role && t(role)}</div>);
 		}
 
 		// if not editable, don't show role
