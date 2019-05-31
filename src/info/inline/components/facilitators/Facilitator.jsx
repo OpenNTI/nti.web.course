@@ -13,7 +13,8 @@ const t = scoped('course.info.inline.components.facilitators.Facilitator', {
 	visible: 'Visible',
 	hidden: 'Hidden',
 	hiddenInfo: 'Hidden From Learners',
-	titlePlaceholder: 'Add a title'
+	titlePlaceholder: 'Add a title',
+	roleFlyoutHeading: 'Choose a Role'
 });
 
 export default class Facilitator extends React.Component {
@@ -124,6 +125,7 @@ export default class Facilitator extends React.Component {
 				ref={this.attachRoleFlyoutRef}
 			>
 				<div>
+					<div className="facilitator-flyout-heading">{t('roleFlyoutHeading')}</div>
 					{options.map(this.renderRoleOption)}
 				</div>
 			</Flyout.Triggered>
