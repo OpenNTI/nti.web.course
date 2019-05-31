@@ -212,9 +212,9 @@ export default class Facilitator extends React.Component {
 	}
 
 	renderTitle () {
-		const { facilitator: {JobTitle}, editable } = this.props;
+		const { facilitator: {visible, JobTitle}, editable } = this.props;
 
-		return editable
+		return editable && visible
 			? <Input.Text className="job-title-input" onChange={this.onTitleChange} value={JobTitle} placeholder={t('titlePlaceholder')}/>
 			: <span>{JobTitle}</span>;
 	}
