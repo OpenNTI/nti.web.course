@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Flyout, Avatar, Input} from '@nti/web-commons';
+import {Flyout, Avatar, Input, Checkbox} from '@nti/web-commons';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
@@ -13,6 +13,7 @@ const t = scoped('course.info.inline.components.facilitators.Facilitator', {
 	visible: 'Visible',
 	hidden: 'Hidden',
 	hiddenInfo: 'Hidden From Learners',
+	titlePlaceholder: 'Add a title'
 });
 
 export default class Facilitator extends React.Component {
@@ -75,42 +76,20 @@ export default class Facilitator extends React.Component {
 		return <div className="trigger">{text}<i className="icon-chevron-down"/></div>;
 	}
 
-	toggleVisible = () => {
+	onVisibiltyChange = ({target: {checked: hidden}}) => {
 		const {onChange, facilitator} = this.props;
 
 		onChange && onChange({
 			...facilitator,
-			visible: true
+			visible: !hidden
 		});
-
-		this.visibilityFlyout && this.visibilityFlyout.dismiss();
-	}
-
-	toggleHidden = () => {
-		const {onChange, facilitator} = this.props;
-
-		onChange && onChange({
-			...facilitator,
-			visible: false
-		});
-
-		this.visibilityFlyout && this.visibilityFlyout.dismiss();
 	}
 
 	renderVisibilitySelect () {
+		const {facilitator: {visible}} = this.props;
+
 		return (
-			<Flyout.Triggered
-				className="course-facilitator-visibility-flyout"
-				trigger={this.renderVisibilityTrigger()}
-				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
-				sizing={Flyout.SIZES.MATCH_SIDE}
-				ref={this.attachVisibilityFlyoutRef}
-			>
-				<div>
-					<div className="visibility-option" onClick={this.toggleVisible}>{t('visible')}</div>
-					<div className="visibility-option" onClick={this.toggleHidden}>{t('hidden')}</div>
-				</div>
-			</Flyout.Triggered>
+			<Checkbox onChange={this.onVisibiltyChange} label={t('hidden')} checked={!visible} />
 		);
 	}
 
@@ -234,7 +213,7 @@ export default class Facilitator extends React.Component {
 		const { facilitator: {JobTitle}, editable } = this.props;
 
 		return editable
-			? <Input.Text className="job-title-input" onChange={this.onTitleChange} value={JobTitle}/>
+			? <Input.Text className="job-title-input" onChange={this.onTitleChange} value={JobTitle} placeholder={t('titlePlaceholder')}/>
 			: <span>{JobTitle}</span>;
 	}
 

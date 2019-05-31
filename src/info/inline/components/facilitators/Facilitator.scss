@@ -31,8 +31,14 @@
 	background: white;
 	
 	&.hidden {
-		> :not(.visibility-status) {
+		.image {
 			opacity: 0.3;
+		}
+
+		&:not(.edit) {
+			> :not(.visibility-status) {
+				opacity: 0.3;
+			}
 		}
 	}
 	
@@ -202,6 +208,11 @@
 
 			input {
 				width: 100%;
+				border: 1px solid #e2e2e2;
+				background: white;
+				padding: 1px 5px;
+				height: auto;
+				line-height: 1;
 			}
 		}
 
@@ -212,6 +223,11 @@
 
 			> :not(:last-child) {
 				margin-right: 1.5em;
+			}
+
+			.label {
+				text-transform: none;
+				padding: 0;
 			}
 
 			.delete-facilitator {
