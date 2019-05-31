@@ -58,7 +58,7 @@ export default class Section extends React.Component {
 
 		const { components, catalogEntry, editable } = props;
 
-		let hasData = false || editable;
+		let hasData = editable;
 
 		(components || []).forEach((cmp) => {
 			const {getter} = cmp;
