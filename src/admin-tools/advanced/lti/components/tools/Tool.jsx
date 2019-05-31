@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Flyout, HOC } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
-import EditTool from '../editing/EditTool';
+import EditTool from './../../../../../lti-tools/editing/EditTool';
 
 const DEFAULT_TEXT = {
 	edit: 'Edit',

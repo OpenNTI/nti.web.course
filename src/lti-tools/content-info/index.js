@@ -1,1 +1,0 @@
-export LTIContent from './View';
