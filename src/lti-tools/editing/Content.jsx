@@ -28,7 +28,8 @@ class Content extends Component {
 		onSubmit: PropTypes.func.isRequired,
 		submitLabel: PropTypes.string.isRequired,
 		error: PropTypes.string,
-		loading: PropTypes.bool
+		loading: PropTypes.bool,
+		item: PropTypes.object
 	}
 
 	constructor (props) {

@@ -6,7 +6,6 @@ export default class LTIStore extends Stores.SimpleStore {
 
 		this.set('loading', false);
 		this.set('error', null);
-		this.set('editing-error', null);
 		this.set('items', null);
 		this.course = null;
 	}
@@ -16,26 +15,8 @@ export default class LTIStore extends Stores.SimpleStore {
 		this.loadItems();
 	}
 
-	async addItem (item) {
-		this.set('editing-error', null);
-
-		try {
-			await this.course.postToLink('lti-configured-tools', item);
-			return true;
-		} catch (err) {
-			const defaultError = 'There was an error with creating the tool.';
-
-			if (err) {
-				const error = typeof err === 'string' ? err : (err.message || defaultError);
-				this.set('editing-error', error);
-			} else {
-				this.set('editing-error', defaultError);
-			}
-
-			this.emitChange('editing-error');
-		}
-
-		this.loadItems();
+	addItem (item) {
+		return this.course.postToLink('lti-configured-tools', item, true);
 	}
 
 	setCourse (course) {
@@ -69,9 +50,4 @@ export default class LTIStore extends Stores.SimpleStore {
 		this.emitChange('items');
 	}
 
-
-	clearError () {
-		this.set('editing-error', null);
-		this.emitChange('editing-error');
-	}
 }

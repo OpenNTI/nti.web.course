@@ -1,2 +1,2 @@
-export * from './content-info';
+export * from './editing';
 export * from './content-selection';

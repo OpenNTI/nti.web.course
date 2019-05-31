@@ -3,8 +3,9 @@ import { Button, Loading } from '@nti/web-commons';
 import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 
-import Store from './Store';
-import AddTool from './components/editing/AddTool';
+import Store from './../../../lti-tools/editing/Store';
+import AddTool from './../../../lti-tools/editing/AddTool';
+
 import ToolList from './components/tools/ToolList';
 
 const DEFAULT_TEXT = {

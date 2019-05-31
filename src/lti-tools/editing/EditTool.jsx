@@ -11,6 +11,7 @@ const DEFAULT_TEXT = {
 
 const t = scoped('nti-web-course.admin-tools.advanced.lti.editing.EditTool', DEFAULT_TEXT);
 
+
 export default class EditTool extends Component {
 	static propTypes = {
 		onBeforeDismiss: PropTypes.func.isRequired,
@@ -22,17 +23,19 @@ export default class EditTool extends Component {
 		loading: false
 	}
 
-	onSubmit = async (updatedItem) => {
+	onSubmit = (updatedItem) => {
 		const { onBeforeDismiss, item } = this.props;
 		this.setState({ loading: true });
-		try {
-			await item.save(updatedItem);
-			this.setState({ loading: false });
-		} catch (error) {
-			this.setState({ error, loading: false });
-		}
 
-		onBeforeDismiss();
+		item.save(updatedItem)
+			.then(x => {
+				this.setState({ loading: false });
+				onBeforeDismiss();
+			})
+			.catch(error => {
+				const msg = 'There was an error with updating the tool.';
+				this.setState({ loading: false, error: msg });
+			});
 	}
 
 	render () {
