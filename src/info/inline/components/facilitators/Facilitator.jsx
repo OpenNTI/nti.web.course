@@ -137,7 +137,7 @@ export default class Facilitator extends React.Component {
 	}
 
 	renderDelete () {
-		return (<div className="delete-facilitator" onClick={this.removeFacilitator}><i className="icon-light-x"/></div>);
+		return (<div className="delete-facilitator" onClick={this.removeFacilitator}><i className="icon-bold-x"/></div>);
 	}
 
 	renderControls () {
