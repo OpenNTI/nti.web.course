@@ -5,7 +5,7 @@ import { getService } from '@nti/web-client';
 import {scoped} from '@nti/lib-locale';
 import cx from 'classnames';
 
-import Role from './Role';
+import {default as Role, RoleLabel} from './Role';
 import {getAvailableRoles} from './utils';
 
 
@@ -93,7 +93,7 @@ export default class AddFacilitators extends React.Component {
 				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
 				Class: 'CourseCatalogInstructorLegacyInfo',
 				username: x.value.Username,
-				JobTitle: t(this.state.selectedRole)
+				// JobTitle: t(this.state.selectedRole)
 			};
 		}));
 
@@ -146,10 +146,14 @@ export default class AddFacilitators extends React.Component {
 	}
 
 	renderRoleTrigger () {
+		const {selectedRole: role} = this.state;
+
 		return (
 			<div className="trigger">
-				<div className="role-value">{t(this.state.selectedRole)}</div>
-				<div className="dropdown"><i className="icon-chevron-down"/></div>
+				<RoleLabel role={role} />
+				<div className="dropdown">
+					<i className="icon-chevron-down"/>
+				</div>
 			</div>
 		);
 	}

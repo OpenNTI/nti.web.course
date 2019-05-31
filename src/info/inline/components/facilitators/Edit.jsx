@@ -85,11 +85,11 @@ export default class FacilitatorsEdit extends React.Component {
 				role: u.role
 			};
 
-			if(DEFAULT_JOB_TITLES.includes(newUser.JobTitle)) {
-				// we assigned a default job title, meaning we didn't have one initially, so just reflect
-				// the role
-				newUser.JobTitle = t(newUser.role);
-			}
+			// if(DEFAULT_JOB_TITLES.includes(newUser.JobTitle)) {
+			// 	// we assigned a default job title, meaning we didn't have one initially, so just reflect
+			// 	// the role
+			// 	newUser.JobTitle = t(newUser.role);
+			// }
 
 			return newUser;
 		});
@@ -144,11 +144,11 @@ export default class FacilitatorsEdit extends React.Component {
 				if(x.key === key) {
 					let newUser = {...facilitator};
 
-					if(DEFAULT_JOB_TITLES.includes(newUser.JobTitle)) {
-						// we assigned a default job title, meaning we didn't have one initially, so just reflect
-						// the role
-						newUser.JobTitle = t(newUser.role);
-					}
+					// if(DEFAULT_JOB_TITLES.includes(newUser.JobTitle)) {
+					// 	// we assigned a default job title, meaning we didn't have one initially, so just reflect
+					// 	// the role
+					// 	newUser.JobTitle = t(newUser.role);
+					// }
 
 					return newUser;
 				}
