@@ -9,6 +9,8 @@ export default class FacilitatorsView extends React.Component {
 		courseInstance: PropTypes.object.isRequired
 	}
 
+	static hasData = (catalogEntry, {facilitators = []}  = {}) => facilitators.length
+
 	static FIELD_NAME = 'Instructors';
 
 	state = {}

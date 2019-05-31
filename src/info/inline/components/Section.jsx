@@ -67,7 +67,7 @@ export default class Section extends React.Component {
 			if(cmp.View.hasData) {
 				// for special fields (like meeting times), it's not sufficient to just check
 				// a single field value, so allow them to define a hasData to determine that
-				hasData = hasData || cmp.View.hasData(catalogEntry);
+				hasData = hasData || cmp.View.hasData(catalogEntry, props);
 			}
 			else if((!getter && !cmp.View.FIELD_NAME) || !isEmpty(value)) {
 				// if no FIELD_NAME is defined, don't assume it's no data, it may be pulled
