@@ -23,25 +23,26 @@ export default class EditTool extends Component {
 		loading: false
 	}
 
-	onSubmit = (updatedItem) => {
+	onSubmit = async (updatedItem) => {
 		const { onBeforeDismiss, item } = this.props;
 		this.setState({ loading: true });
 
-		item.save(updatedItem)
-			.then(x => {
-				this.setState({ loading: false });
-				onBeforeDismiss();
-			})
-			.catch(error => {
-				const msg = 'There was an error with updating the tool.';
-				if (error.suberrors) {
-					this.setState({ error: error.suberrors, loading: false });
-				} else if (error.code && error.field && error.message) {
-					this.setState({ error: [error], loading: false});
-				} else {
-					this.setState({ error: error.Message || error.message || msg, loading: false });
-				}
-			});
+		try {
+			await item.save(updatedItem);
+
+			this.setState({ loading: false });
+
+			onBeforeDismiss();
+		} catch (error) {
+			const msg = 'There was an error with updating the tool.';
+			if (error.suberrors) {
+				this.setState({ error: error.suberrors, loading: false });
+			} else if (error.code && error.field && error.message) {
+				this.setState({ error: [error], loading: false});
+			} else {
+				this.setState({ error: error.Message || error.message || msg, loading: false });
+			}
+		}
 	}
 
 	render () {
