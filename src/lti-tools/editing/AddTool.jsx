@@ -7,9 +7,10 @@ import Base from './Base';
 
 const DEFAULT_TEXT = {
 	title: 'Add Tool',
+	invalid: 'There was an error with creating the tool.'
 };
 
-const t = scoped('nti-web-course.admin-tools.advanced.lti.editing.AddTool', DEFAULT_TEXT);
+const t = scoped('nti-web-course.lti-tools.editing.AddTool', DEFAULT_TEXT);
 
 export default class AddTool extends Component {
 	static propTypes  = {
@@ -40,7 +41,7 @@ export default class AddTool extends Component {
 			}
 
 		} catch (error) {
-			const msg = 'There was an error with creating the tool.';
+			const msg = t('invalid');
 			if (error.suberrors) {
 				this.setState({ error: error.suberrors, loading: false });
 			} else if (error.code && error.field && error.message) {

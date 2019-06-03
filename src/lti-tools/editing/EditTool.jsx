@@ -7,9 +7,10 @@ import Base from './Base';
 const DEFAULT_TEXT = {
 	title: 'Edit Tool',
 	submitLabel: 'Save',
+	invalid: 'There was an error with updating the tool.'
 };
 
-const t = scoped('nti-web-course.admin-tools.advanced.lti.editing.EditTool', DEFAULT_TEXT);
+const t = scoped('nti-web-course.lti-tools.editing.EditTool', DEFAULT_TEXT);
 
 
 export default class EditTool extends Component {
@@ -34,7 +35,7 @@ export default class EditTool extends Component {
 
 			onBeforeDismiss();
 		} catch (error) {
-			const msg = 'There was an error with updating the tool.';
+			const msg = t('invalid');
 			if (error.suberrors) {
 				this.setState({ error: error.suberrors, loading: false });
 			} else if (error.code && error.field && error.message) {

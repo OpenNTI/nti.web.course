@@ -10,7 +10,7 @@ const DEFAULT_TEXT = {
 	secret: 'Shared Secret',
 };
 
-const t = scoped('nti-web-course.admin-tools.advanced.lti.editing.EditTool', DEFAULT_TEXT);
+const t = scoped('nti-web-course.lti-tools.editing.EditTool', DEFAULT_TEXT);
 
 const BaseForm = ({ item, onChange, children, onSubmit, renderButtons}) => (
 	<form className="lti-base-form" onSubmit={onSubmit}>
