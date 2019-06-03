@@ -14,7 +14,7 @@ const DEFAULT_TEXT = {
 	secureUrl: 'Secure Launch URL'
 };
 
-const t = scoped('nti-web-course.admin-tools.advanced.lti.editing.forms.Manual', DEFAULT_TEXT);
+const t = scoped('nti-web-course.lti-tools.editing.forms.Manual', DEFAULT_TEXT);
 
 const Manual = ({ onChange, onSubmit, item, renderButtons, error }) => (
 	<BaseForm onChange={onChange} onSubmit={onSubmit} item={item} renderButtons={renderButtons}>
