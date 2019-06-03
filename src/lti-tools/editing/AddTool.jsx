@@ -23,29 +23,32 @@ export default class AddTool extends Component {
 		error: null
 	}
 
-	onSubmit = (item) => {
+	onSubmit = async (item) => {
 		const { onBeforeDismiss, store, modal } = this.props;
 
 		this.setState({ loading: true });
 
-		store.addItem(item)
-			.then(x => {
-				this.setState({ loading: false });
-				onBeforeDismiss(item);
-				if (!modal) {
-					store.loadItems();
-				}
-			})
-			.catch(error => {
-				const msg = 'There was an error with creating the tool.';
-				if (error.suberrors) {
-					this.setState({ error: error.suberrors, loading: false });
-				} else if (error.code && error.field && error.message) {
-					this.setState({ error: [error], loading: false});
-				} else {
-					this.setState({ error: error.Message || error.message || msg, loading: false });
-				}
-			});
+		try {
+			await store.addItem(item);
+
+			this.setState({ loading: false });
+
+			onBeforeDismiss(item);
+
+			if (!modal) {
+				store.loadItems();
+			}
+
+		} catch (error) {
+			const msg = 'There was an error with creating the tool.';
+			if (error.suberrors) {
+				this.setState({ error: error.suberrors, loading: false });
+			} else if (error.code && error.field && error.message) {
+				this.setState({ error: [error], loading: false});
+			} else {
+				this.setState({ error: error.Message || error.message || msg, loading: false });
+			}
+		}
 	}
 
 	render () {
