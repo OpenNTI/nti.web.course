@@ -29,7 +29,7 @@ class Base extends Component {
 		title: PropTypes.string.isRequired,
 		onSubmit: PropTypes.func.isRequired,
 		submitLabel: PropTypes.string.isRequired,
-		error: PropTypes.string,
+		error: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 		loading: PropTypes.bool,
 		item: PropTypes.object,
 		modal: PropTypes.bool
@@ -109,7 +109,7 @@ class Base extends Component {
 
 	renderForm () {
 		const { item } = this.state;
-		const { submitLabel, loading } = this.props;
+		const { submitLabel, loading, error } = this.props;
 
 		const { formselector } = item;
 		let Form = Manual;
@@ -122,6 +122,14 @@ class Base extends Component {
 			{ label: submitLabel, type: 'submit', disabled: loading, tag: 'button' }
 		];
 
+		let errors = null;
+		if (error && (error instanceof Array)) {
+			errors = error.reduce((obj, x) => {
+				obj[x.field] = x.message;
+				return obj;
+			}, {});
+		}
+
 		return (
 			<Form
 				onSubmit={this.onSubmit}
@@ -130,6 +138,7 @@ class Base extends Component {
 				renderButtons={
 					<DialogButtons className="lti-base-add-controls" buttons={buttons} />
 				}
+				error={errors}
 			/>
 		);
 	}
@@ -142,7 +151,7 @@ class Base extends Component {
 		const contents = (
 			<div className="lti-base-tool-editing">
 				<Panels.TitleBar title={title} iconAction={this.onBeforeDismiss} />
-				{error && <span className="lti-base-tool-error">{error}</span>}
+				{error && (typeof error === 'string') && <span className="lti-base-tool-error">{error}</span>}
 				<Label className="config-type-label" label="Configuration Type">
 					<Select value={formselector} onChange={this.onModeSelect}>
 						{modeOptions.map(({ value, label }) => (

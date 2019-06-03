@@ -34,7 +34,13 @@ export default class EditTool extends Component {
 			})
 			.catch(error => {
 				const msg = 'There was an error with updating the tool.';
-				this.setState({ loading: false, error: msg });
+				if (error.suberrors) {
+					this.setState({ error: error.suberrors, loading: false });
+				} else if (error.code && error.field && error.message) {
+					this.setState({ error: [error], loading: false});
+				} else {
+					this.setState({ error: error.Message || error.message || msg, loading: false });
+				}
 			});
 	}
 

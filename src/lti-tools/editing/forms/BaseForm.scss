@@ -20,12 +20,33 @@
 		padding: 5px 0px;
 	}
 
+	.lti-base-form-error {
+		color: $primary-red;
+		display: block;
+		padding: 0px 0px 0px 0px;
+	}
+
 	.split-input {
 		display: flex;
 		justify-content: space-between;
 
 		.nti-labeled-input {
 			width: 48%;
+		}
+
+		.lti-base-form-input{
+			width: 48%;
+
+			.nti-labeled-input {
+				width: 100%;
+			}
+
+			.lti-base-form-error {
+				color: $primary-red;
+				display: block;
+				padding: 0px 0px 0px 0px;
+			}
+
 		}
 	}
 }

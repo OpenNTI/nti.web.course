@@ -16,7 +16,7 @@ const DEFAULT_TEXT = {
 
 const t = scoped('nti-web-course.admin-tools.advanced.lti.editing.forms.Manual', DEFAULT_TEXT);
 
-const Manual = ({ onChange, onSubmit, item, renderButtons }) => (
+const Manual = ({ onChange, onSubmit, item, renderButtons, error }) => (
 	<BaseForm onChange={onChange} onSubmit={onSubmit} item={item} renderButtons={renderButtons}>
 		<Label label={t('title')}>
 			<Text required value={item.title} onChange={value => onChange('title', value)} placeholder={t('title')} />
@@ -25,12 +25,18 @@ const Manual = ({ onChange, onSubmit, item, renderButtons }) => (
 			<Text value={item.description} onChange={value => onChange('description', value)} placeholder={t('desc')} />
 		</Label>
 		<div className="split-input">
-			<Label label={t('launch')}>
-				<Text required value={item['launch_url']} onChange={(value) => onChange('launch_url', value)} placeholder={t('launch')} />
-			</Label>
-			<Label label={t('secureUrl')}>
-				<Text required value={item['secure_launch_url']} onChange={(value) => onChange('secure_launch_url', value)} placeholder={t('secureUrl')} />
-			</Label>
+			<div className="lti-base-form-input">
+				<Label label={t('launch')}>
+					<Text required value={item['launch_url']} onChange={(value) => onChange('launch_url', value)} placeholder={t('launch')} />
+				</Label>
+				{error && error.launch_url && <span className="lti-base-form-error">{error.launch_url}</span>}
+			</div>
+			<div className="lti-base-form-input">
+				<Label label={t('secureUrl')}>
+					<Text required value={item['secure_launch_url']} onChange={(value) => onChange('secure_launch_url', value)} placeholder={t('secureUrl')} />
+				</Label><br/>
+				{error && error.secure_launch_url && <span className="lti-base-form-error">{error.secure_launch_url}</span>}
+			</div>
 		</div>
 	</BaseForm>
 );
@@ -44,7 +50,8 @@ Manual.propTypes = {
 		description: PropTypes.string.isRequired,
 		'launch_url': PropTypes.string.isRequired,
 		'secure_launch_url': PropTypes.string.isRequired
-	}).isRequired
+	}).isRequired,
+	error: PropTypes.object
 };
 
 export default Manual;
