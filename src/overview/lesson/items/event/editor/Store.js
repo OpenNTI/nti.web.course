@@ -69,7 +69,7 @@ export default class CourseEventsStore extends Stores.BoundStore {
 			}
 		});
 
-		await this.load();
+		await this.load(this.searchTerm);
 	}
 
 	async createEvent (course, event, title, description, location, startDate, endDate, img) {
