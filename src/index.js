@@ -21,3 +21,4 @@ export * from './scorm';
 export * as Templates from './editor/templates';
 export * from './lti-tools';
 export Selector from './selector';
+export ScormCollection from './scorm/collection';
