@@ -3,6 +3,7 @@ import './group';
 import './poll';
 import './question-set';
 import './related-work';
+import './scorm';
 import './survey';
 import './timeline';
 import './topic';
