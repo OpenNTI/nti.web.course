@@ -74,6 +74,7 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 		data.append('source', file);
 
 		const upload = course.putUploadToLink('ScormInstances', data, true);
+		upload.setName(file.name);
 
 		this.monitorUpload(upload);
 		this.set({
@@ -93,7 +94,7 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 		} catch (e) {
 			this.set({
 				upload: null,
-				uploadError: e
+				uploadError: e.wasCanceled ? null : e
 			});
 		}
 	}

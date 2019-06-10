@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Input, Errors} from '@nti/web-commons';
+import {Input, Errors, Task} from '@nti/web-commons';
 
 import Store from '../Store';
 import {ACCEPTS_FILES} from '../Constants';
@@ -13,14 +13,20 @@ const allowedTypes = ACCEPTS_FILES.reduce((acc, file) => ({...acc, [file]: true}
 const t = scoped('course.scorm.collection.components.Empty', {
 	title: 'Drag a SCORM Package to Upload, or',
 	requirements: 'Must be a .zip file.',
+	uploading: {
+		header: 'Uploading your file.',
+		subHeader: 'This may take a moment.'
+	}
 });
 
+
 export default
-@Store.monitor(['uploadPackage', 'uploadError'])
+@Store.monitor(['uploadPackage', 'uploadError', 'upload'])
 class EmptyScormCollection extends React.Component {
 	static propTypes = {
 		uploadPackage: PropTypes.func,
-		uploadError: PropTypes.object
+		uploadError: PropTypes.object,
+		upload: PropTypes.object
 	}
 
 
@@ -34,18 +40,27 @@ class EmptyScormCollection extends React.Component {
 
 
 	render () {
-		const {uploadError} = this.props;
+		const {uploadError, upload} = this.props;
 
 		return (
 			<>
 				{uploadError && (<Errors.Bar error={uploadError} />)}
 				<Container>
-					<Input.FileDrop
-						getString={t}
-						onChange={this.onFileChange}
-						sizeLimit={Infinity}
-						allowedTypes={allowedTypes}
-					/>
+					{!upload && (
+						<Input.FileDrop
+							getString={t}
+							onChange={this.onFileChange}
+							sizeLimit={Infinity}
+							allowedTypes={allowedTypes}
+						/>
+					)}
+					{upload && (
+						<Task.Progress.Panel
+							task={upload}
+							header={t('uploading.header')}
+							subHeader={t('uploading.subHeader')}
+						/>
+					)}
 				</Container>
 			</>
 		);
