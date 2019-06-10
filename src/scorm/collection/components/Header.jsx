@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
+import {scoped} from '@nti/lib-locale';
+import {Input, Button, Search} from '@nti/web-commons';
 
 import Store from '../Store';
+
+import Styles from './Header.css';
+
+const cx = classnames.bind(Styles);
+const t = scoped('course.scorm.collection.components.Header', {
+	upload: 'Upload a SCORM Package'
+});
 
 export default 
 @Store.monitor(['uploadPackage', 'filter', 'setFilter'])
@@ -12,10 +22,18 @@ class ScormCollectionHeader extends React.Component {
 		setFilter: PropTypes.func
 	}
 
+
+	onFileChanged = () => {}
+
 	render () {
+		const {filter, setFilter} = this.props;
+
 		return (
-			<div>
-				Header
+			<div className={cx('scorm-collection-header')}>
+				<Input.FileInputWrapper className={cx('upload')} onChange={this.onFileChanged}>
+					<Button rounded>{t('upload')}</Button>
+				</Input.FileInputWrapper>
+				<Search className={cx('search')} value={filter} onChange={setFilter} />
 			</div>
 		);
 	}

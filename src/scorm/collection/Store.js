@@ -1,6 +1,18 @@
 import {Stores} from '@nti/lib-store';
 
 
+function packageMatches (p, filter) {
+	const {title} = p;
+
+	return title && title.toLowerCase().indexOf(filter) >= 0;
+}
+
+function filterPackages (packages, filter) {
+	if (!filter) { return packages; }
+
+	return packages.filter(p => packageMatches(p, filter));
+}
+
 export default class ScormCollectionStore extends Stores.BoundStore {
 	constructor () {
 		super();
@@ -31,7 +43,8 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 		this.set({
 			loading: true,
 			error: null,
-			packages: null
+			packages: null,
+			filter: '',
 		});
 
 		try {
@@ -41,6 +54,7 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 				initialLoad: true,
 				loading: false,
 				packages,
+				fullPackages: packages,
 				empty: !packages || packages.length === 0 
 			});
 		} catch (e) {
@@ -82,5 +96,17 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 				uploadError: e
 			});
 		}
+	}
+
+
+	setFilter (filter) {
+		const packages = this.get('fullPackages');
+
+		this.setImmediate({
+			filter,
+			packages: filterPackages(packages, filter.toLowerCase())
+		});
+
+
 	}
 }

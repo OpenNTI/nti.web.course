@@ -1,0 +1,11 @@
+.scorm-collection {
+	display: flex;
+	flex-direction: column;
+	min-height: 25rem;
+	background: white;
+}
+
+.scorm-collection > *:last-child {
+	flex: 1 0 auto;
+}
+

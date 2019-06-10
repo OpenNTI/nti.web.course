@@ -1,0 +1,14 @@
+.scorm-collection-header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.upload {
+	flex: 0 0 auto;
+}
+
+.search {
+	flex: 0 0 auto;
+}

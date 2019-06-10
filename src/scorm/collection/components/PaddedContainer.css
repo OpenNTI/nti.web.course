@@ -1,0 +1,9 @@
+.scorm-padded-container {
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.scorm-padded-container > *:last-child {
+	flex: 1 0 auto;
+}
