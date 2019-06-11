@@ -1,0 +1,57 @@
+.scorm-grid-card {
+	background: var(--panel-background);
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.13);
+	border-radius: 5px;
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+}
+
+.asset-icon:global(.file-type.icon) {
+	flex: 0 0 auto;
+	width: 100px;
+	height: 125px;
+}
+
+.meta {
+	flex: 1 1 auto;
+	padding: 15px;
+}
+
+.title-container {
+	display: flex;
+}
+
+.title {
+	flex: 1 1 auto;
+	font: normal 400 1.125rem/1.3 var(--body-font-family);
+	color: var(--primary-grey);
+}
+
+.list {
+	margin: 5px 0;
+	min-height: 0.875rem;
+}
+
+.open-button:global(.nti-button.primary) {
+	flex: 0 0 auto;
+	background-color: var(--secondary-green);
+	border-radius: 4px;
+	padding: 0 1.25rem;
+	font-size: 1rem;
+	line-height: 2.5;
+	font-weight: 400;
+	min-width: 95px;
+	text-align: center;
+}
+
+.description {
+	font: normal 400 0.875rem/1.3 var(--body-font-family);
+	color: var(--secondary-grey);
+	max-height: 2.6em;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
