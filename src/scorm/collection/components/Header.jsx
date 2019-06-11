@@ -31,7 +31,10 @@ class ScormCollectionHeader extends React.Component {
 		return (
 			<div className={cx('scorm-collection-header')}>
 				<Input.FileInputWrapper className={cx('upload')} onChange={this.onFileChanged}>
-					<Button rounded>{t('upload')}</Button>
+					<Button className={cx('scorm-upload-button')} rounded>
+						<i className="icon-upload" />
+						<span>{t('upload')}</span>
+					</Button>
 				</Input.FileInputWrapper>
 				<Search className={cx('search')} value={filter} onChange={setFilter} />
 			</div>

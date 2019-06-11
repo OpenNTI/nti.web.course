@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
 import {DnD, EmptyState} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import Store from '../Store';
 import {ACCEPTS_FILES} from '../Constants';
 
+import Styles from './PackageList.css';
+import Container from './PaddedContainer';
 import Header from './Header';
 import Package from './Package';
 
+const cx = classnames.bind(Styles);
 const t = scoped('course.scorm.collection.components.PackageList', {
 	empty: {
 		filtered: 'No SCORM packages match your search term.',
@@ -17,7 +21,7 @@ const t = scoped('course.scorm.collection.components.PackageList', {
 });
 
 export default
-@Store.monitor(['packages', 'selectedPackage', 'filter'])
+@Store.monitor(['packages', 'filter'])
 class ScormCollectionPackageList extends React.Component {
 	static propTypes = {
 		packages: PropTypes.array,
@@ -40,9 +44,11 @@ class ScormCollectionPackageList extends React.Component {
 				accepts={DnD.DropZone.acceptFilesOfType(ACCEPTS_FILES)}
 				onFileDrop={this.onFileDrop}
 			>
-				<Header />
-				{empty && this.renderEmpty(filter)}
-				{!empty && this.renderPackages(packages, selectedPackages)}
+				<Container>
+					<Header />
+					{empty && this.renderEmpty(filter)}
+					{!empty && this.renderPackages(packages, selectedPackages)}
+				</Container>
 			</DnD.DropZoneIndicator>
 		);
 	}
@@ -57,7 +63,7 @@ class ScormCollectionPackageList extends React.Component {
 
 	renderPackages (packages, selectedPackages) {
 		return (
-			<ul>
+			<ul className={cx('package-list')}>
 				{packages.map((pack) => {
 					const isSelected = selectedPackages && selectedPackages.has(pack.scormId);
 

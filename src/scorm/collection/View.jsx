@@ -21,13 +21,13 @@ class ScormCollection extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
 			course: props.course,
-			selected: props.selected,
 			onPackageUploaded: props.onPackageUploaded
 		};
 	}
 
 	static propTypes = {
 		course: PropTypes.object,
+		selected: PropTypes.object,
 		onPackageUploaded: PropTypes.func,
 
 		initialLoad: PropTypes.bool,
@@ -40,7 +40,7 @@ class ScormCollection extends React.Component {
 
 
 	render () {
-		const {initialLoad, unavailable, error, empty} = this.props;
+		const {initialLoad, unavailable, error, empty, selected} = this.props;
 		let content = null;
 
 		if (unavailable || error) {
@@ -48,7 +48,7 @@ class ScormCollection extends React.Component {
 		} else if (empty) {
 			content = (<Empty />);
 		} else {
-			content = (<PackageList />);
+			content = (<PackageList selectedPackages={selected} />);
 		}
 
 		return (

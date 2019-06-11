@@ -9,6 +9,21 @@
 	flex: 0 0 auto;
 }
 
-.search {
+form.search {
 	flex: 0 0 auto;
+	box-shadow: none;
+    background: white;
+    border-bottom: 1px solid var(--border-grey-light);
+    border-radius: 0;
+    width: 350px;
+}
+
+.scorm-upload-button {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.scorm-upload-button :global(i) {
+	margin-right: 0.3rem;
 }

@@ -23,11 +23,7 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 	}
 
 	async load () {
-		const {course, selected} = this.binding;
-
-		this.set({
-			selectedPackages: selected
-		});
+		const {course} = this.binding;
 
 		if (course === this.course) { return; }
 
