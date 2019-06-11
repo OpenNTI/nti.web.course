@@ -21,12 +21,14 @@ class ScormCollection extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
 			course: props.course,
-			selected: props.selected
+			selected: props.selected,
+			onPackageUploaded: props.onPackageUploaded
 		};
 	}
 
 	static propTypes = {
 		course: PropTypes.object,
+		onPackageUploaded: PropTypes.func,
 
 		initialLoad: PropTypes.bool,
 		unavailable: PropTypes.bool,

@@ -73,23 +73,29 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 
 		data.append('source', file);
 
-		const upload = course.putUploadToLink('ScormInstances', data, true);
+		const upload = course.putUploadToLink('ScormInstances', data);
 		upload.setName(file.name);
 
-		this.monitorUpload(upload);
+		this.monitorUpload(upload, course);
 		this.set({
 			upload
 		});
 	}
 
-	async monitorUpload (upload) {
+	async monitorUpload (upload, course) {
 		try {
-			await upload;
+			const {'scorm_id': scormId} = await upload;
+			const packages = await course.fetchLinkParsed('ScormInstances');
 
-			//TODO: add new package
+			if (this.binding.onPackageUploaded) {
+				this.binding.onPackageUploaded(packages.find(p => p.scormId === scormId));
+			}
 
 			this.set({
-				upload: null
+				upload: null,
+				packages,
+				fullPackages: packages,
+				empty: !packages || packages.length === 0
 			});
 		} catch (e) {
 			this.set({
