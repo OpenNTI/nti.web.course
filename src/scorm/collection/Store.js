@@ -74,7 +74,8 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 
 		this.monitorUpload(upload, course);
 		this.set({
-			upload
+			upload,
+			uploadError: null
 		});
 	}
 
