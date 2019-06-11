@@ -22,6 +22,7 @@ form.search {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	cursor: pointer;
 }
 
 .scorm-upload-button :global(i) {

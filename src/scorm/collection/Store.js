@@ -102,6 +102,13 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 	}
 
 
+	clearUploadError () {
+		this.set({
+			uploadError: null
+		});
+	}
+
+
 	setFilter (filter) {
 		const packages = this.get('fullPackages');
 

@@ -1,3 +1,7 @@
+.package-list-container {
+	position: relative;
+}
+
 .package-list {
 	list-style: none;
 	padding: 0;
@@ -12,4 +16,25 @@
 
 .package-list li:last-of-type {
 	border-bottom-width: 0;
+}
+
+.upload-bar-container {
+	position: absolute;
+	top: auto; bottom: 1rem;
+	left: 0; right: 0;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.upload-bar,
+.upload-error {
+	width: 100%;
+	max-width: 600px;
+}
+
+.upload-error {
+	border-radius: 2px;
+	box-shadow: 0 0 1px 1px rgba(0,0,0,0.1), 0 1px 0 1px rgba(0,0,0,0.1);
 }
