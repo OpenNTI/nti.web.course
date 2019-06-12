@@ -42,6 +42,10 @@ async function saveItem (service, link, type, user) {
 	}
 }
 
+export function canAddFacilitators (courseInstance) {
+	return courseInstance && courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors');
+}
+
 /**
  * Save facilitator data to the appropriate places, according to the following rules:
  *
@@ -70,7 +74,7 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	const editorsLink = courseInstance && courseInstance.getLink('Editors');
 
 	if(!instructorsLink || !editorsLink) {
-		return;
+		return facilitators;
 	}
 
 	// determine which users should be posted/deleted via the Instructors/Editors link

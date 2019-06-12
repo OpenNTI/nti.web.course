@@ -7,7 +7,7 @@ import AddButton from '../../widgets/AddButton';
 
 import Facilitator from './Facilitator';
 import AddFacilitators from './AddFacilitators';
-
+import {canAddFacilitators} from './utils';
 
 const t = scoped('course.info.inline.components.facilitators.Edit', {
 	addFacilitators: 'Add a Facilitator',
@@ -111,6 +111,12 @@ export default class FacilitatorsEdit extends React.Component {
 	}
 
 	renderAddFacilitator () {
+		const {courseInstance} = this.props;
+
+		if (!canAddFacilitators(courseInstance)) {
+			return null;
+		}
+
 		return <AddButton clickHandler={this.launchAddDialog} className="add-facilitator" label={t('addFacilitators')}/>;
 	}
 

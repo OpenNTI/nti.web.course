@@ -200,12 +200,19 @@ export default class Section extends React.Component {
 		this.setState({saveable : enabled});
 	}
 
+
+	isEditable () {
+		const {editable, components, catalogEntry, courseInstance} = this.props;
+
+		return editable && components.some(c => !c.isEditable || c.isEditable(catalogEntry, courseInstance));
+	}
+
 	renderEditButton () {
 		if(this.props.isEditing) {
 			return null;
 		}
 
-		if(this.props.editable) {
+		if(this.isEditable()) {
 			const className = cx('edit-course-info', { 'indented' : !this.props.inlinePlacement && !this.props.title });
 
 			return <div className={className} onClick={this.beginEditing}>{t('edit')}</div>;
