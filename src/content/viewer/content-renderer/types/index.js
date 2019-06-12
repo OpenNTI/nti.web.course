@@ -2,12 +2,14 @@ import './default';
 // import './video';
 
 import Webinar from './webinar';
+import SCORM from './scorm';
 import TypeRegistry from './Registry';
 
 const typeRegistry = TypeRegistry.getInstance();
 
 export const TYPES = {
-	Webinar
+	Webinar,
+	SCORM
 };
 
 export function getCmpFor (overrides, ...args) {

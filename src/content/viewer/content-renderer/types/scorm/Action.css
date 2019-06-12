@@ -1,0 +1,27 @@
+.scorm-action {
+	background: white;
+}
+
+.scorm-action a {
+	text-decoration: none;
+}
+
+.message {
+	font: normal 600 0.875rem/1.3 var(--body-font-family);
+	color: var(--secondary-grey);
+	padding: 1.25rem 1rem 8rem;
+}
+
+.scorm-action .launch {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	background-color: var(--secondary-green);
+	text-decoration: none;
+}
+
+.scorm-action .launch span {
+	font: normal 400 1rem/1.3 var(--body-font-family);
+	margin-right: 0.3rem;
+}
