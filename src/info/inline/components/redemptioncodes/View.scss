@@ -1,1 +1,16 @@
 @import "~@nti/style-common";
+
+.redemption-codes-visibility-label {
+	color: $secondary-grey;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	i {
+		margin-right: 0.3rem;
+	}
+
+	span {
+		font-size: 0.875rem;
+	}
+}

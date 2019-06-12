@@ -4,7 +4,8 @@ import {scoped} from '@nti/lib-locale';
 
 
 const t = scoped('course.info.inline.components.redemptioncodes.View', {
-	label: 'Redemption Code'
+	label: 'Redemption Code',
+	visibility: 'Only visible to facilitators.'
 });
 
 export default class RedemptionCodesView extends React.Component {
@@ -39,6 +40,10 @@ export default class RedemptionCodesView extends React.Component {
 			<div className="columned">
 				<div className="field-info">
 					<div className="date-label">{t('label')}</div>
+					<div className="redemption-codes-visibility-label">
+						<i className="icon-view" />
+						<span>{t('visibility')}</span>
+					</div>
 				</div>
 				<div className="content-column">{this.renderCodes()}</div>
 			</div>
