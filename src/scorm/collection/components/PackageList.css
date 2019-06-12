@@ -1,5 +1,6 @@
 .package-list-container {
 	position: relative;
+	padding-bottom: 35px;
 }
 
 .package-list {
@@ -26,12 +27,13 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	z-index: 1;
 }
 
-.upload-bar,
-.upload-error {
+.background {
 	width: 100%;
 	max-width: 600px;
+	background: white;
 }
 
 .upload-error {

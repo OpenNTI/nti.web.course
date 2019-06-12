@@ -59,8 +59,10 @@ class ScormCollectionPackageList extends React.Component {
 					{!empty && this.renderPackages(packages, selectedPackages)}
 				</Container>
 				<div className={cx('upload-bar-container')}>
-					{upload && (<Task.Progress.Bar className={cx('upload-bar')} task={upload} />)}
-					{uploadError && (<Errors.Bar error={uploadError} className={cx('upload-error')} onClick={clearUploadError} />)}
+					<div className={cx('background')}>
+						{upload && (<Task.Progress.Bar className={cx('upload-bar')} task={upload} />)}
+						{uploadError && (<Errors.Bar error={uploadError} className={cx('upload-error')} onClick={clearUploadError} />)}
+					</div>
 				</div>
 			</DnD.DropZoneIndicator>
 		);
