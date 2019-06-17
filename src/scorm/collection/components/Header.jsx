@@ -23,11 +23,11 @@ class ScormCollectionHeader extends React.Component {
 	}
 
 
-	onFileChanged = (file) => {
+	onFileChanged = (e) => {
 		const {uploadPackage} = this.props;
 
 		if (uploadPackage) {
-			uploadPackage(file);
+			uploadPackage(e.target.files[0]);
 		}
 	}
 
