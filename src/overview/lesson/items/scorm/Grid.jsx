@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {AssetIcon, Button, List} from '@nti/web-commons';
+import {AssetIcon, Button, List, Ellipsed} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
 
 import PaddedContainer from '../../common/PaddedContainer';
@@ -25,16 +25,14 @@ export default function LessonOverviewScormGridItem ({item, course, requiredLabe
 		<PaddedContainer>
 			<LinkTo.Object object={item}>
 				<div className={cx('scorm-grid-card')}>
-					{item.icon && (<AssetIcon className={cx('asset-icon')} src={item.icon} mimeType={item.MimeType} />)}
+					<AssetIcon className={cx('asset-icon')} src={item.icon} mimeType={item.MimeType} />
 					<div className={cx('meta')}>
-						<div className={cx('title-container')}>
-							<div className={cx('title')}>{item.title}</div>
-							<Button className={cx('open-button')} rounded>{t('open')}</Button>
-						</div>
+						<Ellipsed className={cx('title')}>{item.title}</Ellipsed>
 						<List.SeparatedInline className={cx('list')}>
 							{requiredLabel}
 						</List.SeparatedInline>
-						<div className={cx('description')}>{item.description}</div>
+						<Ellipsed className={cx('description')}>{item.description}</Ellipsed>
+						<Button className={cx('open-button')} rounded>{t('open')}</Button>
 					</div>
 				</div>
 			</LinkTo.Object>
