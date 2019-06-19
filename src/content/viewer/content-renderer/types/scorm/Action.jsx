@@ -12,27 +12,25 @@ const t = scoped('course.content.viewer.content-renderer.types.scorm.Action', {
 	open: 'Open'
 });
 
+function getLaunchLink (item) {
+	const link = item.getLink('LaunchSCORM');
+
+	return link ? `${link}?redirecturl=${encodeURIComponent(global.location.href)}` : null;
+}
+
 SCORMAction.propTypes = {
 	item: PropTypes.shape({
 		getLink: PropTypes.func
 	})
 };
 export default function SCORMAction ({item}) {
-	const link = item.getLink('LaunchSCORM');
+	const link = getLaunchLink(item);
 	let button = (
-		<Button className={cx('launch')} disabled={!link}>
+		<Button className={cx('launch')} href={link} rel="external" disabled={!link}>
 			<span>{t('open')}</span>
 			<i className="icon-launch" />
 		</Button>
 	);
-
-	if (link) {
-		button = (
-			<a href={link} target="_blank" rel="noopener noreferrer">
-				{button}
-			</a>
-		);
-	}
 
 	return (
 		<div className={cx('scorm-action')}>
