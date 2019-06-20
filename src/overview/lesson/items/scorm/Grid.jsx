@@ -21,10 +21,12 @@ LessonOverviewScormGridItem.propTypes = {
 	noProgress: PropTypes.bool
 };
 export default function LessonOverviewScormGridItem ({item, course, requiredLabel}) {
+	const completed = item.hasCompleted && item.hasCompleted();
+
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item}>
-				<div className={cx('scorm-grid-card')}>
+				<div className={cx('scorm-grid-card', {completed})}>
 					<AssetIcon className={cx('asset-icon')} src={item.icon} mimeType={item.MimeType} />
 					<div className={cx('meta')}>
 						<Ellipsed className={cx('title')}>{item.title}</Ellipsed>
@@ -38,20 +40,4 @@ export default function LessonOverviewScormGridItem ({item, course, requiredLabe
 			</LinkTo.Object>
 		</PaddedContainer>
 	);
-
-	// return (
-	// 	<PaddedContainer>
-	// 		<LinkTo.Object object={item}>
-	// 			<div className="card">
-	// 				<Card
-	// 					data-ntiid={item.NTIID}
-	// 					item={item}
-	// 					contentPackage={course}
-	// 					labels={[requiredLabel, commentLabel]}
-	// 					noProgress={noProgress}
-	// 				/>
-	// 			</div>
-	// 		</LinkTo.Object>
-	// 	</PaddedContainer>
-	// );
 }

@@ -8,6 +8,34 @@
 	margin: 0.9375rem 0;
 }
 
+.scorm-grid-card.completed .asset-icon:global(.file-type.icon)::after {
+	content: '';
+	display: block;
+	position: absolute;
+	background-color: rgba(0, 0, 0, 0.6);
+	background-image: url('./assets/circle-check-white-large.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+
+	top: 50%;
+	left: 50%;
+	width: 40px;
+	height: 40px;
+	margin-top: -20px;
+	margin-left: -20px;
+	border-radius: 40px;
+
+}
+
+.scorm-grid-card.completed .asset-icon:global(.file-type.icon)::before {
+	content: '';
+	display: block;
+	position: absolute;
+	top: 0; bottom: 0;
+	left: 0; right: 0;
+	background: rgba(0, 0, 0, 0.5);
+}
+
 .asset-icon:global(.file-type.icon) {
 	flex: 0 0 auto;
 	width: 100px;
