@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {scoped} from '@nti/lib-locale';
-import {AssetIcon, Button, List, Ellipsed} from '@nti/web-commons';
+import {AssetIcon, Button, List, Text} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
 
 import PaddedContainer from '../../common/PaddedContainer';
@@ -29,11 +29,23 @@ export default function LessonOverviewScormGridItem ({item, course, requiredLabe
 				<div className={cx('scorm-grid-card', {completed})}>
 					<AssetIcon className={cx('asset-icon')} src={item.icon} mimeType={item.MimeType} />
 					<div className={cx('meta')}>
-						<Ellipsed className={cx('title')}>{item.title}</Ellipsed>
+						<Text
+							limitLines={1}
+							overflow={Text.Ellipsis}
+							className={cx('title')}
+						>
+							{item.title}
+						</Text>
 						<List.SeparatedInline className={cx('list')}>
 							{requiredLabel}
 						</List.SeparatedInline>
-						<Ellipsed className={cx('description')}>{item.description}</Ellipsed>
+						<Text
+							limitLines={2}
+							overflow={Text.Ellipsis}
+							className={cx('description')}
+						>
+							{item.description}
+						</Text>
 						<Button className={cx('open-button')} rounded>{t('open')}</Button>
 					</div>
 				</div>
