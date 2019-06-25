@@ -8,6 +8,7 @@ const {VideoRoll} = Models.courses.overview;
 const {SurveyReference, Survey} = Models.assessment.survey;
 const {RelatedWorkReference, LTIExternalToolAsset, Package, RenderablePackage} = Models.content;
 const {Video} = Models.media;
+const {SCORMContentInfo} = Models.courses.scorm;
 
 const DEFAULT_REQUIRED_POLICY_LINKS = {
 	FETCH: 'GetDefaultRequiredPolicy',
@@ -24,7 +25,8 @@ const TYPES = {
 	SURVEYS: 'Surveys',
 	RELATED_WORK: 'External Links and Uploads',
 	LTI: 'LTI Tools',
-	READINGS: 'Readings'
+	READINGS: 'Readings',
+	SCORM: 'SCORM Packages'
 };
 
 const MIME_TYPES_MAP = {
@@ -34,7 +36,8 @@ const MIME_TYPES_MAP = {
 	[TYPES.READINGS]: ['application/vnd.nextthought.persistentcontentpackage', Package.MimeType, RenderablePackage.MimeType],
 	[TYPES.SURVEYS]: [SurveyReference.MimeType, Survey.MimeType],
 	[TYPES.VIDEOS]: [VideoRoll.MimeType, ...Video.MimeTypes],
-	[TYPES.WEBINARS]: [WebinarAsset.MimeType]
+	[TYPES.WEBINARS]: [WebinarAsset.MimeType],
+	[TYPES.SCORM]: [SCORMContentInfo.MimeType]
 };
 
 export default class CourseAdminCompletionStore extends Stores.SimpleStore {
