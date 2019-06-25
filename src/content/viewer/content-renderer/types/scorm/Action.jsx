@@ -13,7 +13,7 @@ const t = scoped('course.content.viewer.content-renderer.types.scorm.Action', {
 });
 
 function getLaunchLink (item) {
-	const link = item.getLink('LaunchSCORM');
+	const link = item.ScormContentInfo && item.ScormContentInfo.getLink('LaunchSCORM');
 
 	return link ? `${link}?redirecturl=${encodeURIComponent(global.location.href)}` : null;
 }
