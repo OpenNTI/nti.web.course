@@ -3,7 +3,7 @@ import {Stores} from '@nti/lib-store';
 	
 //PIN any package that is uploading, processing, or errord.
 function isPinnedPackage (p) {
-	return p.isTask;
+	return p.isTask || p.isProcessing || p.isErrored;
 }
 
 function packageMatches (p, filter) {
@@ -73,12 +73,18 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 
 		try {
 			const packages = await course.fetchLinkParsed('ScormInstances');
+			const sorted = packages.sort((a, b) => {
+				if (isPinnedPackage(a) && !isPinnedPackage(b)) { return -1; }
+				if (!isPinnedPackage(a) && isPinnedPackage(b)) { return 1; }
+
+				return a.getCreatedTime() - b.getCreatedTime();
+			});
 
 			this.set({
 				initialLoad: true,
 				loading: false,
-				packages,
-				fullPackages: packages
+				packages: sorted,
+				fullPackages: sorted
 			});
 		} catch (e) {
 			this.set({
