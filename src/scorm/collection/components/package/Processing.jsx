@@ -39,7 +39,7 @@ export default class ProcessingPackage extends React.PureComponent {
 
 
 	teardown () {
-		if (this.pollingTask) {
+		if (this.pollingTask && this.pollingTask.canCancel) {
 			this.pollingTask.cancel();
 		}
 	}

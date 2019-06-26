@@ -16,7 +16,7 @@ const t = scoped('course.scorm.collection.View', {
 
 
 export default
-@Store.connect(['initialLoad', 'unavailable', 'error', 'empty', 'uploadError'])
+@Store.connect(['initialLoad', 'unavailable', 'error', 'empty', 'fullPackages', 'uploadError'])
 class ScormCollection extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {

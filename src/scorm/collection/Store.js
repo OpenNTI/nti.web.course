@@ -45,9 +45,8 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 
 	get empty () {
 		const fullPackages = this.get('fullPackages');
-		const upload = this.get('upload');
 
-		return (fullPackages && fullPackages.length === 0) && !upload;
+		return (fullPackages && fullPackages.length === 0);
 	}
 
 

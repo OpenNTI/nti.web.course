@@ -50,7 +50,8 @@ class UploadingPackage extends React.PureComponent {
 		if (!task.hasProgress) { return null; }
 
 		const {progress} = task;
-		const {current, total} = progress || {current: 5, total: 10};
+		const {current, total} = progress;
+
 		const percent = (current / total) * 100;
 		const style = {
 			width: `${Math.round(percent || 0)}%`
