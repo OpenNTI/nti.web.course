@@ -74,7 +74,7 @@ class ScormCollectionPackageList extends React.Component {
 					const isSelected = selectedPackages && selectedPackages.has(pack.scormId);
 
 					return (
-						<li key={index}>
+						<li key={pack.scormId || index}>
 							<Package package={pack} selected={isSelected} />
 						</li>
 					);
