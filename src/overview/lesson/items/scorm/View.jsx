@@ -35,7 +35,7 @@ class LessonOverview extends React.Component {
 		const {layout, item, editMode, onRequirementChange, ...otherProps} = this.props;
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
-		const completionLabel = (<CompletionLabel item={item} />);
+		const completionLabel = item.hasCompleted && item.hasCompleted() ? (<CompletionLabel item={item} />) : null;
 
 		const commentCount = item[Summary] && item[Summary].ItemCount;
 		const commentLabel = typeof commentCount !== 'number' ? t('viewComments') : t('comments', {count: commentCount});
