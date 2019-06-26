@@ -403,6 +403,45 @@ exports[`Course admin advanced completion test (no requirables) renders completa
               </div>
             </div>
           </div>
+          <div
+            className="completion-control"
+          >
+            <div
+              className="label"
+            >
+              SCORM Packages
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off"
+                  >
+                    <input
+                      checked={false}
+                      disabled={false}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -807,6 +846,45 @@ exports[`Course admin advanced completion test (with requirables) renders comple
                     />
                     <div
                       className="toggle-button on"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="completion-control"
+          >
+            <div
+              className="label"
+            >
+              SCORM Packages
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off"
+                  >
+                    <input
+                      checked={false}
+                      disabled={false}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
                     />
                   </div>
                 </div>
@@ -1223,6 +1301,45 @@ exports[`Course admin advanced completion test (with requirables) renders comple
               </div>
             </div>
           </div>
+          <div
+            className="completion-control"
+          >
+            <div
+              className="label"
+            >
+              SCORM Packages
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off"
+                  >
+                    <input
+                      checked={false}
+                      disabled={false}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1633,6 +1750,45 @@ exports[`Course admin advanced completion test (with requirables) renders comple
               </div>
             </div>
           </div>
+          <div
+            className="completion-control disabled"
+          >
+            <div
+              className="label"
+            >
+              SCORM Packages
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off disabled"
+                  >
+                    <input
+                      checked={false}
+                      disabled={true}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2011,6 +2167,45 @@ exports[`Course admin advanced completion test (with requirables) renders not co
               className="label"
             >
               Webinars
+            </div>
+            <div
+              className="control"
+            >
+              <div
+                className="nti-toggle-input"
+              >
+                <div
+                  className="toggler-container"
+                >
+                  <div
+                    className="toggle-label off"
+                  >
+                    Off
+                  </div>
+                  <div
+                    className="toggler off disabled"
+                  >
+                    <input
+                      checked={false}
+                      disabled={true}
+                      onChange={[Function]}
+                      type="checkbox"
+                    />
+                    <div
+                      className="toggle-button off"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="completion-control disabled"
+          >
+            <div
+              className="label"
+            >
+              SCORM Packages
             </div>
             <div
               className="control"
