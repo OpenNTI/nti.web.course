@@ -38,9 +38,10 @@ class LessonOverview extends React.Component {
 		const commentCount = item[Summary] && item[Summary].ItemCount;
 		const commentLabel = typeof commentCount !== 'number' ? t('viewComments') : t('comments', {count: commentCount});
 
+		const requireChange = (value) => onRequirementChange(value, item.ScormContentInfo);
 		const required = item.CompletionRequired;
 		const requiredLabel = item && item.isCompletable && item.isCompletable() && onRequirementChange ?
-			(<RequirementControl key={`${item.scormId}-requirement`} record={item} onChange={onRequirementChange} />) :
+			(<RequirementControl key={`${item.scormId}-requirement`} record={item.ScormContentInfo} onChange={requireChange} />) :
 			required && (<Required key="required-label" />);
 
 		return (
