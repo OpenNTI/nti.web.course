@@ -3,3 +3,8 @@
 	font: normal 400 1rem/1.375 var(--body-font-family);
 	color: var(--primary-grey);
 }
+
+
+.white {
+	color: white;
+}

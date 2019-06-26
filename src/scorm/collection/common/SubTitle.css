@@ -11,3 +11,11 @@
 .dark {
 	color: var(--secondary-grey);
 }
+
+.white {
+	color: white;
+}
+
+.green {
+	color: var(--secondary-green);
+}

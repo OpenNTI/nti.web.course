@@ -1,0 +1,45 @@
+.ready-scorm-package {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 1rem 0;
+}
+
+.ready-scorm-package.selected {
+	background: var(--primary-blue);
+	margin-left: -0.5rem;
+	margin-right: -0.5rem;
+	padding: 1rem 0.5rem;
+}
+
+.title-container {
+	flex: 1 1 auto;
+}
+
+.sub-title-list {
+	color: var(--tertiary-grey);
+}
+
+.selected .sub-title-list {
+	color: white;
+}
+
+.control-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.control-list li {
+	margin: 0;
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	min-width: 150px;
+	font: normal 400 1rem/1.35 var(--body-font-family);
+	color: var(--primary-grey);
+}
+
+.control-trigger {
+	font: normal 600 1rem/22px var(--body-font-family);
+	color: var(--tertiary-grey);
+}

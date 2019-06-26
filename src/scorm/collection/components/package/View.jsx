@@ -5,13 +5,14 @@ import Uploading from './Uploading';
 import UploadingFailed from './UploadFailed';
 import Processing from './Processing';
 import ProcessingFailed from './ProcessingFailed';
-// import Ready from './Ready';
+import Ready from './Ready';
 
 const STATES = [
 	(pack) => pack.isTask && pack.isRejected ? UploadingFailed : null,
 	(pack) => pack.isTask ? Uploading : null,
 	(pack) => pack.isErrored ? ProcessingFailed : null,
-	(pack) => pack.isProcessing ? Processing : null
+	(pack) => pack.isProcessing ? Processing : null,
+	() => Ready
 ];
 
 export default class SCORMPackageView extends React.Component {

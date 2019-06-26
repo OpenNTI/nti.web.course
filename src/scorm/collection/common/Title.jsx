@@ -7,10 +7,11 @@ import Styles from './Title.css';
 const cx = classnames.bind(Styles);
 
 Title.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
+	white: PropTypes.bool
 };
-export default function Title ({className, ...otherProps}) {
+export default function Title ({className, white, ...otherProps}) {
 	return (
-		<span className={cx('scorm-collection-title', className)} {...otherProps} />
+		<span className={cx('scorm-collection-title', className, {white})} {...otherProps} />
 	);
 }
