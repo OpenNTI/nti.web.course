@@ -1,0 +1,40 @@
+.uploading-package {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 1rem 1.5rem 1rem 0;
+	position: relative;
+}
+
+.icon {
+	flex: 0 0 auto;
+	width: 30px;
+	height: 40px;
+	margin: 0 12px;
+	background-image: url('./assets/file-upload.svg');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+}
+
+.title-container {
+	flex: 1 1 auto;
+}
+
+.sub-title {
+	display: block;
+}
+
+.cancel {
+	font: normal 400 0.875rem/1.35 var(--body-font-family);
+	color: var(--primary-blue);
+	cursor: pointer;
+}
+
+.progress {
+	position: absolute;
+	top: auto; bottom: 0;
+	left: 0; right: auto;
+	height: 2px;
+	background-color: var(--primary-blue);
+}

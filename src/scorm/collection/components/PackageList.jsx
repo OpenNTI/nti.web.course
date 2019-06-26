@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {DnD, EmptyState, Task, Errors} from '@nti/web-commons';
+import {DnD, EmptyState} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import Store from '../Store';
@@ -10,7 +10,7 @@ import {ACCEPTS_FILES} from '../Constants';
 import Styles from './PackageList.css';
 import Container from './PaddedContainer';
 import Header from './Header';
-import Package from './Package';
+import Package from './package';
 
 const cx = classnames.bind(Styles);
 const t = scoped('course.scorm.collection.components.PackageList', {
@@ -29,10 +29,7 @@ class ScormCollectionPackageList extends React.Component {
 		selectedPackages: PropTypes.shape({
 			has: PropTypes.func
 		}),
-		uploadPackage: PropTypes.func,
-		upload: PropTypes.object,
-		uploadError: PropTypes.object,
-		clearUploadError: PropTypes.func
+		uploadPackage: PropTypes.func
 	}
 
 	onFileDrop = (e, files) => {
@@ -44,7 +41,7 @@ class ScormCollectionPackageList extends React.Component {
 	}
 
 	render () {
-		const {packages, selectedPackages, filter, upload, uploadError, clearUploadError} = this.props;
+		const {packages, selectedPackages, filter} = this.props;
 		const empty = !packages || !packages.length;
 
 		return (
@@ -58,12 +55,6 @@ class ScormCollectionPackageList extends React.Component {
 					{empty && this.renderEmpty(filter)}
 					{!empty && this.renderPackages(packages, selectedPackages)}
 				</Container>
-				<div className={cx('upload-bar-container')}>
-					<div className={cx('background')}>
-						{upload && (<Task.Progress.Bar className={cx('upload-bar')} task={upload} />)}
-						{uploadError && (<Errors.Bar error={uploadError} className={cx('upload-error')} onClick={clearUploadError} />)}
-					</div>
-				</div>
 			</DnD.DropZoneIndicator>
 		);
 	}
@@ -79,11 +70,11 @@ class ScormCollectionPackageList extends React.Component {
 	renderPackages (packages, selectedPackages) {
 		return (
 			<ul className={cx('package-list')}>
-				{packages.map((pack) => {
+				{packages.map((pack, index) => {
 					const isSelected = selectedPackages && selectedPackages.has(pack.scormId);
 
 					return (
-						<li key={pack.scormId}>
+						<li key={index}>
 							<Package package={pack} selected={isSelected} />
 						</li>
 					);

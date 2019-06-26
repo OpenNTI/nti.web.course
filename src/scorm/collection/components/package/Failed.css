@@ -1,0 +1,35 @@
+.failed-upload {
+	/*primary red*/
+	background: rgba(243,82,82,0.05);
+	padding: 1rem 1.5rem 1rem 0.75rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.title-container {
+	flex: 1 1 auto;
+}
+
+.message {
+	font: normal 400 0.875rem/1.35 var(--body-font-family);
+	color: var(--primary-grey);
+}
+
+.label {
+	color: var(--primary-red);
+}
+
+.clear {
+	width: 18px;
+	height: 18px;
+	border-radius: 18px;
+	background: rgba(0, 0, 0, 0.5);
+	cursor: pointer;
+
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding-left: 1px;
+}

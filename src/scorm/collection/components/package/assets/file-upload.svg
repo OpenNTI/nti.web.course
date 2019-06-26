@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="40px" viewBox="0 0 30 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Row-List" transform="translate(-52.000000, -331.000000)">
+            <g id="Group" transform="translate(67.000000, 351.000000) rotate(-270.000000) translate(-67.000000, -351.000000) translate(47.000000, 336.000000)">
+                <path d="M5,-5 L35,-5 L35,35 L5,35 L5,-5 Z M6,-4 L6,34 L34,34 L34,-4 L6,-4 Z" id="Rectangle" fill="#E2E2E2" fill-rule="nonzero" transform="translate(20.000000, 15.000000) rotate(-270.000000) translate(-20.000000, -15.000000) "></path>
+                <rect id="Rectangle" fill="#FFFFFF" x="1" y="1" width="38" height="28"></rect>
+                <path d="M15.9142136,14 L27,14 C27.5522847,14 28,14.4477153 28,15 C28,15.5522847 27.5522847,16 27,16 L15.9142136,16 L19.7071068,19.7928932 C20.0976311,20.1834175 20.0976311,20.8165825 19.7071068,21.2071068 C19.3165825,21.5976311 18.6834175,21.5976311 18.2928932,21.2071068 L13.0757359,15.9899495 C12.5290019,15.4432155 12.5290019,14.5567845 13.0757359,14.0100505 L18.2928932,8.79289322 C18.6834175,8.40236893 19.3165825,8.40236893 19.7071068,8.79289322 C20.0976311,9.18341751 20.0976311,9.81658249 19.7071068,10.2071068 L15.9142136,14 Z" id="Combined-Shape" fill="#3FB3F6" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,7 +1,14 @@
 import {Stores} from '@nti/lib-store';
 
+	
+//PIN any package that is uploading, processing, or errord.
+function isPinnedPackage (p) {
+	return p.isTask;
+}
 
 function packageMatches (p, filter) {
+	if (isPinnedPackage(p)) { return true; }
+
 	const {title} = p;
 
 	return title && title.toLowerCase().indexOf(filter) >= 0;
@@ -13,6 +20,19 @@ function filterPackages (packages, filter) {
 	return packages.filter(p => packageMatches(p, filter));
 }
 
+function getFormData (file) {
+	const data = new FormData();
+
+	data.append('source', file);
+
+	return data;
+}
+
+
+function replaceIn (original, replacement, list) {
+	return list.map((item) => item === original ? replacement : item);
+}
+
 export default class ScormCollectionStore extends Stores.BoundStore {
 	constructor () {
 		super();
@@ -21,6 +41,15 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 			initialLoad: false
 		});
 	}
+
+
+	get empty () {
+		const fullPackages = this.get('fullPackages');
+		const upload = this.get('upload');
+
+		return (fullPackages && fullPackages.length === 0) && !upload;
+	}
+
 
 	async load () {
 		const {course} = this.binding;
@@ -50,8 +79,7 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 				initialLoad: true,
 				loading: false,
 				packages,
-				fullPackages: packages,
-				empty: !packages || packages.length === 0 
+				fullPackages: packages
 			});
 		} catch (e) {
 			this.set({
@@ -63,50 +91,60 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 	}
 
 
-	uploadPackage (file) {
-		const {course} = this.binding;
-		const data = new FormData();
+	_prependPackage (p) {
+		const oldPackages = this.get('fullPackages');
+		const filter = this.get('filter');
 
-		data.append('source', file);
+		const newPackages = [p, ...oldPackages];
 
-		const upload = course.putUploadToLink('ScormInstances', data);
-		upload.setName(file.name);
-
-		this.monitorUpload(upload, course);
 		this.set({
-			upload,
-			uploadError: null
+			packages: filterPackages(newPackages, filter),
+			fullPackages: newPackages
 		});
 	}
 
-	async monitorUpload (upload, course) {
+
+	_replacePackage (oldPackage, newPackage) {
+		this.set({
+			packages: replaceIn(oldPackage, newPackage, this.get('packages')),
+			fullPackages: replaceIn(oldPackage, newPackage, this.get('fullPackages'))
+		});
+	}
+
+	_removePackage (pack) {
+		this.set({
+			packages: (this.get('packages') || []).filter(p => p !== pack),
+			fullPackages: (this.get('fullPackages') || []).filter(p => p !== pack)
+		});
+	}
+
+
+	async uploadPackage (file) {
+		const {course} = this.binding;
+
+		const upload = course.putUploadToLink('ScormInstances', getFormData(file), true);
+
+		upload.setName(file.name);
+		this._prependPackage(upload);
+
 		try {
-			const {'scorm_id': scormId} = await upload;
-			const packages = await course.fetchLinkParsed('ScormInstances');
+			const newPackage = await upload;
 
-			if (this.binding.onPackageUploaded) {
-				this.binding.onPackageUploaded(packages.find(p => p.scormId === scormId));
-			}
-
-			this.set({
-				upload: null,
-				packages,
-				fullPackages: packages,
-				empty: !packages || packages.length === 0
-			});
+			this._replacePackage(upload, newPackage);
 		} catch (e) {
-			this.set({
-				upload: null,
-				uploadError: e.wasCanceled ? null : e
-			});
+			if (e.wasCanceled) {
+				this._removePackage(upload);
+			}
 		}
 	}
 
 
-	clearUploadError () {
-		this.set({
-			uploadError: null
-		});
+	async deletePackage (pack) {
+		if (pack.isTask) {
+			return this._removePackage(pack);
+		}
+
+		//TODO
 	}
 
 
@@ -117,7 +155,5 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 			filter,
 			packages: filterPackages(packages, filter.toLowerCase())
 		});
-
-
 	}
 }

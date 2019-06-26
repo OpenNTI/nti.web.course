@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Input, Errors, Task} from '@nti/web-commons';
+import {Input} from '@nti/web-commons';
 
 import Store from '../Store';
 import {ACCEPTS_FILES} from '../Constants';
@@ -21,12 +21,10 @@ const t = scoped('course.scorm.collection.components.Empty', {
 
 
 export default
-@Store.monitor(['uploadPackage', 'uploadError', 'upload'])
+@Store.monitor(['uploadPackage'])
 class EmptyScormCollection extends React.Component {
 	static propTypes = {
-		uploadPackage: PropTypes.func,
-		uploadError: PropTypes.object,
-		upload: PropTypes.object
+		uploadPackage: PropTypes.func
 	}
 
 
@@ -40,27 +38,15 @@ class EmptyScormCollection extends React.Component {
 
 
 	render () {
-		const {uploadError, upload} = this.props;
-
 		return (
 			<>
-				{uploadError && (<Errors.Bar error={uploadError} />)}
 				<Container>
-					{!upload && (
-						<Input.FileDrop
-							getString={t}
-							onChange={this.onFileChange}
-							sizeLimit={Infinity}
-							allowedTypes={allowedTypes}
-						/>
-					)}
-					{upload && (
-						<Task.Progress.Panel
-							task={upload}
-							header={t('uploading.header')}
-							subHeader={t('uploading.subHeader')}
-						/>
-					)}
+					<Input.FileDrop
+						getString={t}
+						onChange={this.onFileChange}
+						sizeLimit={Infinity}
+						allowedTypes={allowedTypes}
+					/>
 				</Container>
 			</>
 		);
