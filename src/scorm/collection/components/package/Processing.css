@@ -1,0 +1,26 @@
+.processing-package {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	padding: 1rem 0;
+}
+
+.loading {
+	flex: 0 0 auto;
+	margin: 0 1rem;
+}
+
+.title-container {
+	flex: 1 1 auto;
+}
+
+.sub-titles {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+}
+
+.sub-titles > * {
+	display: block;
+	margin-right: 0.3rem;
+}
