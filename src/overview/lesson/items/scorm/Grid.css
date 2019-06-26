@@ -13,7 +13,6 @@
 	display: block;
 	position: absolute;
 	background-color: rgba(0, 0, 0, 0.6);
-	background-image: url('./assets/circle-check-white-large.png');
 	background-position: center center;
 	background-repeat: no-repeat;
 
@@ -25,6 +24,14 @@
 	margin-left: -20px;
 	border-radius: 40px;
 
+}
+
+.scorm-grid-card.completed.success .asset-icon:global(.file-type.icon)::after {
+	background-image: url('./assets/circle-check-white-large.png');
+}
+
+.scorm-grid-card.completed.failed .asset-icon:global(.file-type.icon)::after {
+	background-image: url('./assets/circle-warning-white-large.svg');
 }
 
 .scorm-grid-card.completed .asset-icon:global(.file-type.icon)::before {
@@ -61,6 +68,7 @@
 	grid-column: 1/1;
 	grid-row: 2/2;
 	min-height: 0.875rem;
+	color: var(--tertiary-grey);
 }
 
 .list:not(:empty) {

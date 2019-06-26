@@ -8,7 +8,7 @@ import { List, Grid } from '../../Constants';
 import Required from '../../common/Required';
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
 
-
+import CompletionLabel from './CompletionLabel';
 import ListCmp from './List';
 import GridCmp from './Grid';
 
@@ -35,6 +35,8 @@ class LessonOverview extends React.Component {
 		const {layout, item, editMode, onRequirementChange, ...otherProps} = this.props;
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
+		const completionLabel = (<CompletionLabel item={item} />);
+
 		const commentCount = item[Summary] && item[Summary].ItemCount;
 		const commentLabel = typeof commentCount !== 'number' ? t('viewComments') : t('comments', {count: commentCount});
 
@@ -50,6 +52,7 @@ class LessonOverview extends React.Component {
 				item={item}
 				commentLabel={!editMode && commentLabel}
 				requiredLabel={requiredLabel}
+				completionLabel={completionLabel}
 				{...otherProps}
 			/>
 		);

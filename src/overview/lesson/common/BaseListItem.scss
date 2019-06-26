@@ -48,6 +48,12 @@
 						top: 3px !important;
 					}
 				}
+
+				&.failed {
+					background-color: $primary-red;
+					color: white;
+					font: normal 600 1.125rem/24px $body-font-family;
+				}
 			}
 		}
 

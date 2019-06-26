@@ -121,10 +121,21 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 
 	renderCompletedStatus () {
 		const {item, noCompletedStatus} = this.props;
-		if(item.hasCompleted && item.hasCompleted() && !noCompletedStatus) {
+
+		if (noCompletedStatus) { return null; }
+
+		if (item.hasCompleted && item.hasCompleted() && item.completedSuccessfully()) {
 			return (
 				<div className="progress-icon">
 					<CircularProgress width={20} height={20} isComplete/>
+				</div>
+			);
+		}
+
+		if (item.hasCompleted && item.hasCompleted() && item.completedUnsuccessfully()) {
+			return (
+				<div className="progress-icon failed">
+					<span>!</span>
 				</div>
 			);
 		}
