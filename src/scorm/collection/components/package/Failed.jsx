@@ -19,7 +19,10 @@ export default
 class UploadedFailedPackage extends React.Component {
 	static propTypes = {
 		package: PropTypes.object.isRequired,
-		error: PropTypes.object,
+		error: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.object
+		]),
 		deletePackage: PropTypes.func
 	}
 
@@ -66,7 +69,7 @@ class UploadedFailedPackage extends React.Component {
 		return (
 			<div className={cx('failed-upload')}>
 				<div className={cx('title-container')}>
-					<Title>{pack.name}</Title>
+					<Title>{pack.name || pack.fileName}</Title>
 					<div className={cx('message')}>
 						<span className={cx('label')}>{t('label')}</span> <span className={cx('error')}>{Errors.Messages.getMessage(error)}</span>
 					</div>

@@ -15,8 +15,7 @@ const t = scoped('course.scorm.collection.components.package.Uploading', {
 });
 
 export default
-class UploadingPackage extends React.Component {
-
+class UploadingPackage extends React.PureComponent {
 	static propTypes = {
 		package: PropTypes.object.isRequired
 	}

@@ -144,7 +144,21 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 			return this._removePackage(pack);
 		}
 
-		//TODO
+		let removed = false;
+		const removeTimeout = setTimeout(() => {
+			removed = true;
+			this._removePackage(pack);
+		}, 100);
+
+		try {
+			pack.delete('delete');
+		} catch (e) {
+			clearTimeout(removeTimeout);
+
+			if (removed) {
+				this._prependPackage(pack);
+			}
+		}
 	}
 
 
