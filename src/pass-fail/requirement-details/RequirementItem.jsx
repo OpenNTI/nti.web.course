@@ -24,7 +24,7 @@ const TYPES = {
 	},
 	'application/vnd.nextthought.scormcompletionmetadata': {
 		title: item => item.ScormContentInfoTitle,
-		score: item => item.Success ? t('notSatisfactory') : t('satisfactory'),
+		score: item => item.Success ? t('satisfactory') : t('notSatisfactory'),
 		targetScore: () => '-'
 	}
 };
