@@ -136,6 +136,11 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 			const newPackage = await upload;
 
 			this._replacePackage(upload, newPackage);
+
+			if (this.binding.onPackageUploaded) {
+				this.binding.onPackageUploaded(newPackage);
+			}
+
 		} catch (e) {
 			if (e.wasCanceled) {
 				this._removePackage(upload);
@@ -154,6 +159,10 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 			removed = true;
 			this._removePackage(pack);
 		}, 100);
+
+		if (this.binding.onPackageDeleted) {
+			this.binding.onPackageDeleted(pack);
+		}
 
 		try {
 			pack.delete('delete');
