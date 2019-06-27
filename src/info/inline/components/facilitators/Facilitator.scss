@@ -169,6 +169,11 @@
 		grid-template-columns: [info] 1fr [controls] auto;
 		grid-template-areas: "name controls" "title title";
 
+		.is-ie & {
+			height: 100px;
+			grid: 1fr auto;
+		}
+
 		.title {
 			grid-area: title;
 
