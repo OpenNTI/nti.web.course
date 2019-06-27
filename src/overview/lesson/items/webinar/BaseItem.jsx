@@ -54,7 +54,7 @@ export default class WebinarBaseItem extends React.Component {
 		);
 	}
 
-	renderStatus () {
+	renderStatus (startTime, endTime) {
 		const { item: {webinar}} = this.props;
 
 		if(!webinar) {
@@ -66,12 +66,12 @@ export default class WebinarBaseItem extends React.Component {
 		return (
 			<div className="status">
 				{isAvailable && <div className="live">Live</div>}
-				<div className={cx('duration-container', {'is-active': isAvailable})}><DateTime.Duration webinar={webinar}/></div>
+				<div className={cx('duration-container', {'is-active': isAvailable})}><DateTime.Duration {...{startTime, endTime}}/></div>
 			</div>
 		);
 	}
 
-	renderImageAndDescription () {
+	renderImageAndDescription (startDate, endDate) {
 		const {item} = this.props;
 		const {webinar} = item;
 
@@ -79,7 +79,7 @@ export default class WebinarBaseItem extends React.Component {
 
 		return (
 			<div className={cx('image-and-description', {iconless: !hasIcon})}>
-				{hasIcon && <div className="image"><img src={item.icon}/>{this.renderStatus()}</div>}
+				{hasIcon && <div className="image"><img src={item.icon}/>{this.renderStatus(startDate, endDate)}</div>}
 				<pre className="description">{webinar.description}</pre>
 			</div>
 		);
@@ -104,7 +104,7 @@ export default class WebinarBaseItem extends React.Component {
 					/>
 				</div>
 				{!readOnly && !hideControls && !noProgress && <Button webinar={webinar} onStatusChange={this.onStatusChange} onUnregister={this.onUnregister} />}
-				{webinar && !isMinimal && this.renderImageAndDescription()}
+				{webinar && !isMinimal && this.renderImageAndDescription(startDate, endDate)}
 			</div>
 		);
 	}
