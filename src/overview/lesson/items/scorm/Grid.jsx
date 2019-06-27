@@ -25,11 +25,12 @@ export default function LessonOverviewScormGridItem ({item, course, requiredLabe
 	const completed = item.hasCompleted && item.hasCompleted();
 	const success = item.completedSuccessfully && item.completedSuccessfully();
 	const failed = item.completedUnsuccessfully && item.completedUnsuccessfully();
+	const hasDescription = !!item.description;
 
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item}>
-				<div className={cx('scorm-grid-card', {completed, success, failed})}>
+				<div className={cx('scorm-grid-card', {completed, success, failed, 'has-description': hasDescription})}>
 					<AssetIcon className={cx('asset-icon')} src={item.icon} mimeType={item.MimeType} />
 					<div className={cx('meta')}>
 						<Text
@@ -39,10 +40,6 @@ export default function LessonOverviewScormGridItem ({item, course, requiredLabe
 						>
 							{item.title}
 						</Text>
-						<List.SeparatedInline className={cx('list')}>
-							{completionLabel}
-							{requiredLabel}
-						</List.SeparatedInline>
 						<Text
 							limitLines={2}
 							overflow={Text.Ellipsis}
@@ -50,6 +47,10 @@ export default function LessonOverviewScormGridItem ({item, course, requiredLabe
 						>
 							{item.description}
 						</Text>
+						<List.SeparatedInline className={cx('list')}>
+							{requiredLabel}
+							{completionLabel}
+						</List.SeparatedInline>
 						<Button className={cx('open-button')} rounded>{t('open')}</Button>
 					</div>
 				</div>
