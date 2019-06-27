@@ -52,7 +52,7 @@ class ReadyPackage extends React.Component {
 		return (
 			<LinkTo.Object className={cx('ready-scorm-package', {selected})} object={pack}>
 				<div className={cx('title-container')}>
-					<Title white={selected} >{pack.title}</Title>
+					<Title>{pack.title}</Title>
 					<List.SeparatedInline className={cx('sub-title-list')}>
 						{this.renderUploaded(pack, selected)}
 						{this.renderFileName(pack, selected)}
@@ -74,8 +74,7 @@ class ReadyPackage extends React.Component {
 		if (ago < NOW_CUTOFF) {
 			return (
 				<SubTitle
-					green={!selected}
-					white={selected}
+					green
 				>
 					{t('uploaded.now')}
 				</SubTitle>
@@ -85,7 +84,7 @@ class ReadyPackage extends React.Component {
 		const date = DateTime.format(created, 'MMMM DD, YYYY [at] H:mmA');
 
 		return (
-			<SubTitle white={selected}>
+			<SubTitle>
 				{t('uploaded.date', { date })}
 			</SubTitle>
 		);
@@ -95,7 +94,7 @@ class ReadyPackage extends React.Component {
 		if (!pack.fileName) { return null; }
 
 		return (
-			<SubTitle white={selected}>{pack.fileName}</SubTitle>
+			<SubTitle>{pack.fileName}</SubTitle>
 		);
 	}
 
