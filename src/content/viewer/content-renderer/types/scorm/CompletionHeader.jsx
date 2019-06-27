@@ -67,10 +67,6 @@ export default class SCORMCompletionHeader extends React.Component {
 				<div className={cx('icon', {success, failed})} />
 				{this.renderTitle(success, failed, item)}
 				{this.renderSubTitle(success, failed, item)}
-				<div className={cx('result-container')}>
-					<div className={cx('result-label')}>{t('result.label')}</div>
-					{this.renderResult(success, failed, item)}
-				</div>
 			</div>
 		);
 	}
@@ -98,16 +94,6 @@ export default class SCORMCompletionHeader extends React.Component {
 				{failed && (<span className={cx('failed-label')}>{t('label.fail')}</span>)}
 				{formattedDate && (<span className={cx('completedDate')}>{t('completedDate', {date: formattedDate})}</span>)}
 			</List.SeparatedInline>
-		);
-	}
-
-	renderResult (success) {
-		const result = success ? t('result.success') : t('result.fail');
-
-		return (
-			<div className={cx('result')}>
-				{result}
-			</div>
 		);
 	}
 }
