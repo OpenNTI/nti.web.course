@@ -7,6 +7,7 @@ import TypeRegistry from '../Registry';
 
 import Styles from './View.css';
 import Action from './Action';
+import CompletionHeader from './CompletionHeader';
 
 const {Aside, Responsive} = Layouts;
 const cx = classnames.bind(Styles);
@@ -37,17 +38,20 @@ class CourseContentViewerRendererScorm extends React.Component {
 		const {item} = location || {};
 
 		return (
-			<section className={cx('scorm-content')}>
-				<div className={cx('header')}>
-					<AssetIcon className={cx('asset-icon')} src={item.icon} mimeType={item.MimeType} />
-					<div className={cx('title')}>{item.title}</div>
-				</div>
-				<div className={cx('description')}>
-					{item.description}
-				</div>
-				<Responsive.Item query={Responsive.isMobileContext} render={this.renderMobileAction} course={course} item={item} />
-				<Responsive.Item query={Responsive.isWebappContext} render={this.renderWebAction} course={course} item={item} />
-			</section>
+			<div>
+				<CompletionHeader item={item} />
+				<section className={cx('scorm-body')}>
+					<div className={cx('header')}>
+						<AssetIcon className={cx('asset-icon')} src={item.icon} mimeType={item.MimeType} />
+						<div className={cx('title')}>{item.title}</div>
+					</div>
+					<div className={cx('description')}>
+						{item.description}
+					</div>
+					<Responsive.Item query={Responsive.isMobileContext} render={this.renderMobileAction} course={course} item={item} />
+					<Responsive.Item query={Responsive.isWebappContext} render={this.renderWebAction} course={course} item={item} />
+				</section>
+			</div>
 		);
 	}
 

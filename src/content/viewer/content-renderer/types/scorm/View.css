@@ -1,4 +1,4 @@
-.scorm-content {
+.scorm-body {
 	padding: 3.5rem 2rem;
 }
 
@@ -8,7 +8,7 @@
 	margin-bottom: 1.75rem;
 }
 
-.scorm-content .asset-icon {
+.scorm-body .asset-icon {
 	width: 100px;
 	height: 125px;
 	flex: 0 0 auto;
