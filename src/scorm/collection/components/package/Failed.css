@@ -14,7 +14,10 @@
 }
 
 .message {
-	font: normal 400 0.875rem/1.35 var(--body-font-family);
+	font-weight: 400;
+	font-size: 0.875rem;
+	line-height: 1.35;
+	font-family: var(--body-font-family);
 	color: var(--primary-grey);
 }
 

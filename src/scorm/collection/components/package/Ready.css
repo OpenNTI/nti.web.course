@@ -6,7 +6,7 @@
 }
 
 .ready-scorm-package.selected {
-	background: rgb(63, 179, 246, 0.1);
+	background: rgba(63, 179, 246, 0.1);
 	margin-left: -0.5rem;
 	margin-right: -0.5rem;
 	padding: 1rem 2rem 1rem 0.5rem;
@@ -31,11 +31,17 @@
 	padding: 0.5rem 1rem;
 	cursor: pointer;
 	min-width: 150px;
-	font: normal 400 1rem/1.35 var(--body-font-family);
+	font-weight: 400;
+	font-size: 1rem;
+	line-height: 1.35;
+	font-family: var(--body-font-family);
 	color: var(--primary-grey);
 }
 
 .control-trigger {
-	font: normal 600 1rem/22px var(--body-font-family);
+	font-weight: 600;
+	font-size: 1rem;
+	line-height: 22px;
+	font-family: var(--body-font-family);
 	color: var(--tertiary-grey);
 }

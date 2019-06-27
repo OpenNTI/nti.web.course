@@ -26,7 +26,9 @@
 }
 
 .cancel {
-	font: normal 400 0.875rem/1.35 var(--body-font-family);
+	font-size: 0.875rem;
+	line-height: 1.35;
+	font-family: var(--body-font-family);
 	color: var(--primary-blue);
 	cursor: pointer;
 }

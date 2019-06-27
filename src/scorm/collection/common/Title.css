@@ -1,6 +1,8 @@
 .scorm-collection-title {
 	display: block;
-	font: normal 400 1rem/1.375 var(--body-font-family);
+	font-size: 1rem;
+	line-height: 1.375;
+	font-family: var(--body-font-family);
 	color: var(--primary-grey);
 }
 
