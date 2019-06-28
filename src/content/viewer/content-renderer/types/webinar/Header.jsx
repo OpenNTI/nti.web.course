@@ -19,7 +19,6 @@ export default class Header extends React.Component {
 			item: {
 				title,
 				webinar,
-				icon,
 				completed,
 				expired
 			}
@@ -38,7 +37,6 @@ export default class Header extends React.Component {
 						eventType: t('type'),
 						startTime,
 						endTime,
-						icon,
 						completed,
 						expired
 					}}
