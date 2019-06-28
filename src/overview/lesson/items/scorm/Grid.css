@@ -77,6 +77,11 @@
 	display: block;
 }
 
+:global(.is-ie) .scorm-grid-card.has-description .description {
+	-ms-grid-column: 1;
+	-ms-grid-column-span: 1;
+}
+
 .scorm-grid-card.has-description .list {
 	grid-column: 1/1;
 	grid-row: 3/3;
