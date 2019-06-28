@@ -79,7 +79,7 @@
 
 :global(.is-ie) .scorm-grid-card.has-description .description {
 	-ms-grid-column: 1;
-	-ms-grid-column-span: 1;
+	-ms-grid-column-span: 2;
 }
 
 .scorm-grid-card.has-description .list {
