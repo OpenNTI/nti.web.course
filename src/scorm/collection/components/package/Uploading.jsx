@@ -15,7 +15,7 @@ const t = scoped('course.scorm.collection.components.package.Uploading', {
 });
 
 export default
-class UploadingPackage extends React.PureComponent {
+class UploadingPackage extends React.Component {
 	static propTypes = {
 		package: PropTypes.object.isRequired
 	}
@@ -30,6 +30,7 @@ class UploadingPackage extends React.PureComponent {
 
 	render () {
 		const {package: task} = this.props;
+		const isDone = !task.progress || task.progress.current === task.progress.total;
 
 		if (!task) { return null; }
 
@@ -40,7 +41,7 @@ class UploadingPackage extends React.PureComponent {
 					<Title>{task.name}</Title>
 					<SubTitle className={cx('sub-title')} blue>{t('uploading')}</SubTitle>
 				</div>
-				{task.canCancel && (<div className={cx('cancel')} onClick={this.onCancel} role="button">{t('cancel')}</div>)}
+				{task.canCancel && !isDone && (<div className={cx('cancel')} onClick={this.onCancel} role="button">{t('cancel')}</div>)}
 				{this.renderProgress(task)}
 			</div>
 		);
