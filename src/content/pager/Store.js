@@ -21,6 +21,10 @@ function isContentOutlineNode (item) {
 	return isOutlineNode && item.hasOverviewContent;
 }
 
+function isConstrainedOutlineNode (item) {
+	return isOutlineNode(item) && item.contentIsConstrained;
+}
+
 function buildIsSameContentOutlineNode (node) {
 	const contentId = node.getContentId ? node.getContentId() : node;
 	const id = node.getID ? node.getID() : node;
@@ -92,12 +96,15 @@ function oneOf (...fns) {
 	};
 }
 
-const isNotPageableContent = oneOf(
-	isCourse,
-	isOutlineNode,
-	isOverview,
-	isOverviewGroup,
-	isVideoRoll
+const isNotPageableContent = combine(
+	invert(isConstrainedOutlineNode),
+	oneOf(
+		isCourse,
+		isOutlineNode,
+		isOverview,
+		isOverviewGroup,
+		isVideoRoll
+	)
 );
 
 
@@ -183,6 +190,62 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		return nodes;
 	}
 
+	clear () {
+		delete this[COURSE];
+		delete this[LESSON];
+		delete this[SELECTION];
+	}
+
+	#doLoad = async () => {
+		try {
+			const courseTree = this.getCourseContentTree();
+			const lessonNode = this.getLessonNode();
+			const selectionNodes = this.getSelectionNodes();
+
+			const lessonInfo = await this.getLessonInfo(courseTree, lessonNode, selectionNodes);
+			const location = await this.getLocationInfo(courseTree, lessonNode, selectionNodes);
+			const pagingInfo = await this.getPagingInfo(courseTree, lessonNode, selectionNodes);
+
+			this.set({
+				loading: false,
+				lessonInfo,
+				location,
+				...pagingInfo
+			});
+		} catch (e) {
+			this.set({
+				loading: true,
+				error: e
+			});
+		}
+	}
+
+	async updateOnAssignmentSubmit (assignment) {
+		const next = this.get('next');
+		const previous = this.get('previous');
+
+		const needsUpdate = (item) => {
+			return item && item.contentIsConstrained && item.contentIsConstrainedBy && item.contentIsConstrainedBy(assignment) && item.refresh();
+		};
+
+		try {
+			const nextUpdate = await needsUpdate(next.item);
+			const prevUpdate = await needsUpdate(previous.item);
+
+			if (nextUpdate || prevUpdate) {
+				this.update();
+			}
+		} catch (e) {
+			//swallow
+		}
+	}
+
+
+	update () {
+		delete this[SELECTION];
+		this.#doLoad();
+	}
+
 
 	async load () {
 		const needsReload = this.needsReload();
@@ -206,27 +269,7 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			});
 		}
 
-		try {
-			const courseTree = this.getCourseContentTree();
-			const lessonNode = this.getLessonNode();
-			const selectionNodes = this.getSelectionNodes();
-
-			const lessonInfo = await this.getLessonInfo(courseTree, lessonNode, selectionNodes);
-			const location = await this.getLocationInfo(courseTree, lessonNode, selectionNodes);
-			const pagingInfo = await this.getPagingInfo(courseTree, lessonNode, selectionNodes);
-
-			this.set({
-				loading: false,
-				lessonInfo,
-				location,
-				...pagingInfo
-			});
-		} catch (e) {
-			this.set({
-				loading: true,
-				error: e
-			});
-		}
+		this.#doLoad();
 	}
 
 
@@ -344,8 +387,8 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const nextNode = await courseWalker.selectNext().getCurrentNode();
 		const prevNode = await courseWalker.selectPrev().getCurrentNode();
 
-		const nextLessonNode = nextNode && nextNode.findParent(isOutlineNode);
-		const prevLessonNode = prevNode && prevNode.findParent(isOutlineNode);
+		const nextLessonNode = nextNode && nextNode.findParentOrSelf(isOutlineNode);
+		const prevLessonNode = prevNode && prevNode.findParentOrSelf(isOutlineNode);
 
 		const nextLesson = nextLessonNode && await nextLessonNode.getItem();
 		const prevLesson = prevLessonNode && await prevLessonNode.getItem();

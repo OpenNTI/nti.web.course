@@ -3,6 +3,11 @@
 	border-top: 1px solid var(--border-grey-light);
 }
 
+.up-next.disabled {
+	pointer-events: none;
+	opacity: 0.6;
+}
+
 .up-next:hover {
 	background-color: #fafafa;
 }

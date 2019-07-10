@@ -47,6 +47,12 @@ function nextIsSubPage (next, lessonInfo) {
 	return item && (!nextItem || nextItem.getID() !== item.getID());
 }
 
+function isConstrained (next, lessonInfo) {
+	const {item} = next || {};
+
+	return item.isOutlineNode && item.contentIsConstrained;
+}
+
 
 export default class UpNext extends React.Component {
 	static propTypes = {
@@ -67,9 +73,10 @@ export default class UpNext extends React.Component {
 		const endOfCourse = isEndOfCourse(next, lessonInfo);
 		const endOfLesson = isEndOfLesson(next, lessonInfo);
 		const subPage = nextIsSubPage(next, lessonInfo);
+		const constrained = endOfLesson && isConstrained(next, lessonInfo);
 
 		return (
-			<div className={cx('up-next')}>
+			<div className={cx('up-next', {disabled: constrained})}>
 				{endOfCourse && this.renderEndOfCourse(next, lessonInfo)}
 				{!endOfCourse && endOfLesson && this.renderEndOfLesson(next, lessonInfo)}
 				{!endOfCourse && !endOfLesson && subPage && this.renderSubPage(next, lessonInfo)}
