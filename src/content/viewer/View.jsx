@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {getScrollParent} from '@nti/lib-dom';
+import {getScrollParent, scrollElementTo} from '@nti/lib-dom';
 import {Layouts, Decorators} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -45,8 +45,9 @@ class CourseContentViewer extends React.Component {
 
 		if (i(location) !== i(prevLoc)) {
 			const scroller = getScrollParent(this.domNode.current);
-			if (scroller && scroller.scrollTo) {
-				scroller.scrollTo(0, 0);
+
+			if (scroller) {
+				scrollElementTo(scroller, 0, 0);
 			}
 		}
 	}
