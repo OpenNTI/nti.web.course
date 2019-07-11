@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {DialogButtons, Loading} from '@nti/web-commons';
+import {DialogButtons, Loading, Input} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
-import {PlaintextEditor, Parsers} from '@nti/web-editor';
 
 import Header from './Header';
 import EmailsInput from './EmailsInput';
@@ -76,17 +75,13 @@ export default class View extends React.Component {
 	onSend = async () => {
 		const {
 			props: {course, onSuccess},
-			state: {emails, message: draftState}
+			state: {emails, message}
 		} = this;
 		let error;
-		const {PlainText} = Parsers;
-
 		this.setState({
 			error,
 			busy: true
 		});
-
-		const [message] = PlainText.fromDraftState(draftState);
 
 		try {
 			const result = await course.sendInvitations(emails, message);
@@ -140,8 +135,14 @@ export default class View extends React.Component {
 				/>
 				<Error error={error} />
 				<InvalidEmails invalid={invalid} />
-				{/* <Input.FileDrop allowedTypes={{'text/csv': true}} onChange={this.onFileChange} onError={this.onFileError} value={file} getString={fileUploadStrings} /> */}
-				<PlaintextEditor text={message} placeholder={t('placeholders.message')} onChange={this.onMessageChange} />
+				<div className={cx('message')}>
+					<Input.TextArea
+						value={message}
+						placeholder={t('placeholders.message')}
+						onChange={this.onMessageChange}
+						autoGrow
+					/>
+				</div>
 				<DialogButtons buttons={buttons} />
 				{busy && (
 					<div className={cx('loading')}>

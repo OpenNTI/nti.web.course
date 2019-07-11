@@ -16,6 +16,13 @@
 	line-height: normal;
 }
 
+.message :global(.textarea-container) {
+	border: none;
+	box-shadow: none;
+	background: none;
+	border-radius: 0;
+}
+
 .loading {
 	position: absolute;
 	top: 0;
