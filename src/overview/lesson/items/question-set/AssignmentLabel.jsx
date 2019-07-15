@@ -10,7 +10,14 @@ import RequirementControl from '../../../../progress/widgets/RequirementControl'
 const t = scoped('course.overview.lesson.overview.question-set.AssignmentLabel', {
 	draft: 'Draft',
 	maxTime: '%(maxTime)s time limit',
-	failed: 'Not Satisfactory',
+	failed: {
+		limitedAttempts: {
+			zero: 'Not Satisfactory, No Attempts Remaining',
+			one: 'Not Satisfactory, %(count)s Attempt Remaining',
+			other: 'Not Satisfactory, %(count)s Attempts Remaining'
+		},
+		unlimitedAttempts: 'Not Satisfactory, Unlimited Attempts Remaining'
+	},
 	completed: {
 		label: 'completed ',
 		graded: 'graded ',
@@ -84,9 +91,13 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			isNoSubmit: (a && a.isNonSubmit()) || (h && h.isSyntheticSubmission()),
 			isSynthetic: h && h.isSyntheticSubmission(),
 			isDraft: a && !a.isPublished(),
+
 			isTimed: a && a.isTimed,
 			maxTime: a && a.isTimed && a.getMaximumTimeAllowed && a.getMaximumTimeAllowed(),
 			duration: a && a.isTimed && a.getDuration && a.getDuration(),
+
+			maxSubmissions: a && a.maxSubmissions,
+			submissionCount: a && a.submissionCount,
 
 			isSubmitted: h && h.isSubmitted(),
 			completedDate: !canEdit && h && h.Submission && h.Submission.getCreatedTime(),
@@ -138,13 +149,23 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 
 	renderFailed () {
-		const {failed} = this.state;
+		const {failed, maxSubmissions, submissionCount} = this.state;
 
 		if (!failed) { return null; }
 
+		let label = '';
+
+		if (maxSubmissions == null) {
+			label = t('failed.limitedAttempts', {count: 1});
+		} else if (maxSubmissions < 0) {
+			label = t('failed.unlimitedAttempts');
+		} else {
+			label = t('failed.limitedAttempts', {count: maxSubmissions - submissionCount});
+		}
+
 		return (
 			<span className="failed">
-				{t('failed')}
+				{label}
 			</span>
 		);
 	}
