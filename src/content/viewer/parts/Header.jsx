@@ -27,6 +27,13 @@ const t = scoped('course.content.viewer.parts.Header', {
 });
 
 
+function isConstrained (next) {
+	const {item} = next || {};
+
+	return item.isOutlineNode && item.contentIsConstrained;
+}
+
+
 export default class Header extends React.Component {
 	static propTypes = {
 		dismissPath: PropTypes.string,
@@ -154,9 +161,12 @@ export default class Header extends React.Component {
 	renderPaging () {
 		const {next, previous} = this.props;
 
+		const showNext = next && !isConstrained(next);
+		const showPrev = previous && !isConstrained(previous);
+
 		return (
 			<div className={cx('paging')}>
-				{previous && (
+				{showPrev && (
 					<LinkTo.Object
 						object={previous.item}
 						context={previous}
@@ -166,13 +176,13 @@ export default class Header extends React.Component {
 						<i className="icon-chevronup-25" />
 					</LinkTo.Object>
 				)}
-				{!previous && (
+				{!showPrev && (
 					<span className={cx('prev-link-disabled')}>
 						<i className="icon-chevronup-25" />
 					</span>
 				)}
 
-				{next && (
+				{showNext && (
 					<LinkTo.Object
 						object={next.item}
 						context={next}
@@ -182,7 +192,7 @@ export default class Header extends React.Component {
 						<i className="icon-chevrondown-25" />
 					</LinkTo.Object>
 				)}
-				{!next && (
+				{!showNext && (
 					<span className={cx('next-link-disabled')}>
 						<i className="icon-chevrondown-25" />
 					</span>

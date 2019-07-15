@@ -47,7 +47,7 @@ function nextIsSubPage (next, lessonInfo) {
 	return item && (!nextItem || nextItem.getID() !== item.getID());
 }
 
-function isConstrained (next, lessonInfo) {
+function isConstrained (next) {
 	const {item} = next || {};
 
 	return item.isOutlineNode && item.contentIsConstrained;
