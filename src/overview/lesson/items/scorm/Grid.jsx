@@ -35,14 +35,14 @@ export default function LessonOverviewScormGridItem ({item, course, requiredLabe
 					<div className={cx('meta')}>
 						<Text
 							limitLines={1}
-							overflow={Text.Ellipsis}
+							overflow={Text.Overflow.Ellipsis}
 							className={cx('title')}
 						>
 							{item.title}
 						</Text>
 						<Text
 							limitLines={2}
-							overflow={Text.Ellipsis}
+							overflow={Text.Overflow.Ellipsis}
 							className={cx('description')}
 						>
 							{item.description}
