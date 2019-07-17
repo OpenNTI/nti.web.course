@@ -19,6 +19,13 @@ exports[`Course overview assignment label test Completable, optional, editable 1
   </li>
   <li>
     <span
+      className="attempts"
+    >
+      1 Attempt
+    </span>
+  </li>
+  <li>
+    <span
       className="due late"
     >
       Due Monday, October 30 12:00 AM CDT
@@ -37,6 +44,13 @@ exports[`Course overview assignment label test Completable, required, not editab
     >
       Required
     </div>
+  </li>
+  <li>
+    <span
+      className="attempts"
+    >
+      1 Attempt
+    </span>
   </li>
   <li>
     <span
@@ -118,6 +132,13 @@ exports[`Course overview assignment label test Not completed, but excused 1`] = 
 >
   <li>
     <span
+      className="attempts"
+    >
+      1 Attempt
+    </span>
+  </li>
+  <li>
+    <span
       className="due late"
     >
       Due Monday, October 30 12:00 AM CDT
@@ -140,6 +161,13 @@ exports[`Course overview assignment label test Not completed, overdue 1`] = `
 >
   <li>
     <span
+      className="attempts"
+    >
+      1 Attempt
+    </span>
+  </li>
+  <li>
+    <span
       className="due late"
     >
       Due Monday, October 30 12:00 AM CDT
@@ -152,6 +180,13 @@ exports[`Course overview assignment label test Not completed, overdue, but is no
 <ul
   className="nti-separated-inline-list lesson-overview-assignment-status"
 >
+  <li>
+    <span
+      className="attempts"
+    >
+      1 Attempt
+    </span>
+  </li>
   <li>
     <span
       className="due"

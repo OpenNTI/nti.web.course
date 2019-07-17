@@ -197,28 +197,6 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		);
 	}
 
-	xrenderAttempts () {
-		const {failed, maxSubmissions, submissionCount} = this.state;
-
-		if (!failed) { return null; }
-
-		let label = '';
-
-		if (maxSubmissions == null) {
-			label = t('failed.limitedAttempts', {count: 1});
-		} else if (maxSubmissions < 0) {
-			label = t('failed.unlimitedAttempts');
-		} else {
-			label = t('failed.limitedAttempts', {count: maxSubmissions - submissionCount});
-		}
-
-		return (
-			<span className="failed">
-				{label}
-			</span>
-		);
-	}
-
 
 	renderTimed () {
 		const {duration, isSynthetic} = this.state;
