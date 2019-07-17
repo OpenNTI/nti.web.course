@@ -5,6 +5,10 @@
 	text-transform: uppercase;
 	color: $tertiary-grey;
 
+	li {
+		display: inline-block;
+	}
+
 	.completed {
 		&.ontime:not(.submission-failed) .status-label {
 			color: $secondary-green;

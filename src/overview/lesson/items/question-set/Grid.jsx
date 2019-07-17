@@ -14,6 +14,7 @@ import AssignmentIcon from './AssignmentIcon';
 import AssignmentLabel from './AssignmentLabel';
 
 const DEFAULT_TEXT = {
+	tryAgain: 'Try Again',
 	review: 'Review',
 	start: 'Start',
 	view: 'View'
@@ -148,6 +149,8 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 	renderAssignmentButton () {
 		const {assignment, assignmentHistory} = this.props;
 		const parts = assignment.parts || [];
+		const {maxSubmissions, submissionCount} = assignment;
+		const success = assignment.CompletedItem && assignment.CompletedItem.Success;
 		const startDate = assignment.getAvailableForSubmissionBeginning();
 		const dueDate = assignment.getAvailableForSubmissionEnding();
 		const now = new Date();
@@ -157,7 +160,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		if (assignment.isNonSubmit()) {
 			text = t('view');
 		} else if (assignmentHistory) {
-			text = t('review');
+			text = maxSubmissions == null || success || maxSubmissions === submissionCount ? t('review') : t('tryAgain');
 		} else if (dueDate && dueDate < now) {
 			text = t('start');
 		} else if (!startDate || now >= startDate) {

@@ -10,6 +10,26 @@ import RequirementControl from '../../../../progress/widgets/RequirementControl'
 const t = scoped('course.overview.lesson.overview.question-set.AssignmentLabel', {
 	draft: 'Draft',
 	maxTime: '%(maxTime)s time limit',
+	attempts: {
+		notStarted: {
+			limitedAttempts: {
+				zero: 'No Attempts',
+				one: '%(count)s Attempt',
+				other: '%(count)s Attempts'
+			},
+			unlimitedAttempts: 'Unlimited Attempts'
+		},
+		started: {
+			failed: {
+				limitedAttempts: {
+					zero: 'Not Satisfactory, No Attempts Remaining',
+					one: 'Not Satisfactory, %(count)s Attempt Remaining',
+					other: 'Not Satisfactory, %(count)s Attempts Remaining'
+				},
+				unlimitedAttempts: 'Not Satisfactory, Unlimited Attempts Remaining'
+			}
+		}
+	},
 	failed: {
 		limitedAttempts: {
 			zero: 'Not Satisfactory, No Attempts Remaining',
@@ -116,7 +136,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		return (
 			<List.SeparatedInline className="lesson-overview-assignment-status">
 				{this.renderRequired()}
-				{this.renderFailed()}
+				{this.renderAttempts()}
 				{this.renderDraft()}
 				{this.renderTimed()}
 				{this.renderCompletion()}
@@ -147,8 +167,37 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			null;
 	}
 
+	renderAttempts () {
+		const {isSubmitted, failed, maxSubmissions, submissionCount} = this.state;
 
-	renderFailed () {
+		if (isSubmitted && !failed) { return null; }
+
+		let key = 'attempts';
+
+		if (!isSubmitted) {
+			key = `${key}.notStarted`;
+		} else {
+			key = `${key}.started.failed`;
+		}
+
+		let label = '';
+
+		if (maxSubmissions == null) {
+			label = t(`${key}.limitedAttempts`, {count: 1});
+		} else if (maxSubmissions < 0) {
+			label = t(`${key}.unlimitedAttempts`);
+		} else {
+			label = t(`${key}.limitedAttempts`, {count: maxSubmissions - submissionCount});
+		}
+
+		return (
+			<span className={cx('attempts', {failed})}>
+				{label}
+			</span>
+		);
+	}
+
+	xrenderAttempts () {
 		const {failed, maxSubmissions, submissionCount} = this.state;
 
 		if (!failed) { return null; }
