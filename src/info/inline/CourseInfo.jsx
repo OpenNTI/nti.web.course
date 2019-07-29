@@ -105,6 +105,7 @@ export default class CourseInfo extends React.Component {
 			courseInstance,
 			redemptionCodes,
 			enrollmentAccess,
+			hasMoreFacilitators: courseInstance.hasLink('Instructors') || courseInstance.hasLink('Editors'),
 			facilitators: mergeAllFacilitators(
 				catalogEntry.Instructors,
 				[],
@@ -354,6 +355,7 @@ export default class CourseInfo extends React.Component {
 			courseInstance,
 			enrollmentAccess,
 			facilitators,
+			hasMoreFacilitators,
 			showingFacilitatorEditor,
 			showingFullFacilitatorSet,
 			loadingFullFacilitators,
@@ -440,6 +442,7 @@ export default class CourseInfo extends React.Component {
 						onBeginEditing={this.activateFacilitatorsEditor}
 						onEndEditing={this.endEditing}
 						doSave={this.saveFacilitators}
+						hasMoreFacilitators={hasMoreFacilitators}
 						showingFacilitatorEditor={showingFacilitatorEditor}
 						showingFullFacilitatorSet={showingFullFacilitatorSet}
 						loadingFullFacilitators={loadingFullFacilitators}

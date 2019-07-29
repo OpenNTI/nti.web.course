@@ -13,12 +13,15 @@ const t = scoped('course.info.inline.components.facilitators.Edit', {
 });
 
 LoadAllFacilitators.propTypes = {
+	hasMoreFacilitators: PropTypes.bool,
 	showingFullFacilitatorSet: PropTypes.bool,
 	loadingFullFacilitators: PropTypes.bool,
 	showFullFacilitatorSet: PropTypes.func,
 	hideFullFacilitatorSet: PropTypes.func
 };
-export default function LoadAllFacilitators ({showingFullFacilitatorSet, loadingFullFacilitators, showFullFacilitatorSet, hideFullFacilitatorSet}) {
+export default function LoadAllFacilitators ({hasMoreFacilitators, showingFullFacilitatorSet, loadingFullFacilitators, showFullFacilitatorSet, hideFullFacilitatorSet}) {
+	if (!hasMoreFacilitators) { return null; }
+
 	const handler = showingFullFacilitatorSet ? hideFullFacilitatorSet : showFullFacilitatorSet;
 
 	return (
