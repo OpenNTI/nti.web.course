@@ -100,12 +100,6 @@ export default class CourseInfo extends React.Component {
 			enrollmentAccess = null;
 		}
 
-		const instructorsLink = courseInstance ? courseInstance.getLink('Instructors') : null;
-		const editorsLink = courseInstance ? courseInstance.getLink('Editors') : null;
-
-		const instructorsRaw = instructorsLink ? await service.get(instructorsLink) : [];
-		const editorsRaw = editorsLink ? await service.get(editorsLink) : [];
-
 		this.setState({
 			catalogEntry,
 			courseInstance,
@@ -113,8 +107,8 @@ export default class CourseInfo extends React.Component {
 			enrollmentAccess,
 			facilitators: mergeAllFacilitators(
 				catalogEntry.Instructors,
-				instructorsRaw && instructorsRaw.Items,
-				editorsRaw && editorsRaw.Items,
+				[],
+				[],
 				catalogEntry),
 			loading: false
 		});
@@ -181,8 +175,68 @@ export default class CourseInfo extends React.Component {
 		this.setState({activeEditor: EDITORS.MEET_TIMES});
 	}
 
-	activateFacilitatorsEditor = () => {
-		this.setState({activeEditor: EDITORS.FACILITATORS});
+	hideFullFacilitatorSet = async () => {
+		this.setState({
+			showingFullFacilitatorSet: false
+		});
+	}
+
+	showFullFacilitatorSet = async () => {
+		this.loadFullFacilitatorsSet({showingFullFacilitatorSet: true});
+	}
+
+	loadFullFacilitatorsSet = async (extraState = {}) => {
+		const {
+			catalogEntry,
+			courseInstance,
+			facilitatorsFullyLoaded,
+			loadingFullFacilitators
+		} = this.state;
+
+		if (facilitatorsFullyLoaded || loadingFullFacilitators) {
+			this.setState(extraState);
+			return;
+		}
+
+		this.setState({
+			loadingFullFacilitators: true
+		});
+
+		try {
+			const service = await getService();
+
+			const instructorsLink = courseInstance ? courseInstance.getLink('Instructors') : null;
+			const editorsLink = courseInstance ? courseInstance.getLink('Editors') : null;
+
+			const instructorsRaw = instructorsLink ? await service.get(instructorsLink) : [];
+			const editorsRaw = editorsLink ? await service.get(editorsLink) : [];
+
+
+			this.setState({
+				...extraState,
+				loadingFullFacilitators: false,
+				facilitatorsFullyLoaded: true,
+				facilitators: mergeAllFacilitators(
+					catalogEntry.Instructors,
+					instructorsRaw && instructorsRaw.Items,
+					editorsRaw && editorsRaw.Items,
+					catalogEntry
+				)
+			});
+		} catch (e) {
+			this.setState({
+				...extraState,
+				loadingFullFacilitators: false
+			});
+		}
+	}
+
+	activateFacilitatorsEditor = async () => {
+		this.setState({
+			showingFacilitatorEditor: true,
+		}, () => {
+			this.loadFullFacilitatorsSet({activeEditor: EDITORS.FACILITATORS, showingFacilitatorEditor: false});
+		});
 	}
 
 	activateTranscriptCreditEditor = () => {
@@ -294,7 +348,17 @@ export default class CourseInfo extends React.Component {
 
 	render () {
 		const { editable, hasAdminToolsAccess } = this.props;
-		const { activeEditor, catalogEntry, courseInstance, enrollmentAccess, facilitators, loading } = this.state;
+		const {
+			activeEditor,
+			catalogEntry,
+			courseInstance,
+			enrollmentAccess,
+			facilitators,
+			showingFacilitatorEditor,
+			showingFullFacilitatorSet,
+			loadingFullFacilitators,
+			loading
+		} = this.state;
 
 		if(loading || !catalogEntry) {
 			return (<div className="course-inline-editor loading"><Loading.Mask/></div>);
@@ -376,6 +440,11 @@ export default class CourseInfo extends React.Component {
 						onBeginEditing={this.activateFacilitatorsEditor}
 						onEndEditing={this.endEditing}
 						doSave={this.saveFacilitators}
+						showingFacilitatorEditor={showingFacilitatorEditor}
+						showingFullFacilitatorSet={showingFullFacilitatorSet}
+						loadingFullFacilitators={loadingFullFacilitators}
+						showFullFacilitatorSet={this.showFullFacilitatorSet}
+						hideFullFacilitatorSet={this.hideFullFacilitatorSet}
 						hideDeleteBlock/>
 				</div>
 				<TechSupport />

@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Loading} from '@nti/web-commons';
 
 import Facilitator from './Facilitator';
+import LoadAll from './LoadAll';
 
 export default class FacilitatorsView extends React.Component {
 	static propTypes = {
 		facilitators: PropTypes.arrayOf(PropTypes.object),
+		showingFullFacilitatorSet: PropTypes.bool,
+		showingFacilitatorEditor: PropTypes.bool,
 		courseInstance: PropTypes.object.isRequired
 	}
 
@@ -21,14 +25,18 @@ export default class FacilitatorsView extends React.Component {
 	}
 
 	render () {
-		const { facilitators } = this.props;
+		const { facilitators, showingFacilitatorEditor: showingEditor, showingFullFacilitatorSet:showFull } = this.props;
+		const filter = showFull ? (x => x.role) : (x => x.role && x.visible);
 
 		return (
-			<div className="facilitators">
-				{(facilitators || [])
-					.filter(x => x.role)
-					.map(this.renderFacilitator)}
-			</div>
+			<Loading.Placeholder loading={showingEditor} fallback={(<Loading.Spinner />)} delay={100}>
+				<div className="facilitators">
+					{(facilitators || [])
+						.filter(filter)
+						.map(this.renderFacilitator)}
+					<LoadAll {...this.props} />
+				</div>
+			</Loading.Placeholder>
 		);
 	}
 }
