@@ -13,7 +13,10 @@ const t = scoped('course.admin-tools.advanced.completion.View', {
 	certificates: 'Award Certificate on Completion',
 	percentage: 'Percentage (1 to 100)',
 	defaultRequired: 'Required by Default',
-	assignments: 'Assignments'
+	assignments: 'Assignments',
+	types: {
+		Assignments: 'Assignments'
+	}
 });
 
 export default
@@ -130,10 +133,11 @@ class CourseAdminCompletion extends React.Component {
 	renderDefaultRequiredToggle = (defaultRequirable, disabled) => {
 		const className = cx('completion-control', {disabled});
 		const {label, isDefault} = defaultRequirable;
+		const text = t.isMissing(`types.${label}`) ? label : t(`types.${label}`);
 
 		return (
 			<div className={className} key={label}>
-				<div className="label">{label}</div>
+				<div className="label">{text}</div>
 				<div className="control">
 					<Input.Toggle
 						disabled={disabled}
