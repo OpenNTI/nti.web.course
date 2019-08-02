@@ -166,7 +166,7 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 				: ROLES.ASSISTANT;
 
 		const assetRoot = Presentation.Asset.getAssetRoot({ contentPackage: catalogEntry });
-		const imageUrl = assetRoot && assetRoot + '/instructor-photos/0' + (index + 1) + '.png';
+		const imageUrl = !username && assetRoot && assetRoot + '/instructor-photos/0' + (index + 1) + '.png';
 
 		aggregated.push({
 			role,
