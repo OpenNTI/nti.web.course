@@ -101,6 +101,10 @@ export default class Administrative extends React.Component {
 	}
 
 	renderOptions () {
+		const {course} = this.props;
+		const canExport = course && course.CatalogEntry && course.CatalogEntry.hasLink('Export');
+
+
 		return (
 			<Flyout.Triggered
 				className="admin-course-options"
@@ -108,7 +112,15 @@ export default class Administrative extends React.Component {
 				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
 				ref={this.attachOptionsFlyoutRef}
 			>
-				<CourseMenu course={this.props.course} doEdit={this.doEdit} doExport={this.doExport} doDelete={this.deleteCourse} doRequestSupport={this.doRequestSupport} registered admin />
+				<CourseMenu
+					registered
+					admin
+					course={course}
+					doEdit={this.doEdit}
+					doExport={canExport ? this.doExport : null}
+					doDelete={this.deleteCourse}
+					doRequestSupport={this.doRequestSupport}
+				/>
 			</Flyout.Triggered>
 		);
 	}
