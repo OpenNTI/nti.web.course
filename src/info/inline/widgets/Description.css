@@ -1,0 +1,6 @@
+.course-info-description {
+	display: inline-block;
+	font-size: 0.875rem;
+	color: var(--secondary-grey);
+	margin-bottom: 10px;
+}

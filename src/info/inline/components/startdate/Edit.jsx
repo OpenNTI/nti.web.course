@@ -4,10 +4,11 @@ import {scoped} from '@nti/lib-locale';
 
 import DatePicker from '../../widgets/DatePicker';
 
+import Disclaimer from './Disclaimer';
+
 
 const t = scoped('course.info.inline.components.startdate.Edit', {
 	label: 'Start Date',
-	description: 'Delay when people can start.',
 	invalid: 'Start date cannot be after end date'
 });
 
@@ -104,7 +105,7 @@ export default class StartDateEdit extends React.Component {
 			<div className="columned">
 				<div className="field-info">
 					<div className="field-label">{t('label')}</div>
-					<div className="field-description">{t('description')}</div>
+					<Disclaimer />
 				</div>
 				<div className="content-column">
 					<DatePicker date={StartDate} disabledDays={this.disabledDays} onChange={this.onChange}/>

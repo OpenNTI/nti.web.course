@@ -4,6 +4,7 @@ import {scoped} from '@nti/lib-locale';
 
 import DateView from '../../widgets/DateView';
 
+import Disclaimer from './Disclaimer';
 
 const t = scoped('course.info.inline.components.startdate.View', {
 	label: 'Start Date'
@@ -11,7 +12,8 @@ const t = scoped('course.info.inline.components.startdate.View', {
 
 export default class StartDateView extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired
+		catalogEntry: PropTypes.object.isRequired,
+		editable: PropTypes.bool
 	}
 
 	static FIELD_NAME = 'StartDate';
@@ -21,10 +23,15 @@ export default class StartDateView extends React.Component {
 	}
 
 	render () {
-		const StartDate = this.props.catalogEntry.getStartDate();
+		const {catalogEntry, editable} = this.props;
+		const StartDate = catalogEntry.getStartDate();
 
 		return (
-			<DateView date={StartDate} label={t('label')}/>
+			<DateView
+				date={StartDate}
+				label={t('label')}
+				disclaimer={editable ? (<Disclaimer />) : null}
+			/>
 		);
 	}
 }

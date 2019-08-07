@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
 import { getWeekdaysFrom, convertToTimeStr } from './utils';
+import Disclaimer from './Disclaimer';
 
 
 const t = scoped('course.info.inline.components.meettimes.View', {
@@ -11,7 +12,8 @@ const t = scoped('course.info.inline.components.meettimes.View', {
 
 export default class MeetTimesView extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired
+		catalogEntry: PropTypes.object.isRequired,
+		editable: PropTypes.bool
 	}
 
 	static FIELD_NAME = 'Schedule';
@@ -73,10 +75,13 @@ export default class MeetTimesView extends React.Component {
 	}
 
 	render () {
+		const {editable} = this.props;
+
 		return (
 			<div className="columned">
 				<div className="field-info">
 					<div className="date-label">{t('label')}</div>
+					{editable && (<Disclaimer />)}
 				</div>
 				<div className="content-column">{this.renderTimes()}</div>
 			</div>

@@ -4,6 +4,7 @@ import {scoped} from '@nti/lib-locale';
 
 import CreditViewContents from '../credit/Contents';
 
+import Dislcaimer from './Disclaimer';
 import Store from './managetypes/CreditTypesStore';
 import CreditEntry from './CreditEntry';
 
@@ -26,7 +27,8 @@ class TranscriptCreditView extends React.Component {
 	static propTypes = {
 		store: PropTypes.object.isRequired,
 		catalogEntry: PropTypes.object.isRequired,
-		enrollmentAccess: PropTypes.object
+		enrollmentAccess: PropTypes.object,
+		editable: PropTypes.bool
 	}
 
 	static FIELD_NAME = 'credits';
@@ -91,10 +93,13 @@ class TranscriptCreditView extends React.Component {
 	}
 
 	render () {
+		const {editable} = this.props;
+
 		return (
 			<div className="columned transcript-credit-hours">
 				<div className="field-info">
 					<div className="date-label">{t('label')}</div>
+					{editable && (<Dislcaimer />)}
 				</div>
 				<div className="content-column">{this.renderContent()}</div>
 			</div>

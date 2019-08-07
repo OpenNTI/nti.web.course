@@ -5,7 +5,8 @@ import { DateTime } from '@nti/web-commons';
 export default class DateView extends React.Component {
 	static propTypes = {
 		date: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-		label: PropTypes.string.isRequired
+		label: PropTypes.string.isRequired,
+		disclaimer: PropTypes.node
 	}
 
 	static FIELD_NAME = 'StartDate';
@@ -15,12 +16,13 @@ export default class DateView extends React.Component {
 	}
 
 	render () {
-		const { date, label } = this.props;
+		const { date, label, disclaimer } = this.props;
 
 		return (
 			<div className="columned">
 				<div className="field-info">
 					<div className="date-label">{label}</div>
+					{disclaimer || null}
 				</div>
 				<div className="content-column">
 					<div className="date-value">{(date && DateTime.format(date)) || '-'}</div>

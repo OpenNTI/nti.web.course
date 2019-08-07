@@ -6,6 +6,7 @@ import {getService} from '@nti/web-client';
 import AddButton from '../../widgets/AddButton';
 import CreditViewContents from '../credit/Contents';
 
+import Disclaimer from './Disclaimer';
 import Store from './managetypes/CreditTypesStore';
 import CreditEntry from './CreditEntry';
 import AddCreditType from './AddCreditType';
@@ -248,6 +249,7 @@ class TranscriptCreditEdit extends React.Component {
 			<div className="columned transcript-credit-hours edit">
 				<div className="field-info">
 					<div className="date-label">{t('label')}</div>
+					<Disclaimer />
 				</div>
 				<div className="content-column">{this.renderContent()}</div>
 			</div>

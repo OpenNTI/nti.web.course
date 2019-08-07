@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 
+import Disclaimer from './Disclaimer';
 
 const t = scoped('course.info.inline.components.redemptioncodes.View', {
-	label: 'Redemption Code',
-	visibility: 'Only visible to facilitators.'
+	label: 'Redemption Code'
 });
 
 export default class RedemptionCodesView extends React.Component {
@@ -39,11 +39,10 @@ export default class RedemptionCodesView extends React.Component {
 		return (
 			<div className="columned">
 				<div className="field-info">
-					<div className="date-label">{t('label')}</div>
-					<div className="redemption-codes-visibility-label">
-						<i className="icon-view" />
-						<span>{t('visibility')}</span>
+					<div className="date-label">
+						<span>{t('label')}</span>
 					</div>
+					<Disclaimer />
 				</div>
 				<div className="content-column">{this.renderCodes()}</div>
 			</div>

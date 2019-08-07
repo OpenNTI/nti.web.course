@@ -6,11 +6,11 @@ import {TimePicker} from '@nti/web-commons';
 import Day from '../../../../editor/panels/daytime/Day';
 
 import { getWeekdaysFrom, getDateStr } from './utils';
+import Disclaimer from './Disclaimer';
 
 
 const t = scoped('course.info.inline.components.meettimes.Edit', {
 	label: 'Meet Times',
-	description: 'When to be online together (local time).'
 });
 
 export default class MeetTimesEdit extends React.Component {
@@ -144,7 +144,7 @@ export default class MeetTimesEdit extends React.Component {
 		return (
 			<div className="field-info">
 				<div className="field-label">{t('label')}</div>
-				<div className="field-description">{t('description')}</div>
+				<Disclaimer />
 				<div className="meet-times-edit-widget">
 					{this.renderDaySelection()}
 					{this.renderTimeSelection()}

@@ -4,6 +4,7 @@ import { scoped } from '@nti/lib-locale';
 import { Prompt } from '@nti/web-commons';
 
 import Code from './code';
+import Disclaimer from './Disclaimer';
 import Store from './Store';
 
 const t = scoped('course.info.inline.components.redemptioncodes.Edit', {
@@ -59,13 +60,16 @@ class RedemptionCodesEdit extends React.Component {
 		const canCreateCode = courseInstance.hasLink('CreateCourseInvitation');
 
 		return (
-			<div className="redemption-codes-editor">
+			<div className="redemption-codes-editor columned">
 				<div className="field-info">
 					<div className="field-label">{t('label')}</div>
+					<Disclaimer />
+				</div>
+				<div className="content-column">
+					{(items || []).map(code => <Code key={code.getID()} code={code} onDelete={this.deleteCode} />)}
+					{canCreateCode && <a className="create-code" onClick={this.createCode}>Create Code</a>}
 				</div>
 				{error && <div className="error">{error}</div>}
-				{(items || []).map(code => <Code key={code.getID()} code={code} onDelete={this.deleteCode} />)}
-				{canCreateCode && <a className="create-code" onClick={this.createCode}>Create Code</a>}
 			</div>
 		);
 	}
