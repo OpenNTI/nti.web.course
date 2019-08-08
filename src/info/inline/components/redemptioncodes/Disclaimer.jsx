@@ -10,7 +10,7 @@ const cx = classnames.bind(Styles);
 
 const t = scoped('course.info.inline.components.redemptioncodes.Disclaimer', {
 	visibility: 'Only visible to facilitators.',
-	description: 'Redemption code are a great way to grant access to your course, but there are no limitations to how many learners can use them.'
+	description: 'Redemption codes are a great way to grant access to your course, but there are no limitations to how many learners can use them.'
 });
 
 export default function RedemptionCodeDisclaimer () {
