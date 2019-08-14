@@ -88,18 +88,34 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	const editorsToRemove = facilitators.filter(x => x.role !== ROLES.EDITOR && x.role !== ROLES.INSTRUCTOR);
 	const instructorsToRemove = facilitators.filter(x => x.role !== ROLES.ASSISTANT && x.role !== ROLES.INSTRUCTOR);
 
+	if (instructorsToSave.length) {
+		const payload = instructorsToSave.reduce((acc, f) => {
+			return {users: [...acc.users, f.username]};
+		}, {users: []});
+
+		payload.users = payload.users.join(',');
+
+		service.post(instructorsLink, payload);
+	}
+
 	// do the POST/DELETE calls
-	instructorsToSave.forEach(x => {
-		saveItem(service, instructorsLink, 'post', x.username);
-	});
+	// instructorsToSave.forEach(x => {
+	// 	saveItem(service, instructorsLink, 'post', x.username);
+	// });
 
 	instructorsToRemove.forEach(x => {
 		saveItem(service, instructorsLink + '/' + x.username, 'delete', x.username);
 	});
 
-	editorsToSave.forEach(x => {
-		saveItem(service, editorsLink, 'post', x.username);
-	});
+	if (editorsToSave.length) {
+		const payload = editorsToSave.reduce((acc, f) => {
+			return {users: [...acc.users, f.username]};
+		}, {users: []});
+
+		payload.users = payload.users.join(',');
+
+		service.post(editorsLink, payload);
+	}
 
 	editorsToRemove.forEach(x => {
 		saveItem(service, editorsLink + '/' + x.username, 'delete', x.username);
