@@ -6,7 +6,7 @@ const mockService = () => ({
 	post: (link, data) => {
 		const key = 'post-' + link;
 
-		let newData = [...(savedData[key] || []), data.user];
+		let newData = data.users;
 
 		savedData[key] = newData;
 	},
@@ -143,9 +143,10 @@ describe('Test saveFacilitators', () => {
 				});
 			};
 
-			verifyList(savedData['post-Instructors'], ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth']);
+			console.log(savedData);
+			verifyList(savedData['post-Instructors'].split(','), ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth']);
 			verifyList(savedData['delete-Instructors'], ['eonly', 'hiddenEditor', 'toRemove']);
-			verifyList(savedData['post-Editors'], ['eonly', 'both', 'hiddenEditor', 'hiddenBoth']);
+			verifyList(savedData['post-Editors'].split(','), ['eonly', 'both', 'hiddenEditor', 'hiddenBoth']);
 			verifyList(savedData['delete-Editors'], ['ionly', 'hiddenInstructor', 'toRemove']);
 
 			done();
