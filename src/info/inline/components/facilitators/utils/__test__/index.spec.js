@@ -143,7 +143,6 @@ describe('Test saveFacilitators', () => {
 				});
 			};
 
-			console.log(savedData);
 			verifyList(savedData['post-Instructors'].split(','), ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth']);
 			verifyList(savedData['delete-Instructors'], ['eonly', 'hiddenEditor', 'toRemove']);
 			verifyList(savedData['post-Editors'].split(','), ['eonly', 'both', 'hiddenEditor', 'hiddenBoth']);
