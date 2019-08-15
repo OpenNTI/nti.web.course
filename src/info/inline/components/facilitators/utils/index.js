@@ -93,7 +93,7 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 			return {users: [...acc.users, f.username]};
 		}, {users: []});
 
-		payload.users = payload.users.join(',');
+		payload.users = payload.users.filter(Boolean).join(',');
 
 		service.post(instructorsLink, payload);
 	}
@@ -112,7 +112,7 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 			return {users: [...acc.users, f.username]};
 		}, {users: []});
 
-		payload.users = payload.users.join(',');
+		payload.users = payload.users.filter(Boolean).join(',');
 
 		service.post(editorsLink, payload);
 	}
