@@ -3,6 +3,7 @@ import EventEmitter from 'events';
 import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.navigation.tabs', {
+	community: 'Community',
 	activity: 'Activity',
 	lessons: 'Lessons',
 	scorm: 'Content',
@@ -15,6 +16,12 @@ const t = scoped('course.navigation.tabs', {
 export const getDefaultTabLabel = tab => t(tab);
 
 export const TABS = {
+	'activity': {
+		hasAccess: () => true
+	},
+	'community': {
+		hasAccess: course => course.hasCommunity()
+	},
 	'lessons': {
 		hasAccess: course => course.hasOutline() && !course.isScormInstance,
 		subRoutes: ['content'],
@@ -40,7 +47,7 @@ export const TABS = {
 	}
 };
 
-export const DEFAULT_ORDER = ['lessons', 'scorm', 'assignments', 'discussions', 'info', 'videos'];
+export const DEFAULT_ORDER = ['activity', 'community', 'lessons', 'scorm', 'assignments', 'discussions', 'info', 'videos'];
 
 const UPDATE_BUS = new EventEmitter();
 

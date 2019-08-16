@@ -1,4 +1,5 @@
 export Card from './card';
+export Community from './community';
 export CourseCreateButton from './CreateButton';
 export * as Content from './content';
 export * as Editor from './editor';
