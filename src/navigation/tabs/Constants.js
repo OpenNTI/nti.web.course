@@ -16,9 +16,6 @@ const t = scoped('course.navigation.tabs', {
 export const getDefaultTabLabel = tab => t(tab);
 
 export const TABS = {
-	'activity': {
-		hasAccess: () => true
-	},
 	'community': {
 		hasAccess: course => course.hasCommunity()
 	},
@@ -47,7 +44,7 @@ export const TABS = {
 	}
 };
 
-export const DEFAULT_ORDER = ['activity', 'community', 'lessons', 'scorm', 'assignments', 'discussions', 'info', 'videos'];
+export const DEFAULT_ORDER = ['community', 'lessons', 'scorm', 'assignments', 'discussions', 'info', 'videos'];
 
 const UPDATE_BUS = new EventEmitter();
 
