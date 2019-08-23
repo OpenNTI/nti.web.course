@@ -8,7 +8,7 @@ const t = scoped('course.navigation.tabs', {
 	lessons: 'Lessons',
 	scorm: 'Content',
 	assignments: 'Assignments',
-	discussions: 'Discussions',
+	discussions: 'Community',
 	info: 'Course Info',
 	videos: 'Videos'
 });
@@ -17,6 +17,7 @@ export const getDefaultTabLabel = tab => t(tab);
 
 export const TABS = {
 	'community': {
+		labelKey: 'discussions',//We are wanting to pull in any existing overrides of the discussion tab
 		hasAccess: course => course.hasCommunity()
 	},
 	'lessons': {
@@ -31,9 +32,6 @@ export const TABS = {
 	'assignments': {
 		hasAccess: course => course.shouldShowAssignments()
 	},
-	'discussions': {
-		hasAccess: course => course.hasDiscussions()
-	},
 	'info': {
 		hasAccess: () => true
 	},
@@ -44,7 +42,7 @@ export const TABS = {
 	}
 };
 
-export const DEFAULT_ORDER = ['community', 'lessons', 'scorm', 'assignments', 'info', 'videos'];
+export const DEFAULT_ORDER = ['lessons', 'scorm', 'assignments', 'community', 'info', 'videos'];
 
 const UPDATE_BUS = new EventEmitter();
 

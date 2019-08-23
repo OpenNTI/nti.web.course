@@ -12,7 +12,7 @@ const t = scoped('course.navigation.tabs.editor.Tab', {
 		'lessons': 'This tab opens by default and contains all activities and content including readings, files, videos, assessments, discussions, and more, organized into units, lessons, and sections.',
 		'scorm': 'The tab opens by default and contains the SCORM content.',
 		'assignments': 'This tab contains all assignments. Learners can take assignments, view progress, and see scores. Facilitators can view learner progress, see reports, and add feedback and scores.',
-		'discussions': 'This tab offers forums to promote engagement and discussion. Both learners and facilitators can create a new discussion. Facilitators can also post announcements.',
+		'community': 'This tab offers forums to promote engagement and discussion. Both learners and facilitators can create a new discussion. Facilitators can also post announcements.',
 		'info': 'This tab includes information such as the title, description, credit awarded, start date, facilitators, and contact info. Facilitators can access reports, rosters, and other tools here.'
 	}
 });

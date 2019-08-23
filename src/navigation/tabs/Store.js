@@ -20,14 +20,18 @@ function formatTabs (course, overrides = {}) {
 	const order = DEFAULT_ORDER;//TODO: get the order from the overrides if it gets defined
 	const labels = overrides.names || {};
 
+	const getLabel = (key) => key && labels[key] != null ? labels[key] : null;
+	const getDefaultLabel = (key) => key && getDefaultTabLabel(key);
+
 	return order
 		.filter(key => shouldShowTab(key, course))
 		.map((key) => {
 			const tab = TABS[key];
+			const label = getLabel(key) || getLabel(tab.labelKey);
 
 			return {
 				id: key,
-				label: labels[key] != null ? labels[key] : getDefaultTabLabel(key),
+				label: label != null ? label : (getDefaultLabel(tab.labelKey) || getDefaultLabel(key)),
 				isRootRoute: tab && tab.isRootRoute,
 				subRoutes: tab && tab.subRoutes
 			};
