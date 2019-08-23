@@ -73,16 +73,6 @@ describe('Course Navigation Constants', () => {
 				});
 			});
 
-			describe('discussions', () => {
-				test('course has discussions', () => {
-					expect(TABS.discussions.hasAccess({hasDiscussions: () => true})).toBeTruthy();
-				});
-
-				test('course does not have discussions', () => {
-					expect(TABS.discussions.hasAccess({hasDiscussions: () => true})).toBeTruthy();
-				});
-			});
-
 			test('info', () => {
 				expect(TABS.info.hasAccess()).toBeTruthy();
 			});
