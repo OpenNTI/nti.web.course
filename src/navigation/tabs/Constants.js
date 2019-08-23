@@ -44,7 +44,7 @@ export const TABS = {
 	}
 };
 
-export const DEFAULT_ORDER = ['community', 'lessons', 'scorm', 'assignments', 'discussions', 'info', 'videos'];
+export const DEFAULT_ORDER = ['community', 'lessons', 'scorm', 'assignments', 'info', 'videos'];
 
 const UPDATE_BUS = new EventEmitter();
 
