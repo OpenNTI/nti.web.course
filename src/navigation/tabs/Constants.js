@@ -13,7 +13,7 @@ const t = scoped('course.navigation.tabs', {
 	videos: 'Videos'
 });
 
-export const getDefaultTabLabel = tab => t(tab);
+export const getDefaultTabLabel = tab => !t.isMissing(tab) ? t(tab) : '';
 
 export const TABS = {
 	'community': {

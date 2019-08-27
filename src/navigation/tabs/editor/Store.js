@@ -8,12 +8,25 @@ import {isValidTab} from './utils';
 const MIN_SAVING_TIME = 300;
 
 function formatTabs (course, overrides = {}) {
-	const {names} = overrides;
 	const order = DEFAULT_ORDER;//TODO: get the order from the overrides
+	const labels = overrides.names || {};
+
+	const getLabel = (key) => key && labels[key] != null ? labels[key] : null;
+	const getDefaultLabel = (key) => key && getDefaultTabLabel(key);
 
 	return order
 		.filter(key => TABS[key] && !TABS[key].notEditable && TABS[key].hasAccess(course))
-		.map(tab => ({id: tab, default: getDefaultTabLabel(tab), label: names[tab] || getDefaultTabLabel(tab)}));
+		.map((key) => {
+			const tab = TABS[key];
+			const label = getLabel(key) || getLabel(tab.labelKey);
+			const defaultLabel = getDefaultLabel(tab.labelKey) || getDefaultLabel(key);
+
+			return {
+				id: key,
+				label: label != null ? label : defaultLabel,
+				default: defaultLabel
+			};
+		});
 }
 
 export default class TabNameStore extends Stores.BoundStore {
