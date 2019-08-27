@@ -39,6 +39,19 @@ function formatTabs (course, overrides = {}) {
 }
 
 export default class CourseTabStore extends Stores.BoundStore {
+	static Tabs = Object.keys(TABS).reduce((acc, tab) => ({...acc, [tab]: tab}), {})
+
+	static async getTabLabelForCourse (course, tabId) {
+		const overrides = await course.fetchLink('GetCourseTabPreferences');
+		const tabs = formatTabs(course, overrides);
+
+		for (let tab of tabs) {
+			if (tab.id === tabId) {
+				return tab.label;
+			}
+		}
+	}
+
 	constructor () {
 		super();
 
