@@ -5,7 +5,6 @@ import { scoped } from '@nti/lib-locale';
 
 import Store from './../../../lti-tools/editing/Store';
 import AddTool from './../../../lti-tools/editing/AddTool';
-
 import ToolList from './components/tools/ToolList';
 
 const DEFAULT_TEXT = {
@@ -31,6 +30,7 @@ class LTITools extends Component {
 		loading: PropTypes.bool,
 		error: PropTypes.string,
 		store: PropTypes.shape({
+			loadItems: PropTypes.func.isRequired,
 			setCourse: PropTypes.func.isRequired
 		}).isRequired,
 	}

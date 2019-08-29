@@ -6,8 +6,10 @@ import ListItem from '../../common/ListItem';
 export default class BaseEnrollmentListItem extends React.Component {
 	static propTypes = {
 		option: PropTypes.shape({
+			getPriceDisplay: PropTypes.func,
 			getTitle: PropTypes.func.isRequired,
-			getPrice: PropTypes.func.isRequired
+			getPrice: PropTypes.func.isRequired,
+			isEnrolled: PropTypes.func.isRequired,
 		}),
 		selected: PropTypes.bool,
 		onSelect: PropTypes.func

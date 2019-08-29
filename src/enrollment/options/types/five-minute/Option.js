@@ -170,7 +170,7 @@ export default class FiveMinuteEnrollmentOption extends Base {
 		return getTranslationFor(this.getString, 'enrolled.getAcquainted', this.catalogEntry, this.option, this.access);
 	}
 
-	getCopmleteProfile () {
+	getCompleteProfile () {
 		return getTranslationFor(this.getString, 'enrolled.completeProfile', this.catalogEntry, this.option, this.access);
 	}
 }

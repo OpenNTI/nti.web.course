@@ -21,6 +21,8 @@ const triggersReload = [
 	SORT_ORDER
 ];
 
+const hasProperty = (x, k) => Object.prototype.hasOwnProperty.call(x, k);
+
 export default
 @mixin(Mixins.Searchable)
 class StreamedBatchStore extends Stores.BoundStore {
@@ -113,7 +115,7 @@ class StreamedBatchStore extends Stores.BoundStore {
 
 	getOption = key => {
 		const {pendingOptions} = this;
-		const source = pendingOptions && pendingOptions.hasOwnProperty(key)
+		const source = pendingOptions && hasProperty(pendingOptions, key)
 			? pendingOptions
 			: this.get(OPTIONS) || {};
 		return source[key];
@@ -138,7 +140,7 @@ class StreamedBatchStore extends Stores.BoundStore {
 		const reload = this.requiresReload(newOptions);
 
 		this.set(OPTIONS, stripEmptyProperties({...options, ...newOptions}));
-		
+
 		if (reload) {
 			this.reload();
 		}
@@ -147,7 +149,7 @@ class StreamedBatchStore extends Stores.BoundStore {
 	requiresReload (newOptions = {}) {
 		const options = this.get(OPTIONS);
 		return triggersReload.some(option => (
-			newOptions.hasOwnProperty(option) // has an option that triggers a reload…
+			hasProperty(newOptions,option) // has an option that triggers a reload…
 			&& newOptions[option] !== options[option] // …and it's not the value we already have…
 			&& !(newOptions[option] == null && options[option] == null) // …and they're not both null-ish
 		));
@@ -182,10 +184,10 @@ class StreamedBatchStore extends Stores.BoundStore {
 		this.set('loading', true);
 		this.emitChange('loading');
 		const batches = this.get('batches');
-		
+
 		try {
 			const batch = href ? await this.loadBatch(href, options) : { Items: [] };
-			
+
 			// if options changed while we were awaiting the response, drop it on the floor.
 			// the second condition is a little backwards--it's testing whether the old options
 			// would trigger a reload, but it answers the question we're interested in.

@@ -9,7 +9,10 @@ import PaddedContainer from '../../common/PaddedContainer';
 export default class BaseEnrolledDescription extends React.Component {
 	static propTypes = {
 		option: PropTypes.shape({
-			getEnrolledDescription: PropTypes.func.isRequired
+			getEnrolledDescription: PropTypes.func.isRequired,
+			getGetAcquaintedWith: PropTypes.func,
+			getCompleteProfile: PropTypes.func,
+			option: PropTypes.any,
 		}).isRequired
 	}
 
@@ -26,10 +29,10 @@ export default class BaseEnrolledDescription extends React.Component {
 						</LinkTo.Object>
 					</PaddedContainer>
 				)}
-				{option.getCopmleteProfile && (
+				{option.getCompleteProfile && (
 					<PaddedContainer className="link complete-profile">
 						<LinkTo.Object object={option.option} context="complete-profile">
-							<div {...rawContent(option.getCopmleteProfile())} />
+							<div {...rawContent(option.getCompleteProfile())} />
 						</LinkTo.Object>
 					</PaddedContainer>
 				)}

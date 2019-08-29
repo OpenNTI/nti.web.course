@@ -24,7 +24,14 @@ class Scorm extends Component {
 			getScormCourse: PropTypes.func.isRequired,
 			getID: PropTypes.func.isRequired,
 			getLink: PropTypes.func.isRequired,
-			fetchLink: PropTypes.func.isRequired
+			hasLink: PropTypes.func.isRequired,
+			fetchLink: PropTypes.func.isRequired,
+			CompletionPolicy: PropTypes.any,
+			title: PropTypes.string.isRequired,
+			isAdministrative: PropTypes.bool,
+			Metadata: PropTypes.shape({
+				hasLink: PropTypes.func
+			}).isRequired,
 		}),
 		error: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 		onBundleUpdate: PropTypes.func.isRequired
@@ -61,7 +68,7 @@ class Scorm extends Component {
 		const {bundle} = this.props;
 
 		// drive this by CompletionPolicy or CourseProgress
-		return Object.keys(bundle).includes('CompletionPolicy') && Boolean(bundle.CompletionPolicy);
+		return 'CompletionPolicy' in bundle && Boolean(bundle.CompletionPolicy);
 	}
 
 	renderInstructor = () => {

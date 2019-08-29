@@ -16,7 +16,7 @@ const t = scoped('course.info.inline.components.facilitators.Edit', {
 	instructor: 'Instructor'
 });
 
-const DEFAULT_JOB_TITLES = ['Assistant', 'Instructor', 'Editor'];
+// const DEFAULT_JOB_TITLES = ['Assistant', 'Instructor', 'Editor'];
 
 export default class FacilitatorsEdit extends React.Component {
 	static propTypes = {

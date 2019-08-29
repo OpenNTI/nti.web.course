@@ -42,6 +42,7 @@ export default class CourseEnrollmentAdminManageEnrollmentOption extends React.C
 			getTitle: PropTypes.func,
 			getDescription: PropTypes.func,
 			isAvailable: PropTypes.func,
+			isEnrolled: PropTypes.func,
 			getScope: PropTypes.func
 		}).isRequired,
 

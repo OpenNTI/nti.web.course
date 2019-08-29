@@ -15,7 +15,8 @@ export default class CourseEnrollmentOptionsEnrolledCurrent extends React.Compon
 		option: PropTypes.shape({
 			EnrolledTitle: PropTypes.func.isRequired,
 			EnrolledDescription: PropTypes.func.isRequired,
-			DropButton: PropTypes.func
+			DropButton: PropTypes.func,
+			OpenButton: PropTypes.func
 		}),
 		hasUpdates: PropTypes.bool,
 		doUpgrade: PropTypes.func

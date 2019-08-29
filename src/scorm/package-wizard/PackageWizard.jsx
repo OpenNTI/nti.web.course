@@ -26,6 +26,7 @@ class PackageWizard extends React.Component {
 		onDismiss: PropTypes.func,
 		bundle: PropTypes.shape({
 			Metadata: PropTypes.shape({
+				getLink: PropTypes.func.isRequired,
 				hasLink: PropTypes.func.isRequired
 			}),
 			getID: PropTypes.func.isRequired

@@ -12,7 +12,17 @@ export default class CourseEnrollmentOptionsFiveMinuteDescription extends React.
 		option: PropTypes.shape({
 			admissionState: PropTypes.string,
 			seatCount: PropTypes.number,
-			apiDown: PropTypes.bool
+			apiDown: PropTypes.bool,
+			isPending: PropTypes.func,
+			isRejected: PropTypes.func,
+			isApiDown: PropTypes.func,
+			getPendingLabel: PropTypes.func,
+			getPendingDescription: PropTypes.func,
+			getRejectedTitle: PropTypes.func,
+			getRejectedDescription: PropTypes.func,
+			getApiDownDescription: PropTypes.func,
+			getAvailableSeats: PropTypes.func,
+			getAvailabelSeatsLabel: PropTypes.func,
 		}).isRequired
 	}
 

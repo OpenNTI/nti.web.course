@@ -34,6 +34,8 @@ export default class CourseEnrollmentOptions extends React.Component {
 		}),
 
 		store: PropTypes.shape({
+			cleanUp: PropTypes.func,
+			setup: PropTypes.func,
 			load: PropTypes.func
 		}),
 		loading: PropTypes.bool,

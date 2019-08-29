@@ -114,8 +114,8 @@ describe('Course enrollment open option test', () => {
 		expect(enrollment.getGetAcquaintedWith()).toEqual('Get Acquainted with the Platform');
 	});
 
-	test('Test getCopmleteProfile', () => {
+	test('Test getCompleteProfile', () => {
 		let enrollment = new Option({}, null, basicCatalogEntry);
-		expect(enrollment.getCopmleteProfile()).toEqual('Complete Your Profile');
+		expect(enrollment.getCompleteProfile()).toEqual('Complete Your Profile');
 	});
 });

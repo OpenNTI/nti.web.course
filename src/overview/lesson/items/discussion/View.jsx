@@ -72,7 +72,7 @@ class LessonOverviewDiscussion extends React.Component {
 	async setupTopic (item, course) {
 		try {
 			const topic = await item.resolveTarget(course);
-			const isForum = topic.hasOwnProperty('TopicCount');
+			const isForum = Object.prototype.hasOwnProperty.call(topic,'TopicCount');
 
 			this.setState({
 				topic,

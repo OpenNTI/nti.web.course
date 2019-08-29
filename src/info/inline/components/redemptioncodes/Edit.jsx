@@ -23,13 +23,15 @@ export default
 class RedemptionCodesEdit extends React.Component {
 	static propTypes = {
 		courseInstance: PropTypes.shape({
+			hasLink: PropTypes.func.isRequired,
 			postToLink: PropTypes.func.isRequired
 		}),
 		items: PropTypes.arrayOf(PropTypes.object),
 		onValueChange: PropTypes.func,
 		store: PropTypes.shape({
 			setCourse: PropTypes.func.isRequired,
-			createItem: PropTypes.func.isRequired
+			createItem: PropTypes.func.isRequired,
+			deleteItem: PropTypes.func.isRequired,
 		}).isRequired,
 		error: PropTypes.string
 	}
