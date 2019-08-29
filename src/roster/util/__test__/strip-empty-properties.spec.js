@@ -6,21 +6,21 @@ describe('strip empty properties', () => {
 		const o = {test: null};
 		expect(o).toHaveProperty('test');
 		const stripped = strip(o);
-		expect(stripped).toHaveProperty('test');
+		expect(stripped).not.toHaveProperty('test');
 	});
 
 	test('strips undefined', () => {
 		const o = {test: undefined};
 		expect(o).toHaveProperty('test');
 		const stripped = strip(o);
-		expect(stripped).toHaveProperty('test');
+		expect(stripped).not.toHaveProperty('test');
 	});
 
 	test('strips empty strings by default', () => {
 		const o = {test: ''};
 		expect(o).toHaveProperty('test');
 		const stripped = strip(o);
-		expect(stripped).toHaveProperty('test');
+		expect(stripped).not.toHaveProperty('test');
 	});
 
 	test('preserves empty strings when requested', () => {
