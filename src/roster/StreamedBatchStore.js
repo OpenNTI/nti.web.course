@@ -210,8 +210,13 @@ class StreamedBatchStore extends Stores.BoundStore {
 
 
 	load () {
+		const batches = this.get('batches');
+
+		if (batches && batches.length) { return; }
+
 		this[Load](this.get('href'), this.get(OPTIONS));
 	}
+
 
 
 	// reload () {
