@@ -123,13 +123,13 @@ export default class CourseOverviewLessonHeader extends React.Component {
 		return (
 			<div className="layout-toggle">
 				<label className="grid">
-					<input type="radio" group={LAYOUT_GROUP} name="grid" checked={layout === Grid} onChange={this.selectGrid} />
+					<input type="radio" group={LAYOUT_GROUP} name="grid" checked={layout === Grid} onChange={this.selectGrid} aria-label="grid view" role="button"/>
 					<div className="toggle">
 						<i className="icon-grid" />
 					</div>
 				</label>
 				<label className="list">
-					<input type="radio" group={LAYOUT_GROUP} name="list" checked={layout === List} onChange={this.selectList} />
+					<input type="radio" group={LAYOUT_GROUP} name="list" checked={layout === List} onChange={this.selectList} aria-label="list view" role="button"/>
 					<div className="toggle">
 						<i className="icon-list" />
 					</div>
