@@ -9,7 +9,9 @@ import PaddedContainer from './common/PaddedContainer';
 
 const t = scoped('course.overview.lesson.Header', {
 	dateRangeSeparator: ' - ',
-	requiredFilter: 'Only Required'
+	requiredFilter: 'Only Required',
+	list: 'List View',
+	grid: 'Grid View'
 });
 
 const {Responsive} = Layouts;
@@ -123,13 +125,13 @@ export default class CourseOverviewLessonHeader extends React.Component {
 		return (
 			<div className="layout-toggle">
 				<label className="grid">
-					<input type="radio" group={LAYOUT_GROUP} name="grid" checked={layout === Grid} onChange={this.selectGrid} aria-label="grid view" role="button"/>
+					<input type="radio" group={LAYOUT_GROUP} name="grid" checked={layout === Grid} onChange={this.selectGrid} aria-label={t('grid')}/>
 					<div className="toggle">
 						<i className="icon-grid" />
 					</div>
 				</label>
 				<label className="list">
-					<input type="radio" group={LAYOUT_GROUP} name="list" checked={layout === List} onChange={this.selectList} aria-label="list view" role="button"/>
+					<input type="radio" group={LAYOUT_GROUP} name="list" checked={layout === List} onChange={this.selectList} aria-label={t('list')}/>
 					<div className="toggle">
 						<i className="icon-list" />
 					</div>
