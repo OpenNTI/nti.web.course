@@ -54,6 +54,7 @@ export default class CourseCommunity extends React.Component {
 			<Community.View
 				title={tabName}
 				community={course.getCommunity()}
+				noBackground
 				{...otherProps}
 			/>
 		);
