@@ -13,7 +13,7 @@ exports[`Course enrollment administering view Test with access 1`] = `
     className="nti-course-enrollment-padded-container nti-course-enrollment-description description"
     dangerouslySetInnerHTML={
       Object {
-        "__html": "You are administering this course. Class begins October 22nd, 12:00 AM CDT and will be conducted fully online.",
+        "__html": "You are administering this course. Class begins October 22nd, 12:00 AM GMT and will be conducted fully online.",
       }
     }
   />
@@ -43,7 +43,7 @@ exports[`Course enrollment administering view Test with no access 1`] = `
     className="nti-course-enrollment-padded-container nti-course-enrollment-description description"
     dangerouslySetInnerHTML={
       Object {
-        "__html": "You are administering this course. Class begins October 22nd, 12:00 AM CDT and will be conducted fully online.",
+        "__html": "You are administering this course. Class begins October 22nd, 12:00 AM GMT and will be conducted fully online.",
       }
     }
   />

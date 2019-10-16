@@ -26,6 +26,6 @@ describe('DatePicker test', () => {
 
 		const dateInfoEl = dateEl.find('.date-info').first();
 
-		expect(dateInfoEl.text()).toEqual('Friday at 12:00 am CST');
+		expect(dateInfoEl.text()).toEqual('Friday at 12:00 am GMT');
 	});
 });
