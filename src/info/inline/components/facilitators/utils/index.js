@@ -1,4 +1,3 @@
-import { getService } from '@nti/web-client';
 import { Presentation } from '@nti/web-commons';
 
 export const ROLES = {
@@ -33,14 +32,6 @@ export function getAvailableRoles (courseInstance) {
 	return options;
 }
 
-async function saveItem (service, link, type, user) {
-	if(type === 'delete') {
-		await service.delete(link);
-	}
-	else if (type === 'post') {
-		await service.post(link, { user });
-	}
-}
 
 export function canAddFacilitators (courseInstance) {
 	return courseInstance && courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors');
@@ -68,12 +59,7 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	// will only be tracked through the Instructors/Editors links
 	await catalogEntry.save({Instructors: facilitators.filter(x => x.visible && x.role && x.role !== '')});
 
-	const service = await getService();
-
-	const instructorsLink = courseInstance && courseInstance.getLink('Instructors');
-	const editorsLink = courseInstance && courseInstance.getLink('Editors');
-
-	if(!instructorsLink || !editorsLink) {
+	if (!courseInstance || !courseInstance.hasLink('Instructors') || !courseInstance.hasLink('Editors')) {
 		return facilitators;
 	}
 
@@ -82,44 +68,33 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	// editor => Editors
 	// assistant => Instructors
 	// instructor => Editors + Instructors
-	const editorsToSave = facilitators.filter(x => x.role === ROLES.EDITOR || x.role === ROLES.INSTRUCTOR);
-	const instructorsToSave = facilitators.filter(x => x.role === ROLES.ASSISTANT || x.role === ROLES.INSTRUCTOR);
+	const editorsToAdd = facilitators.filter(x => x.role === ROLES.EDITOR || x.role === ROLES.INSTRUCTOR);
+	const instructorsToAdd = facilitators.filter(x => x.role === ROLES.ASSISTANT || x.role === ROLES.INSTRUCTOR);
 
 	const editorsToRemove = facilitators.filter(x => x.role !== ROLES.EDITOR && x.role !== ROLES.INSTRUCTOR);
 	const instructorsToRemove = facilitators.filter(x => x.role !== ROLES.ASSISTANT && x.role !== ROLES.INSTRUCTOR);
 
-	if (instructorsToSave.length) {
-		const payload = instructorsToSave.reduce((acc, f) => {
-			return {users: [...acc.users, f.username]};
-		}, {users: []});
+	const getPayload = users => ({users: users.map(u => u.username).join(',')});
 
-		payload.users = payload.users.filter(Boolean).join(',');
+	const tasks = [];
 
-		service.post(instructorsLink, payload);
+	if (instructorsToAdd.length) {
+		tasks.push(courseInstance.postToLink('Instructors', getPayload(instructorsToAdd)));
 	}
 
-	// do the POST/DELETE calls
-	// instructorsToSave.forEach(x => {
-	// 	saveItem(service, instructorsLink, 'post', x.username);
-	// });
-
-	instructorsToRemove.forEach(x => {
-		saveItem(service, instructorsLink + '/' + x.username, 'delete', x.username);
-	});
-
-	if (editorsToSave.length) {
-		const payload = editorsToSave.reduce((acc, f) => {
-			return {users: [...acc.users, f.username]};
-		}, {users: []});
-
-		payload.users = payload.users.filter(Boolean).join(',');
-
-		service.post(editorsLink, payload);
+	if (editorsToAdd.length) {
+		tasks.push(courseInstance.postToLink('Editors', getPayload(editorsToAdd)));
 	}
 
-	editorsToRemove.forEach(x => {
-		saveItem(service, editorsLink + '/' + x.username, 'delete', x.username);
-	});
+	if (instructorsToRemove.length) {
+		tasks.push(courseInstance.postToLink('RemoveInstructors', getPayload(instructorsToRemove)));
+	}
+
+	if (editorsToRemove.length) {
+		tasks.push(courseInstance.postToLink('RemoveEditors', getPayload(editorsToRemove)));
+	}
+
+	await Promise.all(tasks);
 
 	return facilitators.filter(x => x.role && x.role !== '');
 }
