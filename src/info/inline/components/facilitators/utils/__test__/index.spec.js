@@ -55,7 +55,8 @@ describe('Test saveFacilitators', () => {
 		const courseInstance = {
 			getLink: (name) => {
 				return name;
-			}
+			},
+			hasLink: name => Boolean(name)
 		};
 
 		const facilitators = [
