@@ -56,7 +56,8 @@ describe('Test saveFacilitators', () => {
 			getLink: (name) => {
 				return name;
 			},
-			hasLink: name => Boolean(name)
+			hasLink: name => Boolean(name),
+			postToLink: () => {}
 		};
 
 		const facilitators = [
