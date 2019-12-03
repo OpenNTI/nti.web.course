@@ -45,7 +45,7 @@ describe('Test saveFacilitators', () => {
 
 	test('Test save every type', (done) => {
 		// saveFacilitators (catalogEntry, courseInstance, facilitators) {
-
+		const service = mockService();
 		const catalogEntry = {
 			save: (data) => {
 				savedData.Instructors = data.Instructors;
@@ -57,7 +57,7 @@ describe('Test saveFacilitators', () => {
 				return name;
 			},
 			hasLink: name => Boolean(name),
-			postToLink: () => {}
+			postToLink: (...args) => service.post(...args)
 		};
 
 		const facilitators = [
@@ -146,9 +146,9 @@ describe('Test saveFacilitators', () => {
 			};
 
 			verifyList(savedData['post-Instructors'].split(','), ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth']);
-			verifyList(savedData['delete-Instructors'], ['eonly', 'hiddenEditor', 'toRemove']);
+			verifyList(savedData['post-RemoveInstructors'].split(','), ['eonly', 'hiddenEditor', 'toRemove']);
 			verifyList(savedData['post-Editors'].split(','), ['eonly', 'both', 'hiddenEditor', 'hiddenBoth']);
-			verifyList(savedData['delete-Editors'], ['ionly', 'hiddenInstructor', 'toRemove']);
+			verifyList(savedData['post-RemoveEditors'].split(','), ['ionly', 'hiddenInstructor', 'toRemove']);
 
 			done();
 		});
