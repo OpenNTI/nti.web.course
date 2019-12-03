@@ -27,7 +27,7 @@ describe('End date edit test', () => {
 
 		const dateInfoEl = dateEl.find('.date-info').first();
 
-		expect(dateInfoEl.text()).toEqual('Monday at 05:00 am GMT');
+		expect(dateInfoEl.text()).toEqual('Monday at 05:00 am UTC');
 	});
 
 	test('Test no date', () => {

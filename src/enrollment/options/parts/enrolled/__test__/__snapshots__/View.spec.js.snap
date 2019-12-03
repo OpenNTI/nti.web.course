@@ -41,7 +41,7 @@ exports[`Course enrollment enrolled view One option, enrolled, upgrade available
           className="nti-course-enrollment-padded-container nti-course-enrollment-description"
           dangerouslySetInnerHTML={
             Object {
-              "__html": "The course ended on October 31st, 12:00 AM GMT. The content of this course will remain available for you to review at any time.",
+              "__html": "The course ended on October 31st, 12:00 AM UTC. The content of this course will remain available for you to review at any time.",
             }
           }
         />
@@ -112,7 +112,7 @@ exports[`Course enrollment enrolled view Two options, second enrolled 1`] = `
           className="nti-course-enrollment-padded-container nti-course-enrollment-description"
           dangerouslySetInnerHTML={
             Object {
-              "__html": "The course ended on October 31st, 12:00 AM GMT. The content of this course will remain available for you to review at any time.",
+              "__html": "The course ended on October 31st, 12:00 AM UTC. The content of this course will remain available for you to review at any time.",
             }
           }
         />

@@ -20,6 +20,6 @@ describe('Start date view test', () => {
 
 		const cmp = mount(<View catalogEntry={catalogEntry}/>);
 
-		expect(cmp.find('.content-column').text()).toEqual('August 17, 2015Monday at 07:00 pm GMT');
+		expect(cmp.find('.content-column').text()).toEqual('August 17, 2015Monday at 07:00 pm UTC');
 	});
 });
