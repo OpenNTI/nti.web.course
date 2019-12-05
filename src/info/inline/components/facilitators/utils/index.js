@@ -15,15 +15,15 @@ export function getAvailableRoles (courseInstance) {
 	if (courseInstance) {
 		const hasEditors = courseInstance.hasLink('Editors');
 		const hasInstructors = courseInstance.hasLink('Instructors');
-	
+
 		if (hasEditors && hasInstructors) {
 			options.push(ROLES.INSTRUCTOR);
 		}
-	
+
 		if (hasEditors) {
 			options.push(ROLES.EDITOR);
 		}
-	
+
 		if (hasInstructors) {
 			options.push(ROLES.ASSISTANT);
 		}
@@ -74,7 +74,9 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	const editorsToRemove = facilitators.filter(x => x.role !== ROLES.EDITOR && x.role !== ROLES.INSTRUCTOR);
 	const instructorsToRemove = facilitators.filter(x => x.role !== ROLES.ASSISTANT && x.role !== ROLES.INSTRUCTOR);
 
-	const getPayload = users => ({users: users.map(u => u.username).join(',')});
+	const getPayload = users => ({
+		users: users.map(u => u && u.username).filter(Boolean)
+	});
 
 	const tasks = [];
 

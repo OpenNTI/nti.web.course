@@ -145,10 +145,10 @@ describe('Test saveFacilitators', () => {
 				});
 			};
 
-			verifyList(savedData['post-Instructors'].split(','), ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth']);
-			verifyList(savedData['post-RemoveInstructors'].split(','), ['eonly', 'hiddenEditor', 'toRemove']);
-			verifyList(savedData['post-Editors'].split(','), ['eonly', 'both', 'hiddenEditor', 'hiddenBoth']);
-			verifyList(savedData['post-RemoveEditors'].split(','), ['ionly', 'hiddenInstructor', 'toRemove']);
+			verifyList(savedData['post-Instructors'], ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth']);
+			verifyList(savedData['post-RemoveInstructors'], ['eonly', 'hiddenEditor', 'toRemove']);
+			verifyList(savedData['post-Editors'], ['eonly', 'both', 'hiddenEditor', 'hiddenBoth']);
+			verifyList(savedData['post-RemoveEditors'], ['ionly', 'hiddenInstructor', 'toRemove']);
 
 			done();
 		});
