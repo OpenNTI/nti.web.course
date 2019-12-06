@@ -51,6 +51,10 @@ export function canAddFacilitators (courseInstance) {
  * @return {Promise}                Wraps the saved facilitators
  */
 export async function saveFacilitators (catalogEntry, courseInstance, facilitators) {
+	// Content backed facilitators don't have usernames (and connot be add/removed/managed)
+	// So lets prevent operating on them.
+	facilitators = facilitators?.filter(x => x && x.username);
+
 	if(!facilitators || facilitators.length === 0) {
 		return;
 	}
@@ -75,7 +79,7 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	const instructorsToRemove = facilitators.filter(x => x.role !== ROLES.ASSISTANT && x.role !== ROLES.INSTRUCTOR);
 
 	const getPayload = users => ({
-		users: users.map(u => u && u.username).filter(Boolean)
+		users: users.map(u => u && u.username)
 	});
 
 	const tasks = [];
