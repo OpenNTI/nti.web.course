@@ -51,17 +51,18 @@ export function canAddFacilitators (courseInstance) {
  * @return {Promise}                Wraps the saved facilitators
  */
 export async function saveFacilitators (catalogEntry, courseInstance, facilitators) {
-	// Content backed facilitators don't have usernames (and connot be add/removed/managed)
-	// So lets prevent operating on them.
-	facilitators = facilitators?.filter(x => x && x.username);
-
-	if(!facilitators || facilitators.length === 0) {
-		return;
-	}
 
 	// visible facilitators go in the catalogEntry Instructors field, hidden facilitators
 	// will only be tracked through the Instructors/Editors links
 	await catalogEntry.save({Instructors: facilitators.filter(x => x.visible && x.role && x.role !== '')});
+
+	// Content backed facilitators don't have usernames (and connot be add/removed/managed)
+	// So lets prevent operating on them.
+	facilitators = facilitators?.filter(x => x && (x.username && !x.contentOnly));
+
+	if(!facilitators || facilitators.length === 0) {
+		return;
+	}
 
 	if (!courseInstance || !courseInstance.hasLink('Instructors') || !courseInstance.hasLink('Editors')) {
 		return facilitators;
@@ -169,6 +170,7 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 			role,
 			visible: true,
 			locked: !username,
+			contentOnly: !inInstructors && !inEditors,
 			imageUrl,
 			...x
 		});
