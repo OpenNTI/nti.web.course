@@ -51,17 +51,16 @@ export function canAddFacilitators (courseInstance) {
  * @return {Promise}                Wraps the saved facilitators
  */
 export async function saveFacilitators (catalogEntry, courseInstance, facilitators) {
-
 	// visible facilitators go in the catalogEntry Instructors field, hidden facilitators
 	// will only be tracked through the Instructors/Editors links
 	await catalogEntry.save({Instructors: facilitators.filter(x => x.visible && x.role && x.role !== '')});
 
-	// Content backed facilitators don't have usernames (and connot be add/removed/managed)
+	// Content backed facilitators don't have usernames (and cannot be add/removed/managed)
 	// So lets prevent operating on them.
-	facilitators = facilitators?.filter(x => x && (x.username && !x.contentOnly));
+	const userBacked = facilitators?.filter(x => x && (x.username && !x.contentOnly));
 
-	if(!facilitators || facilitators.length === 0) {
-		return;
+	if(!userBacked || userBacked.length === 0) {
+		return facilitators;
 	}
 
 	if (!courseInstance || !courseInstance.hasLink('Instructors') || !courseInstance.hasLink('Editors')) {
@@ -73,11 +72,11 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	// editor => Editors
 	// assistant => Instructors
 	// instructor => Editors + Instructors
-	const editorsToAdd = facilitators.filter(x => x.role === ROLES.EDITOR || x.role === ROLES.INSTRUCTOR);
-	const instructorsToAdd = facilitators.filter(x => x.role === ROLES.ASSISTANT || x.role === ROLES.INSTRUCTOR);
+	const editorsToAdd = userBacked.filter(x => x.role === ROLES.EDITOR || x.role === ROLES.INSTRUCTOR);
+	const instructorsToAdd = userBacked.filter(x => x.role === ROLES.ASSISTANT || x.role === ROLES.INSTRUCTOR);
 
-	const editorsToRemove = facilitators.filter(x => x.role !== ROLES.EDITOR && x.role !== ROLES.INSTRUCTOR);
-	const instructorsToRemove = facilitators.filter(x => x.role !== ROLES.ASSISTANT && x.role !== ROLES.INSTRUCTOR);
+	const editorsToRemove = userBacked.filter(x => x.role !== ROLES.EDITOR && x.role !== ROLES.INSTRUCTOR);
+	const instructorsToRemove = userBacked.filter(x => x.role !== ROLES.ASSISTANT && x.role !== ROLES.INSTRUCTOR);
 
 	const getPayload = users => ({
 		users: users.map(u => u && u.username)
