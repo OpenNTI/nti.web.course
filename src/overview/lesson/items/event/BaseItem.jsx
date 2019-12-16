@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {DateTime} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
+import {Hooks, Events} from '@nti/web-session';
 
 function isToday (a, b) {
 	return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
 }
 
+@Hooks.onEvent(Events.EVENT_UPDATED, 'onEventUpdated')
 export default class EventBaseItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired,
@@ -20,6 +22,16 @@ export default class EventBaseItem extends React.Component {
 
 
 	state = {}
+
+	onEventUpdated = async (newEvent) => {
+		const {item} = this.props;
+		const {CalendarEvent: event} = item;
+
+		if (event.NTIID === newEvent.NTIID) {
+			await event.refresh(newEvent);
+			this.forceUpdate();
+		}
+	}
 
 	renderDate () {
 		const {item} = this.props;
