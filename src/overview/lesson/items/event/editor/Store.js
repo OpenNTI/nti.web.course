@@ -2,6 +2,7 @@ import {getService} from '@nti/web-client';
 import {Stores} from '@nti/lib-store';
 import {Models} from '@nti/lib-interfaces';
 import AppDispatcher from '@nti/lib-dispatcher';
+import {Events} from '@nti/web-session';
 
 function safeContains (fieldValue, target) {
 	return fieldValue && fieldValue.toLowerCase().indexOf(target.toLowerCase()) >= 0;
@@ -109,9 +110,10 @@ export default class CourseEventsStore extends Stores.BoundStore {
 
 			if(event) {
 				type = 'Calendar-Event-Changed';
-				calendarEvent = await service.putParseResponse(event.getLink('edit'), formData);
-				event.refresh(calendarEvent);
+				const raw = await service.put(event.getLink('edit'), formData);
+				await event.refresh(calendarEvent);
 				calendarEvent = event;
+				Events.emit(Events.EVENT_UPDATED, raw);
 			}
 			else {
 				calendarEvent = await service.postParseResponse(calendar.getLink('create_calendar_event'), formData);
