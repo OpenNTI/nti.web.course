@@ -1,0 +1,7 @@
+a.nti-link-to-path:not([href]) .content-link.related-work-ref {
+	opacity: 0.5;
+
+	.nti-separated-inline-list.extra-labels {
+		pointer-events: none;
+	}
+}
