@@ -10,9 +10,10 @@ import PublishCourse from './PublishCourse';
 const t = scoped('course.info.inline.widgets.CourseVisibility', {
 	makeChanges: 'Make Changes',
 	inPreview: 'In Preview',
+	inDraft: 'In Draft',
 	yes: 'Yes',
 	no: 'No',
-	visibleInCatalog: 'Visible in Catalog',
+	visibleInCatalog: 'Discoverable in Catalog',
 	allowingEnrollment: 'Allowing Enrollment',
 	forCredit: 'For-Credit',
 	public: 'Public',
@@ -53,7 +54,7 @@ export default class CourseVisibility extends React.Component {
 
 		if(catalogEntry.Preview) {
 			return this.renderLabeledContent(
-				t('inPreview'),
+				catalogEntry.hasLink('edit') ? t('inDraft') : t('inPreview'),
 				'preview',
 				catalogEntry.StartDate ? DateTime.format(new Date(catalogEntry.StartDate), '[Starts] MMM. D, YYYY') : t('noStartDate')
 			);
