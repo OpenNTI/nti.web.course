@@ -1,5 +1,11 @@
 @import "~@nti/style-common";
 
+.publish-course-modal-container {
+	& > .icon-close {
+		display: none;
+	}
+}
+
 .publish-course {
 	width: 768px;
 	background-color: white;
@@ -77,38 +83,43 @@
 				}
 			}
 
+			.course-option-info {
+				flex: 1 1 auto;
+			}
+
+			.course-option-control {
+				flex: 0 0 auto;
+
+				.control {
+					position: static;
+				}
+			}
+
 			.course-option-label {
-				line-height: 40px;
+				font-size: 1.125rem;
+				font-weight: 400;
+				line-height: 2;
+				color: $primary-grey;
+			}
+
+			.course-option-info {
+				font-size: 0.875rem;
+				font-weight: 400;
+				line-height: 1.3;
+				color: $primary-grey;
+			}
+
+			.course-option-disclaimer {
+				margin: 0.5rem 0 0 1rem;
+				padding: 0;
+				font-size: 0.875;
+				font-weight: 600;
+				line-height: 1.3;
+				color: $primary-grey;
 			}
 
 			.nti-input-toggle {
 				float: right;
-			}
-		}
-
-		.preview-mode-widget {
-			color: $primary-grey;
-			cursor: pointer;
-
-			.preview-option {
-				width: 218px;
-			}
-
-			&:not(.flyout-trigger) {
-				.preview-option {
-					padding: 10px;
-				}
-			}
-		}
-
-		.preview-date-info {
-			font-size: 10px;
-			text-transform: uppercase;
-			font-weight: 600;
-			color: #b8b8b8;
-
-			&.warning {
-				color: #f72;
 			}
 		}
 
@@ -121,8 +132,9 @@
 			margin-left: 8px;
 			box-shadow: 1px 1px 2px 0 #ccc;
 
-			.content {
-				width: 180px;
+			.course-preview-option {
+				width: 190px;
+				padding: 0;
 			}
 
 			i {
@@ -160,4 +172,32 @@
 			}
 		}
 	}
+}
+
+.course-preview-option {
+	padding: 10px 20px 10px 10px;
+
+	.course-preview-option-info {
+		font-size: 10px;
+		font-weight: 600;
+		text-transform: uppercase;
+		color: $tertiary-grey;
+	}
+
+	&.draft-option.selected .course-preview-option-info {
+		color: $primary-red;
+	}
+
+	&.publish-option.selected .course-preview-option-info {
+		color: $secondary-green;
+	}
+
+	&.publish-on-date-option.selected .course-preview-option-info {
+		color: $secondary-green;
+	}
+
+	&.publish-on-date-option.selected.no-date .course-preview-option-info {
+		color: #f72;
+	}
+
 }

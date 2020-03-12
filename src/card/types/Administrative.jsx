@@ -15,7 +15,7 @@ import Registry from './Registry';
 const {Responsive} = Layouts;
 
 const t = scoped('course.card.type.administering', {
-	starting: 'preview',
+	starting: 'draft',
 	confirmDelete: 'Do you want to delete this course?'
 });
 
