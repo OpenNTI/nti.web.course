@@ -62,13 +62,12 @@ describe('PublishCourse test', () => {
 		setTimeout(function () {
 			const publiclyAvailableOption = cmp.find('.publicly-available-option').first();
 
-			expect(publiclyAvailableOption.text()).toMatch(/Off/);
 			expect(publiclyAvailableOption.find('.toggle-button').first().prop('className')).toMatch(/ off/);
 
-			const previewModeOption = cmp.find('.preview-mode-option').first();
+			const previewModeOption = cmp.find('.preview-mode-widget').first();
 
-			expect(previewModeOption.text()).toMatch(/Off/);
-			expect(previewModeOption.text()).toMatch(/Course is visible/);
+			expect(previewModeOption.text()).toMatch(/Published/);
+			expect(previewModeOption.text()).toMatch(/Content is available to learners/);
 
 			done();
 		}, 200);
@@ -103,11 +102,10 @@ describe('PublishCourse test', () => {
 		);
 
 		setTimeout(function () {
-			const previewModeOption = cmp.find('.preview-mode-option').first();
+			const previewModeOption = cmp.find('.preview-mode-widget').first();
 
-			expect(previewModeOption.text()).toMatch(/Based on start date/);
+			expect(previewModeOption.text()).toMatch(/Publish on Start Date/);
 			expect(previewModeOption.text()).toMatch(/No start date found/);
-			expect(previewModeOption.find('.preview-date-info').first().prop('className')).toMatch(/ warning/);
 
 			done();
 		}, 200);
@@ -123,11 +121,10 @@ describe('PublishCourse test', () => {
 		);
 
 		setTimeout(function () {
-			const previewModeOption = cmp.find('.preview-mode-option').first();
+			const previewModeOption = cmp.find('.preview-mode-widget').first();
 
-			expect(previewModeOption.text()).toMatch(/Based on start date/);
+			expect(previewModeOption.text()).toMatch(/Publish on Start Date/);
 			expect(previewModeOption.text()).toMatch(/April 5th 2017, 12:00 am/);
-			expect(previewModeOption.find('.preview-date-info').first().prop('className')).not.toMatch(/ warning/);
 
 			done();
 		}, 200);
