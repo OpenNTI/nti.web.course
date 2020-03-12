@@ -22,7 +22,10 @@ describe('CourseVisibility test', () => {
 			},
 			Preview,
 			isHidden,
-			StartDate
+			StartDate,
+			hasLink (rel) {
+				if (rel === 'edit') { return true;}
+			}
 		};
 	}
 
@@ -97,7 +100,8 @@ describe('CourseVisibility test', () => {
 						}
 					};
 				},
-				Preview: true
+				Preview: true,
+				hasLink: () => true
 			};
 
 			const cmp = mount(<CourseVisibility catalogEntry={catalogEntry}/>);
