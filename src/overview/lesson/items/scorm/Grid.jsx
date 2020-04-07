@@ -14,6 +14,14 @@ const t = scoped('course.overview.lesson.items.scorm.Grid', {
 	open: 'Open'
 });
 
+const stop = (e) => e.stopPropagation();
+
+function getLaunchLink (item) {
+	const link = item.ScormContentInfo && item.ScormContentInfo.getLink('LaunchSCORM');
+
+	return link ? `${link}?redirecturl=${encodeURIComponent(global.location.href)}` : null;
+}
+
 LessonOverviewScormGridItem.propTypes = {
 	item: PropTypes.object.isRequired,
 	course: PropTypes.object,
@@ -26,6 +34,8 @@ export default function LessonOverviewScormGridItem ({item, course, requiredLabe
 	const success = item.completedSuccessfully && item.completedSuccessfully();
 	const failed = item.completedUnsuccessfully && item.completedUnsuccessfully();
 	const hasDescription = !!item.description;
+
+	const launchLink = getLaunchLink(item);
 
 	return (
 		<PaddedContainer>
@@ -51,7 +61,7 @@ export default function LessonOverviewScormGridItem ({item, course, requiredLabe
 							{requiredLabel}
 							{completionLabel}
 						</List.SeparatedInline>
-						<Button className={cx('open-button')} rounded>{t('open')}</Button>
+						<Button className={cx('open-button')} href={launchLink} rel="external" disabled={!launchLink} rounded onClick={stop}>{t('open')}</Button>
 					</div>
 				</div>
 			</LinkTo.Object>
