@@ -175,8 +175,13 @@ exports[`Course overview LTI item test Grid item with no comments, completable, 
       >
         <li>
           <div
+            aria-haspopup="dialog"
             className="flyout-trigger require-control-value require-control flyout-closed"
+            onBlur={[Function]}
             onClick={[Function]}
+            onFocus={[Function]}
+            onKeyPress={[Function]}
+            tabIndex={0}
           >
             <span>
               Optional
@@ -401,8 +406,13 @@ exports[`Course overview LTI item test List item with no comments, completable, 
               >
                 <li>
                   <div
+                    aria-haspopup="dialog"
                     className="flyout-trigger require-control-value require-control flyout-closed"
+                    onBlur={[Function]}
                     onClick={[Function]}
+                    onFocus={[Function]}
+                    onKeyPress={[Function]}
+                    tabIndex={0}
                   >
                     <span>
                       Optional

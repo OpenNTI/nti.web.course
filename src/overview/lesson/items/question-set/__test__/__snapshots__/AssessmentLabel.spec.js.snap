@@ -74,8 +74,13 @@ exports[`Course overview asessment label test Question count, required editable 
 >
   <li>
     <div
+      aria-haspopup="dialog"
       className="flyout-trigger require-control-value require-control flyout-closed"
+      onBlur={[Function]}
       onClick={[Function]}
+      onFocus={[Function]}
+      onKeyPress={[Function]}
+      tabIndex={0}
     >
       <span>
         Optional

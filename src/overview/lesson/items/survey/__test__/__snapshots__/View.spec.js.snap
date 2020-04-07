@@ -405,8 +405,13 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
             >
               <li>
                 <div
+                  aria-haspopup="dialog"
                   className="flyout-trigger require-control-value require-control flyout-closed"
+                  onBlur={[Function]}
                   onClick={[Function]}
+                  onFocus={[Function]}
+                  onKeyPress={[Function]}
+                  tabIndex={0}
                 >
                   <span>
                     Required

@@ -2,8 +2,13 @@
 
 exports[`Progress widgets requirement control test Default (optional) 1`] = `
 <div
+  aria-haspopup="dialog"
   className="flyout-trigger require-control-value require-control flyout-closed"
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
+  onKeyPress={[Function]}
+  tabIndex={0}
 >
   <span>
     Default (Optional)
@@ -16,8 +21,13 @@ exports[`Progress widgets requirement control test Default (optional) 1`] = `
 
 exports[`Progress widgets requirement control test Default (required) 1`] = `
 <div
+  aria-haspopup="dialog"
   className="flyout-trigger require-control-value require-control flyout-closed"
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
+  onKeyPress={[Function]}
+  tabIndex={0}
 >
   <span>
     Default (Required)
@@ -30,8 +40,13 @@ exports[`Progress widgets requirement control test Default (required) 1`] = `
 
 exports[`Progress widgets requirement control test Optional 1`] = `
 <div
+  aria-haspopup="dialog"
   className="flyout-trigger require-control-value require-control flyout-closed"
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
+  onKeyPress={[Function]}
+  tabIndex={0}
 >
   <span>
     Optional
@@ -44,8 +59,13 @@ exports[`Progress widgets requirement control test Optional 1`] = `
 
 exports[`Progress widgets requirement control test Required 1`] = `
 <div
+  aria-haspopup="dialog"
   className="flyout-trigger require-control-value require-control flyout-closed"
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
+  onKeyPress={[Function]}
+  tabIndex={0}
 >
   <span>
     Required
