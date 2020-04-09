@@ -11,7 +11,7 @@ import Styles from './Grid.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('course.overview.lesson.items.scorm.Grid', {
-	open: 'Open'
+	open: 'Launch'
 });
 
 const stop = (e) => e.stopPropagation();
