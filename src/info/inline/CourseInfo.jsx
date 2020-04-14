@@ -450,7 +450,6 @@ export default class CourseInfo extends React.Component {
 						hideFullFacilitatorSet={this.hideFullFacilitatorSet}
 						hideDeleteBlock/>
 				</div>
-				<TechSupport />
 				{hasAdminToolsAccess && <InfoPanel {...this.props}/>}
 			</div>
 		);
