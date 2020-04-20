@@ -26,7 +26,6 @@ export default function CoursePriceEditor ({catalogEntry, onValueChange, error})
 	}, [catalogEntry]);
 
 	const onChange = (newAmount, currency) => {
-		debugger;
 		setAmount(newAmount);
 
 		if (onValueChange) {
