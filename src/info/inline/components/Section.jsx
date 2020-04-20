@@ -135,7 +135,7 @@ export default class Section extends React.Component {
 			// instead of doing the default key-value save, do custom logic if specified
 			doSave(pendingChanges).then((value) => {
 				onEndEditing && onEndEditing(value);
-			});
+			}).catch(e => this.setState({error: e}));
 		}
 		else if(pendingChanges && Object.keys(pendingChanges).length > 0) {
 			// do a standard key-value PUT on the catalogEntry.  this covers 90%

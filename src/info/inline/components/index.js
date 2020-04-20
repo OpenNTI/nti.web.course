@@ -7,6 +7,7 @@ export * as MeetTimes from './meettimes';
 export * as Tags from './tags';
 export * as RedemptionCodes from './redemptioncodes';
 export * as Prerequisites from './prerequisites';
+export * as Pricing from './pricing';
 export * as Department from './department';
 export * as Facilitators from './facilitators';
 export * as Assets from './assets';
