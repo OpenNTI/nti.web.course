@@ -15,8 +15,8 @@ async function setPrice (entry, instance, {amount, currency}) {
 	const dollars = amount / 100;
 
 	const resp = purchasable ?
-		await purchasable.save({amount: dollars, currency, Public: true}) :
-		await entry.postToLink('CreateCoursePurchasable', {amount: dollars, currency});
+		await purchasable.save({Amount: dollars, Currency: currency, Public: true}) :
+		await entry.postToLink('CreateCoursePurchasable', {Amount: dollars, Currency: currency});
 
 	//If we didn't have a purchasable, we need to refresh the
 	//catalog entry to get the StoreEnrollment option
