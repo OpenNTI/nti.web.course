@@ -11,6 +11,9 @@ export default async function savePrice (entry, instance, pending) {
 		return;
 	}
 
+	if (!pending?.price?.amount) {
+		throw new Error('Must have a price');
+	}
 
 	const resp = purchasable ?
 		await purchasable.save(pending.price) :

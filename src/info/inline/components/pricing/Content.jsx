@@ -10,14 +10,16 @@ const t = scoped('course.info.inline.components.pricing.View', {
 });
 
 CoursePricingContent.propTypes = {
-	children: PropTypes.any
+	children: PropTypes.any,
+	extra: PropTypes.any
 };
-export default function CoursePricingContent ({children}) {
+export default function CoursePricingContent ({children, extra}) {
 	return (
 		<div className="columned pricing">
 			<div className="field-info">
 				<div className="date-label">{t('label')}</div>
 				<Description>{t('description')}</Description>
+				{extra}
 			</div>
 			<div className="content-column">
 				{children}
