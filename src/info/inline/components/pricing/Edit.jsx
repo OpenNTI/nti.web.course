@@ -19,6 +19,7 @@ const RadioGroup = 'course-pricing';
 const Free = 'free';
 const OneTime = 'one-time';
 
+const MaxPrice = 99999999;//999,999.99 comes from stripe (https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts)
 
 CoursePriceEditor.propTypes = {
 	catalogEntry: PropTypes.object,
@@ -69,7 +70,7 @@ export default function CoursePriceEditor ({catalogEntry, onValueChange, error})
 					<Input.Currency
 						className={cx('course-price-input')}
 						amount={amount}
-				currency="USD"
+						max={MaxPrice}
 						currency={currency}
 						onChange={onChange}
 						omitFractional
