@@ -1,11 +1,34 @@
 import getPurchasable from './get-purchasable';
 
+async function setOpenEnrollment (entry, allow) {
+	const vendorInfo = await entry.fetchLink('VendorInfo');
+
+	const deny = !allow;
+	const payload = {...vendorInfo};
+
+	if (vendorInfo?.NTI?.DenyOpenEnrollment === deny) { return; }
+
+	if (!payload.NTI) {
+		payload.NTI = {DenyOpenEnrollment: deny};
+	} else {
+		payload.NTI.DenyOpenEnrollment = deny;
+	}
+
+	await entry.putToLink('VendorInfo', payload);
+}
+
 async function makeFree (entry) {
 	const purchasable = getPurchasable(entry);
 
-	if (!purchasable) { return entry; }
+	await setOpenEnrollment(entry, true);
 
-	await purchasable.save({Public: false});
+	if (purchasable) {
+		await purchasable.save({Public: false});
+	}
+
+	await entry.refresh();
+	entry.onChange();
+
 	return entry;
 }
 
@@ -15,18 +38,15 @@ async function setPrice (entry, instance, {amount, currency}) {
 	const purchasable = getPurchasable(entry);
 	const dollars = amount / 100;
 
+	await setOpenEnrollment(entry, false);
+
 	const saving = purchasable ?
 		purchasable.save({Amount: dollars, Currency: currency, Public: true}) :
 		entry.postToLink('CreateCoursePurchasable', {Amount: dollars, Currency: currency});
 
 	await saving;
-
-	//If we didn't have a purchasable, we need to refresh the
-	//catalog entry to get the StoreEnrollment option
-	if (!purchasable) {
-		await entry.refresh();
-		entry.onChange();
-	}
+	await entry.refresh();
+	entry.onChange();
 
 	return entry;
 }
