@@ -13,11 +13,12 @@ const t = scoped('course.info.inline.components.pricing.View', {
 	free: 'Free'
 });
 
-
+CoursePricing.hasData = (catalogEntry, {enrollmentAccess}) => enrollmentAccess?.isAdministrative;
 CoursePricing.propTypes = {
-	catalogEntry: PropTypes.object
+	catalogEntry: PropTypes.object,
+	enrollmentAccess: PropTypes.object
 };
-export default function CoursePricing ({catalogEntry}) {
+export default function CoursePricing ({catalogEntry, enrollmentAccess}) {
 	const price = getPrice(catalogEntry);
 	const amount = price?.amount;
 	const currency = price?.currency;

@@ -89,12 +89,10 @@ export default class CourseInfo extends React.Component {
 			redemptionCodes = null;
 		}
 
-		const accessLink = catalogEntry.getLink('UserCoursePreferredAccess');
-
 		let enrollmentAccess;
 
 		try {
-			enrollmentAccess = accessLink ? await service.get(accessLink) : null;
+			enrollmentAccess = await catalogEntry.fetchLinkParsed('UserCoursePreferredAccess');
 		} catch (e) {
 			// may not have access at all
 			enrollmentAccess = null;
