@@ -3,9 +3,10 @@ import getPurchasable from './get-purchasable';
 async function makeFree (entry) {
 	const purchasable = getPurchasable(entry);
 
-	if (!purchasable) { return; }
+	if (!purchasable) { return entry; }
 
-	return await purchasable.save({Public: false});
+	await purchasable.save({Public: false});
+	return entry;
 }
 
 async function setPrice (entry, instance, {amount, currency}) {
@@ -14,9 +15,11 @@ async function setPrice (entry, instance, {amount, currency}) {
 	const purchasable = getPurchasable(entry);
 	const dollars = amount / 100;
 
-	const resp = purchasable ?
-		await purchasable.save({Amount: dollars, Currency: currency, Public: true}) :
-		await entry.postToLink('CreateCoursePurchasable', {Amount: dollars, Currency: currency});
+	const saving = purchasable ?
+		purchasable.save({Amount: dollars, Currency: currency, Public: true}) :
+		entry.postToLink('CreateCoursePurchasable', {Amount: dollars, Currency: currency});
+
+	await saving;
 
 	//If we didn't have a purchasable, we need to refresh the
 	//catalog entry to get the StoreEnrollment option
@@ -25,7 +28,7 @@ async function setPrice (entry, instance, {amount, currency}) {
 		entry.onChange();
 	}
 
-	return resp;
+	return entry;
 }
 
 export default async function savePrice (entry, instance, pending) {
