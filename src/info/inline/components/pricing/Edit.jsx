@@ -6,12 +6,14 @@ import {Input, Errors, Radio, Text} from '@nti/web-commons';
 
 import Styles from './Styles.css';
 import Content from './Content';
-import {getPrice} from './utils';
+import Disclaimer from './Disclaimer';
+import {getPrice, hasOpenAndPurchaseEnrollment} from './utils';
 
 const cx = classnames.bind(Styles);
 const t = scoped('course.info.inline.components.pricing.View', {
 	free: 'Free',
-	oneTime: 'One-Time Purchase'
+	oneTime: 'One-Time Purchase',
+	purchaseAndOpenDisclaimer: 'This course is configured to also allow free enrollment, editing the price will turn off free enrollment.'
 });
 
 const RadioGroup = 'course-pricing';
@@ -77,6 +79,11 @@ export default function CoursePriceEditor ({catalogEntry, onValueChange, error})
 					/>
 				)}
 				<Errors.Message className={cx('course-price-error')} error={error} />
+				{hasOpenAndPurchaseEnrollment && (
+					<Disclaimer>
+						<Text.Base>{t('purchaseAndOpenDisclaimer')}</Text.Base>
+					</Disclaimer>
+				)}
 			</div>
 		</Content>
 	);
