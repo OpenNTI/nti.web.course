@@ -17,7 +17,7 @@ import CourseVideo from './widgets/CourseVideo';
 import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
-	RedemptionCodes, Prerequisites, Pricing, Department, Facilitators, Assets, TranscriptCredit } from './components';
+	RedemptionCodes, Prerequisites, Access, Department, Facilitators, Assets, TranscriptCredit } from './components';
 
 
 const EDITORS = {
@@ -28,7 +28,7 @@ const EDITORS = {
 	FACILITATORS: 'Facilitators',
 	TRANSCRIPT_CREDIT: 'TranscriptCredit',
 	REDEMPTION_CODES: 'RedemptionCodes',
-	COURSE_PRICING: 'Pricing'
+	COURSE_ACCESS: 'Access'
 };
 
 /**
@@ -174,8 +174,8 @@ export default class CourseInfo extends React.Component {
 		this.setState({activeEditor: EDITORS.MEET_TIMES});
 	}
 
-	activatePricingEditor = () => {
-		this.setState({activeEditor: EDITORS.COURSE_PRICING});
+	activateAccessEditor = () => {
+		this.setState({activeEditor: EDITORS.COURSE_ACCESS});
 	}
 
 	hideFullFacilitatorSet = async () => {
@@ -392,14 +392,14 @@ export default class CourseInfo extends React.Component {
 					{this.renderAssetUploadWidget()}
 					<Section
 						className="pricing-section"
-						components={[Pricing]}
+						components={[Access]}
 						catalogEntry={catalogEntry}
 						courseInstance={courseInstance}
 						enrollmentAccess={enrollmentAccess}
 						editable={editable}
-						isEditing={activeEditor === EDITORS.COURSE_PRICING}
-						doSave={pending => Pricing.savePrice(catalogEntry, courseInstance, pending)}
-						onBeginEditing={this.activatePricingEditor}
+						isEditing={activeEditor === EDITORS.COURSE_ACCESS}
+						doSave={pending => Access.saveAccess(catalogEntry, courseInstance, pending)}
+						onBeginEditing={this.activateAccessEditor}
 						onEndEditing={this.endEditing}
 						hideDeleteBlock
 					/>
