@@ -69,16 +69,10 @@ export default class CourseRosterStore extends StreamedBatchStore {
 			const summary = await course.getRosterSummary();
 			this.set(KEYS.ROSTER_SUMMARY, summary);
 
-			const {
-				TotalLegacyOpenEnrolledCount,
-				TotalLegacyForCreditEnrolledCount
-			} = summary || {};
 
 			// filter scopes with zero count and remap legacy scope names
-			const scopes = Object.entries({
-				TotalLegacyForCreditEnrolledCount,
-				TotalLegacyOpenEnrolledCount
-			}).reduce((acc, [scope, count]) => !count ? acc : {...acc, [mapScopeName(scope)]: count} , {});
+			const scopes = Object.entries(summary.TotalEnrollmentsByScope)
+				.reduce((acc, [scope, count]) => !count ? acc : {...acc, [mapScopeName(scope)]: count} , {});
 
 			this.set(KEYS.ENROLLMENT_SCOPES, scopes);
 		}
