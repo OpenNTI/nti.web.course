@@ -65,7 +65,7 @@ export default function CoursePriceEditor ({catalogEntry, onValueChange, error})
 	return (
 		<Content extra={extra} >
 			<div className={cx('edit')}>
-				{selectedOption === Free && (<Text.Base className={cx('free')}>{t('free')}</Text.Base>)}
+				{selectedOption === Free && (<Text.Base className={cx('free', 'price-display')}>{t('free')}</Text.Base>)}
 				{selectedOption === OneTime && (
 					<Input.Currency
 						className={cx('course-price-input')}

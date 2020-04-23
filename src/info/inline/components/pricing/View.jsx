@@ -27,8 +27,8 @@ export default function CoursePricing ({catalogEntry, enrollmentAccess}) {
 		<Content>
 			<div className={cx('display')}>
 				{!amount ?
-					(<Text.Base className={cx('free')}>{t('free')}</Text.Base>) :
-					(<Text.Base className={cx('price')}>{Currency.format(amount / 100, true, 'en-US', currency || 'USD')}</Text.Base>)
+					(<Text.Base className={cx('free', 'price-display')}>{t('free')}</Text.Base>) :
+					(<Text.Base className={cx('price', 'price-display')}>{Currency.format(amount / 100, true, 'en-US', currency || 'USD')}</Text.Base>)
 				}
 			</div>
 		</Content>
