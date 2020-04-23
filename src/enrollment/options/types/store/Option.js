@@ -32,6 +32,10 @@ const t = scoped('course.enrollment.types.store', {
 		redeemable: {
 			title: 'Redeem a Gift'
 		}
+	},
+	disabled: {
+		title: 'Unavailable',
+		description: 'Purchases are unavailable a this time. Please try again later.'
 	}
 });
 
@@ -71,6 +75,12 @@ export default class StoreEnrollmentOption extends Base {
 		return !!this.redeemable;
 	}
 
+	isDisabled () {
+		const stripeConnectKey = this.option.getPurchasable()?.getStripeConnectKey();
+
+		return !stripeConnectKey || !stripeConnectKey.PublicKey;
+	}
+
 
 	async load () {
 		if (!this.isAvailable() && !this.isEnrolled()) {
@@ -95,5 +105,13 @@ export default class StoreEnrollmentOption extends Base {
 
 	getRedeemTitle () {
 		return getTranslationFor(this.getString, 'gifting.redeemable.title', this.catalogEntry, this.option, this.access);
+	}
+
+	getDisabledTitle () {
+		return this.getString('disabled.title');
+	}
+
+	getDisabledDescription () {
+		return this.getString('disabled.description');
 	}
 }

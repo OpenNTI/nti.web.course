@@ -73,6 +73,11 @@ export default class BaseEnrollment {
 	}
 
 
+	isDisabled () {
+		return false;
+	}
+
+
 	getScope () {
 		return this.SCOPE;
 	}

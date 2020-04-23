@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {rawContent} from '@nti/lib-commons';
+import {Prompt} from '@nti/web-commons';
 
 import Button from '../../common/Button';
 import EnrollLink from '../../common/EnrollmentLink';
@@ -9,7 +10,10 @@ export default class CourseEnrollmentBaseTypeEnrollButton extends React.Componen
 	static propTypes = {
 		option: PropTypes.shape({
 			option: PropTypes.object.isRequired,
-			getEnrollButtonLabel: PropTypes.func
+			getEnrollButtonLabel: PropTypes.func,
+			isDisabled: PropTypes.func,
+			getDisabledDescription: PropTypes.func,
+			getDisabledTitle: PropTypes.func
 		}).isRequired
 	}
 
@@ -19,8 +23,18 @@ export default class CourseEnrollmentBaseTypeEnrollButton extends React.Componen
 
 		if (!label) { return null; }
 
+		const disabled = option?.isDisabled();
+		const alert = (e) => {
+			if (!disabled) { return; }
+
+			e.stopPropagation();
+			e.preventDefault();
+
+			Prompt.alert(option.getDisabledDescription(), option.getDisabledTitle());
+		};
+
 		return (
-			<EnrollLink option={option}>
+			<EnrollLink option={option} onClick={alert}>
 				<Button {...rawContent(label)} />
 			</EnrollLink>
 		);
