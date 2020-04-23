@@ -79,7 +79,7 @@ export default function CoursePriceEditor ({catalogEntry, onValueChange, error})
 					/>
 				)}
 				<Errors.Message className={cx('course-price-error')} error={error} />
-				{hasOpenAndPurchaseEnrollment && (
+				{hasOpenAndPurchaseEnrollment(catalogEntry) && (
 					<Disclaimer>
 						<Text.Base>{t('purchaseAndOpenDisclaimer')}</Text.Base>
 					</Disclaimer>
