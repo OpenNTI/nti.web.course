@@ -19,6 +19,13 @@ export default function OneTimePurchaseEditor ({catalogEntry, onChange:onChangeP
 
 		setAmount(price?.amount);
 		setCurrency(price?.currency ?? 'USD');
+
+		onChangeProp?.({
+			price: {
+				amount: price?.amount,
+				currency: price?.currency ?? 'USD'
+			}
+		});
 	}, [catalogEntry]); 
 
 	const onChange = (newAmount, newCurrency) => {
