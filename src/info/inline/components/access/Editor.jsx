@@ -5,6 +5,7 @@ import {Radio} from '@nti/web-commons';
 import {getAvailableTypes} from './types';
 import OverviewContainer from './components/OverviewContainer';
 import RadioGroup from './components/RadioGroup';
+import ErrorMessage from './components/Error';
 
 const RadioGroupName = 'course-access-option';
 
@@ -19,7 +20,7 @@ export default function CourseAccessEditor ({catalogEntry, onValueChange, error}
 	const updatePending = (update) => {
 		const newPending = {...pending, ...update};
 
-		onValueChange(newPending);
+		onValueChange('access', newPending);
 		setPending(newPending);
 	};
 
@@ -49,6 +50,7 @@ export default function CourseAccessEditor ({catalogEntry, onValueChange, error}
 	return (
 		<OverviewContainer extra={extra}>
 			{Editor && (<Editor catalogEntry={catalogEntry} onChange={updatePending} error={error} />)}
+			<ErrorMessage error={error} />
 		</OverviewContainer>
 	);
 }

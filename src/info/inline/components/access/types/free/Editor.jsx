@@ -1,9 +1,7 @@
 import React from 'react';
 
-export default function FreeEditor () {
-	return (
-		<div>
-			Free Editor
-		</div>
-	);
+import Display from './Display';
+
+export default function FreeEditor (props) {
+	return (<Display {...props} />);
 }

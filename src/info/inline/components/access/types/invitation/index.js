@@ -1,5 +1,7 @@
 import {scoped} from '@nti/lib-locale';
 
+import {setOpenEnrollment, setPrice, update} from '../utils';
+
 const t = scoped('course.info.inline.components.access.types.invitation', {
 	display: 'Invitation Only'
 });
@@ -25,3 +27,11 @@ export const isActive = (course) => {
 
 	return true;
 };
+
+
+export async function save (course) {
+	await setOpenEnrollment(course, false);
+	await setPrice(course, null);
+
+	return await update(course);
+}

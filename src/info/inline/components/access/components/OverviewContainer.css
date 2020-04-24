@@ -1,0 +1,5 @@
+.course-access-container {
+	& :global(.nti-text-input) {
+		background: white;
+	}
+}

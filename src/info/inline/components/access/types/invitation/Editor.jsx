@@ -1,9 +1,7 @@
 import React from 'react';
 
-export default function InvitationEditor () {
-	return (
-		<div>
-			Invitation Editor
-		</div>
-	);
+import Display from './Display';
+
+export default function InvitationEditor (props) {
+	return (<Display {...props} />);
 }

@@ -1,0 +1,10 @@
+.course-access-label {
+	display: inline-block;
+	font-size: 0.875rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: white;
+	padding: 0.25rem 1rem;
+	background: var(--secondary-green);
+	border-radius: 4px;
+}

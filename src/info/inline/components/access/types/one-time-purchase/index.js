@@ -1,5 +1,7 @@
 import {scoped} from '@nti/lib-locale';
 
+import {getPurchaseOption, setOpenEnrollment, setPrice, update} from '../utils';
+
 const t = scoped('course.info.inline.components.access.types.one-time-purchase', {
 	display: 'One-Time Purchase'
 });
@@ -11,12 +13,20 @@ export Editor from './Editor';
 export const Name = 'One-Time Purchase';
 export const displayName = t('display');
 
-const getEnrollmentOption = course => course?.getEnrollmentOptions()?.getEnrollmentOptionForPurchase();
-
 export const isAvailable = (course) => {
 	if (course.hasLink('CreateCoursePurchasable')) { return true; }
 
-	return getEnrollmentOption(course)?.getPurchasable();
+	return getPurchaseOption(course)?.getPurchasable();
 };
 
-export const isActive = course => getEnrollmentOption(course)?.enabled;
+export const isActive = course => getPurchaseOption(course)?.enabled;
+
+export async function save (course, {price}) {
+	debugger;
+	if (!price?.amount) { throw new Error('Must have a price'); }
+
+	await setOpenEnrollment(course, false);
+	await setPrice(course, price);
+
+	return await update(course);
+}
