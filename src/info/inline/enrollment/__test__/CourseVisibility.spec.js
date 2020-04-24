@@ -70,84 +70,84 @@ describe('CourseVisibility test', () => {
 	});
 
 
-	describe('Allowing enrollment tests', () => {
-		test('Test none', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
+	// describe('Allowing enrollment tests', () => {
+	// 	test('Test none', () => {
+	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = cmp.find('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
 
-			expect(enrollmentContent.text()).toEqual('Invitation Only');
-		});
+	// 		expect(enrollmentContent.text()).toEqual('Invitation Only');
+	// 	});
 
-		test('Test five minute enrollment', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['FiveminuteEnrollment'])}/>);
+	// 	test('Test five minute enrollment', () => {
+	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['FiveminuteEnrollment'])}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = cmp.find('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
 
-			expect(enrollmentContent.text()).toEqual('For-Credit');
-		});
+	// 		expect(enrollmentContent.text()).toEqual('For-Credit');
+	// 	});
 
-		test('Test IMSEnrollment with SourcedID', () => {
-			const catalogEntry = {
-				getEnrollmentOptions: function () {
-					return {
-						Items: {
-							IMSEnrollment: {
-								SourcedID: '1234'
-							}
-						}
-					};
-				},
-				Preview: true,
-				hasLink: () => true
-			};
+	// 	test('Test IMSEnrollment with SourcedID', () => {
+	// 		const catalogEntry = {
+	// 			getEnrollmentOptions: function () {
+	// 				return {
+	// 					Items: {
+	// 						IMSEnrollment: {
+	// 							SourcedID: '1234'
+	// 						}
+	// 					}
+	// 				};
+	// 			},
+	// 			Preview: true,
+	// 			hasLink: () => true
+	// 		};
 
-			const cmp = mount(<CourseVisibility catalogEntry={catalogEntry}/>);
+	// 		const cmp = mount(<CourseVisibility catalogEntry={catalogEntry}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = cmp.find('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
 
-			expect(enrollmentContent.text()).toEqual('For-Credit');
-		});
+	// 		expect(enrollmentContent.text()).toEqual('For-Credit');
+	// 	});
 
-		test('Test IMSEnrollment without SourcedID', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['IMSEnrollment'])}/>);
+	// 	test('Test IMSEnrollment without SourcedID', () => {
+	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['IMSEnrollment'])}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = cmp.find('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
 
-			expect(enrollmentContent.text()).toEqual('Invitation Only');
-		});
+	// 		expect(enrollmentContent.text()).toEqual('Invitation Only');
+	// 	});
 
-		test('Test StoreEnrollment', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['StoreEnrollment'])}/>);
+	// 	test('Test StoreEnrollment', () => {
+	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['StoreEnrollment'])}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = cmp.find('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
 
-			expect(enrollmentContent.text()).toEqual('Public');
-		});
+	// 		expect(enrollmentContent.text()).toEqual('Public');
+	// 	});
 
-		test('Test OpenEnrollment', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment'])}/>);
+	// 	test('Test OpenEnrollment', () => {
+	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment'])}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = cmp.find('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
 
-			expect(enrollmentContent.text()).toEqual('Public');
-		});
+	// 		expect(enrollmentContent.text()).toEqual('Public');
+	// 	});
 
-		test('Test OpenEnrollment and FiveminuteEnrollment', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment', 'FiveminuteEnrollment'])}/>);
+	// 	test('Test OpenEnrollment and FiveminuteEnrollment', () => {
+	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment', 'FiveminuteEnrollment'])}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = cmp.find('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
 
-			expect(enrollmentContent.text()).toEqual('For-Credit, Public');
-		});
-	});
+	// 		expect(enrollmentContent.text()).toEqual('For-Credit, Public');
+	// 	});
+	// });
 
 
 	describe('Visible in catalog tests', () => {
