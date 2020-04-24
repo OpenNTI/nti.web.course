@@ -105,7 +105,7 @@ export default class CourseVisibility extends React.Component {
 		return (
 			<div className="course-visibility">
 				{this.renderPreviewIndicator()}
-				{this.renderAllowingEnrollment()}
+				{/*{this.renderAllowingEnrollment()}*/}
 				{this.renderVisibleInCatalog()}
 				<div className="launch-button" onClick={this.launchVisibilityDialog}>{t('makeChanges')}</div>
 			</div>
