@@ -22,7 +22,6 @@ export const isAvailable = (course) => {
 export const isActive = course => getPurchaseOption(course)?.enabled;
 
 export async function save (course, {price}) {
-	debugger;
 	if (!price?.amount) { throw new Error('Must have a price'); }
 
 	await setOpenEnrollment(course, false);

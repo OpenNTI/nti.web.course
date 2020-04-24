@@ -17,6 +17,5 @@ export function findActiveType (course) {
 }
 
 export function saveAccess (course, instance, {access}) {
-	debugger;
 	return Types.find(t => t.Name === access?.active)?.save(course, access);
 }
