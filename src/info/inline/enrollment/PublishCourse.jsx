@@ -354,7 +354,6 @@ export default class PublishCourse extends React.Component {
 		return (
 			<div className="publish-course">
 				{this.renderHeader()}
-				{this.renderNavBar()}
 				{this.renderContents()}
 				{this.renderBottomControls()}
 			</div>
