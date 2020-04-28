@@ -39,8 +39,10 @@ class OutlineHeader extends React.Component {
 		// a reload of progress data
 		const {course} = this.props;
 
+		if (!this.isStudent(course)) { return; }
+
 		course.refreshPreferredAccess().then(() => {
-			this.loadProgress(course);
+			this.loadProgress(course, true);
 		});
 	}
 
@@ -110,7 +112,26 @@ class OutlineHeader extends React.Component {
 		});
 	}
 
-	async loadProgress (course) {
+	shouldLoad (course, force) {
+		const now = Date.now();
+		const lastLoad = this.lastLoad;
+		
+		this.lastLoad = {
+			course,
+			time: now
+		};
+
+		if (!lastLoad) { return true; }
+
+		const sameCourse = lastLoad.course === course;
+		const diff = now - lastLoad.time;
+
+		return force || !sameCourse || diff > LOAD_WAIT;
+	}
+
+	async loadProgress (course, force) {
+		if (!this.shouldLoad(course, force)) { return; }
+
 		const isCompletable = Object.keys(course).includes('CompletionPolicy');
 
 		if(isCompletable && this.isStudent(course)) {
@@ -131,14 +152,7 @@ class OutlineHeader extends React.Component {
 	}
 
 	componentDidUpdate (prevProps) {
-		const isDifferentCourse = prevProps.course !== this.props.course;
-
-		// only update after a buffer time.  otherwise, updates will continually
-		// be triggered
-		if(isDifferentCourse || !this.lastLoadTime || (Date.now() - this.lastLoadTime > LOAD_WAIT)) {
-			this.lastLoadTime = Date.now();
-			this.loadProgress(this.props.course);
-		}
+		this.loadProgress(this.props.course);
 	}
 
 	onPreferredAccessChange () {
