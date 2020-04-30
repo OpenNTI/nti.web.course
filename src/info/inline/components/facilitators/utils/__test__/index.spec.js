@@ -2,7 +2,12 @@ import { saveFacilitators, mergeAllFacilitators, getAvailableRoles } from '../';
 
 let savedData = null;
 
-const mockService = () => ({
+const mockService = (putData) => ({
+	put: (link, data) => {
+		const key = `put-${link}`;
+
+		putData[key] = data;
+	},
 	post: (link, data) => {
 		const key = 'post-' + link;
 
@@ -43,9 +48,10 @@ describe('Test saveFacilitators', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
-	test('Test save every type', (done) => {
+	test('Test save every type', async () => {
 		// saveFacilitators (catalogEntry, courseInstance, facilitators) {
-		const service = mockService();
+		const putData = {};
+		const service = mockService(putData);
 		const catalogEntry = {
 			save: (data) => {
 				savedData.Instructors = data.Instructors;
@@ -57,7 +63,8 @@ describe('Test saveFacilitators', () => {
 				return name;
 			},
 			hasLink: name => Boolean(name),
-			postToLink: (...args) => service.post(...args)
+			postToLink: (...args) => service.post(...args),
+			putToLink: (...args) => service.put(...args)
 		};
 
 		const facilitators = [
@@ -126,32 +133,14 @@ describe('Test saveFacilitators', () => {
 			}
 		];
 
-		saveFacilitators(catalogEntry, courseInstance, facilitators).then(() => {
-			const findCatalogInstructor = (name) => {
-				return savedData.Instructors.filter(x => x.username === name)[0];
-			};
+		await saveFacilitators(catalogEntry, courseInstance, facilitators);
 
-			// there should be 3 visible facilitators, so exactly 3 saved to catalogEntry.Instructors
-			expect(savedData.Instructors.length).toBe(3);
-			expect(findCatalogInstructor('ionly').Name).toEqual('I Only');
-			expect(findCatalogInstructor('eonly').Name).toEqual('E Only');
-			expect(findCatalogInstructor('both').Name).toEqual('Both');
+		const {roles} = putData['put-roles'];
+		const expectedEditors = ['eonly', 'both', 'hiddenBoth', 'hiddenEditor'];
+		const expectedInstructors = ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth'];
 
-			const verifyList = (list1, list2) => {
-				expect(list1.length).toBe(list2.length);
-
-				list2.forEach(x => {
-					expect(list1.some(y => y === x)).toBe(true);
-				});
-			};
-
-			verifyList(savedData['post-Instructors'], ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth']);
-			verifyList(savedData['post-RemoveInstructors'], ['eonly', 'hiddenEditor', 'toRemove']);
-			verifyList(savedData['post-Editors'], ['eonly', 'both', 'hiddenEditor', 'hiddenBoth']);
-			verifyList(savedData['post-RemoveEditors'], ['ionly', 'hiddenInstructor', 'toRemove']);
-
-			done();
-		});
+		expect(roles.editors.sort()).toEqual(expectedEditors.sort());
+		expect(roles.instructors.sort()).toEqual(expectedInstructors.sort());
 	});
 });
 
