@@ -14,7 +14,7 @@ import {
 
 import CourseVisibility from './enrollment/CourseVisibility';
 import CourseVideo from './widgets/CourseVideo';
-import { saveFacilitators, mergeAllFacilitators } from './components/facilitators/utils';
+import { saveFacilitators, getVisibleFacilitators, getAllFacalitators, hasHiddenFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';
 import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
 	RedemptionCodes, Prerequisites, Access, Department, Facilitators, Assets, TranscriptCredit } from './components';
@@ -98,17 +98,16 @@ export default class CourseInfo extends React.Component {
 			enrollmentAccess = null;
 		}
 
+		const facilitators = await getVisibleFacilitators(catalogEntry, courseInstance);
+		const hasMoreFacilitators = hasHiddenFacilitators(catalogEntry, courseInstance);
+
 		this.setState({
 			catalogEntry,
 			courseInstance,
 			redemptionCodes,
 			enrollmentAccess,
-			hasMoreFacilitators: courseInstance.hasLink('Instructors') || courseInstance.hasLink('Editors'),
-			facilitators: mergeAllFacilitators(
-				catalogEntry.Instructors,
-				[],
-				[],
-				catalogEntry),
+			facilitators,
+			hasMoreFacilitators,
 			loading: false
 		});
 	}
@@ -206,25 +205,14 @@ export default class CourseInfo extends React.Component {
 		});
 
 		try {
-			const service = await getService();
-
-			const instructorsLink = courseInstance ? courseInstance.getLink('Instructors') : null;
-			const editorsLink = courseInstance ? courseInstance.getLink('Editors') : null;
-
-			const instructorsRaw = instructorsLink ? await service.get(instructorsLink) : [];
-			const editorsRaw = editorsLink ? await service.get(editorsLink) : [];
+			const facilitators = await getAllFacalitators(catalogEntry, courseInstance);
 
 
 			this.setState({
 				...extraState,
 				loadingFullFacilitators: false,
 				facilitatorsFullyLoaded: true,
-				facilitators: mergeAllFacilitators(
-					catalogEntry.Instructors,
-					instructorsRaw && instructorsRaw.Items,
-					editorsRaw && editorsRaw.Items,
-					catalogEntry
-				)
+				facilitators
 			});
 		} catch (e) {
 			this.setState({

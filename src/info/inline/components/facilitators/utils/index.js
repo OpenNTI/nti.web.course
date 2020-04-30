@@ -63,7 +63,7 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 		return facilitators;
 	}
 
-	if (!courseInstance || !courseInstance.hasLink('Instructors') || !courseInstance.hasLink('Editors')) {
+	if (!courseInstance?.hasLink('roles')) {
 		return facilitators;
 	}
 
@@ -72,37 +72,27 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	// editor => Editors
 	// assistant => Instructors
 	// instructor => Editors + Instructors
-	const editorsToAdd = userBacked.filter(x => x.role === ROLES.EDITOR || x.role === ROLES.INSTRUCTOR);
-	const instructorsToAdd = userBacked.filter(x => x.role === ROLES.ASSISTANT || x.role === ROLES.INSTRUCTOR);
 
-	const editorsToRemove = userBacked.filter(x => x.role !== ROLES.EDITOR && x.role !== ROLES.INSTRUCTOR);
-	const instructorsToRemove = userBacked.filter(x => x.role !== ROLES.ASSISTANT && x.role !== ROLES.INSTRUCTOR);
+	const roles = userBacked.reduce((acc, user) => {
+		if (user.role === ROLES.EDITOR || user.role === ROLES.INSTRUCTOR) {
+			acc.Editors.push(user);
+		}
 
-	const getPayload = users => ({
-		users: users.map(u => u && u.username)
+		if (user.role === ROLES.ASSISTANT || user.role === ROLES.INSTRUCTOR) {
+			acc.Instructors.push(user);
+		}
+
+		return acc;
+	}, {Editors: [], Instructors: []});
+
+	await courseInstance.putToLink('roles', {
+		roles: {
+			editors: roles.Editors.map(user => user?.username),
+			instructors: roles.Instructors.map(user => user?.username)
+		}
 	});
 
-	const tasks = [];
-
-	if (instructorsToAdd.length) {
-		tasks.push(courseInstance.postToLink('Instructors', getPayload(instructorsToAdd)));
-	}
-
-	if (editorsToAdd.length) {
-		tasks.push(courseInstance.postToLink('Editors', getPayload(editorsToAdd)));
-	}
-
-	if (instructorsToRemove.length) {
-		tasks.push(courseInstance.postToLink('RemoveInstructors', getPayload(instructorsToRemove)));
-	}
-
-	if (editorsToRemove.length) {
-		tasks.push(courseInstance.postToLink('RemoveEditors', getPayload(editorsToRemove)));
-	}
-
-	await Promise.all(tasks);
-
-	return facilitators.filter(x => x.role && x.role !== '');
+	return facilitators.filter(user => user.role && user.role !== '');
 }
 
 function containsUser (list, userName) {
@@ -187,4 +177,23 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 		.forEach(user => pushLegacyInstructorInfo(user, ROLES.EDITOR));
 
 	return aggregated;
+}
+
+export function hasHiddenFacilitators (entry, instance) {
+	return instance.hasLink('roles');
+}
+
+
+export function getVisibleFacilitators (entry, instance) {
+	return mergeAllFacilitators(entry.Instructors, [], [], entry);
+}
+
+
+export async function getAllFacalitators (entry, instance) {
+	const roles = await instance.fetchLink('roles');
+
+	const instructors = roles?.roles?.instructors?.Items ?? [];
+	const editors = roles?.roles?.editors?.Items ?? [];
+
+	return mergeAllFacilitators(entry.Instructors, instructors, editors, entry);
 }
