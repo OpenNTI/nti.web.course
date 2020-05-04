@@ -10,7 +10,7 @@ const t = scoped('course.pass-fail.requirement-details', {
 	done: 'Done',
 	cancel: 'Cancel',
 	assignmentReq: 'ASSIGNMENT NAME',
-	message: 'The following items did not meet the requirements to complete this course yet.'
+	message: 'The following items have not satisfied the requirements of this course.'
 });
 
 export default class RequirementDetails extends React.Component {
