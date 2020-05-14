@@ -1,6 +1,6 @@
 {
   "name": "@nti/web-course",
-  "version": "1.77.0",
+  "version": "1.78.0-alpha",
   "author": "nextthought",
   "description": "ReactJS components for course management",
   "license": "UNLICENSED",
