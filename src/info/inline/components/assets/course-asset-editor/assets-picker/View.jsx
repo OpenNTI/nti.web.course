@@ -98,7 +98,7 @@ export default class AssetsPicker extends React.Component {
 		try {
 			const images = await Promise.all(
 				sizes.map(async (size) => {
-					const editorState = ImageEditor.getEditorState(asset, size.formatting);
+					const editorState = size.editorState || ImageEditor.getEditorState(asset, size.formatting);
 
 					const blob = await ImageEditor.getBlobForEditorState(editorState);
 
@@ -141,6 +141,7 @@ export default class AssetsPicker extends React.Component {
 				if (size.id === activeSizeID) {
 					return {
 						...size,
+						editorState,
 						formatting: editorState.formatting
 					};
 				}
@@ -185,6 +186,7 @@ export default class AssetsPicker extends React.Component {
 							key={index}
 							asset={asset}
 							formatting={size.formatting}
+							editorState={size.editorState}
 							name={size.name}
 							selectID={size.id}
 							active={activeSizeID === size.id}

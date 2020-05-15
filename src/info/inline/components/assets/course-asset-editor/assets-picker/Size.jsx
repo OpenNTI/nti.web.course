@@ -7,6 +7,7 @@ export default class AssetPickerSize extends React.Component {
 	static propTypes = {
 		asset: PropTypes.object.isRequired,
 		formatting: PropTypes.object.isRequired,
+		editorState: PropTypes.object.isRequired,
 		name: PropTypes.string.isRequired,
 		active: PropTypes.bool,
 		selectID: PropTypes.string,
@@ -21,18 +22,18 @@ export default class AssetPickerSize extends React.Component {
 
 
 	componentDidUpdate (prevProps) {
-		const {asset:newAsset, formatting: newFormatting} = this.props;
-		const {asset:oldAsset, formatting: oldFormatting} = prevProps;
+		const {asset:newAsset, editorState} = this.props;
+		const {asset:oldAsset, editorState: oldState} = prevProps;
 
-		if (newAsset !== oldAsset || newFormatting !== oldFormatting) {
+		if (newAsset !== oldAsset || editorState !== oldState) {
 			this.loadSrcFor();
 		}
 	}
 
 
 	async loadSrcFor (props = this.props) {
-		const {asset, formatting} = props;
-		const editorState = ImageEditor.getEditorState(asset, formatting);
+		const {asset, editorState:stateProp, formatting} = props;
+		const editorState = stateProp || ImageEditor.getEditorState(asset, formatting);
 
 		try {
 			const img = await ImageEditor.getImageForEditorState(editorState);
