@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Page, HOC} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
@@ -14,12 +15,19 @@ const t = scoped('course.info.page.components.NavBar', {
 	reports: 'Reports',
 	roster: 'Roster',
 	completion: 'Completion',
-	lti: 'LTI Tools'
+	lti: 'LTI Tools',
+	navigation: 'Navigation'
 });
 
 const NameLink = Variant(Outline.Item, {as: LinkTo.Name, activeClassName: Outline.Item.activeClassName});
 
-export default function CoursePageNavBar () {
+const hasLTI = course => course?.hasLink('lti-configured-tools');
+const hasTabs = course => course?.hasLink('UpdateCourseTabPreferences');
+
+CoursePageNavBar.propTypes = {
+	instance: PropTypes.object
+};
+export default function CoursePageNavBar ({instance}) {
 	return (
 		<Outline>
 			<Outline.Header title={t('title')} />
@@ -35,9 +43,16 @@ export default function CoursePageNavBar () {
 			<NameLink name={RouteNames.Completion}>
 				{t('completion')}
 			</NameLink>
-			<NameLink name={RouteNames.LTI}>
-				{t('lti')}
-			</NameLink>
+			{hasLTI(instance) && (
+				<NameLink name={RouteNames.LTI}>
+					{t('lti')}
+				</NameLink>
+			)}
+			{hasTabs(instance) && (
+				<NameLink name={RouteNames.Navigation}>
+					{t('navigation')}
+				</NameLink>
+			)}
 		</Outline>
 	);
 }

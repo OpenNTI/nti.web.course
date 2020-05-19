@@ -4,6 +4,11 @@
 	position: relative;
 	padding: 2rem;
 
+	&.tab-editor-page {
+		background: white;
+		box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.15);
+	}
+
 	.saving-container {
 		position: absolute;
 		top: 0;

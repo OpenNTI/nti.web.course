@@ -5,10 +5,12 @@ import {RouteNames} from './Constants';
 import About from './routes/About';
 import Completion from './routes/Completion';
 import LTI from './routes/LTI';
+import Navigation from './routes/Navigation';
 import Reports from './routes/Reports';
 import Roster from './routes/Roster';
 
 export default Router.for([
+	Route({path: '/navitation', component: Navigation, name: RouteNames.Navigation}),
 	Route({path: '/lti-tools', component: LTI, name: RouteNames.LTI}),
 	Route({path: '/completion', component: Completion, name: RouteNames.Completion}),
 	Route({path: '/reports', component: Reports, name: RouteNames.Reports}),

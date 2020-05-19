@@ -35,7 +35,7 @@ export default function CourseInfoFrame ({course, children, ...otherProps}) {
 	return (
 		<Page>
 			<Page.Navigation>
-				<NavBar />
+				<NavBar {...courseParts} />
 			</Page.Navigation>
 			<Page.Content card={false}>
 				<Loading.Placeholder loading={loading} fallback={(<Page.Content.Loading />)}>

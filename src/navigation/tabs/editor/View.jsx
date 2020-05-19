@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import {Loading, Button} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -37,6 +38,7 @@ class CourseNavigationTabsEditor extends React.Component {
 
 	static propTypes = {
 		course: PropTypes.object.isRequired,
+		page: PropTypes.bool,
 
 		loading: PropTypes.bool,
 		error: PropTypes.any,
@@ -86,10 +88,10 @@ class CourseNavigationTabsEditor extends React.Component {
 
 
 	render () {
-		const {loading, saving, error} = this.props;
+		const {loading, saving, error, page} = this.props;
 
 		return (
-			<div className="nti-course-tab-editor">
+			<div className={cx('nti-course-tab-editor', {'tab-editor-page': page})}>
 				{loading && (<Loading.Mask />)}
 				{!loading && saving && (<div className="saving-container"><Loading.Mask message={t('saving')} /></div>)}
 				{!loading && error && this.renderError()}

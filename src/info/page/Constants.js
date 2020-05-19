@@ -3,5 +3,6 @@ export const RouteNames = {
 	Reports: 'course-reports',
 	Roster: 'course-roster',
 	Completion: 'course-completion',
-	LTI: 'course-lti'
+	LTI: 'course-lti',
+	Navigation: 'course-navigation'
 };
