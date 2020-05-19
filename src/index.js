@@ -3,7 +3,7 @@ export Community from './community';
 export CourseCreateButton from './CreateButton';
 export * as Content from './content';
 export * as Editor from './editor';
-export Info from './info/inline/CourseInfo';
+export * as Info from './info';
 export PublishCourse from './info/inline/enrollment/PublishCourse';
 export ManageTranscriptCredits from './info/inline/components/transcriptcredit/managetypes';
 export * as Progress from './progress';
