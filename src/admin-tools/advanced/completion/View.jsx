@@ -35,6 +35,7 @@ export default
 class CourseAdminCompletion extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
+		page: PropTypes.bool,
 		store: PropTypes.object.isRequired,
 		loading: PropTypes.bool,
 		completable: PropTypes.bool,
@@ -193,10 +194,10 @@ class CourseAdminCompletion extends React.Component {
 
 
 	render () {
-		const {loading, error} = this.props;
+		const {loading, error, page} = this.props;
 
 		return (
-			<div className="course-admin-completion">
+			<div className={cx('course-admin-completion', {'completion-page': page})}>
 				{loading && <Loading.Ellipsis/>}
 				{!loading && (
 					<div className="content">

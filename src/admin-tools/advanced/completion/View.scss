@@ -6,6 +6,20 @@
 	padding: 30px 0;
 	max-width: 750px;
 
+	&.completion-page {
+		max-width: none;
+		background: white;
+		padding: 0 0 5rem;
+
+		.default-required-container {
+			margin-right: 35px;
+
+			.completion-control {
+				margin-right: 0;
+			}
+		}
+	}
+
 	.error {
 		color: $primary-red;
 		height: 20px;

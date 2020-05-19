@@ -12,7 +12,8 @@ const t = scoped('course.info.page.components.NavBar', {
 	title: 'Course Info',
 	about: 'About',
 	reports: 'Reports',
-	roster: 'Roster'
+	roster: 'Roster',
+	completion: 'Completion'
 });
 
 const NameLink = Variant(Outline.Item, {as: LinkTo.Name, activeClassName: Outline.Item.activeClassName});
@@ -29,6 +30,9 @@ export default function CoursePageNavBar () {
 			</NameLink>
 			<NameLink name={RouteNames.Reports}>
 				{t('reports')}
+			</NameLink>
+			<NameLink name={RouteNames.Completion}>
+				{t('completion')}
 			</NameLink>
 		</Outline>
 	);
