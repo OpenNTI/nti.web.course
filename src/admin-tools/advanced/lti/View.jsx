@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Loading } from '@nti/web-commons';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import { scoped } from '@nti/lib-locale';
 
 import Store from './../../../lti-tools/editing/Store';
@@ -26,6 +27,7 @@ export default
 class LTITools extends Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
+		page: PropTypes.bool,
 		items: PropTypes.array,
 		loading: PropTypes.bool,
 		error: PropTypes.string,
@@ -79,7 +81,7 @@ class LTITools extends Component {
 
 	render () {
 		const { addIsVisible } = this.state;
-		const { course, items, loading, error, store } = this.props;
+		const { course, page, items, loading, error, store } = this.props;
 		const hasLTI = course.hasLink('lti-configured-tools');
 
 		if (!hasLTI) {
@@ -87,7 +89,7 @@ class LTITools extends Component {
 		}
 
 		return (
-			<div className="lti-tools-config">
+			<div className={cx('lti-tools-config', {'lti-page': page})}>
 				<div className="lti-tools-config-headerBar">
 					<div className="lti-tools-config-header">{t('header')}</div>
 					{!error && <Button className="lti-tools-add" onClick={this.onAddTool}>{t('add')}</Button>}
