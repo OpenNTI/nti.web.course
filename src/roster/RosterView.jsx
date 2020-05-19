@@ -37,6 +37,7 @@ export default
 class CourseRosterView extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
+		inline: PropTypes.bool,
 		encodedBatchLink: PropTypes.string,
 		renderRoster: PropTypes.func,
 		children: PropTypes.any,
@@ -136,6 +137,7 @@ class CourseRosterView extends React.Component {
 	getComponentProps = () => {
 		const {
 			children,
+			inline,
 			course,
 			items,
 			loading,
@@ -155,6 +157,7 @@ class CourseRosterView extends React.Component {
 		return {
 			children,
 			course,
+			inline,
 			loading,
 			items,
 			error,

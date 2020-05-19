@@ -25,6 +25,7 @@ export default class Roster extends React.Component {
 
 	static propTypes = {
 		course: PropTypes.object,
+		inline: PropTypes.bool,
 		items: PropTypes.array,
 		loading: PropTypes.bool,
 		error: PropTypes.any,
@@ -99,6 +100,7 @@ export default class Roster extends React.Component {
 
 	render () {
 		const {
+			inline,
 			items,
 			scopes,
 			loading,
@@ -119,7 +121,7 @@ export default class Roster extends React.Component {
 
 		return (
 			<Scroll.BoundaryMonitor window onBottom={this.onScrolledBottom} onUpdate={this.onUpdate}>
-				<section className={cx('course-roster')}>
+				<section className={cx('course-roster', {inline})}>
 					{showHeader && <Header />}
 					<Toolbar course={course} />
 					<div className={cx('content', {empty, loading})}>

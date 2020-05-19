@@ -1,3 +1,5 @@
 export const RouteNames = {
-	About: 'course-about'
+	About: 'course-about',
+	Reports: 'course-reports',
+	Roster: 'course-roster'
 };

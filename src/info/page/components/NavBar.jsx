@@ -10,7 +10,9 @@ const {Variant} = HOC;
 
 const t = scoped('course.info.page.components.NavBar', {
 	title: 'Course Info',
-	about: 'About'
+	about: 'About',
+	reports: 'Reports',
+	roster: 'Roster'
 });
 
 const NameLink = Variant(Outline.Item, {as: LinkTo.Name, activeClassName: Outline.Item.activeClassName});
@@ -19,8 +21,14 @@ export default function CoursePageNavBar () {
 	return (
 		<Outline>
 			<Outline.Header title={t('title')} />
-			<NameLink name={RouteNames.About}>
+			<NameLink name={RouteNames.About} exact>
 				{t('about')}
+			</NameLink>
+			<NameLink name={RouteNames.Roster}>
+				{t('roster')}
+			</NameLink>
+			<NameLink name={RouteNames.Reports}>
+				{t('reports')}
 			</NameLink>
 		</Outline>
 	);
