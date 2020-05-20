@@ -91,15 +91,15 @@ export default class LessonView extends React.Component {
 			const filterAllowed = course.CompletionPolicy && layout !== Grid;
 			const overview = await outlineNode.getContent({requiredOnly: filterAllowed && requiredOnly});
 
-			const isAdmin = this.props.course.isAdministrative;
 
 			// only get progress stats if admin
-			const {progressByItems} = !isAdmin ? {} : await outlineNode.fetchLink('ProgressStatisticsByItem');
+			// const isAdmin = this.props.course.isAdministrative;
+			// const {Items: progressByItems} = !isAdmin ? {} : await outlineNode.fetchLink('ProgressStatisticsByItem');
 
 			this.setState({
 				loading: false,
 				overview,
-				progressByItems
+				progressByItems: null
 			});
 		} catch (e) {
 			this.setState({
