@@ -21,8 +21,11 @@ const t = scoped('course.info.page.components.NavBar', {
 
 const NameLink = Variant(Outline.Item, {as: LinkTo.Name, activeClassName: Outline.Item.activeClassName});
 
+const hasRoster = course => course?.hasLink('CourseEnrollmentRoster');
+const hasReports = course => course?.Reports?.length;
+const hasCompletion = course => course?.hasLink('CompletionPolicy');
 const hasLTI = course => course?.hasLink('lti-configured-tools');
-const hasTabs = course => course?.hasLink('UpdateCourseTabPreferences');
+const hasNavigation = course => course?.hasLink('UpdateCourseTabPreferences');
 
 CoursePageNavBar.propTypes = {
 	instance: PropTypes.object
@@ -34,21 +37,27 @@ export default function CoursePageNavBar ({instance}) {
 			<NameLink name={RouteNames.About} exact>
 				{t('about')}
 			</NameLink>
-			<NameLink name={RouteNames.Roster}>
-				{t('roster')}
-			</NameLink>
-			<NameLink name={RouteNames.Reports}>
-				{t('reports')}
-			</NameLink>
-			<NameLink name={RouteNames.Completion}>
-				{t('completion')}
-			</NameLink>
+			{hasRoster(instance) && (
+				<NameLink name={RouteNames.Roster}>
+					{t('roster')}
+				</NameLink>
+			)}
+			{hasReports(instance) && (
+				<NameLink name={RouteNames.Reports}>
+					{t('reports')}
+				</NameLink>
+			)}
+			{hasCompletion(instance) && (
+				<NameLink name={RouteNames.Completion}>
+					{t('completion')}
+				</NameLink>
+			)}
 			{hasLTI(instance) && (
 				<NameLink name={RouteNames.LTI}>
 					{t('lti')}
 				</NameLink>
 			)}
-			{hasTabs(instance) && (
+			{hasNavigation(instance) && (
 				<NameLink name={RouteNames.Navigation}>
 					{t('navigation')}
 				</NameLink>
