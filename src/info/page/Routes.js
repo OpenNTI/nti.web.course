@@ -10,7 +10,7 @@ import Reports from './routes/Reports';
 import Roster from './routes/Roster';
 
 export default Router.for([
-	Route({path: '/navitation', component: Navigation, name: RouteNames.Navigation}),
+	Route({path: '/navigation', component: Navigation, name: RouteNames.Navigation}),
 	Route({path: '/lti-tools', component: LTI, name: RouteNames.LTI}),
 	Route({path: '/completion', component: Completion, name: RouteNames.Completion}),
 	Route({path: '/reports', component: Reports, name: RouteNames.Reports}),
