@@ -23,15 +23,15 @@ const NameLink = Variant(Outline.Item, {as: LinkTo.Name, activeClassName: Outlin
 
 const hasRoster = course => course?.hasLink('CourseEnrollmentRoster');
 const hasReports = course => course?.Reports?.length;
-const hasCompletion = (course, catalogEntry) => catalogEntry?.hasLink('edit');
+const hasCompletion = (course, access) => access?.isAdministrative;
 const hasLTI = course => course?.hasLink('lti-configured-tools');
 const hasNavigation = course => course?.hasLink('UpdateCourseTabPreferences');
 
 CoursePageNavBar.propTypes = {
-	instance: PropTypes.object,
-	catalogEntry: PropTypes.object
+	access: PropTypes.object,
+	instance: PropTypes.object
 };
-export default function CoursePageNavBar ({instance, catalogEntry}) {
+export default function CoursePageNavBar ({access, instance}) {
 	return (
 		<Outline>
 			<Outline.Header title={t('title')} />
@@ -48,7 +48,7 @@ export default function CoursePageNavBar ({instance, catalogEntry}) {
 					{t('reports')}
 				</NameLink>
 			)}
-			{hasCompletion(instance, catalogEntry) && (
+			{hasCompletion(instance, access) && (
 				<NameLink name={RouteNames.Completion}>
 					{t('completion')}
 				</NameLink>
