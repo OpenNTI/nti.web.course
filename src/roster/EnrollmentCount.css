@@ -1,0 +1,25 @@
+.enrollment-count {
+	width: 224px;
+	box-shadow: 1px 0 0 #eaeaea;
+	height: 100%;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	& .count {
+		font-size: 1.75rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: var(--secondary-green);
+	}
+
+	& .label {
+		font-size: 0.625rem;
+		font-weight: 600;
+		line-height: 1.3;
+		text-transform: uppercase;
+		color: var(--tertiary-grey);
+	}
+}

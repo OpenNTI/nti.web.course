@@ -177,6 +177,8 @@ class StreamedBatchStore extends Stores.BoundStore {
 	reload = () => {
 		this.clearBatches();
 		this.load();
+
+		this.onReload?.();
 	}
 
 

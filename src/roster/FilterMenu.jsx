@@ -12,7 +12,7 @@ import styles from './FilterMenu.css';
 const cx = classnames.bind(styles);
 
 const t = scoped('roster.component.filter-menu', {
-	'no-filter': 'All Students',
+	'no-filter': 'All Learners',
 	...DEFAULT_ENROLLMENT_SCOPE_NAMES
 });
 

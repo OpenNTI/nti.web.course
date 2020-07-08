@@ -8,7 +8,7 @@ import classnames from 'classnames/bind';
 import styles from './Student.css';
 
 const t = scoped('roster.columns.student', {
-	header: 'Student',
+	header: 'Learner',
 	email: 'Email'
 });
 const cx = classnames.bind(styles);

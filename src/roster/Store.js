@@ -29,6 +29,8 @@ const scopeNames = {
 const mapScopeName = name => scopeNames[name] || name;
 
 export default class CourseRosterStore extends StreamedBatchStore {
+	static Keys = KEYS
+
 	constructor () {
 		super();
 
@@ -54,6 +56,10 @@ export default class CourseRosterStore extends StreamedBatchStore {
 
 		this.loadSummary();
 		this.load();
+	}
+
+	onReload () {
+		this.loadSummary();
 	}
 
 	async loadBatch (href, options) {
