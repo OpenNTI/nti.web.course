@@ -30,9 +30,12 @@
 }
 
 .table.table {
-	width: 100%;
-	table-layout: auto;
 	color: var(--secondary-grey, #757474);
+}
+
+.tabel.table td {
+	width: 25%;
+	overflow: hidden;
 }
 
 .table.table tr > *:first-child {

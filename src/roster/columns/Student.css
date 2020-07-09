@@ -1,5 +1,6 @@
 .student-cell {
-	width: 100%;
+	width: 40%;
+	overflow: hidden;
 }
 
 .student {
@@ -9,6 +10,13 @@
 	min-height: 60px;
 	position: relative;
 	font-weight: 600;
+	overflow: hidden;
+
+	& :global(.username) {
+		flex: 1 1 auto;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
 }
 
 .student > * {
