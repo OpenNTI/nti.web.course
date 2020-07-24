@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
-import {Input} from '@nti/web-commons';
-
+import {Common} from '@nti/web-editor';
 
 const t = scoped('course.info.inline.components.description.Edit', {
 	label: 'About This Course'
@@ -41,7 +40,7 @@ export default class DescriptionEdit extends React.Component {
 		return (
 			<div className="description-editor">
 				<div className="label">{t('label')}</div>
-				<Input.TextArea className="description-input" onChange={this.onChange} value={this.state.value}/>
+				<Common.RichText value={this.state.value} onContentChange={this.onChange} />
 			</div>
 		);
 	}
