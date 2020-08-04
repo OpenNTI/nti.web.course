@@ -60,7 +60,7 @@ export default class BasicWizardPanel extends React.Component {
 		const { buttonLabel, saveCmp: Cmp } = this.props;
 
 		if(Cmp) {
-			return (<Cmp onSave={this.onSave} label={t('create')}/>);
+			return (<Cmp onSave={this.onSave} label={buttonLabel || t('create')}/>);
 		}
 
 		return null;
