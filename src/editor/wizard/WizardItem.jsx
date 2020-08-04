@@ -120,7 +120,7 @@ export default class WizardItem extends React.Component {
 
 	renderLoading () {
 		if(this.state.loading) {
-			return (<Loading.Mask message={t('saving')}/>);
+			return (<Loading.Overlay label={t('saving')} loading large/>);
 		}
 
 		return null;
@@ -161,7 +161,6 @@ export default class WizardItem extends React.Component {
 			<div className="course-wizard-item">
 				{this.renderHeader()}
 				{this.renderError()}
-				{this.renderLoading()}
 				<div className="course-panel-content-container">
 					<Cmp
 						onCancel={this.doCancel}
@@ -170,6 +169,7 @@ export default class WizardItem extends React.Component {
 						exitProgressState={this.exitProgressState}
 						{...otherProps}/>
 				</div>
+				{this.renderLoading()}
 			</div>
 		);
 	}

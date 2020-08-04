@@ -12,7 +12,8 @@ import Styles from './WizardPanel.css';
 const cx = classnames.bind(Styles);
 const t = scoped('course.editor.panels.instructors.WizardPanel', {
 	cancel: 'Continue to Course',
-	save: 'Save Facilitators'
+	save: 'Save Facilitators',
+	saving: 'Saving'
 });
 
 const {Utils} = EditFacilitators;
@@ -31,6 +32,7 @@ export default function InstructorsWizardPanel ({catalogEntry, afterSave, saveCm
 	const courseInstance = getCourseInstance(catalogEntry);
 	const [facilitators, setFacilitators] = React.useState(null);
 	const [error, setError] = React.useState(null);
+	const [saving, setSaving] = React.useState(false);
 
 	const SaveCmp = saveCmp;
 
@@ -71,11 +73,13 @@ export default function InstructorsWizardPanel ({catalogEntry, afterSave, saveCm
 
 	const saveFacilitators = async () => {
 		try {
+			setSaving(true);
 			await Utils.saveFacilitators(catalogEntry, courseInstance, facilitators);
 		
 			afterSave?.();
 		} catch (e) {
 			setError(e);
+			setSaving(false);
 		}
 	};
 
@@ -97,6 +101,7 @@ export default function InstructorsWizardPanel ({catalogEntry, afterSave, saveCm
 				<SaveCmp className="course-panel-continue" onSave={saveFacilitators} label={t('save')} />
 				<div className="course-panel-cancel" secondary onClick={onCancel}>{t('cancel')}</div>
 			</div>
+			{saving && (<Loading.Overlay large loading label={t('saving')} />)}
 		</div>
 	);
 }
