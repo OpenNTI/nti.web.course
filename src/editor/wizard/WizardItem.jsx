@@ -29,6 +29,7 @@ export default class WizardItem extends React.Component {
 		buttonLabel: PropTypes.string,
 		firstTab: PropTypes.bool,
 		hideHeaderControls: PropTypes.bool,
+		hideBackButton: PropTypes.bool,
 		// by default, a wizard item cancel means to delete the temp course,
 		// but sometimes we may want to cancel and keep the course
 		// TODO: Maybe separate the delete on cancel logic out and have a more generic underlying component?
@@ -75,7 +76,7 @@ export default class WizardItem extends React.Component {
 	renderBackButton () {
 		const { inProgress } = this.state;
 
-		if(this.props.hideHeaderControls || this.props.firstTab || inProgress) {
+		if(this.props.hideHeaderControls || this.props.hideBackButton || this.props.firstTab || inProgress) {
 			return null;
 		}
 

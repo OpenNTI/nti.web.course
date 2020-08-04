@@ -7,7 +7,9 @@ import AddButton from '../../widgets/AddButton';
 
 import Facilitator from './Facilitator';
 import AddFacilitators from './AddFacilitators';
-import {canAddFacilitators} from './utils';
+import * as Utils from './utils';
+
+const {canAddFacilitators} = Utils;
 
 const t = scoped('course.info.inline.components.facilitators.Edit', {
 	addFacilitators: 'Add a Facilitator',
@@ -19,6 +21,8 @@ const t = scoped('course.info.inline.components.facilitators.Edit', {
 // const DEFAULT_JOB_TITLES = ['Assistant', 'Instructor', 'Editor'];
 
 export default class FacilitatorsEdit extends React.Component {
+	static Utils = Utils;
+
 	static propTypes = {
 		courseInstance: PropTypes.object.isRequired,
 		facilitators: PropTypes.arrayOf(PropTypes.object),

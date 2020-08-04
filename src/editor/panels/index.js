@@ -3,6 +3,7 @@ export * as DayTime from './daytime';
 export * as Dates from './dates';
 export * as ImportPanel from './import';
 export * as ImportConfirmation from './importconfirmation';
+export * as Instructors from './instructors';
 export * as Settings from './settings';
 export * as ScormBasic from './scorm-basic';
 export * as ScormImport from './scorm-import';

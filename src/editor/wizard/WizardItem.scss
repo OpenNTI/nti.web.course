@@ -52,11 +52,12 @@
 }
 
 .course-panel-continue {
-	width: 100px;
+	min-width: 100px;
 	float: right;
 	height: 40px;
 	line-height: 40px;
 	margin-right: 10px;
+	padding: 0 1.5rem;
 	background-color: rgb(63, 179, 246);
 	border-radius: 5px;
 	color: white;
@@ -65,10 +66,11 @@
 }
 
 .course-panel-cancel {
-	width: 100px;
+	min-width: 100px;
 	float: right;
 	line-height: 40px;
 	height: 40px;
 	margin-right: 10px;
+	padding: 0 1.5rem;
 	cursor: pointer;
 }

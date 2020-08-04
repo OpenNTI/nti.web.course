@@ -8,6 +8,7 @@ import {saveCatalogEntry} from '../../../editor/Actions';
 
 const t = scoped('course.editor.panels.basic.WizardPanel', {
 	cancel: 'Cancel',
+	create: 'Create Course',
 	courseName: 'Course Name',
 	identifier: 'Identification Number (i.e. UCOL-3224)',
 	description: 'Description'
@@ -59,7 +60,7 @@ export default class BasicWizardPanel extends React.Component {
 		const { buttonLabel, saveCmp: Cmp } = this.props;
 
 		if(Cmp) {
-			return (<Cmp onSave={this.onSave} label={buttonLabel}/>);
+			return (<Cmp onSave={this.onSave} label={t('create')}/>);
 		}
 
 		return null;

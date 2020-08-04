@@ -19,6 +19,8 @@ const t = scoped('course.wizard.CourseWizard', {
 });
 
 export default class CourseWizard extends React.Component {
+	static modalClassName = 'course-creation-wizard-modal';
+
 	static propTypes = {
 		title: PropTypes.string,
 		catalogEntry: PropTypes.object,
@@ -44,7 +46,8 @@ export default class CourseWizard extends React.Component {
 			? this.props.catalogEntry
 			: {
 				save: save,
-				delete: () => { return Promise.resolve(); }
+				delete: () => { return Promise.resolve(); },
+				isPlaceholder: true
 			};
 
 		this.state = {
@@ -97,6 +100,7 @@ export default class CourseWizard extends React.Component {
 				onCancel={this.cancel}
 				onFinish={this.creationCompleted}
 				hideHeaderControls={panel.WizardPanel.hideHeaderControls}
+				hideBackButton={panel.WizardPanel.hideBackButton}
 				firstTab={this.props.template && index === 0}	// if provided a template, don't allow back control on first step
 				afterSave={index === arr.length - 1
 					? () => this.creationCompleted(!panel.WizardPanel.disallowEditorRedirect)

@@ -1,0 +1,11 @@
+.instructors-wizard-panel {
+	max-width: 600px;
+	margin: 0 auto 5rem;
+	position: relative;
+	padding-bottom: 1rem;
+
+	& :global(.add-facilitator.add-button) {
+		position: absolute;
+		top: 100%;
+	}
+}

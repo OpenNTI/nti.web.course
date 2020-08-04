@@ -8,7 +8,10 @@ export const createCourse = (onCourseModified, template) => {
 	let dialog = null;
 
 	return new Promise((fulfill, reject) => {
-		dialog = Prompt.modal(<CourseWizard template={template} onFinish={fulfill} onCancel={reject} onCourseModified={onCourseModified}/>);
+		dialog = Prompt.modal(
+			<CourseWizard template={template} onFinish={fulfill} onCancel={reject} onCourseModified={onCourseModified}/>,
+			{className: CourseWizard.modalClassName}
+		);
 	}).then((savedEntry) => {
 		dialog && dialog.dismiss();
 

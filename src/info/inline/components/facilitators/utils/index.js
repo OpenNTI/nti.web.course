@@ -7,7 +7,7 @@ export const ROLES = {
 };
 
 const getUsername = x => x.Username || x.username;
-const roleDisplayName = role => role.charAt(0).toUpperCase() + role.slice(1);
+export const roleDisplayName = role => role.charAt(0).toUpperCase() + role.slice(1);
 
 export function getAvailableRoles (courseInstance) {
 	let options = [];
