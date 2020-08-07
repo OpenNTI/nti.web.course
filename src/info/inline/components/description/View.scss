@@ -6,4 +6,9 @@
 	line-height: 1.8em;
 	font-size: 14px;
 	word-wrap: break-word;
+
+	& a {
+		color: $primary-blue;
+		text-decoration: none;
+	}
 }
