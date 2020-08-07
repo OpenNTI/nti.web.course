@@ -33,7 +33,7 @@ export default class DescriptionEdit extends React.Component {
 
 		this.setState({value: val});
 
-		onValueChange && onValueChange(DescriptionEdit.FIELD_NAME, val);
+		onValueChange && onValueChange(DescriptionEdit.FIELD_NAME, val ?? '');
 	}
 
 	render () {
