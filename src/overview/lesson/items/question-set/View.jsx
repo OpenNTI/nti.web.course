@@ -26,6 +26,14 @@ const HANDLES = [
 	'application/vnd.nextthought.assessment.assignment'
 ];
 
+async function getAssessmentSubmission (id) {
+	const service = await getService();
+	const pageInfo = await service.getPageInfo(id);
+	const submission = await pageInfo.getUserDataLastOfType(SUBMITTED_QUIZ);
+
+	return submission;
+}
+
 export default
 @Registry.register(HANDLES)
 @Hooks.onEvent({
@@ -98,6 +106,10 @@ class LessonOverviewQuestionSet extends React.Component {
 
 		if (item.MimeType === 'application/vnd.nextthought.assignmentref') {
 			return this.setupAssignmentRef(target, course);
+		}
+
+		if (item.MimeType === 'application/vnd.nextthought.questionsetref') {
+			return this.setupQuestionSetRef(target, course);
 		}
 
 
@@ -174,7 +186,37 @@ class LessonOverviewQuestionSet extends React.Component {
 		} catch (e) {
 			//TODO: figure out if/how we need to handle this case
 		}
+	}
 
+	async setupQuestionSetRef (id, course) {
+		const {readOnly} = this.props;
+
+		try {
+			const assessment = await course.getAssessment(id);
+
+			this.setState({
+				assessment,
+				networkError: false
+			}, async () => {
+				if (readOnly) { return; }
+
+				try {
+					const submission = await getAssessmentSubmission(id);
+
+					this.setState({
+						assessmentSubmission: submission
+					});
+				} catch (e) {
+					if (isNetworkError(e)) {
+						this.setNetworkError();
+					}
+
+					//Its fine if we can't load a submission
+				}
+			});
+		} catch (e) {
+			//TODO figure out if/how we need to handle this
+		}
 	}
 
 
@@ -189,9 +231,7 @@ class LessonOverviewQuestionSet extends React.Component {
 			if (readOnly) { return; }
 
 			try {
-				const service = await getService();
-				const pageInfo = await service.getPageInfo(id);
-				const submission = await pageInfo.getUserDataLastOfType(SUBMITTED_QUIZ);
+				const submission = await getAssessmentSubmission(id);
 
 				this.setState({
 					assessmentSubmission: submission
