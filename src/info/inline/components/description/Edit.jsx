@@ -40,7 +40,7 @@ export default class DescriptionEdit extends React.Component {
 		return (
 			<div className="description-editor">
 				<div className="label">{t('label')}</div>
-				<Common.RichText value={this.state.value} onContentChange={this.onChange} />
+				<Common.RichText value={this.state.value} onContentChange={this.onChange} contentChangeBuffer={100} />
 			</div>
 		);
 	}
