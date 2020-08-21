@@ -1,3 +1,4 @@
+import './Progress.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {CircularProgress} from '@nti/web-charts';

@@ -1,3 +1,4 @@
+import './Icon.scss';
 import React from 'react';
 
 export default function LessonOverviewSurveyIcon ({...otherProps}) {

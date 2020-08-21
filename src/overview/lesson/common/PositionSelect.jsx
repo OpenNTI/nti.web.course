@@ -1,3 +1,4 @@
+import './PositionSelect.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Flyout, Input, DialogButtons} from '@nti/web-commons';

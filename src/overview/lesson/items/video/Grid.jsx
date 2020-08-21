@@ -1,3 +1,4 @@
+import './Grid.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Component as Video} from '@nti/web-video';

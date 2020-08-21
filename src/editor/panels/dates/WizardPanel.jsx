@@ -1,3 +1,4 @@
+import './WizardPanel.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DayPickerRange } from '@nti/web-commons';

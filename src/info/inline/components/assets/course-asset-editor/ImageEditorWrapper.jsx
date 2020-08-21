@@ -1,3 +1,4 @@
+import './ImageEditorWrapper.scss';
 import React from 'react';
 import {ImageEditor} from '@nti/web-whiteboard';
 

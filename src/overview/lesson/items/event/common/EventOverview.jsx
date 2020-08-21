@@ -1,3 +1,4 @@
+import './EventOverview.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DialogButtons, DateTime, Prompt, Input, Loading} from '@nti/web-commons';

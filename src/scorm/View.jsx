@@ -1,3 +1,4 @@
+import './View.scss';
 
 import React, { Component } from 'react';
 import { Button, Layouts } from '@nti/web-commons';

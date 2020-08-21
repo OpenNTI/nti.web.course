@@ -1,3 +1,4 @@
+import './CourseVideo.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Video, { EmbedInput, getCanonicalUrlFrom } from '@nti/web-video';

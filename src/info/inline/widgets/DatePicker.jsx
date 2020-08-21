@@ -1,3 +1,4 @@
+import './DatePicker.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DateTime, DayTimePicker, Flyout } from '@nti/web-commons';

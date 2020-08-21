@@ -1,3 +1,4 @@
+import './ManageCreditTypes.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {ConflictResolution} from '@nti/web-commons';

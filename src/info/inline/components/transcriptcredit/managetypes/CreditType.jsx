@@ -1,3 +1,4 @@
+import './CreditType.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Input, Prompt} from '@nti/web-commons';

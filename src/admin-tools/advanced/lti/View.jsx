@@ -1,3 +1,4 @@
+import './View.scss';
 import React, { Component } from 'react';
 import { Button, Loading } from '@nti/web-commons';
 import PropTypes from 'prop-types';
