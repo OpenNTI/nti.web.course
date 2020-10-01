@@ -8,6 +8,10 @@
 		text-transform: uppercase;
 	}
 
+	span.draft {
+		color: $tertiary-grey
+	}
+
 	.require-control-value {
 		line-height: 20px;
 	}

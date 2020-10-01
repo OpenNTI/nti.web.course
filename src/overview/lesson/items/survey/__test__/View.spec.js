@@ -20,6 +20,7 @@ function itemBuilder () {
 		_submissions: 0,
 		_isSubmitted: false,
 		_isClosed: false,
+		_published: true,
 
 		commentCount: function (val) {
 			this._commentCount = val;
@@ -61,6 +62,11 @@ function itemBuilder () {
 			return this;
 		},
 
+		published: (val) => {
+			this._published = val;
+			return this;
+		},
+
 		submitted: function () {
 			this._isSubmitted = true;
 			return this;
@@ -87,7 +93,8 @@ function itemBuilder () {
 				byline: this._byline,
 				submissions: this._submissions,
 				isSubmitted: this._isSubmitted,
-				isClosed: this._isClosed
+				isClosed: this._isClosed,
+				isTargetPublished: () => this._published
 			};
 		}
 	};

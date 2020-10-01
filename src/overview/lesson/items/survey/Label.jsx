@@ -8,6 +8,7 @@ import RequirementControl from '../../../../progress/widgets/RequirementControl'
 import Required from '../../common/Required';
 
 const DEFAULT_TEXT = {
+	draft: 'Draft',
 	question: {
 		one: '%(count)s Question',
 		other: '%(count)s Questions'
@@ -35,6 +36,7 @@ export default function LessonOverviewSurveyLabel ({item, onRequirementChange}) 
 					<RequirementControl record={item} onChange={onRequirementChange}/>
 				)
 				: required && <Required/>}
+			{!item.isTargetPublished() && (<span className="draft">{t('draft')}</span>)}
 			<span className="question-count">{t('question', {count: item.getQuestionCount()})}</span>
 			<span className="submissions">{t('submissions', {count: item.submissions})}</span>
 		</List.SeparatedInline>
