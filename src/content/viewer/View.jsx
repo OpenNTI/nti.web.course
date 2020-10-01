@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {getScrollParent, scrollElementTo} from '@nti/lib-dom';
-import {Layouts, Decorators} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import {Layouts, Decorators, Page} from '@nti/web-commons';
 
 import Styles from './View.css';
 import Content from './content-renderer';
@@ -12,9 +11,6 @@ import UpNext from './parts/UpNext';
 
 const {Aside} = Layouts;
 const cx = classnames.bind(Styles);
-const t = scoped('course.content.viewer.View', {
-	error: 'Unable to load content.'
-});
 
 export default
 @Decorators.addClassToRoot('nti-course-content-open')
@@ -65,18 +61,12 @@ class CourseContentViewer extends React.Component {
 
 		return (
 			<Cmp ref={this.domNode} className={cx('nti-course-content', className, {loading})}>
-				{error && (
-					<div className={cx('contents-error')}>
-						{t('error')}
-					</div>
-				)}
-				{!error && (
-					<div className={cx('contents')}>
-						<Header location={location} {...otherProps} />
-						<Content location={location} {...otherProps} />
-						<UpNext location={location} {...otherProps} />
-					</div>
-				)}
+				<div className={cx('contents')}>
+					<Header location={location} {...otherProps} />
+					{error && (<Page.Content.NotFound error={error} />)}
+					{!error && (<Content location={location} {...otherProps} />)}
+					<UpNext location={location} {...otherProps} />
+				</div>
 			</Cmp>
 		);
 	}
