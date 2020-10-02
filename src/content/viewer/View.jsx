@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import {getScrollParent, scrollElementTo} from '@nti/lib-dom';
 import {Layouts, Decorators, Page} from '@nti/web-commons';
+import {getHistory} from '@nti/web-routing';
 
 import Styles from './View.css';
 import Content from './content-renderer';
@@ -63,7 +64,14 @@ class CourseContentViewer extends React.Component {
 			<Cmp ref={this.domNode} className={cx('nti-course-content', className, {loading})}>
 				<div className={cx('contents')}>
 					<Header location={location} {...otherProps} />
-					{error && (<Page.Content.NotFound error={error} />)}
+					{error && (
+						<Page.Content.NotFound
+							error={error}
+							actions={[
+								Page.Content.NotFound.getBackAction(getHistory())
+							]}
+						/>
+					)}
 					{!error && (<Content location={location} {...otherProps} />)}
 					<UpNext location={location} {...otherProps} />
 				</div>
