@@ -72,7 +72,7 @@
 			}
 
 			&.add-new {
-				color: $primary-blue;
+				color: var(--primary-blue);
 				padding: 0.5rem;
 				cursor: pointer;
 			}

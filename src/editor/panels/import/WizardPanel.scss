@@ -33,7 +33,7 @@
 		.bar {
 			width: 100%;
 			height: rem-calc(10px);
-			background-color: rgba($primary-blue, 0.2);
+			background-color: rgba(var(--primary-blue), 0.2);
 
 			&.uploaded {
 				background-color: rgba($primary-green, 0.2);
@@ -47,7 +47,7 @@
 
 			.indicator {
 				height: 100%;
-				background-color: $primary-blue;
+				background-color: var(--primary-blue);
 				transition: width 1s ease;
 			}
 		}

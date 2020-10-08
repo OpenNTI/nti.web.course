@@ -12,7 +12,7 @@
 		border-radius: 3px;
 
 		&.selected {
-			box-shadow: 0 0 0 2px $primary-blue;
+			box-shadow: 0 0 0 2px var(--primary-blue);
 		}
 	}
 }

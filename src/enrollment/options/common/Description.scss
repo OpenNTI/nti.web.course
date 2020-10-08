@@ -5,7 +5,7 @@
 	min-height: rem-calc(100px);
 
 	a[href] {
-		color: $primary-blue;
+		color: var(--primary-blue);
 		text-decoration: none;
 	}
 }

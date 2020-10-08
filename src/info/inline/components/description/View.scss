@@ -8,7 +8,7 @@
 	word-wrap: break-word;
 
 	& a {
-		color: $primary-blue;
+		color: var(--primary-blue);
 		text-decoration: none;
 	}
 }

@@ -21,7 +21,7 @@
 			outline: 0;
 
 			&::before {
-				outline: 5px auto $primary-blue;
+				outline: 5px auto var(--primary-blue);
 			}
 		}
 
@@ -74,7 +74,7 @@
 			border-radius: 100%;
 
 			&.active {
-				background: $primary-blue;
+				background: var(--primary-blue);
 			}
 		}
 

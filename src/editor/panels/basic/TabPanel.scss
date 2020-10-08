@@ -51,7 +51,7 @@
 			.access-code-copy {
 				padding-top: 10px;
 				cursor: pointer;
-				color: $primary-blue;
+				color: var(--primary-blue);
 				font-size: 12px;
 				position: absolute;
 				z-index: 9999;

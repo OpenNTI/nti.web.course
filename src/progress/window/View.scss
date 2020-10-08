@@ -88,8 +88,8 @@
 
 			&.primary {
 				color: white;
-				background-color: $primary-blue;
-				border-color: $primary-blue;
+				background-color: var(--primary-blue);
+				border-color: var(--primary-blue);
 			}
 		}
 	}

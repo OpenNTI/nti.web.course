@@ -19,7 +19,7 @@
 			}
 
 			&.active {
-				background: $primary-blue;
+				background: var(--primary-blue);
 				color: white;
 			}
 		}

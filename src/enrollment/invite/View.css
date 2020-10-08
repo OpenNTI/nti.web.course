@@ -5,7 +5,7 @@
 }
 
 .invitation-form a {
-	color: var(--primary-blue, #3fb3f6);
+	color: var(--primary-blue);
 }
 
 .invitation-form header {

@@ -51,7 +51,7 @@
 	}
 
 	.load-more {
-		background-color: $primary-blue;
+		background-color: var(--primary-blue);
 		color: white;
 		text-align: center;
 		font: normal 400 1rem/1.25 $body-font-family;

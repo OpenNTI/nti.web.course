@@ -50,7 +50,7 @@
 		}
 
 		.confirm {
-			background-color: $primary-blue;
+			background-color: var(--primary-blue);
 			color: white;
 			cursor: pointer;
 			display: inline;

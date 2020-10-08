@@ -12,7 +12,7 @@
 
 	.header {
 		height: 137px;
-		background: linear-gradient(270deg, #3fb3f6 0%, #157aff 100%);
+		background: linear-gradient(270deg 0%, #157aff 100%);
 		color: white;
 		padding: 17px 35px;
 		position: relative;
@@ -55,8 +55,8 @@
 			cursor: pointer;
 
 			&.active {
-				border-bottom: solid 2px #3fb3f6;
-				color: $primary-blue;
+				border-bottom: solid 2px var(--primary-blue);
+				color: var(--primary-blue);
 			}
 		}
 	}
@@ -165,7 +165,7 @@
 
 			.publish {
 				color: white;
-				background-color: $primary-blue;
+				background-color: var(--primary-blue);
 				cursor: pointer;
 				padding: 0 25px;
 				line-height: 40px;

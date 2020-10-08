@@ -2,7 +2,7 @@
 
 .nti-course-card-authors {
 	font: normal 700 0.625rem/1.4 $body-font-family;
-	color: $primary-blue;
+	color: var(--primary-blue);
 	text-transform: uppercase;
 	overflow: hidden;
 	text-overflow: ellipsis;

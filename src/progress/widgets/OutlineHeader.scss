@@ -21,7 +21,7 @@
 
 			&.cert-link {
 				a {
-					color: $primary-blue;
+					color: var(--primary-blue);
 					text-decoration: none;
 					cursor: pointer;
 				}

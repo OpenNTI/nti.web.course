@@ -33,7 +33,7 @@
 	.role-label-editor {
 		&::before {
 			content: $icon-edit;
-			color: $primary-blue;
+			color: var(--primary-blue);
 		}
 	}
 

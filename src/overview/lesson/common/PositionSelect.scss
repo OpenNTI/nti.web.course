@@ -33,7 +33,7 @@
 		font: normal 400 0.875rem/40px "Open Sans", sans-serif;
 
 		&.selected {
-			color: $primary-blue;
+			color: var(--primary-blue);
 			pointer-events: none;
 		}
 	}
@@ -55,14 +55,14 @@
 		}
 
 		&.selected {
-			color: $primary-blue;
+			color: var(--primary-blue);
 			pointer-events: none;
 		}
 	}
 
 	.add-new {
 		line-height: 20px;
-		color: $primary-blue;
+		color: var(--primary-blue);
 		padding: 8px;
 		font-size: 0.875rem;
 	}

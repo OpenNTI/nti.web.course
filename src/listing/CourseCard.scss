@@ -35,8 +35,8 @@
 			margin-top: 20px;
 
 			&.selected {
-				background-color: $primary-blue;
-				box-shadow: 1px 1px 2px 1px $primary-blue;
+				background-color: var(--primary-blue);
+				box-shadow: 1px 1px 2px 1px var(--primary-blue);
 			}
 		}
 	}
@@ -115,7 +115,7 @@
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		color: #3fb3f6;
+		color: var(--primary-blue);
 	}
 
 	.course-id {

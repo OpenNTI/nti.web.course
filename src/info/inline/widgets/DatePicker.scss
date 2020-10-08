@@ -65,7 +65,7 @@
 		color: var(--secondary-grey);
 
 		&.no-date {
-			color: $primary-blue;
+			color: var(--primary-blue);
 			padding-top: 6px;
 			font-weight: 300;
 		}

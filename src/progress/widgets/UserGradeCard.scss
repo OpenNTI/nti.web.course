@@ -17,7 +17,7 @@
 		}
 
 		.grade-container {
-			color: #3fb3f6;
+			color: var(--primary-blue);
 			position: absolute;
 			right: 78px;
 			bottom: 6px;
@@ -31,7 +31,7 @@
 			padding-left: 2px;
 
 			.grade {
-				border: solid 2px #3fb3f6;
+				border: solid 2px var(--primary-blue);
 				border-radius: 25px;
 				width: 27px;
 				height: 27px;
@@ -55,7 +55,7 @@
 	}
 
 	.assign-grade {
-		color: $primary-blue;
+		color: var(--primary-blue);
 		font-size: 14px;
 		cursor: pointer;
 	}

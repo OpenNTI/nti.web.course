@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .add-button {
-	color: $primary-blue;
+	color: var(--primary-blue);
 	display: flex;
 	cursor: pointer;
 

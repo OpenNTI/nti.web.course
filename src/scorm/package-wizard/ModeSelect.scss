@@ -15,13 +15,13 @@
 		margin: 0 30px;
 
         &.selected {
-            border-color: $primary-blue;
+            border-color: var(--primary-blue);
         }
 
         .name {
             margin-top: 40px;
             margin-bottom: 20px;
-            color: $primary-blue;
+            color: var(--primary-blue);
             text-align: center;
             font-size: 18px;
             font-weight: 600;
