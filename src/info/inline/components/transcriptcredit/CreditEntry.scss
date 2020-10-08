@@ -46,7 +46,7 @@
 		margin: 12px 0 0 10px;
 
 		i {
-			background-color: $tertiary-grey;
+			background-color: var(--tertiary-grey);
 			font-size: 9px;
 			font-weight: bold;
 		}
@@ -68,7 +68,7 @@
 		.credit-type-option {
 			&.disabled {
 				cursor: initial;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 			}
 
 			&.add-new {

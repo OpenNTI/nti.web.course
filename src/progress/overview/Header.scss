@@ -41,7 +41,7 @@
 		}
 
 		&.disabled {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			pointer-events: none;
 		}
 	}

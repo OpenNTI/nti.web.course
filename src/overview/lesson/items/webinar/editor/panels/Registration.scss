@@ -35,7 +35,7 @@
 		}
 
 		.learn-more {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			font-size: 14px;
 			line-height: 22px;
 			font-weight: 300;
@@ -56,7 +56,7 @@
 		.learn-more-content {
 			.steps-title {
 				font-size: 10px;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				text-transform: uppercase;
 				font-weight: bold;
 				margin-top: 20px;
@@ -77,8 +77,8 @@
 					line-height: 32px;
 					font-size: 12px;
 					text-align: center;
-					color: $tertiary-grey;
-					border: solid 1px $tertiary-grey;
+					color: var(--tertiary-grey);
+					border: solid 1px var(--tertiary-grey);
 					margin-right: 10px;
 				}
 			}

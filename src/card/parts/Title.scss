@@ -7,7 +7,7 @@
 	.provider-unique-id, .course-date {
 		font: normal 700 0.625rem/2.5 $body-font-family;
 		text-transform: uppercase;
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;

@@ -21,7 +21,7 @@
 
 		& > .label {
 			font: normal 700 0.75rem/1.25 $body-font-family;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			text-transform: uppercase;
 			flex: 0 0 auto;
 		}

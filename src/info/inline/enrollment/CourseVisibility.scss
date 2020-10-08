@@ -16,7 +16,7 @@
 			text-transform: uppercase;
 			font-weight: 600;
 			font-size: 10px;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 
 			&.preview {
 				color: #ffa500;

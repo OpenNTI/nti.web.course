@@ -11,6 +11,6 @@
     }
 
     .close, .back, .course-panel-cancel {
-        color: $tertiary-grey;
+        color: var(--tertiary-grey);
     }
 }

@@ -22,7 +22,7 @@
 			.message {
 				line-height: 20px;
 				font-size: 14px;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				text-align: center;
 			}
 		}
@@ -38,7 +38,7 @@
 				font-size: 10px;
 				font-weight: bold;
 				line-height: 24px;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				text-transform: uppercase;
 			}
 
@@ -89,7 +89,7 @@
 			}
 
 			.message {
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				font-size: 14px;
 				line-height: 20px;
 				text-align: center;

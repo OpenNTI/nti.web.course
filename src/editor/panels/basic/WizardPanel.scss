@@ -17,7 +17,7 @@
 
 		&::placeholder {
 			font-style: italic;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			font-weight: 300;
 		}
 	}

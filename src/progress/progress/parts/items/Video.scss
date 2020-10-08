@@ -4,7 +4,7 @@
 	.video-progress-item-icon {
 		width: rem-calc(80px);
 		height: rem-calc(45px);
-		background-color: $tertiary-grey;
+		background-color: var(--tertiary-grey);
 		position: relative;
 		box-shadow: 0 0 1px 0 $border-grey;
 

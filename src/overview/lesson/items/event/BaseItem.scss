@@ -66,7 +66,7 @@ $header-ranges: (
 			.availability-info {
 				font-size: 10px;
 				text-transform: uppercase;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				margin-top: 4px;
 				white-space: nowrap;
 				overflow: hidden;
@@ -102,7 +102,7 @@ $header-ranges: (
 						position: absolute;
 						right: 0;
 						top: 10px;
-						color: $tertiary-grey;
+						color: var(--tertiary-grey);
 					}
 				}
 			}
@@ -131,7 +131,7 @@ $header-ranges: (
 			// max-width: 130px;
 
 			&.disabled {
-				background-color: $tertiary-grey;//#B8B8B8;
+				background-color: var(--tertiary-grey);//#B8B8B8;
 				pointer-events: none;
 
 				&.clickable {
@@ -206,7 +206,7 @@ $header-ranges: (
 				// div {
 				// 	padding-top: 38px;
 				// 	font-weight: 600;
-				// 	color: $tertiary-grey;
+				// 	color: var(--tertiary-grey);
 				// 	font-size: 24px;
 				// 	text-align: center;
 				// 	opacity: 0.5;

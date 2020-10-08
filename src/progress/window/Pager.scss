@@ -24,7 +24,7 @@
 			cursor: pointer;
 
 			&.inactive {
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				cursor: default;
 			}
 		}

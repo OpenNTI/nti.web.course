@@ -67,7 +67,7 @@
 		font-weight: bold;
 		text-transform: uppercase;
 		padding: 0 1.25rem 0.5rem;
-		color: #b8b8b8;
+		color: var(--tertiary-grey);
 	}
 }
 
@@ -220,7 +220,7 @@
 
 			.delete-facilitator {
 				color: white;
-				background-color: #b8b8b8;
+				background-color: var(--tertiary-grey);
 				height: 16px;
 				width: 16px;
 				border-radius: 25px;

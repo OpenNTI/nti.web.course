@@ -60,7 +60,7 @@
 		}
 
 		&.incomplete {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 		}
 	}
 }

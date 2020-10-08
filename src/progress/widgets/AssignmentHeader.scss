@@ -40,7 +40,7 @@
 					}
 
 					i {
-						color: $tertiary-grey;
+						color: var(--tertiary-grey);
 					}
 				}
 			}
@@ -72,7 +72,7 @@
 			.stat-label {
 				font-size: 10px;
 				text-transform: uppercase;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 			}
 
 			.stat-value {

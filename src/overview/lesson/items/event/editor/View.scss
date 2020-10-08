@@ -35,7 +35,7 @@
 				}
 
 				i {
-					color: #b8b8b8;
+					color: var(--tertiary-grey);
 					margin-left: 6px;
 					font-size: 20px;
 					position: absolute;
@@ -89,7 +89,7 @@
 					max-width: 550px;
 
 					.date {
-						color: $tertiary-grey;
+						color: var(--tertiary-grey);
 						font-size: 10px;
 						text-transform: uppercase;
 					}

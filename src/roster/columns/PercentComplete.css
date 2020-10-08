@@ -1,7 +1,7 @@
 .percent-complete-container {
 	display: flex;
 	align-items: center;
-	color: var(--tertiary-grey, #b8b8b8);
+	color: var(--tertiary-grey);
 	font-weight: 300;
 }
 

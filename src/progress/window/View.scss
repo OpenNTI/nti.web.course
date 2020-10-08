@@ -51,7 +51,7 @@
 
 		i.icon-search {
 			position: absolute;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			font-size: 18px;
 			left: 32px;
 			top: 43px;
@@ -71,7 +71,7 @@
 
 			&::placeholder {
 				font-style: italic;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 			}
 		}
 
