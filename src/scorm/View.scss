@@ -67,7 +67,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
         .nti-button.primary.scorm-post-launch-button {
-            background-color: #B8B8B8;
+            background-color: var(--tertiary-grey);
             border-radius: 3px;
             margin-top: 97px;
             -webkit-font-smoothing: antialiased;
