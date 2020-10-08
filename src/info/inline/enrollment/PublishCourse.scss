@@ -189,11 +189,11 @@
 	}
 
 	&.publish-option.selected .course-preview-option-info {
-		color: $secondary-green;
+		color: var(--secondary-green);
 	}
 
 	&.publish-on-date-option.selected .course-preview-option-info {
-		color: $secondary-green;
+		color: var(--secondary-green);
 	}
 
 	&.publish-on-date-option.selected.no-date .course-preview-option-info {

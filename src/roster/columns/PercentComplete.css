@@ -14,5 +14,5 @@
 }
 
 .positive .text {
-	color: var(--secondary-green, #3fb34f);
+	color: var(--secondary-green);
 }

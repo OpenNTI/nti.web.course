@@ -86,7 +86,7 @@
 
 			.badge {
 				display: inline-block;
-				background: $secondary-green;
+				background: var(--secondary-green);
 				color: #fff;
 				border-radius: 20px;
 				text-transform: uppercase;

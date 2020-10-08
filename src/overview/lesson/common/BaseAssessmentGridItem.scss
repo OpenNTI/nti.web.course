@@ -82,7 +82,7 @@
 			.nti-button.primary {
 				border-radius: 4px;
 				padding: rem-calc(0 20px);
-				background-color: $secondary-green;
+				background-color: var(--secondary-green);
 				font-size: 1rem;
 				line-height: 2.5;
 				font-weight: 400;

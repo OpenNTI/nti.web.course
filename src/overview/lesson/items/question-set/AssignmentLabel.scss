@@ -11,7 +11,7 @@
 
 	.completed {
 		&.ontime:not(.submission-failed) .status-label {
-			color: $secondary-green;
+			color: var(--secondary-green);
 			background: none;
 			padding-left: 0;
 		}
