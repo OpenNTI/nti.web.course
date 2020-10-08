@@ -21,11 +21,11 @@
 
 	.loading-error {
 		text-align: center;
-		color: $primary-red;
+		color: var(--primary-red);
 	}
 
 	.saving-error {
-		color: $primary-red;
+		color: var(--primary-red);
 		margin-bottom: 1rem;
 		font: normal 400 0.875rem/1.3 $body-font-family;
 	}

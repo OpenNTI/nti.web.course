@@ -56,7 +56,7 @@
 		}
 
 		&.failed {
-			color: $primary-red;
+			color: var(--primary-red);
 		}
 
 		&.incomplete {

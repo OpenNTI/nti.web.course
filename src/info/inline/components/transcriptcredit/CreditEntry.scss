@@ -14,7 +14,7 @@
 		background-color: white;
 
 		&:invalid {
-			background-color: rgba($primary-red, 0.1);
+			background-color: rgba(var(--primary-red), 0.1);
 		}
 	}
 

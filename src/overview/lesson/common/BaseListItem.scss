@@ -50,7 +50,7 @@
 				}
 
 				&.failed {
-					background-color: $primary-red;
+					background-color: var(--primary-red);
 					color: white;
 					font: normal 600 1.125rem/24px $body-font-family;
 				}

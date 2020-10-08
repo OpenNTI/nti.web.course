@@ -73,7 +73,7 @@
 			line-height: 1.5rem;
 			color: white;
 			z-index: 1;
-			background-color: $primary-red;
+			background-color: var(--primary-red);
 			text-align: left;
 			padding: 0 0.5rem;
 		}
@@ -91,7 +91,7 @@
 				background-color: white;
 
 				&.invalid {
-					border: solid 1px $primary-red;
+					border: solid 1px var(--primary-red);
 				}
 
 				&.name-input {

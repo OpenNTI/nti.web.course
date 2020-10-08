@@ -185,7 +185,7 @@
 	}
 
 	&.draft-option.selected .course-preview-option-info {
-		color: $primary-red;
+		color: var(--primary-red);
 	}
 
 	&.publish-option.selected .course-preview-option-info {

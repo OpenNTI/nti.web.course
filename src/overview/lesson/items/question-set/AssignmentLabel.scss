@@ -17,7 +17,7 @@
 		}
 
 		.errors {
-			color: $primary-red;
+			color: var(--primary-red);
 		}
 	}
 
@@ -31,7 +31,7 @@
 		}
 
 		&.late {
-			color: $primary-red;
+			color: var(--primary-red);
 		}
 
 		i {
@@ -46,10 +46,10 @@
 	}
 
 	.excused {
-		color: $primary-red;
+		color: var(--primary-red);
 	}
 
 	.failed {
-		color: $primary-red;
+		color: var(--primary-red);
 	}
 }

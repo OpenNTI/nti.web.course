@@ -79,7 +79,7 @@
         .scorm-error {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            color: $primary-red;
+            color: var(--primary-red);
             padding: 10px 0px;
         }
     }

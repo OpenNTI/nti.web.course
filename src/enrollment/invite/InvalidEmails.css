@@ -1,5 +1,5 @@
 .invalid-emails {
-	background: var(--primary-red, #f35252);
+	background: var(--primary-red);
 	color: white;
 	padding: 0.625em;
 	font-size: 0.75rem;

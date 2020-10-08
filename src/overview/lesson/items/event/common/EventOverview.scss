@@ -10,7 +10,7 @@
 	}
 
 	.error {
-		background-color: $primary-red;
+		background-color: var(--primary-red);
 		color: white;
 		text-align: center;
 		min-height: 40px;
@@ -33,7 +33,7 @@
 
 				.month {
 					text-transform: uppercase;
-					color: $primary-red;
+					color: var(--primary-red);
 					font-weight: bold;
 					font-size: 10px;
 					line-height: 14px;
@@ -131,7 +131,7 @@
 
 								.error {
 									background-color: white;
-									color: $primary-red;
+									color: var(--primary-red);
 								}
 
 								.container {
@@ -248,7 +248,7 @@
 			}
 
 			.delete-button {
-				background-color: $primary-red;
+				background-color: var(--primary-red);
 				color: white;
 				line-height: 36px;
 				padding: 0 2rem;

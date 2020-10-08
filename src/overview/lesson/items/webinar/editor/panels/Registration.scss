@@ -43,7 +43,7 @@
 		}
 
 		.error {
-			color: $primary-red;
+			color: var(--primary-red);
 			font-size: 14px;
 			margin-top: 0.5rem;
 		}
@@ -144,7 +144,7 @@
 
 	&.error {
 		.nti-text-input {
-			border: solid 1px $primary-red;
+			border: solid 1px var(--primary-red);
 		}
 	}
 }

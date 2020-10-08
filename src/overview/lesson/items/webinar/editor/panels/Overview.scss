@@ -18,7 +18,7 @@
 
 				.month {
 					text-transform: uppercase;
-					color: $primary-red;
+					color: var(--primary-red);
 					font-weight: bold;
 					font-size: 10px;
 					line-height: 14px;
@@ -207,7 +207,7 @@
 			padding-bottom: 120px;
 
 			.delete-button {
-				background-color: $primary-red;
+				background-color: var(--primary-red);
 				color: white;
 				line-height: 36px;
 				padding: 0 2rem;

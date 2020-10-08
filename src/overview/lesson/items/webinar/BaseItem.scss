@@ -127,7 +127,7 @@ $header-ranges: (
 					}
 
 					.live {
-						background-color: $primary-red;
+						background-color: var(--primary-red);
 						padding: 5px 10px 5px 17px;
 						border-radius: 3px 0 0 3px;
 						text-transform: uppercase;
@@ -167,7 +167,7 @@ $header-ranges: (
 
 		.month {
 			text-transform: uppercase;
-			color: $primary-red;
+			color: var(--primary-red);
 			font-weight: bold;
 			font-size: 10px;
 			line-height: 14px;

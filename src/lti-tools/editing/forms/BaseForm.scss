@@ -21,7 +21,7 @@
 	}
 
 	.lti-base-form-error {
-		color: $primary-red;
+		color: var(--primary-red);
 		display: block;
 		padding: 0px 0px 0px 0px;
 	}
@@ -42,7 +42,7 @@
 			}
 
 			.lti-base-form-error {
-				color: $primary-red;
+				color: var(--primary-red);
 				display: block;
 				padding: 0px 0px 0px 0px;
 			}
