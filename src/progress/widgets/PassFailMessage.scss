@@ -13,7 +13,7 @@
 
 	.success-message {
 		.congratulations {
-			color: $primary-green;
+			color: var(--primary-green);
 			line-height: 19px;
 			font-weight: 600;
 		}

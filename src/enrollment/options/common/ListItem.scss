@@ -24,7 +24,7 @@
 
 	&.selected {
 		.meta {
-			color: $primary-green;
+			color: var(--primary-green);
 		}
 	}
 }

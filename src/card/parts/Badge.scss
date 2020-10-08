@@ -15,7 +15,7 @@
 	}
 
 	&.green {
-		background-color: $primary-green;
+		background-color: var(--primary-green);
 
 		.completed-check {
 			display: inline-block;

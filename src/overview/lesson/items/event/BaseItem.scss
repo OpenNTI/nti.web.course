@@ -82,7 +82,7 @@ $header-ranges: (
 				}
 
 				.completion-label {
-					color: $primary-green;
+					color: var(--primary-green);
 				}
 
 				.incomplete-label {
@@ -116,7 +116,7 @@ $header-ranges: (
 
 		button {
 			border-radius: 4px;
-			background-color: $primary-green;//#3fb34f;
+			background-color: var(--primary-green);//#3fb34f;
 			color: #fff;
 			font-family: $body-font-family;
 			font-size: 16px;

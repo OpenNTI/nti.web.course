@@ -7,7 +7,7 @@
 
 @mixin value {
 	border-radius: 100px;
-	background-color: $primary-green;
+	background-color: var(--primary-green);
 }
 
 .nti-course-enrollment-list-item {
@@ -65,7 +65,7 @@
 				display: inline-block;
 				vertical-align: middle;
 				font: normal 600 0.625rem/2 $body-font-family;
-				color: $primary-green;
+				color: var(--primary-green);
 				text-transform: uppercase;
 			}
 
@@ -73,7 +73,7 @@
 				display: inline-block;
 				vertical-align: middle;
 				color: white;
-				background-color: $primary-green;
+				background-color: var(--primary-green);
 				margin-right: 0.5rem;
 				padding: 0.1875rem;
 				border-radius: 24px;

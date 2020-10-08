@@ -36,12 +36,12 @@
 			background-color: rgba(var(--primary-blue), 0.2);
 
 			&.uploaded {
-				background-color: rgba($primary-green, 0.2);
+				background-color: rgba(var(--primary-green), 0.2);
 
 				.indicator {
 					width: 100%;
 					transition: none;
-					background-color: $primary-green;
+					background-color: var(--primary-green);
 				}
 			}
 
