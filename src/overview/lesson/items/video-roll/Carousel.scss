@@ -70,7 +70,7 @@
 			display: block;
 			width: 0.75rem;
 			height: 0.75rem;
-			background: $quad-grey;
+			background: var(--quad-grey);
 			border-radius: 100%;
 
 			&.active {

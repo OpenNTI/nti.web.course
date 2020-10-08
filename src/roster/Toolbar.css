@@ -1,5 +1,5 @@
 .toolbar {
-	background: #f8f8f8;
+	background: var(--quad-grey);
 	padding: 12px 30px;
 	border-bottom: 1px solid #ddd;
 	display: flex;

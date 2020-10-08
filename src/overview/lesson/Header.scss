@@ -76,7 +76,7 @@
 			}
 
 			input:checked + .toggle {
-				background-color: $quad-grey;
+				background-color: var(--quad-grey);
 				box-shadow:
 					0 1px 0 0 $border-grey,
 					0 -1px 0 0 $border-grey,
