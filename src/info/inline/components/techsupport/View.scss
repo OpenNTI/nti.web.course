@@ -74,7 +74,7 @@
 		}
 
 		.link a:not(:link) {
-			color: $primary-grey;
+			color: var(--primary-grey);
 		}
 	}
 }

@@ -36,7 +36,7 @@
 
 		.title {
 			font: normal 600 1rem/1.2 $header-font-family;
-			color: $primary-grey;
+			color: var(--primary-grey);
 			text-transform: uppercase;
 			flex: 1 1 auto;
 			max-width: 450px;

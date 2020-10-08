@@ -23,7 +23,7 @@
 			font-size: 24px;
 			font-weight: 300;
 			line-height: 33px;
-			color: $primary-grey;
+			color: var(--primary-grey);
 			margin-bottom: 15px;
 		}
 
@@ -122,7 +122,7 @@
 			width: 430px;
 
 			.title {
-				color: $primary-grey;
+				color: var(--primary-grey);
 				font-size: 16px;
 				margin-bottom: 5px;
 			}

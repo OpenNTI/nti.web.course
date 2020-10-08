@@ -175,7 +175,7 @@ $header-ranges: (
 
 		.day {
 			font-size: 28px;
-			color: $primary-grey;
+			color: var(--primary-grey);
 		}
 
 		.circular-progress {

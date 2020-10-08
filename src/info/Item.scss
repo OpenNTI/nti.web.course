@@ -28,7 +28,7 @@
 
 		.title {
 			font: normal 400 1.25rem/1.25 $body-font-family;
-			color: $primary-grey;
+			color: var(--primary-grey);
 			flex: 1 1 auto;
 			text-overflow: ellipsis;
 			overflow: hidden;
@@ -52,7 +52,7 @@
 			}
 
 			.date {
-				color: $primary-grey;
+				color: var(--primary-grey);
 
 				.label {
 					font-weight: 700;

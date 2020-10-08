@@ -42,7 +42,7 @@
 		display: block;
 		text-align: center;
 		font: normal 600 1rem/1.4 $body-font-family;
-		color: $primary-grey;
+		color: var(--primary-grey);
 		overflow: hidden;
 		text-overflow: ellipsis;
 		padding: 0 10px;

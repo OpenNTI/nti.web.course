@@ -22,7 +22,7 @@
 
 		&.disabled {
 			background-color: $tertiary-grey;
-			color: $primary-grey;
+			color: var(--primary-grey);
 			opacity: 0.5;
 			pointer-events: none;
 		}

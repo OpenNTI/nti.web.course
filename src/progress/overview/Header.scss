@@ -15,7 +15,7 @@
 	.current-page {
 		font: normal 600 0.75rem/1.4 $body-font-family;
 		text-transform: uppercase;
-		color: $primary-grey;
+		color: var(--primary-grey);
 	}
 
 	.spacer {

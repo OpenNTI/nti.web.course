@@ -10,7 +10,7 @@
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
 	font-size: 14px;
 	font-weight: 300;
-	color: $primary-grey;
+	color: var(--primary-grey);
 	position: relative;
 
 	&.add {
