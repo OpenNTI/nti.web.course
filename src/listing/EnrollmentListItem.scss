@@ -2,7 +2,7 @@
 
 @mixin bar {
 	border-radius: 100px;
-	background-color: $border-grey-light;
+	background-color: var(--border-grey)-light;
 }
 
 @mixin value {

@@ -9,7 +9,7 @@
 
 		.chart {
 			display: inline-block;
-			border: 1px solid $border-grey;
+			border: 1px solid var(--border-grey);
 			border-radius: 10px;
 			padding: rem-calc(0 10px);
 			font: normal 600 0.625rem/2 $body-font-family;

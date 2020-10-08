@@ -10,7 +10,7 @@
 		}
 
 		.cancel {
-			box-shadow: inset 0 1px 0 0 $border-grey-light;
+			box-shadow: inset 0 1px 0 0 var(--border-grey)-light;
 			background: $panel-background;
 			color: var(--secondary-grey);
 		}

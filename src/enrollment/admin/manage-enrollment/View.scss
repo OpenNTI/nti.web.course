@@ -36,7 +36,7 @@
 		margin: 0;
 
 		li {
-			box-shadow: 0 1px 0 0 $border-grey-light;
+			box-shadow: 0 1px 0 0 var(--border-grey)-light;
 			padding: 1.25rem;
 
 			&:last-of-type {
