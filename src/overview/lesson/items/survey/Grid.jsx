@@ -71,7 +71,23 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 
 	renderButton = () => {
 		const {item} = this.props;
-		const text = item.isSubmitted ? t('review') : item.isClosed ? t('closed') : t('take');
+
+		const startDate = item.getTargetAssignedDate();
+		const now = new Date();
+
+		let text = '';
+
+		if (item.isSubmitted) {
+			text = t('review');
+		} else if (startDate && now < startDate) {
+			text = '';
+		} else if (item.isClosed) {
+			text = t('closed');
+		} else {
+			text = t('take');
+		}
+
+		if (!text) { return null; }
 
 		return (
 			<Button rounded>

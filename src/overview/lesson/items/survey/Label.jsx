@@ -1,7 +1,7 @@
 import './Label.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {List} from '@nti/web-commons';
+import {List, DateTime} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
@@ -16,7 +16,8 @@ const DEFAULT_TEXT = {
 	submissions: {
 		one: '%(count)s Submission',
 		other: '%(count)s Submissions'
-	}
+	},
+	available: 'Available %(date)s'
 };
 const t = scoped('course.overview.lesson.items.survey.Label', DEFAULT_TEXT);
 
@@ -29,6 +30,9 @@ export default function LessonOverviewSurveyLabel ({item, onRequirementChange}) 
 	const required = (item || {}).CompletionRequired;
 	const completable = (item || {}).isCompletable && (item || {}).isCompletable();
 
+	const availableDate = item.getTargetAssignedDate();
+	const isAvailable = !availableDate || availableDate < (new Date());
+
 	return (
 		<List.SeparatedInline className="lesson-overview-survey-label">
 			{completable && onRequirementChange ?
@@ -39,6 +43,11 @@ export default function LessonOverviewSurveyLabel ({item, onRequirementChange}) 
 			{!item.isTargetPublished() && (<span className="draft">{t('draft')}</span>)}
 			<span className="question-count">{t('question', {count: item.getQuestionCount()})}</span>
 			<span className="submissions">{t('submissions', {count: item.submissions})}</span>
+			{!isAvailable && (
+				<span className="available">
+					{t('available', {date: DateTime.format(availableDate, 'dddd, MMMM D h:mm A z')})}
+				</span>
+			)}
 		</List.SeparatedInline>
 	);
 }
