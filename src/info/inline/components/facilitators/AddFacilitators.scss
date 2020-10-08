@@ -34,7 +34,7 @@
 }
 
 .role-option {
-	color: #757474;
+	color: var(--secondary-grey);
 	font-size: 14px;
 	padding: 10px;
 	cursor: pointer;
@@ -42,7 +42,7 @@
 
 .add-facilitators {
 	background-color: white;
-	color: #757474;
+	color: var(--secondary-grey);
 	width: 768px;
 	min-height: 133;
 

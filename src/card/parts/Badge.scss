@@ -39,7 +39,7 @@
 	}
 
 	&.grey {
-		background-color: $secondary-grey;
+		background-color: var(--secondary-grey);
 	}
 
 	&.black {
@@ -52,7 +52,7 @@
 
 	&.white {
 		background-color: #fff;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 	}
 
 	&.settings {

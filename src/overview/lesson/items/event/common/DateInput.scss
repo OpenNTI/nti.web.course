@@ -17,7 +17,7 @@
 	}
 
 	.time-value {
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 		height: 40px;
 		position: relative;
@@ -47,7 +47,7 @@
 	overflow: auto;
 
 	.available-time {
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 		font-size: 14px;
 		padding-left: 15px;
 		text-transform: uppercase;

@@ -263,13 +263,13 @@ $header-ranges: (
 					margin-bottom: 10px;
 					font-size: 12px;
 					font-weight: bold;
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 				}
 
 				.description {
 					@include limit-lines($lines: 5, $line-height: 1.4);
 
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 					font-size: 14px;
 					line-height: 19px;
 					font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;

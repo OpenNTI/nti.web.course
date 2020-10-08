@@ -37,7 +37,7 @@
 
 		.title {
 			display: block;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			flex: 0 0 auto;
 			font: normal 400 1.25rem/1.25 $body-font-family;
 			white-space: nowrap;

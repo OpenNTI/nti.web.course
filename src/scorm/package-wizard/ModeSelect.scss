@@ -31,7 +31,7 @@
 
         .description {
             padding: 0px 15px;
-            color: $secondary-grey;
+            color: var(--secondary-grey);
             text-align: center;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;

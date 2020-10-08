@@ -31,7 +31,7 @@
 				.description {
 					font-size: 14px;
 					line-height: 19px;
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 				}
 
 				&:not(:first-of-type) {

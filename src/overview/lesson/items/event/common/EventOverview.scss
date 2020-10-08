@@ -165,7 +165,7 @@
 							bottom: 38px;
 							width: 200px;
 							text-align: center;
-							color: $secondary-grey;
+							color: var(--secondary-grey);
 							z-index: 0;
 
 							i {
@@ -190,7 +190,7 @@
 
 						line-height: 19px;
 						font-size: 14px;
-						color: $secondary-grey;
+						color: var(--secondary-grey);
 						text-align: left;
 						padding-left: 20px;
 						font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
@@ -227,7 +227,7 @@
 			}
 
 			.flyout-trigger {
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 			}
 
@@ -268,7 +268,7 @@
 
 			.section-description {
 				font-size: 14px;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				margin-top: 5px;
 				margin-bottom: 16px;
 			}

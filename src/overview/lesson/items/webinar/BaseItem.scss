@@ -149,7 +149,7 @@ $header-ranges: (
 			.description {
 				@include limit-lines($lines: 6, $line-height: 1.4);
 
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				font-size: 14px;
 				line-height: 19px;
 				font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;

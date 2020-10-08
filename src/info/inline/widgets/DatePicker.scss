@@ -62,7 +62,7 @@
 		padding-left: 15px;
 		font-size: 14px;
 		min-width: 170px;
-		color: #757474;
+		color: var(--secondary-grey);
 
 		&.no-date {
 			color: $primary-blue;

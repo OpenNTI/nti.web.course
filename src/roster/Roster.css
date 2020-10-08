@@ -30,7 +30,7 @@
 }
 
 .table.table {
-	color: var(--secondary-grey, #757474);
+	color: var(--secondary-grey);
 }
 
 .tabel.table td {

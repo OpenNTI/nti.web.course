@@ -46,7 +46,7 @@
 		width: 100%;
 		left: 0;
 		font-weight: 600;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 
 		.delete-controls {
 			cursor: pointer;
@@ -69,7 +69,7 @@
 	}
 
 	.description {
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 		line-height: 19px;
 		margin-bottom: 10px;
 	}

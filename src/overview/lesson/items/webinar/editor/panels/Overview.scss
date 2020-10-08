@@ -150,7 +150,7 @@
 							bottom: 38px;
 							width: 200px;
 							text-align: center;
-							color: $secondary-grey;
+							color: var(--secondary-grey);
 							z-index: 0;
 
 							i {
@@ -169,7 +169,7 @@
 
 						line-height: 19px;
 						font-size: 14px;
-						color: $secondary-grey;
+						color: var(--secondary-grey);
 						text-align: left;
 						padding-left: 20px;
 						font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
@@ -184,7 +184,7 @@
 
 		.info-banner {
 			background-color: #fcf4d7;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			text-align: left;
 			font-size: 14px;
 			padding: 9px 110px 9px 80px;
@@ -227,7 +227,7 @@
 
 			.section-description {
 				font-size: 14px;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				margin-top: 5px;
 				margin-bottom: 16px;
 			}
