@@ -58,7 +58,7 @@
 
 		&.not-available {
 			.icon-alert {
-				color: $primary-orange;
+				color: var(--primary-orange);
 			}
 		}
 

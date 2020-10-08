@@ -112,14 +112,14 @@
 			top: 0;
 			width: 2px;
 			height: 100%;
-			background-color: $primary-orange;
+			background-color: var(--primary-orange);
 
 			.label {
 				position: absolute;
 				left: 0; right: auto;
 				bottom: 100%; top: auto;
 				padding: 0.25rem;
-				background: $primary-orange;
+				background: var(--primary-orange);
 				color: white;
 				font: normal 600 0.625rem/1.4 $body-font-family;
 				text-transform: uppercase;

@@ -27,7 +27,7 @@
 
 	.due {
 		&.today {
-			color: $primary-orange;
+			color: var(--primary-orange);
 		}
 
 		&.late {
