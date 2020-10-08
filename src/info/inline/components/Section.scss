@@ -31,7 +31,7 @@
 
 	&.edit {
 		.contents {
-			background-color: #fbfbfb;
+			background-color: var(--panel-background);
 		}
 	}
 

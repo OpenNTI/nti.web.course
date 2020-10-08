@@ -2,7 +2,7 @@
 
 .progress-overview-stats {
 	display: flex;
-	backgound: $panel-background;
+	backgound: var(--panel-background);
 	box-shadow: 0 1px 0 0 var(--border-grey);
 
 

@@ -36,7 +36,7 @@
 
 	.student-info {
 		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15), 0 1px 0 0 #e2e2e2;
-		background-color: #fbfbfb;
+		background-color: var(--panel-background);
 
 		.user-grade-card {
 			margin-top: 1px;

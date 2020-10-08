@@ -14,7 +14,7 @@
 	position: relative;
 
 	&.add {
-		background-color: #fbfbfb;
+		background-color: var(--panel-background);
 		color: var(--tertiary-grey);
 		text-align: center;
 		cursor: pointer;

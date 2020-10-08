@@ -3,7 +3,7 @@
 .user-grade-card {
 	width: 252px;
 	height: 251px;
-	background-color: #fbfbfb;
+	background-color: var(--panel-background);
 	text-align: center;
 
 	.avatar-container {
@@ -21,12 +21,12 @@
 			position: absolute;
 			right: 78px;
 			bottom: 6px;
-			border: solid 2px #fbfbfb;
+			border: solid 2px var(--panel-background);
 			border-radius: 20px;
 			width: 34px;
 			font-size: 14px;
 			height: 34px;
-			background-color: #fbfbfb;
+			background-color: var(--panel-background);
 			padding-top: 2px;
 			padding-left: 2px;
 

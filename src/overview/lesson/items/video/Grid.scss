@@ -54,7 +54,7 @@
 		@include fill;
 		@include wide-screen;
 
-		background-color: $panel-background;
+		background-color: var(--panel-background);
 		background-size: cover;
 		background-position: center center;
 

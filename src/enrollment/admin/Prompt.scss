@@ -13,6 +13,6 @@
 		height: calc(90vh - 90px);
 		overflow: auto;
 		padding-bottom: 4rem;
-		background: $panel-background;
+		background: var(--panel-background);
 	}
 }
