@@ -58,7 +58,7 @@
 			padding: rem-calc(0 10px);
 
 			.title-container {
-				font: normal 500 1.125rem/1.3 $body-font-family;
+				font: normal 500 1.125rem/1.3 var(--body-font-family);
 				color: var(--primary-grey);
 
 				& > .title {

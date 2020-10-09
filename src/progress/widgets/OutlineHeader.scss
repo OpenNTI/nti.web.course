@@ -31,7 +31,7 @@
 }
 
 .default-outline-header {
-	font: normal 500 0.9em/3.5em "Open Sans", sans-serif;
+	font: normal 500 0.9em/3.5em var(--body-font-family);
 	color: #a1a1a1;
 	box-shadow: none;
 	display: inline-block;

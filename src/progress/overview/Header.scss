@@ -7,13 +7,13 @@
 	padding: rem-calc(8px 8px 8px 30px);
 
 	.username {
-		font: normal 600 0.75rem/1.4 $body-font-family;
+		font: normal 600 0.75rem/1.4 var(--body-font-family);
 		color: var(--secondary-grey);
 		text-transform: uppercase;
 	}
 
 	.current-page {
-		font: normal 600 0.75rem/1.4 $body-font-family;
+		font: normal 600 0.75rem/1.4 var(--body-font-family);
 		text-transform: uppercase;
 		color: var(--primary-grey);
 	}

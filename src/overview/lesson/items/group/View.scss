@@ -44,7 +44,7 @@
 
 	h2 {
 		position: relative;
-		font: normal 600 0.625rem/1.9 $body-font-family;
+		font: normal 600 0.625rem/1.9 var(--body-font-family);
 		text-transform: uppercase;
 		color: white;
 		display: inline-block;

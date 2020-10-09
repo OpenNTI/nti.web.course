@@ -172,7 +172,7 @@
 						color: var(--secondary-grey);
 						text-align: left;
 						padding-left: 20px;
-						font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+						font-family: var(--body-font-family);
 						white-space: pre-wrap;
 						margin: 0;
 						display: block;

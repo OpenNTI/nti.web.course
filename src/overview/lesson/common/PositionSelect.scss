@@ -16,7 +16,7 @@
 		display: inline-block;
 		vertical-align: middle;
 		width: 198px;
-		font: normal 400 0.875rem/40px "Open Sans", sans-serif;
+		font: normal 400 0.875rem/40px var(--body-font-family);
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
@@ -30,7 +30,7 @@
 
 	.rank-option {
 		padding: 8px;
-		font: normal 400 0.875rem/40px "Open Sans", sans-serif;
+		font: normal 400 0.875rem/40px var(--body-font-family);
 
 		&.selected {
 			color: var(--primary-blue);

@@ -3,7 +3,7 @@
 .nti-course-enrollment-option-button {
 	background-color: var(--primary-blue);
 	color: white;
-	font: normal 300 1.125rem/1.3rem $body-font-family;
+	font: normal 300 1.125rem/1.3rem var(--body-font-family);
 	padding: 0.875rem 1.25rem;
 	text-align: center;
 	cursor: pointer;

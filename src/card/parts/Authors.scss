@@ -1,7 +1,7 @@
 @import '~@nti/style-common';
 
 .nti-course-card-authors {
-	font: normal 700 0.625rem/1.4 $body-font-family;
+	font: normal 700 0.625rem/1.4 var(--body-font-family);
 	color: var(--primary-blue);
 	text-transform: uppercase;
 	overflow: hidden;

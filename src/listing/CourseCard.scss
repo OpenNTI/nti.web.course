@@ -67,7 +67,7 @@
 			padding: 0 7px;
 			border-radius: 3px;
 			text-transform: uppercase;
-			font: normal 600 10px/27px "Open Sans", sans-serif;
+			font: normal 600 10px/27px var(--body-font-family);
 			display: inline-block;
 		}
 
@@ -105,13 +105,13 @@
 		color: var(--secondary-grey);
 		font-weight: 700;
 		font-size: 1em/1.1em;
-		font-family: "Open Sans Condensed";
+		font-family: var(--header-font-family);
 		text-transform: uppercase;
 	}
 
 	.course-instructors {
 		text-transform: uppercase;
-		font: normal bold 0.6em/1.6em "Open Sans", sans-serif;
+		font: normal bold 0.6em/1.6em var(--body-font-family);
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;

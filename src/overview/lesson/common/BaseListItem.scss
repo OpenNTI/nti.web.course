@@ -52,7 +52,7 @@
 				&.failed {
 					background-color: var(--primary-red);
 					color: white;
-					font: normal 600 1.125rem/24px $body-font-family;
+					font: normal 600 1.125rem/24px var(--body-font-family);
 				}
 			}
 		}
@@ -68,7 +68,7 @@
 		overflow: hidden;
 
 		& > .title {
-			font: normal 400 1rem/1.3 $body-font-family;
+			font: normal 400 1rem/1.3 var(--body-font-family);
 			color: var(--primary-grey);
 
 			&.plain {
@@ -84,7 +84,7 @@
 		min-height: rem-calc(14px);
 
 		.nti-separated-inline-list {
-			font: normal 700 0.625rem/1.4 $body-font-family;
+			font: normal 700 0.625rem/1.4 var(--body-font-family);
 			color: var(--tertiary-grey);
 			text-transform: uppercase;
 		}

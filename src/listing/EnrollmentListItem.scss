@@ -28,14 +28,14 @@
 		padding: rem-calc(0 20px);
 
 		.label {
-			font: normal 600 0.625rem/2 $body-font-family;
+			font: normal 600 0.625rem/2 var(--body-font-family);
 			color: var(--tertiary-grey);
 			text-transform: uppercase;
 			flex: 0 0 auto;
 		}
 
 		.title {
-			font: normal 600 1rem/1.2 $header-font-family;
+			font: normal 600 1rem/1.2 var(--header-font-family);
 			color: var(--primary-grey);
 			text-transform: uppercase;
 			flex: 1 1 auto;
@@ -64,7 +64,7 @@
 			.date {
 				display: inline-block;
 				vertical-align: middle;
-				font: normal 600 0.625rem/2 $body-font-family;
+				font: normal 600 0.625rem/2 var(--body-font-family);
 				color: var(--primary-green);
 				text-transform: uppercase;
 			}

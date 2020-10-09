@@ -118,7 +118,7 @@ $header-ranges: (
 			border-radius: 4px;
 			background-color: var(--primary-green);//var(--secondary-green);
 			color: #fff;
-			font-family: $body-font-family;
+			font-family: var(--body-font-family);
 			font-size: 16px;
 			font-weight: 600;
 			line-height: 1.375;
@@ -272,7 +272,7 @@ $header-ranges: (
 					color: var(--secondary-grey);
 					font-size: 14px;
 					line-height: 19px;
-					font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+					font-family: var(--body-font-family);
 					white-space: pre-wrap;
 					margin: 0;
 				}

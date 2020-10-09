@@ -1,7 +1,7 @@
 @import '~@nti/style-common';
 
 .lesson-overview-questionset-assessment-label {
-	font: normal 400 0.75rem/1.4 $body-font-family;
+	font: normal 400 0.75rem/1.4 var(--body-font-family);
 	color: var(--tertiary-grey);
 
 	.require-control-value {
