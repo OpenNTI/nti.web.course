@@ -3,9 +3,9 @@
 .lesson-overview-video-list-item {
 	.lesson-overview-video-list-item-icon {
 		width: 100%;
-		background-color: $tertiary-grey;
+		background-color: var(--tertiary-grey);
 		position: relative;
-		box-shadow: 0 0 1px 0 $border-grey;
+		box-shadow: 0 0 1px 0 var(--border-grey);
 
 		span.thumb {
 			display: block;

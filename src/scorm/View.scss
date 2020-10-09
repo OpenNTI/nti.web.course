@@ -39,7 +39,7 @@
 		}
 
         .scorm-title {
-            color: #494949;
+            color: var(--primary-grey);
             font-size: 24px;
             font-weight: 300;
             line-height: 33px;
@@ -47,7 +47,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
         .scorm-desc {
-            color: #757474;
+            color: var(--secondary-grey);
             font-size: 14px;
             margin-top: 10px;
             line-height: 24px;
@@ -67,7 +67,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
         .nti-button.primary.scorm-post-launch-button {
-            background-color: #B8B8B8;
+            background-color: var(--tertiary-grey);
             border-radius: 3px;
             margin-top: 97px;
             -webkit-font-smoothing: antialiased;
@@ -79,7 +79,7 @@
         .scorm-error {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            color: $primary-red;
+            color: var(--primary-red);
             padding: 10px 0px;
         }
     }
@@ -92,7 +92,7 @@
     .scorm-instructor-card {
         .scorm-edit-link, .scorm-export-link {
             display: block;
-            color: #3FB3F6;
+            color: var(--primary-blue);
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;

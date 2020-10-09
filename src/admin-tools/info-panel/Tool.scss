@@ -20,7 +20,7 @@
 	}
 
 	.tool-title {
-		color: #494949;
+		color: var(--primary-grey);
 		font-size: 16px;
 		font-weight: 600;
 		line-height: 22px;
@@ -28,14 +28,14 @@
 	}
 
 	.tool-subtitle {
-		color: #B8B8B8;
+		color: var(--tertiary-grey);
 		font-size: 14px;
 		line-height: 19px;
 	}
 
 	.tool-link {
-		color: #3FB3F6;
-		font-family: "Open Sans";
+		color: var(--primary-blue);
+		font-family: var(--body-font-family);
 		font-size: 14px;
 		line-height: 19px;
 		margin-top: 15px;

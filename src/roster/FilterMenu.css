@@ -1,5 +1,5 @@
 .filter-menu [role=presentation] { /* target value/placeholder, chevron */
-	color: var(--primary-blue, #3fb3f6);
+	color: var(--primary-blue);
 	font-size: 1.08rem; /* lifted from legacy style */
 	font-style: normal; /* override default placeholder italicization */
 	font-weight: 300;

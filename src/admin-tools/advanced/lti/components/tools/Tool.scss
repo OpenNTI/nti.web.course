@@ -2,7 +2,7 @@
 @import '~@nti/style-common';
 
 li.lti-configured-tool {
-	box-shadow: 0 1px 0 0 $border-grey-light;
+	box-shadow: 0 1px 0 0 var(--border-grey-light);
 	padding: 1rem 1rem;
 	list-style: none;
 	text-decoration: none;

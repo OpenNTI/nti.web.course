@@ -21,7 +21,7 @@
 			outline: 0;
 
 			&::before {
-				outline: 5px auto $primary-blue;
+				outline: 5px auto var(--primary-blue);
 			}
 		}
 
@@ -70,11 +70,11 @@
 			display: block;
 			width: 0.75rem;
 			height: 0.75rem;
-			background: $quad-grey;
+			background: var(--quad-grey);
 			border-radius: 100%;
 
 			&.active {
-				background: $primary-blue;
+				background: var(--primary-blue);
 			}
 		}
 

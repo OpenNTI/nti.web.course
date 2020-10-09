@@ -4,8 +4,8 @@
 	.empty {
 		text-align: center;
 		padding: 0.75rem 0;
-		font: italic 300 1.25rem/1.25 $body-font-family;
-		color: $tertiary-grey;
+		font: italic 300 1.25rem/1.25 var(--body-font-family);
+		color: var(--tertiary-grey);
 	}
 
 	.user {
@@ -25,9 +25,9 @@
 
 		.username {
 			display: inline-block;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			flex: 0 0 auto;
-			font: normal 400 1.25rem/1.25 $body-font-family;
+			font: normal 400 1.25rem/1.25 var(--body-font-family);
 			max-width: calc(100% - 100px);
 			white-space: nowrap;
 			max-width: 200px;
@@ -40,7 +40,7 @@
 			height: 40px;
 			font-size: 1.5rem;
 			line-height: 40px;
-			color: $primary-grey;
+			color: var(--primary-grey);
 			text-align: center;
 			padding-top: 2px;
 			margin-left: 1rem;

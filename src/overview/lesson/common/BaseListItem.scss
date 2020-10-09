@@ -50,9 +50,9 @@
 				}
 
 				&.failed {
-					background-color: $primary-red;
+					background-color: var(--primary-red);
 					color: white;
-					font: normal 600 1.125rem/24px $body-font-family;
+					font: normal 600 1.125rem/24px var(--body-font-family);
 				}
 			}
 		}
@@ -68,8 +68,8 @@
 		overflow: hidden;
 
 		& > .title {
-			font: normal 400 1rem/1.3 $body-font-family;
-			color: $primary-grey;
+			font: normal 400 1rem/1.3 var(--body-font-family);
+			color: var(--primary-grey);
 
 			&.plain {
 				white-space: nowrap;
@@ -84,8 +84,8 @@
 		min-height: rem-calc(14px);
 
 		.nti-separated-inline-list {
-			font: normal 700 0.625rem/1.4 $body-font-family;
-			color: $tertiary-grey;
+			font: normal 700 0.625rem/1.4 var(--body-font-family);
+			color: var(--tertiary-grey);
 			text-transform: uppercase;
 		}
 	}
@@ -93,7 +93,7 @@
 	.lesson-overview-base-list-item-icon.icon.file-type {
 		width: rem-calc(48px);
 		height: rem-calc(60px);
-		// box-shadow: 0 0 1px 0 $border-grey;
+		// box-shadow: 0 0 1px 0 var(--border-grey);
 		box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
 	}
 }
@@ -103,7 +103,7 @@
 		display: flex;
 		padding-top: rem-calc(13px);
 		padding-bottom: rem-calc(13px);
-		box-shadow: inset 0 -1px 0 0 $border-grey-light;
+		box-shadow: inset 0 -1px 0 0 var(--border-grey-light);
 
 		& > * {
 			flex: 0 0 auto;

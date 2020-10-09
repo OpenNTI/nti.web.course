@@ -20,16 +20,16 @@
 		padding-left: rem-calc(18px);
 
 		.title {
-			font: normal 400 1rem/1.3 $body-font-family;
-			color: $primary-grey;
+			font: normal 400 1rem/1.3 var(--body-font-family);
+			color: var(--primary-grey);
 		}
 
 		.labels {
 			.label {
 				display: inline-block;
 				vertical-align: middle;
-				font: normal 600 0.625rem/1.3 $body-font-family;
-				color: $tertiary-grey;
+				font: normal 600 0.625rem/1.3 var(--body-font-family);
+				color: var(--tertiary-grey);
 				text-transform: uppercase;
 				margin-right: 0.3rem;
 

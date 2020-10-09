@@ -3,12 +3,12 @@
 .add-enrollment-option {
 	.content {
 		width: 600px;
-		color: $primary-grey;
+		color: var(--primary-grey);
 
 		.panel-title-bar {
 			height: 50px;
 			line-height: 50px;
-			background-color: #fbfbfb;
+			background-color: var(--panel-background);
 			border-bottom: solid 1px #eee;
 		}
 
@@ -25,13 +25,13 @@
 					font-size: 14px;
 					line-height: 19px;
 					margin-bottom: 5px;
-					color: $primary-grey;
+					color: var(--primary-grey);
 				}
 
 				.description {
 					font-size: 14px;
 					line-height: 19px;
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 				}
 
 				&:not(:first-of-type) {

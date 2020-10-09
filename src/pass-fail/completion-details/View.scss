@@ -8,7 +8,7 @@
 		background: white;
 		padding: 25px;
 		height: 100%;
-		color: #494949;
+		color: var(--primary-grey);
 		text-align: center;
 
 		.completion-image {
@@ -19,7 +19,7 @@
 			}
 
 			.certificate-link {
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				line-height: 29px;
 				cursor: pointer;
 				text-decoration: none;

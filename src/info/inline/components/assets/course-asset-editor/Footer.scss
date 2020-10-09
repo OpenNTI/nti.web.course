@@ -21,8 +21,8 @@
 		}
 
 		&.disabled {
-			background-color: $tertiary-grey;
-			color: $primary-grey;
+			background-color: var(--tertiary-grey);
+			color: var(--primary-grey);
 			opacity: 0.5;
 			pointer-events: none;
 		}

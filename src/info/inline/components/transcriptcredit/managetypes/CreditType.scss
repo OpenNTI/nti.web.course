@@ -7,7 +7,7 @@
 		position: relative;
 
 		i {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			font-size: 22px;
 			line-height: 32px;
 			margin-left: 10px;
@@ -18,7 +18,7 @@
 			width: 7rem;
 			font-size: 14px;
 			line-height: 28px;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 		}
 
 		.nti-text-input {
@@ -50,7 +50,7 @@
 		}
 
 		.confirm {
-			background-color: $primary-blue;
+			background-color: var(--primary-blue);
 			color: white;
 			cursor: pointer;
 			display: inline;

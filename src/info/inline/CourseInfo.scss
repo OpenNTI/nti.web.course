@@ -1,7 +1,7 @@
 @import "~@nti/style-common";
 
 .course-inline-editor {
-	color: #494949;
+	color: var(--primary-grey);
 	height: 100%;
 	min-height: 100px;
 	max-width: 768px;
@@ -15,7 +15,7 @@
 
 	&.view-only {
 		.course-tags .tag {
-			background-color: $primary-blue;
+			background-color: var(--primary-blue);
 		}
 
 		.course-info-editor-section {

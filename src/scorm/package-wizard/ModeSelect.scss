@@ -9,19 +9,19 @@
         padding: 10px;
         height: 300px;
         width: 250px;
-        border: 1px solid $border-grey-light;
+        border: 1px solid var(--border-grey-light);
         background-color: #FFFFFF;
         box-shadow: 0 4px 10px -5px rgba(0, 0, 0, 0.1);
 		margin: 0 30px;
 
         &.selected {
-            border-color: $primary-blue;
+            border-color: var(--primary-blue);
         }
 
         .name {
             margin-top: 40px;
             margin-bottom: 20px;
-            color: $primary-blue;
+            color: var(--primary-blue);
             text-align: center;
             font-size: 18px;
             font-weight: 600;
@@ -31,7 +31,7 @@
 
         .description {
             padding: 0px 15px;
-            color: $secondary-grey;
+            color: var(--secondary-grey);
             text-align: center;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -40,7 +40,7 @@
 
         .hint {
             margin-top: 80px;
-            color: $tertiary-grey;
+            color: var(--tertiary-grey);
             text-align: center;
             font-size: 14px;
             font-style: italic;

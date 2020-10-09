@@ -2,12 +2,12 @@
 
 .course-enrollment-admin-manage-enrollment {
 	.error {
-		color: $primary-red;
+		color: var(--primary-red);
 		padding: 0 1.25rem;
 	}
 
 	.enrolled-header {
-		color: $tertiary-grey;
+		color: var(--tertiary-grey);
 		padding: 0 1.25rem;
 		margin: 2rem 0;
 
@@ -25,7 +25,7 @@
 		}
 
 		&.enrolled {
-			color: $primary-green;
+			color: var(--primary-green);
 		}
 	}
 
@@ -36,7 +36,7 @@
 		margin: 0;
 
 		li {
-			box-shadow: 0 1px 0 0 $border-grey-light;
+			box-shadow: 0 1px 0 0 var(--border-grey-light);
 			padding: 1.25rem;
 
 			&:last-of-type {

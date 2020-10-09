@@ -8,7 +8,7 @@
 		padding-left: 1.5rem;
 
 		.go-to-link {
-			color: $primary-blue;
+			color: var(--primary-blue);
 			margin-left: 0.5rem;
 			cursor: pointer;
 		}
@@ -23,19 +23,19 @@
 			font-size: 24px;
 			font-weight: 300;
 			line-height: 33px;
-			color: $primary-grey;
+			color: var(--primary-grey);
 			margin-bottom: 15px;
 		}
 
 		.description {
 			font-size: 14px;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			line-height: 22px;
 			margin-bottom: 5px;
 		}
 
 		.learn-more {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			font-size: 14px;
 			line-height: 22px;
 			font-weight: 300;
@@ -43,7 +43,7 @@
 		}
 
 		.error {
-			color: $primary-red;
+			color: var(--primary-red);
 			font-size: 14px;
 			margin-top: 0.5rem;
 		}
@@ -56,7 +56,7 @@
 		.learn-more-content {
 			.steps-title {
 				font-size: 10px;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				text-transform: uppercase;
 				font-weight: bold;
 				margin-top: 20px;
@@ -65,7 +65,7 @@
 
 			.step {
 				display: flex;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				font-size: 14px;
 				line-height: 32px;
 				margin-bottom: 10px;
@@ -77,8 +77,8 @@
 					line-height: 32px;
 					font-size: 12px;
 					text-align: center;
-					color: $tertiary-grey;
-					border: solid 1px $tertiary-grey;
+					color: var(--tertiary-grey);
+					border: solid 1px var(--tertiary-grey);
 					margin-right: 10px;
 				}
 			}
@@ -87,7 +87,7 @@
 		.choose-webinar {
 			.info {
 				font-size: 14px;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 			}
 
 			.webinar-options {
@@ -115,27 +115,27 @@
 		.add-as-resource {
 			box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
 			border-radius: 3px;
-			background-color: #fbfbfb;
+			background-color: var(--panel-background);
 			border: 1px solid #e2e2e2;
 			padding: 10px 14px;
 			margin-top: 15px;
 			width: 430px;
 
 			.title {
-				color: $primary-grey;
+				color: var(--primary-grey);
 				font-size: 16px;
 				margin-bottom: 5px;
 			}
 
 			.description {
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				font-size: 14px;
 				margin-bottom: 5px;
 				font-weight: 300;
 			}
 
 			.add-link {
-				color: $primary-blue;
+				color: var(--primary-blue);
 				cursor: pointer;
 				font-size: 14px;
 			}
@@ -144,7 +144,7 @@
 
 	&.error {
 		.nti-text-input {
-			border: solid 1px $primary-red;
+			border: solid 1px var(--primary-red);
 		}
 	}
 }

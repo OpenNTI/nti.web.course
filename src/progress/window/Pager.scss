@@ -20,11 +20,11 @@
 
 		.next, .prev {
 			font-size: 24px;
-			color: $primary-blue;
+			color: var(--primary-blue);
 			cursor: pointer;
 
 			&.inactive {
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				cursor: default;
 			}
 		}

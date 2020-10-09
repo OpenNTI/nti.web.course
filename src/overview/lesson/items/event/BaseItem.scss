@@ -66,7 +66,7 @@ $header-ranges: (
 			.availability-info {
 				font-size: 10px;
 				text-transform: uppercase;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 				margin-top: 4px;
 				white-space: nowrap;
 				overflow: hidden;
@@ -82,11 +82,11 @@ $header-ranges: (
 				}
 
 				.completion-label {
-					color: $primary-green;
+					color: var(--primary-green);
 				}
 
 				.incomplete-label {
-					color: $primary-red;
+					color: var(--primary-red);
 				}
 
 				.event-duration, .incomplete-label, .completion-label {
@@ -102,7 +102,7 @@ $header-ranges: (
 						position: absolute;
 						right: 0;
 						top: 10px;
-						color: $tertiary-grey;
+						color: var(--tertiary-grey);
 					}
 				}
 			}
@@ -116,9 +116,9 @@ $header-ranges: (
 
 		button {
 			border-radius: 4px;
-			background-color: $primary-green;//#3fb34f;
+			background-color: var(--primary-green);//var(--secondary-green);
 			color: #fff;
-			font-family: $body-font-family;
+			font-family: var(--body-font-family);
 			font-size: 16px;
 			font-weight: 600;
 			line-height: 1.375;
@@ -131,7 +131,7 @@ $header-ranges: (
 			// max-width: 130px;
 
 			&.disabled {
-				background-color: $tertiary-grey;//#B8B8B8;
+				background-color: var(--tertiary-grey);
 				pointer-events: none;
 
 				&.clickable {
@@ -140,7 +140,7 @@ $header-ranges: (
 			}
 
 			&.cation {
-				background-color: $border-red;
+				background-color: var(--border-red);
 			}
 
 			&.expiring {
@@ -206,7 +206,7 @@ $header-ranges: (
 				// div {
 				// 	padding-top: 38px;
 				// 	font-weight: 600;
-				// 	color: $tertiary-grey;
+				// 	color: var(--tertiary-grey);
 				// 	font-size: 24px;
 				// 	text-align: center;
 				// 	opacity: 0.5;
@@ -237,7 +237,7 @@ $header-ranges: (
 					}
 
 					.live {
-						background-color: $primary-red;
+						background-color: var(--primary-red);
 						padding: 5px 10px 5px 17px;
 						border-radius: 3px 0 0 3px;
 						text-transform: uppercase;
@@ -263,16 +263,16 @@ $header-ranges: (
 					margin-bottom: 10px;
 					font-size: 12px;
 					font-weight: bold;
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 				}
 
 				.description {
 					@include limit-lines($lines: 5, $line-height: 1.4);
 
-					color: $secondary-grey;
+					color: var(--secondary-grey);
 					font-size: 14px;
 					line-height: 19px;
-					font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+					font-family: var(--body-font-family);
 					white-space: pre-wrap;
 					margin: 0;
 				}
@@ -288,7 +288,7 @@ $header-ranges: (
 
 		.month {
 			text-transform: uppercase;
-			color: $primary-red;
+			color: var(--primary-red);
 			font-weight: bold;
 			font-size: 10px;
 			line-height: 14px;
@@ -296,7 +296,7 @@ $header-ranges: (
 
 		.day {
 			font-size: 28px;
-			color: $primary-grey;
+			color: var(--primary-grey);
 		}
 
 		.circular-progress {

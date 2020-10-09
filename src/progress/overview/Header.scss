@@ -3,19 +3,19 @@
 .progress-overview-header {
 	display: flex;
 	align-items: center;
-	box-shadow: 0 1px 0 0 $border-grey;
+	box-shadow: 0 1px 0 0 var(--border-grey);
 	padding: rem-calc(8px 8px 8px 30px);
 
 	.username {
-		font: normal 600 0.75rem/1.4 $body-font-family;
-		color: $secondary-grey;
+		font: normal 600 0.75rem/1.4 var(--body-font-family);
+		color: var(--secondary-grey);
 		text-transform: uppercase;
 	}
 
 	.current-page {
-		font: normal 600 0.75rem/1.4 $body-font-family;
+		font: normal 600 0.75rem/1.4 var(--body-font-family);
 		text-transform: uppercase;
-		color: $primary-grey;
+		color: var(--primary-grey);
 	}
 
 	.spacer {
@@ -30,7 +30,7 @@
 		text-align: center;
 		font-size: 1.125rem;
 		cursor: pointer;
-		color: $primary-blue;
+		color: var(--primary-blue);
 
 		&.page-up {
 			margin-left: 1rem;
@@ -41,7 +41,7 @@
 		}
 
 		&.disabled {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			pointer-events: none;
 		}
 	}
@@ -53,7 +53,7 @@
 		line-height: rem-calc(36px);//to make it look more centered
 		text-align: center;
 		font-size: 1.75rem;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 	}
 }
 

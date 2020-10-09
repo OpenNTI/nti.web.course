@@ -19,7 +19,7 @@
 	vertical-align: top;
 
 	.wrap {
-		color: $primary-grey;
+		color: var(--primary-grey);
 		padding: rem-calc(8px 10px);
 
 		.title {
@@ -29,18 +29,18 @@
 			font-size: rem-calc(26px);
 			font-style: normal;
 			font-weight: 300;
-			font-family: $header-font-family;
+			font-family: var(--header-font-family);
 			min-height: 60px;
 			margin-bottom: 6px;
 		}
 
 		.comments {
-			font-family: $body-font-family;
+			font-family: var(--body-font-family);
 			font-style: normal;
 			font-weight: 600;
 			font-size: rem-calc(10px);
 			line-height: 1.5;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 		}
 	}
 

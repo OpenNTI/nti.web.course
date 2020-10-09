@@ -23,10 +23,10 @@
 	}
 
 	.lti-tools-config-error {
-		color: $primary-red;
+		color: var(--primary-red);
 		padding: 1rem 1rem;
 		display: block;
-		border: 1px solid $border-grey-light;
+		border: 1px solid var(--border-grey-light);
 		margin: 1rem 0;
 	}
 }

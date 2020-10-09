@@ -20,7 +20,7 @@
 			top: 0;
 			font-size: 14px;
 			font-weight: 300;
-			color: $primary-blue;
+			color: var(--primary-blue);
 			cursor: pointer;
 		}
 	}
@@ -34,7 +34,7 @@
 	.empty-state {
 		margin-top: 50px;
 		font-size: 30px;
-		color: #b8b8b8;
+		color: var(--tertiary-grey);
 		text-align: center;
 	}
 }

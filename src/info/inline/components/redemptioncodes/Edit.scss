@@ -2,7 +2,7 @@
 
 .redemption-codes-editor {
 	.create-code {
-		color: $primary-blue;
+		color: var(--primary-blue);
 		cursor: pointer;
 		font-weight: 100;
 		display: block;

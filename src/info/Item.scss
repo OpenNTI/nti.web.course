@@ -20,15 +20,15 @@
 		max-width: calc(100% - 10rem);
 
 		& > .label {
-			font: normal 700 0.75rem/1.25 $body-font-family;
-			color: $tertiary-grey;
+			font: normal 700 0.75rem/1.25 var(--body-font-family);
+			color: var(--tertiary-grey);
 			text-transform: uppercase;
 			flex: 0 0 auto;
 		}
 
 		.title {
-			font: normal 400 1.25rem/1.25 $body-font-family;
-			color: $primary-grey;
+			font: normal 400 1.25rem/1.25 var(--body-font-family);
+			color: var(--primary-grey);
 			flex: 1 1 auto;
 			text-overflow: ellipsis;
 			overflow: hidden;
@@ -52,7 +52,7 @@
 			}
 
 			.date {
-				color: $primary-grey;
+				color: var(--primary-grey);
 
 				.label {
 					font-weight: 700;

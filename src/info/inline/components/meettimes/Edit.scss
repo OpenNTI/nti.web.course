@@ -23,7 +23,7 @@
 			text-align: center;
 
 			&.selected {
-				background-color: $primary-blue;
+				background-color: var(--primary-blue);
 				color: white;
 			}
 		}
@@ -55,7 +55,7 @@
 			margin: 0 10px;
 			padding-top: 2px;
 			font-size: 20;
-			color: #757474;
+			color: var(--secondary-grey);
 		}
 
 		.number-input-component {

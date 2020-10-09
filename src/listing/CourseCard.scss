@@ -35,8 +35,8 @@
 			margin-top: 20px;
 
 			&.selected {
-				background-color: $primary-blue;
-				box-shadow: 1px 1px 2px 1px $primary-blue;
+				background-color: var(--primary-blue);
+				box-shadow: 1px 1px 2px 1px var(--primary-blue);
 			}
 		}
 	}
@@ -67,7 +67,7 @@
 			padding: 0 7px;
 			border-radius: 3px;
 			text-transform: uppercase;
-			font: normal 600 10px/27px "Open Sans", sans-serif;
+			font: normal 600 10px/27px var(--body-font-family);
 			display: inline-block;
 		}
 
@@ -102,20 +102,20 @@
 		overflow: hidden;
 		line-height: 25px;
 		margin-top: 10px;
-		color: #757474;
+		color: var(--secondary-grey);
 		font-weight: 700;
 		font-size: 1em/1.1em;
-		font-family: "Open Sans Condensed";
+		font-family: var(--header-font-family);
 		text-transform: uppercase;
 	}
 
 	.course-instructors {
 		text-transform: uppercase;
-		font: normal bold 0.6em/1.6em "Open Sans", sans-serif;
+		font: normal bold 0.6em/1.6em var(--body-font-family);
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		color: #3fb3f6;
+		color: var(--primary-blue);
 	}
 
 	.course-id {

@@ -6,13 +6,13 @@
 	background: white;
 
 	.panel-title-bar {
-		border-bottom: 1px solid $border-grey;
+		border-bottom: 1px solid var(--border-grey);
 	}
 
 	.contents-container {
 		height: calc(90vh - 90px);
 		overflow: auto;
 		padding-bottom: 4rem;
-		background: $panel-background;
+		background: var(--panel-background);
 	}
 }

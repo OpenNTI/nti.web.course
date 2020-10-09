@@ -19,21 +19,21 @@
 		font-size: 24px;
 		font-weight: 300;
 		line-height: 33px;
-		color: $primary-grey;
+		color: var(--primary-grey);
 		margin-bottom: 15px;
 		padding: 0 30px;
 	}
 
 	.description {
 		font-size: 14px;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 		line-height: 22px;
 		margin-bottom: 30px;
 	}
 
 	.connect-button {
 		color: white;
-		background-color: $primary-blue;
+		background-color: var(--primary-blue);
 		font-size: 14px;
 		line-height: 40px;
 		width: 150px;

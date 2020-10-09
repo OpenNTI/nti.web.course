@@ -5,12 +5,12 @@
 
 	&.no-progress {
 		.value {
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 		}
 	}
 
 	.value {
-		color: $primary-green;
+		color: var(--primary-green);
 		font-size: 14px;
 		font-weight: 100;
 		margin-left: 10px;

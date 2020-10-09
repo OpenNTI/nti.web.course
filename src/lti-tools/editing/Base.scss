@@ -22,7 +22,7 @@
 	}
 
 	.lti-base-tool-error {
-		color: $primary-red;
+		color: var(--primary-red);
 		display: block;
     	padding: 0px 0px 10px 20px;
 	}

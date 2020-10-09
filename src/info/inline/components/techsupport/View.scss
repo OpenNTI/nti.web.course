@@ -39,7 +39,7 @@
 
 				a {
 					text-decoration: none;
-					color: #3fb3f6;
+					color: var(--primary-blue);
 				}
 			}
 		}
@@ -74,7 +74,7 @@
 		}
 
 		.link a:not(:link) {
-			color: $primary-grey;
+			color: var(--primary-grey);
 		}
 	}
 }

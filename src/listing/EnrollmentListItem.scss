@@ -2,12 +2,12 @@
 
 @mixin bar {
 	border-radius: 100px;
-	background-color: $border-grey-light;
+	background-color: var(--border-grey-light);
 }
 
 @mixin value {
 	border-radius: 100px;
-	background-color: $primary-green;
+	background-color: var(--primary-green);
 }
 
 .nti-course-enrollment-list-item {
@@ -28,15 +28,15 @@
 		padding: rem-calc(0 20px);
 
 		.label {
-			font: normal 600 0.625rem/2 $body-font-family;
-			color: $tertiary-grey;
+			font: normal 600 0.625rem/2 var(--body-font-family);
+			color: var(--tertiary-grey);
 			text-transform: uppercase;
 			flex: 0 0 auto;
 		}
 
 		.title {
-			font: normal 600 1rem/1.2 $header-font-family;
-			color: $primary-grey;
+			font: normal 600 1rem/1.2 var(--header-font-family);
+			color: var(--primary-grey);
 			text-transform: uppercase;
 			flex: 1 1 auto;
 			max-width: 450px;
@@ -55,7 +55,7 @@
 		.nti-course-enrollment-admin-prompt-trigger {
 			width: 40px;
 			height: 40px;
-			color: $primary-blue;
+			color: var(--primary-blue);
 		}
 	}
 
@@ -64,8 +64,8 @@
 			.date {
 				display: inline-block;
 				vertical-align: middle;
-				font: normal 600 0.625rem/2 $body-font-family;
-				color: $primary-green;
+				font: normal 600 0.625rem/2 var(--body-font-family);
+				color: var(--primary-green);
 				text-transform: uppercase;
 			}
 
@@ -73,7 +73,7 @@
 				display: inline-block;
 				vertical-align: middle;
 				color: white;
-				background-color: $primary-green;
+				background-color: var(--primary-green);
 				margin-right: 0.5rem;
 				padding: 0.1875rem;
 				border-radius: 24px;

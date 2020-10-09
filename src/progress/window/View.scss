@@ -4,7 +4,7 @@
 	width: 764px;
 	background-color: white;
 	text-align: center;
-	color: $primary-grey;
+	color: var(--primary-grey);
 
 	.header {
 		display: flex;
@@ -19,7 +19,7 @@
 			white-space: nowrap;
 			font-size: 12px;
 			text-transform: uppercase;
-			color: $secondary-grey;
+			color: var(--secondary-grey);
 			font-weight: 600;
 			line-height: 50px;
 			margin-left: 30px;
@@ -36,7 +36,7 @@
 
 	.student-info {
 		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15), 0 1px 0 0 #e2e2e2;
-		background-color: #fbfbfb;
+		background-color: var(--panel-background);
 
 		.user-grade-card {
 			margin-top: 1px;
@@ -51,7 +51,7 @@
 
 		i.icon-search {
 			position: absolute;
-			color: $tertiary-grey;
+			color: var(--tertiary-grey);
 			font-size: 18px;
 			left: 32px;
 			top: 43px;
@@ -71,7 +71,7 @@
 
 			&::placeholder {
 				font-style: italic;
-				color: $tertiary-grey;
+				color: var(--tertiary-grey);
 			}
 		}
 
@@ -81,15 +81,15 @@
 			font-size: 14px;
 			font-weight: 300;
 			border: 1px solid #e2e2e2;
-			color: $primary-grey;
+			color: var(--primary-grey);
 			width: 130px;
 			margin-left: 10px;
 			cursor: pointer;
 
 			&.primary {
 				color: white;
-				background-color: $primary-blue;
-				border-color: $primary-blue;
+				background-color: var(--primary-blue);
+				border-color: var(--primary-blue);
 			}
 		}
 	}

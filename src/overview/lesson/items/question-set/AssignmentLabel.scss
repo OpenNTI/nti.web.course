@@ -1,9 +1,9 @@
 @import '~@nti/style-common';
 
 .lesson-overview-assignment-status.nti-separated-inline-list {
-	font: normal 600 0.625rem/1.3 $body-font-family;
+	font: normal 600 0.625rem/1.3 var(--body-font-family);
 	text-transform: uppercase;
-	color: $tertiary-grey;
+	color: var(--tertiary-grey);
 
 	li {
 		display: inline-block;
@@ -11,13 +11,13 @@
 
 	.completed {
 		&.ontime:not(.submission-failed) .status-label {
-			color: $secondary-green;
+			color: var(--secondary-green);
 			background: none;
 			padding-left: 0;
 		}
 
 		.errors {
-			color: $primary-red;
+			color: var(--primary-red);
 		}
 	}
 
@@ -27,11 +27,11 @@
 
 	.due {
 		&.today {
-			color: $primary-orange;
+			color: var(--primary-orange);
 		}
 
 		&.late {
-			color: $primary-red;
+			color: var(--primary-red);
 		}
 
 		i {
@@ -46,10 +46,10 @@
 	}
 
 	.excused {
-		color: $primary-red;
+		color: var(--primary-red);
 	}
 
 	.failed {
-		color: $primary-red;
+		color: var(--primary-red);
 	}
 }

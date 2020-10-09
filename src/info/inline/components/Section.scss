@@ -31,7 +31,7 @@
 
 	&.edit {
 		.contents {
-			background-color: #fbfbfb;
+			background-color: var(--panel-background);
 		}
 	}
 
@@ -40,12 +40,12 @@
 		padding: 18px 35px;
 
 		.field-label {
-			color: #494949;
+			color: var(--primary-grey);
 		}
 
 		.field-description {
 			font-size: 14px;
-			color: #757474;
+			color: var(--secondary-grey);
 		}
 
 		.columned {
@@ -69,7 +69,7 @@
 	.label {
 		font-size: 11px;
 		font-weight: 600;
-		color: #b8b8b8;
+		color: var(--tertiary-grey);
 		padding: 15px 0 10px;
 		text-transform: uppercase;
 	}
@@ -86,7 +86,7 @@
 	.edit-course-info {
 		font-size: 14px;
 		cursor: pointer;
-		color: $primary-blue;
+		color: var(--primary-blue);
 		padding-top: 20px;
 		display: inline-block;
 
@@ -122,7 +122,7 @@
 			height: 100%;
 
 			.save {
-				background-color: $primary-blue;
+				background-color: var(--primary-blue);
 				width: 100px;
 				text-align: center;
 				height: 100%;
@@ -131,7 +131,7 @@
 				cursor: pointer;
 
 				&.disabled {
-					background-color: $tertiary-grey;
+					background-color: var(--tertiary-grey);
 					cursor: initial;
 				}
 			}

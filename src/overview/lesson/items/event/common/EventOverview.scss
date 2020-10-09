@@ -10,7 +10,7 @@
 	}
 
 	.error {
-		background-color: $primary-red;
+		background-color: var(--primary-red);
 		color: white;
 		text-align: center;
 		min-height: 40px;
@@ -33,7 +33,7 @@
 
 				.month {
 					text-transform: uppercase;
-					color: $primary-red;
+					color: var(--primary-red);
 					font-weight: bold;
 					font-size: 10px;
 					line-height: 14px;
@@ -41,7 +41,7 @@
 
 				.day {
 					font-size: 28px;
-					color: $primary-grey;
+					color: var(--primary-grey);
 				}
 			}
 
@@ -62,7 +62,7 @@
 						background-color: white;
 						font-size: 18px;
 						height: 40px;
-						color: $primary-grey;
+						color: var(--primary-grey);
 					}
 				}
 
@@ -71,7 +71,7 @@
 					font-size: 10px;
 					font-weight: bold;
 					text-transform: uppercase;
-					color: $tertiary-grey;
+					color: var(--tertiary-grey);
 					margin-bottom: 16px;
 					text-align: left;
 
@@ -84,7 +84,7 @@
 					display: flex;
 
 					.image-upload {
-						background-color: #fbfbfb;
+						background-color: var(--panel-background);
 						min-width: 210px;
 						height: 122px;
 						border-radius: 5px;
@@ -131,7 +131,7 @@
 
 								.error {
 									background-color: white;
-									color: $primary-red;
+									color: var(--primary-red);
 								}
 
 								.container {
@@ -165,7 +165,7 @@
 							bottom: 38px;
 							width: 200px;
 							text-align: center;
-							color: $secondary-grey;
+							color: var(--secondary-grey);
 							z-index: 0;
 
 							i {
@@ -190,10 +190,10 @@
 
 						line-height: 19px;
 						font-size: 14px;
-						color: $secondary-grey;
+						color: var(--secondary-grey);
 						text-align: left;
 						padding-left: 20px;
-						font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+						font-family: var(--body-font-family);
 						white-space: pre-wrap;
 						margin: 0;
 						display: block;
@@ -211,7 +211,7 @@
 			overflow: auto;
 
 			i.icon-chevron-down {
-				color: #b8b8b8;
+				color: var(--tertiary-grey);
 				font-size: 12px;
 				top: 14px !important;
 			}
@@ -227,7 +227,7 @@
 			}
 
 			.flyout-trigger {
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 			}
 
@@ -248,7 +248,7 @@
 			}
 
 			.delete-button {
-				background-color: $primary-red;
+				background-color: var(--primary-red);
 				color: white;
 				line-height: 36px;
 				padding: 0 2rem;
@@ -262,13 +262,13 @@
 			.section-title {
 				padding-top: 20px;
 				font-size: 16px;
-				color: $primary-grey;
+				color: var(--primary-grey);
 				margin-bottom: 10px;
 			}
 
 			.section-description {
 				font-size: 14px;
-				color: $secondary-grey;
+				color: var(--secondary-grey);
 				margin-top: 5px;
 				margin-bottom: 16px;
 			}
@@ -282,7 +282,7 @@
 
 				.subsection-title {
 					font-size: 10px;
-					color: $tertiary-grey;
+					color: var(--tertiary-grey);
 					text-transform: uppercase;
 					font-weight: bold;
 				}

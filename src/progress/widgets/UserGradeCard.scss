@@ -3,7 +3,7 @@
 .user-grade-card {
 	width: 252px;
 	height: 251px;
-	background-color: #fbfbfb;
+	background-color: var(--panel-background);
 	text-align: center;
 
 	.avatar-container {
@@ -17,21 +17,21 @@
 		}
 
 		.grade-container {
-			color: #3fb3f6;
+			color: var(--primary-blue);
 			position: absolute;
 			right: 78px;
 			bottom: 6px;
-			border: solid 2px #fbfbfb;
+			border: solid 2px var(--panel-background);
 			border-radius: 20px;
 			width: 34px;
 			font-size: 14px;
 			height: 34px;
-			background-color: #fbfbfb;
+			background-color: var(--panel-background);
 			padding-top: 2px;
 			padding-left: 2px;
 
 			.grade {
-				border: solid 2px #3fb3f6;
+				border: solid 2px var(--primary-blue);
 				border-radius: 25px;
 				width: 27px;
 				height: 27px;
@@ -41,7 +41,7 @@
 	}
 
 	.user-name {
-		color: $primary-grey;
+		color: var(--primary-grey);
 		font-size: 17px;
 		text-overflow: ellipsis;
 		overflow: hidden;
@@ -50,12 +50,12 @@
 
 	.sub-info {
 		font-size: 14px;
-		color: #b8b8b8;
+		color: var(--tertiary-grey);
 		font-weight: 500;
 	}
 
 	.assign-grade {
-		color: $primary-blue;
+		color: var(--primary-blue);
 		font-size: 14px;
 		cursor: pointer;
 	}

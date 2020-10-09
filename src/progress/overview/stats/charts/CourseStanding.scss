@@ -24,7 +24,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: $primary-red;
+		color: var(--primary-red);
 	}
 
 	.chart-container {
@@ -46,7 +46,7 @@
 				left: 0.25rem;
 				right: 0.25rem;
 				height: 2px;
-				border-top: 1px solid $border-grey-light;
+				border-top: 1px solid var(--border-grey-light);
 			}
 
 			.first {
@@ -84,7 +84,7 @@
 					height: 3px;
 
 					.fill {
-						background-color: $tertiary-grey;
+						background-color: var(--tertiary-grey);
 					}
 				}
 
@@ -94,7 +94,7 @@
 					bottom: 0;
 					left: 0.25rem;
 					right: 0.25rem;
-					background: $primary-green;
+					background: var(--primary-green);
 				}
 
 				.label {
@@ -102,7 +102,7 @@
 					bottom: -14px;
 					width: 100%;
 					text-align: center;
-					font: normal 600 0.625rem/1.4 $body-font-family;
+					font: normal 600 0.625rem/1.4 var(--body-font-family);
 				}
 			}
 		}
@@ -112,16 +112,16 @@
 			top: 0;
 			width: 2px;
 			height: 100%;
-			background-color: $primary-orange;
+			background-color: var(--primary-orange);
 
 			.label {
 				position: absolute;
 				left: 0; right: auto;
 				bottom: 100%; top: auto;
 				padding: 0.25rem;
-				background: $primary-orange;
+				background: var(--primary-orange);
 				color: white;
-				font: normal 600 0.625rem/1.4 $body-font-family;
+				font: normal 600 0.625rem/1.4 var(--body-font-family);
 				text-transform: uppercase;
 				white-space: nowrap;
 

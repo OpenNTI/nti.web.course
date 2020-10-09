@@ -10,12 +10,12 @@
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
 	font-size: 14px;
 	font-weight: 300;
-	color: $primary-grey;
+	color: var(--primary-grey);
 	position: relative;
 
 	&.add {
-		background-color: #fbfbfb;
-		color: $tertiary-grey;
+		background-color: var(--panel-background);
+		color: var(--tertiary-grey);
 		text-align: center;
 		cursor: pointer;
 
@@ -46,7 +46,7 @@
 		width: 100%;
 		left: 0;
 		font-weight: 600;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 
 		.delete-controls {
 			cursor: pointer;
@@ -69,7 +69,7 @@
 	}
 
 	.description {
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 		line-height: 19px;
 		margin-bottom: 10px;
 	}
@@ -95,7 +95,7 @@
 			margin-left: 5px;
 
 			&.free {
-				color: $primary-green;
+				color: var(--primary-green);
 			}
 		}
 	}

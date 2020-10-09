@@ -33,7 +33,7 @@
 	.role-label-editor {
 		&::before {
 			content: $icon-edit;
-			color: $primary-blue;
+			color: var(--primary-blue);
 		}
 	}
 
@@ -49,7 +49,7 @@
 	.role-option {
 		font-size: 14px;
 		font-weight: 300;
-		color: #757474;
+		color: var(--secondary-grey);
 		cursor: pointer;
 		padding: 0.5rem 1.25rem 0.5rem 2.5rem;
 		min-width: 235px;
@@ -67,7 +67,7 @@
 		font-weight: bold;
 		text-transform: uppercase;
 		padding: 0 1.25rem 0.5rem;
-		color: #b8b8b8;
+		color: var(--tertiary-grey);
 	}
 }
 
@@ -75,7 +75,7 @@
 	.visibility-option {
 		font-size: 14px;
 		font-weight: 300;
-		color: #757474;
+		color: var(--secondary-grey);
 		padding: 5px;
 		cursor: pointer;
 	}
@@ -136,7 +136,7 @@
 	min-height: 100px;
 	padding: 1rem;
 	padding-left: 116px; // avatar width + 16
-	color: $primary-grey;
+	color: var(--primary-grey);
 
 	.image {
 		position: absolute;
@@ -155,7 +155,7 @@
 
 	.title {
 		font-size: 0.875rem;
-		color: $secondary-grey;
+		color: var(--secondary-grey);
 		font-weight: 300;
 		word-break: break-all;
 	}
@@ -220,7 +220,7 @@
 
 			.delete-facilitator {
 				color: white;
-				background-color: #b8b8b8;
+				background-color: var(--tertiary-grey);
 				height: 16px;
 				width: 16px;
 				border-radius: 25px;
