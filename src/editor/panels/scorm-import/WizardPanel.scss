@@ -9,7 +9,7 @@
 
 	.course-panel-import-content {
 		min-height: 120px;
-		margin: 0px 20px 20px 20px;
+		margin: 0 20px 20px 20px;
 
 		.course-import-error {
 			text-align: center;
@@ -42,10 +42,10 @@
 		.bar {
 			width: 100%;
 			height: rem-calc(10px);
-			background-color: rgba(var(--primary-blue), 0.2);
+			background-color: rgba(var(--primary-blue-rgb), 0.2);
 
 			&.uploaded {
-				background-color: rgba(var(--primary-green), 0.2);
+				background-color: rgba(var(--primary-green-rgb), 0.2);
 
 				.indicator {
 					width: 100%;

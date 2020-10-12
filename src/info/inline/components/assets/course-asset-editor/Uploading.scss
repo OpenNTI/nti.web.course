@@ -1,7 +1,6 @@
 @import '~@nti/style-common';
 
 .course-asset-editor-uploading {
-
 	.progress-container {
 		min-height: 350px;
 		display: flex;
@@ -17,7 +16,6 @@
 		text-align: center;
 	}
 
-
 	.progress {
 		width: 80%;
 
@@ -31,10 +29,10 @@
 		.bar {
 			width: 100%;
 			height: rem-calc(10px);
-			background-color: rgba(var(--primary-blue), 0.2);
+			background-color: rgba(var(--primary-blue-rgb), 0.2);
 
 			&.uploaded {
-				background-color: rgba(var(--primary-green), 0.2);
+				background-color: rgba(var(--primary-green-rgb), 0.2);
 
 				.indicator {
 					width: 100%;
