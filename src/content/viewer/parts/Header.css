@@ -141,7 +141,7 @@
 
 .paging .next-link:hover,
 .paging .prev-link:hover {
-	color: #168fe7;
+	color: var(--secondary-blue);
 }
 
 .next-link-disabled,
