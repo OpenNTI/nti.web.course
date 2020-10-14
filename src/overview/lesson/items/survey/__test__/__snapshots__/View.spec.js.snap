@@ -62,6 +62,13 @@ exports[`Course overview survey item test Grid item closed 1`] = `
                   0 Submissions
                 </span>
               </li>
+              <li>
+                <span
+                  className="due"
+                >
+                  Available Now
+                </span>
+              </li>
             </ul>
           </div>
         </div>
@@ -149,6 +156,13 @@ exports[`Course overview survey item test Grid item submitted 1`] = `
                   0 Submissions
                 </span>
               </li>
+              <li>
+                <span
+                  className="due"
+                >
+                  Available Now
+                </span>
+              </li>
             </ul>
           </div>
         </div>
@@ -234,6 +248,13 @@ exports[`Course overview survey item test Grid item with 3 questions, 4 submissi
                   className="submissions"
                 >
                   4 Submissions
+                </span>
+              </li>
+              <li>
+                <span
+                  className="due"
+                >
+                  Available Now
                 </span>
               </li>
             </ul>
@@ -328,6 +349,13 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
                   className="submissions"
                 >
                   0 Submissions
+                </span>
+              </li>
+              <li>
+                <span
+                  className="due"
+                >
+                  Available Now
                 </span>
               </li>
             </ul>
@@ -435,6 +463,13 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
                   0 Submissions
                 </span>
               </li>
+              <li>
+                <span
+                  className="due"
+                >
+                  Available Now
+                </span>
+              </li>
             </ul>
           </div>
         </div>
@@ -519,6 +554,13 @@ exports[`Course overview survey item test List item closed 1`] = `
                     0 Submissions
                   </span>
                 </li>
+                <li>
+                  <span
+                    className="due"
+                  >
+                    Available Now
+                  </span>
+                </li>
               </ul>
             </div>
           </div>
@@ -588,6 +630,13 @@ exports[`Course overview survey item test List item submitted 1`] = `
                     0 Submissions
                   </span>
                 </li>
+                <li>
+                  <span
+                    className="due"
+                  >
+                    Available Now
+                  </span>
+                </li>
               </ul>
             </div>
           </div>
@@ -655,6 +704,13 @@ exports[`Course overview survey item test List item with 3 questions, 4 submissi
                     className="submissions"
                   >
                     4 Submissions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="due"
+                  >
+                    Available Now
                   </span>
                 </li>
               </ul>
@@ -733,6 +789,13 @@ exports[`Course overview survey item test List item with 5 comments, completable
                     0 Submissions
                   </span>
                 </li>
+                <li>
+                  <span
+                    className="due"
+                  >
+                    Available Now
+                  </span>
+                </li>
               </ul>
             </div>
           </div>
@@ -807,6 +870,13 @@ exports[`Course overview survey item test List item with 5 comments, completable
                     className="submissions"
                   >
                     0 Submissions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    className="due"
+                  >
+                    Available Now
                   </span>
                 </li>
               </ul>

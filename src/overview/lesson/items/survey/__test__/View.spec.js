@@ -22,6 +22,7 @@ function itemBuilder () {
 		_isClosed: false,
 		_published: true,
 		_assignedDate: null,
+		_dueDate: null,
 
 		commentCount: function (val) {
 			this._commentCount = val;
@@ -73,6 +74,11 @@ function itemBuilder () {
 			return this;
 		},
 
+		dueDate: (val) => {
+			this._dueDate = val;
+			return this;
+		},
+
 		submitted: function () {
 			this._isSubmitted = true;
 			return this;
@@ -101,7 +107,8 @@ function itemBuilder () {
 				isSubmitted: this._isSubmitted,
 				isClosed: this._isClosed,
 				isTargetPublished: () => this._published,
-				getTargetAssignedDate: () => this._assignedDate
+				getTargetAssignedDate: () => this._assignedDate,
+				getTargetDueDate: () => this._dueDate
 			};
 		}
 	};
