@@ -16,4 +16,26 @@
 	.require-control-value {
 		line-height: 20px;
 	}
+
+	.due {
+		color: var(--tertiary-grey);
+
+		&.today {
+			color: var(--primary-orange);
+		}
+
+		&.late {
+			color: var(--primary-red);
+		}
+
+		i {
+			margin-left: 3px;
+		}
+
+		&.editable .label:hover {
+			text-decoration: underline;
+			border-radius: 10px;
+			cursor: pointer;
+		}
+	}
 }
