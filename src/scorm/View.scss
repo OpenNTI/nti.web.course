@@ -1,103 +1,106 @@
 @import '~@nti/style-common';
 
 .scorm-overview-body {
-    width: 100%;
-    min-height: calc(100vh - 110px);
+	width: 100%;
+	min-height: calc(100vh - 110px);
 
 	iframe {
 		width: 100%;
 		min-height: 200px;
 	}
 
-    .scorm-content {
-        @include responsive-range(desktop) {
-            background: white;
-        }
+	.scorm-content {
+		@include responsive-range(desktop) {
+			background: white;
+		}
 
-        min-height: calc(100vh - 110px);
+		min-height: calc(100vh - 110px);
 
-        .scorm-container {
-            display: none;
-        }
-    }
+		.scorm-container {
+			display: none;
+		}
+	}
 
-    .scorm-card {
-        @include responsive-range(mobile) {
-            margin: auto;
-        }
+	.scorm-card {
+		@include responsive-range(mobile) {
+			margin: auto;
+		}
 
 		display: flex;
-        border-bottom: 1px solid #E2E2E2;
-        background-color: #FFFFFF;
-        box-shadow: 0 4px 10px -5px rgba(0, 0, 0, 0.1);
-        position: relative;
-        min-height: 300px;
+		border-bottom: 1px solid #e2e2e2;
+		background-color: #fff;
+		box-shadow: 0 4px 10px -5px rgba(0, 0, 0, 0.1);
+		position: relative;
+		min-height: 300px;
 
 		.course-info {
 			width: calc(100% - 256px);
 			padding: 35px 45px;
 		}
 
-        .scorm-title {
-            color: var(--primary-grey);
-            font-size: 24px;
-            font-weight: 300;
-            line-height: 33px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .scorm-desc {
-            color: var(--secondary-grey);
-            font-size: 14px;
-            margin-top: 10px;
-            line-height: 24px;
-            margin-bottom: 87px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .scorm-launch-button {
-            border-radius: 3px;
-            height: 40px;
-            width: 120px;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        .nti-button.primary.scorm-post-launch-button {
-            background-color: var(--tertiary-grey);
-            border-radius: 3px;
-            margin-top: 97px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            font-weight: 600;
-            font-size: 16px;
-        }
+		.scorm-title {
+			color: var(--primary-grey);
+			font-size: 24px;
+			font-weight: 300;
+			line-height: 33px;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
 
-        .scorm-error {
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            color: var(--primary-red);
-            padding: 10px 0px;
-        }
-    }
+		.scorm-desc {
+			color: var(--secondary-grey);
+			font-size: 14px;
+			margin-top: 10px;
+			line-height: 24px;
+			margin-bottom: 87px;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		.scorm-launch-button {
+			border-radius: 3px;
+			height: 40px;
+			width: 120px;
+			text-align: center;
+			font-size: 16px;
+			font-weight: 600;
+			text-align: center;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		.nti-button.primary.scorm-post-launch-button {
+			background-color: var(--tertiary-grey);
+			border-radius: 3px;
+			margin-top: 97px;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			font-weight: 600;
+			font-size: 16px;
+		}
+
+		.scorm-error {
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			color: var(--primary-red);
+			padding: 10px 0;
+		}
+	}
 
 	.scorm-student-progress {
 		display: flex;
 		width: 100%;
 	}
 
-    .scorm-instructor-card {
-        .scorm-edit-link, .scorm-export-link {
-            display: block;
-            color: var(--primary-blue);
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            cursor: pointer;
-            text-decoration: none;
-        }
-    }
+	.scorm-instructor-card {
+		.scorm-edit-link, .scorm-export-link {
+			display: block;
+			color: var(--primary-blue);
+			font-size: 16px;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+			cursor: pointer;
+			text-decoration: none;
+		}
+	}
 }

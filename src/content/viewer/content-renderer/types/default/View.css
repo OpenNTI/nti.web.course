@@ -2,11 +2,10 @@
 	min-height: 200px;
 	position: relative;
 
-	/*Center Text*/
+	/* Center Text */
 	display: flex;
 	align-item: center;
 	justify-content: center;
-
 }
 
 .missing-text {

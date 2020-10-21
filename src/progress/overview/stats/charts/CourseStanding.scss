@@ -116,8 +116,10 @@
 
 			.label {
 				position: absolute;
-				left: 0; right: auto;
-				bottom: 100%; top: auto;
+				left: 0;
+				right: auto;
+				bottom: 100%;
+				top: auto;
 				padding: 0.25rem;
 				background: var(--primary-orange);
 				color: white;
@@ -136,8 +138,6 @@
 					overflow: hidden;
 					text-overflow: ellipsis;
 				}
-
-
 			}
 
 			&.left {
@@ -148,5 +148,4 @@
 			}
 		}
 	}
-
 }

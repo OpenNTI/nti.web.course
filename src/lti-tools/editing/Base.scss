@@ -9,13 +9,14 @@
 	}
 
 	.nti-select-native-wrapper {
-		margin: 0px 20px;
+		margin: 0 20px;
 		height: 2rem;
 		line-height: 2rem;
 	}
 
 	.dialog-buttons {
 		background: white;
+
 		button {
 			border: none;
 		}
@@ -24,6 +25,6 @@
 	.lti-base-tool-error {
 		color: var(--primary-red);
 		display: block;
-    	padding: 0px 0px 10px 20px;
+		padding: 0 0 10px 20px;
 	}
 }

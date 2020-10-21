@@ -21,7 +21,7 @@
 			-webkit-font-smoothing: antialiased;
 		}
 	}
-	
+
 	.role-label-instructor {
 		&::before {
 			content: $icon-star-filled;
@@ -54,9 +54,8 @@
 		padding: 0.5rem 1.25rem 0.5rem 2.5rem;
 		min-width: 235px;
 		position: relative;
-
 	}
-	
+
 	.flyout-inner {
 		display: inline-block;
 		padding: 1.25rem 0;
@@ -86,7 +85,7 @@
 	margin-top: 15px;
 	box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.18);
 	background: white;
-	
+
 	&.hidden {
 		.image {
 			opacity: 0.3;
@@ -98,7 +97,7 @@
 			}
 		}
 	}
-	
+
 	.visibility-status {
 		float: right;
 		text-align: right;
@@ -107,9 +106,8 @@
 		.status {
 			line-height: 1.625;
 		}
-
 	}
-	
+
 	.image {
 		width: 100px;
 		height: 100px;
@@ -236,7 +234,5 @@
 				}
 			}
 		}
-
 	}
-
 }

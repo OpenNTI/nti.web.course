@@ -17,13 +17,13 @@
 	}
 
 	.nti-labeled-input {
-		padding: 5px 0px;
+		padding: 5px 0;
 	}
 
 	.lti-base-form-error {
 		color: var(--primary-red);
 		display: block;
-		padding: 0px 0px 0px 0px;
+		padding: 0 0 0 0;
 	}
 
 	.split-input {
@@ -34,7 +34,7 @@
 			width: 48%;
 		}
 
-		.lti-base-form-input{
+		.lti-base-form-input {
 			width: 48%;
 
 			.nti-labeled-input {
@@ -44,9 +44,8 @@
 			.lti-base-form-error {
 				color: var(--primary-red);
 				display: block;
-				padding: 0px 0px 0px 0px;
+				padding: 0 0 0 0;
 			}
-
 		}
 	}
 }

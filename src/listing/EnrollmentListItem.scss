@@ -84,6 +84,7 @@
 			appearance: none;
 			border: none;
 			height: 5px;
+
 			@include bar();
 
 			&::-webkit-progress-bar {
