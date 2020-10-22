@@ -63,7 +63,7 @@ class CourseTabs extends React.Component {
 			return '';
 		}
 
-		return this.router.route.location.pathname;
+		return global.location.pathname;
 	}
 
 
