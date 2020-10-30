@@ -93,11 +93,11 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 
 			if(existing) {
 				// PUT to NTIID of def
-				const requests = existing.map(d => {
+				const requests = existing.map(async d => {
 					const editLink = d && d.Links && d.Links.filter(l => l.rel === 'edit')[0];
 
 					if(!editLink) {
-						return Promise.reject('No edit link');
+						throw new Error('No edit link');
 					}
 
 					return service.put(editLink.href, d);
