@@ -1,0 +1,59 @@
+.no-progress-header,
+.class-progress-header,
+.student-progress-header {
+	--small-padding: 0.75rem;
+	--large-padding: 1.125rem;
+
+	padding: var(--small-padding) var(--small-padding) var(--small-padding) var(--large-padding);
+}
+
+.student-progress-header {
+	display: block;
+	text-decoration: none;
+}
+
+.percentage {
+	display: inline-block;
+
+	& svg {
+		display: inline-block;
+	}
+}
+
+.label {
+	font-size: 1rem;
+	font-weight: 300;
+	line-height: 1.375;
+	color: var(--primary-grey);
+}
+
+.sub-label {
+	font-size: 0.625rem;
+	font-weight: bold;
+	line-height: 1.1;
+	color: var(--tertiary-grey);
+	text-transform: uppercase;
+}
+
+.progress-header {
+	display: grid;
+	grid-template-columns: 38px 1fr;
+	grid-template-rows: 1.375rem 0.875rem;
+	grid-column-gap: 0.5rem;
+
+	& .percentage {
+		grid-column: 1 / 1;
+		grid-row: 1 / 3;
+		margin-right: 0.625rem;
+	}
+
+	& .label {
+		grid-column: 2 / 2;
+		grid-row: 1 / 1;
+	}
+
+	& .sub-label {
+		grid-column: 2 / 2;
+		grid-row: 2 / 2;
+	}
+}
