@@ -25,7 +25,6 @@ exports[`Course overview survey item test Grid item closed 1`] = `
             >
               <div
                 className="lesson-overview-survey-icon"
-                large={true}
               />
             </div>
           </div>
@@ -75,7 +74,7 @@ exports[`Course overview survey item test Grid item closed 1`] = `
         <div
           className="button-container"
         >
-          <a
+          <span
             className="nti-button button primary rounded"
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -83,7 +82,7 @@ exports[`Course overview survey item test Grid item closed 1`] = `
             tabIndex="0"
           >
             Closed
-          </a>
+          </span>
         </div>
       </div>
     </div>
@@ -119,7 +118,6 @@ exports[`Course overview survey item test Grid item submitted 1`] = `
             >
               <div
                 className="lesson-overview-survey-icon"
-                large={true}
               />
             </div>
           </div>
@@ -169,7 +167,7 @@ exports[`Course overview survey item test Grid item submitted 1`] = `
         <div
           className="button-container"
         >
-          <a
+          <span
             className="nti-button button primary rounded"
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -177,7 +175,7 @@ exports[`Course overview survey item test Grid item submitted 1`] = `
             tabIndex="0"
           >
             Review
-          </a>
+          </span>
         </div>
       </div>
     </div>
@@ -213,7 +211,6 @@ exports[`Course overview survey item test Grid item with 3 questions, 4 submissi
             >
               <div
                 className="lesson-overview-survey-icon"
-                large={true}
               />
             </div>
           </div>
@@ -263,7 +260,7 @@ exports[`Course overview survey item test Grid item with 3 questions, 4 submissi
         <div
           className="button-container"
         >
-          <a
+          <span
             className="nti-button button primary rounded"
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -271,7 +268,7 @@ exports[`Course overview survey item test Grid item with 3 questions, 4 submissi
             tabIndex="0"
           >
             Take
-          </a>
+          </span>
         </div>
       </div>
     </div>
@@ -307,7 +304,6 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
             >
               <div
                 className="lesson-overview-survey-icon"
-                large={true}
               />
             </div>
           </div>
@@ -364,7 +360,7 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
         <div
           className="button-container"
         >
-          <a
+          <span
             className="nti-button button primary rounded"
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -372,7 +368,7 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
             tabIndex="0"
           >
             Take
-          </a>
+          </span>
         </div>
       </div>
     </div>
@@ -408,7 +404,6 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
             >
               <div
                 className="lesson-overview-survey-icon"
-                large={true}
               />
             </div>
           </div>
@@ -476,7 +471,7 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
         <div
           className="button-container"
         >
-          <a
+          <span
             className="nti-button button primary rounded"
             onClick={[Function]}
             onKeyDown={[Function]}
@@ -484,7 +479,7 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
             tabIndex="0"
           >
             Take
-          </a>
+          </span>
         </div>
       </div>
     </div>
