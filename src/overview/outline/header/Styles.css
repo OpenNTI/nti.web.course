@@ -4,6 +4,10 @@
 	--small-padding: 0.75rem;
 	--large-padding: 1.125rem;
 
+}
+
+.no-progress-header,
+.progress-header {
 	padding: var(--small-padding) var(--small-padding) var(--small-padding) var(--large-padding);
 }
 
