@@ -194,7 +194,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		const {assignment, assessment} = this.props;
 		const blockNavigation = !(assessment || assignment);
 		return !text ? null : (
-			<Button component="span" disabled={this.state.inlineEditorExpanded || blockNavigation} rounded>
+			<Button as="span" disabled={this.state.inlineEditorExpanded || blockNavigation} rounded>
 				{text}
 			</Button>
 		);

@@ -90,7 +90,7 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 		if (!text) { return null; }
 
 		return (
-			<Button rounded>
+			<Button as="span" rounded>
 				{text}
 			</Button>
 		);
