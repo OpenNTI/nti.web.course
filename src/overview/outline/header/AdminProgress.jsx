@@ -84,7 +84,7 @@ export default function AdminProgress ({className, course}) {
 	const progress = !loading && !error ? resolver : null;
 
 	return (
-		<Outline.Header className={cx(Styles['class-progress-header', className])}>
+		<Outline.Header className={cx(Styles['class-progress-header'], className)}>
 			<div className={Styles['progress-header']}>
 				<div className={Styles.percentage}>
 					{loading && (<Loading.Spinner blue />)}
