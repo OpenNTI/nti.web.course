@@ -3,7 +3,6 @@
 .student-progress-header {
 	--small-padding: 0.75rem;
 	--large-padding: 1.125rem;
-
 }
 
 .no-progress-header,
@@ -37,6 +36,10 @@
 	line-height: 1.1;
 	color: var(--tertiary-grey);
 	text-transform: uppercase;
+}
+
+a.progress-header {
+	cursor: pointer;
 }
 
 .progress-header {

@@ -7,6 +7,7 @@ import {Page, Text, Hooks, Prompt, Iframe} from '@nti/web-commons';
 import {CircularProgress} from '@nti/web-charts';
 
 import PassFailMessage from '../../../progress/widgets/PassFailMessage';
+import {RemainingItems} from '../../../progress';
 
 import Styles from './Styles.css';
 
@@ -101,9 +102,9 @@ export default function StudentProgress ({className, course, active, noCertifica
 	}
 
 	return (
-		<Outline.Header as="a" {...linkProps} className={cx(Styles['student-progress-header'], className)}>
+		<Outline.Header className={cx(Styles['student-progress-header'], className)}>
 			<div>
-				<div className={Styles['progress-header']}>
+				<a {...linkProps} className={Styles['progress-header']}>
 					<div className={Styles.percentage}>
 						<CircularProgress
 							width={38}
@@ -115,7 +116,7 @@ export default function StudentProgress ({className, course, active, noCertifica
 					</div>
 					<Text.Base className={Styles.label}>{t('label')}</Text.Base>
 					<Text.Base className={Styles['sub-label']}>{subLabel}</Text.Base>
-				</div>
+				</a>
 				{isCompleted && (
 					<PassFailMessage course={course} requirementsMet={getRequirementsMet(requirementsMet)} />
 				)}
@@ -130,9 +131,10 @@ export default function StudentProgress ({className, course, active, noCertifica
 				)}
 				{showRemaining && (
 					<Prompt.Dialog onBeforeDismiss={() => setShowRemaining(false)}>
-						<div>
-							Remaining Items
-						</div>
+						<RemainingItems.Modal
+							course={course}
+							onClose={() => setShowRemaining(false)}
+						/>
 					</Prompt.Dialog>
 				)}
 			</div>

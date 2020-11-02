@@ -1,0 +1,13 @@
+.remaining-items-modal {
+	background: white;
+
+	--side-padding: 1.75rem;
+}
+
+.header {
+	border-bottom: 1px solid var(--border-grey-light);
+	display: flex;
+	flex-direction: row;
+	align-items: middle;
+	padding: 1rem 1rem 1rem var(--side-padding, 1.75rem);
+}
