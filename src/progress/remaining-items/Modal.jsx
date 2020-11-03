@@ -26,7 +26,7 @@ export default function RemainingItemsModal ({className, onClose, ...otherProps}
 				<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
 				<Checkbox checked={incompleteOnly} label={t('incompleteOnly')} onChange={e => setIncompleteOnly(e.target.checked)} />
 				<div className={Styles.spacer} />
-				<Icons.X onClick={onClose} />
+				<Icons.X  className={Styles.close} onClick={onClose} />
 			</div>
 			<Items requiredOnly={requiredOnly} incompleteOnly={incompleteOnly} {...otherProps} />
 		</div>

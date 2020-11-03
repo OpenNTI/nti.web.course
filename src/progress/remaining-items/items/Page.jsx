@@ -6,6 +6,9 @@ import Items from '../../../overview/lesson/items';
 import Overview from '../../../overview/lesson/OverviewContents';
 import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 
+import Styles from './Style.css';
+import CompletionStatus from './CompletionStatus';
+
 const dateFormat = 'MMMM, D YYYY';
 
 const {useResolver} = Hooks;
@@ -70,14 +73,16 @@ function RemainingItemsPage ({lesson, course, onLoad, requiredOnly, incompleteOn
 		<Loading.Placeholder loading={loading} fallback={<div style={{minHeight: '200px'}} />}>
 			{error && (<Errors.Message error={error} />)}
 			{hasItems && (
-				<PaddedContainer>
-					{available && (<DateTime format={dateFormat} date={available} />)}
-					{!available && ending && (<DateTime format={dateFormat} date={ending} />)}
-					<Text.Base>{overview.title}</Text.Base>
+				<PaddedContainer className={Styles.header}>
+					{available && (<DateTime className={Styles['sub-title']} format={dateFormat} date={available} />)}
+					{!available && ending && (<DateTime className={Styles['sub-title']} format={dateFormat} date={ending} />)}
+					<Text.Base className={Styles.title}>{overview.title}</Text.Base>
 				</PaddedContainer>
 			)}
 			{hasItems && (
 				<Items
+					className={Styles.items}
+
 					items={items}
 					overview={overview}
 					outlineNode={lesson}
@@ -86,6 +91,8 @@ function RemainingItemsPage ({lesson, course, onLoad, requiredOnly, incompleteOn
 
 					requiredOnly={requiredOnly}
 					incompleteOnly={incompleteOnly}
+
+					extraColumns={[CompletionStatus]}
 				/>
 			)}
 

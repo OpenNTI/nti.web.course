@@ -1,0 +1,38 @@
+.header {
+	margin: 1.5rem 0;
+}
+
+.sub-title {
+	font-size: 0.625rem;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--tertiary-grey);
+	text-transform: uppercase;
+}
+
+.title {
+	font-size: 1.5rem;
+	font-weight: 300;
+	line-height: 1.4;
+	color: var(--primary-grey);
+}
+
+.completion-status-cell {
+	width: var(--completion-status-cell, 130px);
+}
+
+.completion-status.complete {
+	color: var(--primary-green);
+}
+
+.items {
+	--completion-cell-width: min(130px, 25vw);
+
+	& :global(.lesson-overview-base-list-item-table-info-cell) {
+		overflow: hidden;
+	}
+
+	& :global(.lesson-overview-base-list-item-container .lesson-overview-base-list-item-table-row > *.lesson-overview-base-list-item-table-info-cell) {
+		max-width: calc(100% - var(--completion-status-cell));
+	}
+}

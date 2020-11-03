@@ -44,7 +44,6 @@ export default function RemainingItems ({course, requiredOnly, incompleteOnly}) 
 		<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
 			{error && (<Errors.Message error={error} />)}
 			{lessonsToShow.map((lesson, index) => {
-				debugger;//eslint-disable-line
 				const toLoad = index === toShow ? () => setToShow(index + 1) : null;
 
 				return (
