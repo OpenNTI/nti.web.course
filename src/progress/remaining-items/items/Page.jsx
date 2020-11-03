@@ -23,7 +23,7 @@ const flatten = (items) => items.reduce((acc, item) => {
 }, []);
 
 const isRequired = item => item?.CompletionRequired;
-const isIncomplete = item => true;//todo: fill this in
+const isIncomplete = item => !item?.hasCompleted?.();
 
 const getFilterFn = (requiredOnly, incompleteOnly) => {
 	return (item) => (!requiredOnly || isRequired(item)) && (!incompleteOnly || isIncomplete(item));
