@@ -5,6 +5,7 @@ import {scoped} from '@nti/lib-locale';
 import {Hooks as SessionHooks} from '@nti/web-session';
 import {Page, Text, Hooks, Prompt, Iframe} from '@nti/web-commons';
 import {CircularProgress} from '@nti/web-charts';
+import {useLocation} from '@nti/web-routing';
 
 import PassFailMessage from '../../../progress/widgets/PassFailMessage';
 import {RemainingItems} from '../../../progress';
@@ -69,8 +70,14 @@ StudentProgress.propTypes = {
 	noCertificateFrame: PropTypes.bool
 };
 export default function StudentProgress ({className, course, active, noCertificateFrame}) {
+	const location = useLocation();
+
 	const [showRemaining, setShowRemaining] = React.useState(false);
 	const [showCert, setShowCert] = React.useState(false);
+
+	React.useEffect(() => {
+		if (showRemaining) { setShowRemaining(false); }
+	}, [location]);
 
 	const progress = useStudentProgress(course, active);
 	const isCompleted = getIsCompleted(progress);
