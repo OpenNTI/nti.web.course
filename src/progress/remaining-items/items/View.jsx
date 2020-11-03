@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Hooks, Loading, Errors} from '@nti/web-commons';
 
+import Styles from './Style.css';
 import Page from './Page';
 
 const {useResolver} = Hooks;
@@ -43,21 +44,23 @@ export default function RemainingItems ({course, requiredOnly, incompleteOnly}) 
 	return (
 		<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
 			{error && (<Errors.Message error={error} />)}
-			{lessonsToShow.map((lesson, index) => {
-				const toLoad = index === toShow ? () => setToShow(index + 1) : null;
+			<div className={Styles.pages}>
+				{lessonsToShow.map((lesson, index) => {
+					const toLoad = index === toShow ? () => setToShow(index + 1) : null;
 
-				return (
-					<Page
-						key={lesson.getID()}
-						lesson={lesson}
-						course={course}
-						requiredOnly={requiredOnly}
-						incompleteOnly={incompleteOnly}
+					return (
+						<Page
+							key={lesson.getID()}
+							lesson={lesson}
+							course={course}
+							requiredOnly={requiredOnly}
+							incompleteOnly={incompleteOnly}
 
-						onLoad={toLoad}
-					/>
-				);
-			})}
+							onLoad={toLoad}
+						/>
+					);
+				})}
+			</div>
 		</Loading.Placeholder>
 	);
 }

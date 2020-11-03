@@ -34,6 +34,14 @@ const getItems = (overview, requiredOnly, incompleteOnly) => (
 		.filter(getFilterFn(requiredOnly, incompleteOnly))
 );
 
+const Placeholder = () => (
+	<div className={Styles['page-placeholder']}>
+		<div className={Styles.placeholder} />
+		<div className={Styles.placeholder} />
+		<div className={Styles.placeholder} />
+	</div>
+);
+
 RemainingItemsPage.propTypes = {
 	course: PropTypes.object,
 	lesson: PropTypes.shape({
@@ -70,7 +78,7 @@ function RemainingItemsPage ({lesson, course, onLoad, requiredOnly, incompleteOn
 	const ending = lesson && lesson.getAvailableEnding();
 
 	return (
-		<Loading.Placeholder loading={loading} fallback={<div style={{minHeight: '200px'}} />}>
+		<Loading.Placeholder loading={loading} fallback={<Placeholder />}>
 			{error && (<Errors.Message error={error} />)}
 			{hasItems && (
 				<PaddedContainer className={Styles.header}>

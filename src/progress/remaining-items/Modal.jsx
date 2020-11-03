@@ -17,8 +17,8 @@ RemainingItemsModal.propTypes = {
 	onClose: PropTypes.func
 };
 export default function RemainingItemsModal ({className, onClose, ...otherProps}) {
-	const [requiredOnly, setRequiredOnly] = React.useState(false);
-	const [incompleteOnly, setIncompleteOnly] = React.useState(false);
+	const [requiredOnly, setRequiredOnly] = React.useState(true);
+	const [incompleteOnly, setIncompleteOnly] = React.useState(true);
 
 	return (
 		<div className={cx(className, Styles['remaining-items-modal'])}>
