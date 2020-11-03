@@ -115,7 +115,9 @@ export default function StudentProgress ({className, course, active, noCertifica
 						/>
 					</div>
 					<Text.Base className={Styles.label}>{t('label')}</Text.Base>
-					<Text.Base className={Styles['sub-label']}>{subLabel}</Text.Base>
+					<Text.Base className={cx(Styles['sub-label'], {[Styles.certificate]: isCompleted && certLink})}>
+						{subLabel}
+					</Text.Base>
 				</a>
 				{isCompleted && (
 					<PassFailMessage course={course} requirementsMet={getRequirementsMet(requirementsMet)} />

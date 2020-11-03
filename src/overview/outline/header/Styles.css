@@ -36,6 +36,10 @@
 	line-height: 1.1;
 	color: var(--tertiary-grey);
 	text-transform: uppercase;
+
+	&.certificate {
+		color: var(--primary-blue);
+	}
 }
 
 a.progress-header {
@@ -47,6 +51,7 @@ a.progress-header {
 	grid-template-columns: 38px 1fr;
 	grid-template-rows: 1.375rem 0.875rem;
 	grid-column-gap: 0.5rem;
+	text-decoration: none;
 
 	& .percentage {
 		grid-column: 1 / 1;
