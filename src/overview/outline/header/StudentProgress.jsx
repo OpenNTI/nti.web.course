@@ -127,7 +127,7 @@ export default function StudentProgress ({className, course, active, noCertifica
 					</Text.Base>
 				</a>
 				{isCompleted && (
-					<PassFailMessage course={course} requirementsMet={getRequirementsMet(requirementsMet)} />
+					<PassFailMessage course={course} requirementsMet={getRequirementsMet(progress)} />
 				)}
 				{showCert && (
 					<Prompt.Dialog onBeforeDismiss={() => setShowCert(false)}>
