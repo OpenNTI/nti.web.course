@@ -55,7 +55,7 @@ const getComponentForMatch = (cmpMatch) =>{
 	}
 
 	return (
-		<Cmp>{html}</Cmp>
+		<Cmp key={cmpMatch}>{html}</Cmp>
 	);
 };
 

@@ -47,7 +47,7 @@ export default class CatalogEntryType extends React.Component {
 		} else {
 			if (isEnrolled) {
 				badges.push((
-					<Badge check green>
+					<Badge green>
 						<i className="icon-check" />
 						<span>{t('enrolled')}</span>
 					</Badge>
