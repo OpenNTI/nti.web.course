@@ -8,7 +8,7 @@ import {CircularProgress} from '@nti/web-charts';
 import {useLocation} from '@nti/web-routing';
 
 import PassFailMessage from '../../../progress/widgets/PassFailMessage';
-import {RemainingItems} from '../../../progress';
+import {RemainingItems, ProgressCompletionNotification} from '../../../progress';
 
 import Styles from './Styles.css';
 
@@ -109,44 +109,47 @@ export default function StudentProgress ({className, course, active, noCertifica
 	}
 
 	return (
-		<Outline.Header className={cx(Styles['student-progress-header'], className)}>
-			<div>
-				<a {...linkProps} className={Styles['progress-header']}>
-					<div className={Styles.percentage}>
-						<CircularProgress
-							width={38}
-							height={38}
-							value={getPercentComplete(progress)}
-							showPctSymbol={false}
-							deficitFillColor="#b8b8b8"
-						/>
-					</div>
-					<Text.Base className={Styles.label}>{t('label')}</Text.Base>
-					<Text.Base className={cx(Styles['sub-label'], {[Styles.certificate]: isCompleted && certLink})}>
-						{subLabel}
-					</Text.Base>
-				</a>
-				{isCompleted && (
-					<PassFailMessage course={course} requirementsMet={getRequirementsMet(progress)} />
-				)}
-				{showCert && (
-					<Prompt.Dialog onBeforeDismiss={() => setShowCert(false)}>
-						<Iframe
-							downloadable
-							src={certLink}
-							title={t('certificateTitle', {title: getTitle(course)})}
-						/>
-					</Prompt.Dialog>
-				)}
-				{showRemaining && (
-					<Prompt.Dialog onBeforeDismiss={() => setShowRemaining(false)}>
-						<RemainingItems.Modal
-							course={course}
-							onClose={() => setShowRemaining(false)}
-						/>
-					</Prompt.Dialog>
-				)}
-			</div>
-		</Outline.Header>
+		<>
+			<Outline.Header className={cx(Styles['student-progress-header'], className)}>
+				<div>
+					<a {...linkProps} className={Styles['progress-header']}>
+						<div className={Styles.percentage}>
+							<CircularProgress
+								width={38}
+								height={38}
+								value={getPercentComplete(progress)}
+								showPctSymbol={false}
+								deficitFillColor="#b8b8b8"
+							/>
+						</div>
+						<Text.Base className={Styles.label}>{t('label')}</Text.Base>
+						<Text.Base className={cx(Styles['sub-label'], {[Styles.certificate]: isCompleted && certLink})}>
+							{subLabel}
+						</Text.Base>
+					</a>
+					{isCompleted && (
+						<PassFailMessage course={course} requirementsMet={getRequirementsMet(progress)} />
+					)}
+					{showCert && (
+						<Prompt.Dialog onBeforeDismiss={() => setShowCert(false)}>
+							<Iframe
+								downloadable
+								src={certLink}
+								title={t('certificateTitle', {title: getTitle(course)})}
+							/>
+						</Prompt.Dialog>
+					)}
+					{showRemaining && (
+						<Prompt.Dialog onBeforeDismiss={() => setShowRemaining(false)}>
+							<RemainingItems.Modal
+								course={course}
+								onClose={() => setShowRemaining(false)}
+							/>
+						</Prompt.Dialog>
+					)}
+				</div>
+			</Outline.Header>
+			<ProgressCompletionNotification/>
+		</>
 	);
 }
