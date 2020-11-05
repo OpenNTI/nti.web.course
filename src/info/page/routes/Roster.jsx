@@ -6,8 +6,8 @@ import Roster from '../../../roster';
 CourseRoster.propTypes = {
 	instance: PropTypes.object
 };
-export default function CourseRoster ({instance}) {
+export default function CourseRoster ({instance, ...otherProps}) {
 	return (
-		<Roster course={instance} inline />
+		<Roster course={instance} inline {...otherProps} />
 	);
 }

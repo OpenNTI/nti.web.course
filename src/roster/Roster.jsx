@@ -1,4 +1,4 @@
-import {join} from 'path';
+// import {join} from 'path';
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -55,7 +55,7 @@ export default class Roster extends React.Component {
 
 	loadMore = () => {
 		const {loadNextPage, loading} = this.props;
-		
+
 		if (!loading && loadNextPage) {
 			loadNextPage();
 		}
@@ -75,9 +75,7 @@ export default class Roster extends React.Component {
 			const batchLink = batchLinkFor(item);
 
 			if (batchLink) {
-				const subroute = `./progress/${encodeBatchLink(batchLink)}`;
-				const path = join(router.baseroute || '', subroute);
-				router.routeTo.path(path);
+				router.routeTo.object({isProgressBatch: true, href: `./progress/${encodeBatchLink(batchLink)}`});
 			}
 		}
 		else {

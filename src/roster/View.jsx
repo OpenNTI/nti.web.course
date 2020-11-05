@@ -10,6 +10,11 @@ export default Router.for([
 	Route({
 		path: '/progress/:encodedBatchLink',
 		component: Dialog,
+		getRouteFor: (obj) => {
+			if (obj.isProgressBatch) {
+				return obj.href;
+			}
+		},
 		props: {
 			content: Progress,
 			modal: true
