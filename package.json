@@ -15,7 +15,8 @@
     "start": "cmp-scripts start",
     "clean": "cmp-scripts clean",
     "check": "cmp-scripts check",
-    "release": "cmp-scripts release"
+    "release": "cmp-scripts release",
+    "storybook": "start-storybook -p 6006"
   },
   "repository": {
     "type": "git",
