@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Hooks, Loading, Errors} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
+import {Hooks, Loading, Errors, Checkbox} from '@nti/web-commons';
+
+import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 
 import Styles from './Style.css';
 import Page from './Page';
@@ -10,15 +13,21 @@ const {isPending, isResolved, isErrored} = useResolver;
 
 const isContentOutlineNode = (item) => item?.isOutlineNode && item?.hasOverviewContent;
 
+const t = scoped('course.progress.remaining-items.items.View', {
+	requiredOnly: 'Only Required',
+	incompleteOnly: 'Only Incomplete'
+});
+
+
 RemainingItems.propTypes = {
 	course: PropTypes.shape({
 		getContentTree: PropTypes.func
-	}),
-
-	requiredOnly: PropTypes.bool,
-	incompleteOnly: PropTypes.bool
+	})
 };
-export default function RemainingItems ({course, requiredOnly, incompleteOnly}) {
+export default function RemainingItems ({course}) {
+	const [requiredOnly, setRequiredOnly] = React.useState(true);
+	const [incompleteOnly, setIncompleteOnly] = React.useState(true);
+
 	const resolver = useResolver(async () => {
 		const contentWalker = course
 			.getContentTree()
@@ -43,6 +52,10 @@ export default function RemainingItems ({course, requiredOnly, incompleteOnly}) 
 
 	return (
 		<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
+			<PaddedContainer className={Styles.controls}>
+				<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
+				<Checkbox checked={incompleteOnly} label={t('incompleteOnly')} onChange={e => setIncompleteOnly(e.target.checked)} />
+			</PaddedContainer>
 			{error && (<Errors.Message error={error} />)}
 			<div className={Styles.pages}>
 				{lessonsToShow.map((lesson, index) => {
