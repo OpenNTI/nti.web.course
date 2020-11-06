@@ -90,7 +90,7 @@ export default function StudentProgress ({className, course, active, noCertifica
 	};
 
 	if (isCompleted && certLink) {
-		if (!noCertificateFrame) {
+		if (noCertificateFrame) {
 			linkProps.href = certLink;
 			linkProps.target = '_blank';
 		} else {
