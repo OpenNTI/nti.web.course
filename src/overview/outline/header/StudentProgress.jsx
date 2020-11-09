@@ -84,20 +84,18 @@ export default function StudentProgress ({className, course, active, noCertifica
 	const requirementsMet = isCompleted && getRequirementsMet(progress);
 	const certLink = getCertLink(course);
 
-	const linkProps = {
-		role: 'button',
-		className: Styles['progress-header']
-	};
+	const linkAction = {};
 
 	if (isCompleted && certLink) {
 		if (noCertificateFrame) {
-			linkProps.href = certLink;
-			linkProps.target = '_blank';
+			linkAction.href = certLink;
+			linkAction.target = '_blank';
+			linkAction.rel = 'noopener';
 		} else {
-			linkProps.onClick = () => setShowCert(true);
+			linkAction.onClick = () => setShowCert(true);
 		}
 	} else if (!isCompleted) {
-		linkProps.onClick = () => setShowRemaining(true);
+		linkAction.onClick = () => setShowRemaining(true);
 	}
 
 	let subLabel = '';
@@ -112,7 +110,7 @@ export default function StudentProgress ({className, course, active, noCertifica
 		<>
 			<Outline.Header className={cx(Styles['student-progress-header'], className)}>
 				<div>
-					<a {...linkProps} className={Styles['progress-header']}>
+					<a {...linkAction} role="button" className={Styles['progress-header']}>
 						<div className={Styles.percentage}>
 							<CircularProgress
 								width={38}
@@ -130,26 +128,29 @@ export default function StudentProgress ({className, course, active, noCertifica
 					{isCompleted && (
 						<PassFailMessage course={course} requirementsMet={getRequirementsMet(progress)} />
 					)}
-					{showCert && (
-						<Prompt.Dialog onBeforeDismiss={() => setShowCert(false)}>
-							<Iframe
-								downloadable
-								src={certLink}
-								title={t('certificateTitle', {title: getTitle(course)})}
-							/>
-						</Prompt.Dialog>
-					)}
-					{showRemaining && (
-						<Prompt.Dialog onBeforeDismiss={() => setShowRemaining(false)}>
-							<RemainingItems.Modal
-								course={course}
-								onClose={() => setShowRemaining(false)}
-							/>
-						</Prompt.Dialog>
-					)}
 				</div>
 			</Outline.Header>
-			<ProgressCompletionNotification/>
+
+			{showCert && (
+				<Prompt.Dialog onBeforeDismiss={() => setShowCert(false)}>
+					<Iframe
+						downloadable
+						src={certLink}
+						title={t('certificateTitle', {title: getTitle(course)})}
+					/>
+				</Prompt.Dialog>
+			)}
+
+			{showRemaining && (
+				<Prompt.Dialog onBeforeDismiss={() => setShowRemaining(false)}>
+					<RemainingItems.Modal
+						course={course}
+						onClose={() => setShowRemaining(false)}
+					/>
+				</Prompt.Dialog>
+			)}
+
+			<ProgressCompletionNotification course={course} viewCertificateAction={certLink && linkAction}/>
 		</>
 	);
 }

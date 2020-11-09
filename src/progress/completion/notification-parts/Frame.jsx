@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import Dismiss from './Dismiss';
@@ -34,8 +34,13 @@ Frame.propTypes = {
 };
 
 export function Frame ({onDismiss, children}) {
+	const hideOnNavigation = useCallback(({target}) => {
+		if (target.tagName === 'A' && (target.onClick || (target.href && !target.target))) {
+			onDismiss();
+		}
+	}, [onDismiss]);
 	return (
-		<Box>
+		<Box onClick={hideOnNavigation}>
 			<Close onClick={onDismiss}/>
 			{children}
 			<Dismiss onClick={onDismiss}/>
