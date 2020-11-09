@@ -8,8 +8,10 @@ import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 import Styles from './Style.css';
 import Page from './Page';
 
-const {useResolver} = Hooks;
+const {useResolver, useMatchesMediaQuery} = Hooks;
 const {isPending, isResolved, isErrored} = useResolver;
+
+const {MobileQuery} = useMatchesMediaQuery;
 
 const isContentOutlineNode = (item) => item?.isOutlineNode && item?.hasOverviewContent;
 
@@ -75,6 +77,8 @@ RemainingItems.propTypes = {
 	})
 };
 export default function RemainingItems ({course}) {
+	const isMobile = useMatchesMediaQuery(MobileQuery);
+
 	const [requiredOnly, setRequiredOnly] = React.useState(true);
 	const [incompleteOnly, setIncompleteOnly] = React.useState(true);
 
@@ -106,10 +110,12 @@ export default function RemainingItems ({course}) {
 
 	return (
 		<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
-			<PaddedContainer className={Styles.controls}>
-				<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
-				<Checkbox checked={incompleteOnly} label={t('incompleteOnly')} onChange={e => setIncompleteOnly(e.target.checked)} />
-			</PaddedContainer>
+			{!isMobile && (
+				<PaddedContainer className={Styles.controls}>
+					<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
+					<Checkbox checked={incompleteOnly} label={t('incompleteOnly')} onChange={e => setIncompleteOnly(e.target.checked)} />
+				</PaddedContainer>
+			)}
 			{error && (<Errors.Message error={error} />)}
 			{lessonsToShow.length === 0 && (
 				<EmptyState header={getEmptyText(requiredOnly, incompleteOnly)} />
