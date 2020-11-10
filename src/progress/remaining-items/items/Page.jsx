@@ -23,15 +23,15 @@ const flatten = (items) => items.reduce((acc, item) => {
 }, []);
 
 const isRequired = item => item?.CompletionRequired;
-const isIncomplete = item => !item?.hasCompleted?.();
+const isIncomplete = (item, completedItems) => CompletionStatus.getCompletedDate(item, completedItems) == null;
 
-const getFilterFn = (requiredOnly, incompleteOnly) => {
-	return (item) => (!requiredOnly || isRequired(item)) && (!incompleteOnly || isIncomplete(item));
+const getFilterFn = (completedItems, requiredOnly, incompleteOnly) => {
+	return (item) => (!requiredOnly || isRequired(item, completedItems)) && (!incompleteOnly || isIncomplete(item, completedItems));
 };
 
-const getItems = (overview, requiredOnly, incompleteOnly) => (
+const getItems = (overview, completedItems, requiredOnly, incompleteOnly) => (
 	flatten(overview?.Items ?? [])
-		.filter(getFilterFn(requiredOnly, incompleteOnly))
+		.filter(getFilterFn(completedItems, requiredOnly, incompleteOnly))
 );
 
 const Placeholder = () => (
@@ -44,6 +44,8 @@ const Placeholder = () => (
 
 RemainingItemsPage.propTypes = {
 	course: PropTypes.object,
+	enrollment: PropTypes.object,
+	enrollmentCompletedItems: PropTypes.object,
 	lesson: PropTypes.shape({
 		title: PropTypes.string,
 		getAvailableBeginning: PropTypes.func,
@@ -56,7 +58,7 @@ RemainingItemsPage.propTypes = {
 	requiredOnly: PropTypes.bool,
 	incompleteOnly: PropTypes.bool
 };
-function RemainingItemsPage ({lesson, course, onLoad, requiredOnly, incompleteOnly}) {
+function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedItems, onLoad, requiredOnly, incompleteOnly}) {
 	const resolver = useResolver(async () => {
 		try {
 			const content = await lesson.getContent();
@@ -71,7 +73,10 @@ function RemainingItemsPage ({lesson, course, onLoad, requiredOnly, incompleteOn
 	const error = isErrored(resolver) ? resolver : null;
 	const overview = isResolved(resolver) ? resolver : null;
 
-	const items = React.useMemo(() => getItems(overview, requiredOnly, incompleteOnly), [overview, requiredOnly, incompleteOnly]);
+	const items = React.useMemo(
+		() => getItems(overview, enrollmentCompletedItems, requiredOnly, incompleteOnly),
+		[overview, enrollmentCompletedItems, requiredOnly, incompleteOnly]
+	);
 	const hasItems = items && items.length > 0;
 
 	const available = lesson && lesson.getAvailableBeginning();
@@ -95,6 +100,8 @@ function RemainingItemsPage ({lesson, course, onLoad, requiredOnly, incompleteOn
 					overview={overview}
 					outlineNode={lesson}
 					course={course}
+					enrollment={enrollment}
+					enrollmentCompletedItems={enrollmentCompletedItems}
 					layout={Overview.List}
 
 					requiredOnly={requiredOnly}

@@ -74,9 +74,12 @@ RemainingItems.propTypes = {
 	course: PropTypes.shape({
 		getContentTree: PropTypes.func,
 		PreferredAccess: PropTypes.object
+	}),
+	enrollment: PropTypes.shape({
+		getCompletedItems: PropTypes.func
 	})
 };
-export default function RemainingItems ({course}) {
+export default function RemainingItems ({course, enrollment}) {
 	const isMobile = useMatchesMediaQuery(MobileQuery);
 
 	const [requiredOnly, setRequiredOnly] = React.useState(true);
@@ -93,20 +96,28 @@ export default function RemainingItems ({course}) {
 		const nodes = await contentWalker.getNodes();
 		const lessons = await Promise.all(nodes.map(n => n.getItem()));
 
-		const summary = await course.PreferredAccess.fetchLink('UserLessonCompletionStatsByOutlineNode');
+		const parent = enrollment ?? course.PreferredAccess;
+		const summary = await parent.fetchLink('UserLessonCompletionStatsByOutlineNode');
+
+		const enrollmentCompletedItems = enrollment ? await enrollment.getCompletedItems() : null;
 
 		return {
 			summary: getSummaryByLesson(summary),
-			lessons
+			lessons,
+			enrollmentCompletedItems
 		};
 	}, [course]);
 
 	const loading = isPending(resolver);
 	const error = isErrored(resolver) ? resolver : null;
-	const {lessons, summary} = isResolved(resolver) ? resolver : {};
+	const {lessons, summary, enrollmentCompletedItems} = isResolved(resolver) ? resolver : {};
 
 	const [toShow, setToShow] = React.useState(0);
-	const lessonsToShow = getLessonsToShow(lessons ?? [], summary, requiredOnly, incompleteOnly).slice(0, toShow + 1);
+	const filteredLessons = React.useMemo(
+		() => getLessonsToShow(lessons ?? [], summary, requiredOnly, incompleteOnly),
+		[lessons, summary, requiredOnly, incompleteOnly]
+	);
+	const lessonsToShow = filteredLessons.slice(0, toShow + 1);
 
 	return (
 		<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
@@ -129,6 +140,8 @@ export default function RemainingItems ({course}) {
 							key={lesson.getID()}
 							lesson={lesson}
 							course={course}
+							enrollment={enrollment}
+							enrollmentCompletedItems={enrollmentCompletedItems}
 							requiredOnly={requiredOnly}
 							incompleteOnly={incompleteOnly}
 
