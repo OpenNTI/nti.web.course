@@ -11,14 +11,13 @@ import {
 	ViewCertificate,
 } from './notification-parts';
 
-const ACKNOWLEDGE = 'AcknowledgeCompletion';
 const Receiver = ({children: renderer, ...props}) => renderer(props);
 
 Notification.propTypes = {
 	course: PropTypes.shape({
 		PreferredAccess: PropTypes.shape({
-			hasLink: PropTypes.func,
-			deleteLink: PropTypes.func
+			acknowledgeCourseCompletion: PropTypes.func,
+			hasCompletionAcknowledgmentRequest: PropTypes.bool,
 		})
 	}),
 	viewCertificateAction: PropTypes.shape({
@@ -34,11 +33,11 @@ export default function Notification ({course, viewCertificateAction: viewCertif
 	const [hide, trip] = useReducer(() => true, false);
 
 	const acknowledge = useCallback(() => {
-		enrollment.deleteLink(ACKNOWLEDGE);
+		enrollment.acknowledgeCourseCompletion();
 		trip();
 	}, [enrollment]);
 
-	const isComplete = enrollment?.hasLink(ACKNOWLEDGE);
+	const isComplete = enrollment?.hasCompletionAcknowledgmentRequest;
 
 	return !isComplete || hide ? null : (
 		<Prompt.Dialog onBeforeDismiss={acknowledge} closeOnMaskClick={false}>
