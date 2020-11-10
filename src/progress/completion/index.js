@@ -1,3 +1,2 @@
-export default function () {
-	return null;
-}
+import Notification from './Notification';
+export default Notification;

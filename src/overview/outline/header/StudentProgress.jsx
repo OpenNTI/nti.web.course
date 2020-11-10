@@ -150,7 +150,7 @@ export default function StudentProgress ({className, course, active, noCertifica
 				</Prompt.Dialog>
 			)}
 
-			<ProgressCompletionNotification course={course} viewCertificateAction={certLink && linkAction}/>
+			<ProgressCompletionNotification course={course} viewCertificateAction={certLink ? linkAction : null}/>
 		</>
 	);
 }
