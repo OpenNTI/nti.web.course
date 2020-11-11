@@ -56,14 +56,24 @@ function getSummaryByLesson (summary) {
 function getLessonsToShow (lessons, summary, requiredOnly, incompleteOnly) {
 	return lessons.filter((lesson) => {
 		const lessonSummary = summary[lesson.getID()] ?? summary[lesson.ContentNTIID];
-		const {
-			IncompleteCount: incomplete,
-			SuccessfulCount: success,
-			UnsuccessfulCount: failed
-		} = lessonSummary;
 
-		const matchesRequired = !requiredOnly || (incomplete + success + failed) > 0;
-		const matchesIncomplete = !incompleteOnly || (incomplete);
+		const required = {
+			incomplete: lessonSummary?.IncompleteCount ?? 0,
+			success: lessonSummary?.SuccessfulCount ?? 0,
+			failed: lessonSummary?.UnsuccessfulCount ?? 0
+		};
+
+		const notRequired = {
+			incomplete: lessonSummary?.UnrequiredIncompleteCount ?? 0,
+			success: lessonSummary?.UnrequiredSuccessfulCount ?? 0,
+			failed: lessonSummary?.UnrequiredUnsuccessfulCount ?? 0
+		};
+
+		const hasRequired = (required.incomplete + required.success + required.failed) > 0;
+		const hasIncomplete = (required.incomplete + notRequired.incomplete) > 0;
+
+		const matchesRequired = !requiredOnly || hasRequired;
+		const matchesIncomplete = !incompleteOnly || hasIncomplete;
 
 		return matchesRequired && matchesIncomplete;
 	});
