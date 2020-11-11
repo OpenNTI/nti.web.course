@@ -60,7 +60,7 @@ const getRequirementsMet = progress => progress?.CompletedItem?.Success;
 const getCertLink = course => course.PreferredAccess.getLink('Certificate');
 const getTitle = course => course.PreferredAccess.CatalogEntry.title;
 
-StudentProgress.handles = (course) => course.PreferredAccess?.isEnrollment && Object.keys(course).includes('CompletionPolicy');
+StudentProgress.handles = (course) => course.PreferredAccess?.isEnrollment && !course.PreferredAccess.isAdministrative && Object.keys(course).includes('CompletionPolicy');
 StudentProgress.propTypes = {
 	className: PropTypes.string,
 	course: PropTypes.shape({

@@ -6,6 +6,7 @@ import {Page, Loading, Icons, Text} from '@nti/web-commons';
 import {CircularProgress} from '@nti/web-charts';
 
 import Styles from './Styles.css';
+import NoProgress from './NoProgress';
 
 const {Navigation: {Outline}} = Page;
 
@@ -82,6 +83,12 @@ export default function AdminProgress ({className, course}) {
 	const loading = resolver === LoadingState;
 	const error = resolver instanceof Error ? resolver : null;
 	const progress = !loading && !error ? resolver : null;
+
+	if (error && error.statusCode === 403) {
+		return (
+			<NoProgress />
+		);
+	}
 
 	return (
 		<Outline.Header className={cx(Styles['class-progress-header'], className)}>
