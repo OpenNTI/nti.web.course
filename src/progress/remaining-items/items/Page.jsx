@@ -16,7 +16,7 @@ const {isPending, isErrored, isResolved} = useResolver;
 
 const flatten = (items) => items.reduce((acc, item) => {
 	if (item.Items) {
-		return [...acc, ...item.Items];
+		return [...acc, ...flatten(item.Items)];
 	}
 
 	return [...acc, item];
