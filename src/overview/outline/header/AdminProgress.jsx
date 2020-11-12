@@ -31,8 +31,7 @@ function useAdminProgress (course) {
 		const now = Date.now();
 		const last = lastLoad.current;
 
-		const shouldLoad = !last || (last.course !== course && (now - last.time) < LOAD_WAIT);
-
+		const shouldLoad = !last || last.course !== course || (now - last.time) > LOAD_WAIT;
 
 		if (!shouldLoad) { return; }
 
