@@ -41,6 +41,7 @@ const t = scoped('course.overview.lesson.overview.question-set.AssignmentLabel',
 	},
 	completed: {
 		label: 'completed ',
+		noCompletion: 'Pending Grade ',
 		graded: 'graded ',
 		submittedAt: 'Submitted At %(date)s',
 		overTime: 'overtime',
@@ -125,6 +126,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			isExcused: h && h.grade && h.grade.isExcused(),
 			assignmentModified: a.getLastModified().getTime(),
 
+			hasCompletion: Boolean(a && a.CompletedItem),
 			failed: a && a.CompletedItem && !a.CompletedItem.Success
 		};
 
@@ -229,7 +231,15 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 
 	renderCompletion () {
-		const {completedDate, isNoSubmit, dueDate, maxTime, duration, failed} = this.state;
+		const {
+			completedDate,
+			isNoSubmit,
+			dueDate,
+			maxTime,
+			duration,
+			failed,
+			hasCompletion,
+		} = this.state;
 
 		if (!completedDate) { return null; }
 
@@ -239,9 +249,19 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		const overtime = !isNoSubmit && maxTime && duration && duration > maxTime ? t('completed.overTimeTip', {time: getNaturalDuration(duration - maxTime, 1)}) : null;
 		const overdue = late && !isNoSubmit ? t('completed.overDueTip', {time: getNaturalDuration(completedDate.getTime() - dueDate.getTime())}) : null;
 
+		let label = '';
+
+		if (isNoSubmit) {
+			label = t('completed.graded');
+		} else if (hasCompletion) {
+			label = t('completed.label');
+		} else {
+			label = t('completed.noCompletion');
+		}
+
 		return (
 			<span className={cx('completed', {late, ontime: !late, 'submission-failed': failed})}>
-				<span className="status-label" data-qtip={qtip}>{isNoSubmit ? t('completed.graded') : t('completed.label')}</span>
+				<span className="status-label" data-qtip={qtip}>{label}</span>
 				{(overtime != null || overdue != null) && (
 					<React.Fragment>
 						<span className="mod-open errors">{t('completed.modOpen')}</span>
