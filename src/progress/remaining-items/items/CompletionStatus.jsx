@@ -23,10 +23,10 @@ CompletionStatus.propTypes = {
 	item: PropTypes.shape({
 		getCompletedDate: PropTypes.func
 	}),
-	enrollmentCompletedItems: PropTypes.object
+	completedItemsOverride: PropTypes.object
 };
-export default function CompletionStatus ({item, enrollmentCompletedItems}) {
-	const completedDate = getCompletedDate(item, enrollmentCompletedItems);
+export default function CompletionStatus ({item, completedItemsOverride}) {
+	const completedDate = getCompletedDate(item, completedItemsOverride);
 	const date = completedDate && DateTime.format(new Date(completedDate), 'M/DD');
 
 	return (

@@ -12,6 +12,13 @@ import TextPart from './TextPart';
 
 const isExternal = (item) => /external/i.test(item.type) || !isNTIID(item.href);
 
+function getCompletedDate (item, completed) {
+	if (!item) { return null; }
+	if (!completed) { return item.getCompletedDate?.(); }
+
+	return completed[item.NTIID] || completed[item.href] || completed[item['Target-NTIID']] || completed['target-NTIID'];
+}
+
 
 class LessonOverviewBaseListItemInfo extends React.Component {
 	static cssClassName = 'lesson-overview-base-list-item-table-info-cell'
@@ -21,6 +28,8 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 		item: PropTypes.object,
 		course: PropTypes.object,
 		disabled: PropTypes.bool,
+
+		completedItemsOverride: PropTypes.object,
 
 		title: PropTypes.string,
 		labels: PropTypes.array,
@@ -121,11 +130,12 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 
 
 	renderCompletedStatus () {
-		const {item, noCompletedStatus} = this.props;
+		const {item, noCompletedStatus, completedItemsOverride} = this.props;
+		const isCompleted = Boolean(getCompletedDate(item, completedItemsOverride));
 
 		if (noCompletedStatus) { return null; }
 
-		if (item.hasCompleted && item.hasCompleted() && item.completedSuccessfully()) {
+		if (isCompleted && item.completedSuccessfully()) {
 			return (
 				<div className="progress-icon">
 					<CircularProgress width={20} height={20} isComplete/>
@@ -133,7 +143,7 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 			);
 		}
 
-		if (item.hasCompleted && item.hasCompleted() && item.completedUnsuccessfully()) {
+		if (isCompleted && item.completedUnsuccessfully()) {
 			return (
 				<div className="progress-icon failed">
 					<span>!</span>

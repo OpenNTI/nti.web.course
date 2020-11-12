@@ -101,7 +101,7 @@ function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedIte
 					outlineNode={lesson}
 					course={course}
 					enrollment={enrollment}
-					enrollmentCompletedItems={enrollmentCompletedItems}
+					completedItemsOverride={enrollmentCompletedItems}
 					layout={Overview.List}
 
 					requiredOnly={requiredOnly}
