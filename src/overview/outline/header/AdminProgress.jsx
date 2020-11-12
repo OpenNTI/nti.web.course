@@ -70,7 +70,7 @@ function useAdminProgress (course) {
 const getFinishedCount = progress => progress.CountCompleted;
 const getFinishedPercentage = progress => Math.floor((progress?.PercentageProgress ?? 0) * 100);
 
-AdminProgress.handles = (course) => course.PreferredAccess?.isAdministrative && Object.keys(course).includes('CompletionPolicy') && course.hasLink('ProgressStats');
+AdminProgress.handles = (course) => course.PreferredAccess?.isAdministrative && course.CompletionPolicy && course.hasLink('ProgressStats');
 AdminProgress.propTypes = {
 	className: PropTypes.string,
 	course: PropTypes.shape({
