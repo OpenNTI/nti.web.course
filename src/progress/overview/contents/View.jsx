@@ -9,7 +9,7 @@ ProgressOverviewContents.propTypes = {
 };
 export default function ProgressOverviewContents ({course, enrollment}) {
 	return (
-		<Items course={course} enrollment={enrollment} />
+		<Items course={course} enrollment={enrollment} readOnly />
 	);
 }
 

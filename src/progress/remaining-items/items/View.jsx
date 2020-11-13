@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Hooks, Loading, Errors, Checkbox, EmptyState} from '@nti/web-commons';
+import {Disable} from '@nti/web-routing';
 
 import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 
@@ -87,9 +88,10 @@ RemainingItems.propTypes = {
 	}),
 	enrollment: PropTypes.shape({
 		getCompletedItems: PropTypes.func
-	})
+	}),
+	readOnly: PropTypes.bool
 };
-export default function RemainingItems ({course, enrollment}) {
+export default function RemainingItems ({course, enrollment, readOnly}) {
 	const isMobile = useMatchesMediaQuery(MobileQuery);
 
 	const [requiredOnly, setRequiredOnly] = React.useState(true);
@@ -129,37 +131,41 @@ export default function RemainingItems ({course, enrollment}) {
 	);
 	const lessonsToShow = filteredLessons.slice(0, toShow + 1);
 
+	const Wrapper = readOnly ? Disable : React.Fragment;
+
 	return (
-		<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
-			{!isMobile && (
-				<PaddedContainer className={Styles.controls}>
-					<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
-					<Checkbox checked={incompleteOnly} label={t('incompleteOnly')} onChange={e => setIncompleteOnly(e.target.checked)} />
-				</PaddedContainer>
-			)}
-			{error && (<Errors.Message error={error} />)}
-			{lessonsToShow.length === 0 && (
-				<EmptyState header={getEmptyText(requiredOnly, incompleteOnly)} />
-			)}
-			<div className={Styles.pages}>
-				{lessonsToShow.map((lesson, index) => {
-					const toLoad = index === toShow ? () => setToShow(index + 1) : null;
+		<Wrapper>
+			<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
+				{!isMobile && (
+					<PaddedContainer className={Styles.controls}>
+						<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
+						<Checkbox checked={incompleteOnly} label={t('incompleteOnly')} onChange={e => setIncompleteOnly(e.target.checked)} />
+					</PaddedContainer>
+				)}
+				{error && (<Errors.Message error={error} />)}
+				{lessonsToShow.length === 0 && (
+					<EmptyState header={getEmptyText(requiredOnly, incompleteOnly)} />
+				)}
+				<div className={Styles.pages}>
+					{lessonsToShow.map((lesson, index) => {
+						const toLoad = index === toShow ? () => setToShow(index + 1) : null;
 
-					return (
-						<Page
-							key={lesson.getID()}
-							lesson={lesson}
-							course={course}
-							enrollment={enrollment}
-							enrollmentCompletedItems={enrollmentCompletedItems}
-							requiredOnly={requiredOnly}
-							incompleteOnly={incompleteOnly}
+						return (
+							<Page
+								key={lesson.getID()}
+								lesson={lesson}
+								course={course}
+								enrollment={enrollment}
+								enrollmentCompletedItems={enrollmentCompletedItems}
+								requiredOnly={requiredOnly}
+								incompleteOnly={incompleteOnly}
 
-							onLoad={toLoad}
-						/>
-					);
-				})}
-			</div>
-		</Loading.Placeholder>
+								onLoad={toLoad}
+							/>
+						);
+					})}
+				</div>
+			</Loading.Placeholder>
+		</Wrapper>
 	);
 }
