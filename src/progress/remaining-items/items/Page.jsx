@@ -23,7 +23,13 @@ const flatten = (items) => items.reduce((acc, item) => {
 }, []);
 
 const isRequired = item => item?.CompletionRequired;
-const isIncomplete = (item, completedItems) => CompletionStatus.getCompletedDate(item, completedItems) == null;
+const isIncomplete = (item, completedItems) => {
+	if (completedItems) {
+		return CompletionStatus.getCompletedDate(item, completedItems) == null;
+	}
+
+	return item.hasCompletion() && item.completedSuccessfully();
+};
 
 const getFilterFn = (completedItems, requiredOnly, incompleteOnly) => {
 	return (item) => (!requiredOnly || isRequired(item, completedItems)) && (!incompleteOnly || isIncomplete(item, completedItems));
