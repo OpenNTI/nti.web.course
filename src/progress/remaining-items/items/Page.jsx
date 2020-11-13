@@ -28,7 +28,7 @@ const isIncomplete = (item, completedItems) => {
 		return CompletionStatus.getCompletedDate(item, completedItems) == null;
 	}
 
-	return item.hasCompletion() && item.completedSuccessfully();
+	return item.hasCompleted() && item.completedSuccessfully();
 };
 
 const getFilterFn = (completedItems, requiredOnly, incompleteOnly) => {
