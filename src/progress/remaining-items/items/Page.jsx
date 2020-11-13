@@ -28,6 +28,8 @@ const isIncomplete = (item, completedItems) => {
 		return CompletionStatus.getCompletedDate(item, completedItems) == null;
 	}
 
+	if (!item.hasCompleted) { return false; }
+
 	return !item.hasCompleted() || !item.completedSuccessfully();
 };
 
