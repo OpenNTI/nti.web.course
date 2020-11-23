@@ -98,7 +98,7 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 					</div>
 					<div className="right">
 						<TextPart className={cx('title', {plain: typeof title === 'string'})}>
-							{title}
+							<>{title}</>
 						</TextPart>
 						<TextPart className="labels">
 							{this.renderLabels()}
