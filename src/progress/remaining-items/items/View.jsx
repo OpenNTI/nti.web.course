@@ -8,17 +8,20 @@ import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 
 import Styles from './Style.css';
 import Page from './Page';
+import Tab from './Tab';
 
-const {useResolver, useMatchesMediaQuery} = Hooks;
+const {useResolver} = Hooks;
 const {isPending, isResolved, isErrored} = useResolver;
 
-const {MobileQuery} = useMatchesMediaQuery;
+const AllItems = 'all-items';
+const OnlyRemaining = 'remaining-items';
 
 const isContentOutlineNode = (item) => item?.isOutlineNode && item?.hasOverviewContent;
 
 const t = scoped('course.progress.remaining-items.items.View', {
 	requiredOnly: 'Required Only',
-	incompleteOnly: 'Incomplete Only',
+	allItems: 'All Items (%(items)s)',
+	remainingItems: 'Remaining Items (%(items)s)',
 	empty: {
 		requiredOnly: {
 			incompleteOnly: 'There are no incomplete required items.',
@@ -33,15 +36,15 @@ const t = scoped('course.progress.remaining-items.items.View', {
 
 const getEmptyText = (requiredOnly, incompleteOnly) => t(`empty.${requiredOnly ? 'requiredOnly' : 'all'}.${incompleteOnly ? 'incompleteOnly' : 'all'}`);
 
+const getLessons = (o) => {
+	if (o.LessonNTIID) { return o; }
+	if (Array.isArray(o)) { return o.map(getLessons); }
+
+	return getLessons(Object.values(o));
+};
+
 function getSummaryByLesson (summary) {
 	const {Outline} = summary;
-
-	const getLessons = (o) => {
-		if (o.LessonNTIID) { return o;}
-		if (Array.isArray(o)) { return o.map(getLessons); }
-
-		return getLessons(Object.values(o));
-	};
 
 	return Outline.reduce((acc, outline) => {
 		const lessons = getLessons(outline).flat();
@@ -52,6 +55,27 @@ function getSummaryByLesson (summary) {
 
 		return acc;
 	}, {});
+}
+
+function getSummaryCount (summary) {
+	const {Outline} = summary;
+
+	return Outline.reduce((acc, outline) => {
+		const lessons = getLessons(outline).flat();
+
+		for (let lesson of lessons) {
+			acc.allItems += lesson.IncompleteCount +
+				lesson.SuccessfulCount +
+				lesson.UnsuccessfulCount +
+				lesson.UnrequiredIncompleteCount +
+				lesson.UnrequiredSuccessfulCount +
+				lesson.UnrequiredUnsuccessfulCount;
+
+			acc.remainingItems += lesson.IncompleteCount + lesson.UnrequiredIncompleteCount;
+		}
+
+		return acc;
+	}, {allItems: 0, remainingItems: 0});
 }
 
 function getLessonsToShow (lessons, summary, requiredOnly, incompleteOnly) {
@@ -81,6 +105,7 @@ function getLessonsToShow (lessons, summary, requiredOnly, incompleteOnly) {
 }
 
 
+
 RemainingItems.propTypes = {
 	course: PropTypes.shape({
 		getContentTree: PropTypes.func,
@@ -92,10 +117,11 @@ RemainingItems.propTypes = {
 	readOnly: PropTypes.bool
 };
 export default function RemainingItems ({course, enrollment, readOnly}) {
-	const isMobile = useMatchesMediaQuery(MobileQuery);
-
+	const [active, setActive] = React.useState(AllItems);
 	const [requiredOnly, setRequiredOnly] = React.useState(true);
-	const [incompleteOnly, setIncompleteOnly] = React.useState(true);
+
+	const incompleteOnly = active === OnlyRemaining;
+
 
 	const resolver = useResolver(async () => {
 		const contentWalker = course
@@ -115,6 +141,7 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 
 		return {
 			summary: getSummaryByLesson(summary),
+			counts: getSummaryCount(summary),
 			lessons,
 			enrollmentCompletedItems
 		};
@@ -122,7 +149,7 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 
 	const loading = isPending(resolver);
 	const error = isErrored(resolver) ? resolver : null;
-	const {lessons, summary, enrollmentCompletedItems} = isResolved(resolver) ? resolver : {};
+	const {lessons, summary, counts, enrollmentCompletedItems} = isResolved(resolver) ? resolver : {};
 
 	const [toShow, setToShow] = React.useState(0);
 	const filteredLessons = React.useMemo(
@@ -136,12 +163,23 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 	return (
 		<Wrapper>
 			<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
-				{!isMobile && (
-					<PaddedContainer className={Styles.controls}>
-						<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
-						<Checkbox checked={incompleteOnly} label={t('incompleteOnly')} onChange={e => setIncompleteOnly(e.target.checked)} />
-					</PaddedContainer>
-				)}
+				<div className={Styles.tabs}>
+					<Tab
+						label={t('allItems', {items: counts?.allItems ?? ''})}
+						name={AllItems}
+						selected={active === AllItems}
+						onSelect={setActive}
+					/>
+					<Tab
+						label={t('remainingItems', {items: counts?.remainingItems ?? ''})}
+						name={OnlyRemaining}
+						selected={active === OnlyRemaining}
+						onSelect={setActive}
+					/>
+				</div>
+				<PaddedContainer className={Styles.controls}>
+					<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
+				</PaddedContainer>
 				{error && (<Errors.Message error={error} />)}
 				{lessonsToShow.length === 0 && (
 					<EmptyState header={getEmptyText(requiredOnly, incompleteOnly)} />

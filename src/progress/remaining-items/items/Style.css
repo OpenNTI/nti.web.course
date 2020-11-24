@@ -1,8 +1,46 @@
-.controls {
-	position: relative;
+.tabs {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 	border-bottom: 1px solid var(--border-grey-light);
-	padding-top: 1.25rem;
-	padding-bottom: 1.25rem;
+}
+
+.tab {
+	position: relative;
+	flex: 0 0 50%;
+	cursor: pointer;
+	padding: 0.875rem 0.5rem 1rem;
+	text-align: center;
+	font-size: 1rem;
+	font-weight: 400;
+
+	&.selected {
+		color: var(--primary-blue);
+		font-weight: 600;
+
+		&::after {
+			content: '';
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 4px;
+			background: var(--primary-blue);
+		}
+	}
+
+	& input {
+		display: none;
+	}
+
+	& + .tab {
+		box-shadow: -1px 0 0 0 var(--border-grey-light);
+	}
+}
+
+.controls {
+	padding-top: 1.5rem;
 
 	& :global(.checkbox-component) {
 		display: inline-block;
@@ -84,5 +122,11 @@
 
 	& :global(.lesson-overview-base-list-item-container .lesson-overview-base-list-item-table-row > *.lesson-overview-base-list-item-table-info-cell) {
 		max-width: calc(100% - var(--completion-cell-width));
+	}
+}
+
+@media (max-width: 480px) {
+	.tab {
+		font-size: 0.75rem;
 	}
 }
