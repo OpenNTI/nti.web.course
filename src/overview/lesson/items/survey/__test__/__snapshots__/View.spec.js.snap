@@ -523,12 +523,9 @@ exports[`Course overview survey item test List item closed 1`] = `
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "Survey item 1",
-                }
-              }
-            />
+            >
+              Survey item 1
+            </div>
             <div
               className="labels"
             >
@@ -599,12 +596,9 @@ exports[`Course overview survey item test List item submitted 1`] = `
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "Survey item 1",
-                }
-              }
-            />
+            >
+              Survey item 1
+            </div>
             <div
               className="labels"
             >
@@ -675,12 +669,9 @@ exports[`Course overview survey item test List item with 3 questions, 4 submissi
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "Survey item 1",
-                }
-              }
-            />
+            >
+              Survey item 1
+            </div>
             <div
               className="labels"
             >
@@ -751,12 +742,9 @@ exports[`Course overview survey item test List item with 5 comments, completable
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "Survey item 1",
-                }
-              }
-            />
+            >
+              Survey item 1
+            </div>
             <div
               className="labels"
             >
@@ -834,12 +822,9 @@ exports[`Course overview survey item test List item with 5 comments, completable
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "Survey item 1",
-                }
-              }
-            />
+            >
+              Survey item 1
+            </div>
             <div
               className="labels"
             >

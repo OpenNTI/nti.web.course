@@ -16,21 +16,14 @@ exports[`Course overview timeline item test Grid item completable, requirement e
         className="file-type icon fallback www"
         style={Object {}}
       />
-      <h5
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "Timeline item 1",
-          }
-        }
-      />
+      <h5>
+        Timeline item 1
+      </h5>
       <div
         className="label"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "By Timeline Creator",
-          }
-        }
-      />
+      >
+        By Timeline Creator
+      </div>
       <div
         className="description"
         dangerouslySetInnerHTML={
@@ -60,21 +53,14 @@ exports[`Course overview timeline item test Grid item with 5 comments, completab
         className="file-type icon fallback www"
         style={Object {}}
       />
-      <h5
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "Timeline item 1",
-          }
-        }
-      />
+      <h5>
+        Timeline item 1
+      </h5>
       <div
         className="label"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "By Timeline Creator",
-          }
-        }
-      />
+      >
+        By Timeline Creator
+      </div>
       <div
         className="description"
         dangerouslySetInnerHTML={
@@ -126,12 +112,9 @@ exports[`Course overview timeline item test List item completable, requirement e
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "Timeline item 1",
-                }
-              }
-            />
+            >
+              Timeline item 1
+            </div>
             <div
               className="labels"
             />
@@ -181,12 +164,9 @@ exports[`Course overview timeline item test List item with 5 comments, completab
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "Timeline item 1",
-                }
-              }
-            />
+            >
+              Timeline item 1
+            </div>
             <div
               className="labels"
             />

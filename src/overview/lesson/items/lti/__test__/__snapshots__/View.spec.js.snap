@@ -20,21 +20,14 @@ exports[`Course overview LTI item test Grid item with 5 comments, completable, r
           className="external"
         />
       </div>
-      <h5
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "LTI item 1",
-          }
-        }
-      />
+      <h5>
+        LTI item 1
+      </h5>
       <div
         className="label"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "By Ref Creator",
-          }
-        }
-      />
+      >
+        By Ref Creator
+      </div>
       <div
         className="description"
         dangerouslySetInnerHTML={
@@ -87,21 +80,14 @@ exports[`Course overview LTI item test Grid item with no comments, completable, 
           className="external"
         />
       </div>
-      <h5
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "LTI item 1",
-          }
-        }
-      />
+      <h5>
+        LTI item 1
+      </h5>
       <div
         className="label"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "By Ref Creator",
-          }
-        }
-      />
+      >
+        By Ref Creator
+      </div>
       <div
         className="description"
         dangerouslySetInnerHTML={
@@ -147,21 +133,14 @@ exports[`Course overview LTI item test Grid item with no comments, completable, 
           className="external"
         />
       </div>
-      <h5
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "LTI item 1",
-          }
-        }
-      />
+      <h5>
+        LTI item 1
+      </h5>
       <div
         className="label"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "By Ref Creator",
-          }
-        }
-      />
+      >
+        By Ref Creator
+      </div>
       <div
         className="description"
         dangerouslySetInnerHTML={
@@ -243,12 +222,9 @@ exports[`Course overview LTI item test List item with 5 comments, completable, r
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "LTI item 1",
-                }
-              }
-            />
+            >
+              LTI item 1
+            </div>
             <div
               className="labels"
             >
@@ -321,12 +297,9 @@ exports[`Course overview LTI item test List item with no comments, completable, 
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "LTI item 1",
-                }
-              }
-            />
+            >
+              LTI item 1
+            </div>
             <div
               className="labels"
             >
@@ -392,12 +365,9 @@ exports[`Course overview LTI item test List item with no comments, completable, 
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "LTI item 1",
-                }
-              }
-            />
+            >
+              LTI item 1
+            </div>
             <div
               className="labels"
             >

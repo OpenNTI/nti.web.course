@@ -24,21 +24,14 @@ exports[`Course overview related work ref item test Grid item unpublished 1`] = 
             className="external"
           />
         </div>
-        <h5
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "work ref 1",
-            }
-          }
-        />
+        <h5>
+          work ref 1
+        </h5>
         <div
           className="label"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "By Ref Creator",
-            }
-          }
-        />
+        >
+          By Ref Creator
+        </div>
         <div
           className="description"
           dangerouslySetInnerHTML={
@@ -96,21 +89,14 @@ exports[`Course overview related work ref item test Grid item with 5 comments, c
             className="external"
           />
         </div>
-        <h5
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "work ref 1",
-            }
-          }
-        />
+        <h5>
+          work ref 1
+        </h5>
         <div
           className="label"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "By Ref Creator",
-            }
-          }
-        />
+        >
+          By Ref Creator
+        </div>
         <div
           className="description"
           dangerouslySetInnerHTML={
@@ -168,21 +154,14 @@ exports[`Course overview related work ref item test Grid item with no comments, 
             className="external"
           />
         </div>
-        <h5
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "work ref 1",
-            }
-          }
-        />
+        <h5>
+          work ref 1
+        </h5>
         <div
           className="label"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "By Ref Creator",
-            }
-          }
-        />
+        >
+          By Ref Creator
+        </div>
         <div
           className="description"
           dangerouslySetInnerHTML={
@@ -233,21 +212,14 @@ exports[`Course overview related work ref item test Grid item with no comments, 
             className="external"
           />
         </div>
-        <h5
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "work ref 1",
-            }
-          }
-        />
+        <h5>
+          work ref 1
+        </h5>
         <div
           className="label"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "By Ref Creator",
-            }
-          }
-        />
+        >
+          By Ref Creator
+        </div>
         <div
           className="description"
           dangerouslySetInnerHTML={
@@ -331,12 +303,9 @@ exports[`Course overview related work ref item test List item unpublished 1`] = 
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "work ref 1",
-                }
-              }
-            />
+            >
+              work ref 1
+            </div>
             <div
               className="labels"
             >
@@ -410,12 +379,9 @@ exports[`Course overview related work ref item test List item with 5 comments, c
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "work ref 1",
-                }
-              }
-            />
+            >
+              work ref 1
+            </div>
             <div
               className="labels"
             >
@@ -489,12 +455,9 @@ exports[`Course overview related work ref item test List item with no comments, 
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "work ref 1",
-                }
-              }
-            />
+            >
+              work ref 1
+            </div>
             <div
               className="labels"
             >
@@ -561,12 +524,9 @@ exports[`Course overview related work ref item test List item with no comments, 
           >
             <div
               className="title plain"
-              dangerouslySetInnerHTML={
-                Object {
-                  "__html": "work ref 1",
-                }
-              }
-            />
+            >
+              work ref 1
+            </div>
             <div
               className="labels"
             >
