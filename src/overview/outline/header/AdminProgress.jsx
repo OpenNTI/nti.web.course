@@ -28,38 +28,30 @@ function useAdminProgress (course) {
 	React.useEffect(() => {
 		let cancelled = false;
 
-		const now = Date.now();
-		const last = lastLoad.current;
-
-		const shouldLoad = !last || last.course !== course || (now - last.time) > LOAD_WAIT;
-
+		const {current: last} = lastLoad;
+		const shouldLoad = !last || last.course !== course || (Date.now() - last.time) > LOAD_WAIT;
 		if (!shouldLoad) { return; }
 
-		const loadProgress = async () => {
+		(async () => {
+			let _progress = null;
 			try {
-				const courseProgress = await course.fetchLink('ProgressStats');
-
-				if (cancelled) { return; }
 
 				lastLoad.current = {
-					time: now,
+					time: Date.now(),
 					course
 				};
 
-				setProgress(courseProgress);
+				_progress = await course.fetchLink('ProgressStats');
 			} catch (e) {
-				if (cancelled) { return; }
-
-				lastLoad.current = {
-					time: now,
-					course
-				};
-
-				setProgress(e);
+				_progress = e;
+			} finally {
+				lastLoad.current.time = Date.now();
+				if (!cancelled) {
+					setProgress(_progress);
+				}
 			}
-		};
+		})();
 
-		loadProgress();
 		return () => cancelled = true;
 	});
 
