@@ -2,13 +2,13 @@
 
 exports[`Course overview assignment icon test Completed on time 1`] = `
 <div
-  className="lesson-overview-assignment-icon on-time"
+  className="lesson-overview-assignment-icon on-time no-completion"
 />
 `;
 
 exports[`Course overview assignment icon test Completed, late 1`] = `
 <div
-  className="lesson-overview-assignment-icon late"
+  className="lesson-overview-assignment-icon late no-completion"
 />
 `;
 
