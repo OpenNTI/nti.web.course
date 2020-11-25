@@ -53,7 +53,7 @@ function useAdminProgress (course) {
 		})();
 
 		return () => cancelled = true;
-	});
+	}, [global.location.toString()]);
 
 	return progress;
 }
