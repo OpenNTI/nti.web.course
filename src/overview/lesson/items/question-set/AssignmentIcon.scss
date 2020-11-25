@@ -1,6 +1,7 @@
 @import '~@nti/style-common';
 
 .lesson-overview-assignment-icon {
+	position: relative;
 	width: rem-calc(40px);
 	height: rem-calc(40px);
 	background-size: cover;
@@ -24,5 +25,20 @@
 
 	&.failed {
 		background-image: url('../assets/assignment_failed.svg');
+	}
+
+	&.no-completion::after {
+		content: '';
+		display: block;
+		position: absolute;
+		bottom: -11px;
+		left: 50%;
+		margin-left: 9px;
+		width: 24px;
+		height: 24px;
+		background-image: url('../assets/Pending.png');
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
 	}
 }
