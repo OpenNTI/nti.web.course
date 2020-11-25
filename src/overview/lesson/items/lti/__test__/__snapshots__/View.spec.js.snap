@@ -30,12 +30,9 @@ exports[`Course overview LTI item test Grid item with 5 comments, completable, r
       </div>
       <div
         className="description"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "this is a test LTI overview item",
-          }
-        }
-      />
+      >
+        this is a test LTI overview item
+      </div>
       <ul
         className="nti-separated-inline-list extra-labels"
       >
@@ -90,12 +87,9 @@ exports[`Course overview LTI item test Grid item with no comments, completable, 
       </div>
       <div
         className="description"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "this is a test LTI overview item",
-          }
-        }
-      />
+      >
+        this is a test LTI overview item
+      </div>
       <ul
         className="nti-separated-inline-list extra-labels"
       >
@@ -143,12 +137,9 @@ exports[`Course overview LTI item test Grid item with no comments, completable, 
       </div>
       <div
         className="description"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "this is a test LTI overview item",
-          }
-        }
-      />
+      >
+        this is a test LTI overview item
+      </div>
       <ul
         className="nti-separated-inline-list extra-labels"
       >

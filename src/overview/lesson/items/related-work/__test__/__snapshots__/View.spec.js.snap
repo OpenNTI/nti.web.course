@@ -34,12 +34,9 @@ exports[`Course overview related work ref item test Grid item unpublished 1`] = 
         </div>
         <div
           className="description"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "this is a test related work ref overview item",
-            }
-          }
-        />
+        >
+          this is a test related work ref overview item
+        </div>
         <ul
           className="nti-separated-inline-list extra-labels"
         >
@@ -99,12 +96,9 @@ exports[`Course overview related work ref item test Grid item with 5 comments, c
         </div>
         <div
           className="description"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "this is a test related work ref overview item",
-            }
-          }
-        />
+        >
+          this is a test related work ref overview item
+        </div>
         <ul
           className="nti-separated-inline-list extra-labels"
         >
@@ -164,12 +158,9 @@ exports[`Course overview related work ref item test Grid item with no comments, 
         </div>
         <div
           className="description"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "this is a test related work ref overview item",
-            }
-          }
-        />
+        >
+          this is a test related work ref overview item
+        </div>
         <ul
           className="nti-separated-inline-list extra-labels"
         >
@@ -222,12 +213,9 @@ exports[`Course overview related work ref item test Grid item with no comments, 
         </div>
         <div
           className="description"
-          dangerouslySetInnerHTML={
-            Object {
-              "__html": "this is a test related work ref overview item",
-            }
-          }
-        />
+        >
+          this is a test related work ref overview item
+        </div>
         <ul
           className="nti-separated-inline-list extra-labels"
         >

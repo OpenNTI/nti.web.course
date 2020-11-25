@@ -26,12 +26,9 @@ exports[`Course overview timeline item test Grid item completable, requirement e
       </div>
       <div
         className="description"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "this is a test timeline overview item",
-          }
-        }
-      />
+      >
+        this is a test timeline overview item
+      </div>
     </div>
   </div>
 </div>
@@ -63,12 +60,9 @@ exports[`Course overview timeline item test Grid item with 5 comments, completab
       </div>
       <div
         className="description"
-        dangerouslySetInnerHTML={
-          Object {
-            "__html": "this is a test timeline overview item",
-          }
-        }
-      />
+      >
+        this is a test timeline overview item
+      </div>
     </div>
   </div>
 </div>
