@@ -1,8 +1,8 @@
 import './Grid.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Component as Video} from '@nti/web-video';
-import {Error as ErrorWidget, Loading} from '@nti/web-commons';
+import {Component as Video, Poster} from '@nti/web-video';
+import {Error as ErrorWidget} from '@nti/web-commons';
 import {LinkTo} from '@nti/web-routing';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
@@ -174,18 +174,12 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		} = this.props;
 
 		const {
-			loading,
 			context,
 			interacted,
 			video,
-			poster,
 			playing,
 			error
 		} = this.state;
-
-
-		const style = poster && { backgroundImage: 'url(' + poster + ')' };
-
 
 		let renderVideoFully = true;
 
@@ -193,15 +187,20 @@ export default class LessonOverviewVideoGrid extends React.Component {
 			renderVideoFully = activeIndex === index;
 		}
 
-
 		const viewed = item.hasCompleted && item.hasCompleted();
-
-		const link = '#';//path.join('videos', encodeForURI(this.getID())) + '/';
-
-
 		const required = item.CompletionRequired;
 
-		const label = item.title || item.label;
+		const badges = [];
+
+		if (item && item.isCompletable && item.isCompletable() && onRequirementChange) {
+			badges.push(<RequirementControl record={item} onChange={onRequirementChange}/>);
+		} else if (!viewed && required) {
+			badges.push(<Required className="badge"/>);
+		}
+
+		if (viewed && !noProgress) {
+			badges.push(<div className="badge viewed">Viewed</div>);
+		}
 
 		return (
 			<div className="lesson-overview-video-container" data-ntiid={item.NTIID}>
@@ -224,25 +223,12 @@ export default class LessonOverviewVideoGrid extends React.Component {
 				)}
 				{(error || playing) ? null : (
 					<LinkTo.Object object={item}>
-						<Loading.Mask loading={loading}
-							style={style}
-							className="overview-video-tap-area" href={link}
-						>
-							<div className="video-badges">
-								{item && item.isCompletable && item.isCompletable() && onRequirementChange ? (
-									<RequirementControl record={item} onChange={onRequirementChange}/>
-								) : ((!viewed && required) && (
-									<Required className="badge"/>
-								))}
-								{viewed && !noProgress && <div className="badge viewed">Viewed</div>}
-							</div>
-							<div className="wrapper">
-								<div className="buttons">
-									<span className="play" title="Play" onClick={this.onPlayClicked}/>
-									<span className="label" title={label}>{label}</span>
-								</div>
-							</div>
-						</Loading.Mask>
+						<Poster
+							className="overview-video-tap-area"
+							video={item}
+							progress={item.getPercentageCompleted()}
+							badges={badges}
+						/>
 					</LinkTo.Object>
 				)}
 			</div>

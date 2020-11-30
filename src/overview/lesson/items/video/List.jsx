@@ -2,6 +2,7 @@ import './List.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DateTime} from '@nti/web-commons';
+import {Poster} from '@nti/web-video';
 
 import Base from '../../common/BaseListItem';
 import Required from '../../common/Required';
@@ -80,14 +81,14 @@ export default class LessonOverviewVideoListItem extends React.Component {
 
 
 	renderIcon = () => {
-		const {thumb} = this.state;
+		const {item} = this.props;
 
 		return (
-			<div className="lesson-overview-video-list-item-icon">
-				{thumb && (
-					<span className="thumb" style={{backgroundImage: `url(${thumb})`}} />
-				)}
-			</div>
+			<Poster
+				className="lesson-overview-video-list-item-icon"
+				video={item}
+				progress={item.getPercentageCompleted()}
+			/>
 		);
 	}
 }
