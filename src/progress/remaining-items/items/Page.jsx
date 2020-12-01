@@ -11,7 +11,7 @@ import CompletionStatus from './CompletionStatus';
 
 const dateFormat = 'MMMM, D YYYY';
 
-const {useResolver} = Hooks;
+const {useResolver, useMobileValue} = Hooks;
 const {isPending, isErrored, isResolved} = useResolver;
 
 const flatten = (items) => items.reduce((acc, item) => {
@@ -67,6 +67,8 @@ RemainingItemsPage.propTypes = {
 	incompleteOnly: PropTypes.bool
 };
 function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedItems, onLoad, requiredOnly, incompleteOnly}) {
+	const extraColumns = useMobileValue(null, [CompletionStatus]);
+
 	const resolver = useResolver(async () => {
 		try {
 			const content = await lesson.getContent();
@@ -115,7 +117,7 @@ function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedIte
 					requiredOnly={requiredOnly}
 					incompleteOnly={incompleteOnly}
 
-					extraColumns={[CompletionStatus]}
+					extraColumns={extraColumns}
 				/>
 			)}
 
