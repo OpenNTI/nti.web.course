@@ -193,13 +193,13 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const badges = [];
 
 		if (item && item.isCompletable && item.isCompletable() && onRequirementChange) {
-			badges.push(<RequirementControl record={item} onChange={onRequirementChange}/>);
+			badges.push(<RequirementControl key="requirement-control" record={item} onChange={onRequirementChange}/>);
 		} else if (!viewed && required) {
-			badges.push(<Required className="badge"/>);
+			badges.push(<Required className="badge" key="required"/>);
 		}
 
 		if (viewed && !noProgress) {
-			badges.push(<div className="badge viewed">Viewed</div>);
+			badges.push(<div className="badge viewed" key="viewed">Viewed</div>);
 		}
 
 		return (
