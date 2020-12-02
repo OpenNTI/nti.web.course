@@ -20,8 +20,14 @@ const isContentOutlineNode = (item) => item?.isOutlineNode && item?.hasOverviewC
 
 const t = scoped('course.progress.remaining-items.items.View', {
 	requiredOnly: 'Required Only',
-	allItems: 'All Items (%(items)s)',
-	remainingItems: 'Remaining Items (%(items)s)',
+	allItems: {
+		zero: 'All Items',
+		other: 'All Items (%(count)s)',
+	},
+	remainingItems: {
+		zero: 'Remaining Items',
+		other: 'Remaining Items (%(count)s)',
+	},
 	empty: {
 		requiredOnly: {
 			incompleteOnly: 'There are no incomplete required items.',
@@ -165,13 +171,13 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 			<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
 				<div className={Styles.tabs}>
 					<Tab
-						label={t('allItems', {items: counts?.allItems ?? ''})}
+						label={t('allItems', {count: counts?.allItems || 0})}
 						name={AllItems}
 						selected={active === AllItems}
 						onSelect={setActive}
 					/>
 					<Tab
-						label={t('remainingItems', {items: counts?.remainingItems ?? ''})}
+						label={t('remainingItems', {count: counts?.remainingItems || 0})}
 						name={OnlyRemaining}
 						selected={active === OnlyRemaining}
 						onSelect={setActive}
