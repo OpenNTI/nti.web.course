@@ -2,6 +2,7 @@ import './BaseListItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {isIterable} from '@nti/lib-commons';
 import {List, AssetIcon, Card, Table} from '@nti/web-commons';
 import {isNTIID} from '@nti/lib-ntiids';
 import {LinkTo} from '@nti/web-routing';
@@ -182,7 +183,7 @@ LessonOverviewBaseListItem.propTypes = {
 	extraColumns: PropTypes.array
 };
 export default function LessonOverviewBaseListItem ({item, extraColumns = [], ...otherProps}) {
-	const columns = [LessonOverviewBaseListItemInfo, ...extraColumns];
+	const columns = [LessonOverviewBaseListItemInfo, ...(isIterable(extraColumns) ? extraColumns : [])];
 	const extraProps = {item, ...otherProps};
 
 	return (
