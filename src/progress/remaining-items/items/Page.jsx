@@ -67,7 +67,7 @@ RemainingItemsPage.propTypes = {
 	incompleteOnly: PropTypes.bool
 };
 function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedItems, onLoad, requiredOnly, incompleteOnly}) {
-	const extraColumns = useMobileValue(null, [CompletionStatus]);
+	const extraColumns = useMobileValue(undefined, [CompletionStatus]);
 
 	const resolver = useResolver(async () => {
 		try {
