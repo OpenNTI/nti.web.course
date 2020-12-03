@@ -82,7 +82,7 @@ exports[`Course overview assignment label test Completed but late 1`] = `
         graded 
       </span>
       <time
-        className="ntiText date"
+        className="date ntiText"
         dateTime="2017-10-25T00:00:00+00:00"
       >
         Wednesday, October 25
@@ -107,7 +107,7 @@ exports[`Course overview assignment label test Completed on time 1`] = `
         graded 
       </span>
       <time
-        className="ntiText date"
+        className="date ntiText"
         dateTime="2017-10-25T00:00:00+00:00"
       >
         Wednesday, October 25
