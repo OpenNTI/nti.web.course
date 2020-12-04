@@ -42,6 +42,9 @@ export default class VideoRollCarousel extends React.Component {
 		return this.props.item.Items;
 	}
 
+	componentWillUnmount () {
+		this.unmounted = true;
+	}
 
 	componentDidMount () {
 		this.getDataIfNeeded(this.props);
@@ -63,11 +66,13 @@ export default class VideoRollCarousel extends React.Component {
 
 
 	onError (error) {
-		this.setState({
-			loading: false,
-			error: error,
-			data: null
-		});
+		if (!this.unmounted) {
+			this.setState({
+				loading: false,
+				error: error,
+				data: null
+			});
+		}
 	}
 
 
@@ -75,6 +80,9 @@ export default class VideoRollCarousel extends React.Component {
 		try {
 			this.setState(initialState);
 			const data = await course.getVideoIndex();
+			if (this.unmounted) {
+				throw new Error('late');
+			}
 			this.setState({loading: false, data});
 		}
 		catch(e) {
