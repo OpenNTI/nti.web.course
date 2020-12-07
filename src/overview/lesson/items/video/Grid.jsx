@@ -29,7 +29,14 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		index: PropTypes.number,
 		touching: PropTypes.bool,
 		onRequirementChange: PropTypes.func,
-		doNotPlayVideosInline: PropTypes.bool
+		inlinePlayback: PropTypes.bool,
+		//
+		badges: PropTypes.bool
+	}
+
+	static defaultProps = {
+		inlinePlayback: true,
+		badges: true
 	}
 
 	state = initialState
@@ -123,9 +130,9 @@ export default class LessonOverviewVideoGrid extends React.Component {
 
 
 	onPlayClicked = (e) => {
-		const {doNotPlayVideosInline} = this.props;
+		const {inlinePlayback} = this.props;
 
-		if (doNotPlayVideosInline) { return; }
+		if (!inlinePlayback) { return; }
 
 		block(e);
 		const {video} = this;
@@ -170,7 +177,8 @@ export default class LessonOverviewVideoGrid extends React.Component {
 			index,
 			onRequirementChange,
 			item,
-			noProgress
+			noProgress,
+			badges: allowBadges,
 		} = this.props;
 
 		const {
@@ -190,16 +198,19 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const viewed = item.hasCompleted && item.hasCompleted();
 		const required = item.CompletionRequired;
 
+
 		const badges = [];
 
-		if (item && item.isCompletable && item.isCompletable() && onRequirementChange) {
-			badges.push(<RequirementControl key="requirement-control" record={item} onChange={onRequirementChange}/>);
-		} else if (!viewed && required) {
-			badges.push(<Required className="badge" key="required"/>);
-		}
+		if (allowBadges) {
+			if (item && item.isCompletable && item.isCompletable() && onRequirementChange) {
+				badges.push(<RequirementControl key="requirement-control" record={item} onChange={onRequirementChange}/>);
+			} else if (!viewed && required) {
+				badges.push(<Required className="badge" key="required"/>);
+			}
 
-		if (viewed && !noProgress) {
-			badges.push(<div className="badge viewed" key="viewed">Viewed</div>);
+			if (viewed && !noProgress) {
+				badges.push(<div className="badge viewed" key="viewed">Viewed</div>);
+			}
 		}
 
 		return (

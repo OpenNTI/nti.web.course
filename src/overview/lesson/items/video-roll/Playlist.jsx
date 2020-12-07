@@ -46,7 +46,7 @@ export default class VideoRollPlaylist extends React.Component {
 		return (
 			<div className="lesson-overview-video-roll-playlist-container" data-ntiid={NTIID}>
 				<div className="stage">
-					<CompletionMonitor {...this.props} item={active} component={Video} />
+					<CompletionMonitor {...this.props} item={active} component={Video} badges={false} />
 				</div>
 				<ul className="playlist">
 					{items.map((x => (
