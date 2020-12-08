@@ -57,7 +57,7 @@ export default class CourseVisibility extends React.Component {
 			return this.renderLabeledContent(
 				catalogEntry.hasLink('edit') ? t('inDraft') : t('inPreview'),
 				'preview',
-				catalogEntry.StartDate ? DateTime.format(new Date(catalogEntry.StartDate), '[Starts] MMM. D, YYYY') : t('noStartDate')
+				catalogEntry.getStartDate ? DateTime.format(catalogEntry.getStartDate(), '[Starts] MMM. D, YYYY') : t('noStartDate')
 			);
 		}
 		else {
