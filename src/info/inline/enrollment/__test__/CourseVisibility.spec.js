@@ -23,6 +23,7 @@ describe('CourseVisibility test', () => {
 			Preview,
 			isHidden,
 			StartDate,
+			getStartDate: StartDate && (() => StartDate),
 			hasLink (rel) {
 				if (rel === 'edit') { return true;}
 			}
