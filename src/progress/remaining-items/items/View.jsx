@@ -130,7 +130,9 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 
 
 	const resolver = useResolver(async () => {
-		const contentWalker = course
+		const parent = enrollment ?? course.PreferredAccess;
+
+		const contentWalker = (await parent.getScopedCourseInstance(course))
 			.getContentTree()
 			.createTreeWalker({
 				skip: (...args) => !isContentOutlineNode(...args),
@@ -140,7 +142,6 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 		const nodes = await contentWalker.getNodes();
 		const lessons = await Promise.all(nodes.map(n => n.getItem()));
 
-		const parent = enrollment ?? course.PreferredAccess;
 		const summary = await parent.fetchLink('UserLessonCompletionStatsByOutlineNode');
 
 		const enrollmentCompletedItems = enrollment ? await enrollment.getCompletedItems() : null;
@@ -151,7 +152,7 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 			lessons,
 			enrollmentCompletedItems
 		};
-	}, [course]);
+	}, [enrollment,course]);
 
 	const loading = isPending(resolver);
 	const error = isErrored(resolver) ? resolver : null;
