@@ -27,18 +27,9 @@
 		background-image: url('../assets/assignment_failed.svg');
 	}
 
-	&.no-completion::after {
-		content: '';
-		display: block;
-		position: absolute;
-		bottom: -11px;
-		left: 50%;
-		margin-left: 9px;
-		width: 24px;
-		height: 24px;
-		background-image: url('../assets/Pending.png');
-		background-repeat: no-repeat;
-		background-position: center;
-		background-size: cover;
+	&.no-completion {
+		max-width: 40px;
+		background-image: url('../assets/Pending@2x.png');
+		background-size: contain;
 	}
 }
