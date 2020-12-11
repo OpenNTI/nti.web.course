@@ -1,40 +1,38 @@
+/* eslint-disable react/prop-types */
 import EventEmitter from 'events';
 
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 
 import Notification from '../Notification';
+
+const Template = ({show, certificate}) => {
+	const course = useMemo(() => ({
+		PreferredAccess: Object.assign(new EventEmitter(), {
+			hasCompletionAcknowledgmentRequest: show,
+			AcknowledgeCompletion: true,
+			acknowledgeCourseCompletion () {
+				this.hasCompletionAcknowledgmentRequest = false;
+				this.emit('change');
+			}
+		})
+	}), [show]);
+
+	const certTarget = !certificate ? null : ({href: certificate, target: '_blank'});
+
+	return !show ? <></> : (
+		<Notification course={course} viewCertificateAction={certTarget}/>
+	);
+};
+
+export const Example = Template.bind({});
+Example.args = {
+	certificate: '#/certificate.pdf',
+	show: true,
+};
+
+
 
 export default {
 	title: 'Completion Notification',
 	component: Notification,
-};
-
-const course = {
-
-	PreferredAccess: Object.assign(new EventEmitter(), {
-		AcknowledgeCompletion: true,
-		hasLink (rel) {
-			return this[rel];
-		},
-		deleteLink (rel) {
-			delete this[rel];
-			this.emit('change');
-		}
-
-	})
-};
-
-
-export const Example = () => {
-	useEffect(() => () => course.PreferredAccess.AcknowledgeCompletion = true);
-	return (
-		<Notification course={course} viewCertificateAction={{href: 'https://google.com', target: '_blank'}}/>
-	);
-};
-
-export const ExampleWithoutCertificate = () => {
-	useEffect(() => () => course.PreferredAccess.AcknowledgeCompletion = true);
-	return (
-		<Notification course={course} />
-	);
 };
