@@ -44,11 +44,11 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 	render () {
 		const {item, assignment, assessment} = this.props;
 		const {inlineEditorExpanded} = this.state;
-		const classname = cx('lesson-overview-question-set-grid-item', { disabled: !(assignment || assessment) });
+		const className = cx('lesson-overview-question-set-grid-item', { disabled: !(assignment || assessment) });
 		return (
 			<div>
 				<Base
-					className={classname}
+					className={className}
 					item={item}
 
 					assignment={assignment}
