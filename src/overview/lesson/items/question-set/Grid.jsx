@@ -81,10 +81,10 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 
 
 	renderIcon = () => {
-		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
+		const {assignment, assignmentHistory, assessment, assessmentSubmission, item} = this.props;
 
-		const item = assignment || assessment;
-		const failed = item && item.CompletedItem && !item.CompletedItem.Success;
+		const CompletedItem = item?.CompletedItem || assignment?.CompletedItem || assessment?.CompletedItem;
+		const failed = CompletedItem && !CompletedItem.Success;
 
 		if(item && item.hasCompleted && item.hasCompleted() && !failed) {
 			return (
@@ -151,7 +151,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		const {assignment, assignmentHistory} = this.props;
 		const parts = assignment.parts || [];
 		const {maxSubmissions, submissionCount} = assignment;
-		const success = assignment.CompletedItem && assignment.CompletedItem.Success;
+		const success = assignment?.CompletedItem?.Success;
 		const startDate = assignment.getAvailableForSubmissionBeginning();
 		const dueDate = assignment.getAvailableForSubmissionEnding();
 		const now = new Date();

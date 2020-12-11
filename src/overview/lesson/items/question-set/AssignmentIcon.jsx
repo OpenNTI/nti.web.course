@@ -12,9 +12,9 @@ export default function LessonOverviewAssignmentIcon ({assignment, assignmentHis
 	const now = new Date();
 	const due = assignment.getDueDate();
 	const noSubmit = assignment.isNonSubmit();
-	const completed = assignmentHistory && assignmentHistory.Submission && assignmentHistory.Submission.getCreatedTime();
-	const hasCompletedItem = assignment?.CompletedItem;
-	const failed = assignment && assignment.CompletedItem && !assignment.CompletedItem.Success;
+	const CompletedItem = assignment?.CompletedItem;
+	const completed = assignmentHistory?.Submission?.getCreatedTime() ?? CompletedItem?.getCompletedDate();
+	const failed = !CompletedItem?.Success === false;
 
 	let cls = '';
 
@@ -24,6 +24,6 @@ export default function LessonOverviewAssignmentIcon ({assignment, assignmentHis
 	if (failed) { cls = 'failed'; }
 
 	return (
-		<div className={cx('lesson-overview-assignment-icon', cls, {large, ['no-completion']: completed && !hasCompletedItem})} />
+		<div className={cx('lesson-overview-assignment-icon', cls, {large, ['no-completion']: completed && !CompletedItem})} />
 	);
 }

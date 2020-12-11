@@ -27,6 +27,7 @@ const HANDLES = [
 ];
 
 async function getAssessmentSubmission (id) {
+	if (typeof id !== 'string') {return;}
 	const service = await getService();
 	const pageInfo = await service.getPageInfo(id);
 	const submission = await pageInfo.getUserDataLastOfType(SUBMITTED_QUIZ);
@@ -57,7 +58,7 @@ class LessonOverviewQuestionSet extends React.Component {
 		const {assignment} = this.state;
 
 		if (assignment && assignment.getID() === submitted.getID()) {
-			this.setupFor(this.props);
+			this.setup(this.props);
 		}
 	}
 
@@ -66,13 +67,13 @@ class LessonOverviewQuestionSet extends React.Component {
 		const {assessment} = this.state;
 
 		if (assessment && assessment.getID() === submitted.getID()) {
-			this.setupFor(this.props);
+			this.setup(this.props);
 		}
 	}
 
 
 	componentDidMount () {
-		this.setupFor(this.props);
+		this.setup(this.props);
 	}
 
 
@@ -87,12 +88,12 @@ class LessonOverviewQuestionSet extends React.Component {
 		const {item:oldItem, course:oldCourse} = prevProps;
 
 		if (newItem !== oldItem || newCourse !== oldCourse) {
-			this.setupFor(this.props);
+			this.setup(this.props);
 		}
 	}
 
 
-	async setupFor (props = this.props) {
+	async setup (props = this.props) {
 		const {item, course} = props;
 		const target = item['Target-NTIID'] || (item.getID ? item.getID() : item.NTIID);
 
@@ -127,26 +128,48 @@ class LessonOverviewQuestionSet extends React.Component {
 	}
 
 
-	async setupAssignmentRef (id, course) {
+	/**
+	 * @param {string|Assignment} target - the assessment id or the assignment instance.
+	 * @returns {void}
+	 */
+	async setupHistory (target) {
+		if (this.props.readOnly) { return; }
+
 		try {
-			const assignment = await course.getAssignment(id);
+
+			const history = await target?.loadHistory?.();
+			const submission = await getAssessmentSubmission(target);
+
+			this.setState({
+				assignmentHistory: history,
+				assessmentSubmission: submission
+			});
+		} catch (e) {
+			if (isNetworkError(e)) {
+				this.setNetworkError();
+			}
+
+			//its fine if we can't load a submission
+		}
+
+	}
+
+
+	async setupAssignmentRef (id, course) {
+		const {item} = this.props;
+		try {
+			let assignment = await course.getAssignment(id);
+			if (item?.CompletedItem) {
+				assignment = Object.create(assignment);
+				Object.defineProperty(assignment, 'CompletedItem', {value: item.CompletedItem});
+			}
 
 			this.setState({
 				assignment,
 				networkError: false
 			});
 
-			try {
-				const history = await assignment.loadHistory();
-
-				this.setState({
-					assignmentHistory: history
-				});
-			} catch (e) {
-				if (isNetworkError(e)) {
-					this.setNetworkError();
-				}
-			}
+			await this.setupHistory(assignment);
 		} catch (e) {
 			//TODO: figure out if/how we need to handle this case
 		}
@@ -166,22 +189,7 @@ class LessonOverviewQuestionSet extends React.Component {
 				networkError: false
 			});
 
-			if (readOnly) {
-				return;
-			}
-
-			try {
-				const history = await assignment.loadHistory();
-
-				this.setState({
-					assignmentHistory: history
-				});
-			} catch (e) {
-				if (isNetworkError(e)) {
-					this.setNetworkError();
-				}
-				//its fine if we can't load the history
-			}
+			await this.setupHistory(assignment);
 
 		} catch (e) {
 			//TODO: figure out if/how we need to handle this case
@@ -189,7 +197,6 @@ class LessonOverviewQuestionSet extends React.Component {
 	}
 
 	async setupQuestionSetRef (id, course) {
-		const {readOnly} = this.props;
 
 		try {
 			const assessment = await course.getAssessment(id);
@@ -197,23 +204,7 @@ class LessonOverviewQuestionSet extends React.Component {
 			this.setState({
 				assessment,
 				networkError: false
-			}, async () => {
-				if (readOnly) { return; }
-
-				try {
-					const submission = await getAssessmentSubmission(id);
-
-					this.setState({
-						assessmentSubmission: submission
-					});
-				} catch (e) {
-					if (isNetworkError(e)) {
-						this.setNetworkError();
-					}
-
-					//Its fine if we can't load a submission
-				}
-			});
+			}, () => this.setupHistory(id));
 		} catch (e) {
 			//TODO figure out if/how we need to handle this
 		}
@@ -221,29 +212,12 @@ class LessonOverviewQuestionSet extends React.Component {
 
 
 	setupAssessment (id, collection) {
-		const {readOnly} = this.props;
 		const assessment = collection.getAssessment(id);
 
 		this.setState({
 			assessment,
 			networkError: false
-		}, async () => {
-			if (readOnly) { return; }
-
-			try {
-				const submission = await getAssessmentSubmission(id);
-
-				this.setState({
-					assessmentSubmission: submission
-				});
-			} catch (e) {
-				if (isNetworkError(e)) {
-					this.setNetworkError();
-				}
-
-				//its fine if we can't load a submission
-			}
-		});
+		}, () => this.setupHistory(id));
 	}
 
 

@@ -84,7 +84,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 
 	componentDidMount () {
-		this.setupFor(this.props);
+		this.setup(this.props);
 	}
 
 
@@ -95,14 +95,14 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		const {assignment:oldAssignment, assignmentHistory:oldHistory, statusExpanded:oldExpanded} = prevProps;
 
 		if (newAssignment !== oldAssignment || newHistory !== oldHistory || statusExpanded !== oldExpanded) {
-			this.setupFor(this.props);
+			this.setup(this.props);
 		}
 
 		// this.setupFor(this.props);
 	}
 
 
-	setupFor (props = this.props) {
+	setup (props = this.props) {
 		const {assignment: a, assignmentHistory: h} = props;
 		const canEdit = a.hasLink('date-edit') || a.hasLink('edit');
 
@@ -122,12 +122,12 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 			submissionCount: a && a.submissionCount,
 
 			isSubmitted: h && h.isSubmitted(),
-			completedDate: !canEdit && h && h.Submission && h.Submission.getCreatedTime(),
+			completedDate: (!canEdit || a?.CompletedItem) && (h?.Submission?.getCreatedTime() ?? a?.CompletedItem?.getCompletedDate()),
 			isExcused: h && h.grade && h.grade.isExcused(),
 			assignmentModified: a.getLastModified().getTime(),
 
 			hasCompletion: Boolean(a && a.CompletedItem),
-			failed: a && a.CompletedItem && !a.CompletedItem.Success
+			failed: a?.CompletedItem?.Success === false
 		};
 
 		this.setState(state);
