@@ -6,7 +6,7 @@ export const Description = styled(Translate).attrs({as: 'p', localeKey:'descript
 	font-size: 1rem;
 	line-height: 1.8125;
 	text-align: center;
-	white-space: pre;
+	white-space: pre-wrap;
 `;
 
 export default Description;
