@@ -42,12 +42,128 @@ const t = scoped('course.progress.remaining-items.items.View', {
 
 const getEmptyText = (requiredOnly, incompleteOnly) => t(`empty.${requiredOnly ? 'requiredOnly' : 'all'}.${incompleteOnly ? 'incompleteOnly' : 'all'}`);
 
-const getLessons = (o) => {
+RemainingItems.propTypes = {
+	course: PropTypes.shape({
+		getContentTree: PropTypes.func,
+		PreferredAccess: PropTypes.object
+	}),
+	enrollment: PropTypes.shape({
+		getCompletedItems: PropTypes.func
+	}),
+	readOnly: PropTypes.bool
+};
+
+export default function RemainingItems ({course, enrollment, readOnly}) {
+	const [active, setActive] = React.useState(AllItems);
+	const [requiredOnly, setRequiredOnly] = React.useState(true);
+
+	const incompleteOnly = active === OnlyRemaining;
+
+
+	const resolver = useResolver(async () => {
+		const parent = enrollment ?? course.PreferredAccess;
+
+		const contentWalker = (await parent.getScopedCourseInstance(course))
+			.getContentTree()
+			.createTreeWalker({
+				skip: (...args) => !isContentOutlineNode(...args),
+				ignoreChildren: isContentOutlineNode
+			});
+
+		const nodes = await contentWalker.getNodes();
+		const lessons = await Promise.all(nodes.map(n => n.getItem()));
+
+		const summary = await parent.fetchLink('UserLessonCompletionStatsByOutlineNode');
+
+		const enrollmentCompletedItems = enrollment ? await enrollment.getCompletedItems() : null;
+
+		const itemInclusionFilter = getInclusionFilter(summary);
+
+		return {
+			summary: getSummaryByLesson(summary),
+			counts: getSummaryCount(summary),
+			lessons,
+			enrollmentCompletedItems,
+			itemInclusionFilter
+		};
+	}, [enrollment,course]);
+
+	const loading = isPending(resolver);
+	const error = isErrored(resolver) ? resolver : null;
+	const {
+		counts,
+		enrollmentCompletedItems,
+		itemInclusionFilter,
+		lessons,
+		summary,
+	} = isResolved(resolver) ? resolver : {};
+
+	const [toShow, setToShow] = React.useState(0);
+	const filteredLessons = React.useMemo(
+		() => getLessonsToShow(lessons ?? [], summary, requiredOnly, incompleteOnly),
+		[lessons, summary, requiredOnly, incompleteOnly]
+	);
+	const lessonsToShow = filteredLessons.slice(0, toShow + 1);
+
+	const Wrapper = readOnly ? Disable : React.Fragment;
+
+	return (
+		<Wrapper>
+			<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
+				<div className={Styles.tabs}>
+					<Tab
+						label={t('allItems', {count: counts?.allItems || 0})}
+						name={AllItems}
+						selected={active === AllItems}
+						onSelect={setActive}
+					/>
+					<Tab
+						label={t('remainingItems', {count: counts?.remainingItems || 0})}
+						name={OnlyRemaining}
+						selected={active === OnlyRemaining}
+						onSelect={setActive}
+					/>
+				</div>
+				<PaddedContainer className={Styles.controls}>
+					<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
+				</PaddedContainer>
+				{error && (<Errors.Message error={error} />)}
+				{lessonsToShow.length === 0 && (
+					<EmptyState header={getEmptyText(requiredOnly, incompleteOnly)} />
+				)}
+				<div className={Styles.pages}>
+					{lessonsToShow.map((lesson, index) => {
+						const toLoad = index === toShow ? () => setToShow(index + 1) : null;
+
+						return (
+							<Page
+								key={lesson.getID()}
+								lesson={lesson}
+								course={course}
+								enrollment={enrollment}
+								enrollmentCompletedItems={enrollmentCompletedItems}
+								requiredOnly={requiredOnly}
+								incompleteOnly={incompleteOnly}
+								itemInclusionFilter={itemInclusionFilter}
+
+								onLoad={toLoad}
+							/>
+						);
+					})}
+				</div>
+			</Loading.Placeholder>
+		</Wrapper>
+	);
+}
+
+
+
+function getLessons (o) {
 	if (o.LessonNTIID) { return o; }
 	if (Array.isArray(o)) { return o.map(getLessons); }
 
 	return getLessons(Object.values(o));
-};
+}
 
 function getSummaryByLesson (summary) {
 	const {Outline} = summary;
@@ -110,107 +226,35 @@ function getLessonsToShow (lessons, summary, requiredOnly, incompleteOnly) {
 	});
 }
 
+function getInclusionFilter (summary) {
+	const {Assignments, Outline} = summary || {};
 
-
-RemainingItems.propTypes = {
-	course: PropTypes.shape({
-		getContentTree: PropTypes.func,
-		PreferredAccess: PropTypes.object
-	}),
-	enrollment: PropTypes.shape({
-		getCompletedItems: PropTypes.func
-	}),
-	readOnly: PropTypes.bool
-};
-export default function RemainingItems ({course, enrollment, readOnly}) {
-	const [active, setActive] = React.useState(AllItems);
-	const [requiredOnly, setRequiredOnly] = React.useState(true);
-
-	const incompleteOnly = active === OnlyRemaining;
-
-
-	const resolver = useResolver(async () => {
-		const parent = enrollment ?? course.PreferredAccess;
-
-		const contentWalker = (await parent.getScopedCourseInstance(course))
-			.getContentTree()
-			.createTreeWalker({
-				skip: (...args) => !isContentOutlineNode(...args),
-				ignoreChildren: isContentOutlineNode
-			});
-
-		const nodes = await contentWalker.getNodes();
-		const lessons = await Promise.all(nodes.map(n => n.getItem()));
-
-		const summary = await parent.fetchLink('UserLessonCompletionStatsByOutlineNode');
-
-		const enrollmentCompletedItems = enrollment ? await enrollment.getCompletedItems() : null;
-
-		return {
-			summary: getSummaryByLesson(summary),
-			counts: getSummaryCount(summary),
-			lessons,
-			enrollmentCompletedItems
-		};
-	}, [enrollment,course]);
-
-	const loading = isPending(resolver);
-	const error = isErrored(resolver) ? resolver : null;
-	const {lessons, summary, counts, enrollmentCompletedItems} = isResolved(resolver) ? resolver : {};
-
-	const [toShow, setToShow] = React.useState(0);
-	const filteredLessons = React.useMemo(
-		() => getLessonsToShow(lessons ?? [], summary, requiredOnly, incompleteOnly),
-		[lessons, summary, requiredOnly, incompleteOnly]
+	const data = new Set(
+		[...Outline, {'assignments': [Assignments]}]
+			.reduce((acc, obj) => [...acc, ...Object.values(obj).flat()],[])
+			.map(statsToNTIIDs)
+			.flat()
 	);
-	const lessonsToShow = filteredLessons.slice(0, toShow + 1);
 
-	const Wrapper = readOnly ? Disable : React.Fragment;
+	return (item) => {
+		const include = data.has(item.getID());
+		if (!include) {
+			console.debug('Excluding item, not in summary', item);
+		}
+		return include;
+	};
+}
 
-	return (
-		<Wrapper>
-			<Loading.Placeholder loading={loading} fallback={<Loading.Spinner.Large />}>
-				<div className={Styles.tabs}>
-					<Tab
-						label={t('allItems', {count: counts?.allItems || 0})}
-						name={AllItems}
-						selected={active === AllItems}
-						onSelect={setActive}
-					/>
-					<Tab
-						label={t('remainingItems', {count: counts?.remainingItems || 0})}
-						name={OnlyRemaining}
-						selected={active === OnlyRemaining}
-						onSelect={setActive}
-					/>
-				</div>
-				<PaddedContainer className={Styles.controls}>
-					<Checkbox checked={requiredOnly} label={t('requiredOnly')} onChange={e => setRequiredOnly(e.target.checked)} />
-				</PaddedContainer>
-				{error && (<Errors.Message error={error} />)}
-				{lessonsToShow.length === 0 && (
-					<EmptyState header={getEmptyText(requiredOnly, incompleteOnly)} />
-				)}
-				<div className={Styles.pages}>
-					{lessonsToShow.map((lesson, index) => {
-						const toLoad = index === toShow ? () => setToShow(index + 1) : null;
 
-						return (
-							<Page
-								key={lesson.getID()}
-								lesson={lesson}
-								course={course}
-								enrollment={enrollment}
-								enrollmentCompletedItems={enrollmentCompletedItems}
-								requiredOnly={requiredOnly}
-								incompleteOnly={incompleteOnly}
-
-								onLoad={toLoad}
-							/>
-						);
-					})}
-				</div>
-			</Loading.Placeholder>
-		</Wrapper>
-	);
+function statsToNTIIDs (stats) {
+	return [
+		...(stats.IncompleteNTIIDs || []),
+		...(stats.UnrequiredIncompleteNTIIDs || []),
+		...[
+			...(stats.SuccessfulItems || []),
+			...(stats.UnSuccessfulItems || []),
+			...(stats.UnrequiredSuccessfulItems || []),
+			...(stats.UnrequiredUnSuccessfulItems || []),
+		].map(x => x.ItemNTIID)
+	];
 }

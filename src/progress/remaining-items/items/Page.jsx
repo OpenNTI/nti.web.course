@@ -37,9 +37,10 @@ const getFilterFn = (completedItems, requiredOnly, incompleteOnly) => {
 	return (item) => (!requiredOnly || isRequired(item, completedItems)) && (!incompleteOnly || isIncomplete(item, completedItems));
 };
 
-const getItems = (overview, completedItems, requiredOnly, incompleteOnly) => (
+const getItems = (overview, completedItems, requiredOnly, incompleteOnly, itemInclusionFilter) => (
 	flatten(overview?.Items ?? [])
 		.filter(getFilterFn(completedItems, requiredOnly, incompleteOnly))
+		.filter(itemInclusionFilter)
 );
 
 const Placeholder = () => (
@@ -62,11 +63,12 @@ RemainingItemsPage.propTypes = {
 	}),
 
 	onLoad: PropTypes.func,
+	itemInclusionFilter: PropTypes.func,
 
 	requiredOnly: PropTypes.bool,
 	incompleteOnly: PropTypes.bool
 };
-function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedItems, onLoad, requiredOnly, incompleteOnly}) {
+function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedItems, onLoad, requiredOnly, incompleteOnly, itemInclusionFilter}) {
 	const extraColumns = useMobileValue(undefined, [CompletionStatus]);
 
 	const resolver = useResolver(async () => {
@@ -84,8 +86,8 @@ function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedIte
 	const overview = isResolved(resolver) ? resolver : null;
 
 	const items = React.useMemo(
-		() => getItems(overview, enrollmentCompletedItems, requiredOnly, incompleteOnly),
-		[overview, enrollmentCompletedItems, requiredOnly, incompleteOnly]
+		() => getItems(overview, enrollmentCompletedItems, requiredOnly, incompleteOnly, itemInclusionFilter),
+		[overview, enrollmentCompletedItems, requiredOnly, incompleteOnly, itemInclusionFilter]
 	);
 	const hasItems = items && items.length > 0;
 
