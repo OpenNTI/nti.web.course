@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import {scoped} from '@nti/lib-locale';
 import {Hooks, Loading, Errors, Checkbox, EmptyState} from '@nti/web-commons';
 import {Disable} from '@nti/web-routing';
+import Logger from '@nti/util-logger';
 
 import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 
 import Styles from './Style.css';
 import Page from './Page';
 import Tab from './Tab';
+
+const logger = Logger.get('course:progress:remaining-items:items:View');
 
 const {useResolver} = Hooks;
 const {isPending, isResolved, isErrored} = useResolver;
@@ -239,7 +242,7 @@ function getInclusionFilter (summary) {
 	return (item) => {
 		const include = data.has(item.getID());
 		if (!include) {
-			console.debug('Excluding item, not in summary', item);
+			logger.debug('Excluding item, not in summary', item);
 		}
 		return include;
 	};
