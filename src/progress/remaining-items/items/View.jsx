@@ -240,7 +240,8 @@ function getInclusionFilter (summary) {
 	);
 
 	return (item) => {
-		const include = data.has(item.getID()) || data.has(item['Target-NTIID']);
+		const target = () => ['Target-NTIID', 'target-NTIID', 'target-ntiid'].reduce((found, x) => found || (x in item && x), false);
+		const include = data.has(item.getID()) || data.has(item[target()]);
 		if (!include) {
 			logger.debug('Excluding item, not in summary', item);
 		}
