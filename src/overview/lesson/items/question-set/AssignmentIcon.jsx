@@ -14,7 +14,7 @@ export default function LessonOverviewAssignmentIcon ({assignment, assignmentHis
 	const noSubmit = assignment.isNonSubmit();
 	const CompletedItem = assignment?.CompletedItem;
 	const completed = assignmentHistory?.Submission?.getCreatedTime() ?? CompletedItem?.getCompletedDate();
-	const failed = !CompletedItem?.Success === false;
+	const failed = CompletedItem?.Success === false;
 
 	let cls = '';
 
