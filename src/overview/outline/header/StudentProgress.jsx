@@ -54,7 +54,7 @@ function useStudentProgress (course, active) {
 
 const getIsCompleted = progress => Boolean(progress?.getCompletedDate());
 const getPercentComplete = progress => Math.floor((progress?.PercentageProgress ?? 0) * 100);
-const getRemainingCount = progress => (progress?.MaxPossibleProgress ?? 0) - (progress?.AbsoluteProgress ?? 0);
+const getRemainingCount = progress => (progress?.MaxPossibleProgress ?? 0) - (progress?.AbsoluteProgress ?? 0) - (progress?.UnsuccessfulItemNTIIDs?.length ?? 0);
 const getRequirementsMet = progress => progress?.CompletedItem?.Success;
 
 const getCertLink = course => course.PreferredAccess.getLink('Certificate');
