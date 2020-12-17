@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Base from '../../common/BaseListItem';
+import GridCompleteIcon from '../../common/GridCompleteIcon';
 
 import AssessmentLabel from './AssessmentLabel';
 import AssessmentIcon from './AssessmentIcon';
@@ -56,7 +57,16 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 
 
 	renderIcon = () => {
-		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
+		const {assignment, assignmentHistory, assessment, assessmentSubmission, item} = this.props;
+
+		const CompletedItem = item?.CompletedItem || assignment?.CompletedItem || assessment?.CompletedItem;
+		const failed = CompletedItem && !CompletedItem.Success;
+
+		if(item && item.hasCompleted && item.hasCompleted() && !failed) {
+			return (
+				<GridCompleteIcon/>
+			);
+		}
 
 		if (assignment) {
 			return (

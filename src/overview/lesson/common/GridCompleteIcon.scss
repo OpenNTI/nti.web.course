@@ -41,22 +41,26 @@
 
 	.grid-complete-icon {
 		position: absolute;
-		border-radius: 40px;
-		width: 40px;
-		height: 40px;
-		border: solid 3px white;
-		background-color: rgba(0, 0, 0, 0.38);
-		box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.3);
 		top: 0;
 		left: 0;
+	}
+}
 
-		.check {
-			color: white;
-			font-size: 26px;
-			text-align: center;
-			width: 34px;
-			position: absolute;
-			top: 4px;
-		}
+.grid-complete-icon {
+	position: relative;
+	border-radius: 40px;
+	width: 40px;
+	height: 40px;
+	border: solid 3px white;
+	background-color: rgba(0, 0, 0, 0.38);
+	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.3);
+
+	.check {
+		color: white;
+		font-size: 26px;
+		text-align: center;
+		width: 34px;
+		position: absolute;
+		top: 4px;
 	}
 }
