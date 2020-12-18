@@ -152,7 +152,7 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 								incompleteOnly={incompleteOnly}
 								itemInclusionFilter={itemInclusionFilter}
 
-								onLoad={isLastItem ? next : null}
+								onWaterfallLoadContinue={isLastItem ? next : null}
 							/>
 						);
 					})}
