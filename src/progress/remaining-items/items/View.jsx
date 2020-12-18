@@ -25,10 +25,12 @@ const t = scoped('course.progress.remaining-items.items.View', {
 	requiredOnly: 'Required Only',
 	allItems: {
 		zero: 'All Items',
+		one: 'All Items (%(count)s)',
 		other: 'All Items (%(count)s)',
 	},
 	remainingItems: {
 		zero: 'Remaining Items',
+		one: 'Remaining Items (%(count)s)',
 		other: 'Remaining Items (%(count)s)',
 	},
 	empty: {
