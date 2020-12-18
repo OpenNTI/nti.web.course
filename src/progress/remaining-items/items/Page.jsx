@@ -136,12 +136,16 @@ function RemainingItemsPage ({
 	);
 }
 
+const MonitorElement = styled('div')`
+	min-height: 10vh;
+`;
+
 export default function RemainingItemsPageContainer (props) {
 	const [onScreen, setOnScreen] = React.useState(false);
-
-	return (
-		<Monitor.OnScreen onChange={(x) => setOnScreen(onScreen || x)}>
-			{onScreen && (<RemainingItemsPage {...props} />)}
-		</Monitor.OnScreen>
+	const tripLikeIDo = React.useCallback((x) => setOnScreen(onScreen || x), [setOnScreen, onScreen]);
+	return !onScreen ? (
+		<Monitor.OnScreen onChange={tripLikeIDo} as={MonitorElement}/> 
+	) : (
+		<RemainingItemsPage {...props} />
 	);
 }
