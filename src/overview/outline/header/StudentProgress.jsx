@@ -80,8 +80,7 @@ export default function StudentProgress ({className, course, active, noCertifica
 	}, [location]);
 
 	const progress = useStudentProgress(course, active);
-	const remaining = getRemainingCount(progress);
-	const isCompleted = remaining === 0 && getIsCompleted(progress);
+	const isCompleted = getIsCompleted(progress);
 	const requirementsMet = isCompleted && getRequirementsMet(progress);
 	const certLink = getCertLink(course);
 
@@ -104,7 +103,7 @@ export default function StudentProgress ({className, course, active, noCertifica
 	if (isCompleted && requirementsMet) {
 		subLabel = certLink ? t('viewCertificate') : t('completed');
 	} else {
-		subLabel = t('itemsRemaining', {count: remaining});
+		subLabel = t('itemsRemaining', {count: getRemainingCount(progress)});
 	}
 
 	return (
