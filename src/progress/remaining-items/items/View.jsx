@@ -220,7 +220,7 @@ function getLessonsToShow (lessons, summary, requiredOnly, incompleteOnly) {
 		};
 
 		const hasRequired = (required.incomplete + required.success + required.failed) > 0;
-		const hasIncomplete = (required.incomplete + notRequired.incomplete) > 0;
+		const hasIncomplete = (required.incomplete + notRequired.incomplete + required.failed) > 0;
 
 		const matchesRequired = !requiredOnly || hasRequired;
 		const matchesIncomplete = !incompleteOnly || hasIncomplete;
