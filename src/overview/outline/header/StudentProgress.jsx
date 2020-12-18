@@ -9,6 +9,7 @@ import {useLocation} from '@nti/web-routing';
 
 import PassFailMessage from '../../../progress/widgets/PassFailMessage';
 import {RemainingItems, ProgressCompletionNotification} from '../../../progress';
+import { getIsCompleted, getPercentageComplete, getRemainingCount, getRequirementsMet } from '../../../progress/remaining-items/utils';
 
 import Styles from './Styles.css';
 
@@ -51,11 +52,6 @@ function useStudentProgress (course, active) {
 
 	return course.PreferredAccess.CourseProgress;
 }
-
-const getIsCompleted = progress => Boolean(progress?.getCompletedDate());
-const getPercentComplete = progress => Math.floor((progress?.PercentageProgress ?? 0) * 100);
-const getRemainingCount = progress => Math.abs((progress?.MaxPossibleProgress ?? 0) - (progress?.AbsoluteProgress ?? 0) - (progress?.UnsuccessfulItemNTIIDs?.length ?? 0));
-const getRequirementsMet = progress => progress?.CompletedItem?.Success;
 
 const getCertLink = course => course.PreferredAccess.getLink('Certificate');
 const getTitle = course => course.PreferredAccess.CatalogEntry.title;
@@ -115,7 +111,7 @@ export default function StudentProgress ({className, course, active, noCertifica
 							<CircularProgress
 								width={38}
 								height={38}
-								value={getPercentComplete(progress)}
+								value={getPercentageComplete(progress)}
 								showPctSymbol={false}
 								deficitFillColor="#b8b8b8"
 							/>

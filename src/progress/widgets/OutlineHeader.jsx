@@ -7,6 +7,8 @@ import {Hooks} from '@nti/web-session';
 import {HOC, Iframe, Prompt} from '@nti/web-commons';
 import {getService} from '@nti/web-client';
 
+import { getPercentageComplete, getRemainingCount } from '../remaining-items/utils';
+
 import PassFailMessage from './PassFailMessage';
 
 const t = scoped('course.progress.widgets.OutlineHeader', {
@@ -49,11 +51,8 @@ class OutlineHeader extends React.Component {
 
 
 	getStateValues (courseProgress, isCompleted) {
-		const itemsComplete = (courseProgress && courseProgress.AbsoluteProgress) || 0;
-		const itemsTotal = (courseProgress && courseProgress.MaxPossibleProgress) || 0;
-
-		const pctComplete = Math.floor(((courseProgress || {}).PercentageProgress * 100) || 0);
-		const remainingItems = itemsTotal - itemsComplete;
+		const pctComplete = getPercentageComplete(courseProgress);
+		const remainingItems = getRemainingCount(courseProgress);
 
 		let subLabel = '0 Items Remaining';
 		if(isCompleted) {
@@ -116,7 +115,7 @@ class OutlineHeader extends React.Component {
 	shouldLoad (course, force) {
 		const now = Date.now();
 		const lastLoad = this.lastLoad;
-		
+
 		this.lastLoad = {
 			course,
 			time: now
