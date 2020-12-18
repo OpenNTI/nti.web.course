@@ -62,13 +62,22 @@ RemainingItemsPage.propTypes = {
 		getContent: PropTypes.func
 	}),
 
-	onLoad: PropTypes.func,
+	onWaterfallLoadContinue: PropTypes.func,
 	itemInclusionFilter: PropTypes.func,
 
 	requiredOnly: PropTypes.bool,
 	incompleteOnly: PropTypes.bool
 };
-function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedItems, onLoad, requiredOnly, incompleteOnly, itemInclusionFilter}) {
+function RemainingItemsPage ({
+	lesson, 
+	course, 
+	enrollment, 
+	enrollmentCompletedItems, 
+	onWaterfallLoadContinue, 
+	requiredOnly, 
+	incompleteOnly, 
+	itemInclusionFilter
+}) {
 	const extraColumns = useMobileValue(undefined, [CompletionStatus]);
 
 	const resolver = useResolver(async () => {
@@ -77,7 +86,7 @@ function RemainingItemsPage ({lesson, course, enrollment, enrollmentCompletedIte
 
 			return content;
 		} finally {
-			onLoad?.();
+			onWaterfallLoadContinue?.();
 		}
 	}, [lesson]);
 

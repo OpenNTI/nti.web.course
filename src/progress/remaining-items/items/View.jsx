@@ -103,12 +103,13 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 		summary,
 	} = isResolved(resolver) ? resolver : {};
 
-	const [toShow, setToShow] = React.useState(0);
+	const [loaded, dispatch] = React.useReducer(loadMoreReducer, 0);
+	const next = React.useCallback(() => dispatch({type:'increment'}), []);
 	const filteredLessons = React.useMemo(
 		() => getLessonsToShow(lessons ?? [], summary, requiredOnly, incompleteOnly),
 		[lessons, summary, requiredOnly, incompleteOnly]
 	);
-	const lessonsToShow = filteredLessons.slice(0, toShow + 1);
+	const lessonsToShow = filteredLessons.slice(0, loaded + 1);
 
 	const Wrapper = readOnly ? Disable : React.Fragment;
 
@@ -137,9 +138,9 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 					<EmptyState header={getEmptyText(requiredOnly, incompleteOnly)} />
 				)}
 				<div className={Styles.pages}>
-					{lessonsToShow.map((lesson, index) => {
-						const toLoad = index === toShow ? () => setToShow(index + 1) : null;
-
+					{lessonsToShow.map((lesson, index, {length}) => {
+						const isLastItem = index === (length - 1);
+						
 						return (
 							<Page
 								key={lesson.getID()}
@@ -151,7 +152,7 @@ export default function RemainingItems ({course, enrollment, readOnly}) {
 								incompleteOnly={incompleteOnly}
 								itemInclusionFilter={itemInclusionFilter}
 
-								onLoad={toLoad}
+								onLoad={isLastItem ? next : null}
 							/>
 						);
 					})}
@@ -263,4 +264,13 @@ function statsToNTIIDs (stats) {
 			...(stats.UnrequiredUnSuccessfulItems || []),
 		].map(x => x.ItemNTIID)
 	];
+}
+
+
+function loadMoreReducer (state, action) {
+	if (action.type === 'increment') {
+		return state + 1;
+	}
+
+	return state;
 }
