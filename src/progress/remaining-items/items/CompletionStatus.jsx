@@ -25,7 +25,7 @@ const getAssignmentDueDate = ({assignment}) => assignment.getDueDate();
 
 function getCompletedDate (item, completed) {
 	if (!item) { return null; }
-	if (!completed) { return item.getCompletedDate?.(); }
+	if (!completed || item.CompletedItem) { return item.getCompletedDate?.(); }
 
 	return completed[item.NTIID] || completed[item.href] || completed[item['Target-NTIID']] || completed['target-NTIID'];
 }
@@ -74,6 +74,7 @@ const Statuses = [
 	}
 ];
 
+CompletionStatus.completedSuccessfully = item => item?.completedSuccessfully?.() ?? (item?.CompletedItem?.Success === true);
 CompletionStatus.getCompletedDate = getCompletedDate;
 CompletionStatus.cssClassName = Styles['completion-status-cell'];
 CompletionStatus.propTypes = {

@@ -24,7 +24,7 @@ const flatten = (items) => items.reduce((acc, item) => {
 
 const isRequired = item => item?.CompletionRequired;
 const isIncomplete = (item, completedItems) => {
-	if (completedItems) {
+	if (completedItems && !item.CompletedItem) {
 		return CompletionStatus.getCompletedDate(item, completedItems) == null;
 	}
 
