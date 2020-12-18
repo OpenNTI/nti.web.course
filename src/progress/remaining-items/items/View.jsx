@@ -196,7 +196,7 @@ function getSummaryCount (summary) {
 				lesson.UnrequiredSuccessfulCount +
 				lesson.UnrequiredUnsuccessfulCount;
 
-			acc.remainingItems += lesson.IncompleteCount + lesson.UnrequiredIncompleteCount;
+			acc.remainingItems += lesson.IncompleteCount + lesson.UnrequiredIncompleteCount + lesson.UnsuccessfulCount;
 		}
 
 		return acc;
