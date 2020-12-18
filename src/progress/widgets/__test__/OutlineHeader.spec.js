@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { Models } from '@nti/lib-interfaces';
 
 import OutlineHeader from '../OutlineHeader';
 
@@ -23,14 +24,11 @@ describe('OutlineHeader view test', () => {
 			PreferredAccess: {
 				addListener () {},
 				MimeType: 'some.type.courseinstanceenrollment',
-				CourseProgress: {
-					getCompletedDate () {
-						return null;
-					},
+				CourseProgress: new Models.courses.CourseProgress(null,null,{
 					AbsoluteProgress: 5,
 					MaxPossibleProgress: 9,
 					PercentageProgress: 0.302355
-				}
+				})
 			}
 		};
 
@@ -46,14 +44,11 @@ describe('OutlineHeader view test', () => {
 			PreferredAccess: {
 				addListener () {},
 				MimeType: 'some.type.courseinstanceenrollment',
-				CourseProgress: {
-					getCompletedDate () {
-						return null;
-					},
+				CourseProgress: new Models.courses.CourseProgress(null,null,{
 					AbsoluteProgress: 5,
 					MaxPossibleProgress: 6,
 					PercentageProgress: 0.302355
-				}
+				})
 			}
 		};
 
@@ -69,14 +64,16 @@ describe('OutlineHeader view test', () => {
 			PreferredAccess: {
 				addListener () {},
 				MimeType: 'some.type.courseinstanceenrollment',
-				CourseProgress: {
-					getCompletedDate () {
-						return Date.now();
+				CourseProgress: new Models.courses.CourseProgress(null,null,{
+					CompletedDate: Date.now() / 1000,
+					CompletedItem: {
+						MimeType: Models.courses.CompletedItem.MimeType,
+						CompletedDate: Date.now() / 1000,
 					},
 					AbsoluteProgress: 5,
 					MaxPossibleProgress: 5,
 					PercentageProgress: 1.0
-				},
+				}),
 				getLink: (rel) => {
 					return null;
 				}
@@ -95,14 +92,16 @@ describe('OutlineHeader view test', () => {
 			PreferredAccess: {
 				addListener () {},
 				MimeType: 'some.type.courseinstanceenrollment',
-				CourseProgress: {
-					getCompletedDate () {
-						return Date.now();
+				CourseProgress: new Models.courses.CourseProgress(null,null,{
+					CompletedDate: Date.now() / 1000,
+					CompletedItem: {
+						MimeType: Models.courses.CompletedItem.MimeType,
+						CompletedDate: Date.now() / 1000,
 					},
 					AbsoluteProgress: 5,
 					MaxPossibleProgress: 5,
 					PercentageProgress: 1.0
-				},
+				}),
 				getLink: (rel) => {
 					if(rel === 'Certificate') {
 						return '/some/certlink';
@@ -128,12 +127,12 @@ describe('OutlineHeader view test', () => {
 			},
 			fetchLink: (rel) => {
 				if(rel === 'ProgressStats') {
-					return {
+					return new Models.courses.CourseProgress(null,null,{
 						CountCompleted: 1,
 						AbsoluteProgress: 2,
 						MaxPossibleProgress: 4,
 						PercentageProgress: 0.45
-					};
+					});
 				}
 			}
 		};
@@ -156,12 +155,12 @@ describe('OutlineHeader view test', () => {
 			},
 			fetchLink: (rel) => {
 				if(rel === 'ProgressStats') {
-					return {
+					return new Models.courses.CourseProgress(null,null,{
 						CountCompleted: 2,
 						AbsoluteProgress: 2,
 						MaxPossibleProgress: 4,
 						PercentageProgress: 0.45
-					};
+					});
 				}
 			}
 		};
@@ -184,12 +183,12 @@ describe('OutlineHeader view test', () => {
 			},
 			fetchLink: (rel) => {
 				if(rel === 'ProgressStats') {
-					return {
+					return new Models.courses.CourseProgress(null,null,{
 						CountCompleted: 4,
 						AbsoluteProgress: 4,
 						MaxPossibleProgress: 4,
 						PercentageProgress: 1.0
-					};
+					});
 				}
 			}
 		};
