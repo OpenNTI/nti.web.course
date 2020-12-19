@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import {InactivityMonitor} from '@nti/lib-dom';
 import {Hooks} from '@nti/web-session';
 import {HOC} from '@nti/web-commons';
-
-export default
-@Hooks.afterBatchEvents()
 class CompletionMonitor extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
@@ -27,7 +24,7 @@ class CompletionMonitor extends React.Component {
 		this.isDirty = this.isDirty || shouldUpdate;
 
 		if (this.becameActive) {
-			this.setupFor(this.props);
+			this.setup(this.props);
 		}
 	}
 
@@ -36,7 +33,7 @@ class CompletionMonitor extends React.Component {
 		this.unsubscribe = monitor.addChangeListener(this.onActiveStateChanged);
 		this.onActiveStateChanged(true);
 
-		this.setupFor(this.props);
+		this.setup(this.props);
 	}
 
 
@@ -56,7 +53,7 @@ class CompletionMonitor extends React.Component {
 		const {item:newItem} = this.props;
 
 		if (oldItem !== newItem || this.isDirty) {
-			this.setupFor(this.props);
+			this.setup(this.props);
 		}
 	}
 
@@ -64,7 +61,7 @@ class CompletionMonitor extends React.Component {
 	onActiveStateChanged = (active) => {
 		if (active) {
 			if (this.isDirty) {
-				this.setupFor(this.props);
+				this.setup(this.props);
 			} else if (!this.isActive) {
 				this.becameActive = true;
 			}
@@ -74,11 +71,11 @@ class CompletionMonitor extends React.Component {
 	}
 
 
-	setupFor (props) {
+	setup (props) {
 		const {item, readOnly} = props;
 
-		if (item.updateCompletedState && !readOnly) {
-			item.updateCompletedState();
+		if (!readOnly) {
+			item.updateCompletedState?.();
 		}
 
 		delete this.isDirty;
@@ -110,3 +107,6 @@ function Wrap (props) {
 		React.Children.only(children)
 	);
 }
+
+
+export default Hooks.afterBatchEvents()(CompletionMonitor);

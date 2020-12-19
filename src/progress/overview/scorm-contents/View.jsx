@@ -27,19 +27,19 @@ export default class ScormProgressOverviewContents extends React.Component {
 	}
 
 	componentDidMount () {
-		this.setupFor(this.props);
+		this.setup();
 	}
 
-	compnentDidUpdate (prevProps) {
+	componentDidUpdate (prevProps) {
 		const { course: oldCourse, enrollment: oldEnrollment } = prevProps;
 		const { course: newCourse, enrollment: newEnrollment } = this.props;
 
-		if (oldCourse !== newCourse && oldEnrollment !== newEnrollment) {
-			this.setupFor(this.props);
+		if (oldCourse !== newCourse || oldEnrollment !== newEnrollment) {
+			this.setup();
 		}
 	}
 
-	async setupFor (props) {
+	async setup (props = this.props) {
 		const { course, enrollment } = props;
 
 		if (!enrollment) {
@@ -50,8 +50,8 @@ export default class ScormProgressOverviewContents extends React.Component {
 			const assignments = await course.getAllAssignments();
 
 			// Need to resolve the completion since there isn't a overview
-			if (assignments && assignments.length > 0) {
-				assignments.forEach(assignment => assignment.updateCompletedState(enrollment));
+			if (assignments?.length > 0) {
+				assignments.forEach(assignment => assignment.updateCompletedState?.(enrollment));
 			}
 
 			const overview = {

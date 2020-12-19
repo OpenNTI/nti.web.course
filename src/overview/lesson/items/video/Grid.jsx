@@ -146,9 +146,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 	updateCompletedState () {
 		const {item} = this.props;
 
-		if (item.updateCompletedState) {
-			item.updateCompletedState();
-		}
+		item.updateCompletedState?.();
 	}
 
 
