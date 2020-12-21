@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import View from '../View';
 
@@ -21,20 +21,20 @@ describe('Prerequisites view test', () => {
 			'Prerequisites': prereqs
 		};
 
-		const cmp = mount(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry}/>);
 
-		const items = cmp.find('.prerequisite');
+		const items = x.container.querySelectorAll('.prerequisite');
 
 		for(let i = 0; i < prereqs.length; i++) {
-			expect(items.at(i).text()).toEqual(prereqs[i].title);
+			expect(items[i].textContent).toEqual(prereqs[i].title);
 		}
 	});
 
 	test('Test no items', () => {
 		const catalogEntry = {};
 
-		const cmp = mount(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry}/>);
 
-		expect(cmp.find('.content-column').first().text()).toEqual('None');
+		expect(x.container.querySelector('.content-column').textContent).toEqual('None');
 	});
 });

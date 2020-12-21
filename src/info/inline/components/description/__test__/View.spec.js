@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import View from '../View';
 
@@ -12,8 +12,8 @@ describe('Description view test', () => {
 			'description': desc
 		};
 
-		const cmp = mount(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry}/>);
 
-		expect(cmp.find('.course-view-description').text()).toEqual(desc);
+		expect(x.container.querySelector('.course-view-description').textContent).toEqual(desc);
 	});
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 
 import CourseNavMenu from '../CourseNavMenu';
 
@@ -30,48 +30,48 @@ describe('CourseNavMenu test', () => {
 		}
 	];
 
-	const verifyContents = (cmp) => {
-		const activeCourseEl = cmp.find('.active-content').first();
+	const verifyContents = (el) => {
+		const activeCourseEl = el.querySelector('.active-content');
 
-		const activeTitle = activeCourseEl.find('.title').first();
+		const activeTitle = activeCourseEl.querySelector('.title');
 
-		expect(activeCourseEl.find('img').prop('src')).toEqual('/active/url');
+		expect(activeCourseEl.querySelector('img').getAttribute('src')).toEqual('/active/url');
 
-		expect(activeTitle.text()).toEqual('Active Course');
+		expect(activeTitle.textContent).toEqual('Active Course');
 
-		const sections = cmp.find('.sections-list').first().find('.section');
+		const sections = el.querySelectorAll('.sections-list .section');
 
-		expect(sections.at(0).text()).toEqual('Section 1');
-		expect(sections.at(0).prop('className')).not.toMatch(/current/);
+		expect(sections[0].textContent).toEqual('Section 1');
+		expect(sections[0].getAttribute('class')).not.toMatch(/current/);
 
-		expect(sections.at(1).text()).toEqual('Section 2');
-		expect(sections.at(1).prop('className')).toMatch(/current/);
+		expect(sections[1].textContent).toEqual('Section 2');
+		expect(sections[1].getAttribute('class')).toMatch(/current/);
 
-		const recentCoursesList = cmp.find('.recent-content-items-list').first().find('.recent-content');
+		const recentCoursesList = el.querySelectorAll('.recent-content-items-list .recent-content');
 
-		expect(recentCoursesList.at(0).find('img').first().prop('src')).toEqual('/some/url1');
-		expect(recentCoursesList.at(1).find('img').first().prop('src')).toEqual('/some/url2');
+		expect(recentCoursesList[0].querySelector('img').getAttribute('src')).toEqual('/some/url1');
+		expect(recentCoursesList[1].querySelector('img').getAttribute('src')).toEqual('/some/url2');
 	};
 
 	test('Test non-admin', () => {
-		const cmp = mount(
+		const {container: root} = render(
 			<CourseNavMenu
 				activeCourse={activeCourse}
 				recentCourses={recentCourses}/>
 		);
 
-		verifyContents(cmp);
+		verifyContents(root);
 
-		expect(cmp.find('.delete-content').exists()).toBe(false);
-		expect(cmp.find('.edit').exists()).toBe(false);
-		expect(cmp.find('.publish').exists()).toBe(false);
+		expect(root.querySelector('.delete-content')).toBeFalsy();
+		expect(root.querySelector('.edit')).toBeFalsy();
+		expect(root.querySelector('.publish')).toBeFalsy();
 	});
 
 	test('Test admin', () => {
 		const onItemClick = jest.fn();
 		const goToEditor = jest.fn();
 
-		const cmp = mount(
+		const {container: root} = render(
 			<CourseNavMenu
 				activeCourse={activeCourse}
 				recentCourses={recentCourses}
@@ -82,17 +82,17 @@ describe('CourseNavMenu test', () => {
 			/>
 		);
 
-		verifyContents(cmp);
+		verifyContents(root);
 
-		expect(cmp.find('.delete-content').exists()).toBe(true);
+		expect(root.querySelector('.delete-content')).toBeTruthy();
 
-		const edit = cmp.find('.edit').first();
-		edit.simulate('click');
+		const edit = root.querySelector('.edit');
+		fireEvent.click(edit);
 		expect(goToEditor).toHaveBeenCalled();
 
-		const recentCourse1 = cmp.find('.recent-content').first();
+		const recentCourse1 = root.querySelector('.recent-content');
 
-		recentCourse1.simulate('click');
+		fireEvent.click(recentCourse1);
 
 		expect(onItemClick).toHaveBeenCalled();
 	});

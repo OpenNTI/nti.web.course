@@ -1,10 +1,8 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Models } from '@nti/lib-interfaces';
 
 import OutlineHeader from '../OutlineHeader';
-
-const wait = n => new Promise(t => setTimeout(t, n));
 
 /* eslint-env jest */
 describe('OutlineHeader view test', () => {
@@ -13,9 +11,9 @@ describe('OutlineHeader view test', () => {
 			NTIID: 'defaultCourse'
 		};
 
-		const cmp = mount(<OutlineHeader course={course}/>);
+		const x = render(<OutlineHeader course={course}/>);
 
-		expect(cmp.text()).toEqual('Outline');
+		expect(x.container.textContent).toEqual('Outline');
 	});
 
 	test('Test incomplete student view', async () => {
@@ -32,10 +30,10 @@ describe('OutlineHeader view test', () => {
 			}
 		};
 
-		const cmp = mount(<OutlineHeader course={course}/>);
+		const {container: root} = render(<OutlineHeader course={course}/>);
 
-		expect(cmp.find('.circular-progress').first().find('.number').first().text()).toEqual('30');
-		expect(cmp.find('.progress-labels').first().find('.sub-label').first().text()).toEqual('4 Items Remaining');
+		expect(root.querySelector('.circular-progress .number').textContent).toEqual('30');
+		expect(root.querySelector('.progress-labels .sub-label').textContent).toEqual('4 Items Remaining');
 	});
 
 	test('Test incomplete student view, single item remaining', async () => {
@@ -52,10 +50,10 @@ describe('OutlineHeader view test', () => {
 			}
 		};
 
-		const cmp = mount(<OutlineHeader course={course}/>);
+		const {container: root} = render(<OutlineHeader course={course}/>);
 
-		expect(cmp.find('.circular-progress').first().find('.number').first().text()).toEqual('30');
-		expect(cmp.find('.progress-labels').first().find('.sub-label').first().text()).toEqual('1 Item Remaining');
+		expect(root.querySelector('.circular-progress .number').textContent).toEqual('30');
+		expect(root.querySelector('.progress-labels .sub-label').textContent).toEqual('1 Item Remaining');
 	});
 
 	test('Test complete student view, no certificate link', async () => {
@@ -80,10 +78,10 @@ describe('OutlineHeader view test', () => {
 			}
 		};
 
-		const cmp = mount(<OutlineHeader course={course}/>);
+		const {container: root} = render(<OutlineHeader course={course}/>);
 
-		expect(cmp.find('.circular-progress').first().find('.number').first().text()).toEqual('100');
-		expect(cmp.find('.progress-labels').first().find('.sub-label').first().text()).toEqual('Completed');
+		expect(root.querySelector('.circular-progress .number').textContent).toEqual('100');
+		expect(root.querySelector('.progress-labels .sub-label').textContent).toEqual('Completed');
 	});
 
 	test('Test complete student view with certificate link', async () => {
@@ -110,13 +108,10 @@ describe('OutlineHeader view test', () => {
 			}
 		};
 
-		const cmp = mount(<OutlineHeader course={course}/>);
+		const {container: root} = render(<OutlineHeader course={course}/>);
 
-		expect(cmp.find('.circular-progress').first().find('.number').first().text()).toEqual('100');
-
-		const certAnchor = cmp.find('.progress-labels').first().find('.sub-label').first().find('a').first();
-
-		expect(certAnchor.text()).toEqual('View Certificate');
+		expect(root.querySelector('.circular-progress .number').textContent).toEqual('100');
+		expect(root.querySelector('.progress-labels .sub-label a').textContent).toEqual('View Certificate');
 	});
 
 	test('Test incomplete instructor view, one student finished', async () => {
@@ -137,14 +132,12 @@ describe('OutlineHeader view test', () => {
 			}
 		};
 
-		const cmp = mount(<OutlineHeader course={course}/>);
+		const {container: root} = render(<OutlineHeader course={course}/>);
 
-		await wait(200);
-
-		cmp.update();
-
-		expect(cmp.find('.circular-progress').first().find('.number').first().text()).toEqual('45');
-		expect(cmp.find('.progress-labels').first().find('.sub-label').first().text()).toEqual('1 Student Finished');
+		await waitFor(() => {
+			expect(root.querySelector('.circular-progress .number').textContent).toEqual('45');
+			expect(root.querySelector('.progress-labels .sub-label').textContent).toEqual('1 Student Finished');
+		});
 	});
 
 	test('Test incomplete instructor view, two students finished', async () => {
@@ -165,14 +158,12 @@ describe('OutlineHeader view test', () => {
 			}
 		};
 
-		const cmp = mount(<OutlineHeader course={course}/>);
+		const {container: root} = render(<OutlineHeader course={course}/>);
 
-		await wait(200);
-
-		cmp.update();
-
-		expect(cmp.find('.circular-progress').first().find('.number').first().text()).toEqual('45');
-		expect(cmp.find('.progress-labels').first().find('.sub-label').first().text()).toEqual('2 Students Finished');
+		await waitFor(() => {
+			expect(root.querySelector('.circular-progress .number').textContent).toEqual('45');
+			expect(root.querySelector('.progress-labels .sub-label').textContent).toEqual('2 Students Finished');
+		});
 	});
 
 	test('Test incomplete instructor view, all students finished', async () => {
@@ -193,13 +184,11 @@ describe('OutlineHeader view test', () => {
 			}
 		};
 
-		const cmp = mount(<OutlineHeader course={course}/>);
+		const {container: root} = render(<OutlineHeader course={course}/>);
 
-		await wait(200);
-
-		cmp.update();
-
-		expect(cmp.find('.circular-progress').first().find('.number').first().text()).toEqual('100');
-		expect(cmp.find('.progress-labels').first().find('.sub-label').first().text()).toEqual('4 Students Finished');
+		await waitFor(() => {
+			expect(root.querySelector('.circular-progress .number').textContent).toEqual('100');
+			expect(root.querySelector('.progress-labels .sub-label').textContent).toEqual('4 Students Finished');
+		});
 	});
 });

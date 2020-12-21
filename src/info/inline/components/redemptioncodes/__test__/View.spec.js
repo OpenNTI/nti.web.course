@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import View from '../View';
 
@@ -15,19 +15,19 @@ describe('Redemption codes view test', () => {
 			}
 		];
 
-		const cmp = mount(<View redemptionCodes={redemptionCodes}/>);
+		const x = render(<View redemptionCodes={redemptionCodes}/>);
 
 
-		const items = cmp.find('.redemption-code');
+		const items = x.container.querySelectorAll('.redemption-code');
 
 		for(let i = 0; i < redemptionCodes.length; i++) {
-			expect(items.at(i).text()).toEqual(redemptionCodes[i].Code);
+			expect(items[i].textContent).toEqual(redemptionCodes[i].Code);
 		}
 	});
 
 	test('Test no items', () => {
-		const cmp = mount(<View/>);
+		const x = render(<View/>);
 
-		expect(cmp.find('.content-column').first().text()).toEqual('None');
+		expect(x.container.querySelector('.content-column').textContent).toEqual('None');
 	});
 });

@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import WizardPanel from '../WizardPanel';
 
@@ -19,15 +19,20 @@ describe('Basic WizardPanel test', () => {
 	const afterSave = jest.fn();
 	const buttonLabel = 'Test Label';
 
-	let cmp = mount(
-		<WizardPanel
-			catalogEntry={catalogEntry}
-			saveCmp={SaveButton}
-			onCancel={onCancel}
-			afterSave={afterSave}
-			buttonLabel={buttonLabel}
-		/>
-	);
+	let result,root, cmp;
+	beforeEach(() => {
+		result = render(
+			<WizardPanel
+				ref={x => cmp = x}
+				catalogEntry={catalogEntry}
+				saveCmp={SaveButton}
+				onCancel={onCancel}
+				afterSave={afterSave}
+				buttonLabel={buttonLabel}
+			/>
+		);
+		root = result.container;
+	});
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
@@ -43,43 +48,44 @@ describe('Basic WizardPanel test', () => {
 	}
 
 	test('Test save button', async () => {
-		const node = cmp.find('.course-panel-continue').first();
+		const node = root.querySelector('.course-panel-continue');
 
-		expect(node.text()).toBe(buttonLabel);
+		expect(node.textContent).toBe(buttonLabel);
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
-
-		expect(mockSave).toHaveBeenCalled();
-		expect(afterSave).toHaveBeenCalled();
+		await waitFor(() => {
+			expect(mockSave).toHaveBeenCalled();
+			expect(afterSave).toHaveBeenCalled();
+		});
 	});
 
 	test('Test cancel button', async () => {
-		const node = cmp.find('.course-panel-cancel').first();
+		const node = root.querySelector('.course-panel-cancel');
 
-		expect(node.text()).toBe('Cancel');
+		expect(node.textContent).toBe('Cancel');
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
+		await waitFor(() =>
 
-		expect(onCancel).toHaveBeenCalled();
+			expect(onCancel).toHaveBeenCalled());
 	});
 
-	const verifyInput = (placeholder, stateField, value) => {
+	const verifyInput = async (placeholder, stateField, value) => {
 		cmp.setState({[stateField]: value});
-		cmp.update();
 
-		const node = cmp.find('[placeholder="' + placeholder + '"]').first();
+		await waitFor(() => {
+			const node = root.querySelector('[placeholder="' + placeholder + '"]');
 
-		expect(node.prop('value')).toEqual(value);
+			expect(node.value).toEqual(value);
+		});
 	};
 
-	test('Test fields', () => {
-		verifyInput('Course Name', 'courseName', 'Test course name');
-		verifyInput('Identification Number (i.e. UCOL-3224)', 'identifier', 'Test ID');
-		verifyInput('Description', 'description', 'Test description');
+	test('Test fields', async () => {
+		await verifyInput('Course Name', 'courseName', 'Test course name');
+		await verifyInput('Identification Number (i.e. UCOL-3224)', 'identifier', 'Test ID');
+		await verifyInput('Description', 'description', 'Test description');
 	});
 
 });

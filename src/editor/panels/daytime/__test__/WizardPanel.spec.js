@@ -1,12 +1,9 @@
 /* eslint-env jest */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import WizardPanel from '../WizardPanel';
-
-
-const wait = x => new Promise(f => setTimeout(f, x));
 
 describe('DayTime WizardPanel test', () => {
 	const mockSave = jest.fn();
@@ -20,15 +17,18 @@ describe('DayTime WizardPanel test', () => {
 	const afterSave = jest.fn();
 	const buttonLabel = 'Test Label';
 
-	let cmp = mount(
-		<WizardPanel
-			catalogEntry={catalogEntry}
-			saveCmp={SaveButton}
-			onCancel={onCancel}
-			afterSave={afterSave}
-			buttonLabel={buttonLabel}
-		/>
-	);
+	let root;
+	beforeEach(() => {
+		({container: root} = render(
+			<WizardPanel
+				catalogEntry={catalogEntry}
+				saveCmp={SaveButton}
+				onCancel={onCancel}
+				afterSave={afterSave}
+				buttonLabel={buttonLabel}
+			/>
+		));
+	});
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
@@ -44,54 +44,46 @@ describe('DayTime WizardPanel test', () => {
 	}
 
 	test('Test save button', async () => {
-		const node = cmp.find('.course-panel-continue').first();
+		const node = root.querySelector('.course-panel-continue');
 
-		expect(node.text()).toBe(buttonLabel);
+		expect(node.textContent).toBe(buttonLabel);
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
-
-		expect(mockSave).toHaveBeenCalled();
-		expect(afterSave).toHaveBeenCalled();
+		await waitFor(() => {
+			expect(mockSave).toHaveBeenCalled();
+			expect(afterSave).toHaveBeenCalled();
+		});
 	});
 
 	test('Test cancel button', async () => {
-		const node = cmp.find('.course-panel-cancel').first();
+		const node = root.querySelector('.course-panel-cancel');
 
-		expect(node.text()).toBe('Cancel');
+		expect(node.textContent).toBe('Cancel');
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
-		expect(onCancel).toHaveBeenCalled();
+		await waitFor(() =>
+			expect(onCancel).toHaveBeenCalled());
 	});
 
-	test('Test date fields', () => {
-		let dayNodes = cmp.find('.course-panel-day');
-
-		let monday = dayNodes.at(1);
-		let wednesday = dayNodes.at(3);
-		let friday = dayNodes.at(5);
+	test('Test date fields', async () => {
+		const [/*sun*/, monday, /* tues */, wednesday, /*thurs*/, friday] = root.querySelectorAll('.course-panel-day');
 
 		// initial state is unselected
-		expect(monday.prop('className')).not.toMatch(/selected/);
-		expect(wednesday.prop('className')).not.toMatch(/selected/);
-		expect(friday.prop('className')).not.toMatch(/selected/);
+		expect(monday.getAttribute('class')).not.toMatch(/selected/);
+		expect(wednesday.getAttribute('class')).not.toMatch(/selected/);
+		expect(friday.getAttribute('class')).not.toMatch(/selected/);
 
-		monday.simulate('click');
-		friday.simulate('click');
+		fireEvent.click(monday);
+		fireEvent.click(friday);
 
-		cmp.update();
-		dayNodes = cmp.find('.course-panel-day');
-		monday = dayNodes.at(1);
-		wednesday = dayNodes.at(3);
-		friday = dayNodes.at(5);
-
-		// after clicking, they should be selected (except wednesday, which wasn't clicked)
-		expect(monday.prop('className')).toMatch(/selected/);
-		expect(wednesday.prop('className')).not.toMatch(/selected/);
-		expect(friday.prop('className')).toMatch(/selected/);
+		await waitFor(() => {
+			// after clicking, they should be selected (except wednesday, which wasn't clicked)
+			expect(monday.getAttribute('class')).toMatch(/selected/);
+			expect(wednesday.getAttribute('class')).not.toMatch(/selected/);
+			expect(friday.getAttribute('class')).toMatch(/selected/);
+		});
 	});
 
 });

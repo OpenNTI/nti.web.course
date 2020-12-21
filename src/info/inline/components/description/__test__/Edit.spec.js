@@ -1,6 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
-import {RichText} from '@nti/web-editor';
+import { render, fireEvent } from '@testing-library/react';
 
 import Edit from '../Edit';
 
@@ -15,13 +14,12 @@ describe('Description edit test', () => {
 			'RichDescription': desc
 		};
 
-		const cmp = mount(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
+		const x = render(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
+		const input = x.container.querySelector('.rich-text-editor');
 
-		const input = cmp.find(RichText).first();
+		expect(input.textContent).toEqual(desc);
 
-		expect(input.props().value).toEqual(desc);
-
-		input.simulate('change');
+		fireEvent.change(input);
 
 		expect(onChange).toHaveBeenCalledWith('RichDescription', desc);
 	});

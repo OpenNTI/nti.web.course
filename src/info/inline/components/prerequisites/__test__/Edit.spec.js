@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import Edit from '../Edit';
 
@@ -22,8 +22,8 @@ describe('Prerequisites edit test', () => {
 			'Prerequisites': prereqs
 		};
 
-		const cmp = mount(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry}/>);
 
-		expect(cmp.html()).toEqual('<div></div>');
+		expect(x.container.innerHTML).toEqual('<div></div>');
 	});
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import TabPanel from '../TabPanel';
 
@@ -21,62 +21,62 @@ describe('Settings TabPanel test', () => {
 	}
 
 	test('Test not publicly available, preview mode off', () => {
-		let cmp = mount(
+		const {container: root} = render(
 			<TabPanel
 				catalogEntry={makeCatalogEntry(true, false, null)}
 			/>
 		);
 
-		const publiclyAvailableOption = cmp.find('.publicly-available-option').first();
+		const publiclyAvailableOption = root.querySelector('.publicly-available-option');
 
-		expect(publiclyAvailableOption.text()).toMatch(/Off/);
-		expect(publiclyAvailableOption.find('.toggle-button').first().prop('className')).toMatch(/ off/);
+		expect(publiclyAvailableOption.textContent).toMatch(/Off/);
+		expect(publiclyAvailableOption.querySelector('.toggle-button').getAttribute('class')).toMatch(/ off/);
 
-		const previewModeOption = cmp.find('.preview-mode-option').first();
+		const previewModeOption = root.querySelector('.preview-mode-option');
 
-		expect(previewModeOption.text()).toMatch(/Off/);
-		expect(previewModeOption.text()).toMatch(/Course is visible/);
+		expect(previewModeOption.textContent).toMatch(/Off/);
+		expect(previewModeOption.textContent).toMatch(/Course is visible/);
 	});
 
 	test('Test publicly available', () => {
-		let cmp = mount(
+		const {container: root} = render(
 			<TabPanel
 				catalogEntry={makeCatalogEntry(false, false, null)}
 			/>
 		);
 
-		const publiclyAvailableOption = cmp.find('.publicly-available-option').first();
+		const publiclyAvailableOption = root.querySelector('.publicly-available-option');
 
-		expect(publiclyAvailableOption.text()).toMatch(/On/);
-		expect(publiclyAvailableOption.find('.toggle-button').first().prop('className')).toMatch(/ on/);
+		expect(publiclyAvailableOption.textContent).toMatch(/On/);
+		expect(publiclyAvailableOption.querySelector('.toggle-button').getAttribute('class')).toMatch(/ on/);
 	});
 
 	test('Test null preview, no start date', () => {
-		let cmp = mount(
+		const {container: root} = render(
 			<TabPanel
 				catalogEntry={makeCatalogEntry(false, null, null)}
 			/>
 		);
 
-		const previewModeOption = cmp.find('.preview-mode-option').first();
+		const previewModeOption = root.querySelector('.preview-mode-option');
 
-		expect(previewModeOption.text()).toMatch(/Based on start date/);
-		expect(previewModeOption.text()).toMatch(/No start date found/);
-		expect(previewModeOption.find('.preview-date-info').first().prop('className')).toMatch(/ warning/);
+		expect(previewModeOption.textContent).toMatch(/Based on start date/);
+		expect(previewModeOption.textContent).toMatch(/No start date found/);
+		expect(previewModeOption.querySelector('.preview-date-info').getAttribute('class')).toMatch(/ warning/);
 	});
 
 	test('Test null preview with start date', () => {
-		let cmp = mount(
+		const { container: root } = render(
 			<TabPanel
 				catalogEntry={makeCatalogEntry(false, null, new Date('4/5/2017'))}
 			/>
 		);
 
-		const previewModeOption = cmp.find('.preview-mode-option').first();
+		const previewModeOption = root.querySelector('.preview-mode-option');
 
-		expect(previewModeOption.text()).toMatch(/Based on start date/);
-		expect(previewModeOption.text()).toMatch(/April 5th 2017, 12:00 am/);
-		expect(previewModeOption.find('.preview-date-info').first().prop('className')).not.toMatch(/ warning/);
+		expect(previewModeOption.textContent).toMatch(/Based on start date/);
+		expect(previewModeOption.textContent).toMatch(/April 5th 2017, 12:00 am/);
+		expect(previewModeOption.querySelector('.preview-date-info').getAttribute('class')).not.toMatch(/ warning/);
 	});
 
 });

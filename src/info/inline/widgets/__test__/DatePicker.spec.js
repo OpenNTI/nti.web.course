@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import DatePicker from '../DatePicker';
 
@@ -8,24 +8,24 @@ describe('DatePicker test', () => {
 	const date = new Date(2017,2,3);
 
 	test('Test empty text', () => {
-		const cmp = mount(<DatePicker/>);
+		const x = render(<DatePicker/>);
 
-		const dateEl = cmp.find('.date').first();
+		const dateEl = x.container.querySelector('.date');
 
-		expect(dateEl.text()).toEqual('Set a Date');
-		expect(dateEl.prop('className')).toMatch(/no-date/);
+		expect(dateEl.textContent).toEqual('Set a Date');
+		expect(dateEl.getAttribute('class')).toMatch(/no-date/);
 	});
 
 	test('Test date text', () => {
-		const cmp = mount(<DatePicker date={date}/>);
+		const x = render(<DatePicker date={date}/>);
 
-		const dateEl = cmp.find('.date').first();
+		const dateEl = x.container.querySelector('.date');
 
-		expect(dateEl.text()).toMatch(/March 3, 2017/);
-		expect(dateEl.prop('className')).not.toMatch(/no-date/);
+		expect(dateEl.textContent).toMatch(/March 3, 2017/);
+		expect(dateEl.getAttribute('class')).not.toMatch(/no-date/);
 
-		const dateInfoEl = dateEl.find('.date-info').first();
+		const dateInfoEl = dateEl.querySelector('.date-info');
 
-		expect(dateInfoEl.text()).toEqual('Friday at 12:00 am UTC');
+		expect(dateInfoEl.textContent).toEqual('Friday at 12:00 am UTC');
 	});
 });

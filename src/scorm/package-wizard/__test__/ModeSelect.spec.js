@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import ModeSelect from '../ModeSelect';
 
@@ -32,42 +32,41 @@ describe('ModeSelect view test', () => {
 			mode = newValue;
 		};
 
-		const cmp = mount(
+		const x = render(
 			<ModeSelect onModeSelect={onModeSelect} saveCmp={SaveButton}/>
 		);
 
-		const updateOption = cmp.find('.mode-option').first();
-		const replaceOption = cmp.find('.mode-option').at(1);
+		const [updateOption, replaceOption] = x.container.querySelectorAll('.mode-option');
 
-		expect(updateOption.find('.name').text()).toEqual('Update Package');
-		expect(updateOption.find('.description').text()).toEqual('Learner progress will be kept, but it will adjust if content was added or removed.');
-		expect(updateOption.find('.hint').text()).toEqual('Better for Small Changes');
+		expect(updateOption.querySelector('.name').textContent).toEqual('Update Package');
+		expect(updateOption.querySelector('.description').textContent).toEqual('Learner progress will be kept, but it will adjust if content was added or removed.');
+		expect(updateOption.querySelector('.hint').textContent).toEqual('Better for Small Changes');
 
-		expect(replaceOption.find('.name').text()).toEqual('Replace Package');
-		expect(replaceOption.find('.description').text()).toEqual('Replacing a course package will reset learner progress. All progress will be lost.');
-		expect(replaceOption.find('.hint').text()).toEqual('Better for Larger Changes');
+		expect(replaceOption.querySelector('.name').textContent).toEqual('Replace Package');
+		expect(replaceOption.querySelector('.description').textContent).toEqual('Replacing a course package will reset learner progress. All progress will be lost.');
+		expect(replaceOption.querySelector('.hint').textContent).toEqual('Better for Larger Changes');
 
 		// nothing selected at the beginning
-		expect(cmp.find('.mode-option').first().prop('className')).not.toMatch(/selected/);
-		expect(cmp.find('.mode-option').at(1).prop('className')).not.toMatch(/selected/);
+		expect(updateOption.getAttribute('class')).not.toMatch(/selected/);
+		expect(replaceOption.getAttribute('class')).not.toMatch(/selected/);
 
-		updateOption.simulate('click');
+		fireEvent.click(updateOption);
 
 		// after update click, only update is selected
-		expect(cmp.find('.mode-option').first().prop('className')).toMatch(/selected/);
-		expect(cmp.find('.mode-option').at(1).prop('className')).not.toMatch(/selected/);
+		expect(updateOption.getAttribute('class')).toMatch(/selected/);
+		expect(replaceOption.getAttribute('class')).not.toMatch(/selected/);
 
-		cmp.find('.course-panel-continue').first().simulate('click');
+		fireEvent.click(x.container.querySelector('.course-panel-continue'));
 
 		expect(mode).toEqual('UpdateSCORM');
 
-		replaceOption.simulate('click');
+		fireEvent.click(replaceOption);
 
 		// after replace is clicked, selected switches from update to replace card
-		expect(cmp.find('.mode-option').first().prop('className')).not.toMatch(/selected/);
-		expect(cmp.find('.mode-option').at(1).prop('className')).toMatch(/selected/);
+		expect(updateOption.getAttribute('class')).not.toMatch(/selected/);
+		expect(replaceOption.getAttribute('class')).toMatch(/selected/);
 
-		cmp.find('.course-panel-continue').first().simulate('click');
+		fireEvent.click(x.container.querySelector('.course-panel-continue'));
 
 		expect(mode).toEqual('ImportSCORM');
 	});

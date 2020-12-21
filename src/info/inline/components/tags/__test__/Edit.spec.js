@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import Edit from '../Edit';
 
@@ -12,18 +12,18 @@ describe('Tags edit test', () => {
 			tags
 		};
 
-		const cmp = mount(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry}/>);
 
-		const tokens = cmp.find('div.token');
+		const tokens = x.container.querySelectorAll('div.token');
 
 		expect(tokens.length).toEqual(3);
 
 		for(let i = 0; i < tags.length; i++) {
-			expect(tokens.at(i).text()).toEqual(tags[i].toUpperCase());
+			expect(tokens[i].textContent).toEqual(tags[i].toUpperCase());
 		}
 
 		// there should be an input representing the next token as the user types
-		const inputs = cmp.find('input');
+		const inputs = x.container.querySelectorAll('input');
 
 		expect(inputs.length).toEqual(1);
 	});

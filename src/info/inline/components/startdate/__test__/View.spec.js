@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import View from '../View';
 
@@ -18,8 +18,8 @@ describe('Start date view test', () => {
 			}
 		};
 
-		const cmp = mount(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry}/>);
 
-		expect(cmp.find('.content-column').text()).toEqual('August 17, 2015Monday at 07:00 pm UTC');
+		expect(x.container.querySelector('.content-column').textContent).toEqual('August 17, 2015Monday at 07:00 pm UTC');
 	});
 });

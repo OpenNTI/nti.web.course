@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import CourseEditor from '../CourseEditor';
 
@@ -46,7 +46,7 @@ describe('CourseEditor test', () => {
 		description: mockDescription
 	};
 
-	const getCmp = () => mount(
+	const getCmp = () => render(
 		<CourseEditor
 			title={mockTitle}
 			catalogEntry={catalogEntry}
@@ -74,57 +74,45 @@ describe('CourseEditor test', () => {
 	afterEach(onAfter);
 
 	test('Test labels', () => {
-		const cmp = getCmp();
+		const {container:root} = getCmp();
 
-		expect(cmp.find('.course-id').first().text()).toEqual(mockID);
-		expect(cmp.find('.course-title').first().text()).toEqual(mockTitle);
+		expect(root.querySelector('.course-id').textContent).toEqual(mockID);
+		expect(root.querySelector('.course-title').textContent).toEqual(mockTitle);
 	});
 
-	test('Test save', (done) => {
-		const cmp = getCmp();
+	test('Test save', async () => {
+		const {container: root} = getCmp();
 
-		const saveButton = cmp.find('.course-panel-continue').first();
+		const saveButton = root.querySelector('.course-panel-continue');
 
-		saveButton.simulate('click');
+		fireEvent.click(saveButton);
 
-		const verifyCalled = () => {
+		await waitFor(() => {
 			expect(mockSave).toHaveBeenCalled();
-
-			done();
-		};
-
-		verifyCalled();
+		});
 	});
 
-	test('Test close', (done) => {
-		const cmp = getCmp();
+	test('Test close', async () => {
+		const {container: root} = getCmp();
 
-		const closeButton = cmp.find('.close').first();
+		const closeButton = root.querySelector('.close');
 
-		closeButton.simulate('click');
+		fireEvent.click(closeButton);
 
-		const verifyCalled = () => {
+		await waitFor(() => {
 			expect(onCancelMock).toHaveBeenCalled();
-
-			done();
-		};
-
-		verifyCalled();
+		});
 	});
 
-	test('Test cancel', (done) => {
-		const cmp = getCmp();
+	test('Test cancel', async () => {
+		const {container: root} = getCmp();
 
-		const cancelButton = cmp.find('.course-panel-cancel').first();
+		const cancelButton = root.querySelector('.course-panel-cancel');
 
-		cancelButton.simulate('click');
+		fireEvent.click(cancelButton);
 
-		const verifyCalled = () => {
+		await waitFor(() => {
 			expect(onCancelMock).toHaveBeenCalled();
-
-			done();
-		};
-
-		verifyCalled();
+		});
 	});
 });

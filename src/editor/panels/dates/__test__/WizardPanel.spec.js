@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import WizardPanel from '../WizardPanel';
 
@@ -19,15 +19,20 @@ describe('Dates WizardPanel test', () => {
 	const afterSave = jest.fn();
 	const buttonLabel = 'Test Label';
 
-	let cmp = mount(
-		<WizardPanel
-			catalogEntry={catalogEntry}
-			saveCmp={SaveButton}
-			onCancel={onCancel}
-			afterSave={afterSave}
-			buttonLabel={buttonLabel}
-		/>
-	);
+	let result, root, cmp;
+	beforeEach(() => {
+		result = render(
+			<WizardPanel
+				ref={x => cmp = x}
+				catalogEntry={catalogEntry}
+				saveCmp={SaveButton}
+				onCancel={onCancel}
+				afterSave={afterSave}
+				buttonLabel={buttonLabel}
+			/>
+		);
+		root = result.container;
+	});
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
@@ -43,47 +48,43 @@ describe('Dates WizardPanel test', () => {
 	}
 
 	test('Test save button', async () => {
-		const node = cmp.find('.course-panel-continue').first();
+		const node = root.querySelector('.course-panel-continue');
 
-		expect(node.text()).toBe(buttonLabel);
+		expect(node.textContent).toBe(buttonLabel);
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
-
-		expect(mockSave).toHaveBeenCalled();
-		expect(afterSave).toHaveBeenCalled();
+		await waitFor(() => {
+			expect(mockSave).toHaveBeenCalled();
+			expect(afterSave).toHaveBeenCalled();
+		});
 	});
 
 	test('Test cancel button', async () => {
-		const node = cmp.find('.course-panel-cancel').first();
+		const node = root.querySelector('.course-panel-cancel');
 
-		expect(node.text()).toBe('Cancel');
+		expect(node.textContent).toBe('Cancel');
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
-
-		expect(onCancel).toHaveBeenCalled();
+		await waitFor(() =>
+			expect(onCancel).toHaveBeenCalled());
 	});
 
-	test('Test date fields', () => {
-		let startDate = cmp.find('.date').first();
-		let endDate = cmp.find('.date').last();
+	test('Test date fields', async () => {
+		const [startDate, endDate] = root.querySelectorAll('.date');
 
 		// initial state, startDate selected, endDate not selected
-		expect(startDate.prop('className')).toMatch(/selected/);
-		expect(endDate.prop('className')).not.toMatch(/selected/);
+		expect(startDate.getAttribute('class')).toMatch(/selected/);
+		expect(endDate.getAttribute('class')).not.toMatch(/selected/);
 
-		endDate.simulate('click');
+		fireEvent.click(endDate);
 
-		cmp.update();
-		startDate = cmp.find('.date').first();
-		endDate = cmp.find('.date').last();
-
-		// after clicking end date, states should swap: now startDate not selected, endDate selected
-		expect(startDate.prop('className')).not.toMatch(/selected/);
-		expect(endDate.prop('className')).toMatch(/selected/);
+		await waitFor(() => {
+			// after clicking end date, states should swap: now startDate not selected, endDate selected
+			expect(startDate.getAttribute('class')).not.toMatch(/selected/);
+			expect(endDate.getAttribute('class')).toMatch(/selected/);
+		});
 	});
 
 });

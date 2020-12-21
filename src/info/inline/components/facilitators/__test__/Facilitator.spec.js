@@ -1,11 +1,9 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import Facilitator from '../Facilitator';
 
 import {labels} from './Role.spec';
-
-const wait = x => new Promise(f => setTimeout(f, x));
 
 const mockService = () => ({
 	getObject: (o) => Promise.resolve(o),
@@ -63,62 +61,59 @@ describe('Facilitator component test', () => {
 	afterEach(onAfter);
 
 	test('Test view', async () => {
-		const cmp = mount(<Facilitator facilitator={facilitator} courseInstance={courseInstance}/>);
+		let cmp;
+		const x = render(<Facilitator ref={_ => cmp = _} facilitator={facilitator} courseInstance={courseInstance}/>);
 
-		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.role').exists()).toBe(false); // view-only should not see roles
-		expect(cmp.find('.title').first().text()).toEqual(title);
+		expect(x.container.querySelector('.name').textContent).toEqual(display);
+		expect(x.container.querySelector('.role')).toBeFalsy(); // view-only should not see roles
+		expect(x.container.querySelector('.title').textContent).toEqual(title);
 
-		await wait(100);
+		await waitFor(() => {
 
-		cmp.update();
+			expect(cmp.state.validImage).toBe(true);
 
-		expect(cmp.state().validImage).toBe(true);
-
-		expect(cmp.find('.image').first().prop('style').backgroundImage).toEqual('url(goodURL)');
-
+			expect(x.container.querySelector('.image').style.backgroundImage).toEqual('url(goodURL)');
+		});
 	});
 
 	test('Test edit', () => {
 		const onRemove = jest.fn();
 
-		const cmp = mount(<Facilitator facilitator={facilitator} courseInstance={courseInstance} onRemove={onRemove} editable/>);
+		const x = render(<Facilitator facilitator={facilitator} courseInstance={courseInstance} onRemove={onRemove} editable/>);
 
-		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.role').first().text()).toEqual(labels.assistant);
-		expect(cmp.find('.title .job-title-input').first().props().value).toEqual(title);
+		expect(x.container.querySelector('.name').textContent).toEqual(display);
+		expect(x.container.querySelector('.role').textContent).toEqual(labels.assistant);
+		expect(x.container.querySelector('.title .job-title-input').value).toEqual(title);
 
-		cmp.find('.delete-facilitator').first().simulate('click');
+		fireEvent.click(x.container.querySelector('.delete-facilitator'));
 
 		expect(onRemove).toHaveBeenCalledWith(facilitator);
 	});
 
-	test('Test invalid image', (done) => {
+	test('Test invalid image', async () => {
 		const facilitatorBadImage = {
 			...facilitator,
 			imageUrl: 'badURL'
 		};
 
-		const cmp = mount(<Facilitator facilitator={facilitatorBadImage} courseInstance={courseInstance}/>);
+		let cmp;
+		const x = render(<Facilitator ref={_ => cmp = _} facilitator={facilitatorBadImage} courseInstance={courseInstance}/>);
 
-		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.role').exists()).toBe(false); // view-only should not see roles
-		expect(cmp.find('.title').first().text()).toEqual(title);
+		expect(x.container.querySelector('.name').textContent).toEqual(display);
+		expect(x.container.querySelector('.role')).toBeFalsy(); // view-only should not see roles
+		expect(x.container.querySelector('.title').textContent).toEqual(title);
 
-		setTimeout(() => {
+		await waitFor(() =>
 			// verify that the image validation failed
-			expect(cmp.state().validImage).toBe(false);
+			expect(cmp.state.validImage).toBe(false));
 
-			// update props with facilitator with valid image URL
-			cmp.setProps({facilitator});
+		// update props with facilitator with valid image URL
+		x.rerender(<Facilitator ref={_ => cmp = _} facilitator={facilitator} courseInstance={courseInstance}/>);
 
-			setTimeout(() => {
-				// verify that the image validation passed now
-				expect(cmp.state().validImage).toBe(true);
-
-				done();
-			}, 200);
-		}, 200);
+		await waitFor(() => {
+			// verify that the image validation passed now
+			expect(cmp.state.validImage).toBe(true);
+		});
 	});
 
 	test('Test self user', () => {
@@ -127,12 +122,12 @@ describe('Facilitator component test', () => {
 			username: 'TestUser'
 		};
 
-		const cmp = mount(<Facilitator facilitator={myUser} courseInstance={courseInstance} editable/>);
+		const x = render(<Facilitator facilitator={myUser} courseInstance={courseInstance} editable/>);
 
-		expect(cmp.find('.name').first().text()).toEqual(display);
-		expect(cmp.find('.role').first().text()).toEqual(labels.assistant);
-		expect(cmp.find('.title .job-title-input').first().props().value).toEqual(title);
+		expect(x.container.querySelector('.name').textContent).toEqual(display);
+		expect(x.container.querySelector('.role').textContent).toEqual(labels.assistant);
+		expect(x.container.querySelector('.title .job-title-input').value).toEqual(title);
 
-		expect(cmp.find('.delete-facilitator').exists()).toBe(true);
+		expect(x.container.querySelector('.delete-facilitator')).toBeTruthy();
 	});
 });

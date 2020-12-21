@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 
 import Edit from '../Edit';
 
@@ -14,14 +14,14 @@ describe('Title edit test', () => {
 			'title': title
 		};
 
-		const cmp = mount(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
+		const x = render(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
 
-		const input = cmp.find('.title-input').first();
+		const input = x.container.querySelector('.title-input');
 
-		expect(input.props().value).toEqual(title);
+		expect(input.value).toEqual(title);
 
-		input.simulate('change');
+		fireEvent.change(input, {target: {value: 'new'}});
 
-		expect(onChange).toHaveBeenCalledWith('title', title);
+		expect(onChange).toHaveBeenCalledWith('title', 'new');
 	});
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 
 import Role from '../Role';
 
@@ -14,11 +14,11 @@ describe('Role test', () => {
 	test('Test assistant', () => {
 		const onClick = jest.fn();
 
-		const cmp = mount(<Role role="assistant" onClick={onClick}/>);
+		const x = render(<Role role="assistant" onClick={onClick}/>);
 
-		expect(cmp.text()).toEqual(labels.assistant);
+		expect(x.container.textContent).toEqual(labels.assistant);
 
-		cmp.simulate('click');
+		fireEvent.click(x.container.querySelector('.role-option'));
 
 		expect(onClick).toHaveBeenCalled();
 	});
@@ -26,11 +26,11 @@ describe('Role test', () => {
 	test('Test Editor', () => {
 		const onClick = jest.fn();
 
-		const cmp = mount(<Role role="editor" onClick={onClick}/>);
+		const x = render(<Role role="editor" onClick={onClick}/>);
 
-		expect(cmp.text()).toEqual(labels.editor);
+		expect(x.container.textContent).toEqual(labels.editor);
 
-		cmp.simulate('click');
+		fireEvent.click(x.container.querySelector('.role-option'));
 
 		expect(onClick).toHaveBeenCalled();
 	});
@@ -38,11 +38,11 @@ describe('Role test', () => {
 	test('Test Instructor', () => {
 		const onClick = jest.fn();
 
-		const cmp = mount(<Role role="instructor" onClick={onClick}/>);
+		const x = render(<Role role="instructor" onClick={onClick}/>);
 
-		expect(cmp.text()).toEqual(labels.instructor);
+		expect(x.container.textContent).toEqual(labels.instructor);
 
-		cmp.simulate('click');
+		fireEvent.click(x.container.querySelector('.role-option'));
 
 		expect(onClick).toHaveBeenCalled();
 	});

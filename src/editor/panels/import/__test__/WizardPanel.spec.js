@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import WizardPanel from '../WizardPanel';
 
@@ -71,7 +71,7 @@ const onBefore = () => {
 };
 
 const onAfter = () => {
-	//unmock getService()
+	//un-mock getService()
 	const {$AppConfig} = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
@@ -111,7 +111,7 @@ describe('Import panel test', () => {
 	}
 
 	test('Test initial appearance is correct', () => {
-		const cmp = mount(
+		const {container} = render(
 			<WizardPanel
 				catalogEntry={catalogEntry}
 				saveCmp={SaveButton}
@@ -121,9 +121,9 @@ describe('Import panel test', () => {
 			/>
 		);
 
-		const input = cmp.find('input').first();
+		const input = container.querySelector('input');
 
-		expect(input.prop('type')).toEqual('file');
-		expect(input.prop('accept')).toEqual('.zip');
+		expect(input.getAttribute('type')).toEqual('file');
+		expect(input.getAttribute('accept')).toEqual('.zip');
 	});
 });

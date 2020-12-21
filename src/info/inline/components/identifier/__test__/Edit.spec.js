@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import Edit from '../Edit';
 
@@ -7,21 +7,22 @@ import Edit from '../Edit';
 describe('Department edit test', () => {
 	const onChange = jest.fn();
 
-	test('Test identifier edit', () => {
+	test('Test identifier edit', async () => {
 		const identifier = 'ABC123';
 
 		const catalogEntry = {
 			'ProviderUniqueID': identifier
 		};
 
-		const cmp = mount(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
+		const {container} = render(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
 
-		const input = cmp.find('.identifier-input').first();
+		const input = container.querySelector('input.identifier-input');
 
-		expect(input.props().value).toEqual(identifier);
+		expect(input.value).toEqual(identifier);
 
-		input.simulate('change');
+		fireEvent.change(input, {target: {value: 'nope'}});
 
-		expect(onChange).toHaveBeenCalledWith('ProviderUniqueID', identifier);
+		await waitFor(() =>
+			expect(onChange).toHaveBeenCalledWith('ProviderUniqueID', 'nope'));
 	});
 });

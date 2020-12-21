@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { TestUtils } from '@nti/web-client';
 
 import CourseWizard from '../CourseWizard';
@@ -13,7 +13,7 @@ describe('CourseWizard test', () => {
 	const onSaveMock = jest.fn();
 	const mockTitle = 'Course for editing';
 
-	let cmp;
+	let root;
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
@@ -28,7 +28,7 @@ describe('CourseWizard test', () => {
 		);
 	}
 
-	beforeAll(() => {
+	beforeEach(() => {
 		setupTestClient({
 			getWorkspace: () => {
 				return {};
@@ -40,67 +40,49 @@ describe('CourseWizard test', () => {
 			}
 		});
 
-		cmp = mount(
+		({container: root} = render(
 			<CourseWizard
 				title={mockTitle}
 				onCancel={onCancelMock}
 				onSave={onSaveMock}
 				saveCmp={SaveButton}
 			/>
-		);
+		));
 	});
 
-	afterAll(() => {
+	afterEach(() => {
 		tearDownTestClient();
 	});
 
-	test('Test available templates', (done) => {
-		const verify = () => {
-			cmp.update();
+	test('Test available templates', async () => {
+		await waitFor(() => {
 
-			const templateNames = cmp.find('.template-name');
+			const templateNames = root.querySelectorAll('.template-name');
 
 			expect(templateNames.length).toEqual(3);
 
-			expect(templateNames.at(0).text()).toEqual('Blank');
-			expect(templateNames.at(1).text()).toEqual('Import');
-			expect(templateNames.at(2).text()).toEqual('Scorm');
-
-			done();
-		};
-
-		setTimeout(verify, 300);
+			expect(templateNames[0].textContent).toEqual('Blank');
+			expect(templateNames[1].textContent).toEqual('Import');
+			expect(templateNames[2].textContent).toEqual('Scorm');
+		});
 	});
 
-	test('Test close', (done) => {
-		const verify = () => {
-			cmp.update();
+	test('Test close', async () => {
+		await waitFor(() => {
+			const closeButton = root.querySelector('.close');
+			expect(closeButton).toBeTruthy();
+			fireEvent.click(closeButton);
+		});
 
-			const closeButton = cmp.find('.close');
-
-			closeButton.simulate('click');
-
-			expect(onCancelMock).toHaveBeenCalled();
-
-			done();
-		};
-
-		setTimeout(verify, 300);
+		expect(onCancelMock).toHaveBeenCalled();
 	});
 
-	test('Test cancel', (done) => {
-		const verify = () => {
-			cmp.update();
-
-			const cancelButton = cmp.find('.course-panel-cancel').first();
-
-			cancelButton.simulate('click');
-
-			expect(onCancelMock).toHaveBeenCalled();
-
-			done();
-		};
-
-		setTimeout(verify, 300);
+	test('Test cancel', async () => {
+		await waitFor(() => {
+			const cancelButton = root.querySelector('.course-panel-cancel');
+			expect(cancelButton).toBeTruthy();
+			fireEvent.click(cancelButton);
+		});
+		expect(onCancelMock).toHaveBeenCalled();
 	});
 });

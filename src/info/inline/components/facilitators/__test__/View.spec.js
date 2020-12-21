@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import View from '../View';
 
@@ -55,21 +55,21 @@ describe('Facilitators view test', () => {
 	afterEach(onAfter);
 
 	test('Test non-editor view', () => {
-		const cmp = mount(<View facilitators={facilitators} courseInstance={courseInstance}/>);
+		const x = render(<View facilitators={facilitators} courseInstance={courseInstance}/>);
 
-		const items = cmp.find('.facilitator');
+		const find = _ => x.container.querySelector(`.facilitator ${_}`);
 
-		expect(items.first().find('.name').first().text()).toEqual('Visible Assistant');
-		expect(items.first().find('.type').exists()).toBe(false); // view-only should not see role
-		expect(items.first().find('.title').first().text()).toEqual('visible');
+		expect(find('.name').textContent).toEqual('Visible Assistant');
+		expect(find('.type')).toBeFalsy(); // view-only should not see role
+		expect(find('.title').textContent).toEqual('visible');
 	});
 
 	test('Test editor view', () => {
-		const cmp = mount(<View facilitators={facilitators} courseInstance={courseInstance} editable/>);
+		const x = render(<View facilitators={facilitators} courseInstance={courseInstance} editable/>);
 
-		const items = cmp.find('.facilitator');
+		const find = _ => x.container.querySelector(`.facilitator ${_}`);
 
-		expect(items.first().find('.name').first().text()).toEqual('Visible Assistant');
-		expect(items.first().find('.title').first().text()).toEqual('visible');
+		expect(find('.name').textContent).toEqual('Visible Assistant');
+		expect(find('.title').textContent).toEqual('visible');
 	});
 });

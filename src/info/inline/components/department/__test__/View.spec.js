@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import View from '../View';
 
@@ -12,8 +12,8 @@ describe('Department view test', () => {
 			'ProviderDepartmentTitle': depName
 		};
 
-		const cmp = mount(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry}/>);
 
-		expect(cmp.find('.content-column').text()).toEqual(depName);
+		expect(x.container.querySelector('.content-column').textContent).toEqual(depName);
 	});
 });

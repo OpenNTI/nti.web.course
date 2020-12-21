@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import CourseListing from '../CourseListing';
 
@@ -48,7 +48,7 @@ const onBefore = () => {
 };
 
 const onAfter = () => {
-	//unmock getService()
+	//un-mock getService()
 	const {$AppConfig} = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
@@ -62,28 +62,33 @@ describe('CourseListing test', () => {
 	test('Test admin load and display courses', async () => {
 		const onClick = jest.fn();
 
-		const cmp = mount(<CourseListing
-			onCourseClick={onClick}
-			isAdministrative
-		/>);
+		let cmp;
+		const x = render(
+			<CourseListing
+				ref={_ => cmp = _}
+				onCourseClick={onClick}
+				isAdministrative
+			/>
+		);
 
-		expect(cmp.state().loading).toBe(true);
-		expect(cmp.find('.loading').first().exists()).toBe(true);
+		const find = s => x.container.querySelector(s);
+		const findAll = s => x.container.querySelectorAll(s);
 
-		await wait(100); //FIXME: it would be better to get the loading promise from the component and await that.
+		expect(cmp.state.loading).toBe(true);
+		expect(find('.loading')).toBeTruthy();
 
-		cmp.update();
+		await waitFor(() => expect(cmp.state.loading).toBe(false));
 
-		expect(cmp.state().loading).toBe(false);
+		const [a, b] = findAll('.course-meta');
 
-		expect(cmp.find('.course-meta').at(0).text()).toEqual('CRS1Course1');
-		expect(cmp.find('.course-meta').at(1).text()).toEqual('CRS2Course2');
+		expect(a.textContent).toEqual('CRS1Course1');
+		expect(b.textContent).toEqual('CRS2Course2');
 
 		// there should be admin controls on each card
-		expect(cmp.find('.admin-controls').length).toBe(2);
+		expect(findAll('.admin-controls').length).toBe(2);
 
 		// admins should be able to click cards
-		cmp.find('.course-item').first().simulate('click');
+		fireEvent.click(find('.course-item'));
 
 		expect(onClick).toHaveBeenCalled();
 	});
@@ -91,27 +96,32 @@ describe('CourseListing test', () => {
 	test('Test non-admin load and display courses', async () => {
 		const onClick = jest.fn();
 
-		const cmp = mount(<CourseListing
-			onCourseClick={onClick}
-		/>);
+		let cmp;
+		const x = render(
+			<CourseListing
+				ref={_ => cmp = _}
+				onCourseClick={onClick}
+			/>
+		);
 
-		expect(cmp.state().loading).toBe(true);
-		expect(cmp.find('.loading').first().exists()).toBe(true);
+		const find = s => x.container.querySelector(s);
+		const findAll = s => x.container.querySelectorAll(s);
 
-		await wait(100); //FIXME: it would be better to get the loading promise from the component and await that.
+		expect(cmp.state.loading).toBe(true);
+		expect(find('.loading')).toBeTruthy();
 
-		cmp.update();
+		await waitFor(() => expect(cmp.state.loading).toBe(false));
 
-		expect(cmp.state().loading).toBe(false);
+		const [a, b] = findAll('.course-meta');
 
-		expect(cmp.find('.course-meta').at(0).text()).toEqual('CRS1Course1');
-		expect(cmp.find('.course-meta').at(1).text()).toEqual('CRS2Course2');
+		expect(a.textContent).toEqual('CRS1Course1');
+		expect(b.textContent).toEqual('CRS2Course2');
 
 		// there should NOT be admin controls for non-admins
-		expect(cmp.find('.admin-controls').length).toBe(0);
+		expect(findAll('.admin-controls').length).toBe(0);
 
 		// non-admins can still click courses
-		cmp.find('.course-item').first().simulate('click');
+		fireEvent.click(find('.course-item'));
 
 		expect(onClick).toHaveBeenCalled();
 	});

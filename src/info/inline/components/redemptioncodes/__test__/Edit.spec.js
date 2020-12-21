@@ -1,5 +1,5 @@
 // import React from 'react';
-// import { mount } from 'enzyme';
+// import { render } from '@testing-library/react';
 
 // import Edit from '../Edit';
 
@@ -18,8 +18,8 @@ describe('Redemption codes edit test', () => {
 		// 	}
 		// ];
 
-		// const cmp = mount(<Edit redemptionCodes={redemptionCodes}/>);
+		// const result = render(<Edit redemptionCodes={redemptionCodes}/>);
 
-		// expect(cmp.html()).toEqual('<div></div>');
+		// expect(result.container.innerHtml).toEqual('<div></div>');
 	});
 });

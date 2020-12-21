@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import CourseCard from '../CourseCard';
 
@@ -16,27 +16,30 @@ describe('CourseCard test', () => {
 		ProviderUniqueID: mockID
 	};
 
-	const cmp = mount(<CourseCard
-		course={course}
-		onClick={onClick}
-		onEdit={onEdit}
-		isAdministrative
-	/>);
-
-	test('Test labels', () => {
-		expect(cmp.find('.course-id').first().text()).toEqual(mockID);
-		expect(cmp.find('.course-title').first().text()).toEqual(mockTitle);
+	let result;
+	beforeEach(() => {
+		result = render(
+			<CourseCard
+				course={course}
+				onClick={onClick}
+				onEdit={onEdit}
+				isAdministrative
+			/>
+		);
 	});
 
-	test('Test card click', (done) => {
-		cmp.simulate('click');
+	const find = x => result.container.querySelector(x);
 
-		const verifyCalled = () => {
+	test('Test labels', () => {
+		expect(find('.course-id').textContent).toEqual(mockID);
+		expect(find('.course-title').textContent).toEqual(mockTitle);
+	});
+
+	test('Test card click', async () => {
+		fireEvent.click(find('.course-item'));
+
+		await waitFor(() => {
 			expect(onClick).toHaveBeenCalled();
-
-			done();
-		};
-
-		setTimeout(verifyCalled, 300);
+		});
 	});
 });

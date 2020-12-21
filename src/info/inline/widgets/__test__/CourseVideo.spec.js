@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import CourseVideo from '../CourseVideo';
 
@@ -8,19 +8,17 @@ describe('CourseVideo test', () => {
 	const catalogEntry = {};
 
 	test('Test no video - view only', () => {
-		const cmp = mount(<CourseVideo catalogEntry={catalogEntry}/>);
+		const x = render(<CourseVideo catalogEntry={catalogEntry}/>);
 
-		expect(cmp.html()).toBe(null);
+		expect(x.container.innerHTML).toBe('');
 	});
 
 	test('Test no video - editable', () => {
-		const cmp = mount(<CourseVideo catalogEntry={catalogEntry} editable/>);
+		const x = render(<CourseVideo catalogEntry={catalogEntry} editable/>);
 
-		expect(cmp.find('.video-button').first().text()).toMatch(/Cover Video/);
+		expect(x.container.querySelector('.video-button').textContent).toMatch(/Cover Video/);
 
-		const buttons = cmp.find('.buttons').first();
-
-		expect(buttons.exists()).toBe(false);
+		expect(x.container.querySelector('.buttons')).toBeFalsy();
 	});
 
 	test('Test no video - editable', () => {
@@ -30,14 +28,13 @@ describe('CourseVideo test', () => {
 			}
 		};
 
-		const cmp = mount(<CourseVideo catalogEntry={catalogEntryWithVideo} editable/>);
+		const x = render(<CourseVideo catalogEntry={catalogEntryWithVideo} editable/>);
 
-		expect(cmp.find('.video-button').first().exists()).toBe(false);
+		expect(x.container.querySelector('.video-button')).toBeFalsy();
 
-		const buttons = cmp.find('.buttons').first();
+		const buttons = x.container.querySelector('.buttons');
 
-		expect(buttons.exists()).toBe(true);
-		expect(buttons.find('.change').first().exists()).toBe(true);
-		expect(buttons.find('.remove').first().exists()).toBe(true);
+		expect(buttons.querySelector('.change')).toBeTruthy();
+		expect(buttons.querySelector('.remove')).toBeTruthy();
 	});
 });

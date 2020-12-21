@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import AssetType from '../AssetType';
 
@@ -42,10 +42,10 @@ describe('AssetType test', () => {
 			presentationroot: '/root/'
 		};
 
-		const cmp = mount(<AssetType catalogEntry={catalogEntry} type="background"/>);
+		const x = render(<AssetType catalogEntry={catalogEntry} type="background"/>);
 
-		const img = cmp.find('img').first();
+		const img = x.container.querySelector('img');
 
-		expect(img.prop('src').indexOf('/root/background.png')).toEqual(0);
+		expect(img.getAttribute('src').indexOf('/root/background.png')).toEqual(0);
 	});
 });

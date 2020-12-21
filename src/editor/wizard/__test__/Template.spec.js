@@ -1,11 +1,11 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import Template from '../Template';
 
 /* eslint-env jest */
 describe('Template test', () => {
-	test('Test view', () => {
+	test('Test view', async () => {
 		const templateName = 'A TEMPLATE';
 		const templateDescription = 'A DESCRIPTION';
 		const onClick = jest.fn();
@@ -15,13 +15,14 @@ describe('Template test', () => {
 			description: templateDescription
 		};
 
-		const cmp = mount(<Template template={template} onClick={onClick}/>);
+		const {container: root} = render(<Template template={template} onClick={onClick}/>);
 
-		expect(cmp.find('.template-name').first().text()).toEqual(templateName);
-		expect(cmp.find('.template-description').first().text()).toEqual(templateDescription);
+		expect(root.querySelector('.template-name').textContent).toEqual(templateName);
+		expect(root.querySelector('.template-description').textContent).toEqual(templateDescription);
 
-		cmp.simulate('click');
+		fireEvent.click(root.querySelector('.item'));
 
-		expect(onClick).toHaveBeenCalled();
+		await waitFor(() =>
+			expect(onClick).toHaveBeenCalled());
 	});
 });

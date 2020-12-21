@@ -1,11 +1,9 @@
 /* eslint-env jest */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import TabPanel from '../TabPanel';
-
-const wait = x => new Promise(f => setTimeout(f, x));
 
 describe('Basic TabPanel test', () => {
 	const mockSave = jest.fn();
@@ -26,15 +24,18 @@ describe('Basic TabPanel test', () => {
 	const afterSave = jest.fn();
 	const buttonLabel = 'Test Label';
 
-	let cmp = mount(
-		<TabPanel
-			catalogEntry={catalogEntry}
-			saveCmp={SaveButton}
-			onCancel={onCancel}
-			afterSave={afterSave}
-			buttonLabel={buttonLabel}
-		/>
-	);
+	let result;
+	beforeEach(() => {
+		result = render(
+			<TabPanel
+				catalogEntry={catalogEntry}
+				saveCmp={SaveButton}
+				onCancel={onCancel}
+				afterSave={afterSave}
+				buttonLabel={buttonLabel}
+			/>
+		);
+	});
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
@@ -50,35 +51,34 @@ describe('Basic TabPanel test', () => {
 	}
 
 	test('Test save button', async () => {
-		const node = cmp.find('.course-panel-continue').first();
+		const node = result.container.querySelector('.course-panel-continue');
 
-		expect(node.text()).toBe(buttonLabel);
+		expect(node.textContent).toBe(buttonLabel);
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
-
-		expect(mockSave).toHaveBeenCalled();
-		expect(afterSave).toHaveBeenCalled();
+		await waitFor(() => {
+			expect(mockSave).toHaveBeenCalled();
+			expect(afterSave).toHaveBeenCalled();
+		});
 
 	});
 
 	test('Test cancel button', async () => {
-		const node = cmp.find('.course-panel-cancel').first();
+		const node = await result.findByText('Cancel');
 
-		expect(node.text()).toBe('Cancel');
+		expect(node.textContent).toBe('Cancel');
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
-
-		expect(onCancel).toHaveBeenCalled();
+		await waitFor(() =>
+			expect(onCancel).toHaveBeenCalled());
 	});
 
 	const verifyInput = (placeholder, stateField, value) => {
-		const node = cmp.find('[placeholder="' + placeholder + '"]').first();
+		const node = result.container.querySelector('[placeholder="' + placeholder + '"]');
 
-		expect(node.prop('value')).toEqual(value);
+		expect(node.value).toEqual(value);
 	};
 
 	test('Test fields', () => {

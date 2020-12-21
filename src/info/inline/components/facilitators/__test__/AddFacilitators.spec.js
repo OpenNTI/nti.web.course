@@ -1,5 +1,6 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
+import { wait } from '@nti/lib-commons';
 
 import AddFacilitators from '../AddFacilitators';
 
@@ -26,11 +27,12 @@ const courseInstance = {
 
 /* eslint-env jest */
 describe('AddFacilitators component test', () => {
-	test('Test view', () => {
+	test('Test view', async () => {
 		const onDismiss = jest.fn();
 		const existing = [];
 
-		const cmp = mount(<AddFacilitators courseInstance={courseInstance} onDismiss={onDismiss} facilitatorList={existing}/>);
+		let cmp;
+		const x = render(<AddFacilitators ref={_ => cmp = _} courseInstance={courseInstance} onDismiss={onDismiss} facilitatorList={existing}/>);
 
 		cmp.setState({
 			values: [
@@ -44,13 +46,14 @@ describe('AddFacilitators component test', () => {
 			selectedRole: 'instructor'
 		});
 
-		expect(cmp.state().isVisible).toBe(false);
 
-		cmp.find('input[type="checkbox"]').first().simulate('change', { target: { checked: true } });
+		await waitFor(() => expect(cmp.state.isVisible).toBe(false));
 
-		expect(cmp.state().isVisible).toBe(true);
+		fireEvent.click(x.container.querySelector('input[type="checkbox"]'), { target: { checked: false } });
 
-		cmp.find('.confirm').first().simulate('click');
+		await waitFor(() => expect(cmp.state.isVisible).toBe(true));
+
+		fireEvent.click(x.container.querySelector('.confirm'));
 
 		// expect(addedValue.role).toEqual('instructor');
 		// expect(addedValue.visible).toEqual(true);

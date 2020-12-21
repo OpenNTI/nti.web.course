@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import TemplateChooser from '../TemplateChooser';
 
@@ -31,44 +31,39 @@ describe('TemplateChooser test', () => {
 	const mockTitle = 'Course for editing';
 	const mockLabel = 'Label for test';
 
-	const cmp = mount(
-		<TemplateChooser
-			title={mockTitle}
-			onCancel={onCancelMock}
-			afterSave={onSaveMock}
-			onTemplateSelect={onTemplateSelectMock}
-			buttonLabel={mockLabel}
-			saveCmp={SaveButton}
-		/>
-	);
-
-	test('Test save', (done) => {
-		const saveButton = cmp.find('.course-panel-continue').first();
-
-		expect(saveButton.text()).toEqual(mockLabel);
-
-		saveButton.simulate('click');
-
-		const verifyCalled = () => {
-			expect(onTemplateSelectMock).toHaveBeenCalled();
-
-			done();
-		};
-
-		setTimeout(verifyCalled, 300);
+	let root;
+	beforeEach(() => {
+		({container: root} = render(
+			<TemplateChooser
+				title={mockTitle}
+				onCancel={onCancelMock}
+				afterSave={onSaveMock}
+				onTemplateSelect={onTemplateSelectMock}
+				buttonLabel={mockLabel}
+				saveCmp={SaveButton}
+			/>
+		));
 	});
 
-	test('Test cancel', (done) => {
-		const cancelButton = cmp.find('.course-panel-cancel').first();
+	test('Test save', async () => {
+		const saveButton = root.querySelector('.course-panel-continue');
 
-		cancelButton.simulate('click');
+		expect(saveButton.textContent).toEqual(mockLabel);
 
-		const verifyCalled = () => {
+		fireEvent.click(saveButton);
+
+		await waitFor(() => {
+			expect(onTemplateSelectMock).toHaveBeenCalled();
+		});
+	});
+
+	test('Test cancel', async () => {
+		const cancelButton = root.querySelector('.course-panel-cancel');
+
+		fireEvent.click(cancelButton);
+
+		await waitFor(() => {
 			expect(onCancelMock).toHaveBeenCalled();
-
-			done();
-		};
-
-		setTimeout(verifyCalled, 300);
+		});
 	});
 });

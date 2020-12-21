@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import PublishCourse from '../PublishCourse';
 
@@ -20,7 +20,7 @@ const onBefore = () => {
 };
 
 const onAfter = () => {
-	//unmock getService()
+	//un-mock getService()
 	const {$AppConfig} = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
@@ -50,84 +50,80 @@ describe('PublishCourse test', () => {
 		};
 	}
 
-	test('Test not publicly available, preview mode off', (done) => {
+	test('Test not publicly available, preview mode off', async () => {
 		catalogEntry = makeCatalogEntry(true, false, null);
 
-		let cmp = mount(
+		const x = render(
 			<PublishCourse
 				catalogEntry={catalogEntry}
 			/>
 		);
 
-		setTimeout(function () {
-			const publiclyAvailableOption = cmp.find('.publicly-available-option').first();
+		await waitFor(() => {
+			const publiclyAvailableOption = x.container.querySelector('.publicly-available-option');
 
-			expect(publiclyAvailableOption.find('.toggle-button').first().prop('className')).toMatch(/ off/);
+			expect(publiclyAvailableOption.querySelector('.toggle-button').getAttribute('class')).toMatch(/ off/);
 
-			const previewModeOption = cmp.find('.preview-mode-widget').first();
+			const previewModeOption = x.container.querySelector('.preview-mode-widget');
 
-			expect(previewModeOption.text()).toMatch(/Published/);
-			expect(previewModeOption.text()).toMatch(/Content is available to learners/);
-
-			done();
-		}, 200);
+			expect(previewModeOption.textContent).toMatch(/Published/);
+			expect(previewModeOption.textContent).toMatch(/Content is available to learners/);
+		});
 	});
 
-	test('Test publicly available', (done) => {
+	test('Test publicly available', async () => {
 		catalogEntry = makeCatalogEntry(false, false, null);
 
-		let cmp = mount(
+		const x = render(
 			<PublishCourse
 				catalogEntry={catalogEntry}
 			/>
 		);
 
-		setTimeout(function () {
-			const publiclyAvailableOption = cmp.find('.publicly-available-option').first();
+		await waitFor(() => {
+			const publiclyAvailableOption = x.container.querySelector('.publicly-available-option');
 
-			expect(publiclyAvailableOption.text()).toMatch(/On/);
-			expect(publiclyAvailableOption.find('.toggle-button').first().prop('className')).toMatch(/ on/);
+			expect(publiclyAvailableOption.textContent).toMatch(/On/);
+			expect(publiclyAvailableOption.querySelector('.toggle-button').getAttribute('class')).toMatch(/ on/);
 
-			done();
-		}, 200);
+		});
 	});
 
-	test('Test null preview, no start date', (done) => {
+	test('Test null preview, no start date', async () => {
 		catalogEntry = makeCatalogEntry(false, null, null);
 
-		let cmp = mount(
+		const x = render(
 			<PublishCourse
 				catalogEntry={catalogEntry}
 			/>
 		);
 
-		setTimeout(function () {
-			const previewModeOption = cmp.find('.preview-mode-widget').first();
+		await waitFor(() => {
+			const previewModeOption = x.container.querySelector('.preview-mode-widget');
 
-			expect(previewModeOption.text()).toMatch(/Publish on Start Date/);
-			expect(previewModeOption.text()).toMatch(/No start date found/);
+			expect(previewModeOption.textContent).toMatch(/Publish on Start Date/);
+			expect(previewModeOption.textContent).toMatch(/No start date found/);
 
-			done();
-		}, 200);
+
+		});
 	});
 
-	test('Test null preview with start date', (done) => {
+	test('Test null preview with start date', async () => {
 		catalogEntry = makeCatalogEntry(false, null, new Date('4/5/2017'));
 
-		let cmp = mount(
+		const x = render(
 			<PublishCourse
 				catalogEntry={catalogEntry}
 			/>
 		);
 
-		setTimeout(function () {
-			const previewModeOption = cmp.find('.preview-mode-widget').first();
+		await waitFor(() => {
+			const previewModeOption = x.container.querySelector('.preview-mode-widget');
 
-			expect(previewModeOption.text()).toMatch(/Publish on Start Date/);
-			expect(previewModeOption.text()).toMatch(/April 5th 2017, 12:00 am/);
+			expect(previewModeOption.textContent).toMatch(/Publish on Start Date/);
+			expect(previewModeOption.textContent).toMatch(/April 5th 2017, 12:00 am/);
 
-			done();
-		}, 200);
+		});
 	});
 
 });

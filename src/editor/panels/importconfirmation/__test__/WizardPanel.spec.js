@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import WizardPanel from '../WizardPanel';
 
@@ -8,10 +8,10 @@ const CONFIRMATION_MESSAGE = 'Import process is taking longer than expected.  Th
 /* eslint-env jest */
 describe('Import confirmation test', () => {
 	test('Test appearance', () => {
-		let cmp = mount(
+		let {container} = render(
 			<WizardPanel/>
 		);
 
-		expect(cmp.find('.import-in-progress').text()).toEqual(CONFIRMATION_MESSAGE);
+		expect(container.querySelector('.import-in-progress').textContent).toEqual(CONFIRMATION_MESSAGE);
 	});
 });

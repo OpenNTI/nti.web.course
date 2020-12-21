@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, waitFor } from '@testing-library/react';
 
 import View from '../View';
 
@@ -33,7 +33,7 @@ const onBefore = () => {
 };
 
 const onAfter = () => {
-	//unmock getService()
+	//un-mock getService()
 	const {$AppConfig} = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
@@ -65,21 +65,19 @@ describe('Test roster view', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
-	test.skip('Test view', (done) => {
+	test('Test view', async () => {
 		const course = {
 			getLink: function (url) {
 				return url;
 			}
 		};
 
-		const cmp = mount(<View hasCourse course={course} renderRoster={Renderer}/>);
+		const {container} = render(<View hasCourse course={course} renderRoster={Renderer}/>);
 
-		expect(cmp.html()).toEqual('<div>Loading...</div>');
+		expect(container.innerHTML).toEqual('<div>Loading...</div>');
 
-		setTimeout(function () {
-			expect(cmp.html()).toEqual('<div>Number of items: 2</div>');
-
-			done();
-		}, 200);
+		await waitFor(() => {
+			expect(container.innerHTML).toEqual('<div>Number of items: 2</div>');
+		});
 	});
 });

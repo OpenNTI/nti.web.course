@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import View from '../View';
 
@@ -23,19 +23,19 @@ describe('Credit view test', () => {
 			LegacyEnrollmentStatus: 'Open'
 		};
 
-		const cmp = mount(<View catalogEntry={catalogEntry} enrollmentAccess={enrollmentAccess}/>);
+		const x = render(<View catalogEntry={catalogEntry} enrollmentAccess={enrollmentAccess}/>);
 
-		expect(cmp.find('.hours').first().text()).toEqual('5 Credits Available');
+		expect(x.container.querySelector('.hours').textContent).toEqual('5 Credits Available');
 
-		const enrollLink = cmp.find('.enroll-link').first().find('a').first();
+		const enrollLink = x.container.querySelector('.enroll-link a');
 
-		expect(enrollLink.prop('href')).toEqual(URL);
-		expect(enrollLink.text()).toEqual(LABEL);
+		expect(enrollLink.getAttribute('href')).toEqual(URL);
+		expect(enrollLink.textContent).toEqual(LABEL);
 
-		const openEnrollment = cmp.find('.open-enrollment').first();
+		const openEnrollment = x.container.querySelector('.open-enrollment');
 
-		expect(openEnrollment.text()).toMatch(/You’re registered for the open course./);
-		expect(openEnrollment.text()).toMatch(/(No Credit)/);
+		expect(openEnrollment.textContent).toMatch(/You’re registered for the open course./);
+		expect(openEnrollment.textContent).toMatch(/(No Credit)/);
 	});
 
 	test('Test single credit', () => {
@@ -45,8 +45,8 @@ describe('Credit view test', () => {
 			}]
 		};
 
-		const cmp = mount(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry}/>);
 
-		expect(cmp.find('.hours').first().text()).toEqual('1 Credit Available');
+		expect(x.container.querySelector('.hours').textContent).toEqual('1 Credit Available');
 	});
 });

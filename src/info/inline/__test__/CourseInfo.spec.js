@@ -1,5 +1,5 @@
 // import React from 'react';
-// import { mount } from 'enzyme';
+// import { render, fireEvent, waitFor } from '@testing-library/react';
 
 // import CourseInfo from '../CourseInfo';
 
@@ -42,7 +42,7 @@ describe('CourseInfo test', () => {
 
 	// const startDate = new Date('2016-06-13T05:00:00Z');
 
-	test('Test editable', () => {
+	test.skip('Test editable', () => {
 	// 	const title = 'a title';
 	// 	const catalogEntry = {
 	// 		title,
@@ -54,7 +54,7 @@ describe('CourseInfo test', () => {
 	// 		getDefaultAssetRoot: () => ''
 	// 	};
 	//
-	// 	const cmp = mount(<CourseInfo catalogEntry={catalogEntry} editable/>);
+	// 	const results = render(<CourseInfo catalogEntry={catalogEntry} editable/>);
 	//
 	// 	expect(cmp.find('.loading').exists()).toBe(true);
 	//
@@ -124,7 +124,7 @@ describe('CourseInfo test', () => {
 	// 		}
 	// 	};
 	//
-	// 	const cmp = mount(<CourseInfo catalogEntry={catalogEntry}/>);
+	// 	const cmp = render(<CourseInfo catalogEntry={catalogEntry}/>);
 	//
 	// 	cmp.setState({
 	// 		catalogEntry,

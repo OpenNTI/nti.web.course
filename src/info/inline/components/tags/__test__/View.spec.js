@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import View from '../View';
 
@@ -12,14 +12,14 @@ describe('Tags view test', () => {
 			tags
 		};
 
-		const cmp = mount(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry}/>);
 
-		const tagCmps = cmp.find('.tag');
+		const tagCmps = x.container.querySelectorAll('.tag');
 
 		expect(tagCmps.length).toBe(3);
 
 		for(let i = 0; i < tags.length; i++) {
-			expect(tagCmps.at(i).text()).toEqual(tags[i]);
+			expect(tagCmps[i].textContent).toEqual(tags[i]);
 		}
 	});
 });

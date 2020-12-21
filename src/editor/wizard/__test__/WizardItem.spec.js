@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import WizardItem from '../WizardItem';
 
@@ -12,16 +12,19 @@ describe('WizardItem test', () => {
 	const mockCmpContents = 'Mock contents';
 	const mockLabel = 'Mock button label';
 
-	const cmp = mount(
-		<WizardItem
-			title={mockTitle}
-			stepName={mockStepName}
-			onCancel={onCancelMock}
-			afterSave={onSaveMock}
-			wizardCmp={MockCmp}
-			buttonLabel={mockLabel}
-		/>
-	);
+	let root;
+	beforeEach(() => {
+		({container: root} = render(
+			<WizardItem
+				title={mockTitle}
+				stepName={mockStepName}
+				onCancel={onCancelMock}
+				afterSave={onSaveMock}
+				wizardCmp={MockCmp}
+				buttonLabel={mockLabel}
+			/>
+		));
+	});
 
 	function MockCmp () {
 		return (
@@ -32,20 +35,20 @@ describe('WizardItem test', () => {
 	}
 
 	test('Test contents', () => {
-		expect(cmp.find('.mock-contents').first().text()).toEqual(mockCmpContents);
+		expect(root.querySelector('.mock-contents').textContent).toEqual(mockCmpContents);
 	});
 
 	test('Test labels', () => {
-		expect(cmp.find('.course-panel-header-title').first().text()).toEqual(mockTitle);
-		expect(cmp.find('.course-panel-header-stepname').first().text()).toEqual(mockStepName);
+		expect(root.querySelector('.course-panel-header-title').textContent).toEqual(mockTitle);
+		expect(root.querySelector('.course-panel-header-stepname').textContent).toEqual(mockStepName);
 	});
 
 	test('Test back button exists', () => {
-		expect(cmp.find('.back').exists()).toBe(true);
+		expect(root.querySelector('.back')).toBeTruthy();
 	});
 
 	test('Test back button does not exist for first tab', () => {
-		const firstTabCmp = mount(
+		const {container} = render(
 			<WizardItem
 				title={mockTitle}
 				stepName={mockStepName}
@@ -57,6 +60,6 @@ describe('WizardItem test', () => {
 			/>
 		);
 
-		expect(firstTabCmp.find('.back').exists()).toBe(false);
+		expect(container.querySelector('.back')).toBeFalsy();
 	});
 });

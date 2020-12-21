@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { DateTime } from '@nti/web-commons';
 
 import Edit from '../Edit';
@@ -19,15 +19,15 @@ describe('Start date edit test', () => {
 			}
 		};
 
-		const cmp = mount(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry}/>);
 
-		const dateEl = cmp.find('.date').first();
+		const dateEl = x.container.querySelector('.date');
 
-		expect(dateEl.text()).toMatch('August 17, 2015');
+		expect(dateEl.textContent).toMatch('August 17, 2015');
 
-		const dateInfoEl = dateEl.find('.date-info').first();
+		const dateInfoEl = dateEl.querySelector('.date-info');
 
-		expect(dateInfoEl.text()).toEqual('Monday at 05:00 am UTC');
+		expect(dateInfoEl.textContent).toEqual('Monday at 05:00 am UTC');
 	});
 
 	test('Test no date', () => {
@@ -40,13 +40,13 @@ describe('Start date edit test', () => {
 			}
 		};
 
-		const cmp = mount(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry}/>);
 
-		const dateEl = cmp.find('.date').first();
+		const dateEl = x.container.querySelector('.date');
 
 		const now = new Date();
 		const expectedDateStr = DateTime.format(now) + DateTime.format(now, 'dddd [at] 12:00 [am] z');
 
-		expect(dateEl.text()).toMatch(expectedDateStr);
+		expect(dateEl.textContent).toMatch(expectedDateStr);
 	});
 });

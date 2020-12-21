@@ -1,14 +1,10 @@
+/* eslint-env jest */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import TabPanel from '../TabPanel';
 
-
-const wait = x => new Promise(f => setTimeout(f, x));
-
-
-/* eslint-env jest */
 describe('DayTime TabPanel test', () => {
 	const mockSave = jest.fn();
 	const catalogEntry = {
@@ -30,15 +26,18 @@ describe('DayTime TabPanel test', () => {
 	const afterSave = jest.fn();
 	const buttonLabel = 'Test Label';
 
-	let cmp = mount(
-		<TabPanel
-			catalogEntry={catalogEntry}
-			saveCmp={SaveButton}
-			onCancel={onCancel}
-			afterSave={afterSave}
-			buttonLabel={buttonLabel}
-		/>
-	);
+	let result;
+	beforeEach(() => {
+		result = render(
+			<TabPanel
+				catalogEntry={catalogEntry}
+				saveCmp={SaveButton}
+				onCancel={onCancel}
+				afterSave={afterSave}
+				buttonLabel={buttonLabel}
+			/>
+		);
+	});
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
@@ -54,75 +53,62 @@ describe('DayTime TabPanel test', () => {
 	}
 
 	test('Test save button', async () => {
-		const node = cmp.find('.course-panel-continue').first();
+		const node = result.container.querySelector('.course-panel-continue');
 
-		expect(node.text()).toBe(buttonLabel);
+		expect(node.textContent).toBe(buttonLabel);
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
-
-		expect(mockSave).toHaveBeenCalled();
-		expect(afterSave).toHaveBeenCalled();
+		await waitFor(() => {
+			expect(mockSave).toHaveBeenCalled();
+			expect(afterSave).toHaveBeenCalled();
+		});
 	});
 
 	test('Test cancel button', async () => {
-		const node = cmp.find('.course-panel-cancel').first();
+		const node = result.container.querySelector('.course-panel-cancel');
 
-		expect(node.text()).toBe('Cancel');
+		expect(node.textContent).toBe('Cancel');
 
-		node.simulate('click');
+		fireEvent.click(node);
 
-		await wait(1);
-
-		expect(onCancel).toHaveBeenCalled();
+		await waitFor(() =>
+			expect(onCancel).toHaveBeenCalled());
 	});
 
 
 	test('Test weekday fields', () => {
-		let dayNodes = cmp.find('.course-panel-day');
-
-		let monday = dayNodes.at(1);
-		let wednesday = dayNodes.at(3);
-		let thursday = dayNodes.at(4);
-		let friday = dayNodes.at(5);
+		const [/*sun*/ ,monday, /*tues*/, wednesday, thursday, friday] = result.container.querySelectorAll('.course-panel-day');
 
 		// initial state (mon, thurs, fri should be selected)
-		expect(monday.prop('className')).toMatch(/selected/);
-		expect(wednesday.prop('className')).not.toMatch(/selected/);
-		expect(thursday.prop('className')).toMatch(/selected/);
-		expect(friday.prop('className')).toMatch(/selected/);
+		expect(monday.getAttribute('class')).toMatch(/selected/);
+		expect(wednesday.getAttribute('class')).not.toMatch(/selected/);
+		expect(thursday.getAttribute('class')).toMatch(/selected/);
+		expect(friday.getAttribute('class')).toMatch(/selected/);
 
-		monday.simulate('click');
-		wednesday.simulate('click');
-
-		cmp.update();
-		dayNodes = cmp.find('.course-panel-day');
-		monday = dayNodes.at(1);
-		wednesday = dayNodes.at(3);
-		thursday = dayNodes.at(4);
-		friday = dayNodes.at(5);
+		fireEvent.click(monday);
+		fireEvent.click(wednesday);
 
 		// after clicking, wed, thurs and fri should be selected
-		expect(monday.prop('className')).not.toMatch(/selected/);
-		expect(wednesday.prop('className')).toMatch(/selected/);
-		expect(thursday.prop('className')).toMatch(/selected/);
-		expect(friday.prop('className')).toMatch(/selected/);
+		expect(monday.getAttribute('class')).not.toMatch(/selected/);
+		expect(wednesday.getAttribute('class')).toMatch(/selected/);
+		expect(thursday.getAttribute('class')).toMatch(/selected/);
+		expect(friday.getAttribute('class')).toMatch(/selected/);
 	});
 
 	const verifyTime = (time, node) => {
 		const [ hours, minutes ] = time.split(':');
 
-		const hourNode = node.find('input[name="hours"]').first();
-		const minuteNode = node.find('input[name="minutes"]').first();
+		const hourNode = node.querySelector('input[name="hours"]');
+		const minuteNode = node.querySelector('input[name="minutes"]');
 
-		expect(hourNode.prop('value')).toEqual(hours);
-		expect(minuteNode.prop('value')).toEqual(minutes);
+		expect(hourNode.value).toEqual(hours);
+		expect(minuteNode.value).toEqual(minutes);
 	};
 
 	test('Test time fields', () => {
-		const startTime = cmp.find('.course-panel-starttime').first();
-		const endTime = cmp.find('.course-panel-endtime').first();
+		const startTime = result.container.querySelector('.course-panel-starttime');
+		const endTime = result.container.querySelector('.course-panel-endtime');
 
 		verifyTime(catalogEntry.Schedule.times[0], startTime);
 		verifyTime(catalogEntry.Schedule.times[1], endTime);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import TagInput from '../TagInput';
 
@@ -7,19 +7,19 @@ import TagInput from '../TagInput';
 describe('TagInput test', () => {
 	test('Test existing value', () => {
 		const values = ['abc', '123', 'def'];
-		const cmp = mount(<TagInput value={values}/>);
+		const x = render(<TagInput value={values}/>);
 
 		// there should be three tokens for the existing values
-		const tokens = cmp.find('div.token');
+		const tokens = x.container.querySelectorAll('div.token');
 
 		expect(tokens.length).toEqual(3);
 
 		for(let i = 0; i < values.length; i++) {
-			expect(tokens.at(i).text()).toEqual(values[i]);
+			expect(tokens[i].textContent).toEqual(values[i]);
 		}
 
 		// there should be an input representing the next token as the user types
-		const inputs = cmp.find('input');
+		const inputs = x.container.querySelectorAll('input');
 
 		expect(inputs.length).toEqual(1);
 	});

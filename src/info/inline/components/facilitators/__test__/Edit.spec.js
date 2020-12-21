@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import Edit from '../Edit';
 
@@ -18,7 +18,7 @@ const onBefore = () => {
 };
 
 const onAfter = () => {
-	//unmock getService()
+	//un-mock getService()
 	const {$AppConfig} = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
@@ -61,16 +61,16 @@ describe('Facilitators edit test', () => {
 			newValues = value;
 		}
 
-		const cmp = mount(<Edit facilitators={facilitators} courseInstance={courseInstance} onValueChange={onValueChange}/>);
+		const x = render(<Edit facilitators={facilitators} courseInstance={courseInstance} onValueChange={onValueChange}/>);
 
-		const facilitatorItems = cmp.find('.facilitator.edit');
+		const facilitatorItems = x.container.querySelectorAll('.facilitator.edit');
 
 		expect(facilitatorItems.length).toBe(2);
 
-		const deleteBtn = cmp.find('.delete-facilitator').first();
+		const deleteBtn = x.container.querySelector('.delete-facilitator');
 
-		deleteBtn.simulate('click');
-		const visibleAssistant = newValues.filter(x => x.key === 'visibleAssistant')[0];
+		fireEvent.click(deleteBtn);
+		const [visibleAssistant] = newValues.filter(({key}) => key === 'visibleAssistant');
 
 		expect(visibleAssistant.role).toEqual(''); // empty role flags for removal
 	});
@@ -80,14 +80,14 @@ describe('Facilitators edit test', () => {
 			hasLink: (l) => l === 'Instructors'
 		};
 
-		const cmp = mount(<Edit facilitators={facilitators} courseInstance={courseInstance}/>);
+		const x = render(<Edit facilitators={facilitators} courseInstance={courseInstance}/>);
 
-		const editableItems = cmp.find('.facilitator.edit');
+		const editableItems = x.container.querySelectorAll('.facilitator.edit');
 
-		// only Insturctor role should be able to edit
-		expect(editableItems.exists()).toBe(false);
+		// only Instructor role should be able to edit
+		expect(editableItems.length).toBe(0);
 
-		const facilitatorItems = cmp.find('.facilitator');
+		const facilitatorItems = x.container.querySelectorAll('.facilitator');
 
 		expect(facilitatorItems.length).toBe(2);
 	});
@@ -97,14 +97,14 @@ describe('Facilitators edit test', () => {
 			hasLink: (l) => l === 'Editors'
 		};
 
-		const cmp = mount(<Edit facilitators={facilitators} courseInstance={courseInstance}/>);
+		const x = render(<Edit facilitators={facilitators} courseInstance={courseInstance}/>);
 
-		const editableItems = cmp.find('.facilitator.edit');
+		const editableItems = x.container.querySelectorAll('.facilitator.edit');
 
-		// only Insturctor role should be able to edit
-		expect(editableItems.exists()).toBe(false);
+		// only Instructor role should be able to edit
+		expect(editableItems.length).toBe(0);
 
-		const facilitatorItems = cmp.find('.facilitator');
+		const facilitatorItems = x.container.querySelectorAll('.facilitator');
 
 		expect(facilitatorItems.length).toBe(2);
 	});

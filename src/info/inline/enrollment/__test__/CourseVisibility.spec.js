@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 
 import CourseVisibility from '../CourseVisibility';
 
@@ -33,61 +33,61 @@ describe('CourseVisibility test', () => {
 
 	describe('Preview mode tests', () => {
 		test('Test preview mode with start date', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, new Date('10/31/2015'))}/>);
+			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, new Date('10/31/2015'))}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const previewLabel = labeledContentItems.first().find('.label').first();
-			const dateValue = labeledContentItems.first().find('.content').first();
+			const labeledContentItems = x.container.querySelector('.labeled-content');
+			const previewLabel = labeledContentItems.querySelector('.label');
+			const dateValue = labeledContentItems.querySelector('.content');
 
-			expect(previewLabel.prop('className')).toMatch(/preview/);
-			expect(dateValue.text()).toEqual('Starts Oct. 31, 2015');
+			expect(previewLabel.getAttribute('class')).toMatch(/preview/);
+			expect(dateValue.textContent).toEqual('Starts Oct. 31, 2015');
 
-			const launchButton = cmp.find('.launch-button').first();
+			const launchButton = x.container.querySelector('.launch-button');
 
-			expect(launchButton.exists()).toBe(true);
+			expect(launchButton).toBeTruthy();
 		});
 
 		test('Test preview mode with no start date', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
+			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const previewLabel = labeledContentItems.first().find('.label').first();
-			const dateValue = labeledContentItems.first().find('.content').first();
+			const labeledContentItems = x.container.querySelector('.labeled-content');
+			const previewLabel = labeledContentItems.querySelector('.label');
+			const dateValue = labeledContentItems.querySelector('.content');
 
-			expect(previewLabel.prop('className')).toMatch(/preview/);
-			expect(dateValue.text()).toEqual('No Start Date');
+			expect(previewLabel.getAttribute('class')).toMatch(/preview/);
+			expect(dateValue.textContent).toEqual('No Start Date');
 		});
 
 		test('Test no preview', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(false, true)}/>);
+			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(false, true)}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const firstLabel = labeledContentItems.first().find('.label').first();
+			const labeledContentItems = x.container.querySelector('.labeled-content');
+			const firstLabel = labeledContentItems.querySelector('.label');
 
 			// there shouldn't be a preview label so the first label we find should have
 			// nothing to do with preview
-			expect(firstLabel.prop('className')).not.toMatch(/preview/);
+			expect(firstLabel.getAttribute('class')).not.toMatch(/preview/);
 		});
 	});
 
 
 	// describe('Allowing enrollment tests', () => {
 	// 	test('Test none', () => {
-	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
+	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
 
-	// 		const labeledContentItems = cmp.find('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
 
-	// 		expect(enrollmentContent.text()).toEqual('Invitation Only');
+	// 		expect(enrollmentContent.textContent).toEqual('Invitation Only');
 	// 	});
 
 	// 	test('Test five minute enrollment', () => {
-	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['FiveminuteEnrollment'])}/>);
+	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['FiveminuteEnrollment'])}/>);
 
-	// 		const labeledContentItems = cmp.find('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
 
-	// 		expect(enrollmentContent.text()).toEqual('For-Credit');
+	// 		expect(enrollmentContent.textContent).toEqual('For-Credit');
 	// 	});
 
 	// 	test('Test IMSEnrollment with SourcedID', () => {
@@ -105,69 +105,69 @@ describe('CourseVisibility test', () => {
 	// 			hasLink: () => true
 	// 		};
 
-	// 		const cmp = mount(<CourseVisibility catalogEntry={catalogEntry}/>);
+	//		const x = render(<CourseVisibility catalogEntry={catalogEntry}/>);
 
-	// 		const labeledContentItems = cmp.find('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
 
-	// 		expect(enrollmentContent.text()).toEqual('For-Credit');
+	// 		expect(enrollmentContent.textContent).toEqual('For-Credit');
 	// 	});
 
 	// 	test('Test IMSEnrollment without SourcedID', () => {
-	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['IMSEnrollment'])}/>);
+	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['IMSEnrollment'])}/>);
 
-	// 		const labeledContentItems = cmp.find('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
 
-	// 		expect(enrollmentContent.text()).toEqual('Invitation Only');
+	// 		expect(enrollmentContent.textContent).toEqual('Invitation Only');
 	// 	});
 
 	// 	test('Test StoreEnrollment', () => {
-	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['StoreEnrollment'])}/>);
+	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['StoreEnrollment'])}/>);
 
-	// 		const labeledContentItems = cmp.find('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
 
-	// 		expect(enrollmentContent.text()).toEqual('Public');
+	// 		expect(enrollmentContent.textContent).toEqual('Public');
 	// 	});
 
 	// 	test('Test OpenEnrollment', () => {
-	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment'])}/>);
+	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment'])}/>);
 
-	// 		const labeledContentItems = cmp.find('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
 
-	// 		expect(enrollmentContent.text()).toEqual('Public');
+	// 		expect(enrollmentContent.textContent).toEqual('Public');
 	// 	});
 
 	// 	test('Test OpenEnrollment and FiveminuteEnrollment', () => {
-	// 		const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment', 'FiveminuteEnrollment'])}/>);
+	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment', 'FiveminuteEnrollment'])}/>);
 
-	// 		const labeledContentItems = cmp.find('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems.at(1).find('.content').first();
+	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
+	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
 
-	// 		expect(enrollmentContent.text()).toEqual('For-Credit, Public');
+	// 		expect(enrollmentContent.textContent).toEqual('For-Credit, Public');
 	// 	});
 	// });
 
 
 	describe('Visible in catalog tests', () => {
 		test('Test is visible in catalog', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, false)}/>);
+			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, false)}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const visibilityContent = labeledContentItems.last().find('.content').first();
+			const labeledContentItems = Array.from(x.container.querySelectorAll('.labeled-content'));
+			const visibilityContent = labeledContentItems.pop().querySelector('.content');
 
-			expect(visibilityContent.text()).toEqual('Yes');
+			expect(visibilityContent.textContent).toEqual('Yes');
 		});
 
 		test('Test is not visible in catalog', () => {
-			const cmp = mount(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
+			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
 
-			const labeledContentItems = cmp.find('.labeled-content');
-			const visibilityContent = labeledContentItems.last().find('.content').first();
+			const labeledContentItems = Array.from(x.container.querySelectorAll('.labeled-content'));
+			const visibilityContent = labeledContentItems.pop().querySelector('.content');
 
-			expect(visibilityContent.text()).toEqual('No');
+			expect(visibilityContent.textContent).toEqual('No');
 		});
 	});
 });
