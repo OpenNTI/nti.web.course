@@ -21,7 +21,6 @@ describe('Dates WizardPanel test', () => {
 	beforeEach(() => {
 		result = render(
 			<WizardPanel
-				ref={x => cmp = x}
 				catalogEntry={catalogEntry}
 				saveCmp={SaveButton}
 				onCancel={onCancel}
