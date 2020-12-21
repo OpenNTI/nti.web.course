@@ -5,8 +5,6 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import WizardPanel from '../WizardPanel';
 
-const wait = x => new Promise(f => setTimeout(f, x));
-
 describe('Basic WizardPanel test', () => {
 	const mockSave = jest.fn();
 	const catalogEntry = {

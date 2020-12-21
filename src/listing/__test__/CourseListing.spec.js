@@ -3,8 +3,6 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import CourseListing from '../CourseListing';
 
-const wait = x => new Promise(f => setTimeout(f, x));
-
 const mockService = () => ({
 	get: function (url) {
 		if(url === 'coursesURL') {

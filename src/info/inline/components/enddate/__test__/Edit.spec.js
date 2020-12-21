@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { DateTime } from '@nti/web-commons';
 
 import Edit from '../Edit';

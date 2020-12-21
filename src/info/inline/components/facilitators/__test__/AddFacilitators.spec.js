@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
-import { wait } from '@nti/lib-commons';
 
 import AddFacilitators from '../AddFacilitators';
 
