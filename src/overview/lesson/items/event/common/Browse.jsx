@@ -35,7 +35,7 @@ class BrowseEvents extends React.Component {
 				</div>
 				<div className="info">
 					<div className="title">{event.title}</div>
-					<div className="date">{DateTime.format(event.getStartTime(), 'LL [at] h:mm a')}</div>
+					<div className="date">{DateTime.format(event.getStartTime(), DateTime.MONTH_NAME_DAY_YEAR_AT_TIME)}</div>
 				</div>
 				<div className="remove" onClick={(e) => {
 					e.stopPropagation();

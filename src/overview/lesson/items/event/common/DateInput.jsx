@@ -66,7 +66,7 @@ export default class EventDateInput extends React.Component {
 	}
 
 	renderDateTrigger () {
-		return <div className="date-info"><span className="label">{this.props.label}</span>{DateTime.format(this.props.date, 'MMMM DD, YYYY')}<i className="icon-chevron-down"/></div>;
+		return <div className="date-info"><span className="label">{this.props.label}</span>{DateTime.format(this.props.date)}<i className="icon-chevron-down"/></div>;
 	}
 
 	renderTimeTrigger (disabled) {
@@ -74,7 +74,7 @@ export default class EventDateInput extends React.Component {
 
 		return (
 			<div className={cx('time-value', {disabled})}>
-				{DateTime.format(date, 'hh:mm a')}
+				{DateTime.format(date, DateTime.TIME_PADDED)}
 				<i className="icon-chevron-down"/>
 			</div>
 		);
@@ -91,7 +91,7 @@ export default class EventDateInput extends React.Component {
 					this.timeFlyout.dismiss();
 				}
 				}>
-				{DateTime.format(time, 'hh:mm a')}
+				{DateTime.format(time, DateTime.TIME_PADDED)}
 			</div>
 		);
 	}

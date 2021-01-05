@@ -78,7 +78,7 @@ export default class SettingsTabPanel extends React.Component {
 
 		if(previewMode === null) {
 			label = t('nullPreview');
-			desc = StartDate ? DateTime.format(StartDate, 'MMMM Do YYYY, h:mm a') : t('noDateFound');
+			desc = StartDate ? DateTime.format(StartDate, DateTime.MONTH_NAME_ORDINAL_DAY_YEAR_TIME) : t('noDateFound');
 
 			if(!StartDate) {
 				warning = true;
@@ -117,7 +117,7 @@ export default class SettingsTabPanel extends React.Component {
 		return (
 			<div className="preview-option preview-mode-none" onClick={this.nullOutPreviewMode}>
 				<div>Based on start date</div>
-				<div className="preview-date-info">{DateTime.format(StartDate, 'MMMM Do YYYY, h:mm a')}</div>
+				<div className="preview-date-info">{DateTime.format(StartDate, DateTime.MONTH_NAME_ORDINAL_DAY_YEAR_TIME)}</div>
 			</div>
 		);
 	}
@@ -147,7 +147,7 @@ export default class SettingsTabPanel extends React.Component {
 				<div>
 					{this.renderPreviewOption(t('previewOn'), t('previewOnDesc'), false, this.enablePreviewMode)}
 					{this.renderPreviewOption(t('previewOff'), t('previewOffDesc'), false, this.disablePreviewMode)}
-					{this.renderPreviewOption(t('nullPreview'), StartDate ? DateTime.format(StartDate, 'MMMM Do YYYY, h:mm a') : t('noDateFound'), !StartDate, this.nullOutPreviewMode)}
+					{this.renderPreviewOption(t('nullPreview'), StartDate ? DateTime.format(StartDate, DateTime.MONTH_NAME_ORDINAL_DAY_YEAR_TIME) : t('noDateFound'), !StartDate, this.nullOutPreviewMode)}
 				</div>
 			</Flyout.Triggered>
 		);

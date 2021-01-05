@@ -58,7 +58,7 @@ export default class AssignmentHeader extends React.Component {
 	}
 
 	renderDueDateTrigger () {
-		const dueDate = DateTime.format(DUE_DATE, 'ddd, MMMM Do');
+		const dueDate = DateTime.format(DUE_DATE, DateTime.WEEKDAY_ABBR_MONTH_NAME_ORDINAL_DAY);
 
 		return <div className="trigger"><span className="value">{t('due', {dueDate})}</span><i className="icon-chevron-down"/></div>;
 	}

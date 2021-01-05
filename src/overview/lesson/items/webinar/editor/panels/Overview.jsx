@@ -56,8 +56,8 @@ export default class WebinarOverviewEditor extends React.Component {
 
 		return (
 			<div className="date">
-				<div className="month">{DateTime.format(startDate, 'MMM')}</div>
-				<div className="day">{DateTime.format(startDate, 'D')}</div>
+				<div className="month">{DateTime.format(startDate, DateTime.MONTH_ABBR)}</div>
+				<div className="day">{DateTime.format(startDate, DateTime.DAY_OF_THE_MONTH)}</div>
 			</div>
 		);
 	}
@@ -73,7 +73,7 @@ export default class WebinarOverviewEditor extends React.Component {
 					<span>Live</span>
 					<DateTime.Duration webinar={webinar} longAbbreviations/>
 					<span>Webinar</span>
-					<span className="date">{DateTime.format(startDate, 'dddd [at] hh:mm a z')}</span>
+					<span className="date">{DateTime.format(startDate, DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE)}</span>
 				</div>
 				<div className="image-and-description">
 					<ImageUpload img={img} onChange={imgBlob => this.setState({imgBlob})}/>

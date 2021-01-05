@@ -9,7 +9,7 @@ import PaddedContainer from '../../../overview/lesson/common/PaddedContainer';
 import Styles from './Style.css';
 import CompletionStatus from './CompletionStatus';
 
-const dateFormat = 'MMMM, D YYYY';
+const dateFormat = DateTime.MONTH_NAME_DAY_YEAR;
 
 const {useResolver, useMobileValue} = Hooks;
 const {isPending, isErrored, isResolved} = useResolver;
@@ -69,13 +69,13 @@ RemainingItemsPage.propTypes = {
 	incompleteOnly: PropTypes.bool
 };
 function RemainingItemsPage ({
-	lesson, 
-	course, 
-	enrollment, 
-	enrollmentCompletedItems, 
-	onWaterfallLoadContinue, 
-	requiredOnly, 
-	incompleteOnly, 
+	lesson,
+	course,
+	enrollment,
+	enrollmentCompletedItems,
+	onWaterfallLoadContinue,
+	requiredOnly,
+	incompleteOnly,
 	itemInclusionFilter
 }) {
 	const extraColumns = useMobileValue(undefined, [CompletionStatus]);
@@ -144,7 +144,7 @@ export default function RemainingItemsPageContainer (props) {
 	const [onScreen, setOnScreen] = React.useState(false);
 	const tripLikeIDo = React.useCallback((x) => setOnScreen(onScreen || x), [setOnScreen, onScreen]);
 	return !onScreen ? (
-		<Monitor.OnScreen onChange={tripLikeIDo} as={MonitorElement}/> 
+		<Monitor.OnScreen onChange={tripLikeIDo} as={MonitorElement}/>
 	) : (
 		<RemainingItemsPage {...props} />
 	);

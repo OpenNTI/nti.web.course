@@ -205,7 +205,7 @@ export default class PublishCourse extends React.Component {
 			<div className={cx('course-preview-option preview-mode-none  publish-on-date-option', {selected, 'no-date': !startDate})} onClick={onClick}>
 				<Text.Base as="div" className="course-preview-option-label">{t('nullPreview')}</Text.Base>
 				<Text.Base as="div" className="course-preview-option-info">
-					{startDate ? DateTime.format(startDate, 'MMMM Do YYYY, h:mm a') : t('noDateFound')}
+					{startDate ? DateTime.format(startDate, DateTime.MONTH_NAME_ORDINAL_DAY_YEAR_TIME) : t('noDateFound')}
 				</Text.Base>
 			</div>
 		);

@@ -20,6 +20,6 @@ describe('Start date view test', () => {
 
 		const x = render(<View catalogEntry={catalogEntry}/>);
 
-		expect(x.container.querySelector('.content-column').textContent).toEqual('August 17, 2015Monday at 07:00 pm UTC');
+		expect(x.container.querySelector('.content-column').textContent).toEqual('August 17, 2015Monday at 07:00 PM UTC');
 	});
 });

@@ -11,7 +11,7 @@ const t = scoped('course.listing.EnrollmentListItem', {
 	completed: 'Completed on %(date)s'
 });
 
-const DATE_FORMAT = 'MMMM D, YYYY';
+const DATE_FORMAT = DateTime.MONTH_NAME_DAY_YEAR;
 
 export default class CourseEnrollmentListItem extends React.Component {
 	static propTypes = {

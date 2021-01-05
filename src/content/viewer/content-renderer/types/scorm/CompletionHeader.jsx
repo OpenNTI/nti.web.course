@@ -74,7 +74,7 @@ export default class SCORMCompletionHeader extends React.Component {
 
 	renderTitle (success) {
 		const label = success ? t('title.success') : t('title.fail');
-	
+
 		return (
 			<div className={cx('title')}>
 				{label}
@@ -85,7 +85,7 @@ export default class SCORMCompletionHeader extends React.Component {
 
 	renderSubTitle (success, failed, item) {
 		const date = item.getCompletedDate();
-		const formattedDate = date && DateTime.format(date, 'dddd, MMMM D [at] h:mmA ');
+		const formattedDate = date && DateTime.format(date, DateTime.WEEKDAY_MONTH_NAME_DAY_AT_TIME);
 
 		if (!failed && !formattedDate) { return null; }
 

@@ -16,7 +16,7 @@ export default function ProgressOverviewContentsCompletedDate ({item}) {
 
 	if (!completedDate) { return null; }
 
-	const date = DateTime.format(new Date(completedDate), 'M/DD');
+	const date = DateTime.format(new Date(completedDate), DateTime.MONTH_DAY);
 
 	return (
 		<div className="progress-overview-contents-completed-date">

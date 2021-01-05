@@ -65,7 +65,6 @@ const t = scoped('course.overview.lesson.overview.question-set.AssignmentLabel',
 });
 
 const getNaturalDuration = (...args) => DateTime.getNaturalDuration(...args);
-const formatDate = (...args) => DateTime.format(...args);
 const isToday = (...args) => DateTime.isToday(...args);
 
 export default class LessonOverviewAssignmentLabel extends React.Component {
@@ -244,7 +243,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		if (!completedDate) { return null; }
 
 		const late = dueDate && completedDate >= dueDate;
-		const qtip = t('completed.submittedAt', {date: formatDate(completedDate, 'h:mm A M/D/YYYY')});
+		const qtip = t('completed.submittedAt', {date: DateTime.format(completedDate, DateTime.TIME_DATE_STAMP)});
 
 		const overtime = !isNoSubmit && maxTime && duration && duration > maxTime ? t('completed.overTimeTip', {time: getNaturalDuration(duration - maxTime, 1)}) : null;
 		const overdue = late && !isNoSubmit ? t('completed.overDueTip', {time: getNaturalDuration(completedDate.getTime() - dueDate.getTime())}) : null;
@@ -271,7 +270,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 						<span className="mod-close errors">{t('completed.modClose')}</span>
 					</React.Fragment>
 				)}
-				<DateTime className="date" date={completedDate} format="dddd, MMMM D" />
+				<DateTime className="date" date={completedDate} format={DateTime.WEEKDAY_MONTH_NAME_DAY} />
 			</span>
 		);
 	}
@@ -293,7 +292,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 
 		if (completedDate) { return null; }
 
-		const format = date => formatDate(date, 'dddd, MMMM D h:mm A z');
+		const format = date => DateTime.format(date, DateTime.WEEKDAY_MONTH_NAME_DAY_TIME_WITH_ZONE);
 
 		const dueToday = dueDate > now && isToday(dueDate);
 		const late = !isNoSubmit && dueDate && dueDate <= now;
@@ -301,7 +300,7 @@ export default class LessonOverviewAssignmentLabel extends React.Component {
 		let text = '';
 
 		if (dueToday) {
-			text = t('due.today', {time: formatDate(dueDate, 'h:mm a z')});
+			text = t('due.today', {time: DateTime.format(dueDate, DateTime.TIME_WITH_ZONE)});
 		} else if (availableDate > now && dueDate > now) {
 			text = t('due.available', {date: format(availableDate)});
 		} else if (dueDate) {

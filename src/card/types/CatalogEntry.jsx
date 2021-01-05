@@ -9,7 +9,7 @@ import Badge from '../parts/Badge';
 
 import Registry from './Registry';
 
-const DATE_FORMAT = 'll';
+const DATE_FORMAT = DateTime.MONTH_NAME_DAY_YEAR;
 
 const t = scoped('course.card.type.catalogEntry', {
 	administering: 'Administering',

@@ -19,9 +19,11 @@ const t = scoped('course.info.inline.widgets.CourseVisibility', {
 	forCredit: 'For-Credit',
 	public: 'Public',
 	invitationOnly: 'Invitation Only',
-	noStartDate: 'No Start Date'
+	noStartDate: 'No Start Date',
+	startsOn: 'Starts %(date)s',
 });
 
+const startsDate = f => t('startsOn', {date: f(DateTime.MONTH_ABBR_DAY_YEAR)});
 export default class CourseVisibility extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
@@ -57,7 +59,7 @@ export default class CourseVisibility extends React.Component {
 			return this.renderLabeledContent(
 				catalogEntry.hasLink('edit') ? t('inDraft') : t('inPreview'),
 				'preview',
-				catalogEntry.getStartDate ? DateTime.format(catalogEntry.getStartDate(), '[Starts] MMM. D, YYYY') : t('noStartDate')
+				catalogEntry.getStartDate ? DateTime.format(catalogEntry.getStartDate(), startsDate) : t('noStartDate')
 			);
 		}
 		else {

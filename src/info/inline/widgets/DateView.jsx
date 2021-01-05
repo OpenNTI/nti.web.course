@@ -26,7 +26,7 @@ export default class DateView extends React.Component {
 				</div>
 				<div className="content-column">
 					<div className="date-value">{(date && DateTime.format(date)) || '-'}</div>
-					<div className="date-info">{DateTime.format(date, 'dddd [at] hh:mm a z')}</div>
+					<div className="date-info">{DateTime.format(date, DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE)}</div>
 				</div>
 			</div>
 		);

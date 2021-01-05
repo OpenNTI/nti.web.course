@@ -40,7 +40,7 @@ describe('CourseVisibility test', () => {
 			const dateValue = labeledContentItems.querySelector('.content');
 
 			expect(previewLabel.getAttribute('class')).toMatch(/preview/);
-			expect(dateValue.textContent).toEqual('Starts Oct. 31, 2015');
+			expect(dateValue.textContent).toEqual('Starts Oct 31, 2015');
 
 			const launchButton = x.container.querySelector('.launch-button');
 

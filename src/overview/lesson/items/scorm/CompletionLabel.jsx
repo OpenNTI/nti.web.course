@@ -19,7 +19,7 @@ export default function CompletionLabel ({item}) {
 	if (!item.isCompletable || !item.isCompletable() || !item.hasCompleted()) { return null; }
 
 	const date = item.getCompletedDate();
-	const formattedDate = date ? DateTime.format(date, 'MMMM DD, YYYY [at] H:mmA') : '';
+	const formattedDate = date ? DateTime.format(date, DateTime.MONTH_NAME_DAY_YEAR_AT_TIME) : '';
 
 	const success = item.completedSuccessfully();
 	const failed = item.completedUnsuccessfully();

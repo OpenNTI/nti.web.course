@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import {DateTime} from '@nti/web-commons';
+import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
 import {Hooks, Events} from '@nti/web-session';
 
@@ -10,6 +11,15 @@ function isToday (a, b) {
 	return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
 }
 
+const t = scoped('course.overview.lesson.items.event.Base', {
+	endsAt: 'Ends %(date)s at %(time)s',
+	startsAt: 'Starts %(weekday)s at %(time)s',
+	startsFrom: 'Starts %(weekday)s from %(time)s',
+});
+
+const endsAt = f => t('endsAt', { date: f(DateTime.WEEKDAY_MONTH_NAME_DAY_YEAR), time: f(DateTime.TIME_PADDED_WITH_ZONE) });
+const startsAt = f => t('startsAt', { weekday: f(DateTime.WEEKDAY), time: f(DateTime.TIME_PADDED) });
+const startsFrom = f => t('startsFrom', { weekday: f(DateTime.WEEKDAY), time: f(DateTime.TIME_PADDED) });
 @Hooks.onEvent(Events.EVENT_UPDATED, 'onEventUpdated')
 export default class EventBaseItem extends React.Component {
 	static propTypes = {
@@ -68,12 +78,12 @@ export default class EventBaseItem extends React.Component {
 		const {item: {CalendarEvent: event}} = this.props;
 
 		// default case, render 'Starts [day] from [startTime] - [endTime]'
-		let timeDisplay = DateTime.format(event.getStartTime(), '[Starts] dddd [from] hh:mm a')
-			+ ' - ' + DateTime.format(event.getEndTime(), 'hh:mm a z');
+		let timeDisplay = DateTime.format(event.getStartTime(), startsFrom)
+			+ ' - ' + DateTime.format(event.getEndTime(), DateTime.TIME_PADDED_WITH_ZONE);
 
 		if(!isToday(event.getStartTime(), event.getEndTime())) {
-			timeDisplay = DateTime.format(event.getStartTime(), '[Starts] dddd [at] hh:mm a')
-				+ ' - ' + DateTime.format(event.getEndTime(), '[Ends] dddd LL [at] hh:mm a z');
+			timeDisplay = DateTime.format(event.getStartTime(), startsAt)
+				+ ' - ' + DateTime.format(event.getEndTime(), endsAt);
 		}
 
 		return (

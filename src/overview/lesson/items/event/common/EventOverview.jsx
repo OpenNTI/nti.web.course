@@ -88,7 +88,7 @@ class EventOverviewEditor extends React.Component {
 			<div className="event-info">
 				<div className="title"><Input.Text placeholder={t('eventTitle')} value={title} onChange={(val) => this.setState({title: val})} maxLength="140"/></div>
 				<div className="time-info">
-					<span className="date">{DateTime.format(startDate, 'dddd [at] hh:mm a z')}</span>
+					<span className="date">{DateTime.format(startDate, DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE)}</span>
 				</div>
 				<div className="image-and-description">
 					<ImageUpload img={img} onChange={imgBlob => this.setState({imgBlob})}/>

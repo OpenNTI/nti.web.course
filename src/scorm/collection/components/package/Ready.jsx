@@ -65,7 +65,7 @@ class ReadyPackage extends React.Component {
 
 	renderUploaded (pack, selected) {
 		const created = pack.getCreatedTime();
-		
+
 		if (!created) { return null; }
 
 		const now = new Date();
@@ -81,7 +81,7 @@ class ReadyPackage extends React.Component {
 			);
 		}
 
-		const date = DateTime.format(created, 'MMMM DD, YYYY [at] H:mmA');
+		const date = DateTime.format(created, DateTime.MONTH_NAME_DAY_YEAR_AT_TIME);
 
 		return (
 			<SubTitle>

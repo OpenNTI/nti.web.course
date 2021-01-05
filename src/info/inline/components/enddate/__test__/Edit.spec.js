@@ -27,7 +27,7 @@ describe('End date edit test', () => {
 
 		const dateInfoEl = dateEl.querySelector('.date-info');
 
-		expect(dateInfoEl.textContent).toEqual('Monday at 05:00 am UTC');
+		expect(dateInfoEl.textContent).toEqual('Monday at 05:00 AM UTC');
 	});
 
 	test('Test no date', () => {
@@ -45,7 +45,7 @@ describe('End date edit test', () => {
 		const dateEl = x.container.querySelector('.date');
 
 		const now = new Date();
-		const expectedDateStr = DateTime.format(now) + DateTime.format(now, 'dddd [at] 11:59 [pm] z');
+		const expectedDateStr = DateTime.format(now) + DateTime.format(now, 'eeee \'at 11:59 PM\' z');
 
 		expect(dateEl.textContent).toMatch(expectedDateStr);
 	});

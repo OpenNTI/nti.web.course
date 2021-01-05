@@ -1,7 +1,7 @@
 import {DateTime} from '@nti/web-commons';
 
-const FULL_FORMAT = 'MMMM Do, h:mm A z';
-const M_D_Y_FORMAT = 'MMMM Do, YYYY';
+const FULL_FORMAT = DateTime.MONTH_NAME_ORDINAL_DAY_TIME_WITH_ZONE;
+const M_D_Y_FORMAT = DateTime.MONTH_NAME_ORDINAL_DAY_YEAR;
 
 export default function getCatalogEntryData (catalogEntry, option) {
 	const startDate = catalogEntry.getStartDate();

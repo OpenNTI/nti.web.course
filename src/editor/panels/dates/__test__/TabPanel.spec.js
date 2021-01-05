@@ -75,8 +75,8 @@ describe('Dates TabPanel test', () => {
 		const [startDate, endDate] = result.container.querySelectorAll('.date');
 
 		// since there were provided values, initial state should show these dates
-		expect(startDate.querySelector('.value').textContent).toBe('Sep. 22');
-		expect(endDate.querySelector('.value').textContent).toBe('Dec. 24');
+		expect(startDate.querySelector('.value').textContent).toBe('Sep 22');
+		expect(endDate.querySelector('.value').textContent).toBe('Dec 24');
 
 		// initial state, startDate selected, endDate not selected
 		expect(startDate.getAttribute('class')).toMatch(/selected/);

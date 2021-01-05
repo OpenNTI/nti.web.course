@@ -154,12 +154,12 @@ export default class CourseOverviewLessonHeader extends React.Component {
 
 
 	renderSmallDates = () => {
-		return this.renderDates('ddd, MMM Do');
+		return this.renderDates(DateTime.WEEKDAY_ABBR_MONTH_ABBR_ORDINAL_DAY);
 	}
 
 
 	renderLargeDates = () => {
-		return this.renderDates('dddd, MMMM Do');
+		return this.renderDates(DateTime.WEEKDAY_MONTH_NAME_ORDINAL_DAY);
 	}
 
 

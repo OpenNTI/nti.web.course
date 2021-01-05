@@ -75,7 +75,7 @@ describe('Settings TabPanel test', () => {
 		const previewModeOption = root.querySelector('.preview-mode-option');
 
 		expect(previewModeOption.textContent).toMatch(/Based on start date/);
-		expect(previewModeOption.textContent).toMatch(/April 5th 2017, 12:00 am/);
+		expect(previewModeOption.textContent).toMatch(/April 5th 2017, 12:00 AM/);
 		expect(previewModeOption.querySelector('.preview-date-info').getAttribute('class')).not.toMatch(/ warning/);
 	});
 

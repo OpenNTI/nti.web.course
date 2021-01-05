@@ -31,13 +31,13 @@ export default function SiteAdminCourseInfo ({className, catalogEntry}) {
 					{startDate && (
 						<div className="start date">
 							<span className="label">{t('start')}</span>
-							<DateTime className="value" date={startDate} format="ll"/>
+							<DateTime className="value" date={startDate} format={DateTime.MONTH_ABBR_DAY_YEAR}/>
 						</div>
 					)}
 					{endDate && (
 						<div className="end date">
 							<span className="label">{t('end')}</span>
-							<DateTime className="value" date={endDate} format="ll" />
+							<DateTime className="value" date={endDate} format={DateTime.MONTH_ABBR_DAY_YEAR} />
 						</div>
 					)}
 				</div>

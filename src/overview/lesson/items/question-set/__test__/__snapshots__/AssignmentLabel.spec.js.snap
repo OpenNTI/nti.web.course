@@ -33,7 +33,7 @@ exports[`Course overview assignment label test Completable, optional, editable 1
     <span
       className="due late"
     >
-      Due Monday, October 30 12:00 AM UTC
+      Due Monday, October 30, 12:00 AM UTC
     </span>
   </li>
 </ul>
@@ -61,7 +61,7 @@ exports[`Course overview assignment label test Completable, required, not editab
     <span
       className="due late"
     >
-      Due Monday, October 30 12:00 AM UTC
+      Due Monday, October 30, 12:00 AM UTC
     </span>
   </li>
 </ul>
@@ -83,7 +83,7 @@ exports[`Course overview assignment label test Completed but late 1`] = `
       </span>
       <time
         className="date ntiText"
-        dateTime="2017-10-25T00:00:00+00:00"
+        dateTime="2017-10-25T00:00:00Z"
       >
         Wednesday, October 25
       </time>
@@ -108,7 +108,7 @@ exports[`Course overview assignment label test Completed on time 1`] = `
       </span>
       <time
         className="date ntiText"
-        dateTime="2017-10-25T00:00:00+00:00"
+        dateTime="2017-10-25T00:00:00Z"
       >
         Wednesday, October 25
       </time>
@@ -146,7 +146,7 @@ exports[`Course overview assignment label test Not completed, but excused 1`] = 
     <span
       className="due late"
     >
-      Due Monday, October 30 12:00 AM UTC
+      Due Monday, October 30, 12:00 AM UTC
     </span>
   </li>
   <li>
@@ -175,7 +175,7 @@ exports[`Course overview assignment label test Not completed, overdue 1`] = `
     <span
       className="due late"
     >
-      Due Monday, October 30 12:00 AM UTC
+      Due Monday, October 30, 12:00 AM UTC
     </span>
   </li>
 </ul>
@@ -196,7 +196,7 @@ exports[`Course overview assignment label test Not completed, overdue, but is no
     <span
       className="due"
     >
-      Due Monday, October 30 12:00 AM UTC
+      Due Monday, October 30, 12:00 AM UTC
     </span>
   </li>
 </ul>

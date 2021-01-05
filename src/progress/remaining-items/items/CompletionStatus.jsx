@@ -13,7 +13,7 @@ const t = scoped('course.progress.remaining-items.items.CompletionStatus', {
 	pendingGrade: 'Pending Grade'
 });
 
-const formatDate = date => DateTime.format(date, 'M/DD');
+const formatDate = date => DateTime.format(date, DateTime.MONTH_DAY);
 
 const isAssignment = ({assignment}) => Boolean(assignment);
 const isNoSubmitAssignment = ({assignment:a, assignmentHistory:h}) => (a && a.isNonSubmit()) || (h && h.isSyntheticSubmission());

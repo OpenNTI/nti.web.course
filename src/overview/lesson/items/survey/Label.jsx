@@ -27,7 +27,6 @@ const DEFAULT_TEXT = {
 };
 const t = scoped('course.overview.lesson.items.survey.Label', DEFAULT_TEXT);
 
-const formatDate = (...args) => DateTime.format(...args);
 const isToday = (...args) => DateTime.isToday(...args);
 
 function getDueDate (item) {
@@ -36,7 +35,7 @@ function getDueDate (item) {
 	const available = item.getTargetAssignedDate();
 	const due = item.getTargetDueDate();
 
-	const format = date => formatDate(date, 'dddd, MMMM D h:mm A z');
+	const format = date => DateTime.format(date, DateTime.WEEKDAY_MONTH_NAME_DAY_TIME_WITH_ZONE);
 
 	const dueToday = due > now && isToday(due);
 	const late = due && due <= now;
@@ -44,7 +43,7 @@ function getDueDate (item) {
 	let text = '';
 
 	if (dueToday) {
-		text = t('due.today', {time: formatDate(due, 'h:mm a z')});
+		text = t('due.today', {time: DateTime.format(due, DateTime.TIME_WITH_ZONE)});
 	} else if (available > now && due > now) {
 		text = t('due.available', {date: format(available)});
 	} else if (due) {

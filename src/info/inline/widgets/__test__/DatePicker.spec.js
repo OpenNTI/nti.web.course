@@ -26,6 +26,6 @@ describe('DatePicker test', () => {
 
 		const dateInfoEl = dateEl.querySelector('.date-info');
 
-		expect(dateInfoEl.textContent).toEqual('Friday at 12:00 am UTC');
+		expect(dateInfoEl.textContent).toEqual('Friday at 12:00 AM UTC');
 	});
 });

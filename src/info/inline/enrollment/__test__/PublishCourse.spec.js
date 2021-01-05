@@ -121,7 +121,7 @@ describe('PublishCourse test', () => {
 			const previewModeOption = x.container.querySelector('.preview-mode-widget');
 
 			expect(previewModeOption.textContent).toMatch(/Publish on Start Date/);
-			expect(previewModeOption.textContent).toMatch(/April 5th 2017, 12:00 am/);
+			expect(previewModeOption.textContent).toMatch(/April 5th 2017, 12:00 AM/);
 
 		});
 	});
