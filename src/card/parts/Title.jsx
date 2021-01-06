@@ -1,8 +1,62 @@
-import './Title.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {Text} from '@nti/web-commons';
 
 import {getSemesterBadge} from '../../utils/Semester';
+
+const Block = styled.div`
+	overflow: hidden;
+	margin-top: 4px;
+`;
+
+const Meta = styled.div`
+	--gap: 5px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	margin: 0;
+	margin-top: calc(-1 * var(--gap));
+
+	& > * {
+		flex: 0 1 auto;
+		margin: 0;
+		margin-top: var(--gap);
+		&:global(.course-date) {
+			flex: 0 0 auto;
+		}
+	}
+`;
+
+const Token = styled(Text)`
+	font: normal 700 0.625rem var(--body-font-family);
+	text-transform: uppercase;
+	color: var(--tertiary-grey);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+	line-height: 1.2rem;
+	@media (--respond-to-handhelds) {
+		line-height: 1;
+	}
+`;
+
+const Title = styled(Text).attrs({as: 'h2'})`
+	font: normal 700 1rem/1.3 var(--header-font-family);
+	display: block;
+	color: var(--primary-grey);
+	text-transform: uppercase;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	margin: 0;
+
+	@media (--respond-to-handhelds) {
+		font-weight: 300;
+		margin-bottom: 5px;
+		white-space: normal;
+	}
+`;
+
 
 CourseCardTitle.propTypes = {
 	course: PropTypes.shape({
@@ -16,12 +70,15 @@ export default function CourseCardTitle ({course}) {
 	const dateText = getSemesterBadge(course);
 
 	return (
-		<div className="nti-course-card-title">
-			<div className="provider-unique-id">{course.ProviderUniqueID}</div>
-			{dateText &&
-				<div className="course-date">{dateText}</div>
-			}
-			<div className="title">{course.Title}</div>
-		</div>
+		<Block className="nti-course-card-title">
+			<Meta>
+				<Token className="provider-unique-id">{course.ProviderUniqueID}</Token>
+				{dateText &&
+					<Token className="course-date">{dateText}</Token>
+				}
+			</Meta>
+			<Title limitLines={3} className="title">{course.Title}</Title>
+		</Block>
 	);
 }
+
