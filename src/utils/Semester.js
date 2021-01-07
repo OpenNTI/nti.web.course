@@ -1,3 +1,4 @@
+/** @typedef { @import("@nti/lib-interfaces").Models.courses.Instance} Instance */
 import {scoped} from '@nti/lib-locale';
 
 const t = scoped('course.utils.Semester.months', {
@@ -16,6 +17,13 @@ const t = scoped('course.utils.Semester.months', {
 	'not-set': ''
 });
 
+
+
+/**
+ *
+ * @param {Instance} course - The course instance
+ * @returns {?Date} - Date
+ */
 export function getEffectiveDate (course) {
 	// if there is no start date, but we have an end date, consider that end date
 	// as the 'effective' date for the course.  So when determining which semester an archived
@@ -23,6 +31,12 @@ export function getEffectiveDate (course) {
 	return course.getStartDate() || course.getEndDate();
 }
 
+
+/**
+ *
+ * @param {Instance} course - The course instance
+ * @returns {string} formatted string
+ */
 export function getSemester (course) {
 	let start = getEffectiveDate(course),
 		month = start && start.getMonth(),
@@ -30,6 +44,12 @@ export function getSemester (course) {
 	return s || '';
 }
 
+
+/**
+ *
+ * @param {Instance} course - The course instance
+ * @returns {string} formatted string
+ */
 export function  getSemesterBadge (course) {
 	let start = getEffectiveDate(course),
 		semester = getSemester(course);
