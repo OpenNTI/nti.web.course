@@ -12,13 +12,18 @@ CourseCard.propTypes = {
 	className: PropTypes.string,
 	course: PropTypes.object.isRequired,
 	badges: PropTypes.arrayOf(PropTypes.node),
+
+	// FIXME: these three booleans should be a single prop enum
+	// ie: variant=PropTypes.oneOf(['card', 'list-item', 'auto'])
 	card: PropTypes.bool,
 	list: PropTypes.bool,
 	collapseToList: PropTypes.bool,
+
 	progress: PropTypes.number,
 	onClick: PropTypes.func
 };
 export default function CourseCard ({className, course, badges, card = true, list, collapseToList, progress, onClick}) {
+	const variant = (!list && !collapseToList) ? 'card' : 'list-item';
 	return (
 		<div
 			onClick={onClick}
@@ -26,8 +31,8 @@ export default function CourseCard ({className, course, badges, card = true, lis
 		>
 			<Image course={course} />
 			<div className="meta">
-				<Title course={course} />
-				<Authors course={course} />
+				<Title course={course} variant={variant} />
+				<Authors course={course} variant={variant} />
 			</div>
 			{badges && (
 				<ul className="badges">

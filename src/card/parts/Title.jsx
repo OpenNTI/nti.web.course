@@ -44,7 +44,7 @@ const Token = styled(Text)`
 		line-height: 1;
 	}
 
-	:global(.nti-course-card-container.list) & {
+	&.variant-list-item {
 		line-height: 1.5;
 	}
 `;
@@ -64,7 +64,7 @@ const Title = styled(Text).attrs({as: 'h2'})`
 		white-space: normal;
 	}
 
-	:global(.nti-course-card-container.list) & {
+	&.variant-list-item {
 		font-weight: 400;
 		margin-bottom: 0.5rem;
 		white-space: nowrap;
@@ -78,20 +78,21 @@ CourseCardTitle.propTypes = {
 		Title: PropTypes.string
 	}),
 	// hideSemester: PropTypes.bool
+	variant: PropTypes.oneOf(['card', 'list-item']),
 };
 
-export default function CourseCardTitle ({course}) {
+export default function CourseCardTitle ({course, variant}) {
 	const dateText = getSemesterBadge(course);
 
 	return (
 		<Block className="nti-course-card-title" data-testid="nti-course-card-title-block">
 			<Meta>
-				<Token data-testid="provider-unique-id">{course.ProviderUniqueID}</Token>
+				<Token variant={variant} data-testid="provider-unique-id">{course.ProviderUniqueID}</Token>
 				{dateText &&
-					<Token data-testid="course-date">{dateText}</Token>
+					<Token variant={variant} data-testid="course-date">{dateText}</Token>
 				}
 			</Meta>
-			<Title limitLines={3} data-testid="course-title">{course.Title}</Title>
+			<Title variant={variant} limitLines={3} data-testid="course-title">{course.Title}</Title>
 		</Block>
 	);
 }
