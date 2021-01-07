@@ -140,19 +140,6 @@ $CUSTOM_RANGES: (
 		padding: 0 10px;
 		overflow: hidden;
 
-		.nti-course-card-title {
-			.provider-unique-id, .course-date {
-				line-height: 1.5;
-			}
-
-			.title {
-				display: block;
-				font-weight: 400;
-				margin-bottom: 0.5rem;
-				white-space: nowrap;
-			}
-		}
-
 		.nti-course-card-authors {
 			margin-top: 0;
 			display: block;

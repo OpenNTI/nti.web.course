@@ -39,8 +39,13 @@ const Token = styled(Text)`
 	text-overflow: ellipsis;
 	display: inline-block;
 	line-height: 1.2rem;
+
 	@media (--respond-to-handhelds) {
 		line-height: 1;
+	}
+
+	:global(.nti-course-card-container.list) & {
+		line-height: 1.5;
 	}
 `;
 
@@ -57,6 +62,12 @@ const Title = styled(Text).attrs({as: 'h2'})`
 		font-weight: 300;
 		margin-bottom: 5px;
 		white-space: normal;
+	}
+
+	:global(.nti-course-card-container.list) & {
+		font-weight: 400;
+		margin-bottom: 0.5rem;
+		white-space: nowrap;
 	}
 `;
 
