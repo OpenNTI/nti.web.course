@@ -42,7 +42,7 @@ export default function CourseCard ({className, course, badges, card = true, lis
 			)}
 
 			{progress !== undefined && progress > 0 &&
-				<div className="progress" style={{width: progress * 100 + '%'}} />
+				<div className="progress" data-testid="progress-bar" style={{width: progress * 100 + '%'}} />
 			}
 		</div>
 	);

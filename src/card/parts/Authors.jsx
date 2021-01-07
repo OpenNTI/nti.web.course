@@ -9,7 +9,7 @@ CourseCardAuthors.propTypes = {
 };
 export default function CourseCardAuthors ({course}) {
 	return (
-		<div className="nti-course-card-authors">
+		<div data-testid="course-authors" className="nti-course-card-authors">
 			{course.getAuthorLine()}
 		</div>
 	);

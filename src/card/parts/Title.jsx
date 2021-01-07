@@ -84,14 +84,14 @@ export default function CourseCardTitle ({course}) {
 	const dateText = getSemesterBadge(course);
 
 	return (
-		<Block className="nti-course-card-title">
+		<Block className="nti-course-card-title" data-testid="nti-course-card-title-block">
 			<Meta>
-				<Token className="provider-unique-id">{course.ProviderUniqueID}</Token>
+				<Token data-testid="provider-unique-id">{course.ProviderUniqueID}</Token>
 				{dateText &&
-					<Token className="course-date">{dateText}</Token>
+					<Token data-testid="course-date">{dateText}</Token>
 				}
 			</Meta>
-			<Title limitLines={3} className="title">{course.Title}</Title>
+			<Title limitLines={3} data-testid="course-title">{course.Title}</Title>
 		</Block>
 	);
 }
