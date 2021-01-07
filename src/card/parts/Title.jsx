@@ -16,11 +16,14 @@ const Meta = styled.div`
 	flex-wrap: nowrap;
 	margin: 0;
 	margin-top: calc(-1 * var(--gap));
+	margin-right: calc(-1 * var(--gap));
 
 	& > * {
 		flex: 0 1 auto;
 		margin: 0;
 		margin-top: var(--gap);
+		margin-right: var(--gap);
+
 		&:global(.course-date) {
 			flex: 0 0 auto;
 		}
