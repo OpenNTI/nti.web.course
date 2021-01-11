@@ -40,6 +40,10 @@ const Token = styled(Text)`
 	display: inline-block;
 	line-height: 1.2rem;
 
+	&.no-shrink {
+		flex-shrink: 0;
+	}
+
 	@media (--respond-to-handhelds) {
 		line-height: 1;
 	}
@@ -89,7 +93,7 @@ export default function CourseCardTitle ({course, variant}) {
 			<Meta>
 				<Token variant={variant} data-testid="provider-unique-id">{course.ProviderUniqueID}</Token>
 				{dateText &&
-					<Token variant={variant} data-testid="course-date">{dateText}</Token>
+					<Token variant={variant} no-shrink data-testid="course-date">{dateText}</Token>
 				}
 			</Meta>
 			<Title variant={variant} limitLines={3} data-testid="course-title">{course.Title}</Title>
