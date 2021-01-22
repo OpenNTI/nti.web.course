@@ -12,7 +12,7 @@
 
 	.header {
 		height: 137px;
-		background: linear-gradient(270deg 0%, #157aff 100%);
+		background: linear-gradient(270deg, var(--primary-blue) 0%, #157aff 100%);
 		color: white;
 		padding: 17px 35px;
 		position: relative;
