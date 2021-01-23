@@ -1,13 +1,17 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Input, Loading} from '@nti/web-commons';
+import {Input, Loading, Text} from '@nti/web-commons';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
 
 import Store from './Store';
+// import Credit from './Credit';
+import Badges from './Badges';
 
 const t = scoped('course.admin-tools.advanced.completion.View', {
+	title: 'Completion Requirements',
+	awardTitle: 'Awards Upon Completion',
 	cancel: 'Cancel',
 	save: 'Save',
 	completable: 'Completable',
@@ -195,7 +199,8 @@ class CourseAdminCompletion extends React.Component {
 
 
 	render () {
-		const {loading, error, page} = this.props;
+		const {loading, error, page, course, completable, disabled: nonEditor, updateDisabled} = this.props;
+		const disabled = !completable || nonEditor || updateDisabled;
 
 		return (
 			<div className={cx('course-admin-completion', {'completion-page': page})}>
@@ -203,11 +208,17 @@ class CourseAdminCompletion extends React.Component {
 				{!loading && (
 					<div className="content">
 						<div className="error">{error || ''}</div>
-						<div className="inputs">
+						<div className="group">
+							<Text.Base className="title">{t('title')}</Text.Base>
 							{this.renderCompletableToggle()}
 							{this.renderPercentage()}
-							{this.renderCertificateToggle()}
 							{this.renderDefaultRequiredSection()}
+						</div>
+						<div className="group">
+							<Text.Base className="title">{t('awardTitle')}</Text.Base>
+							{/* <Credit course={course} disabled={disabled} /> */}
+							<Badges course={course} disabled={disabled} />
+							{this.renderCertificateToggle()}
 						</div>
 					</div>
 				)
