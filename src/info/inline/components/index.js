@@ -1,4 +1,5 @@
 export * as Access from './access';
+export * as Badges from './badges';
 export * as Title from './title';
 export * as Description from './description';
 export * as Identifier from './identifier';

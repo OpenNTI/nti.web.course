@@ -17,7 +17,7 @@ import CourseVisibility from './enrollment/CourseVisibility';
 import CourseVideo from './widgets/CourseVideo';
 import { saveFacilitators, getVisibleFacilitators, getAllFacalitators, hasHiddenFacilitators } from './components/facilitators/utils';
 import Section from './components/Section';
-import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes,
+import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes, Badges,
 	RedemptionCodes, Prerequisites, Access, Department, Facilitators, Assets, TranscriptCredit } from './components';
 
 
@@ -390,6 +390,14 @@ export default class CourseInfo extends React.Component {
 						doSave={pending => Access.saveAccess(catalogEntry, courseInstance, pending)}
 						onBeginEditing={this.activateAccessEditor}
 						onEndEditing={this.endEditing}
+						hideDeleteBlock
+					/>
+					<Section
+						className="badge-section"
+						components={[Badges]}
+						catalogEntry={catalogEntry}
+						courseInstance={courseInstance}
+						enrollmentAccess={enrollmentAccess}
 						hideDeleteBlock
 					/>
 					<Section
