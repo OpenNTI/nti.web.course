@@ -1,1 +1,1 @@
-export formatProgressStats from './format-progress-stats';
+export { default as formatProgressStats } from './format-progress-stats';

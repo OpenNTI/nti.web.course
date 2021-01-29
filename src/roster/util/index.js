@@ -3,4 +3,4 @@ export {
 	decodeBatchLink
 } from './batch-link-encoding';
 
-export stripEmptyProperties from './strip-empty-properties';
+export { default as stripEmptyProperties } from './strip-empty-properties';

@@ -1,1 +1,1 @@
-export ContentSelection from './View';
+export { default as ContentSelection } from './View';

@@ -1,2 +1,2 @@
-export Prompt from './Prompt';
-export Manager from './View';
+export { default as Prompt } from './Prompt';
+export { default as Manager } from './View';

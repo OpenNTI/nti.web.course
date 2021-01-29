@@ -1,1 +1,1 @@
-export WizardPanel from './WizardPanel';
+export { default as WizardPanel } from './WizardPanel';

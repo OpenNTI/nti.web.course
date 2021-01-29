@@ -1,1 +1,1 @@
-export TechSupport from './View';
+export { default as TechSupport } from './View';

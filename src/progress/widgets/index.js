@@ -1,6 +1,6 @@
-export AssignmentHeader from './AssignmentHeader';
-export GradeCard from './GradeCard';
-export OutlineHeader from './OutlineHeader';
-export ProgressCard from './ProgressCard';
-export UserGradeCard from './UserGradeCard';
-export RequirementControl from './RequirementControl';
+export { default as AssignmentHeader } from './AssignmentHeader';
+export { default as GradeCard } from './GradeCard';
+export { default as OutlineHeader } from './OutlineHeader';
+export { default as ProgressCard } from './ProgressCard';
+export { default as UserGradeCard } from './UserGradeCard';
+export { default as RequirementControl } from './RequirementControl';

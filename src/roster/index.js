@@ -1,2 +1,2 @@
 export { default } from './View';
-export Roster from './Roster';
+export { default as Roster } from './Roster';

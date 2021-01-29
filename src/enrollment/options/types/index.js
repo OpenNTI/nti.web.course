@@ -10,4 +10,4 @@ export function getTypeFor (...args) {
 	return registry.getItemFor(...args);
 }
 
-export Unknown from './unknown';
+export { default as Unknown } from './unknown';

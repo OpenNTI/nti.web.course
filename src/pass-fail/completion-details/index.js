@@ -1,1 +1,1 @@
-export CompletionDetails from './View';
+export { default as CompletionDetails } from './View';

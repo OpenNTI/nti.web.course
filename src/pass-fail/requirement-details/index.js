@@ -1,1 +1,1 @@
-export RequirementDetails from './View';
+export { default as RequirementDetails } from './View';

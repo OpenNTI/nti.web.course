@@ -1,2 +1,2 @@
-export TabPanel from './TabPanel';
-export WizardPanel from './WizardPanel';
+export { default as TabPanel } from './TabPanel';
+export { default as WizardPanel } from './WizardPanel';

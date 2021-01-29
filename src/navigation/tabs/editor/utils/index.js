@@ -1,2 +1,2 @@
-export getTabError from './get-tab-error';
-export isValidTab from './is-valid-tab';
+export { default as getTabError } from './get-tab-error';
+export { default as isValidTab } from './is-valid-tab';

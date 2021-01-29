@@ -6,8 +6,8 @@ const t = scoped('course.info.inline.components.access.types.free', {
 	display: 'Free'
 });
 
-export Display from './Display';
-export Editor from './Editor';
+export { default as Display } from './Display';
+export { default as Editor } from './Editor';
 
 export const Name = 'Free';
 export const displayName = t('display');

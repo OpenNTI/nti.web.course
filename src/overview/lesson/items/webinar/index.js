@@ -1,5 +1,5 @@
-export Editor from './editor';
+export { default as Editor } from './editor';
 
 export { default } from './View';
 
-export RegistrationButton from './Button';
+export { default as RegistrationButton } from './Button';
