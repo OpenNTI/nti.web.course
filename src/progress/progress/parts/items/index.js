@@ -4,4 +4,4 @@ import './QuestionSet';
 import './Video';
 import './RelatedWork';
 
-export default from './View';
+export { default } from './View';

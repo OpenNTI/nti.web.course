@@ -1,2 +1,2 @@
 export { default as Scorm } from './View';
-export default from './package-wizard';
+export { default } from './package-wizard';

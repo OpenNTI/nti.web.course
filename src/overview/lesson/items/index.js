@@ -14,4 +14,4 @@ import './lti';
 export * as Webinar from './webinar';
 export * as Event from './event';
 
-export default from './View';
+export { default } from './View';

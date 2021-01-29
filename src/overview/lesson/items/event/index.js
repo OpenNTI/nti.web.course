@@ -1,3 +1,3 @@
 export Editor from './editor';
 
-export default from './View';
+export { default } from './View';
