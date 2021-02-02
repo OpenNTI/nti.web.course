@@ -5,9 +5,6 @@ import React from 'react';
 // import Section from '../../../info/inline/components/Section';
 
 
-CompletionCredit.propTypes = {
-
-};
 export default function CompletionCredit ({course}) {
 	return (
 		<div>

@@ -36,7 +36,7 @@ class PackageWizard extends React.Component {
 
 	/**
 	 * Constructor
-	 * @param {object} props - contains bundle
+	 * @param {Object} props - contains bundle
 	 */
 	constructor (props) {
 		super(props);

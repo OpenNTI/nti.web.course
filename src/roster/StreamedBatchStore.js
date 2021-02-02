@@ -245,9 +245,9 @@ class StreamedBatchStore extends Stores.BoundStore {
    * Provide a method to load a batch given a href and options
    *
    * @override
-   * @param  {String} href    the href of the batch to load
+   * @param  {string} href    the href of the batch to load
    * @param  {Object} options the options to load the batch with
-   * @return {Promise}         fulfills with a batch model
+   * @returns {Promise}         fulfills with a batch model
    */
 	loadBatch (href, options) {}
 }

@@ -10,7 +10,7 @@
 			left: -1.25rem;
 			top: 50%;
 			transform: translateY(-50%);
-			font-family: "icomoon" !important;
+			font-family: "icomoon", serif !important;
 			font-style: normal;
 			font-weight: normal;
 			-webkit-font-feature-settings: normal;
@@ -80,11 +80,27 @@
 	}
 }
 
+.visibility-tooltip {
+	font-size: 0.625rem;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	padding: 0.875em;
+	color: white;
+	background: #404040;
+}
+
 .facilitator {
 	// display: flex;
 	margin-top: 15px;
 	box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.18);
 	background: white;
+	//
+	display: block;
+	position: relative;
+	min-height: 100px;
+	padding: 1rem;
+	padding-left: 116px; // avatar width + 16
+	color: var(--primary-grey);
 
 	&.hidden {
 		.image {
@@ -116,32 +132,10 @@
 		background-color: #eee;
 		background-size: cover;
 		background-position: center center;
-	}
-}
-
-.visibility-tooltip {
-	font-size: 0.625rem;
-	text-transform: uppercase;
-	letter-spacing: 0.5px;
-	padding: 0.875em;
-	color: white;
-	background: #404040;
-}
-
-.facilitator {
-	display: block;
-	position: relative;
-	min-height: 100px;
-	padding: 1rem;
-	padding-left: 116px; // avatar width + 16
-	color: var(--primary-grey);
-
-	.image {
+		//
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 100px;
-		height: 100px;
 	}
 
 	.name {

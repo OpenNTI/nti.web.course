@@ -83,10 +83,6 @@
 				}
 			}
 
-			.course-option-info {
-				flex: 1 1 auto;
-			}
-
 			.course-option-control {
 				flex: 0 0 auto;
 
@@ -103,6 +99,7 @@
 			}
 
 			.course-option-info {
+				flex: 1 1 auto;
 				font-size: 0.875rem;
 				font-weight: 400;
 				line-height: 1.3;

@@ -48,7 +48,7 @@ export function canAddFacilitators (courseInstance) {
  * @param  {Object} catalogEntry    Catalog entry containing Instructors field
  * @param  {Object} courseInstance  Course instance containing Instructors/Editors link
  * @param  {Array} facilitators     List of facilitators modeled similarly to catalogEntry.Instructors
- * @return {Promise}                Wraps the saved facilitators
+ * @returns {Promise}                Wraps the saved facilitators
  */
 export async function saveFacilitators (catalogEntry, courseInstance, facilitators) {
 	// visible facilitators go in the catalogEntry Instructors field, hidden facilitators
@@ -120,7 +120,7 @@ function containsUser (list, userName) {
  * @param  {Array} instructors         Instructors pulled from the courseInstance's Instructors link
  * @param  {Array} editors             Editors pulled from the courseInstance's Editors link
  * @param  {Object} catalogEntry       Course these instructors are applied to
- * @return {Array}                     Facilitator list with role/visibility properties
+ * @returns {Array}                     Facilitator list with role/visibility properties
  */
 export function mergeAllFacilitators (catalogInstructors, instructors, editors, catalogEntry) {
 	let aggregated = [];

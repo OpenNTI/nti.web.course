@@ -60,7 +60,7 @@ export default class VideoRollCarousel extends React.Component {
 		}
 
 		if (offsetWidth !== renderedOffsetWidth) {
-			this.setState({offsetWidth: renderedOffsetWidth});//eslint-disable-line react/no-did-update-set-state
+			this.setState({offsetWidth: renderedOffsetWidth});
 		}
 	}
 

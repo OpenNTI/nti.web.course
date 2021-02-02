@@ -110,9 +110,9 @@ export default class Section extends React.Component {
 	 * the user clicks Save, these pending changes (if any) will be saved to the catalogEntry
 	 *
 	 * @param  {string} key     catalogEntry field name
-	 * @param  {object} value   catalogEntry field value
+	 * @param  {Object} value   catalogEntry field value
 	 * @param  {string} error   store any errorsfound when updating values
-	 * @return {void}
+	 * @returns {void}
 	 */
 	aggregateChanges = (key, value, error) => {
 		const { pendingChanges } = this.state;
