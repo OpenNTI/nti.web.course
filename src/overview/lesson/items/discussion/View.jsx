@@ -76,7 +76,7 @@ class LessonOverviewDiscussion extends React.Component {
 
 			this.setState({
 				topic,
-				title: topic.title,
+				title: item.title || topic.title,
 				commentLabel: isForum ?
 					t('commentLabel.topics', {count: topic.TopicCount || 0}) :
 					t('commentLabel.comments', {count: topic.PostCount || 0})
