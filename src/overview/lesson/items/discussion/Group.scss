@@ -1,5 +1,10 @@
 .lesson-overview-collated-discussion-grid-items {
 	& > li {
-		display: inline;
+		display: inline-block;
+		margin: 5px 5px 5px 0;
+	}
+
+	& > li:nth-child(n + 3) {
+		margin-right: 0;
 	}
 }
