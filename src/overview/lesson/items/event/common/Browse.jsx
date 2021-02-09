@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {Loading, DateTime, Prompt, Input} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {Connectors} from '@nti/lib-store';
@@ -13,8 +14,6 @@ const t = scoped('course.overview.lesson.items.event.common.Browse', {
 	noIcon: 'No Icon'
 });
 
-export default
-@Connectors.Any.connect(['loading', 'events', 'deleteEvent', 'doSearch', 'searchTerm'])
 class BrowseEvents extends React.Component {
 	static propTypes = {
 		onSelect: PropTypes.func,
@@ -84,3 +83,8 @@ class BrowseEvents extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(BrowseEvents, [
+	Connectors.Any.connect(['loading', 'events', 'deleteEvent', 'doSearch', 'searchTerm'])
+]);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Input, Button, Search} from '@nti/web-commons';
 
@@ -13,8 +14,6 @@ const t = scoped('course.scorm.collection.components.Header', {
 	upload: 'Upload a SCORM Package'
 });
 
-export default 
-@Store.monitor(['uploadPackage', 'filter', 'setFilter'])
 class ScormCollectionHeader extends React.Component {
 	static propTypes = {
 		uploadPackage: PropTypes.func,
@@ -47,3 +46,8 @@ class ScormCollectionHeader extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(ScormCollectionHeader, [
+	Store.monitor(['uploadPackage', 'filter', 'setFilter'])
+]);

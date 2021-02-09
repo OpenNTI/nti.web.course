@@ -1,6 +1,7 @@
 import './OutlineHeader.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {CircularProgress} from '@nti/web-charts';
 import {Hooks} from '@nti/web-session';
@@ -26,8 +27,6 @@ const LOAD_WAIT = 5000;
 const STUDENT = 'Student';
 const ADMIN = 'Admin';
 
-export default
-@Hooks.afterBatchEvents()
 class OutlineHeader extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -260,3 +259,8 @@ class OutlineHeader extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(OutlineHeader, [
+	Hooks.afterBatchEvents()
+]);

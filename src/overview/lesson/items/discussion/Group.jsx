@@ -8,9 +8,7 @@ import View from '../View';
 
 import {COLLATED_MIME_TYPE, DiscussionGroup} from './Collator';
 
-export default
-@Registry.register(COLLATED_MIME_TYPE)
-class Group extends React.Component {
+export default class Group extends React.Component {
 	static propTypes = {
 		item: PropTypes.instanceOf(DiscussionGroup),
 		course: PropTypes.object,
@@ -26,3 +24,5 @@ class Group extends React.Component {
 		);
 	}
 }
+
+Registry.register(COLLATED_MIME_TYPE)(Group);

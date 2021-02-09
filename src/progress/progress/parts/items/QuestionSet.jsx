@@ -13,9 +13,7 @@ const DEFAULT_TEXT = {
 };
 const t = scoped('web-course.progress.QuestionSetItem', DEFAULT_TEXT);
 
-export default
-@Registry.register('application/vnd.nextthought.questionsetref')
-class QuestionSetProgressItem extends React.Component {
+export default class QuestionSetProgressItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		course: PropTypes.object
@@ -60,3 +58,5 @@ class QuestionSetProgressItem extends React.Component {
 
 	}
 }
+
+Registry.register('application/vnd.nextthought.questionsetref')(QuestionSetProgressItem);

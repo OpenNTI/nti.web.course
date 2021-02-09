@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 
 import CreditViewContents from '../credit/Contents';
@@ -18,12 +19,6 @@ const t = scoped('course.info.inline.components.transcriptcredit.view', {
 	noCredit: '(No Credit)'
 });
 
-export default
-@Store.connect({
-	loading: 'loading',
-	types: 'types',
-	error: 'error'
-})
 class TranscriptCreditView extends React.Component {
 	static propTypes = {
 		store: PropTypes.object.isRequired,
@@ -107,3 +102,11 @@ class TranscriptCreditView extends React.Component {
 		);
 	}
 }
+
+export default decorate(TranscriptCreditView, [
+	Store.connect({
+		loading: 'loading',
+		types: 'types',
+		error: 'error'
+	})
+]);

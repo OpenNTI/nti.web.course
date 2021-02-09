@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {Prompt, Layouts, Loading} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -16,20 +17,8 @@ const t = scoped('course.progress.overview.View', {
 
 const {InfiniteLoad} = Layouts;
 
-const propMap = {
-	loading: 'loading',
-	error: 'error',
-	currentItem: 'currentItem',
-	totalItems: 'totalItems',
-	currentItemIndex: 'currentItemIndex',
-	hasNextItem: 'hasNextItem',
-	hasPrevItem: 'hasPrevItem',
-	loadNextItem: 'loadNextItem',
-	loadPrevItem: 'loadPrevItem'
-};
 
-export default
-@Store.connect(propMap)
+
 class ProgressOverview extends React.Component {
 	static showForBatchLink (batch, course) {
 		return new Promise ((fulfill) => {
@@ -141,3 +130,17 @@ class ProgressOverview extends React.Component {
 			contents;
 	}
 }
+
+export default decorate(ProgressOverview, [
+	Store.connect({
+		loading: 'loading',
+		error: 'error',
+		currentItem: 'currentItem',
+		totalItems: 'totalItems',
+		currentItemIndex: 'currentItemIndex',
+		hasNextItem: 'hasNextItem',
+		hasPrevItem: 'hasPrevItem',
+		loadNextItem: 'loadNextItem',
+		loadPrevItem: 'loadPrevItem'
+	})
+]);

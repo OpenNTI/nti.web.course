@@ -2,6 +2,7 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {decorate} from '@nti/lib-commons';
 import {Loading, Button} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -18,20 +19,6 @@ const t = scoped('course.navigation.tabs.editor.View', {
 	unknownSavingError: 'Unable to save tab changes'
 });
 
-export default
-@Store.connect([
-	'loading',
-	'error',
-	'saving',
-	'savingError',
-	'canEdit',
-	'hasChanged',
-	'valid',
-	'tabs',
-	'updateTabLabel',
-	'cancelChanges',
-	'saveChanges'
-])
 class CourseNavigationTabsEditor extends React.Component {
 	static deriveBindingFromProps (props) {
 		return props.course;
@@ -148,3 +135,19 @@ class CourseNavigationTabsEditor extends React.Component {
 		);
 	}
 }
+
+export default decorate(CourseNavigationTabsEditor, [
+	Store.connect([
+		'loading',
+		'error',
+		'saving',
+		'savingError',
+		'canEdit',
+		'hasChanged',
+		'valid',
+		'tabs',
+		'updateTabLabel',
+		'cancelChanges',
+		'saveChanges'
+	])
+]);

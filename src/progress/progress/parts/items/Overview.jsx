@@ -21,9 +21,7 @@ function flatten (overview) {
 	}, []);
 }
 
-export default
-@Registry.register('application/vnd.nextthought.ntilessonoverview')
-class Overview extends React.Component {
+export default class Overview extends React.Component {
 	static propTypes = {
 		item: PropTypes.object
 	}
@@ -44,3 +42,5 @@ class Overview extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.ntilessonoverview')(Overview);

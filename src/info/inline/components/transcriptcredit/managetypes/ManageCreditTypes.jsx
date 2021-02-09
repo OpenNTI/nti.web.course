@@ -1,6 +1,7 @@
 import './ManageCreditTypes.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {ConflictResolution} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {Connectors} from '@nti/lib-store';
@@ -15,12 +16,6 @@ const t = scoped('course.info.inline.components.transcriptcredit.managetypes.Man
 	unit: 'Unit'
 });
 
-export default
-@Connectors.Any.connect({
-	loading: 'loading',
-	types: 'types',
-	error: 'error'
-})
 class ManageCreditTypes extends React.Component {
 	static propTypes = {
 		loading: PropTypes.bool,
@@ -200,3 +195,12 @@ class ManageCreditTypes extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(ManageCreditTypes, [
+	Connectors.Any.connect({
+		loading: 'loading',
+		types: 'types',
+		error: 'error'
+	})
+]);

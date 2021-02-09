@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Prompt} from '@nti/web-commons';
 
@@ -13,11 +14,6 @@ const cx = classnames.bind(styles);
 const t = scoped('course.roster.invite', {
 	buttonLabel: 'Invite'
 });
-
-export default
-@Store.monitor({
-	course: 'course'
-})
 class Invite extends React.Component {
 
 	static propTypes = {
@@ -55,3 +51,10 @@ class Invite extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(Invite, [
+	Store.monitor({
+		course: 'course'
+	})
+]);

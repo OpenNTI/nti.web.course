@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {Input, Loading, Text} from '@nti/web-commons';
 import cx from 'classnames';
 import {scoped} from '@nti/lib-locale';
@@ -24,19 +25,6 @@ const t = scoped('course.admin-tools.advanced.completion.View', {
 	}
 });
 
-export default
-@Store.connect([
-	'loading',
-	'completable',
-	'certificationPolicy',
-	'percentage',
-	'disabled',
-	'defaultRequiredDisabled',
-	'defaultRequirables',
-	'completableToggleDisabled',
-	'updateDisabled',
-	'error'
-])
 class CourseAdminCompletion extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -227,3 +215,19 @@ class CourseAdminCompletion extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(CourseAdminCompletion, [
+	Store.connect([
+		'loading',
+		'completable',
+		'certificationPolicy',
+		'percentage',
+		'disabled',
+		'defaultRequiredDisabled',
+		'defaultRequirables',
+		'completableToggleDisabled',
+		'updateDisabled',
+		'error'
+	])
+]);

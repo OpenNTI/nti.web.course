@@ -2,6 +2,7 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {decorate} from '@nti/lib-commons';
 import { Loading, HOC } from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -17,17 +18,7 @@ const t = scoped('course.enrollment.options', {
 	notEnrolledLabel: 'Enroll Today'
 });
 
-const propMap = {
-	loading: 'loading',
-	error: 'error',
-	enrolled: 'enrolled',
-	administrative: 'administrative',
-	options: 'options',
-	access: 'access'
-};
-
-@Store.connect(propMap)
-export default class CourseEnrollmentOptions extends React.Component {
+class CourseEnrollmentOptions extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		catalogEntry: PropTypes.shape({
@@ -147,3 +138,15 @@ export default class CourseEnrollmentOptions extends React.Component {
 
 
 }
+
+export default decorate(CourseEnrollmentOptions, [
+	Store.connect({
+		loading: 'loading',
+		error: 'error',
+		enrolled: 'enrolled',
+		administrative: 'administrative',
+		options: 'options',
+		access: 'access'
+	})
+]);
+

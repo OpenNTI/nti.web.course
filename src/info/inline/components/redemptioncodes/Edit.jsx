@@ -1,6 +1,7 @@
 import './Edit.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import { Prompt } from '@nti/web-commons';
 
@@ -13,14 +14,6 @@ const t = scoped('course.info.inline.components.redemptioncodes.Edit', {
 	confirmDelete: 'Do you want to delete this code?'
 });
 
-const propMap = {
-	loading: 'loading',
-	error: 'error',
-	items: 'items'
-};
-
-export default
-@Store.connect(propMap)
 class RedemptionCodesEdit extends React.Component {
 	static propTypes = {
 		courseInstance: PropTypes.shape({
@@ -77,3 +70,13 @@ class RedemptionCodesEdit extends React.Component {
 		);
 	}
 }
+
+
+
+export default decorate(RedemptionCodesEdit, [
+	Store.connect({
+		loading: 'loading',
+		error: 'error',
+		items: 'items'
+	})
+]);

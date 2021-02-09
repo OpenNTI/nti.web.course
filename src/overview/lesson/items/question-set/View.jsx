@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {getService} from '@nti/web-client';
 import {Events, Hooks} from '@nti/web-session';
 
@@ -35,12 +36,6 @@ async function getAssessmentSubmission (id) {
 	return submission;
 }
 
-export default
-@Registry.register(HANDLES)
-@Hooks.onEvent({
-	[Events.ASSIGNMENT_SUBMITTED]: 'onAssignmentSubmitted',
-	[Events.ASSESSMENT_SUBMITTED]: 'onAssessmentSubmitted'
-})
 class LessonOverviewQuestionSet extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
@@ -240,3 +235,11 @@ class LessonOverviewQuestionSet extends React.Component {
 		);
 	}
 }
+
+export default decorate(LessonOverviewQuestionSet, [
+	Registry.register(HANDLES),
+	Hooks.onEvent({
+		[Events.ASSIGNMENT_SUBMITTED]: 'onAssignmentSubmitted',
+		[Events.ASSESSMENT_SUBMITTED]: 'onAssessmentSubmitted'
+	})
+]);

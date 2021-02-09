@@ -1,5 +1,6 @@
 import './View.scss';
 import React, { Component } from 'react';
+import {decorate} from '@nti/lib-commons';
 import { Button, Loading } from '@nti/web-commons';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -17,14 +18,6 @@ const DEFAULT_TEXT = {
 
 const t = scoped('nti-web-course.admin-tools.advanced.lti', DEFAULT_TEXT);
 
-const propMap = {
-	loading: 'loading',
-	error: 'error',
-	items: 'items'
-};
-
-export default
-@Store.connect(propMap)
 class LTITools extends Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -103,3 +96,11 @@ class LTITools extends Component {
 		);
 	}
 }
+
+export default decorate(LTITools, [
+	Store.connect({
+		loading: 'loading',
+		error: 'error',
+		items: 'items'
+	})
+]);

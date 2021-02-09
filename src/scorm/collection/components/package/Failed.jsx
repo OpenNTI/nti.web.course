@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Errors} from '@nti/web-commons';
 
@@ -14,8 +15,6 @@ const t = scoped('course.scorm.collection.components.package.UploadFailed', {
 	label: 'There was a problem'
 });
 
-export default
-@Store.monitor(['deletePackage'])
 class UploadedFailedPackage extends React.Component {
 	static propTypes = {
 		package: PropTypes.object.isRequired,
@@ -81,3 +80,8 @@ class UploadedFailedPackage extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(UploadedFailedPackage, [
+	Store.monitor(['deletePackage'])
+]);

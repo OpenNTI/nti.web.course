@@ -7,9 +7,7 @@ import Registry from '../Registry';
 import ListCmp from './List';
 import GridCmp from './Grid';
 
-export default
-@Registry.register('application/vnd.nextthought.surveyref')
-class LessonOverviewSurveyItem extends React.Component {
+export default class LessonOverviewSurveyItem extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([Grid, List])
 	}
@@ -24,3 +22,5 @@ class LessonOverviewSurveyItem extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.surveyref')(LessonOverviewSurveyItem);

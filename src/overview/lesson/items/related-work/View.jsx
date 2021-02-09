@@ -23,9 +23,7 @@ const DEFAULT_TEXT = {
 };
 const t = scoped('course.overview.lessons.items.related-work', DEFAULT_TEXT);
 
-export default
-@Registry.register('application/vnd.nextthought.relatedworkref')
-class LessonOverviewRelatedWork extends React.Component {
+export default class LessonOverviewRelatedWork extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([List, Grid]),
 		item: PropTypes.object,
@@ -108,3 +106,5 @@ class LessonOverviewRelatedWork extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.relatedworkref')(LessonOverviewRelatedWork);

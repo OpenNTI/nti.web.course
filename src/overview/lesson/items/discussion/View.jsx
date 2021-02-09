@@ -28,9 +28,7 @@ const HANDLES = [
 	'application/vnd.nextthought.discussion'
 ];
 
-export default
-@Registry.register(HANDLES)
-class LessonOverviewDiscussion extends React.Component {
+export default class LessonOverviewDiscussion extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		course: PropTypes.object,
@@ -115,3 +113,5 @@ class LessonOverviewDiscussion extends React.Component {
 		);
 	}
 }
+
+Registry.register(HANDLES)(LessonOverviewDiscussion);

@@ -5,9 +5,7 @@ import PropTypes from 'prop-types';
 import Base from './Base';
 import Registry from './Registry';
 
-export default
-@Registry.register('application/vnd.nextthought.relatedworkref')
-class RelatedWorkRefProgressItem extends React.Component {
+export default class RelatedWorkRefProgressItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object
 	}
@@ -33,3 +31,5 @@ class RelatedWorkRefProgressItem extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.relatedworkref')(RelatedWorkRefProgressItem);

@@ -1,6 +1,6 @@
+import {decorate,URL} from '@nti/lib-commons';
 import {Stores, Mixins} from '@nti/lib-store';
 import {mixin} from '@nti/lib-decorators';
-import {URL} from '@nti/lib-commons';
 import QS from 'query-string';
 
 import {stripEmptyProperties} from './util';
@@ -23,8 +23,6 @@ const triggersReload = [
 
 const hasProperty = (x, k) => Object.prototype.hasOwnProperty.call(x, k);
 
-export default
-@mixin(Mixins.Searchable)
 class StreamedBatchStore extends Stores.BoundStore {
 	constructor () {
 		super();
@@ -251,6 +249,10 @@ class StreamedBatchStore extends Stores.BoundStore {
    */
 	loadBatch (href, options) {}
 }
+
+export default decorate(StreamedBatchStore, [
+	mixin(Mixins.Searchable)
+]);
 
 
 function getNextLink (batch) {

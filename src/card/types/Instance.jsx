@@ -2,7 +2,6 @@ import React from 'react';
 
 import Registry from './Registry';
 
-@Registry.register('application/vnd.nextthought.courses.courseinstance')
 export default class CourseInstanceCard extends React.Component {
 	render () {
 		return (
@@ -12,3 +11,5 @@ export default class CourseInstanceCard extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.courses.courseinstance')(CourseInstanceCard);

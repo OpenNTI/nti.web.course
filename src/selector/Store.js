@@ -1,11 +1,10 @@
+import {decorate} from '@nti/lib-commons';
 import {Stores, Mixins} from '@nti/lib-store';
 import {getService} from '@nti/web-client';
 import {mixin} from '@nti/lib-decorators';
 
 const BATCH_SIZE = 20;
 
-export default
-@mixin(Mixins.Searchable)
 class CourseSelectorStore extends Stores.BoundStore {
 	constructor () {
 		super();
@@ -112,3 +111,7 @@ class CourseSelectorStore extends Stores.BoundStore {
 		}
 	}
 }
+
+export default decorate(CourseSelectorStore, [
+	mixin(Mixins.Searchable)
+]);

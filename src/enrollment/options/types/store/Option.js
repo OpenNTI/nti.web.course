@@ -44,7 +44,6 @@ function handles (option) {
 	return option.MimeType === 'application/vnd.nextthought.courseware.storeenrollmentoption';
 }
 
-@Registry.register(handles)
 export default class StoreEnrollmentOption extends Base {
 	ORDER = 2
 	SCOPE = 'Purchased'
@@ -115,3 +114,5 @@ export default class StoreEnrollmentOption extends Base {
 		return this.getString('disabled.description');
 	}
 }
+
+Registry.register(handles)(StoreEnrollmentOption);

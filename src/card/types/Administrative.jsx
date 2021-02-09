@@ -19,7 +19,6 @@ const t = scoped('course.card.type.administering', {
 	confirmDelete: 'Do you want to delete this course?'
 });
 
-@Registry.register('application/vnd.nextthought.courseware.courseinstanceadministrativerole')
 export default class Administrative extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -172,3 +171,5 @@ export default class Administrative extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.courseware.courseinstanceadministrativerole')(Administrative);

@@ -1,6 +1,7 @@
 import './EnrollmentOptions.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Loading, Input} from '@nti/web-commons';
 
@@ -28,15 +29,6 @@ const cmpMap = {
 	[MIME_TYPES.IMS]: IMSEnrollment
 };
 
-export default
-@Store.connect({
-	enrollmentOptions: 'enrollmentOptions',
-	availableOptions: 'availableOptions',
-	allowOpenEnrollment: 'allowOpenEnrollment',
-	error: 'error',
-	warning: 'warning',
-	loading: 'loading'
-})
 class EnrollmentOptions extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
@@ -227,3 +219,14 @@ class EnrollmentOptions extends React.Component {
 		);
 	}
 }
+
+export default decorate(EnrollmentOptions, [
+	Store.connect({
+		enrollmentOptions: 'enrollmentOptions',
+		availableOptions: 'availableOptions',
+		allowOpenEnrollment: 'allowOpenEnrollment',
+		error: 'error',
+		warning: 'warning',
+		loading: 'loading'
+	})
+]);

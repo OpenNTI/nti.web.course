@@ -21,9 +21,7 @@ const DEFAULT_TEXT = {
 };
 const t = scoped('course.overview.lessons.items.ltiexternaltoolasset', DEFAULT_TEXT);
 
-export default
-@Registry.register('application/vnd.nextthought.ltiexternaltoolasset')
-class LTIExternalToolAsset extends React.Component {
+export default class LTIExternalToolAsset extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([Grid, List]),
 		item: PropTypes.object,
@@ -70,3 +68,5 @@ class LTIExternalToolAsset extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.ltiexternaltoolasset')(LTIExternalToolAsset);

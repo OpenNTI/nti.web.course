@@ -26,7 +26,6 @@ function handles (option) {
 	return option.MimeType === 'application/vnd.nextthought.courseware.ensyncimisexternalenrollmentoption';
 }
 
-@Registry.register(handles)
 export default class ExternalEnrollmentOption extends Base {
 	ORDER = 2
 
@@ -38,3 +37,5 @@ export default class ExternalEnrollmentOption extends Base {
 		}
 	}
 }
+
+Registry.register(handles)(ExternalEnrollmentOption);

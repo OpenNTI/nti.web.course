@@ -2,6 +2,7 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Loading, Input, EmptyState} from '@nti/web-commons';
 
@@ -19,18 +20,6 @@ const t = scoped('course.selector', {
 	loadMore: 'Load More'
 });
 
-export default
-@Store.connect([
-	'courses',
-	'loading',
-	'error',
-	'searchTerm',
-	'updateSearchTerm',
-	'hasMore',
-	'loadingMore',
-	'loadMore',
-	'errorLoadingMore'
-])
 class CourseSelector extends React.Component {
 	static deriveBindingFromProps (props) {
 		return props.collection || 'catalog';
@@ -167,3 +156,17 @@ class CourseSelector extends React.Component {
 		);
 	}
 }
+
+export default decorate(CourseSelector, [
+	Store.connect([
+		'courses',
+		'loading',
+		'error',
+		'searchTerm',
+		'updateSearchTerm',
+		'hasMore',
+		'loadingMore',
+		'loadMore',
+		'errorLoadingMore'
+	])
+]);

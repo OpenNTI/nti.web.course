@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {Loading, EmptyState} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -14,9 +15,6 @@ const t = scoped('course.scorm.collection.View', {
 	unavailable: 'SCORM is not available in this course.'
 });
 
-
-export default
-@Store.connect(['initialLoad', 'unavailable', 'error', 'empty', 'fullPackages', 'uploadError'])
 class ScormCollection extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -65,3 +63,8 @@ class ScormCollection extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(ScormCollection, [
+	Store.connect(['initialLoad', 'unavailable', 'error', 'empty', 'fullPackages', 'uploadError'])
+]);

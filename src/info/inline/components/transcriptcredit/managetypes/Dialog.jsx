@@ -1,6 +1,7 @@
 import './Dialog.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Prompt, Panels} from '@nti/web-commons';
 
@@ -12,12 +13,6 @@ const t = scoped('course.info.inline.components.transcriptcredit.managetypes.Dia
 	done: 'Save',
 });
 
-export default
-@Store.connect({
-	loading: 'loading',
-	types: 'types',
-	error: 'error'
-})
 class ManageCreditTypesDialog extends React.Component {
 	static show (onClose) {
 		return new Promise((fulfill, reject) => {
@@ -95,3 +90,11 @@ class ManageCreditTypesDialog extends React.Component {
 		);
 	}
 }
+
+export default decorate(ManageCreditTypesDialog, [
+	Store.connect({
+		loading: 'loading',
+		types: 'types',
+		error: 'error'
+	})
+]);

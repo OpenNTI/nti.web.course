@@ -21,7 +21,7 @@ const t = scoped('course.card.type.Enrollment', {
 	viewDetails: 'View Details'
 });
 
-@Registry.register('application/vnd.nextthought.courseware.courseinstanceenrollment')
+
 export default class EnrollmentCard extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -138,3 +138,5 @@ export default class EnrollmentCard extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.courseware.courseinstanceenrollment')(EnrollmentCard);

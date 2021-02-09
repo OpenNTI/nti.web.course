@@ -1,30 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {Hooks, Events} from '@nti/web-session';
 
 import Viewer from '../viewer';
 
 import Store from './Store';
 
-export default
-@Store.connect([
-	'clear',
-	'updateOnAssignmentSubmit',
-	'updateOnBatchEvent',
-
-	'loading',
-	'error',
-
-	'location',
-	'lessonInfo',
-
-	'next',
-	'nextLesson',
-	'previous',
-	'previousLesson'
-])
-@Hooks.afterBatchEvents()
-@Hooks.onEvent(Events.ASSIGNMENT_SUBMITTED, 'onAssignmentSubmitted')
 class ContentPager extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {
@@ -52,7 +34,7 @@ class ContentPager extends React.Component {
 			)
 		]),
 		requiredOnly: PropTypes.bool,
-		
+
 		clear: PropTypes.func,
 		updateOnAssignmentSubmit: PropTypes.func,
 		updateOnBatchEvent: PropTypes.func
@@ -91,3 +73,24 @@ class ContentPager extends React.Component {
 		);
 	}
 }
+
+export default decorate(ContentPager, [
+	Store.connect([
+		'clear',
+		'updateOnAssignmentSubmit',
+		'updateOnBatchEvent',
+
+		'loading',
+		'error',
+
+		'location',
+		'lessonInfo',
+
+		'next',
+		'nextLesson',
+		'previous',
+		'previousLesson'
+	]),
+	Hooks.afterBatchEvents(),
+	Hooks.onEvent(Events.ASSIGNMENT_SUBMITTED, 'onAssignmentSubmitted'),
+]);

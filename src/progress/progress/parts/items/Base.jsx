@@ -7,9 +7,7 @@ import Container from '../../../common/Container';
 
 import Registry from './Registry';
 
-export default
-@Registry.register(Registry.DEFAULT)
-class BaseProgressItem extends React.Component {
+export default class BaseProgressItem extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		item: PropTypes.object,
@@ -72,3 +70,5 @@ class BaseProgressItem extends React.Component {
 		);
 	}
 }
+
+Registry.register(Registry.DEFAULT)(BaseProgressItem);

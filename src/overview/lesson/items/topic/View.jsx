@@ -12,9 +12,7 @@ import Registry from '../Registry';
 * The "Topic" here references the <topic> tag in the legacy ToC xml.
 * This is is just a flat link to content.
 */
-export default
-@Registry.register('application/vnd.nextthought.topic')
-class LessonOverviewTopic extends React.Component {
+export default class LessonOverviewTopic extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired
 	}
@@ -32,3 +30,5 @@ class LessonOverviewTopic extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.topic')(LessonOverviewTopic);

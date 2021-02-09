@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Input} from '@nti/web-commons';
 
@@ -20,8 +21,6 @@ const t = scoped('course.scorm.collection.components.Empty', {
 });
 
 
-export default
-@Store.monitor(['uploadPackage'])
 class EmptyScormCollection extends React.Component {
 	static propTypes = {
 		uploadPackage: PropTypes.func
@@ -52,3 +51,7 @@ class EmptyScormCollection extends React.Component {
 		);
 	}
 }
+
+export default decorate(EmptyScormCollection, [
+	Store.monitor(['uploadPackage'])
+]);

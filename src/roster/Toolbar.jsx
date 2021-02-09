@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import classnames from 'classnames/bind';
 
@@ -17,11 +18,8 @@ const t = scoped('course.roster.toolbar', {
 });
 
 
-
-export default
-@Store.monitor(['reload'])
 class Toolbar extends React.Component {
-	
+
 	static propTypes = {
 		course: PropTypes.object,
 		reload: PropTypes.func
@@ -51,3 +49,8 @@ class Toolbar extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(Toolbar, [
+	Store.monitor(['reload'])
+]);

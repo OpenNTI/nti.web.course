@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
 import {List, DateTime, Flyout} from '@nti/web-commons';
@@ -23,8 +24,6 @@ const t = scoped('course.scorm.collection.component.package.Ready', {
 	delete: 'Delete'
 });
 
-export default
-@Store.monitor(['deletePackage'])
 class ReadyPackage extends React.Component {
 	static propTypes = {
 		package: PropTypes.object.isRequired,
@@ -117,3 +116,8 @@ class ReadyPackage extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(ReadyPackage, [
+	Store.monitor(['deletePackage'])
+]);

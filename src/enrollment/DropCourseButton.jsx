@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import { getService } from '@nti/web-client';
 import {dispatch} from '@nti/lib-dispatcher';
@@ -15,8 +16,7 @@ const t = scoped('course.enrollment.DropCourseButton', {
 	error: 'Error dropping this course'
 });
 
-@Store.connect(['options'])
-export default class DropCourseButton extends React.Component {
+class DropCourseButton extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		store: PropTypes.shape({
@@ -73,3 +73,7 @@ export default class DropCourseButton extends React.Component {
 		return drop ? (<div onClick={drop} className="option delete-course"><span className="label">{t('drop')}</span></div>) : null;
 	}
 }
+
+export default decorate(DropCourseButton, [
+	Store.connect(['options'])
+]);

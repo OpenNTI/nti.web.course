@@ -8,9 +8,7 @@ import PaddedContainer from '../../common/PaddedContainer';
 import ListCmp from './List';
 import GridCmp from './Grid';
 
-export default
-@Registry.register('application/vnd.nextthought.ntivideo')
-class LessonOverviewVideo extends React.Component {
+export default class LessonOverviewVideo extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([Grid, List])
 	}
@@ -31,3 +29,5 @@ class LessonOverviewVideo extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.ntivideo')(LessonOverviewVideo);

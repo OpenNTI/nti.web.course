@@ -2,6 +2,7 @@ import './BaseItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {decorate} from '@nti/lib-commons';
 import {DateTime} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {LinkTo} from '@nti/web-routing';
@@ -20,8 +21,7 @@ const t = scoped('course.overview.lesson.items.event.Base', {
 const endsAt = f => t('endsAt', { date: f(DateTime.WEEKDAY_MONTH_NAME_DAY_YEAR), time: f(DateTime.TIME_PADDED_WITH_ZONE) });
 const startsAt = f => t('startsAt', { weekday: f(DateTime.WEEKDAY), time: f(DateTime.TIME_PADDED) });
 const startsFrom = f => t('startsFrom', { weekday: f(DateTime.WEEKDAY), time: f(DateTime.TIME_PADDED) });
-@Hooks.onEvent(Events.EVENT_UPDATED, 'onEventUpdated')
-export default class EventBaseItem extends React.Component {
+class EventBaseItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired,
 		course: PropTypes.object.isRequired,
@@ -129,3 +129,7 @@ export default class EventBaseItem extends React.Component {
 		);
 	}
 }
+
+export default decorate(EventBaseItem, [
+	Hooks.onEvent(Events.EVENT_UPDATED, 'onEventUpdated')
+]);

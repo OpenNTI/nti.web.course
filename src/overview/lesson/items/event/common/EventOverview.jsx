@@ -1,6 +1,7 @@
 import './EventOverview.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {DialogButtons, DateTime, Prompt, Input, Loading} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import {ImageUpload} from '@nti/web-whiteboard';
@@ -29,8 +30,6 @@ const t = scoped('course.overview.lesson.items.event.common.Overview', {
 	end: 'End'
 });
 
-export default
-@Connectors.Any.connect(['createEvent', 'createError', 'saving'])
 class EventOverviewEditor extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -220,3 +219,8 @@ class EventOverviewEditor extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(EventOverviewEditor, [
+	Connectors.Any.connect(['createEvent', 'createError', 'saving'])
+]);

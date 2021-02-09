@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 
 import Overview from '../common/EventOverview';
 import Browse from '../common/Browse';
@@ -11,8 +12,6 @@ const BROWSE_LIST = 'browse-list';
 const OVERVIEW = 'overview';
 
 
-export default
-@Store.connect(['loading', 'events'])
 class EventEditor extends React.Component {
 	static propTypes = {
 		activePanel: PropTypes.string,
@@ -88,3 +87,7 @@ class EventEditor extends React.Component {
 		);
 	}
 }
+
+export default decorate(EventEditor, [
+	Store.connect(['loading', 'events'])
+]);

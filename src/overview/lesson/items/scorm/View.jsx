@@ -20,9 +20,7 @@ const t = scoped('course.overview.lessons.items.scorm', {
 	viewComments: 'View Comments'
 });
 
-export default
-@Registry.register('application/vnd.nextthought.scormcontentref')
-class LessonOverview extends React.Component {
+export default class LessonOverviewScormItem extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([List, Grid]),
 		item: PropTypes.object,
@@ -58,3 +56,5 @@ class LessonOverview extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.scormcontentref')(LessonOverviewScormItem);

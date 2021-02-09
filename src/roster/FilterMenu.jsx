@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {Select} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 import classnames from 'classnames/bind';
@@ -16,14 +17,6 @@ const t = scoped('roster.component.filter-menu', {
 	...DEFAULT_ENROLLMENT_SCOPE_NAMES
 });
 
-
-export default
-@Store.monitor({
-	[KEYS.OPTIONS]: 'options',
-	[KEYS.BATCH_START]: 'batchStart',
-	[KEYS.FILTER]: 'filter',
-	[KEYS.ENROLLMENT_SCOPES]: 'scopes'
-})
 class FilterMenu extends React.Component {
 
 	static propTypes = {
@@ -46,7 +39,7 @@ class FilterMenu extends React.Component {
 			options: {filter} = {},
 			scopes
 		} = this.props;
-		
+
 		const total = Object.values(scopes || {}).reduce((a, v) => a + v, 0);
 
 		const options = Object.entries(scopes || {})
@@ -66,3 +59,13 @@ class FilterMenu extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(FilterMenu, [
+	Store.monitor({
+		[KEYS.OPTIONS]: 'options',
+		[KEYS.BATCH_START]: 'batchStart',
+		[KEYS.FILTER]: 'filter',
+		[KEYS.ENROLLMENT_SCOPES]: 'scopes'
+	})
+]);

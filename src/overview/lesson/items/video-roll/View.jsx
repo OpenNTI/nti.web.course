@@ -7,9 +7,7 @@ import Registry from '../Registry';
 import ListCmp from './List';
 import GridCmp from './Grid';
 
-export default
-@Registry.register('application/vnd.nextthought.videoroll')
-class LessonOverviewVideoRoll extends React.Component {
+export default class LessonOverviewVideoRoll extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([Grid, List])
 	}
@@ -24,3 +22,5 @@ class LessonOverviewVideoRoll extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.videoroll')(LessonOverviewVideoRoll);

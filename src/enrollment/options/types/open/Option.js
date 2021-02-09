@@ -33,7 +33,6 @@ function handles (option) {
 	return option.MimeType === 'application/vnd.nextthought.courseware.openenrollmentoption';
 }
 
-@Registry.register(handles)
 export default class OpenEnrollmentOption extends Base {
 	ORDER = 1
 	SCOPE = 'Public'
@@ -46,3 +45,5 @@ export default class OpenEnrollmentOption extends Base {
 		}
 	}
 }
+
+Registry.register(handles)(OpenEnrollmentOption);

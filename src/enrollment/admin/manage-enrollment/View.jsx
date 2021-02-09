@@ -2,6 +2,7 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {Loading, EmptyState} from '@nti/web-commons';
 
@@ -15,8 +16,6 @@ const t = scoped('course.enrollment.admin.manage-enrollment', {
 	notEnrolled: 'Not Enrolled'
 });
 
-export default
-@Store.connect(['loading', 'error', 'record', 'notAuthorized', 'options', 'enrollInOption', 'dropCourse', 'enrollInScope'])
 class CourseEnrollmentAdminManageEnrollment extends React.Component {
 	static deriveBindingFromProps (props) {
 		return {course: props.course, user: props.user, enrollment: props.enrollment, onChange: props.onChange};
@@ -93,3 +92,7 @@ class CourseEnrollmentAdminManageEnrollment extends React.Component {
 		);
 	}
 }
+
+export default decorate(CourseEnrollmentAdminManageEnrollment, [
+	Store.connect(['loading', 'error', 'record', 'notAuthorized', 'options', 'enrollInOption', 'dropCourse', 'enrollInScope'])
+]);

@@ -60,7 +60,6 @@ function handles (option) {
 	return option.MimeType === 'application/vnd.nextthought.courseware.fiveminuteenrollmentoption';
 }
 
-@Registry.register(handles)
 export default class FiveMinuteEnrollmentOption extends Base {
 	ORDER = 3
 	SCOPE = 'ForCredit'
@@ -174,3 +173,5 @@ export default class FiveMinuteEnrollmentOption extends Base {
 		return getTranslationFor(this.getString, 'enrolled.completeProfile', this.catalogEntry, this.option, this.access);
 	}
 }
+
+Registry.register(handles)(FiveMinuteEnrollmentOption);

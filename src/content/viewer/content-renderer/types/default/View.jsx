@@ -18,9 +18,7 @@ function getMissingMessage (location) {
 	return `Unknown Item Type: ${item.MimeType}`;
 }
 
-export default
-@TypeRegistry.register(BaseRegistry.Default)
-class CourseContentViewerDefaultType extends React.Component {
+export default class CourseContentViewerDefaultType extends React.Component {
 	static propTypes = {
 		location: PropTypes.object
 	}
@@ -41,3 +39,5 @@ class CourseContentViewerDefaultType extends React.Component {
 		);
 	}
 }
+
+TypeRegistry.register(BaseRegistry.Default)(CourseContentViewerDefaultType);

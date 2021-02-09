@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {getScrollParent, scrollElementTo} from '@nti/lib-dom';
 import {Layouts, Decorators, Page} from '@nti/web-commons';
 import {getHistory} from '@nti/web-routing';
@@ -13,8 +14,6 @@ import UpNext from './parts/UpNext';
 const {Aside} = Layouts;
 const cx = classnames.bind(Styles);
 
-export default
-@Decorators.addClassToRoot('nti-course-content-open')
 class CourseContentViewer extends React.Component {
 	static ContentTypes = Content.ContentTypes
 
@@ -79,3 +78,7 @@ class CourseContentViewer extends React.Component {
 		);
 	}
 }
+
+export default decorate(CourseContentViewer, [
+	Decorators.addClassToRoot('nti-course-content-open')
+]);

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {searchable, contextual} from '@nti/web-search';
 import {scoped} from '@nti/lib-locale';
 import {SortOrder} from '@nti/lib-interfaces';
@@ -30,10 +31,6 @@ const propMap = {
 	[KEYS.ENROLLMENT_SCOPES]: 'scopes'
 };
 
-export default
-@contextual(t('roster'))
-@searchable()
-@Store.connect(propMap)
 class CourseRosterView extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
@@ -183,3 +180,10 @@ class CourseRosterView extends React.Component {
 		return hasCourse && renderRoster(this.getComponentProps());
 	}
 }
+
+
+export default decorate(CourseRosterView, [
+	contextual(t('roster')),
+	searchable(),
+	Store.connect(propMap),
+]);

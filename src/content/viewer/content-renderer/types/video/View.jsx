@@ -15,9 +15,7 @@ const handles = (obj) => {
 	return item && MIME_TYPES[item.MimeType];
 };
 
-export default
-@TypeRegistry.register(handles)
-class CourseContentViewerRendererVideo extends React.Component {
+export default class CourseContentViewerRendererVideo extends React.Component {
 	static propTypes = {
 		location: PropTypes.shape({
 			item: PropTypes.object
@@ -36,3 +34,6 @@ class CourseContentViewerRendererVideo extends React.Component {
 		);
 	}
 }
+
+
+TypeRegistry.register(handles)(CourseContentViewerRendererVideo);

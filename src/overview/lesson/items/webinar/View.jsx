@@ -7,9 +7,7 @@ import Registry from '../Registry';
 
 import BaseItem from './BaseItem';
 
-export default
-@Registry.register('application/vnd.nextthought.webinarasset')
-class LessonOverviewWebinarAsset extends React.Component {
+export default class LessonOverviewWebinarAsset extends React.Component {
 
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -27,3 +25,5 @@ class LessonOverviewWebinarAsset extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.webinarasset')(LessonOverviewWebinarAsset);

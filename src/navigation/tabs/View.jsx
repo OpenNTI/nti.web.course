@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {Navigation} from '@nti/web-commons';
 
 import RouteCache from './RouteCache';
@@ -15,9 +16,6 @@ function isRouteActive (route, activeRoute) {
 	return isSameRoute(route, activeRoute) || activeRoute.indexOf(route) === 0;
 }
 
-
-export default
-@Store.connect(['tabs'])
 class CourseTabs extends React.Component {
 	static deriveBindingFromProps (props) {
 		return props.course;
@@ -136,3 +134,8 @@ class CourseTabs extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(CourseTabs, [
+	Store.connect(['tabs'])
+]);

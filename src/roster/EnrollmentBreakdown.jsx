@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {PieChart} from '@nti/web-charts';
 import {scoped} from '@nti/lib-locale';
 
@@ -21,10 +22,6 @@ const t = scoped('course.roster.enrollment-breakdown', {
 	scopes: DEFAULT_ENROLLMENT_SCOPE_NAMES
 });
 
-export default
-@Store.monitor({
-	[KEYS.ENROLLMENT_SCOPES]: 'scopes'
-})
 class EnrollmentBreakdown extends React.Component {
 
 	static propTypes = {
@@ -54,3 +51,9 @@ class EnrollmentBreakdown extends React.Component {
 		);
 	}
 }
+
+export default decorate(EnrollmentBreakdown, [
+	Store.monitor({
+		[KEYS.ENROLLMENT_SCOPES]: 'scopes'
+	})
+]);

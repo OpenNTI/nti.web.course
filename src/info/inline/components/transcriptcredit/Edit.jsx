@@ -1,6 +1,7 @@
 import './Edit.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {decorate} from '@nti/lib-commons';
 import {scoped} from '@nti/lib-locale';
 import {getService} from '@nti/web-client';
 
@@ -22,12 +23,6 @@ const t = scoped('course.info.inline.components.transcriptcredit.edit', {
 	noTypesCantAdd: 'There are no credit types defined'
 });
 
-export default
-@Store.connect({
-	loading: 'loading',
-	types: 'types',
-	error: 'error'
-})
 class TranscriptCreditEdit extends React.Component {
 	static propTypes = {
 		store: PropTypes.object.isRequired,
@@ -257,3 +252,11 @@ class TranscriptCreditEdit extends React.Component {
 		);
 	}
 }
+
+export default decorate(TranscriptCreditEdit, [
+	Store.connect({
+		loading: 'loading',
+		types: 'types',
+		error: 'error'
+	})
+]);

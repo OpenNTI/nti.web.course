@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+import {decorate} from '@nti/lib-commons';
 import {DnD, EmptyState} from '@nti/web-commons';
 import {scoped} from '@nti/lib-locale';
 
@@ -20,8 +21,6 @@ const t = scoped('course.scorm.collection.components.PackageList', {
 	}
 });
 
-export default
-@Store.monitor(['packages', 'filter', 'upload', 'uploadError', 'uploadPackage', 'clearUploadError'])
 class ScormCollectionPackageList extends React.Component {
 	static propTypes = {
 		packages: PropTypes.array,
@@ -83,3 +82,8 @@ class ScormCollectionPackageList extends React.Component {
 		);
 	}
 }
+
+
+export default decorate(ScormCollectionPackageList, [
+	Store.monitor(['packages', 'filter', 'upload', 'uploadError', 'uploadPackage', 'clearUploadError'])
+]);

@@ -8,9 +8,7 @@ import {collateDiscussions} from '../discussion/Collator';
 import Registry from '../Registry';
 import Items from '../View';
 
-export default
-@Registry.register('application/vnd.nextthought.nticourseoverviewgroup')
-class LessonOverviewGroup extends React.Component {
+export default class LessonOverviewGroup extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		layout: PropTypes.oneOf([Grid, List])
@@ -29,3 +27,5 @@ class LessonOverviewGroup extends React.Component {
 		);
 	}
 }
+
+Registry.register('application/vnd.nextthought.nticourseoverviewgroup')(LessonOverviewGroup);
