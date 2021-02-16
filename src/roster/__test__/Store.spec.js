@@ -1,4 +1,4 @@
-import {default as Store, KEYS} from '../Store';
+import { default as Store, KEYS } from '../Store';
 
 /* eslint-env jest */
 describe('Test roster store', () => {
@@ -12,7 +12,7 @@ describe('Test roster store', () => {
 		store.loadCourse({
 			getLink: function () {
 				return url;
-			}
+			},
 		});
 
 		expect(store.hasCourse).toBe(true);
@@ -23,7 +23,7 @@ describe('Test roster store', () => {
 	});
 
 	test('Test searchTerm', () => {
-		const {SEARCH_TERM: key} = KEYS;
+		const { SEARCH_TERM: key } = KEYS;
 		const store = new Store();
 
 		const term = 'testSearch';

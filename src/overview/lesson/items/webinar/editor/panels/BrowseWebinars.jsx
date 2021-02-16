@@ -1,62 +1,69 @@
 import './BrowseWebinars.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {GotoWebinar} from '@nti/web-integrations';
-import {getHistory} from '@nti/web-routing';
+import { scoped } from '@nti/lib-locale';
+import { GotoWebinar } from '@nti/web-integrations';
+import { getHistory } from '@nti/web-routing';
 
-const t = scoped('course.overview.lesson.items.webinar.editor.panels.BrowseWebinars', {
-	webinarLinkDesc: 'Do you have a GoToWebinar link?',
-	pasteLink: 'Paste Link'
-});
+const t = scoped(
+	'course.overview.lesson.items.webinar.editor.panels.BrowseWebinars',
+	{
+		webinarLinkDesc: 'Do you have a GoToWebinar link?',
+		pasteLink: 'Paste Link',
+	}
+);
 
 export default class BrowseWebinars extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		onLinkClick: PropTypes.func,
-		onWebinarClick: PropTypes.func
-	}
+		onWebinarClick: PropTypes.func,
+	};
 
-	state = {}
+	state = {};
 
 	static childContextTypes = {
-		router: PropTypes.object
-	}
+		router: PropTypes.object,
+	};
 
-
-	getChildContext () {
-		const {router: providedRouter} = this.context;
+	getChildContext() {
+		const { router: providedRouter } = this.context;
 
 		return {
 			router: {
 				...providedRouter,
 				history: getHistory(),
-				getRouteFor: (obj) => {
+				getRouteFor: obj => {
 					return () => {
-						const {onWebinarClick} = this.props;
+						const { onWebinarClick } = this.props;
 
-						if(onWebinarClick) {
+						if (onWebinarClick) {
 							onWebinarClick(obj);
 						}
 					};
-				}
-			}
+				},
+			},
 		};
 	}
 
-	render () {
+	render() {
 		return (
 			<GotoWebinar.IfConnected context={this.props.course}>
 				<div className="webinar-browse-webinars">
 					<div className="link-bar">
 						<span>{t('webinarLinkDesc')}</span>
-						<span className="go-to-link" onClick={() => {
-							if(this.props.onLinkClick) {
-								this.props.onLinkClick();
-							}
-						}}>{t('pasteLink')}</span>
+						<span
+							className="go-to-link"
+							onClick={() => {
+								if (this.props.onLinkClick) {
+									this.props.onLinkClick();
+								}
+							}}
+						>
+							{t('pasteLink')}
+						</span>
 					</div>
-					<GotoWebinar.UpcomingWebinars context={this.props.course}/>
+					<GotoWebinar.UpcomingWebinars context={this.props.course} />
 				</div>
 			</GotoWebinar.IfConnected>
 		);

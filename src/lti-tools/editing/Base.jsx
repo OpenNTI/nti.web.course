@@ -1,7 +1,14 @@
 import './Base.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Panels, DialogButtons, Select, Input, Loading, Prompt } from '@nti/web-commons';
+import {
+	Panels,
+	DialogButtons,
+	Select,
+	Input,
+	Loading,
+	Prompt,
+} from '@nti/web-commons';
 
 const { Label } = Input;
 
@@ -14,17 +21,16 @@ import ByURL from './forms/ByURL';
 const MODES = {
 	MANUAL: 'input',
 	XML: 'xml_paste',
-	URL: 'xml_link'
+	URL: 'xml_link',
 };
 
 const modeOptions = [
 	{ label: 'Manual Entry', value: MODES.MANUAL },
 	{ label: 'By URL', value: MODES.URL },
-	{ label: 'Paste XML', value: MODES.XML }
+	{ label: 'Paste XML', value: MODES.XML },
 ];
 
-export default
-class Base extends Component {
+export default class Base extends Component {
 	static propTypes = {
 		onBeforeDismiss: PropTypes.func.isRequired,
 		title: PropTypes.string.isRequired,
@@ -33,26 +39,26 @@ class Base extends Component {
 		error: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
 		loading: PropTypes.bool,
 		item: PropTypes.object,
-		modal: PropTypes.bool
-	}
+		modal: PropTypes.bool,
+	};
 
 	static defaultProps = {
 		modal: false,
-		submitLabel: 'Create'
-	}
+		submitLabel: 'Create',
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		const item = this._setupItem(props);
 		this.state = { item };
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		const item = this._setupItem(this.props);
 		this.setState({ item });
 	}
 
-	_setupItem (props) {
+	_setupItem(props) {
 		const { item } = props;
 		if (item) {
 			const { title, description, MimeType } = item;
@@ -60,14 +66,14 @@ class Base extends Component {
 			return {
 				title,
 				description,
-				'consumer_key': item['consumer_key'],
+				consumer_key: item['consumer_key'],
 				secret: '',
-				'launch_url': item['launch_url'],
-				'secure_launch_url': item['secure_launch_url'],
-				'xml_paste': '',
-				'xml_link': '',
+				launch_url: item['launch_url'],
+				secure_launch_url: item['secure_launch_url'],
+				xml_paste: '',
+				xml_link: '',
 				MimeType,
-				formselector: MODES.MANUAL
+				formselector: MODES.MANUAL,
 			};
 		}
 
@@ -75,56 +81,64 @@ class Base extends Component {
 			formselector: MODES.MANUAL,
 			title: '',
 			description: '',
-			'consumer_key': '',
+			consumer_key: '',
 			secret: '',
-			'launch_url': '',
-			'secure_launch_url': '',
-			'xml_paste': '',
-			'xml_link': '',
-			'MimeType': 'application/vnd.nextthought.ims.consumer.configuredtool'
+			launch_url: '',
+			secure_launch_url: '',
+			xml_paste: '',
+			xml_link: '',
+			MimeType: 'application/vnd.nextthought.ims.consumer.configuredtool',
 		};
 	}
 
 	onModeSelect = ({ target: { value } }) => {
 		const { item } = this.state;
 		this.setState({ item: { ...item, formselector: value } });
-	}
+	};
 
 	onChange = (name, value) => {
 		const { item } = this.state;
 		this.setState({ item: { ...item, [name]: value } });
-	}
+	};
 
-	onSubmit = (e) => {
+	onSubmit = e => {
 		const { item } = this.state;
 		const { onSubmit } = this.props;
 		e.preventDefault();
 
 		onSubmit(item);
-	}
+	};
 
 	onBeforeDismiss = () => {
 		const { onBeforeDismiss } = this.props;
 		onBeforeDismiss();
-	}
+	};
 
-	renderForm () {
+	renderForm() {
 		const { item } = this.state;
 		const { submitLabel, loading, error } = this.props;
 
 		const { formselector } = item;
 		let Form = Manual;
 
-		if (formselector === MODES.XML) { Form = ByXML; }
-		else if (formselector === MODES.URL) { Form = ByURL; }
+		if (formselector === MODES.XML) {
+			Form = ByXML;
+		} else if (formselector === MODES.URL) {
+			Form = ByURL;
+		}
 
 		const buttons = [
 			{ label: 'Cancel', onClick: this.onBeforeDismiss },
-			{ label: submitLabel, type: 'submit', disabled: loading, tag: 'button' }
+			{
+				label: submitLabel,
+				type: 'submit',
+				disabled: loading,
+				tag: 'button',
+			},
 		];
 
 		let errors = null;
-		if (error && (error instanceof Array)) {
+		if (error && error instanceof Array) {
 			errors = error.reduce((obj, x) => {
 				obj[x.field] = x.message;
 				return obj;
@@ -137,26 +151,37 @@ class Base extends Component {
 				onChange={this.onChange}
 				item={item}
 				renderButtons={
-					<DialogButtons className="lti-base-add-controls" buttons={buttons} />
+					<DialogButtons
+						className="lti-base-add-controls"
+						buttons={buttons}
+					/>
 				}
 				error={errors}
 			/>
 		);
 	}
 
-
-	render () {
+	render() {
 		const { title, error, loading, modal } = this.props;
-		const { item: { formselector } } = this.state;
+		const {
+			item: { formselector },
+		} = this.state;
 
 		const contents = (
 			<div className="lti-base-tool-editing">
-				<Panels.TitleBar title={title} iconAction={this.onBeforeDismiss} />
-				{error && (typeof error === 'string') && <span className="lti-base-tool-error">{error}</span>}
+				<Panels.TitleBar
+					title={title}
+					iconAction={this.onBeforeDismiss}
+				/>
+				{error && typeof error === 'string' && (
+					<span className="lti-base-tool-error">{error}</span>
+				)}
 				<Label className="config-type-label" label="Configuration Type">
 					<Select value={formselector} onChange={this.onModeSelect}>
 						{modeOptions.map(({ value, label }) => (
-							<option key={value} value={value}>{label}</option>
+							<option key={value} value={value}>
+								{label}
+							</option>
 						))}
 					</Select>
 				</Label>
@@ -165,7 +190,12 @@ class Base extends Component {
 			</div>
 		);
 
-		return modal ?
-			contents : (<Dialog closeOnMaskClick onBeforeDismiss={this.onBeforeDismiss}>{contents}</Dialog>);
+		return modal ? (
+			contents
+		) : (
+			<Dialog closeOnMaskClick onBeforeDismiss={this.onBeforeDismiss}>
+				{contents}
+			</Dialog>
+		);
 	}
 }

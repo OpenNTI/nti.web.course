@@ -9,15 +9,19 @@ const t = scoped('course.components.CreateButton', {
 });
 
 export default class CreateButton extends React.Component {
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
 
 	launchWizard = () => {
 		Editor.createCourse();
-	}
+	};
 
-	render () {
-		return (<div onClick={this.launchWizard} className="create-course-button">{t('label')}</div>);
+	render() {
+		return (
+			<div onClick={this.launchWizard} className="create-course-button">
+				{t('label')}
+			</div>
+		);
 	}
 }

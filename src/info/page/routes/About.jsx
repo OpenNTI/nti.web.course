@@ -6,10 +6,10 @@ import CourseInfo from '../../inline/CourseInfo';
 CourseAbout.propTypes = {
 	instance: PropTypes.object,
 	catalogEntry: PropTypes.shape({
-		hasLink: PropTypes.func
-	})
+		hasLink: PropTypes.func,
+	}),
 };
-export default function CourseAbout ({instance, catalogEntry}) {
+export default function CourseAbout({ instance, catalogEntry }) {
 	return (
 		<CourseInfo
 			catalogEntry={catalogEntry}

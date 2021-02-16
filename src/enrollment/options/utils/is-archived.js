@@ -1,4 +1,4 @@
-export default function isArchived (catalogEntry) {
+export default function isArchived(catalogEntry) {
 	const endDate = catalogEntry.getEndDate();
 
 	return endDate && endDate < Date.now();

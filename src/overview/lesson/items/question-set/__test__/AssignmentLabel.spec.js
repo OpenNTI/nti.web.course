@@ -3,22 +3,42 @@ import renderer from 'react-test-renderer';
 
 import AssignmentLabel from '../AssignmentLabel';
 
-function buildAssignment (assignedDate, dueDate, lastModified, maxTimeAllowed, duration, isPublished, isSubmitted, isTimed, noSubmit, canEdit) {
+function buildAssignment(
+	assignedDate,
+	dueDate,
+	lastModified,
+	maxTimeAllowed,
+	duration,
+	isPublished,
+	isSubmitted,
+	isTimed,
+	noSubmit,
+	canEdit
+) {
 	return {
-		getAssignedDate: () => assignedDate && typeof assignedDate === 'string' ? new Date(assignedDate) : assignedDate,
-		getDueDate: () => dueDate && typeof dueDate === 'string' ? new Date(dueDate) : dueDate,
-		getLastModified: () => lastModified && typeof lastModified === 'string' ? new Date(lastModified) : lastModified,
+		getAssignedDate: () =>
+			assignedDate && typeof assignedDate === 'string'
+				? new Date(assignedDate)
+				: assignedDate,
+		getDueDate: () =>
+			dueDate && typeof dueDate === 'string'
+				? new Date(dueDate)
+				: dueDate,
+		getLastModified: () =>
+			lastModified && typeof lastModified === 'string'
+				? new Date(lastModified)
+				: lastModified,
 		isPublished: () => isPublished,
 		isNonSubmit: () => noSubmit,
 		hasLink: () => canEdit,
 		getMaximumTimeAllowed: () => maxTimeAllowed,
 		getDuration: () => duration,
 		isSubmitted: () => isSubmitted,
-		isTimed
+		isTimed,
 	};
 }
 
-function assignmentBuilder () {
+function assignmentBuilder() {
 	return {
 		assignedDateVal: null,
 		dueDateVal: null,
@@ -82,21 +102,30 @@ function assignmentBuilder () {
 				this.isSubmittedVal,
 				this.isTimedVal,
 				this.noSubmitVal,
-				this.canEditVal);
-		}
+				this.canEditVal
+			);
+		},
 	};
 }
 
-function buildAssignmentHistory (completedDate, isSynthetic, isSubmitted, isExcused) {
+function buildAssignmentHistory(
+	completedDate,
+	isSynthetic,
+	isSubmitted,
+	isExcused
+) {
 	return {
 		isSyntheticSubmission: () => isSynthetic,
 		isSubmitted: () => isSubmitted,
 		Submission: {
-			getCreatedTime: () => completedDate && typeof completedDate === 'string' ? new Date(completedDate) : null
+			getCreatedTime: () =>
+				completedDate && typeof completedDate === 'string'
+					? new Date(completedDate)
+					: null,
 		},
 		grade: {
-			isExcused: () => isExcused
-		}
+			isExcused: () => isExcused,
+		},
 	};
 }
 
@@ -115,10 +144,10 @@ describe('Course overview assignment label test', () => {
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
-					'10/25/2017',	// completedDate
-					false,			// isSynthetic
-					true,			// isSubmitted
-					false,			// isExcused
+					'10/25/2017', // completedDate
+					false, // isSynthetic
+					true, // isSubmitted
+					false // isExcused
 				)}
 			/>
 		);
@@ -137,10 +166,10 @@ describe('Course overview assignment label test', () => {
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
-					null,			// completedDate
-					false,			// isSynthetic
-					true,			// isSubmitted
-					false,			// isExcused
+					null, // completedDate
+					false, // isSynthetic
+					true, // isSubmitted
+					false // isExcused
 				)}
 			/>
 		);
@@ -162,10 +191,10 @@ describe('Course overview assignment label test', () => {
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
-					null,			// completedDate
-					false,			// isSynthetic
-					true,			// isSubmitted
-					false,			// isExcused
+					null, // completedDate
+					false, // isSynthetic
+					true, // isSubmitted
+					false // isExcused
 				)}
 			/>
 		);
@@ -188,10 +217,10 @@ describe('Course overview assignment label test', () => {
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
-					'10/25/2017',	// completedDate
-					false,			// isSynthetic
-					true,			// isSubmitted
-					false,			// isExcused
+					'10/25/2017', // completedDate
+					false, // isSynthetic
+					true, // isSubmitted
+					false // isExcused
 				)}
 			/>
 		);
@@ -212,10 +241,10 @@ describe('Course overview assignment label test', () => {
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
-					null,			// completedDate
-					false,			// isSynthetic
-					false,			// isSubmitted
-					false,			// isExcused
+					null, // completedDate
+					false, // isSynthetic
+					false, // isSubmitted
+					false // isExcused
 				)}
 			/>
 		);
@@ -237,10 +266,10 @@ describe('Course overview assignment label test', () => {
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
-					null,			// completedDate
-					false,			// isSynthetic
-					false,			// isSubmitted
-					false,			// isExcused
+					null, // completedDate
+					false, // isSynthetic
+					false, // isSubmitted
+					false // isExcused
 				)}
 			/>
 		);
@@ -261,10 +290,10 @@ describe('Course overview assignment label test', () => {
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
-					null,			// completedDate
-					false,			// isSynthetic
-					false,			// isSubmitted
-					true,			// isExcused
+					null, // completedDate
+					false, // isSynthetic
+					false, // isSubmitted
+					true // isExcused
 				)}
 			/>
 		);
@@ -283,20 +312,20 @@ describe('Course overview assignment label test', () => {
 			.build();
 
 		const overviewItemRef = {
-			isCompletable: () => true
+			isCompletable: () => true,
 		};
 
 		const cmp = renderer.create(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
-					null,			// completedDate
-					false,			// isSynthetic
-					false,			// isSubmitted
-					false,			// isExcused
+					null, // completedDate
+					false, // isSynthetic
+					false, // isSubmitted
+					false // isExcused
 				)}
 				overviewItemRef={overviewItemRef}
-				onRequirementChange={()=>{}}
+				onRequirementChange={() => {}}
 			/>
 		);
 
@@ -316,10 +345,10 @@ describe('Course overview assignment label test', () => {
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
-					null,			// completedDate
-					false,			// isSynthetic
-					false,			// isSubmitted
-					false,			// isExcused
+					null, // completedDate
+					false, // isSynthetic
+					false, // isSubmitted
+					false // isExcused
 				)}
 				required
 			/>

@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import EnrollmentCard from '../common/EnrollmentCard';
-import OptionText, {TITLE, DESCRIPTION} from '../common/OptionText';
+import OptionText, { TITLE, DESCRIPTION } from '../common/OptionText';
 
 export default class ExternalEnrollment extends React.Component {
 	static propTypes = {
 		option: PropTypes.object.isRequired,
-		className: PropTypes.string
-	}
+		className: PropTypes.string,
+	};
 
-	state = {}
+	state = {};
 
-	render () {
-		const {className, option} = this.props;
+	render() {
+		const { className, option } = this.props;
 
 		const cls = cx('external', className);
 

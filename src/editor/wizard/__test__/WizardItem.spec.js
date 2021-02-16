@@ -14,7 +14,7 @@ describe('WizardItem test', () => {
 
 	let root;
 	beforeEach(() => {
-		({container: root} = render(
+		({ container: root } = render(
 			<WizardItem
 				title={mockTitle}
 				stepName={mockStepName}
@@ -26,21 +26,23 @@ describe('WizardItem test', () => {
 		));
 	});
 
-	function MockCmp () {
-		return (
-			<div className="mock-contents">
-				{mockCmpContents}
-			</div>
-		);
+	function MockCmp() {
+		return <div className="mock-contents">{mockCmpContents}</div>;
 	}
 
 	test('Test contents', () => {
-		expect(root.querySelector('.mock-contents').textContent).toEqual(mockCmpContents);
+		expect(root.querySelector('.mock-contents').textContent).toEqual(
+			mockCmpContents
+		);
 	});
 
 	test('Test labels', () => {
-		expect(root.querySelector('.course-panel-header-title').textContent).toEqual(mockTitle);
-		expect(root.querySelector('.course-panel-header-stepname').textContent).toEqual(mockStepName);
+		expect(
+			root.querySelector('.course-panel-header-title').textContent
+		).toEqual(mockTitle);
+		expect(
+			root.querySelector('.course-panel-header-stepname').textContent
+		).toEqual(mockStepName);
 	});
 
 	test('Test back button exists', () => {
@@ -48,7 +50,7 @@ describe('WizardItem test', () => {
 	});
 
 	test('Test back button does not exist for first tab', () => {
-		const {container} = render(
+		const { container } = render(
 			<WizardItem
 				title={mockTitle}
 				stepName={mockStepName}

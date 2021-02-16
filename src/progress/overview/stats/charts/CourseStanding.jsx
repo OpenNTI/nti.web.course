@@ -2,70 +2,82 @@ import './CourseStanding.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
-import {Loading, DisplayName} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Loading, DisplayName } from '@nti/web-commons';
 
-import {formatProgressStats} from './utils';
+import { formatProgressStats } from './utils';
 
 const t = scoped('course.progress.overview.stats.charts.CourseStanding', {
 	label: 'Course Standing',
 	progressBinLabel: '%(start)s - %(end)s%%',
 	progressPercentLabel: ' - %(percent)s%%',
-	error: 'Unable to load progress statistics.'
+	error: 'Unable to load progress statistics.',
 });
 
 export default class CourseStanding extends React.Component {
-	static label = t('label')
+	static label = t('label');
 
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		enrollment: PropTypes.object,
-		large: PropTypes.bool
-	}
+		large: PropTypes.bool,
+	};
 
+	state = {};
 
-	state = {}
-
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
-	componentDidUpdate (prevProps) {
-		const {course:oldCourse, enrollment:oldEnrollment, large:oldLarge} = prevProps;
-		const {course:newCourse, enrollment:newEnrollment, large:newLarge} = this.props;
+	componentDidUpdate(prevProps) {
+		const {
+			course: oldCourse,
+			enrollment: oldEnrollment,
+			large: oldLarge,
+		} = prevProps;
+		const {
+			course: newCourse,
+			enrollment: newEnrollment,
+			large: newLarge,
+		} = this.props;
 
-		if (oldCourse !== newCourse || oldEnrollment !== newEnrollment || oldLarge !== newLarge) {
+		if (
+			oldCourse !== newCourse ||
+			oldEnrollment !== newEnrollment ||
+			oldLarge !== newLarge
+		) {
 			this.setupFor(this.props);
 		}
 	}
 
+	setupFor(props) {
+		this.setState(
+			{
+				loading: true,
+				error: null,
+			},
+			async () => {
+				const { course, enrollment, large } = props;
 
-	setupFor (props) {
-		this.setState({
-			loading: true,
-			error: null
-		}, async () => {
-			const {course, enrollment, large} = props;
+				try {
+					const stats = await course.fetchLink('ProgressStats');
 
-			try {
-				const stats = await course.fetchLink('ProgressStats');
-
-				this.setState({
-					loading: false,
-					stats: formatProgressStats(stats, large, enrollment)
-				});
-			} catch (e) {
-				this.setState({
-					loading: false,
-					error: e
-				});
+					this.setState({
+						loading: false,
+						stats: formatProgressStats(stats, large, enrollment),
+					});
+				} catch (e) {
+					this.setState({
+						loading: false,
+						error: e,
+					});
+				}
 			}
-		});
+		);
 	}
 
-
-	render () {
-		const {loading, error, stats} = this.state;
+	render() {
+		const { loading, error, stats } = this.state;
 
 		return (
 			<div className="progress-overview-charts-course-standing">
@@ -74,7 +86,11 @@ export default class CourseStanding extends React.Component {
 						<Loading.Spinner />
 					</div>
 				)}
-				{!loading && error && (<div className="error-container"><div className="error">{t('error')}</div></div>)}
+				{!loading && error && (
+					<div className="error-container">
+						<div className="error">{t('error')}</div>
+					</div>
+				)}
 				{!loading && stats && (
 					<div className="chart-container">
 						<div className="chart">
@@ -92,33 +108,42 @@ export default class CourseStanding extends React.Component {
 						</div>
 					</div>
 				)}
-
 			</div>
 		);
 	}
 
-
-	renderStats (stats) {
-		const {series, upperBound} = stats;
+	renderStats(stats) {
+		const { series, upperBound } = stats;
 
 		return (
 			<div className="series">
 				{series.map((data, index) => {
-					const percentTotal = Math.round((data.total / upperBound) * 100);
+					const percentTotal = Math.round(
+						(data.total / upperBound) * 100
+					);
 					const startingPercent = Math.floor(data.start * 100);
 					const endingPercent = Math.ceil(data.end * 100);
 
 					const style = {
 						left: `${startingPercent}%`,
 						width: `${endingPercent - startingPercent}%`,
-						top: percentTotal ? `${100 - percentTotal}%` : 'auto'
+						top: percentTotal ? `${100 - percentTotal}%` : 'auto',
 					};
 
 					return (
-						<div className={cx('data', {empty: percentTotal === 0})} key={index} style={style}>
+						<div
+							className={cx('data', {
+								empty: percentTotal === 0,
+							})}
+							key={index}
+							style={style}
+						>
 							<div className="fill" />
 							<div className="label">
-								{t('progressBinLabel', {start: startingPercent, end: endingPercent})}
+								{t('progressBinLabel', {
+									start: startingPercent,
+									end: endingPercent,
+								})}
 							</div>
 						</div>
 					);
@@ -127,26 +152,28 @@ export default class CourseStanding extends React.Component {
 		);
 	}
 
+	renderEnrollmentProgress() {
+		const { enrollment } = this.props;
 
-	renderEnrollmentProgress () {
-		const {enrollment} = this.props;
+		if (!enrollment) {
+			return null;
+		}
 
-		if (!enrollment) { return null; }
-
-		const {CourseProgress, UserProfile, Username} = enrollment;
-		const {PercentageProgress} = CourseProgress;
+		const { CourseProgress, UserProfile, Username } = enrollment;
+		const { PercentageProgress } = CourseProgress;
 		const percent = Math.floor(PercentageProgress * 100);
 		const style = {
-			left: `${percent}%`
+			left: `${percent}%`,
 		};
 
 		return (
-			<div className={cx('enrollment-progress', {left: percent > 50})} style={style}>
+			<div
+				className={cx('enrollment-progress', { left: percent > 50 })}
+				style={style}
+			>
 				<div className="label">
 					<DisplayName entity={UserProfile || Username} />
-					<span>
-						{t('progressPercentLabel', {percent})}
-					</span>
+					<span>{t('progressPercentLabel', { percent })}</span>
 				</div>
 			</div>
 		);

@@ -57,7 +57,8 @@
 	.controls {
 		@include clearfix();
 
-		.save, .cancel {
+		.save,
+		.cancel {
 			float: right;
 			margin-left: 0.5rem;
 		}

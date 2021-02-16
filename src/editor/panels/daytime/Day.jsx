@@ -7,20 +7,24 @@ export default class Day extends React.Component {
 		day: PropTypes.object.isRequired,
 		className: PropTypes.string,
 		onClick: PropTypes.func,
-		selected: PropTypes.bool
-	}
+		selected: PropTypes.bool,
+	};
 
 	onDayClick = () => {
 		const { onClick, day } = this.props;
 
 		onClick && onClick(day);
-	}
+	};
 
-	render () {
+	render() {
 		const { day, className, selected } = this.props;
 
 		let cls = cx(className || 'course-panel-day', { selected });
 
-		return (<div className={cls} onClick={this.onDayClick}>{day.code}</div>);
+		return (
+			<div className={cls} onClick={this.onDayClick}>
+				{day.code}
+			</div>
+		);
 	}
 }

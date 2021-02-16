@@ -7,7 +7,7 @@ import { List, Grid } from '../../../Constants';
 
 const course = {};
 
-function itemBuilder () {
+function itemBuilder() {
 	return {
 		_id: 'item1',
 		_MimeType: 'application/vnd.nextthought.ntitimeline',
@@ -55,15 +55,15 @@ function itemBuilder () {
 				icon: this._icon,
 				MimeType: this._MimeType,
 				[Summary]: {
-					ItemCount: this._commentCount
+					ItemCount: this._commentCount,
 				},
 				isCompletable: () => this._completable,
 				CompletionRequired: this._CompletionRequired,
 				title: this._title,
 				description: this._description,
-				byline: this._byline
+				byline: this._byline,
 			};
-		}
+		},
 	};
 }
 
@@ -74,9 +74,15 @@ describe('Course overview timeline item test', () => {
 	// If we do implement support for these other labels, we'll need to regenerate these snapshots
 
 	test('Grid item with 5 comments, completable, required', async () => {
-		const item = itemBuilder().commentCount(5).completable().required().build();
+		const item = itemBuilder()
+			.commentCount(5)
+			.completable()
+			.required()
+			.build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid} course={course}/>);
+		const cmp = renderer.create(
+			<View item={item} layout={Grid} course={course} />
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -85,16 +91,29 @@ describe('Course overview timeline item test', () => {
 	test('Grid item completable, requirement edtiable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid} onRequirementChange={()=>{}} course={course}/>);
+		const cmp = renderer.create(
+			<View
+				item={item}
+				layout={Grid}
+				onRequirementChange={() => {}}
+				course={course}
+			/>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 
 	test('List item with 5 comments, completable, required', async () => {
-		const item = itemBuilder().commentCount(5).completable().required().build();
+		const item = itemBuilder()
+			.commentCount(5)
+			.completable()
+			.required()
+			.build();
 
-		const cmp = renderer.create(<View item={item} layout={List} course={course}/>);
+		const cmp = renderer.create(
+			<View item={item} layout={List} course={course} />
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -103,7 +122,14 @@ describe('Course overview timeline item test', () => {
 	test('List item completable, requirement edtiable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<View item={item} layout={List} onRequirementChange={()=>{}} course={course}/>);
+		const cmp = renderer.create(
+			<View
+				item={item}
+				layout={List}
+				onRequirementChange={() => {}}
+				course={course}
+			/>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();

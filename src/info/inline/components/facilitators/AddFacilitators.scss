@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .user-suggestion {
 	display: flex;
@@ -59,7 +59,7 @@
 			float: right;
 			cursor: pointer;
 
-			i[class^="icon-"] {
+			i[class^='icon-'] {
 				font-size: 24px;
 			}
 		}
@@ -91,7 +91,7 @@
 				position: absolute;
 			}
 
-			[class^=icon] {
+			[class^='icon'] {
 				float: right;
 			}
 		}

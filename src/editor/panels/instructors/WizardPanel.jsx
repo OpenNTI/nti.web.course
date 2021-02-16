@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {Loading, Errors} from '@nti/web-commons';
-import {getAppUser} from '@nti/web-client';
+import { scoped } from '@nti/lib-locale';
+import { Loading, Errors } from '@nti/web-commons';
+import { getAppUser } from '@nti/web-client';
 
-import {Edit as EditFacilitators} from '../../../info/inline/components/facilitators';
+import { Edit as EditFacilitators } from '../../../info/inline/components/facilitators';
 
 import Styles from './WizardPanel.css';
 
@@ -13,12 +13,12 @@ const cx = classnames.bind(Styles);
 const t = scoped('course.editor.panels.instructors.WizardPanel', {
 	cancel: 'Continue to Course',
 	save: 'Save Facilitators',
-	saving: 'Saving'
+	saving: 'Saving',
 });
 
-const {Utils} = EditFacilitators;
+const { Utils } = EditFacilitators;
 
-function getCourseInstance (catalogEntry) {
+function getCourseInstance(catalogEntry) {
 	return catalogEntry.parent()?.CourseInstance;
 }
 
@@ -26,9 +26,13 @@ InstructorsWizardPanel.hideBackButton = true;
 InstructorsWizardPanel.propTypes = {
 	afterSave: PropTypes.func,
 	catalogEntry: PropTypes.any,
-	saveCmp: PropTypes.func
+	saveCmp: PropTypes.func,
 };
-export default function InstructorsWizardPanel ({catalogEntry, afterSave, saveCmp}) {
+export default function InstructorsWizardPanel({
+	catalogEntry,
+	afterSave,
+	saveCmp,
+}) {
 	const courseInstance = getCourseInstance(catalogEntry);
 	const [facilitators, setFacilitators] = React.useState(null);
 	const [error, setError] = React.useState(null);
@@ -42,19 +46,24 @@ export default function InstructorsWizardPanel ({catalogEntry, afterSave, saveCm
 		const loadUser = async () => {
 			try {
 				const user = await getAppUser();
-				const {alias: Name, Username: username} = user;
+				const { alias: Name, Username: username } = user;
 
-				if (unmounted) { return; }
+				if (unmounted) {
+					return;
+				}
 
-				setFacilitators([{
-					username,
-					role: Utils.ROLES.INSTRUCTOR,
-					Name,
-					JobTitle: Utils.roleDisplayName(Utils.ROLES.INSTRUCTOR),
-					visible: false,
-					MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-					Class: 'CourseCatalogInstructorLegacyInfo'
-				}]);
+				setFacilitators([
+					{
+						username,
+						role: Utils.ROLES.INSTRUCTOR,
+						Name,
+						JobTitle: Utils.roleDisplayName(Utils.ROLES.INSTRUCTOR),
+						visible: false,
+						MimeType:
+							'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+						Class: 'CourseCatalogInstructorLegacyInfo',
+					},
+				]);
 			} catch (e) {
 				//swallow
 				setFacilitators([]);
@@ -62,10 +71,12 @@ export default function InstructorsWizardPanel ({catalogEntry, afterSave, saveCm
 		};
 
 		loadUser();
-		return () => unmounted = true;
+		return () => (unmounted = true);
 	}, []);
 
-	const onValueChange = (name, updated) => (setFacilitators(updated), setError(null));
+	const onValueChange = (name, updated) => (
+		setFacilitators(updated), setError(null)
+	);
 
 	const onCancel = () => {
 		afterSave?.();
@@ -74,8 +85,12 @@ export default function InstructorsWizardPanel ({catalogEntry, afterSave, saveCm
 	const saveFacilitators = async () => {
 		try {
 			setSaving(true);
-			await Utils.saveFacilitators(catalogEntry, courseInstance, facilitators);
-		
+			await Utils.saveFacilitators(
+				catalogEntry,
+				courseInstance,
+				facilitators
+			);
+
 			afterSave?.();
 		} catch (e) {
 			setError(e);
@@ -86,8 +101,11 @@ export default function InstructorsWizardPanel ({catalogEntry, afterSave, saveCm
 	return (
 		<div>
 			<div className={cx('instructors-wizard-panel')}>
-				{error && (<Errors.Message error={error} />)}
-				<Loading.Placeholder loading={!facilitators} fallback={(<Loading.Spinner.Large />)}>
+				{error && <Errors.Message error={error} />}
+				<Loading.Placeholder
+					loading={!facilitators}
+					fallback={<Loading.Spinner.Large />}
+				>
 					{facilitators && (
 						<EditFacilitators
 							courseInstance={courseInstance}
@@ -98,10 +116,20 @@ export default function InstructorsWizardPanel ({catalogEntry, afterSave, saveCm
 				</Loading.Placeholder>
 			</div>
 			<div className={cx('controls', 'course-panel-controls')}>
-				<SaveCmp className="course-panel-continue" onSave={saveFacilitators} label={t('save')} />
-				<div className="course-panel-cancel" secondary onClick={onCancel}>{t('cancel')}</div>
+				<SaveCmp
+					className="course-panel-continue"
+					onSave={saveFacilitators}
+					label={t('save')}
+				/>
+				<div
+					className="course-panel-cancel"
+					secondary
+					onClick={onCancel}
+				>
+					{t('cancel')}
+				</div>
 			</div>
-			{saving && (<Loading.Overlay large loading label={t('saving')} />)}
+			{saving && <Loading.Overlay large loading label={t('saving')} />}
 		</div>
 	);
 }

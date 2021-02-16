@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Input} from '@nti/web-commons';
+import { Input } from '@nti/web-commons';
 
-import {getPrice} from '../utils';
+import { getPrice } from '../utils';
 
-const MaxPrice = 99999999;//999,999.99 comes from stripe (https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts)
+const MaxPrice = 99999999; //999,999.99 comes from stripe (https://stripe.com/docs/currencies#minimum-and-maximum-charge-amounts)
 
 OneTimePurchaseEditor.propTypes = {
 	catalogEntry: PropTypes.object,
-	onChange: PropTypes.func
+	onChange: PropTypes.func,
 };
-export default function OneTimePurchaseEditor ({catalogEntry, onChange:onChangeProp}) {
+export default function OneTimePurchaseEditor({
+	catalogEntry,
+	onChange: onChangeProp,
+}) {
 	const [amount, setAmount] = React.useState(null);
 	const [currency, setCurrency] = React.useState('USD');
 
@@ -23,14 +26,14 @@ export default function OneTimePurchaseEditor ({catalogEntry, onChange:onChangeP
 		onChangeProp?.({
 			price: {
 				amount: price?.amount,
-				currency: price?.currency ?? 'USD'
-			}
+				currency: price?.currency ?? 'USD',
+			},
 		});
-	}, [catalogEntry]); 
+	}, [catalogEntry]);
 
 	const onChange = (newAmount, newCurrency) => {
 		setAmount(newAmount);
-		onChangeProp?.({price: {amount: newAmount, currency: newCurrency}});
+		onChangeProp?.({ price: { amount: newAmount, currency: newCurrency } });
 	};
 
 	return (

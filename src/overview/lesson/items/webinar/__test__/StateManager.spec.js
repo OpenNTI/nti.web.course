@@ -1,7 +1,7 @@
 /* eslint-env jest */
-import StateManager, {States} from '../StateManager';
+import StateManager, { States } from '../StateManager';
 
-function itemBuilder () {
+function itemBuilder() {
 	return {
 		_session: null,
 		_isExpired: false,
@@ -39,29 +39,35 @@ function itemBuilder () {
 				getNearestSession: () => {
 					return this._session || getMockSession();
 				},
-				refresh: () => { return Promise.resolve(); },
+				refresh: () => {
+					return Promise.resolve();
+				},
 				isExpired: () => this._isExpired,
 				isJoinable: () => this._isJoinable,
-				hasLink: (link) => {
-					if(link === 'JoinWebinar') {
+				hasLink: link => {
+					if (link === 'JoinWebinar') {
 						return this._hasJoinLink;
 					}
 
-					if(link === 'WebinarRegistrationFields') {
+					if (link === 'WebinarRegistrationFields') {
 						return this._hasRegistrationLink;
 					}
 
 					return false;
-				}
+				},
 			};
-		}
+		},
 	};
 }
 
-function getMockSession (startTime, endTime) {
+function getMockSession(startTime, endTime) {
 	return {
-		getStartTime () { return startTime && new Date(startTime); },
-		getEndTime () { return endTime && new Date(endTime); }
+		getStartTime() {
+			return startTime && new Date(startTime);
+		},
+		getEndTime() {
+			return endTime && new Date(endTime);
+		},
 	};
 }
 
@@ -75,41 +81,128 @@ describe('Webinar state manager utility tests', () => {
 	const now = Date.now();
 
 	test('Test isSessionStartingWithinMinute', () => {
-		expect(manager.isSessionStartingWithinMinute(getMockSession(now + _30_SECONDS), now)).toBe(true); // starts 30 seconds from now
-		expect(manager.isSessionStartingWithinMinute(getMockSession(now - _30_SECONDS), now)).toBe(false); // already started
-		expect(manager.isSessionStartingWithinMinute(getMockSession(now + _2_MINUTES), now)).toBe(false); // starts 2 minutes from now
+		expect(
+			manager.isSessionStartingWithinMinute(
+				getMockSession(now + _30_SECONDS),
+				now
+			)
+		).toBe(true); // starts 30 seconds from now
+		expect(
+			manager.isSessionStartingWithinMinute(
+				getMockSession(now - _30_SECONDS),
+				now
+			)
+		).toBe(false); // already started
+		expect(
+			manager.isSessionStartingWithinMinute(
+				getMockSession(now + _2_MINUTES),
+				now
+			)
+		).toBe(false); // starts 2 minutes from now
 	});
 
 	test('Test isSessionStartingInMoreThanAMinute', () => {
-		expect(manager.isSessionStartingInMoreThanAMinute(getMockSession(now + _30_SECONDS), now)).toBe(false); // starts 30 seconds from now
-		expect(manager.isSessionStartingInMoreThanAMinute(getMockSession(now - _30_SECONDS), now)).toBe(false); // already started
-		expect(manager.isSessionStartingInMoreThanAMinute(getMockSession(now + _2_MINUTES), now)).toBe(true); // starts 2 minutes from now
+		expect(
+			manager.isSessionStartingInMoreThanAMinute(
+				getMockSession(now + _30_SECONDS),
+				now
+			)
+		).toBe(false); // starts 30 seconds from now
+		expect(
+			manager.isSessionStartingInMoreThanAMinute(
+				getMockSession(now - _30_SECONDS),
+				now
+			)
+		).toBe(false); // already started
+		expect(
+			manager.isSessionStartingInMoreThanAMinute(
+				getMockSession(now + _2_MINUTES),
+				now
+			)
+		).toBe(true); // starts 2 minutes from now
 	});
 
 	test('Test isSessionFarFromStarting', () => {
-		expect(manager.isSessionFarFromStarting(getMockSession(now + _30_SECONDS), now)).toBe(false); // starts 30 seconds from now
-		expect(manager.isSessionFarFromStarting(getMockSession(now - _30_SECONDS), now)).toBe(false); // already started
-		expect(manager.isSessionFarFromStarting(getMockSession(now + _90_MINUTES), now)).toBe(true); // starts 90 minutes from now
+		expect(
+			manager.isSessionFarFromStarting(
+				getMockSession(now + _30_SECONDS),
+				now
+			)
+		).toBe(false); // starts 30 seconds from now
+		expect(
+			manager.isSessionFarFromStarting(
+				getMockSession(now - _30_SECONDS),
+				now
+			)
+		).toBe(false); // already started
+		expect(
+			manager.isSessionFarFromStarting(
+				getMockSession(now + _90_MINUTES),
+				now
+			)
+		).toBe(true); // starts 90 minutes from now
 	});
 
 	test('Test isSessionExpiringSoon', () => {
-		expect(manager.isSessionExpiringSoon(getMockSession(null, now + _30_SECONDS), now)).toBe(true); // ends 30 seconds from now
-		expect(manager.isSessionExpiringSoon(getMockSession(null, now + _30_MINUTES), now)).toBe(true); // ends 30 minutes from now
-		expect(manager.isSessionExpiringSoon(getMockSession(null, now - _30_SECONDS), now)).toBe(false); // already ended
-		expect(manager.isSessionExpiringSoon(getMockSession(null, now + _90_MINUTES), now)).toBe(false); // ends 90 minutes from now
+		expect(
+			manager.isSessionExpiringSoon(
+				getMockSession(null, now + _30_SECONDS),
+				now
+			)
+		).toBe(true); // ends 30 seconds from now
+		expect(
+			manager.isSessionExpiringSoon(
+				getMockSession(null, now + _30_MINUTES),
+				now
+			)
+		).toBe(true); // ends 30 minutes from now
+		expect(
+			manager.isSessionExpiringSoon(
+				getMockSession(null, now - _30_SECONDS),
+				now
+			)
+		).toBe(false); // already ended
+		expect(
+			manager.isSessionExpiringSoon(
+				getMockSession(null, now + _90_MINUTES),
+				now
+			)
+		).toBe(false); // ends 90 minutes from now
 	});
 
 	test('Test isSessionActive', () => {
-		expect(manager.isSessionActive(getMockSession(now + _30_SECONDS, now + _90_MINUTES), now)).toBe(false); // starts 30 seconds from now, ends 90 minutes from now
-		expect(manager.isSessionActive(getMockSession(now - _30_SECONDS, now + _90_MINUTES), now)).toBe(true); // already started, ends 90 minutes from now
-		expect(manager.isSessionActive(getMockSession(now - _90_MINUTES, now - _30_MINUTES), now)).toBe(false); // already ended
-		expect(manager.isSessionActive(getMockSession(now - _30_SECONDS, now + _30_MINUTES), now)).toBe(false); // already started, ends 30 minutes from now (active must be before countdown)
+		expect(
+			manager.isSessionActive(
+				getMockSession(now + _30_SECONDS, now + _90_MINUTES),
+				now
+			)
+		).toBe(false); // starts 30 seconds from now, ends 90 minutes from now
+		expect(
+			manager.isSessionActive(
+				getMockSession(now - _30_SECONDS, now + _90_MINUTES),
+				now
+			)
+		).toBe(true); // already started, ends 90 minutes from now
+		expect(
+			manager.isSessionActive(
+				getMockSession(now - _90_MINUTES, now - _30_MINUTES),
+				now
+			)
+		).toBe(false); // already ended
+		expect(
+			manager.isSessionActive(
+				getMockSession(now - _30_SECONDS, now + _30_MINUTES),
+				now
+			)
+		).toBe(false); // already started, ends 30 minutes from now (active must be before countdown)
 	});
 });
 
 describe('Webinar state manager calculateState tests', () => {
 	let state = {};
-	const onStatusChange = newState => { state = newState; };
+	const onStatusChange = newState => {
+		state = newState;
+	};
 
 	beforeEach(() => {
 		state = {};
@@ -134,7 +227,10 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar registered, starting within one minute', async () => {
-		const webinar = itemBuilder().hasJoinLink().session(getMockSession(Date.now() + _30_SECONDS)).build();
+		const webinar = itemBuilder()
+			.hasJoinLink()
+			.session(getMockSession(Date.now() + _30_SECONDS))
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();
@@ -143,7 +239,10 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar unregistered, starting within one minute', async () => {
-		const webinar = itemBuilder().hasRegistrationLink().session(getMockSession(Date.now() + _30_SECONDS)).build();
+		const webinar = itemBuilder()
+			.hasRegistrationLink()
+			.session(getMockSession(Date.now() + _30_SECONDS))
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();
@@ -152,7 +251,10 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar registered, far from starting', async () => {
-		const webinar = itemBuilder().hasJoinLink().session(getMockSession(Date.now() + _90_MINUTES)).build();
+		const webinar = itemBuilder()
+			.hasJoinLink()
+			.session(getMockSession(Date.now() + _90_MINUTES))
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();
@@ -161,7 +263,10 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar unregistered, far from starting', async () => {
-		const webinar = itemBuilder().hasRegistrationLink().session(getMockSession(Date.now() + _90_MINUTES)).build();
+		const webinar = itemBuilder()
+			.hasRegistrationLink()
+			.session(getMockSession(Date.now() + _90_MINUTES))
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();
@@ -170,7 +275,10 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar registered, starting in more than a minute (but less than an hour)', async () => {
-		const webinar = itemBuilder().hasJoinLink().session(getMockSession(Date.now() + _30_MINUTES)).build();
+		const webinar = itemBuilder()
+			.hasJoinLink()
+			.session(getMockSession(Date.now() + _30_MINUTES))
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();
@@ -179,7 +287,10 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar unregistered, starting in more than a minute (but less than an hour)', async () => {
-		const webinar = itemBuilder().hasRegistrationLink().session(getMockSession(Date.now() + _30_MINUTES)).build();
+		const webinar = itemBuilder()
+			.hasRegistrationLink()
+			.session(getMockSession(Date.now() + _30_MINUTES))
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();
@@ -188,7 +299,10 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar registered, expiring soon', async () => {
-		const webinar = itemBuilder().hasJoinLink().session(getMockSession(null, Date.now() + _30_SECONDS)).build();
+		const webinar = itemBuilder()
+			.hasJoinLink()
+			.session(getMockSession(null, Date.now() + _30_SECONDS))
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();
@@ -197,7 +311,10 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar unregistered, expiring soon', async () => {
-		const webinar = itemBuilder().hasRegistrationLink().session(getMockSession(null, Date.now() + _30_SECONDS)).build();
+		const webinar = itemBuilder()
+			.hasRegistrationLink()
+			.session(getMockSession(null, Date.now() + _30_SECONDS))
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();
@@ -206,7 +323,15 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar registered, active', async () => {
-		const webinar = itemBuilder().hasJoinLink().session(getMockSession(Date.now() - _30_MINUTES, Date.now() + _90_MINUTES)).build();
+		const webinar = itemBuilder()
+			.hasJoinLink()
+			.session(
+				getMockSession(
+					Date.now() - _30_MINUTES,
+					Date.now() + _90_MINUTES
+				)
+			)
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();
@@ -215,7 +340,15 @@ describe('Webinar state manager calculateState tests', () => {
 	});
 
 	test('Test webinar unregistered, active', async () => {
-		const webinar = itemBuilder().hasRegistrationLink().session(getMockSession(Date.now() - _30_MINUTES, Date.now() + _90_MINUTES)).build();
+		const webinar = itemBuilder()
+			.hasRegistrationLink()
+			.session(
+				getMockSession(
+					Date.now() - _30_MINUTES,
+					Date.now() + _90_MINUTES
+				)
+			)
+			.build();
 		const manager = new StateManager(webinar, onStatusChange);
 
 		await manager.calculateState();

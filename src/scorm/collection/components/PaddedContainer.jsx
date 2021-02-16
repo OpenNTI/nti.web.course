@@ -7,10 +7,16 @@ import Styles from './PaddedContainer.css';
 const cx = classnames.bind(Styles);
 
 SCORMCollectionPaddedContainer.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
 };
-export default function SCORMCollectionPaddedContainer ({className, ...otherProps}) {
+export default function SCORMCollectionPaddedContainer({
+	className,
+	...otherProps
+}) {
 	return (
-		<div className={cx('scorm-padded-container', className)} {...otherProps} />
+		<div
+			className={cx('scorm-padded-container', className)}
+			{...otherProps}
+		/>
 	);
 }

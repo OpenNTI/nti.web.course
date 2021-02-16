@@ -13,7 +13,6 @@ const styles = css`
 	}
 `;
 
-
 const Box = styled('div')`
 	composes: ${styles.centered};
 
@@ -25,25 +24,31 @@ const Box = styled('div')`
 	& ${Close} {
 		position: absolute;
 		top: 8px;
-		right:8px;
+		right: 8px;
 	}
 `;
 
 Frame.propTypes = {
-	onDismiss: PropTypes.func
+	onDismiss: PropTypes.func,
 };
 
-export function Frame ({onDismiss, children}) {
-	const hideOnNavigation = useCallback(({target}) => {
-		if (target.tagName === 'A' && (target.onClick || (target.href && !target.target))) {
-			onDismiss();
-		}
-	}, [onDismiss]);
+export function Frame({ onDismiss, children }) {
+	const hideOnNavigation = useCallback(
+		({ target }) => {
+			if (
+				target.tagName === 'A' &&
+				(target.onClick || (target.href && !target.target))
+			) {
+				onDismiss();
+			}
+		},
+		[onDismiss]
+	);
 	return (
 		<Box onClick={hideOnNavigation}>
-			<Close onClick={onDismiss}/>
+			<Close onClick={onDismiss} />
 			{children}
-			<Dismiss onClick={onDismiss}/>
+			<Dismiss onClick={onDismiss} />
 		</Box>
 	);
 }

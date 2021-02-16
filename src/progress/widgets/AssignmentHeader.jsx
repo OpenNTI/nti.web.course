@@ -1,9 +1,9 @@
 import './AssignmentHeader.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {Flyout, DateTime} from '@nti/web-commons';
-import {CircularProgress} from '@nti/web-charts';
+import { scoped } from '@nti/lib-locale';
+import { Flyout, DateTime } from '@nti/web-commons';
+import { CircularProgress } from '@nti/web-charts';
 
 const t = scoped('course.components.ProgressCard', {
 	published: 'Published',
@@ -14,7 +14,7 @@ const t = scoped('course.components.ProgressCard', {
 	avgDuration: 'Avg Duration',
 	onTime: 'On Time',
 	grade: '%(letter)s - %(grade)s',
-	duration: '%(hours)s hr. %(minutes)s min.'
+	duration: '%(hours)s hr. %(minutes)s min.',
 });
 
 // MOCK DATA
@@ -29,19 +29,24 @@ const PUBLISHED = true;
 export default class AssignmentHeader extends React.Component {
 	static propTypes = {
 		completed: PropTypes.number,
-		total: PropTypes.number
-	}
+		total: PropTypes.number,
+	};
 
-	attachPublishFlyoutRef = x => this.publishFlyout = x
-	attachDueDateFlyoutRef = x => this.dueDateFlyout = x
+	attachPublishFlyoutRef = x => (this.publishFlyout = x);
+	attachDueDateFlyoutRef = x => (this.dueDateFlyout = x);
 
-	renderPublishTrigger () {
+	renderPublishTrigger() {
 		const label = PUBLISHED ? t('published') : t('unpublished');
 
-		return <div className="trigger"><span className="value">{label}</span><i className="icon-chevron-down"/></div>;
+		return (
+			<div className="trigger">
+				<span className="value">{label}</span>
+				<i className="icon-chevron-down" />
+			</div>
+		);
 	}
 
-	renderPublishControl () {
+	renderPublishControl() {
 		return (
 			<Flyout.Triggered
 				className="course-progress-assignment-header-publish-flyout"
@@ -51,19 +56,32 @@ export default class AssignmentHeader extends React.Component {
 				ref={this.attachPublishFlyoutRef}
 			>
 				<div>
-					<div className="assignment-control-option" onClick={this.publish}>Publish</div>
+					<div
+						className="assignment-control-option"
+						onClick={this.publish}
+					>
+						Publish
+					</div>
 				</div>
 			</Flyout.Triggered>
 		);
 	}
 
-	renderDueDateTrigger () {
-		const dueDate = DateTime.format(DUE_DATE, DateTime.WEEKDAY_ABBR_MONTH_NAME_ORDINAL_DAY);
+	renderDueDateTrigger() {
+		const dueDate = DateTime.format(
+			DUE_DATE,
+			DateTime.WEEKDAY_ABBR_MONTH_NAME_ORDINAL_DAY
+		);
 
-		return <div className="trigger"><span className="value">{t('due', {dueDate})}</span><i className="icon-chevron-down"/></div>;
+		return (
+			<div className="trigger">
+				<span className="value">{t('due', { dueDate })}</span>
+				<i className="icon-chevron-down" />
+			</div>
+		);
 	}
 
-	renderDueDateControl () {
+	renderDueDateControl() {
 		return (
 			<Flyout.Triggered
 				className="course-progress-assignment-header-due-date-flyout"
@@ -73,13 +91,18 @@ export default class AssignmentHeader extends React.Component {
 				ref={this.attachDueDateFlyoutRef}
 			>
 				<div>
-					<div className="assignment-control-option" onClick={this.publish}>Change</div>
+					<div
+						className="assignment-control-option"
+						onClick={this.publish}
+					>
+						Change
+					</div>
 				</div>
 			</Flyout.Triggered>
 		);
 	}
 
-	renderControls () {
+	renderControls() {
 		return (
 			<div className="controls">
 				<CircularProgress
@@ -88,7 +111,8 @@ export default class AssignmentHeader extends React.Component {
 					height={56}
 					showPctSymbol={false}
 					lineThickness={5}
-					deficitFillColor="#eaeaea"/>
+					deficitFillColor="#eaeaea"
+				/>
 				<div className="header-info">
 					<div className="title">{TITLE}</div>
 					<div className="publish-controls">
@@ -101,7 +125,7 @@ export default class AssignmentHeader extends React.Component {
 		);
 	}
 
-	renderStatistic (label, value) {
+	renderStatistic(label, value) {
 		return (
 			<div className="statistic">
 				<div className="stat-label">{label}</div>
@@ -110,21 +134,27 @@ export default class AssignmentHeader extends React.Component {
 		);
 	}
 
-	renderStatistics () {
+	renderStatistics() {
 		const letter = this.getGradeLetter(AVG_GRADE);
 		const hours = Math.floor(AVG_DURATION / 60);
 		const minutes = AVG_DURATION % 60;
 
 		return (
 			<div className="statistics">
-				{this.renderStatistic(t('avgGrade'), t('grade', {grade: AVG_GRADE, letter}) + '%')}
-				{this.renderStatistic(t('avgDuration'), t('duration', { hours, minutes }))}
+				{this.renderStatistic(
+					t('avgGrade'),
+					t('grade', { grade: AVG_GRADE, letter }) + '%'
+				)}
+				{this.renderStatistic(
+					t('avgDuration'),
+					t('duration', { hours, minutes })
+				)}
 				{this.renderStatistic(t('onTime'), ON_TIME_PCT)}
 			</div>
 		);
 	}
 
-	getGradeLetter (value) {
+	getGradeLetter(value) {
 		if (value >= 90) {
 			return 'A';
 		} else if (value >= 80) {
@@ -138,7 +168,7 @@ export default class AssignmentHeader extends React.Component {
 		}
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="course-progress-assignment-header">
 				{this.renderControls()}

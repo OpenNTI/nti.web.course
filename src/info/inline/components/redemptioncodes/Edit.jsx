@@ -1,7 +1,7 @@
 import './Edit.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
+import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import { Prompt } from '@nti/web-commons';
 
@@ -11,14 +11,14 @@ import Store from './Store';
 
 const t = scoped('course.info.inline.components.redemptioncodes.Edit', {
 	label: 'Redemption Code',
-	confirmDelete: 'Do you want to delete this code?'
+	confirmDelete: 'Do you want to delete this code?',
 });
 
 class RedemptionCodesEdit extends React.Component {
 	static propTypes = {
 		courseInstance: PropTypes.shape({
 			hasLink: PropTypes.func.isRequired,
-			postToLink: PropTypes.func.isRequired
+			postToLink: PropTypes.func.isRequired,
 		}),
 		items: PropTypes.arrayOf(PropTypes.object),
 		onValueChange: PropTypes.func,
@@ -27,31 +27,30 @@ class RedemptionCodesEdit extends React.Component {
 			createItem: PropTypes.func.isRequired,
 			deleteItem: PropTypes.func.isRequired,
 		}).isRequired,
-		error: PropTypes.string
-	}
+		error: PropTypes.string,
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		const { store, courseInstance } = this.props;
 		store.setCourse(courseInstance);
 	}
 
-	componentDidCatch (error, info) {
+	componentDidCatch(error, info) {
 		this.setState({ hasError: true });
 	}
 
 	createCode = async () => {
 		this.props.store.createItem();
-	}
+	};
 
-	deleteCode = (code) => {
+	deleteCode = code => {
 		const { store } = this.props;
-		Prompt.areYouSure(t('confirmDelete'))
-			.then(() => {
-				store.deleteItem(code);
-			});
-	}
+		Prompt.areYouSure(t('confirmDelete')).then(() => {
+			store.deleteItem(code);
+		});
+	};
 
-	render () {
+	render() {
 		const { items, error, courseInstance } = this.props;
 		const canCreateCode = courseInstance.hasLink('CreateCourseInvitation');
 
@@ -62,8 +61,18 @@ class RedemptionCodesEdit extends React.Component {
 					<Disclaimer />
 				</div>
 				<div className="content-column">
-					{(items || []).map(code => <Code key={code.getID()} code={code} onDelete={this.deleteCode} />)}
-					{canCreateCode && <a className="create-code" onClick={this.createCode}>Create Code</a>}
+					{(items || []).map(code => (
+						<Code
+							key={code.getID()}
+							code={code}
+							onDelete={this.deleteCode}
+						/>
+					))}
+					{canCreateCode && (
+						<a className="create-code" onClick={this.createCode}>
+							Create Code
+						</a>
+					)}
 				</div>
 				{error && <div className="error">{error}</div>}
 			</div>
@@ -71,12 +80,10 @@ class RedemptionCodesEdit extends React.Component {
 	}
 }
 
-
-
 export default decorate(RedemptionCodesEdit, [
 	Store.connect({
 		loading: 'loading',
 		error: 'error',
-		items: 'items'
-	})
+		items: 'items',
+	}),
 ]);

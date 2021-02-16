@@ -1,7 +1,7 @@
 import { Stores } from '@nti/lib-store';
 
 export default class LTIStore extends Stores.SimpleStore {
-	constructor () {
+	constructor() {
 		super();
 
 		this.set('loading', false);
@@ -10,21 +10,21 @@ export default class LTIStore extends Stores.SimpleStore {
 		this.course = null;
 	}
 
-	async deleteItem (item) {
+	async deleteItem(item) {
 		await item.delete();
 		this.loadItems();
 	}
 
-	addItem (item) {
+	addItem(item) {
 		return this.course.postToLink('lti-configured-tools', item, true);
 	}
 
-	setCourse (course) {
+	setCourse(course) {
 		this.course = course;
 		this.loadItems();
 	}
 
-	async loadItems () {
+	async loadItems() {
 		this.set('loading', true);
 		this.set('error', null);
 
@@ -42,12 +42,11 @@ export default class LTIStore extends Stores.SimpleStore {
 		}
 	}
 
-	itemChange (item) {
+	itemChange(item) {
 		const items = this.get('items');
 
-		const newItems = items.map(x => x.NTIID === item.NTIID ? item : x);
+		const newItems = items.map(x => (x.NTIID === item.NTIID ? item : x));
 		this.set('items', newItems);
 		this.emitChange('items');
 	}
-
 }

@@ -1,22 +1,25 @@
-import {Stores} from '@nti/lib-store';
-import {getService} from '@nti/web-client';
-import {scoped} from '@nti/lib-locale';
+import { Stores } from '@nti/lib-store';
+import { getService } from '@nti/web-client';
+import { scoped } from '@nti/lib-locale';
 
-const t = scoped('course.info.inline.components.transcriptcredit.managetypes.CreditTypeStore', {
-	tooShortError: '%(field)s is required',
-	tooLongError: '%(field)s cannot be longer than 16 characters',
-	missingError: '%(field)s is required'
-});
+const t = scoped(
+	'course.info.inline.components.transcriptcredit.managetypes.CreditTypeStore',
+	{
+		tooShortError: '%(field)s is required',
+		tooLongError: '%(field)s cannot be longer than 16 characters',
+		missingError: '%(field)s is required',
+	}
+);
 
 const FIELD_MAP = {
-	'credit_type': 'Type',
-	'credit_units': 'Unit'
+	credit_type: 'Type',
+	credit_units: 'Unit',
 };
 
 export default class CreditTypesStore extends Stores.SimpleStore {
-	static Singleton = true
+	static Singleton = true;
 
-	constructor () {
+	constructor() {
 		super();
 
 		this.set('types', null);
@@ -24,8 +27,8 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		this.set('error', null);
 	}
 
-	async removeValues (values) {
-		if(!values || values.length === 0) {
+	async removeValues(values) {
+		if (!values || values.length === 0) {
 			return;
 		}
 
@@ -33,9 +36,10 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 
 		try {
 			const requests = values.map(d => {
-				const deleteLink = d && d.Links && d.Links.filter(l => l.rel === 'delete')[0];
+				const deleteLink =
+					d && d.Links && d.Links.filter(l => l.rel === 'delete')[0];
 
-				if(!deleteLink) {
+				if (!deleteLink) {
 					return Promise.reject('No delete link');
 				}
 
@@ -43,8 +47,7 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 			});
 
 			await Promise.all(requests);
-		}
-		catch (e) {
+		} catch (e) {
 			this.set('error', this.makeNiceError(e));
 			this.set('loading', false);
 			this.emitChange('error', 'loading');
@@ -53,22 +56,20 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		}
 	}
 
-	makeNiceError (e) {
-		if(e.code === 'TooShort') {
-			return t('tooShortError', {field: FIELD_MAP[e.field]});
-		}
-		else if(e.code === 'TooLong') {
-			return t('tooLongError', {field: FIELD_MAP[e.field]});
-		}
-		else if(e.code === 'RequiredMissing') {
-			return t('missingError', {field: FIELD_MAP[e.field]});
+	makeNiceError(e) {
+		if (e.code === 'TooShort') {
+			return t('tooShortError', { field: FIELD_MAP[e.field] });
+		} else if (e.code === 'TooLong') {
+			return t('tooLongError', { field: FIELD_MAP[e.field] });
+		} else if (e.code === 'RequiredMissing') {
+			return t('missingError', { field: FIELD_MAP[e.field] });
 		}
 
 		return e.message || e;
 	}
 
-	async saveValues (values) {
-		if(!values) {
+	async saveValues(values) {
+		if (!values) {
 			return;
 		}
 
@@ -76,13 +77,16 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		this.set('error', null);
 		this.emitChange('loading');
 
-		const {newDefs, existing} = this.buildDefinitions(values);
+		const { newDefs, existing } = this.buildDefinitions(values);
 
 		const service = await getService();
-		const defsCollection = service.getCollection('CreditDefinitions', 'Global');
+		const defsCollection = service.getCollection(
+			'CreditDefinitions',
+			'Global'
+		);
 
 		try {
-			if(newDefs) {
+			if (newDefs) {
 				// PUT to collection link
 				const requests = newDefs.map(d => {
 					return service.put(defsCollection.href, d);
@@ -91,12 +95,15 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 				await Promise.all(requests);
 			}
 
-			if(existing) {
+			if (existing) {
 				// PUT to NTIID of def
 				const requests = existing.map(async d => {
-					const editLink = d && d.Links && d.Links.filter(l => l.rel === 'edit')[0];
+					const editLink =
+						d &&
+						d.Links &&
+						d.Links.filter(l => l.rel === 'edit')[0];
 
-					if(!editLink) {
+					if (!editLink) {
 						throw new Error('No edit link');
 					}
 
@@ -107,8 +114,7 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 			}
 
 			return;
-		}
-		catch (e) {
+		} catch (e) {
 			this.set('error', this.makeNiceError(e));
 			this.set('loading', false);
 			this.emitChange('error', 'loading');
@@ -117,65 +123,75 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		}
 	}
 
-	getError () {
+	getError() {
 		return this.get('error');
 	}
 
-	buildDefinitions (values) {
-		const defs = values && values.map(v => {
-			let def = {
-				Links: v.Links,
-				'credit_type': v.type,
-				'credit_units': v.unit,
-				MimeType: 'application/vnd.nextthought.credit.creditdefinition'
-			};
+	buildDefinitions(values) {
+		const defs =
+			values &&
+			values.map(v => {
+				let def = {
+					Links: v.Links,
+					credit_type: v.type,
+					credit_units: v.unit,
+					MimeType:
+						'application/vnd.nextthought.credit.creditdefinition',
+				};
 
-			if(v.NTIID) {
-				def.NTIID = v.NTIID;
-			}
+				if (v.NTIID) {
+					def.NTIID = v.NTIID;
+				}
 
-			return def;
-		});
+				return def;
+			});
 
-		if(!defs) {
+		if (!defs) {
 			return {};
 		}
 
 		const allItems = this.get('types');
 
-		const existing = defs.filter(x => x.NTIID).filter(def => {
-			const match = allItems.filter(i => i.NTIID === def.NTIID)[0];
+		const existing = defs
+			.filter(x => x.NTIID)
+			.filter(def => {
+				const match = allItems.filter(i => i.NTIID === def.NTIID)[0];
 
-			return match.type !== def['credit_type'] || match.unit !== def['credit_units'];
-		});
+				return (
+					match.type !== def['credit_type'] ||
+					match.unit !== def['credit_units']
+				);
+			});
 
 		return {
 			newDefs: defs.filter(x => !x.NTIID),
-			existing
+			existing,
 		};
 	}
 
-	getTypes () {
+	getTypes() {
 		return this.get('types') || [];
 	}
 
-	async loadAllTypes () {
+	async loadAllTypes() {
 		this.set('loading', true);
 		this.emitChange('loading');
 
 		const service = await getService();
 
-		const defsCollection = service.getCollection('CreditDefinitions', 'Global');
+		const defsCollection = service.getCollection(
+			'CreditDefinitions',
+			'Global'
+		);
 
-		if(defsCollection) {
+		if (defsCollection) {
 			const existingTypes = await service.getBatch(defsCollection.href);
 
-			if(existingTypes) {
+			if (existingTypes) {
 				this.set('loading', false);
 				this.set('types', existingTypes.Items);
 				this.emitChange('loading', 'types', 'error');
-			}
-			else {
+			} else {
 				this.set('loading', false);
 				this.set('types', []);
 				this.emitChange('loading', 'types', 'error');

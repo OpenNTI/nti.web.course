@@ -1,22 +1,17 @@
 import './WizardItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 import { Prompt, Switch, Loading } from '@nti/web-commons';
 
 import Store from '../Store';
-import {
-	COURSE_SAVING,
-	COURSE_SAVED,
-	COURSE_SAVE_ERROR
-} from '../Constants';
-
+import { COURSE_SAVING, COURSE_SAVED, COURSE_SAVE_ERROR } from '../Constants';
 
 const t = scoped('course.wizard.WizardItem', {
 	saving: 'Saving...',
 	continue: 'Continue',
 	confirmCancel: 'Canceling will cause the new course to not be saved.',
-	defaultTitle: 'Create a New Course'
+	defaultTitle: 'Create a New Course',
 });
 
 export default class WizardItem extends React.Component {
@@ -34,71 +29,90 @@ export default class WizardItem extends React.Component {
 		// by default, a wizard item cancel means to delete the temp course,
 		// but sometimes we may want to cancel and keep the course
 		// TODO: Maybe separate the delete on cancel logic out and have a more generic underlying component?
-		keepCourseOnCancel: PropTypes.bool
-	}
+		keepCourseOnCancel: PropTypes.bool,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {};
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		Store.addChangeListener(this.onStoreChange);
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		Store.removeChangeListener(this.onStoreChange);
 	}
 
-	onStoreChange = (data) => {
+	onStoreChange = data => {
 		if (data.type === COURSE_SAVING) {
-			this.setState({loading: true});
+			this.setState({ loading: true });
 		} else if (data.type === COURSE_SAVE_ERROR) {
-			this.setState({loading: false, errorMsg: data.errorMsg});
+			this.setState({ loading: false, errorMsg: data.errorMsg });
 		} else if (data.type === COURSE_SAVED) {
-			this.setState({loading: false});
+			this.setState({ loading: false });
 		}
-	}
+	};
 
-	cancel () {
-		if(this.props.onCancel) {
+	cancel() {
+		if (this.props.onCancel) {
 			this.props.onCancel();
 		}
 	}
 
-	renderTitle () {
-		return (<div className="course-panel-header-title">{this.props.title || t('defaultTitle')}</div>);
+	renderTitle() {
+		return (
+			<div className="course-panel-header-title">
+				{this.props.title || t('defaultTitle')}
+			</div>
+		);
 	}
 
-	renderStepName () {
-		return (<div className="course-panel-header-stepname">{this.props.stepName}</div>);
+	renderStepName() {
+		return (
+			<div className="course-panel-header-stepname">
+				{this.props.stepName}
+			</div>
+		);
 	}
 
-	renderBackButton () {
+	renderBackButton() {
 		const { inProgress } = this.state;
 
-		if(this.props.hideHeaderControls || this.props.hideBackButton || this.props.firstTab || inProgress) {
+		if (
+			this.props.hideHeaderControls ||
+			this.props.hideBackButton ||
+			this.props.firstTab ||
+			inProgress
+		) {
 			return null;
 		}
 
 		return (
 			<Switch.Trigger item={Switch.PREVIOUS}>
-				<div className="back"><i className="icon-chevron-left"/></div>
+				<div className="back">
+					<i className="icon-chevron-left" />
+				</div>
 			</Switch.Trigger>
 		);
 	}
 
-	renderCloseButton () {
+	renderCloseButton() {
 		const { inProgress } = this.state;
 
-		if(this.props.hideHeaderControls || inProgress) {
+		if (this.props.hideHeaderControls || inProgress) {
 			return null;
 		}
 
-		return (<div className="close" onClick={this.doCancel}><i className="icon-light-x"/></div>);
+		return (
+			<div className="close" onClick={this.doCancel}>
+				<i className="icon-light-x" />
+			</div>
+		);
 	}
 
-	renderHeader () {
+	renderHeader() {
 		return (
 			<div className="course-panel-header">
 				{this.renderCloseButton()}
@@ -111,49 +125,47 @@ export default class WizardItem extends React.Component {
 		);
 	}
 
-	renderError () {
-		if(this.state.errorMsg) {
-			return (<div className="error">{this.state.errorMsg}</div>);
+	renderError() {
+		if (this.state.errorMsg) {
+			return <div className="error">{this.state.errorMsg}</div>;
 		}
 
 		return null;
 	}
 
-	renderLoading () {
-		if(this.state.loading) {
-			return (<Loading.Overlay label={t('saving')} loading large/>);
+	renderLoading() {
+		if (this.state.loading) {
+			return <Loading.Overlay label={t('saving')} loading large />;
 		}
 
 		return null;
 	}
 
-	doCancel = (closeWithoutDelete) => {
-		if(closeWithoutDelete) {
+	doCancel = closeWithoutDelete => {
+		if (closeWithoutDelete) {
 			this.cancel();
-		}
-		else {
-			if(this.props.catalogEntry && !this.props.keepCourseOnCancel) {
+		} else {
+			if (this.props.catalogEntry && !this.props.keepCourseOnCancel) {
 				Prompt.areYouSure(t('confirmCancel')).then(() => {
 					this.props.catalogEntry.delete().then(() => {
 						this.cancel();
 					});
 				});
-			}
-			else {
+			} else {
 				this.cancel();
 			}
 		}
 	};
 
 	enterProgressState = () => {
-		this.setState({inProgress: true});
-	}
+		this.setState({ inProgress: true });
+	};
 
 	exitProgressState = () => {
-		this.setState({inProgress: false});
-	}
+		this.setState({ inProgress: false });
+	};
 
-	render () {
+	render() {
 		const { wizardCmp: Cmp, ...otherProps } = this.props;
 
 		delete otherProps.onCancel;
@@ -168,7 +180,8 @@ export default class WizardItem extends React.Component {
 						saveCmp={SaveButton}
 						enterProgressState={this.enterProgressState}
 						exitProgressState={this.exitProgressState}
-						{...otherProps}/>
+						{...otherProps}
+					/>
 				</div>
 				{this.renderLoading()}
 			</div>
@@ -178,13 +191,15 @@ export default class WizardItem extends React.Component {
 
 SaveButton.propTypes = {
 	onSave: PropTypes.func,
-	label: PropTypes.string
+	label: PropTypes.string,
 };
 
-function SaveButton ({onSave, label}) {
+function SaveButton({ onSave, label }) {
 	return (
 		<Switch.Trigger action={onSave} item={Switch.NEXT}>
-			<div className="course-panel-continue">{label || t('continue')}</div>
+			<div className="course-panel-continue">
+				{label || t('continue')}
+			</div>
 		</Switch.Trigger>
 	);
 }

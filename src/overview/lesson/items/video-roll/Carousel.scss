@@ -1,11 +1,12 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .lesson-overview-video-roll-carousel-container {
 	position: relative;
 	overflow: hidden;
 	// min-height: 50vw;
 
-	.prev, .next {
+	.prev,
+	.next {
 		border: 0;
 		background: rgba(0, 0, 0, 0);
 		position: absolute;
@@ -26,15 +27,20 @@
 		}
 
 		&::before {
-			content: ' ';//override the icon
+			content: ' '; //override the icon
 			width: 50%;
 			width: 50vw;
 		}
 	}
-	.prev { left: 0; }
-	.next { right: 0; }
+	.prev {
+		left: 0;
+	}
+	.next {
+		right: 0;
+	}
 
-	.videos-carousel, .videos-carousel-dots {
+	.videos-carousel,
+	.videos-carousel-dots {
 		margin: 0;
 		list-style-type: none;
 

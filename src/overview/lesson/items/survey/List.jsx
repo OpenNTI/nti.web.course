@@ -8,11 +8,11 @@ import Label from './Label';
 
 export default class LessonOverviewSurveyListItem extends React.Component {
 	static propTypes = {
-		item: PropTypes.object
-	}
+		item: PropTypes.object,
+	};
 
-	render () {
-		const {item, ...otherProps} = this.props;
+	render() {
+		const { item, ...otherProps } = this.props;
 
 		return (
 			<Base
@@ -26,16 +26,12 @@ export default class LessonOverviewSurveyListItem extends React.Component {
 	}
 
 	renderIcon = () => {
-		return (
-			<Icon />
-		);
-	}
+		return <Icon />;
+	};
 
 	renderLabels = () => {
-		const {item} = this.props;
+		const { item } = this.props;
 
-		return (
-			<Label item={item} />
-		);
-	}
+		return <Label item={item} />;
+	};
 }

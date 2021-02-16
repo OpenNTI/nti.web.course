@@ -1,7 +1,13 @@
-@import "~@nti/style-common";
-%icon-play { background-image: url(./assets/play.png); }
-%icon-transcript { background-image: url(./assets/play-transcript.png); }
-%circle-white-check { background-image: url(../assets/circle-check-white-20.png); }
+@import '~@nti/style-common';
+%icon-play {
+	background-image: url(./assets/play.png);
+}
+%icon-transcript {
+	background-image: url(./assets/play-transcript.png);
+}
+%circle-white-check {
+	background-image: url(../assets/circle-check-white-20.png);
+}
 
 .lesson-overview-video-container {
 	position: relative;
@@ -131,7 +137,8 @@
 		}
 	}
 
-	.play, .player {
+	.play,
+	.player {
 		float: left;
 		display: inline-block;
 		border-radius: 50px;

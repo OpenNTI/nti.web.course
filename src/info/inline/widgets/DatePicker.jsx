@@ -7,48 +7,55 @@ export default class DatePicker extends React.Component {
 	static propTypes = {
 		date: PropTypes.object,
 		onChange: PropTypes.func,
-		disabledDays: PropTypes.func
-	}
+		disabledDays: PropTypes.func,
+	};
 
-	attachFlyoutRef = x => this.flyout = x
+	attachFlyoutRef = x => (this.flyout = x);
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {};
 	}
 
-	renderDateDisplay () {
+	renderDateDisplay() {
 		const { date } = this.props;
 
-		if(!date) {
-			return (<div className="date no-date">{'Set a Date'}</div>);
+		if (!date) {
+			return <div className="date no-date">{'Set a Date'}</div>;
 		}
 
 		return (
 			<div className="date">
 				<div>{DateTime.format(date)}</div>
-				<div className="date-info">{DateTime.format(date, DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE)}</div>
+				<div className="date-info">
+					{DateTime.format(
+						date,
+						DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE
+					)}
+				</div>
 			</div>
 		);
 	}
 
-	renderIcon () {
+	renderIcon() {
 		return (
 			<div className="icon">
-				<div className="calendar-hanger"/>
-				<div className="calendar-top"/>
-				<div className="calendar-bottom"/>
+				<div className="calendar-hanger" />
+				<div className="calendar-top" />
+				<div className="calendar-bottom" />
 			</div>
 		);
 	}
 
-	renderTrigger () {
+	renderTrigger() {
 		return (
 			<div className="date-picker">
 				{this.renderIcon()}
 				{this.renderDateDisplay()}
-				<div className="trigger"><i className="icon-chevron-down small"/></div>
+				<div className="trigger">
+					<i className="icon-chevron-down small" />
+				</div>
 			</div>
 		);
 	}
@@ -63,9 +70,9 @@ export default class DatePicker extends React.Component {
 		// }
 
 		onChange && onChange(value);
-	}
+	};
 
-	render () {
+	render() {
 		return (
 			<Flyout.Triggered
 				className="course-date-picker-flyout"
@@ -75,7 +82,12 @@ export default class DatePicker extends React.Component {
 				ref={this.attachFlyoutRef}
 			>
 				<div>
-					<DayTimePicker value={this.props.date} disabledDays={this.props.disabledDays} onChange={this.onDateSelect} retainTime/>
+					<DayTimePicker
+						value={this.props.date}
+						disabledDays={this.props.disabledDays}
+						onChange={this.onDateSelect}
+						retainTime
+					/>
 				</div>
 			</Flyout.Triggered>
 		);

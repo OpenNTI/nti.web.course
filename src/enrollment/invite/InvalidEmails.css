@@ -30,7 +30,9 @@
 	margin-right: 0.5em;
 }
 
-.invalid-emails li .email {} /* stylelint-disable-line*/ /* we don't currenty style these but we want the .email classname to get hashed to avoid collisions*/
+.invalid-emails li .email {
+	/* we don't currently style these but we want the .email class name to get hashed to avoid collisions */
+}
 
 .invalid-emails li .count {
 	margin-left: 0.375em;

@@ -1,20 +1,23 @@
 import './Dialog.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {Prompt, Panels} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { Prompt, Panels } from '@nti/web-commons';
 
 import ManageCreditTypes from './ManageCreditTypes';
 import Store from './CreditTypesStore';
 
-const t = scoped('course.info.inline.components.transcriptcredit.managetypes.Dialog', {
-	title: 'Manage Credit Types',
-	done: 'Save',
-});
+const t = scoped(
+	'course.info.inline.components.transcriptcredit.managetypes.Dialog',
+	{
+		title: 'Manage Credit Types',
+		done: 'Save',
+	}
+);
 
 class ManageCreditTypesDialog extends React.Component {
-	static show (onClose) {
+	static show(onClose) {
 		return new Promise((fulfill, reject) => {
 			Prompt.modal(
 				<ManageCreditTypesDialog
@@ -33,16 +36,15 @@ class ManageCreditTypesDialog extends React.Component {
 		onClose: PropTypes.func,
 		onSave: PropTypes.func,
 		onDismiss: PropTypes.func,
-		dialog: PropTypes.bool
-	}
+		dialog: PropTypes.bool,
+	};
 
-	state = {}
-
+	state = {};
 
 	onSave = async () => {
-		const {onSave, onDismiss, store} = this.props;
+		const { onSave, onDismiss, store } = this.props;
 
-		this.setState({loading: true});
+		this.setState({ loading: true });
 
 		await store.removeValues(this.state.flaggedForRemoval);
 
@@ -50,7 +52,7 @@ class ManageCreditTypesDialog extends React.Component {
 
 		await store.loadAllTypes();
 
-		if(onSave) {
+		if (onSave) {
 			onSave();
 
 			if (onDismiss) {
@@ -59,32 +61,39 @@ class ManageCreditTypesDialog extends React.Component {
 		}
 
 		// so the loading bar doesn't just flash for a split second
-		setTimeout(() => { this.setState({loading: false}); }, 400);
-	}
+		setTimeout(() => {
+			this.setState({ loading: false });
+		}, 400);
+	};
 
 	onDismiss = () => {
-		const {onDismiss} = this.props;
+		const { onDismiss } = this.props;
 
 		if (onDismiss) {
 			onDismiss();
 		}
-	}
+	};
 
 	onValuesUpdated = (newValues, flaggedForRemoval) => {
-		this.setState({values: newValues, flaggedForRemoval});
-	}
+		this.setState({ values: newValues, flaggedForRemoval });
+	};
 
-
-	render () {
+	render() {
 		return (
 			<div className="manage-credit-types-dialog">
 				{this.props.dialog && (
 					<div className="title">
-						<Panels.TitleBar title={t('title')} iconAction={this.onDismiss} />
+						<Panels.TitleBar
+							title={t('title')}
+							iconAction={this.onDismiss}
+						/>
 					</div>
 				)}
 				<div className="content">
-					<ManageCreditTypes store={this.props.store} onValuesUpdated={this.onValuesUpdated}/>
+					<ManageCreditTypes
+						store={this.props.store}
+						onValuesUpdated={this.onValuesUpdated}
+					/>
 				</div>
 			</div>
 		);
@@ -95,6 +104,6 @@ export default decorate(ManageCreditTypesDialog, [
 	Store.connect({
 		loading: 'loading',
 		types: 'types',
-		error: 'error'
-	})
+		error: 'error',
+	}),
 ]);

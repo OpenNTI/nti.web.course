@@ -1,7 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Models} from '@nti/lib-interfaces';
+import { Models } from '@nti/lib-interfaces';
 
 import PaddedContainer from '../../common/PaddedContainer';
 import { List } from '../../Constants';
@@ -10,22 +10,23 @@ import Registry from '../Registry';
 import BaseItem from './BaseItem';
 
 export default class LessonOverviewEvent extends React.Component {
-
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		item: PropTypes.object.isRequired,
-		layout: PropTypes.any
-	}
+		layout: PropTypes.any,
+	};
 
-	render () {
+	render() {
 		const { layout, ...otherProps } = this.props;
 
 		return (
 			<PaddedContainer>
-				<BaseItem {...otherProps} isMinimal={layout === List}/>
+				<BaseItem {...otherProps} isMinimal={layout === List} />
 			</PaddedContainer>
 		);
 	}
 }
 
-Registry.register(Models.calendar.CalendarEventRef.MimeType)(LessonOverviewEvent);
+Registry.register(Models.calendar.CalendarEventRef.MimeType)(
+	LessonOverviewEvent
+);

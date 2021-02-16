@@ -10,7 +10,6 @@ const REGISTRATION = 'registration';
 const BROWSE_LIST = 'browse-list';
 const OVERVIEW = 'overview';
 
-
 export default class WebinarEditor extends React.Component {
 	static propTypes = {
 		activePanel: PropTypes.string,
@@ -22,56 +21,68 @@ export default class WebinarEditor extends React.Component {
 		onAddToLesson: PropTypes.func,
 		onAddAsExternalLink: PropTypes.func,
 		onDelete: PropTypes.func,
-		saveDisabled: PropTypes.bool
-	}
+		saveDisabled: PropTypes.bool,
+	};
 
 	state = {
-		activePanel: BROWSE_LIST
-	}
+		activePanel: BROWSE_LIST,
+	};
 
-	componentDidMount () {
-		const {webinar: webinarAsset, activePanel} = this.props;
+	componentDidMount() {
+		const { webinar: webinarAsset, activePanel } = this.props;
 
-		if(webinarAsset) {
-			this.setState({activePanel: OVERVIEW, webinar: webinarAsset.webinar});
-		}
-		else if(activePanel) {
-			this.setState({activePanel: activePanel});
+		if (webinarAsset) {
+			this.setState({
+				activePanel: OVERVIEW,
+				webinar: webinarAsset.webinar,
+			});
+		} else if (activePanel) {
+			this.setState({ activePanel: activePanel });
 		}
 	}
 
 	togglePanel = () => {
-		if(this.state.activePanel === REGISTRATION) {
-			this.setState({activePanel: OVERVIEW});
+		if (this.state.activePanel === REGISTRATION) {
+			this.setState({ activePanel: OVERVIEW });
+		} else if (this.state.activePanel === BROWSE_LIST) {
+			this.setState({ activePanel: REGISTRATION });
+		} else {
+			this.setState({ activePanel: BROWSE_LIST });
 		}
-		else if(this.state.activePanel === BROWSE_LIST) {
-			this.setState({activePanel: REGISTRATION});
-		}
-		else {
-			this.setState({activePanel: BROWSE_LIST});
-		}
-	}
+	};
 
-	render () {
-		const {onCancel, onAddToLesson, onDelete, lessonOverview, overviewGroup, webinar: webinarAsset, saveDisabled, course} = this.props;
-		const {webinar} = this.state;
+	render() {
+		const {
+			onCancel,
+			onAddToLesson,
+			onDelete,
+			lessonOverview,
+			overviewGroup,
+			webinar: webinarAsset,
+			saveDisabled,
+			course,
+		} = this.props;
+		const { webinar } = this.state;
 
 		return (
 			<div className="webinar-editor">
 				{/* {!this.props.activePanel && <div onClick={this.togglePanel}>Toggle</div>} */}
 				{this.state.activePanel === REGISTRATION && (
 					<Registration
-						onWebinarSelected={(selectedWebinar) => {
-							this.setState({activePanel: OVERVIEW, webinar: selectedWebinar});
+						onWebinarSelected={selectedWebinar => {
+							this.setState({
+								activePanel: OVERVIEW,
+								webinar: selectedWebinar,
+							});
 						}}
-						onAddAsExternalLink={(url) => {
-							const {onAddAsExternalLink} = this.props;
+						onAddAsExternalLink={url => {
+							const { onAddAsExternalLink } = this.props;
 
 							onAddAsExternalLink(url);
 						}}
 						context={course}
 						onLinkClick={() => {
-							this.setState({activePanel: BROWSE_LIST});
+							this.setState({ activePanel: BROWSE_LIST });
 						}}
 					/>
 				)}
@@ -79,10 +90,13 @@ export default class WebinarEditor extends React.Component {
 					<BrowseWebinars
 						course={course}
 						onLinkClick={() => {
-							this.setState({activePanel: REGISTRATION});
+							this.setState({ activePanel: REGISTRATION });
 						}}
-						onWebinarClick={(selectedWebinar) => {
-							this.setState({activePanel: OVERVIEW, webinar: selectedWebinar});
+						onWebinarClick={selectedWebinar => {
+							this.setState({
+								activePanel: OVERVIEW,
+								webinar: selectedWebinar,
+							});
 						}}
 					/>
 				)}

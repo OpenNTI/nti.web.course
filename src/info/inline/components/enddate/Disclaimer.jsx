@@ -7,7 +7,7 @@
 // 	description: 'When class is officially over.'
 // });
 
-export default function EndDateDisclaimer () {
+export default function EndDateDisclaimer() {
 	return null;
 
 	// return (

@@ -1,7 +1,7 @@
-import {scoped, getLocalizedCurrencyString} from '@nti/lib-locale';
-import {getAppUser} from '@nti/web-client';
+import { scoped, getLocalizedCurrencyString } from '@nti/lib-locale';
+import { getAppUser } from '@nti/web-client';
 
-import {getTranslationFor} from '../../utils';
+import { getTranslationFor } from '../../utils';
 import Base from '../base';
 import Registry from '../Registry';
 
@@ -13,97 +13,106 @@ const t = scoped('course.enrollment.types.five-minute', {
 	enrolled: {
 		title: 'For Credit',
 		description: {
-			'archived': 'Thanks for your participation! The content of this course will remain available for you to review at any time.',
-			'notArchived-startDate': 'Class begins %(fullStartDate)s and will be conducted fully online.',
-			'notArchived-noStartDate': 'Class will be conducted fully online.'
+			archived:
+				'Thanks for your participation! The content of this course will remain available for you to review at any time.',
+			'notArchived-startDate':
+				'Class begins %(fullStartDate)s and will be conducted fully online.',
+			'notArchived-noStartDate': 'Class will be conducted fully online.',
 		},
 		dropLabel: '',
 		openLabel: 'Open',
 		getAcquainted: 'Get Acquainted with the Platform',
-		completeProfile: 'Complete Your Profile'
+		completeProfile: 'Complete Your Profile',
 	},
 	notEnrolled: {
 		title: 'For Credit',
 		description: {
-			noCutOff: 'Earn transcripted college credit from the University of Oklahoma.',
-			hasCutOff: 'Earn transcripted college credit from the University of Oklahoma.  Not available after %(enrollCutOffDate)s.'
+			noCutOff:
+				'Earn transcripted college credit from the University of Oklahoma.',
+			hasCutOff:
+				'Earn transcripted college credit from the University of Oklahoma.  Not available after %(enrollCutOffDate)s.',
 		},
 		buttonLabel: {
 			hasPrice: 'Buy for $%(price)s',
-			noPrice: 'Earn College Credit'
-		}
+			noPrice: 'Earn College Credit',
+		},
 	},
 	pending: {
 		label: 'Admission Pending...',
-		description: 'We\'re processing your request to earn college credit. This process should take no more than two business days. If you believe there has been an error, please contact <a class=\'link\' href=\'mailto:support@nextthought.com\'>help desk.</a>'
+		description:
+			"We're processing your request to earn college credit. This process should take no more than two business days. If you believe there has been an error, please contact <a class='link' href='mailto:support@nextthought.com'>help desk.</a>",
 	},
 	rejected: {
-		title: 'We are unable to confirm your eligibility to enroll through this process.',
-		description: '<a class=\'link\' href=\'mailto:support@nextthought.com\'>Contact the Help desk</a>'
+		title:
+			'We are unable to confirm your eligibility to enroll through this process.',
+		description:
+			"<a class='link' href='mailto:support@nextthought.com'>Contact the Help desk</a>",
 	},
 	apiDown: {
-		description: 'Transcripted credit is available from the University of Oklahoma but unfortunately we cannot process an application at this time. Please contact the <a class=\'link\' href=\'mailto:support@nextthought.com\'>help desk.</a>'
+		description:
+			"Transcripted credit is available from the University of Oklahoma but unfortunately we cannot process an application at this time. Please contact the <a class='link' href='mailto:support@nextthought.com'>help desk.</a>",
 	},
 	seatsAvailable: {
 		zero: 'No Seats Remaining',
 		one: '%(count)s Seat Available',
-		other: '%(count)s Seats Available'
+		other: '%(count)s Seats Available',
 	},
 	dropInfo: {
 		title: 'How do I drop?',
-		description: 'Please contact your site administrator for assistance dropping the course.'
-	}
+		description:
+			'Please contact your site administrator for assistance dropping the course.',
+	},
 });
 
-
-function handles (option) {
-	return option.MimeType === 'application/vnd.nextthought.courseware.fiveminuteenrollmentoption';
+function handles(option) {
+	return (
+		option.MimeType ===
+		'application/vnd.nextthought.courseware.fiveminuteenrollmentoption'
+	);
 }
 
 export default class FiveMinuteEnrollmentOption extends Base {
-	ORDER = 3
-	SCOPE = 'ForCredit'
+	ORDER = 3;
+	SCOPE = 'ForCredit';
 
-	getString = t
+	getString = t;
 
-	Description = Description
-	EnrollButton = EnrollButton
-	DropButton = DropButton
+	Description = Description;
+	EnrollButton = EnrollButton;
+	DropButton = DropButton;
 
-	isPending () {
+	isPending() {
 		return this.admissionState === 'Pending';
 	}
 
-	isRejected () {
+	isRejected() {
 		return this.admissionState === 'Rejected';
 	}
 
-	isApiDown () {
+	isApiDown() {
 		return this.apiDown;
 	}
 
-
-	getAvailableSeats () {
+	getAvailableSeats() {
 		return this.availableSeats;
 	}
 
-
-	getPrice () {
+	getPrice() {
 		return this.option.OU_Price;
 	}
 
-
-	getPriceDisplay () {
+	getPriceDisplay() {
 		// specific case where we can assume USD
 		return getLocalizedCurrencyString(this.getPrice(), 'USD');
 	}
 
-
-	getEnrollCutOffDate () {
-		return this.option.getEnrollCutOffDate && this.option.getEnrollCutOffDate();
+	getEnrollCutOffDate() {
+		return (
+			this.option.getEnrollCutOffDate && this.option.getEnrollCutOffDate()
+		);
 	}
 
-	async load () {
+	async load() {
 		if (!this.isAvailable() && !this.isEnrolled()) {
 			return;
 		}
@@ -125,52 +134,98 @@ export default class FiveMinuteEnrollmentOption extends Base {
 		}
 	}
 
-
-	getPendingLabel () {
-		return getTranslationFor(this.getString, 'pending.label', this.catalogEntry, this.option, this.access);
+	getPendingLabel() {
+		return getTranslationFor(
+			this.getString,
+			'pending.label',
+			this.catalogEntry,
+			this.option,
+			this.access
+		);
 	}
 
-
-	getPendingDescription () {
-		return getTranslationFor(this.getString, 'pending.description', this.catalogEntry, this.option, this.access);
+	getPendingDescription() {
+		return getTranslationFor(
+			this.getString,
+			'pending.description',
+			this.catalogEntry,
+			this.option,
+			this.access
+		);
 	}
 
-
-	getRejectedTitle () {
-		return getTranslationFor(this.getString, 'rejected.title', this.catalogEntry, this.option, this.access);
+	getRejectedTitle() {
+		return getTranslationFor(
+			this.getString,
+			'rejected.title',
+			this.catalogEntry,
+			this.option,
+			this.access
+		);
 	}
 
-
-	getRejectedDescription () {
-		return getTranslationFor(this.getString, 'rejected.description', this.catalogEntry, this.option, this.access);
+	getRejectedDescription() {
+		return getTranslationFor(
+			this.getString,
+			'rejected.description',
+			this.catalogEntry,
+			this.option,
+			this.access
+		);
 	}
 
-
-	getApiDownDescription () {
-		return getTranslationFor(this.getString, 'apiDown.description', this.catalogEntry, this.option, this.access);
+	getApiDownDescription() {
+		return getTranslationFor(
+			this.getString,
+			'apiDown.description',
+			this.catalogEntry,
+			this.option,
+			this.access
+		);
 	}
 
-	getAvailabelSeatsLabel () {
-		return this.getString('seatsAvailable', {count: this.availableSeats});
+	getAvailabelSeatsLabel() {
+		return this.getString('seatsAvailable', { count: this.availableSeats });
 	}
 
-
-	getDropInfoTitle () {
-		return getTranslationFor(this.getString, 'dropInfo.title', this.catalogEntry, this.option, this.access);
+	getDropInfoTitle() {
+		return getTranslationFor(
+			this.getString,
+			'dropInfo.title',
+			this.catalogEntry,
+			this.option,
+			this.access
+		);
 	}
 
-
-	getDropInfoDescription () {
-		return getTranslationFor(this.getString, 'dropInfo.description', this.catalogEntry, this.option, this.access);
+	getDropInfoDescription() {
+		return getTranslationFor(
+			this.getString,
+			'dropInfo.description',
+			this.catalogEntry,
+			this.option,
+			this.access
+		);
 	}
 
-
-	getGetAcquaintedWith () {
-		return getTranslationFor(this.getString, 'enrolled.getAcquainted', this.catalogEntry, this.option, this.access);
+	getGetAcquaintedWith() {
+		return getTranslationFor(
+			this.getString,
+			'enrolled.getAcquainted',
+			this.catalogEntry,
+			this.option,
+			this.access
+		);
 	}
 
-	getCompleteProfile () {
-		return getTranslationFor(this.getString, 'enrolled.completeProfile', this.catalogEntry, this.option, this.access);
+	getCompleteProfile() {
+		return getTranslationFor(
+			this.getString,
+			'enrolled.completeProfile',
+			this.catalogEntry,
+			this.option,
+			this.access
+		);
 	}
 }
 

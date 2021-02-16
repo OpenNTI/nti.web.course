@@ -5,8 +5,8 @@ describe('Test meet time utility: getWeekdaysFrom', () => {
 	test('Test some days', () => {
 		const catalogEntry = {
 			Schedule: {
-				days: ['M', 'W', 'F']
-			}
+				days: ['M', 'W', 'F'],
+			},
 		};
 
 		const weekdays = getWeekdaysFrom(catalogEntry);
@@ -17,20 +17,28 @@ describe('Test meet time utility: getWeekdaysFrom', () => {
 	test('Test all days', () => {
 		const catalogEntry = {
 			Schedule: {
-				days: ['N', 'M', 'T', 'W', 'R', 'F', 'S']
-			}
+				days: ['N', 'M', 'T', 'W', 'R', 'F', 'S'],
+			},
 		};
 
 		const weekdays = getWeekdaysFrom(catalogEntry);
 
-		expect(weekdays).toEqual(['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']);
+		expect(weekdays).toEqual([
+			'sunday',
+			'monday',
+			'tuesday',
+			'wednesday',
+			'thursday',
+			'friday',
+			'saturday',
+		]);
 	});
 
 	test('Test no days', () => {
 		const catalogEntry = {
 			Schedule: {
-				days: []
-			}
+				days: [],
+			},
 		};
 
 		const weekdays = getWeekdaysFrom(catalogEntry);
@@ -41,8 +49,8 @@ describe('Test meet time utility: getWeekdaysFrom', () => {
 	test('Test empty string', () => {
 		const catalogEntry = {
 			Schedule: {
-				days: ['']
-			}
+				days: [''],
+			},
 		};
 
 		const weekdays = getWeekdaysFrom(catalogEntry);
@@ -60,7 +68,7 @@ describe('Test meet time utility: getWeekdaysFrom', () => {
 
 	test('Test no days', () => {
 		const catalogEntry = {
-			Schedule: {}
+			Schedule: {},
 		};
 
 		const weekdays = getWeekdaysFrom(catalogEntry);
@@ -71,8 +79,8 @@ describe('Test meet time utility: getWeekdaysFrom', () => {
 	test('Test legacy format', () => {
 		const catalogEntry = {
 			Schedule: {
-				days: ['MWF']
-			}
+				days: ['MWF'],
+			},
 		};
 
 		const weekdays = getWeekdaysFrom(catalogEntry);

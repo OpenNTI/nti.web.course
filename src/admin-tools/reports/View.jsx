@@ -1,16 +1,18 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Widgets, List} from '@nti/web-reports';
+import { Widgets, List } from '@nti/web-reports';
 
 const { Card } = Widgets;
 
 CourseAdminCourseReports.propTypes = {
-	course: PropTypes.object
+	course: PropTypes.object,
 };
 
-export default function CourseAdminCourseReports ({course}) {
-	return course ?
-		(<Card><List context={course} /></Card>) :
-		null;
+export default function CourseAdminCourseReports({ course }) {
+	return course ? (
+		<Card>
+			<List context={course} />
+		</Card>
+	) : null;
 }

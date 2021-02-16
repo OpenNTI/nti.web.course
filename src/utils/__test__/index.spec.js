@@ -7,11 +7,13 @@ describe('Utils test', () => {
 			PlatformPresentationResources: [
 				{
 					PlatformName: 'webapp',
-					href: 'testRef'
-				}
-			]
+					href: 'testRef',
+				},
+			],
 		};
 
-		expect(getImageUrl(catalogEntry)).toMatch(/testRef\/contentpackage-landing-/);
+		expect(getImageUrl(catalogEntry)).toMatch(
+			/testRef\/contentpackage-landing-/
+		);
 	});
 });

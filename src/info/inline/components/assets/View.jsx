@@ -1,15 +1,14 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import AssetType from './AssetType';
 import CourseAssetEditor from './course-asset-editor';
 
-
 const t = scoped('course.info.inline.components.assets.View', {
 	label: 'Assets',
-	update: 'Edit'
+	update: 'Edit',
 });
 
 /**
@@ -20,36 +19,42 @@ const t = scoped('course.info.inline.components.assets.View', {
 export default class AssetsView extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
-		onEndEditing: PropTypes.func
-	}
+		onEndEditing: PropTypes.func,
+	};
 
 	//  No static FIELD_NAME
 
-	attachRef = x => this.fileInput = x
+	attachRef = x => (this.fileInput = x);
 
-	state = {}
+	state = {};
 
 	launch = () => {
-		CourseAssetEditor.show(this.props.catalogEntry).then(() => {
-			const { onEndEditing } = this.props;
+		CourseAssetEditor.show(this.props.catalogEntry)
+			.then(() => {
+				const { onEndEditing } = this.props;
 
-			onEndEditing && onEndEditing(this.props.catalogEntry);
-		}).catch(() => {
-			const { onEndEditing } = this.props;
+				onEndEditing && onEndEditing(this.props.catalogEntry);
+			})
+			.catch(() => {
+				const { onEndEditing } = this.props;
 
-			onEndEditing && onEndEditing();
-		});
+				onEndEditing && onEndEditing();
+			});
+	};
+
+	renderInput() {
+		return (
+			<div className="add-course-assets-button" onClick={this.launch}>
+				{t('update')}
+			</div>
+		);
 	}
 
-	renderInput () {
-		return (<div className="add-course-assets-button" onClick={this.launch}>{t('update')}</div>);
+	renderAsset(type) {
+		return <AssetType catalogEntry={this.props.catalogEntry} type={type} />;
 	}
 
-	renderAsset (type) {
-		return (<AssetType catalogEntry={this.props.catalogEntry} type={type}/>);
-	}
-
-	renderPreview () {
+	renderPreview() {
 		return (
 			<div className="assets-preview">
 				{this.renderAsset('thumb')}
@@ -60,16 +65,14 @@ export default class AssetsView extends React.Component {
 		);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="assets-section">
 				<div className="header-section">
 					<div className="date-label">{t('label')}</div>
 					{this.renderInput()}
 				</div>
-				<div className="content-row">
-					{this.renderPreview()}
-				</div>
+				<div className="content-row">{this.renderPreview()}</div>
 			</div>
 		);
 	}

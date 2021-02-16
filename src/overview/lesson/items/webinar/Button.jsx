@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {isFlag} from '@nti/web-client';
-import {Timer, DateTime, Layouts, HOC} from '@nti/web-commons';
-import {GotoWebinar} from '@nti/web-integrations';
-import {scoped} from '@nti/lib-locale';
+import { isFlag } from '@nti/web-client';
+import { Timer, DateTime, Layouts, HOC } from '@nti/web-commons';
+import { GotoWebinar } from '@nti/web-integrations';
+import { scoped } from '@nti/lib-locale';
 import classnames from 'classnames/bind';
 
 import styles from './Button.css';
-import StateManager, {States} from './StateManager';
+import StateManager, { States } from './StateManager';
 
 const cx = classnames.bind(styles);
 
@@ -16,45 +16,49 @@ const t = scoped('course.overview.lesson.items.webinar.Button', {
 	unregister: 'Un-Register',
 	join: 'Join',
 	starting: 'Starting',
-	expiresIn: 'Expires in %(timeLeft)s'
+	expiresIn: 'Expires in %(timeLeft)s',
 });
 
 const UnregisteredStates = new Set([
 	States.Unregistered,
 	States.UnregisteredStartingSoon,
-	States.UnregisteredStartingInMinute
+	States.UnregisteredStartingInMinute,
 ]);
 
 const TimedStates = new Set([
 	States.RegisteredExpiringSoon,
 	States.UnregisteredStartingSoon,
-	States.RegisteredStartingSoon
+	States.RegisteredStartingSoon,
 ]);
 
 const BUTTON_TRANSITION_TIME = 3000;
 
 export default class Button extends React.Component {
-
 	static propTypes = {
 		webinar: PropTypes.object.isRequired,
 		onStatusChange: PropTypes.func,
-		onUnregister: PropTypes.func
-	}
+		onUnregister: PropTypes.func,
+	};
 
-	state = {}
+	state = {};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
-		this.stateManager = new StateManager(props.webinar, props.onStatusChange);
+		this.stateManager = new StateManager(
+			props.webinar,
+			props.onStatusChange
+		);
 	}
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.unsubscribe = () => {};
 		this.stateManager.calculateState();
 
-		if (typeof document !== 'undefined' && isFlag('webinar-unregister-shiftkey')) {
+		if (
+			typeof document !== 'undefined' &&
+			isFlag('webinar-unregister-shiftkey')
+		) {
 			document.addEventListener('keydown', this.onGlobalKeyPress);
 			document.addEventListener('keyup', this.onGlobalKeyPress);
 			this.unsubscribe = () => {
@@ -64,110 +68,139 @@ export default class Button extends React.Component {
 		}
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unsubscribe();
 	}
 
-
-	onGlobalKeyPress = ({type, key}) => {
-
+	onGlobalKeyPress = ({ type, key }) => {
 		const keys = new Set([...(this.state.keysDown || [])]);
 		keys[type === 'keydown' ? 'add' : 'delete'](key);
 
 		this.setState({
-			keysDown: [...keys]
+			keysDown: [...keys],
 		});
-	}
+	};
 
-
-	onTick = (clock) => {
+	onTick = clock => {
 		this.stateManager.onTick(clock);
-	}
+	};
 
+	renderJoinContents(enabled, disabledButNotReally) {
+		const { currentState, remainingTime } = this.state;
 
-	renderJoinContents (enabled, disabledButNotReally) {
-		const {currentState, remainingTime} = this.state;
-
-		let buttonContents = (<span>{t('join')}</span>);
+		let buttonContents = <span>{t('join')}</span>;
 		let additionalCls = null;
 
-		if(currentState === States.RegisteredStartingSoon) {
+		if (currentState === States.RegisteredStartingSoon) {
 			additionalCls = 'starting';
 
 			buttonContents = (
-				<Layouts.Carousel transition={Layouts.Carousel.ROTATE_UP} interval={BUTTON_TRANSITION_TIME} active={0} wrap>
+				<Layouts.Carousel
+					transition={Layouts.Carousel.ROTATE_UP}
+					interval={BUTTON_TRANSITION_TIME}
+					active={0}
+					wrap
+				>
 					<div>
-						<span className={cx('timer')}/>
-						<span className={cx('remaining')}>{DateTime.getShortNaturalDuration(remainingTime)}</span>
+						<span className={cx('timer')} />
+						<span className={cx('remaining')}>
+							{DateTime.getShortNaturalDuration(remainingTime)}
+						</span>
 					</div>
 					<div>{t('join')}</div>
 				</Layouts.Carousel>
 			);
-		}
-		else if(currentState === States.RegisteredStartingInMinute) {
+		} else if (currentState === States.RegisteredStartingInMinute) {
 			additionalCls = 'starting';
 
 			buttonContents = (
-				<Layouts.Carousel transition={Layouts.Carousel.ROTATE_UP} interval={BUTTON_TRANSITION_TIME} active={0} wrap>
+				<Layouts.Carousel
+					transition={Layouts.Carousel.ROTATE_UP}
+					interval={BUTTON_TRANSITION_TIME}
+					active={0}
+					wrap
+				>
 					<div>{t('starting')}</div>
 					<div>{t('join')}</div>
 				</Layouts.Carousel>
 			);
-		}
-		else if(currentState === States.RegisteredExpiringSoon) {
+		} else if (currentState === States.RegisteredExpiringSoon) {
 			additionalCls = 'expiring';
 
 			buttonContents = (
 				<div>
 					<div>{t('join')}</div>
 					<div className={cx('remaining')}>
-						{t('expiresIn', {timeLeft: DateTime.formatDuration(remainingTime / 1000)})}
+						{t('expiresIn', {
+							timeLeft: DateTime.formatDuration(
+								remainingTime / 1000
+							),
+						})}
 					</div>
 				</div>
 			);
 		}
 
 		return (
-			<button className={cx('join', additionalCls, { clickable: disabledButNotReally, disabled: !enabled })}>
+			<button
+				className={cx('join', additionalCls, {
+					clickable: disabledButNotReally,
+					disabled: !enabled,
+				})}
+			>
 				{buttonContents}
 			</button>
 		);
 	}
 
+	renderJoinButton() {
+		const { webinar } = this.props;
+		const { currentState } = this.state;
 
-	renderJoinButton () {
-		const {webinar} = this.props;
-		const {currentState} = this.state;
-
-		const enabled = currentState !== States.RegisteredInactive && webinar.isJoinable();
+		const enabled =
+			currentState !== States.RegisteredInactive && webinar.isJoinable();
 		const disabledButNotReally = currentState === States.RegisteredInactive;
 
 		return (
-			<a target="_blank" rel="noopener noreferrer" href={enabled || disabledButNotReally ? webinar.getLink('JoinWebinar') : null}>
+			<a
+				target="_blank"
+				rel="noopener noreferrer"
+				href={
+					enabled || disabledButNotReally
+						? webinar.getLink('JoinWebinar')
+						: null
+				}
+			>
 				{this.renderTimerIfNecessary()}
 				{this.renderJoinContents(enabled, disabledButNotReally)}
 			</a>
 		);
 	}
 
-
-	renderRegisterButton () {
-		const {props: {webinar}, state: {register}} = this;
-		const toggle = x => this.setState({register: !!x});
+	renderRegisterButton() {
+		const {
+			props: { webinar },
+			state: { register },
+		} = this;
+		const toggle = x => this.setState({ register: !!x });
 		const open = () => toggle(true);
 		const close = () => {
 			toggle(false);
 			this.stateManager.calculateState();
 		};
 
-		const {currentState, remainingTime} = this.state;
+		const { currentState, remainingTime } = this.state;
 
 		let buttonLabel = t('register');
 
 		if (currentState === States.UnregisteredStartingSoon) {
 			buttonLabel = (
-				<Layouts.Carousel transition={Layouts.Carousel.ROTATE_UP} interval={BUTTON_TRANSITION_TIME} active={0} wrap>
+				<Layouts.Carousel
+					transition={Layouts.Carousel.ROTATE_UP}
+					interval={BUTTON_TRANSITION_TIME}
+					active={0}
+					wrap
+				>
 					<div className={cx('register-timer')}>
 						<span className={cx('timer')} />
 						<span className={cx('remaining')}>
@@ -177,11 +210,14 @@ export default class Button extends React.Component {
 					<div className={cx('register-label')}>{t('register')}</div>
 				</Layouts.Carousel>
 			);
-		}
-
-		else if (currentState === States.UnregisteredStartingInMinute) {
+		} else if (currentState === States.UnregisteredStartingInMinute) {
 			buttonLabel = (
-				<Layouts.Carousel transition={Layouts.Carousel.ROTATE_UP} interval={BUTTON_TRANSITION_TIME} active={0} wrap>
+				<Layouts.Carousel
+					transition={Layouts.Carousel.ROTATE_UP}
+					interval={BUTTON_TRANSITION_TIME}
+					active={0}
+					wrap
+				>
 					<div className={cx('register-label')}>{t('starting')}</div>
 					<div className={cx('register-label')}>{t('register')}</div>
 				</Layouts.Carousel>
@@ -191,73 +227,72 @@ export default class Button extends React.Component {
 		return (
 			<React.Fragment>
 				{this.renderTimerIfNecessary()}
-				<button onClick={open} disabled={register}>{buttonLabel}</button>
+				<button onClick={open} disabled={register}>
+					{buttonLabel}
+				</button>
 				{register && (
-					<GotoWebinar.Registration item={{webinar}} onBeforeDismiss={close}/>
+					<GotoWebinar.Registration
+						item={{ webinar }}
+						onBeforeDismiss={close}
+					/>
 				)}
 			</React.Fragment>
 		);
 	}
 
-	renderTimerIfNecessary () {
+	renderTimerIfNecessary() {
 		if (TimedStates.has(this.state.currentState)) {
-			return (
-				<Timer onTick={this.onTick}/>
-			);
+			return <Timer onTick={this.onTick} />;
 		}
 	}
 
 	onManagerChange = () => {
 		const {
-			stateManager: {
-				currentState,
-				remainingTime
-			}
+			stateManager: { currentState, remainingTime },
 		} = this;
 
 		this.setState({
 			currentState,
-			remainingTime
+			remainingTime,
 		});
-	}
+	};
 
-
-	renderUnRegisterButton () {
+	renderUnRegisterButton() {
 		const unregister = () => {
-			const {
-				webinar,
-				onUnregister
-			} = this.props;
+			const { webinar, onUnregister } = this.props;
 
-			webinar.requestLink('WebinarUnRegister', 'delete')
+			webinar
+				.requestLink('WebinarUnRegister', 'delete')
 				.then(() => webinar.refresh())
 				.then(() => onUnregister && onUnregister());
 		};
-		
+
 		return (
-			<button className={cx('caution')} onClick={unregister}>{t('unregister')}</button>
+			<button className={cx('caution')} onClick={unregister}>
+				{t('unregister')}
+			</button>
 		);
 	}
-	
 
-	render () {
+	render() {
 		const {
-			props: {webinar, className} = {},
-			state: {currentState, keysDown}
+			props: { webinar, className } = {},
+			state: { currentState, keysDown },
 		} = this;
-		
+
 		let body = null;
 
 		const isModifierOn = x => /^shift$/i.test((keysDown || []).join('-'));
 
 		if (UnregisteredStates.has(currentState)) {
 			body = this.renderRegisterButton();
-		}
-		else if (currentState && currentState !== States.Expired) {
-			if (webinar.hasLink('WebinarUnRegister') && isModifierOn(keysDown)) {
+		} else if (currentState && currentState !== States.Expired) {
+			if (
+				webinar.hasLink('WebinarUnRegister') &&
+				isModifierOn(keysDown)
+			) {
 				body = this.renderUnRegisterButton();
-			}
-			else {
+			} else {
 				body = this.renderJoinButton();
 			}
 		}
@@ -265,7 +300,10 @@ export default class Button extends React.Component {
 		return (
 			<span className={cx('webinar-button-container', className)}>
 				{this.renderTimerIfNecessary()}
-				<HOC.ItemChanges item={this.stateManager} onItemChanged={this.onManagerChange}/>
+				<HOC.ItemChanges
+					item={this.stateManager}
+					onItemChanged={this.onManagerChange}
+				/>
 				{body}
 			</span>
 		);

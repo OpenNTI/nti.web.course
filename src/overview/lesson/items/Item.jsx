@@ -8,7 +8,7 @@ import Registry from './Registry';
 const registry = Registry.getInstance();
 
 export default class LessonOverviewItem extends React.Component {
-	static canRender (item) {
+	static canRender(item) {
 		return !!registry.getItemFor(item.MimeType);
 	}
 
@@ -16,24 +16,27 @@ export default class LessonOverviewItem extends React.Component {
 		item: PropTypes.object,
 		index: PropTypes.number,
 		itemRef: PropTypes.func,
-		readOnly: PropTypes.bool
+		readOnly: PropTypes.bool,
+	};
+
+	state = {};
+
+	componentDidCatch(error) {
+		this.setState({ error });
 	}
 
-	state = {}
-
-	componentDidCatch (error) {
-		this.setState({error});
-	}
-
-	render () {
+	render() {
 		const {
-			props: {item, index, itemRef, readOnly, ...otherProps},
-			state: {error}
+			props: { item, index, itemRef, readOnly, ...otherProps },
+			state: { error },
 		} = this;
 
 		if (error) {
 			return (
-				<div>There was an error attempting to render: {(item || {}).MimeType || 'Unknown Item'}</div>
+				<div>
+					There was an error attempting to render:{' '}
+					{(item || {}).MimeType || 'Unknown Item'}
+				</div>
 			);
 		}
 
@@ -43,10 +46,14 @@ export default class LessonOverviewItem extends React.Component {
 			otherProps.ref = x => itemRef(index, x);
 		}
 
-
-
 		return (
-			<CompletionMonitor {...otherProps} item={item} readOnly={readOnly} component={Cmp} index={index}/>
+			<CompletionMonitor
+				{...otherProps}
+				item={item}
+				readOnly={readOnly}
+				component={Cmp}
+				index={index}
+			/>
 		);
 	}
 }

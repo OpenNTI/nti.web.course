@@ -1,8 +1,8 @@
-import {Stores} from '@nti/lib-store';
-import {getService} from '@nti/web-client';
+import { Stores } from '@nti/lib-store';
+import { getService } from '@nti/web-client';
 
 export default class ProgressOverviewStore extends Stores.SimpleStore {
-	constructor () {
+	constructor() {
 		super();
 
 		this.set({
@@ -16,19 +16,19 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 		});
 	}
 
-	loadNextItem () {
+	loadNextItem() {
 		if (this.nextLink) {
 			this.loadBatchLink(this.nextLink);
 		}
 	}
 
-	loadPrevItem () {
+	loadPrevItem() {
 		if (this.prevLink) {
 			this.loadBatchLink(this.prevLink);
 		}
 	}
 
-	async loadBatchLink (batchLink) {
+	async loadBatchLink(batchLink) {
 		this.nextLink = null;
 		this.prevLink = null;
 
@@ -37,14 +37,22 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 			error: null,
 			currentItem: null,
 			hasNextItem: false,
-			hasPrevItem: false
+			hasPrevItem: false,
 		});
 
 		try {
 			const service = await getService();
 			const batch = await service.getBatch(batchLink);
-			const {Items, FilteredTotalItemCount, TotalItemCount, BatchPage} = batch;
-			const total = FilteredTotalItemCount != null ? FilteredTotalItemCount : TotalItemCount;
+			const {
+				Items,
+				FilteredTotalItemCount,
+				TotalItemCount,
+				BatchPage,
+			} = batch;
+			const total =
+				FilteredTotalItemCount != null
+					? FilteredTotalItemCount
+					: TotalItemCount;
 
 			this.batch = batch;
 			this.nextLink = batch.getLink('batch-next');
@@ -56,18 +64,17 @@ export default class ProgressOverviewStore extends Stores.SimpleStore {
 				currentItemIndex: BatchPage,
 				totalItems: total,
 				hasNextItem: !!this.nextLink && BatchPage < total,
-				hasPrevItem: !!this.prevLink
+				hasPrevItem: !!this.prevLink,
 			});
-		}
-		catch (e) {
+		} catch (e) {
 			this.set({
 				loading: false,
-				error: e
+				error: e,
 			});
 		}
 	}
 
-	loadCourse (enrollment, course) {
+	loadCourse(enrollment, course) {
 		this.set({
 			currentItem: enrollment,
 			currentItemIndex: 1,

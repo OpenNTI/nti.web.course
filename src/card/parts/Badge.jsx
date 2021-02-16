@@ -11,10 +11,32 @@ CourseCardBadge.propTypes = {
 	black: PropTypes.bool,
 	orange: PropTypes.bool,
 	white: PropTypes.bool,
-	settings: PropTypes.bool
+	settings: PropTypes.bool,
 };
-export default function CourseCardBadge ({className, green, blue, grey, black, orange, white, settings, ...otherProps}) {
+export default function CourseCardBadge({
+	className,
+	green,
+	blue,
+	grey,
+	black,
+	orange,
+	white,
+	settings,
+	...otherProps
+}) {
 	return (
-		<div data-testid="badge" className={cx('nti-course-card-badge', className, {green, blue, grey, black, orange, white, settings})} {...otherProps} />
+		<div
+			data-testid="badge"
+			className={cx('nti-course-card-badge', className, {
+				green,
+				blue,
+				grey,
+				black,
+				orange,
+				white,
+				settings,
+			})}
+			{...otherProps}
+		/>
 	);
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt, DialogButtons} from '@nti/web-commons';
+import { Prompt, DialogButtons } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
@@ -8,7 +8,7 @@ const t = scoped('course.info.inline.enrollment.common.EditableItem', {
 	areYouSure: 'Do you want to remove this enrollment option from the course?',
 	cancel: 'Cancel',
 	save: 'Save',
-	ok: 'OK'
+	ok: 'OK',
 });
 
 export default class EditableItem extends React.Component {
@@ -26,16 +26,16 @@ export default class EditableItem extends React.Component {
 		editable: PropTypes.bool,
 		inEditMode: PropTypes.bool,
 		isDisabled: PropTypes.bool,
-		children: PropTypes.object
+		children: PropTypes.object,
+	};
+
+	state = {};
+
+	renderIcon() {
+		return <div className="item-icon" />;
 	}
 
-	state = {}
-
-	renderIcon () {
-		return <div className="item-icon"/>;
-	}
-
-	renderInfo () {
+	renderInfo() {
 		return (
 			<div className="item-info">
 				<div className="name">{this.props.title}</div>
@@ -44,91 +44,104 @@ export default class EditableItem extends React.Component {
 		);
 	}
 
-	onRemove = (e) => {
+	onRemove = e => {
 		e.stopPropagation();
 		e.preventDefault();
 
-		const {isDisabled} = this.props;
+		const { isDisabled } = this.props;
 
-		if(isDisabled) {
+		if (isDisabled) {
 			return;
 		}
 
 		Prompt.areYouSure(t('areYouSure')).then(() => {
-			const {onRemove, option} = this.props;
+			const { onRemove, option } = this.props;
 
-			if(onRemove) {
+			if (onRemove) {
 				onRemove(option);
 			}
 		});
-	}
+	};
 
-	renderControl () {
-		if(this.props.addable) {
+	renderControl() {
+		if (this.props.addable) {
 			return <div className="item-control">Add</div>;
-		}
-		else if(this.props.editable) {
-			return <div className="item-control" onClick={this.onRemove}>Remove</div>;
+		} else if (this.props.editable) {
+			return (
+				<div className="item-control" onClick={this.onRemove}>
+					Remove
+				</div>
+			);
 		}
 	}
 
 	onItemClick = () => {
-		const {onItemActivate, isDisabled} = this.props;
+		const { onItemActivate, isDisabled } = this.props;
 
-		if(onItemActivate && !isDisabled) {
+		if (onItemActivate && !isDisabled) {
 			onItemActivate();
 		}
-	}
+	};
 
 	onSave = () => {
-		const {onSave} = this.props;
+		const { onSave } = this.props;
 
-		if(onSave) {
+		if (onSave) {
 			onSave();
 		}
-	}
+	};
 
 	onCancel = () => {
-		const {onItemDeactivate} = this.props;
+		const { onItemDeactivate } = this.props;
 
-		if(onItemDeactivate) {
+		if (onItemDeactivate) {
 			onItemDeactivate();
 		}
-	}
+	};
 
-	renderButtons () {
-		const {editable, addable} = this.props;
+	renderButtons() {
+		const { editable, addable } = this.props;
 
 		let buttons = [];
 
-		if(editable || addable) {
+		if (editable || addable) {
 			buttons.push({
 				className: 'cancel',
 				label: t('cancel'),
-				onClick: this.onCancel
+				onClick: this.onCancel,
 			});
 
 			buttons.push({
 				className: 'confirm',
 				label: t('save'),
-				onClick: this.onSave
+				onClick: this.onSave,
 			});
-		}
-		else {
+		} else {
 			buttons.push({
 				className: 'confirm',
 				label: t('ok'),
-				onClick: this.onCancel
+				onClick: this.onCancel,
 			});
 		}
 
-		return <DialogButtons buttons={buttons}/>;
+		return <DialogButtons buttons={buttons} />;
 	}
 
-	render () {
-		const {children, addable, inEditMode, isDisabled, error, className} = this.props;
+	render() {
+		const {
+			children,
+			addable,
+			inEditMode,
+			isDisabled,
+			error,
+			className,
+		} = this.props;
 
-		const cls = cx('editable-item', className, {addable, editing: inEditMode, disabled: isDisabled});
+		const cls = cx('editable-item', className, {
+			addable,
+			editing: inEditMode,
+			disabled: isDisabled,
+		});
 
 		return (
 			<div className={cls}>
@@ -139,7 +152,9 @@ export default class EditableItem extends React.Component {
 				</div>
 				<div className="editable-content">
 					{inEditMode && children}
-					{inEditMode && error && <div className="error">{error}</div>}
+					{inEditMode && error && (
+						<div className="error">{error}</div>
+					)}
 				</div>
 				{inEditMode && this.renderButtons()}
 			</div>

@@ -8,14 +8,14 @@ describe('Meeting times view test', () => {
 	test('Test meeting times items', () => {
 		const Schedule = {
 			days: ['M', 'W', 'F'],
-			times: ['10:30:00-05:00', '12:20:00-05:00']
+			times: ['10:30:00-05:00', '12:20:00-05:00'],
 		};
 
 		const catalogEntry = {
-			Schedule
+			Schedule,
 		};
 
-		const x = render(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry} />);
 
 		const dayRows = x.container.querySelectorAll('.day-row');
 

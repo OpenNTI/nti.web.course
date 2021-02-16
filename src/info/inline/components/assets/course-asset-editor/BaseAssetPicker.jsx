@@ -1,30 +1,31 @@
 import './BaseAssetPicker.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ImageEditor} from '@nti/web-whiteboard';
-import {scoped} from '@nti/lib-locale';
+import { ImageEditor } from '@nti/web-whiteboard';
+import { scoped } from '@nti/lib-locale';
 
 import Header from './Header';
 import Footer from './Footer';
 import ImageEditorWrapper from './ImageEditorWrapper';
 
-
-const t = scoped('course.info.inline.asets.course-asset-editor.BaseAssetPicker', {
-	continue: 'Continue',
-	cancel: 'Cancel'
-});
+const t = scoped(
+	'course.info.inline.asets.course-asset-editor.BaseAssetPicker',
+	{
+		continue: 'Continue',
+		cancel: 'Cancel',
+	}
+);
 
 export default class BaseAssetPicker extends React.Component {
 	static propTypes = {
 		onSave: PropTypes.func,
-		onCancel: PropTypes.func
-	}
+		onCancel: PropTypes.func,
+	};
 
-	state = {}
+	state = {};
 
-
-	onImageChange = async (editorState) => {
-		const {onSave} = this.props;
+	onImageChange = async editorState => {
+		const { onSave } = this.props;
 
 		try {
 			const img = await ImageEditor.getImageForEditorState(editorState);
@@ -35,23 +36,21 @@ export default class BaseAssetPicker extends React.Component {
 		} catch (e) {
 			//handle error
 		}
-	}
-
+	};
 
 	onCancel = () => {
-		const {onCancel} = this.props;
+		const { onCancel } = this.props;
 
 		if (onCancel) {
 			onCancel();
 		}
-	}
+	};
 
-
-	render () {
+	render() {
 		return (
 			<div className="course-asset-editor-base-asset-picker">
-				<Header onCancel={this.onCancel}/>
-				<ImageEditorWrapper onChange={this.onImageChange}/>
+				<Header onCancel={this.onCancel} />
+				<ImageEditorWrapper onChange={this.onImageChange} />
 				<Footer
 					continueDisabled
 					continueLabel={t('continue')}
@@ -61,5 +60,4 @@ export default class BaseAssetPicker extends React.Component {
 			</div>
 		);
 	}
-
 }

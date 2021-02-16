@@ -3,13 +3,14 @@ import { Presentation } from '@nti/web-commons';
 export const ROLES = {
 	ASSISTANT: 'assistant',
 	EDITOR: 'editor',
-	INSTRUCTOR: 'instructor'
+	INSTRUCTOR: 'instructor',
 };
 
 const getUsername = x => x.Username || x.username;
-export const roleDisplayName = role => role.charAt(0).toUpperCase() + role.slice(1);
+export const roleDisplayName = role =>
+	role.charAt(0).toUpperCase() + role.slice(1);
 
-export function getAvailableRoles (courseInstance) {
+export function getAvailableRoles(courseInstance) {
 	let options = [];
 
 	if (courseInstance) {
@@ -32,9 +33,12 @@ export function getAvailableRoles (courseInstance) {
 	return options;
 }
 
-
-export function canAddFacilitators (courseInstance) {
-	return courseInstance && courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors');
+export function canAddFacilitators(courseInstance) {
+	return (
+		courseInstance &&
+		courseInstance.hasLink('Instructors') &&
+		courseInstance.hasLink('Editors')
+	);
 }
 
 /**
@@ -50,16 +54,26 @@ export function canAddFacilitators (courseInstance) {
  * @param  {Array} facilitators     List of facilitators modeled similarly to catalogEntry.Instructors
  * @returns {Promise}                Wraps the saved facilitators
  */
-export async function saveFacilitators (catalogEntry, courseInstance, facilitators) {
+export async function saveFacilitators(
+	catalogEntry,
+	courseInstance,
+	facilitators
+) {
 	// visible facilitators go in the catalogEntry Instructors field, hidden facilitators
 	// will only be tracked through the Instructors/Editors links
-	await catalogEntry.save({Instructors: facilitators.filter(x => x.visible && x.role && x.role !== '')});
+	await catalogEntry.save({
+		Instructors: facilitators.filter(
+			x => x.visible && x.role && x.role !== ''
+		),
+	});
 
 	// Content backed facilitators don't have usernames (and cannot be add/removed/managed)
 	// So lets prevent operating on them.
-	const userBacked = facilitators?.filter(x => x && (x.username && !x.contentOnly));
+	const userBacked = facilitators?.filter(
+		x => x && x.username && !x.contentOnly
+	);
 
-	if(!userBacked || userBacked.length === 0) {
+	if (!userBacked || userBacked.length === 0) {
 		return facilitators;
 	}
 
@@ -73,30 +87,38 @@ export async function saveFacilitators (catalogEntry, courseInstance, facilitato
 	// assistant => Instructors
 	// instructor => Editors + Instructors
 
-	const roles = userBacked.reduce((acc, user) => {
-		if (user.role === ROLES.EDITOR || user.role === ROLES.INSTRUCTOR) {
-			acc.Editors.push(user);
-		}
+	const roles = userBacked.reduce(
+		(acc, user) => {
+			if (user.role === ROLES.EDITOR || user.role === ROLES.INSTRUCTOR) {
+				acc.Editors.push(user);
+			}
 
-		if (user.role === ROLES.ASSISTANT || user.role === ROLES.INSTRUCTOR) {
-			acc.Instructors.push(user);
-		}
+			if (
+				user.role === ROLES.ASSISTANT ||
+				user.role === ROLES.INSTRUCTOR
+			) {
+				acc.Instructors.push(user);
+			}
 
-		return acc;
-	}, {Editors: [], Instructors: []});
+			return acc;
+		},
+		{ Editors: [], Instructors: [] }
+	);
 
 	await courseInstance.putToLink('roles', {
 		roles: {
 			editors: roles.Editors.map(user => user?.username),
-			instructors: roles.Instructors.map(user => user?.username)
-		}
+			instructors: roles.Instructors.map(user => user?.username),
+		},
 	});
 
 	return facilitators.filter(user => user.role && user.role !== '');
 }
 
-function containsUser (list, userName) {
-	return (list || []).some(x => x.username === userName || x.Username === userName);
+function containsUser(list, userName) {
+	return (list || []).some(
+		x => x.username === userName || x.Username === userName
+	);
 }
 
 /**
@@ -122,11 +144,16 @@ function containsUser (list, userName) {
  * @param  {Object} catalogEntry       Course these instructors are applied to
  * @returns {Array}                     Facilitator list with role/visibility properties
  */
-export function mergeAllFacilitators (catalogInstructors, instructors, editors, catalogEntry) {
+export function mergeAllFacilitators(
+	catalogInstructors,
+	instructors,
+	editors,
+	catalogEntry
+) {
 	let aggregated = [];
 
-	function pushLegacyInstructorInfo (user, role) {
-		const {alias: Name, Username: username} = user;
+	function pushLegacyInstructorInfo(user, role) {
+		const { alias: Name, Username: username } = user;
 
 		// default to not visible because we've determined these aren't in catalog instructors
 		// and visibility is determined by being in the catalog instructors list
@@ -136,8 +163,9 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 			Name,
 			JobTitle: roleDisplayName(role),
 			visible: false,
-			MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-			Class: 'CourseCatalogInstructorLegacyInfo'
+			MimeType:
+				'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+			Class: 'CourseCatalogInstructorLegacyInfo',
 		});
 	}
 
@@ -146,14 +174,20 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 		const inInstructors = containsUser(instructors, username);
 		const inEditors = containsUser(editors, username);
 
-		const role = inInstructors && inEditors
-			? ROLES.INSTRUCTOR
-			: inEditors
+		const role =
+			inInstructors && inEditors
+				? ROLES.INSTRUCTOR
+				: inEditors
 				? ROLES.EDITOR
 				: ROLES.ASSISTANT;
 
-		const assetRoot = Presentation.Asset.getAssetRoot({ contentPackage: catalogEntry });
-		const imageUrl = !username && assetRoot && assetRoot + '/instructor-photos/0' + (index + 1) + '.png';
+		const assetRoot = Presentation.Asset.getAssetRoot({
+			contentPackage: catalogEntry,
+		});
+		const imageUrl =
+			!username &&
+			assetRoot &&
+			assetRoot + '/instructor-photos/0' + (index + 1) + '.png';
 
 		aggregated.push({
 			role,
@@ -161,14 +195,16 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 			locked: !username,
 			contentOnly: !inInstructors && !inEditors,
 			imageUrl,
-			...x
+			...x,
 		});
 	});
 
 	(instructors || [])
 		.filter(x => !containsUser(aggregated, getUsername(x))) // filter out those we've already added
 		.forEach(user => {
-			const role = containsUser(editors, getUsername(user)) ? ROLES.INSTRUCTOR : ROLES.ASSISTANT;
+			const role = containsUser(editors, getUsername(user))
+				? ROLES.INSTRUCTOR
+				: ROLES.ASSISTANT;
 			pushLegacyInstructorInfo(user, role);
 		});
 
@@ -179,17 +215,15 @@ export function mergeAllFacilitators (catalogInstructors, instructors, editors, 
 	return aggregated;
 }
 
-export function hasHiddenFacilitators (entry, instance) {
+export function hasHiddenFacilitators(entry, instance) {
 	return instance.hasLink('roles');
 }
 
-
-export function getVisibleFacilitators (entry, instance) {
+export function getVisibleFacilitators(entry, instance) {
 	return mergeAllFacilitators(entry.Instructors, [], [], entry);
 }
 
-
-export async function getAllFacalitators (entry, instance) {
+export async function getAllFacalitators(entry, instance) {
 	const roles = await instance.fetchLink('roles');
 
 	const instructors = roles?.roles?.instructors?.Items ?? [];

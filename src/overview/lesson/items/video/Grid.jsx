@@ -1,20 +1,20 @@
 import './Grid.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Component as Video, Poster} from '@nti/web-video';
-import {Error as ErrorWidget} from '@nti/web-commons';
-import {LinkTo} from '@nti/web-routing';
+import { Component as Video, Poster } from '@nti/web-video';
+import { Error as ErrorWidget } from '@nti/web-commons';
+import { LinkTo } from '@nti/web-routing';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';
 import Required from '../../common/Required';
-import {block} from '../../../../utils';
+import { block } from '../../../../utils';
 
 const initialState = {
 	loading: false,
 	error: false,
 	poster: null,
 	playing: false,
-	video: false
+	video: false,
 };
 
 export default class LessonOverviewVideoGrid extends React.Component {
@@ -31,61 +31,55 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		onRequirementChange: PropTypes.func,
 		inlinePlayback: PropTypes.bool,
 		//
-		badges: PropTypes.bool
-	}
+		badges: PropTypes.bool,
+	};
 
 	static defaultProps = {
 		inlinePlayback: true,
-		badges: true
-	}
+		badges: true,
+	};
 
-	state = initialState
+	state = initialState;
 
+	attachVideoRef = x => (this.video = x);
 
-	attachVideoRef = x => this.video = x
-
-
-	getID (props = this.props) {
-		let {NTIID, ntiid} = props.item;
+	getID(props = this.props) {
+		let { NTIID, ntiid } = props.item;
 		return NTIID || ntiid;
 	}
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.fillInVideo(this.props);
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unmounted = true;
 		this.setState = () => {};
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {activeIndex: prevIndex} = prevProps;
-		const {activeIndex} = this.props;
+	componentDidUpdate(prevProps) {
+		const { activeIndex: prevIndex } = prevProps;
+		const { activeIndex } = this.props;
 
 		if (this.getID() !== this.getID(prevProps)) {
 			this.fillInVideo(this.props);
 		}
 
 		if (activeIndex !== prevIndex) {
-			this.setState({interacted: false, playing: false, error: null});
+			this.setState({ interacted: false, playing: false, error: null });
 		}
 	}
 
-
-	onError = (error) => {
+	onError = error => {
 		if (!error.sourceWillChange) {
 			this.setState({
 				...initialState,
-				error
+				error,
 			});
 		}
-	}
+	};
 
-
-	fillInVideo ({item, course, overview} = this.props) {
+	fillInVideo({ item, course, overview } = this.props) {
 		const task = {};
 		this.activeTask = task;
 
@@ -99,8 +93,13 @@ export default class LessonOverviewVideoGrid extends React.Component {
 			// const v = item; //(await course.getVideoIndex()).get(id);
 
 			try {
-				const v = item.sources != null ? item : (await course.getVideoIndex()).get(item.getID());
-				const poster = await (v ? v.getPoster() : Promise.resolve(null));
+				const v =
+					item.sources != null
+						? item
+						: (await course.getVideoIndex()).get(item.getID());
+				const poster = await (v
+					? v.getPoster()
+					: Promise.resolve(null));
 
 				if (this.activeTask !== task || this.unmounted) {
 					return;
@@ -114,8 +113,8 @@ export default class LessonOverviewVideoGrid extends React.Component {
 					context: [
 						course.getID(),
 						overview && overview.getID(),
-						v.getID()
-					].filter(x => x)
+						v.getID(),
+					].filter(x => x),
 				});
 			} catch (e) {
 				this.onError(e);
@@ -124,52 +123,48 @@ export default class LessonOverviewVideoGrid extends React.Component {
 			delete this.activeTask;
 		};
 
-		this.setState({...initialState, loading: true});
+		this.setState({ ...initialState, loading: true });
 		load();
 	}
 
+	onPlayClicked = e => {
+		const { inlinePlayback } = this.props;
 
-	onPlayClicked = (e) => {
-		const {inlinePlayback} = this.props;
-
-		if (!inlinePlayback) { return; }
+		if (!inlinePlayback) {
+			return;
+		}
 
 		block(e);
-		const {video} = this;
-		this.setState({interacted: true});
+		const { video } = this;
+		this.setState({ interacted: true });
 		if (video) {
 			video.play();
 		}
-	}
+	};
 
-
-	updateCompletedState () {
-		const {item} = this.props;
+	updateCompletedState() {
+		const { item } = this.props;
 
 		item.updateCompletedState?.();
 	}
 
-
 	stop = () => {
-		const {video} = this;
+		const { video } = this;
 		if (video) {
 			video.stop();
 		}
-	}
-
+	};
 
 	onStop = () => {
-		this.setState({playing: false});
+		this.setState({ playing: false });
 		this.updateCompletedState();
-	}
-
+	};
 
 	onPlay = () => {
-		this.setState({playing: true});
-	}
+		this.setState({ playing: true });
+	};
 
-
-	render () {
+	render() {
 		const {
 			activeIndex,
 			index,
@@ -179,13 +174,7 @@ export default class LessonOverviewVideoGrid extends React.Component {
 			badges: allowBadges,
 		} = this.props;
 
-		const {
-			context,
-			interacted,
-			video,
-			playing,
-			error
-		} = this.state;
+		const { context, interacted, video, playing, error } = this.state;
 
 		let renderVideoFully = true;
 
@@ -196,27 +185,44 @@ export default class LessonOverviewVideoGrid extends React.Component {
 		const viewed = item.hasCompleted && item.hasCompleted();
 		const required = item.CompletionRequired;
 
-
 		const badges = [];
 
 		if (allowBadges) {
-			if (item && item.isCompletable && item.isCompletable() && onRequirementChange) {
-				badges.push(<RequirementControl key="requirement-control" record={item} onChange={onRequirementChange}/>);
+			if (
+				item &&
+				item.isCompletable &&
+				item.isCompletable() &&
+				onRequirementChange
+			) {
+				badges.push(
+					<RequirementControl
+						key="requirement-control"
+						record={item}
+						onChange={onRequirementChange}
+					/>
+				);
 			} else if (!viewed && required) {
-				badges.push(<Required className="badge" key="required"/>);
+				badges.push(<Required className="badge" key="required" />);
 			}
 
 			if (viewed && !noProgress) {
-				badges.push(<div className="badge viewed" key="viewed">Viewed</div>);
+				badges.push(
+					<div className="badge viewed" key="viewed">
+						Viewed
+					</div>
+				);
 			}
 		}
 
 		return (
-			<div className="lesson-overview-video-container" data-ntiid={item.NTIID}>
+			<div
+				className="lesson-overview-video-container"
+				data-ntiid={item.NTIID}
+			>
 				{error && (
-					<ErrorWidget error={{ message: 'Unable to load video.' }}/>
+					<ErrorWidget error={{ message: 'Unable to load video.' }} />
 				)}
-				{(error || !video || !renderVideoFully) ? null : (
+				{error || !video || !renderVideoFully ? null : (
 					<Video
 						deferred={!interacted}
 						ref={this.attachVideoRef}
@@ -226,11 +232,11 @@ export default class LessonOverviewVideoGrid extends React.Component {
 						onPlaying={this.onPlay}
 						analyticsData={{
 							resourceId: video.getID(),
-							context
+							context,
 						}}
 					/>
 				)}
-				{(error || playing) ? null : (
+				{error || playing ? null : (
 					<LinkTo.Object object={item}>
 						<Poster
 							className="overview-video-tap-area"

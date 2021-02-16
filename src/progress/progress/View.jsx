@@ -1,30 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Layouts} from '@nti/web-commons';
+import { Layouts } from '@nti/web-commons';
 
 import Store from './Store';
 import Page from './parts/Page';
 
-const {InfiniteLoad} = Layouts;
-
+const { InfiniteLoad } = Layouts;
 
 export default class CourseProgress extends React.Component {
 	static propTypes = {
-		course: PropTypes.object
-	}
+		course: PropTypes.object,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
-		const {course} = props;
+		const { course } = props;
 
 		this.state = {
-			store: new Store(course.getContentDataSource())
+			store: new Store(course.getContentDataSource()),
 		};
 	}
 
-
-	render () {
+	render() {
 		return (
 			<InfiniteLoad.Store
 				store={this.state.store}
@@ -34,10 +32,7 @@ export default class CourseProgress extends React.Component {
 		);
 	}
 
-
-	renderPage = (props) => {
-		return (
-			<Page {...props} course={this.props.course} />
-		);
-	}
+	renderPage = props => {
+		return <Page {...props} course={this.props.course} />;
+	};
 }

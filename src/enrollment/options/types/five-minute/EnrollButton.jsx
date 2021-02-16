@@ -3,22 +3,22 @@ import PropTypes from 'prop-types';
 
 import EnrollButton from '../base/EnrollButton';
 
-
 export default class CourseEnrollmentOptionsFiveMinuteEnrollButton extends React.Component {
 	static propTypes = {
 		option: PropTypes.shape({
 			isPending: PropTypes.func,
 			isRejected: PropTypes.func,
-			isApiDown: PropTypes.func
-		}).isRequired
-	}
+			isApiDown: PropTypes.func,
+		}).isRequired,
+	};
 
+	render() {
+		const { option } = this.props;
 
-	render () {
-		const {option} = this.props;
+		if (option.isPending() || option.isRejected() || option.isApiDown()) {
+			return null;
+		}
 
-		if (option.isPending() || option.isRejected() || option.isApiDown()) { return null; }
-
-		return (<EnrollButton {...this.props} />);
+		return <EnrollButton {...this.props} />;
 	}
 }

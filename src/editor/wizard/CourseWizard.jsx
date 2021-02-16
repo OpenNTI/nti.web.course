@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { getService } from '@nti/web-client';
 import { Models } from '@nti/lib-interfaces';
 import { Switch, Loading } from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import { Blank } from '../templates/Blank';
 import { Import } from '../templates/Import';
@@ -13,10 +13,9 @@ import { Scorm } from '../templates/Scorm';
 import TemplateChooser from './TemplateChooser';
 import WizardItem from './WizardItem';
 
-
 const t = scoped('course.wizard.CourseWizard', {
 	finish: 'Finish',
-	chooseTemplate: 'Choose creation type'
+	chooseTemplate: 'Choose creation type',
 });
 
 export default class CourseWizard extends React.Component {
@@ -28,48 +27,59 @@ export default class CourseWizard extends React.Component {
 		onCancel: PropTypes.func,
 		onFinish: PropTypes.func,
 		onCourseModified: PropTypes.func,
-		template: PropTypes.object
-	}
+		template: PropTypes.object,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
-		const save = (data) => {
-			return getService().then((service) => {
-				return Models.courses.CatalogEntry.getFactory(service).create({...data, key: data.identifier}).then((createdEntry) => {
-					this.setState({catalogEntry: createdEntry});
-					return createdEntry;
-				});
+		const save = data => {
+			return getService().then(service => {
+				return Models.courses.CatalogEntry.getFactory(service)
+					.create({ ...data, key: data.identifier })
+					.then(createdEntry => {
+						this.setState({ catalogEntry: createdEntry });
+						return createdEntry;
+					});
 			});
 		};
 
 		let catalogEntry = this.props.catalogEntry
 			? this.props.catalogEntry
 			: {
-				save: save,
-				delete: () => { return Promise.resolve(); },
-				isPlaceholder: true
-			};
+					save: save,
+					delete: () => {
+						return Promise.resolve();
+					},
+					isPlaceholder: true,
+			  };
 
 		this.state = {
 			catalogEntry,
 			loadingTemplates: Boolean(!props.template),
-			panels: props.template && props.template.panels
+			panels: props.template && props.template.panels,
 		};
 	}
 
-	async componentDidMount () {
-		if(this.props.template) {
+	async componentDidMount() {
+		if (this.props.template) {
 			return;
 		}
 
 		const service = await getService();
 		const courseWorkspace = service.getWorkspace('Courses');
-		const allCoursesCollection = courseWorkspace && service.getCollection('AllCourses', courseWorkspace.Title);
+		const allCoursesCollection =
+			courseWorkspace &&
+			service.getCollection('AllCourses', courseWorkspace.Title);
 
 		let availableTemplates = [Blank, Import];
 
-		if (allCoursesCollection && allCoursesCollection.accepts.includes(Models.courses.scorm.SCORMInstance.MimeType)) {
+		if (
+			allCoursesCollection &&
+			allCoursesCollection.accepts.includes(
+				Models.courses.scorm.SCORMInstance.MimeType
+			)
+		) {
 			availableTemplates.push(Scorm);
 		}
 
@@ -78,13 +88,13 @@ export default class CourseWizard extends React.Component {
 
 	cancel = () => {
 		this.props.onCancel && this.props.onCancel();
-	}
+	};
 
 	creationCompleted = (allowRedirect, entry) => {
 		const { onFinish } = this.props;
 
 		onFinish && onFinish(entry || this.state.catalogEntry);
-	}
+	};
 
 	renderItem = (panel, index, arr) => {
 		const stepName = 'step' + (index + 2);
@@ -102,17 +112,22 @@ export default class CourseWizard extends React.Component {
 				onFinish={this.creationCompleted}
 				hideHeaderControls={panel.WizardPanel.hideHeaderControls}
 				hideBackButton={panel.WizardPanel.hideBackButton}
-				firstTab={this.props.template && index === 0}	// if provided a template, don't allow back control on first step
-				afterSave={index === arr.length - 1
-					? () => this.creationCompleted(!panel.WizardPanel.disallowEditorRedirect)
-					: () => {}}/>
+				firstTab={this.props.template && index === 0} // if provided a template, don't allow back control on first step
+				afterSave={
+					index === arr.length - 1
+						? () =>
+								this.creationCompleted(
+									!panel.WizardPanel.disallowEditorRedirect
+								)
+						: () => {}
+				}
+			/>
 		);
-	}
+	};
 
-
-	renderItems () {
-		if(this.state.panels) {
-			return (this.state.panels).map(this.renderItem);
+	renderItems() {
+		if (this.state.panels) {
+			return this.state.panels.map(this.renderItem);
 		}
 
 		// return a placeholder if we haven't chosen a template yet
@@ -121,15 +136,16 @@ export default class CourseWizard extends React.Component {
 				className="course-panel-content"
 				name="step2"
 				component={WizardItem}
-				wizardCmp={TemplateChooser}/>
+				wizardCmp={TemplateChooser}
+			/>
 		);
 	}
 
-	onTemplateSelect = (selected) => {
-		this.setState({panels : selected.panels});
-	}
+	onTemplateSelect = selected => {
+		this.setState({ panels: selected.panels });
+	};
 
-	renderTemplateChooser () {
+	renderTemplateChooser() {
 		return (
 			<Switch.Item
 				className="course-panel-content"
@@ -145,15 +161,24 @@ export default class CourseWizard extends React.Component {
 		);
 	}
 
-	render () {
-		const {template} = this.props;
+	render() {
+		const { template } = this.props;
 
-		if(this.state.loadingTemplates) {
-			return <div className="course-panel wizard"><div className="course-wizard-item"><Loading.Mask/></div></div>;
+		if (this.state.loadingTemplates) {
+			return (
+				<div className="course-panel wizard">
+					<div className="course-wizard-item">
+						<Loading.Mask />
+					</div>
+				</div>
+			);
 		}
 
 		return (
-			<Switch.Panel className="course-panel wizard" active={template ? 'step2' : 'TemplateChooser'}>
+			<Switch.Panel
+				className="course-panel wizard"
+				active={template ? 'step2' : 'TemplateChooser'}
+			>
 				<Switch.Container>
 					{!template && this.renderTemplateChooser()}
 					{this.renderItems()}

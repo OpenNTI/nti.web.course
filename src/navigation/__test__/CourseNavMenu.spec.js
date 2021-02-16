@@ -10,32 +10,34 @@ describe('CourseNavMenu test', () => {
 		thumb: '/active/url',
 		subItems: [
 			{
-				title: 'Section 1'
+				title: 'Section 1',
 			},
 			{
 				title: 'Section 2',
-				cls: 'current'
-			}
-		]
+				cls: 'current',
+			},
+		],
 	};
 
 	const recentCourses = [
 		{
 			title: 'Course 1',
-			thumb: '/some/url1'
+			thumb: '/some/url1',
 		},
 		{
 			title: 'Course 1',
-			thumb: '/some/url2'
-		}
+			thumb: '/some/url2',
+		},
 	];
 
-	const verifyContents = (el) => {
+	const verifyContents = el => {
 		const activeCourseEl = el.querySelector('.active-content');
 
 		const activeTitle = activeCourseEl.querySelector('.title');
 
-		expect(activeCourseEl.querySelector('img').getAttribute('src')).toEqual('/active/url');
+		expect(activeCourseEl.querySelector('img').getAttribute('src')).toEqual(
+			'/active/url'
+		);
 
 		expect(activeTitle.textContent).toEqual('Active Course');
 
@@ -47,17 +49,24 @@ describe('CourseNavMenu test', () => {
 		expect(sections[1].textContent).toEqual('Section 2');
 		expect(sections[1].getAttribute('class')).toMatch(/current/);
 
-		const recentCoursesList = el.querySelectorAll('.recent-content-items-list .recent-content');
+		const recentCoursesList = el.querySelectorAll(
+			'.recent-content-items-list .recent-content'
+		);
 
-		expect(recentCoursesList[0].querySelector('img').getAttribute('src')).toEqual('/some/url1');
-		expect(recentCoursesList[1].querySelector('img').getAttribute('src')).toEqual('/some/url2');
+		expect(
+			recentCoursesList[0].querySelector('img').getAttribute('src')
+		).toEqual('/some/url1');
+		expect(
+			recentCoursesList[1].querySelector('img').getAttribute('src')
+		).toEqual('/some/url2');
 	};
 
 	test('Test non-admin', () => {
-		const {container: root} = render(
+		const { container: root } = render(
 			<CourseNavMenu
 				activeCourse={activeCourse}
-				recentCourses={recentCourses}/>
+				recentCourses={recentCourses}
+			/>
 		);
 
 		verifyContents(root);
@@ -71,7 +80,7 @@ describe('CourseNavMenu test', () => {
 		const onItemClick = jest.fn();
 		const goToEditor = jest.fn();
 
-		const {container: root} = render(
+		const { container: root } = render(
 			<CourseNavMenu
 				activeCourse={activeCourse}
 				recentCourses={recentCourses}

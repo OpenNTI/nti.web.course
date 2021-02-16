@@ -1,12 +1,11 @@
 import './CourseVisibility.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DateTime} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { DateTime } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
 import PublishCourse from './PublishCourse';
-
 
 const t = scoped('course.info.inline.widgets.CourseVisibility', {
 	makeChanges: 'Make Changes',
@@ -23,25 +22,26 @@ const t = scoped('course.info.inline.widgets.CourseVisibility', {
 	startsOn: 'Starts %(date)s',
 });
 
-const startsDate = f => t('startsOn', {date: f(DateTime.MONTH_ABBR_DAY_YEAR)});
+const startsDate = f =>
+	t('startsOn', { date: f(DateTime.MONTH_ABBR_DAY_YEAR) });
 export default class CourseVisibility extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
 		courseInstance: PropTypes.object,
-		onVisibilityChanged: PropTypes.func
-	}
+		onVisibilityChanged: PropTypes.func,
+	};
 
 	launchVisibilityDialog = () => {
 		const { catalogEntry, courseInstance } = this.props;
 
-		PublishCourse.show(catalogEntry, courseInstance).then((value) => {
+		PublishCourse.show(catalogEntry, courseInstance).then(value => {
 			const { onVisibilityChanged } = this.props;
 
 			onVisibilityChanged && onVisibilityChanged(value);
 		});
-	}
+	};
 
-	renderLabeledContent (label, labelCls, content) {
+	renderLabeledContent(label, labelCls, content) {
 		const labelClassName = cx('label', labelCls);
 
 		return (
@@ -52,49 +52,56 @@ export default class CourseVisibility extends React.Component {
 		);
 	}
 
-	renderPreviewIndicator () {
+	renderPreviewIndicator() {
 		const { catalogEntry } = this.props;
 
-		if(catalogEntry.Preview) {
+		if (catalogEntry.Preview) {
 			return this.renderLabeledContent(
 				catalogEntry.hasLink('edit') ? t('inDraft') : t('inPreview'),
 				'preview',
-				catalogEntry.getStartDate ? DateTime.format(catalogEntry.getStartDate(), startsDate) : t('noStartDate')
+				catalogEntry.getStartDate
+					? DateTime.format(catalogEntry.getStartDate(), startsDate)
+					: t('noStartDate')
 			);
-		}
-		else {
+		} else {
 			// what to show if not in preview mode?
 		}
 	}
 
-	renderAllowingEnrollment () {
-		const {catalogEntry} = this.props;
+	renderAllowingEnrollment() {
+		const { catalogEntry } = this.props;
 		const options = catalogEntry.getEnrollmentOptions();
 
 		const items = (options && options.Items) || {};
 
-		const { OpenEnrollment, IMSEnrollment, FiveminuteEnrollment, StoreEnrollment } = items;
+		const {
+			OpenEnrollment,
+			IMSEnrollment,
+			FiveminuteEnrollment,
+			StoreEnrollment,
+		} = items;
 
-		const isForCredit = (IMSEnrollment && IMSEnrollment.SourcedID) || FiveminuteEnrollment;
-		const isPublic = (StoreEnrollment || (OpenEnrollment && OpenEnrollment.enabled)) && !catalogEntry.isHidden;
+		const isForCredit =
+			(IMSEnrollment && IMSEnrollment.SourcedID) || FiveminuteEnrollment;
+		const isPublic =
+			(StoreEnrollment || (OpenEnrollment && OpenEnrollment.enabled)) &&
+			!catalogEntry.isHidden;
 
 		let label = t('invitationOnly');
 
-		const parts = [isForCredit ? t('forCredit') : null, isPublic ? t('public') : null].filter(x => x);
+		const parts = [
+			isForCredit ? t('forCredit') : null,
+			isPublic ? t('public') : null,
+		].filter(x => x);
 
-		if(parts.length > 0) {
+		if (parts.length > 0) {
 			label = parts.join(', ');
 		}
 
-		return this.renderLabeledContent(
-			t('allowingEnrollment'),
-			null,
-			label
-		);
+		return this.renderLabeledContent(t('allowingEnrollment'), null, label);
 	}
 
-
-	renderVisibleInCatalog () {
+	renderVisibleInCatalog() {
 		const { catalogEntry } = this.props;
 
 		return this.renderLabeledContent(
@@ -104,13 +111,18 @@ export default class CourseVisibility extends React.Component {
 		);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="course-visibility">
 				{this.renderPreviewIndicator()}
 				{/*{this.renderAllowingEnrollment()}*/}
 				{this.renderVisibleInCatalog()}
-				<div className="launch-button" onClick={this.launchVisibilityDialog}>{t('makeChanges')}</div>
+				<div
+					className="launch-button"
+					onClick={this.launchVisibilityDialog}
+				>
+					{t('makeChanges')}
+				</div>
 			</div>
 		);
 	}

@@ -5,11 +5,18 @@ import cx from 'classnames';
 
 LessonOverviewPaddedContainer.propTypes = {
 	className: PropTypes.string,
-	children: PropTypes.any
+	children: PropTypes.any,
 };
-export default function LessonOverviewPaddedContainer ({children, className, ...otherProps}) {
+export default function LessonOverviewPaddedContainer({
+	children,
+	className,
+	...otherProps
+}) {
 	return (
-		<div className={cx('lesson-overview-padded-container', className)} {...otherProps}>
+		<div
+			className={cx('lesson-overview-padded-container', className)}
+			{...otherProps}
+		>
 			{children}
 		</div>
 	);

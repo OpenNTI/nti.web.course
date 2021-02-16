@@ -8,20 +8,19 @@ import { Grid } from '../../../Constants';
 
 const { tearDownTestClient, setupTestClient } = TestUtils;
 
-const getMockService = (numberOfUsers) => {
+const getMockService = numberOfUsers => {
 	return {
-		async getObject () {
+		async getObject() {
 			return {
 				title: 'Topic 1',
 				TopicCount: 4,
-				PostCount: 5
+				PostCount: 5,
 			};
-		}
+		},
 	};
 };
 
-
-function itemBuilder () {
+function itemBuilder() {
 	return {
 		_id: 'item1',
 		_MimeType: 'application/vnd.nextthought.discussionref',
@@ -69,7 +68,7 @@ function itemBuilder () {
 				icon: this._icon,
 				MimeType: this._MimeType,
 				[Summary]: {
-					ItemCount: this._commentCount
+					ItemCount: this._commentCount,
 				},
 				isCompletable: () => this._completable,
 				CompletionRequired: this._CompletionRequired,
@@ -80,11 +79,11 @@ function itemBuilder () {
 					return {
 						title: 'Topic 1',
 						TopicCount: 4,
-						PostCount: 5
+						PostCount: 5,
 					};
-				}
+				},
 			};
-		}
+		},
 	};
 }
 
@@ -100,9 +99,13 @@ describe('Course overview discussion item test', () => {
 	});
 
 	test('Grid item with 5 comments, completable, required', async () => {
-		const item = itemBuilder().commentCount(5).completable().required().build();
+		const item = itemBuilder()
+			.commentCount(5)
+			.completable()
+			.required()
+			.build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid}/>);
+		const cmp = renderer.create(<View item={item} layout={Grid} />);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();

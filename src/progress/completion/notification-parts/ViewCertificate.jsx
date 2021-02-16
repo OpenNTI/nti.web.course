@@ -1,6 +1,9 @@
-import {Translate} from './strings';
+import { Translate } from './strings';
 
-export const ViewCertificate = styled(Translate).attrs({as:'a', localeKey: 'viewCertificate'})`
+export const ViewCertificate = styled(Translate).attrs({
+	as: 'a',
+	localeKey: 'viewCertificate',
+})`
 	/* margin: 3.125rem auto 1.25rem; */
 	color: var(--tertiary-grey);
 	font-size: 1rem;

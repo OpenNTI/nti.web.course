@@ -13,49 +13,39 @@ export default class BaseProgressItem extends React.Component {
 		item: PropTypes.object,
 		title: PropTypes.string,
 		labels: PropTypes.array,
-		renderIcon: PropTypes.func
-	}
+		renderIcon: PropTypes.func,
+	};
 
-
-	render () {
-		const {className} = this.props;
+	render() {
+		const { className } = this.props;
 
 		return (
 			<Container className={cx('base-progress-item', className)}>
 				<div className="icon-container">
-					<div className="icon">
-						{this.renderIcon()}
-					</div>
+					<div className="icon">{this.renderIcon()}</div>
 				</div>
 				<div className="right">
-					<div className="title">
-						{this.renderTitle()}
-					</div>
-					<div className="labels">
-						{this.renderLabels()}
-					</div>
+					<div className="title">{this.renderTitle()}</div>
+					<div className="labels">{this.renderLabels()}</div>
 				</div>
 			</Container>
 		);
 	}
 
-
-	renderIcon () {
-		const {renderIcon} = this.props;
+	renderIcon() {
+		const { renderIcon } = this.props;
 
 		return renderIcon ? renderIcon() : null;
 	}
 
+	renderTitle() {
+		const { title, item } = this.props;
 
-	renderTitle () {
-		const {title, item} = this.props;
-
-		return title != null ? title : (item.title || item.label);
+		return title != null ? title : item.title || item.label;
 	}
 
-
-	renderLabels () {
-		const {labels} = this.props;
+	renderLabels() {
+		const { labels } = this.props;
 
 		if (!labels) {
 			return null;
@@ -64,7 +54,11 @@ export default class BaseProgressItem extends React.Component {
 		return (
 			<React.Fragment>
 				{labels.map((label, index) => {
-					return (<span className="label" key={index}>{label}</span>);
+					return (
+						<span className="label" key={index}>
+							{label}
+						</span>
+					);
 				})}
 			</React.Fragment>
 		);

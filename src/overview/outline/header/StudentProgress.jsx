@@ -1,19 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
-import {Hooks as SessionHooks} from '@nti/web-session';
-import {Page, Text, Hooks, Prompt, Iframe} from '@nti/web-commons';
-import {CircularProgress} from '@nti/web-charts';
-import {useLocation} from '@nti/web-routing';
+import { scoped } from '@nti/lib-locale';
+import { Hooks as SessionHooks } from '@nti/web-session';
+import { Page, Text, Hooks, Prompt, Iframe } from '@nti/web-commons';
+import { CircularProgress } from '@nti/web-charts';
+import { useLocation } from '@nti/web-routing';
 
 import PassFailMessage from '../../../progress/widgets/PassFailMessage';
-import {RemainingItems, ProgressCompletionNotification} from '../../../progress';
-import { getIsCompleted, getPercentageComplete, getRemainingCount, getRequirementsMet } from '../../../progress/remaining-items/utils';
+import {
+	RemainingItems,
+	ProgressCompletionNotification,
+} from '../../../progress';
+import {
+	getIsCompleted,
+	getPercentageComplete,
+	getRemainingCount,
+	getRequirementsMet,
+} from '../../../progress/remaining-items/utils';
 
 import Styles from './Styles.css';
 
-const {Navigation: {Outline}} = Page;
+const {
+	Navigation: { Outline },
+} = Page;
 
 const t = scoped('course.overview.outline.header.StudentProgress', {
 	label: 'Course Progress',
@@ -21,12 +31,12 @@ const t = scoped('course.overview.outline.header.StudentProgress', {
 	viewCertificate: 'View Certificate',
 	itemsRemaining: {
 		one: '%(count)s Item Remaining',
-		other: '%(count)s Items Remaining'
+		other: '%(count)s Items Remaining',
 	},
-	certificateTitle: 'Certificate of Completion for %(title)s'
+	certificateTitle: 'Certificate of Completion for %(title)s',
 });
 
-function useStudentProgress (course, active) {
+function useStudentProgress(course, active) {
 	const wasActive = React.useRef(true);
 	const forceUpdate = Hooks.useForceUpdate();
 
@@ -45,7 +55,9 @@ function useStudentProgress (course, active) {
 			}
 		};
 
-		if (!wasActive.current) { updateProgress(); }
+		if (!wasActive.current) {
+			updateProgress();
+		}
 
 		return SessionHooks.afterBatchEvents.subscribe(updateProgress);
 	}, [active]);
@@ -56,23 +68,33 @@ function useStudentProgress (course, active) {
 const getCertLink = course => course.PreferredAccess.getLink('Certificate');
 const getTitle = course => course.PreferredAccess.CatalogEntry.title;
 
-StudentProgress.handles = (course) => course.PreferredAccess?.isEnrollment && !course.PreferredAccess.isAdministrative && course.CompletionPolicy;
+StudentProgress.handles = course =>
+	course.PreferredAccess?.isEnrollment &&
+	!course.PreferredAccess.isAdministrative &&
+	course.CompletionPolicy;
 StudentProgress.propTypes = {
 	className: PropTypes.string,
 	course: PropTypes.shape({
-		PreferredAccess: PropTypes.object
+		PreferredAccess: PropTypes.object,
 	}),
 	active: PropTypes.bool,
-	noCertificateFrame: PropTypes.bool
+	noCertificateFrame: PropTypes.bool,
 };
-export default function StudentProgress ({className, course, active, noCertificateFrame}) {
+export default function StudentProgress({
+	className,
+	course,
+	active,
+	noCertificateFrame,
+}) {
 	const location = useLocation();
 
 	const [showRemaining, setShowRemaining] = React.useState(false);
 	const [showCert, setShowCert] = React.useState(false);
 
 	React.useEffect(() => {
-		if (showRemaining) { setShowRemaining(false); }
+		if (showRemaining) {
+			setShowRemaining(false);
+		}
 	}, [location]);
 
 	const progress = useStudentProgress(course, active);
@@ -99,14 +121,20 @@ export default function StudentProgress ({className, course, active, noCertifica
 	if (isCompleted && requirementsMet) {
 		subLabel = certLink ? t('viewCertificate') : t('completed');
 	} else {
-		subLabel = t('itemsRemaining', {count: getRemainingCount(progress)});
+		subLabel = t('itemsRemaining', { count: getRemainingCount(progress) });
 	}
 
 	return (
 		<>
-			<Outline.Header className={cx(Styles['student-progress-header'], className)}>
+			<Outline.Header
+				className={cx(Styles['student-progress-header'], className)}
+			>
 				<div>
-					<a {...linkAction} role="button" className={Styles['progress-header']}>
+					<a
+						{...linkAction}
+						role="button"
+						className={Styles['progress-header']}
+					>
 						<div className={Styles.percentage}>
 							<CircularProgress
 								width={38}
@@ -116,13 +144,22 @@ export default function StudentProgress ({className, course, active, noCertifica
 								deficitFillColor="#b8b8b8"
 							/>
 						</div>
-						<Text.Base className={Styles.label}>{t('label')}</Text.Base>
-						<Text.Base className={cx(Styles['sub-label'], {[Styles.certificate]: isCompleted && certLink})}>
+						<Text.Base className={Styles.label}>
+							{t('label')}
+						</Text.Base>
+						<Text.Base
+							className={cx(Styles['sub-label'], {
+								[Styles.certificate]: isCompleted && certLink,
+							})}
+						>
 							{subLabel}
 						</Text.Base>
 					</a>
 					{isCompleted && (
-						<PassFailMessage course={course} requirementsMet={getRequirementsMet(progress)} />
+						<PassFailMessage
+							course={course}
+							requirementsMet={getRequirementsMet(progress)}
+						/>
 					)}
 				</div>
 			</Outline.Header>
@@ -132,7 +169,9 @@ export default function StudentProgress ({className, course, active, noCertifica
 					<Iframe
 						downloadable
 						src={certLink}
-						title={t('certificateTitle', {title: getTitle(course)})}
+						title={t('certificateTitle', {
+							title: getTitle(course),
+						})}
 					/>
 				</Prompt.Dialog>
 			)}
@@ -146,7 +185,10 @@ export default function StudentProgress ({className, course, active, noCertifica
 				</Prompt.Dialog>
 			)}
 
-			<ProgressCompletionNotification course={course} viewCertificateAction={certLink ? linkAction : null}/>
+			<ProgressCompletionNotification
+				course={course}
+				viewCertificateAction={certLink ? linkAction : null}
+			/>
 		</>
 	);
 }

@@ -1,26 +1,26 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt, Switch, Loading, Presentation} from '@nti/web-commons';
+import { Prompt, Switch, Loading, Presentation } from '@nti/web-commons';
 import { dispatch } from '@nti/lib-dispatcher';
 
 import BaseAssetPicker from './BaseAssetPicker';
 import AssetCropping from './AssetCropping';
 import AssetsPicker from './assets-picker';
 import Uploading from './Uploading';
-import {Upload} from './tasks';
-
+import { Upload } from './tasks';
 
 export default class CourseAssetEditor extends React.Component {
-	static show (catalogEntry) {
+	static show(catalogEntry) {
 		return new Promise((fulfill, reject) => {
 			return Prompt.modal(
 				<CourseAssetEditor
 					catalogEntry={catalogEntry}
 					onSave={fulfill}
 					onCancel={reject}
-				/>
-				, 'course-asset-editor-prompt');
+				/>,
+				'course-asset-editor-prompt'
+			);
 		});
 	}
 
@@ -28,58 +28,55 @@ export default class CourseAssetEditor extends React.Component {
 		catalogEntry: PropTypes.object.isRequired,
 		onSave: PropTypes.func,
 		onCancel: PropTypes.func,
-		onDismiss: PropTypes.func
-	}
+		onDismiss: PropTypes.func,
+	};
 
+	state = { active: 'loading' };
 
-	state = {active: 'loading'}
-
-
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {catalogEntry:newEntry} = this.props;
-		const {catalogEntry:oldEntry} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { catalogEntry: newEntry } = this.props;
+		const { catalogEntry: oldEntry } = prevProps;
 
 		if (newEntry !== oldEntry) {
 			this.setupFor(this.props);
 		}
 	}
 
-
-	setupFor (props) {
-		const {catalogEntry} = this.props;
+	setupFor(props) {
+		const { catalogEntry } = this.props;
 		const sourceAsset = Presentation.getAssetSrc(catalogEntry, 'source');
 
-		this.setState({
-			active: 'loading'
-		}, () => {
-			const img = new Image();
+		this.setState(
+			{
+				active: 'loading',
+			},
+			() => {
+				const img = new Image();
 
-			img.onload = () => {
-				this.setState({
-					active: 'crop',
-					baseAsset: img
-				});
-			};
+				img.onload = () => {
+					this.setState({
+						active: 'crop',
+						baseAsset: img,
+					});
+				};
 
-			img.onerror = () => {
-				this.setState({
-					active: 'base'
-				});
-			};
+				img.onerror = () => {
+					this.setState({
+						active: 'base',
+					});
+				};
 
-			img.src = sourceAsset;
-		});
-
+				img.src = sourceAsset;
+			}
+		);
 	}
 
-
 	onCancel = () => {
-		const {onCancel, onDismiss} = this.props;
+		const { onCancel, onDismiss } = this.props;
 
 		if (onCancel) {
 			onCancel();
@@ -88,11 +85,10 @@ export default class CourseAssetEditor extends React.Component {
 		if (onDismiss) {
 			onDismiss();
 		}
-	}
-
+	};
 
 	onSave = () => {
-		const {onSave, onDismiss} = this.props;
+		const { onSave, onDismiss } = this.props;
 
 		if (onSave) {
 			onSave();
@@ -101,91 +97,93 @@ export default class CourseAssetEditor extends React.Component {
 		if (onDismiss) {
 			onDismiss();
 		}
-	}
+	};
 
-	onBaseAssetSave = (baseAsset) => {
+	onBaseAssetSave = baseAsset => {
 		this.setState({
 			baseAsset,
 			active: 'crop',
-			error: null
+			error: null,
 		});
-	}
+	};
 
-
-	onAssetCroppingSave = (croppedAsset) => {
+	onAssetCroppingSave = croppedAsset => {
 		this.setState({
 			croppedAsset,
 			active: 'picker',
-
 		});
-	}
-
+	};
 
 	onAssetCroppingBack = () => {
 		this.setState({
 			croppedAsset: null,
-			active: 'base'
+			active: 'base',
 		});
-	}
+	};
 
-
-	onAssetsPicked = (images) => {
-		const {catalogEntry} = this.props;
-		const onProgress = (e) => {
+	onAssetsPicked = images => {
+		const { catalogEntry } = this.props;
+		const onProgress = e => {
 			this.setState({
-				uploadProgress: e
+				uploadProgress: e,
 			});
 		};
 
-		this.setState({
-			active: 'uploading',
-			uploadProgress: null,
-			uploadError: null,
-			error: null
-		}, async () => {
-			try {
-				const resp = await Upload(catalogEntry, images, onProgress);
+		this.setState(
+			{
+				active: 'uploading',
+				uploadProgress: null,
+				uploadError: null,
+				error: null,
+			},
+			async () => {
+				try {
+					const resp = await Upload(catalogEntry, images, onProgress);
 
-				await catalogEntry.refresh(JSON.parse(resp));
+					await catalogEntry.refresh(JSON.parse(resp));
 
-				dispatch('COURSE_ASSET_UPLOAD', { id: catalogEntry.CourseNTIID });
+					dispatch('COURSE_ASSET_UPLOAD', {
+						id: catalogEntry.CourseNTIID,
+					});
 
-				this.setState({
-					uploaded: resp
-				});
-			} catch (e) {
-				this.setState({
-					uploadError: e
-				});
+					this.setState({
+						uploaded: resp,
+					});
+				} catch (e) {
+					this.setState({
+						uploadError: e,
+					});
+				}
 			}
-		});
-
-	}
+		);
+	};
 
 	onPickerBack = () => {
 		this.setState({
-			active: 'crop'
+			active: 'crop',
 		});
-	}
-
+	};
 
 	onUploadingBack = () => {
 		this.setState({
-			active: 'picker'
+			active: 'picker',
 		});
-	}
+	};
 
-
-	render () {
-		const {active, baseAsset, croppedAsset, uploaded, uploadProgress, uploadError} = this.state;
-		const {catalogEntry} = this.props;
+	render() {
+		const {
+			active,
+			baseAsset,
+			croppedAsset,
+			uploaded,
+			uploadProgress,
+			uploadError,
+		} = this.state;
+		const { catalogEntry } = this.props;
 
 		return (
 			<Switch.Container active={active} className="course-asset-editor">
-				<Switch.Item
-					name="loading"
-					component={Loading.Mask}
-				/>
+				<Switch.Item name="loading" component={Loading.Mask} />
 				<Switch.Item
 					name="base"
 					component={BaseAssetPicker}

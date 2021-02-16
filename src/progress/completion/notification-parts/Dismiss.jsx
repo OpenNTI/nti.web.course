@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button} from '@nti/web-commons';
+import { Button } from '@nti/web-commons';
 
-import {Translate} from './strings';
+import { Translate } from './strings';
 
 const styles = css`
 	.button {
@@ -20,13 +20,13 @@ const styles = css`
 `;
 
 Dismiss.propTypes = {
-	onClick: PropTypes.func
+	onClick: PropTypes.func,
 };
 
-export default function Dismiss ({onClick}) {
+export default function Dismiss({ onClick }) {
 	return (
 		<Button onClick={onClick} className={styles.button} plain>
-			<Translate localeKey="dismiss"/>
+			<Translate localeKey="dismiss" />
 		</Button>
 	);
 }

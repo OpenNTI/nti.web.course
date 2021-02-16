@@ -51,7 +51,8 @@
 	.scorm-completion-status {
 		text-align: center;
 
-		&.passed, &.completed {
+		&.passed,
+		&.completed {
 			color: var(--primary-green);
 		}
 

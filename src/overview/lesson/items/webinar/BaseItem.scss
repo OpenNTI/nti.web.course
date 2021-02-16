@@ -1,8 +1,14 @@
 @import '~@nti/style-common';
 
 $header-ranges: (
-	short: (null, 500px),
-	wide: (500px, null)
+	short: (
+		null,
+		500px,
+	),
+	wide: (
+		500px,
+		null,
+	),
 );
 
 .webinar-base-item {
@@ -134,7 +140,7 @@ $header-ranges: (
 						position: relative;
 
 						&::before {
-							content: "·";
+							content: '·';
 							margin-right: 4px;
 							font-size: 24px;
 							line-height: 0;

@@ -1,42 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {Input} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { Input } from '@nti/web-commons';
 
 import Store from '../Store';
-import {ACCEPTS_FILES} from '../Constants';
+import { ACCEPTS_FILES } from '../Constants';
 
 import Container from './PaddedContainer';
 
-const allowedTypes = ACCEPTS_FILES.reduce((acc, file) => ({...acc, [file]: true}), {});
+const allowedTypes = ACCEPTS_FILES.reduce(
+	(acc, file) => ({ ...acc, [file]: true }),
+	{}
+);
 
 const t = scoped('course.scorm.collection.components.Empty', {
 	title: 'Drag a SCORM Package to Upload, or',
 	requirements: 'Must be a .zip file.',
 	uploading: {
 		header: 'Uploading your file.',
-		subHeader: 'This may take a moment.'
-	}
+		subHeader: 'This may take a moment.',
+	},
 });
-
 
 class EmptyScormCollection extends React.Component {
 	static propTypes = {
-		uploadPackage: PropTypes.func
-	}
+		uploadPackage: PropTypes.func,
+	};
 
-
-	onFileChange = (file) => {
-		const {uploadPackage} = this.props;
+	onFileChange = file => {
+		const { uploadPackage } = this.props;
 
 		if (uploadPackage) {
 			uploadPackage(file);
 		}
-	}
+	};
 
-
-	render () {
+	render() {
 		return (
 			<>
 				<Container>
@@ -53,5 +53,5 @@ class EmptyScormCollection extends React.Component {
 }
 
 export default decorate(EmptyScormCollection, [
-	Store.monitor(['uploadPackage'])
+	Store.monitor(['uploadPackage']),
 ]);

@@ -9,10 +9,10 @@ const typeRegistry = TypeRegistry.getInstance();
 
 export const TYPES = {
 	Webinar,
-	SCORM
+	SCORM,
 };
 
-export function getCmpFor (overrides, ...args) {
+export function getCmpFor(overrides, ...args) {
 	const override = overrides ? overrides.getItemFor(...args) : null;
 
 	return override || typeRegistry.getItemFor(...args);

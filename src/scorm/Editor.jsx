@@ -11,15 +11,20 @@ class Editor extends Component {
 	static propTypes = {
 		onDismiss: PropTypes.func.isRequired,
 		bundle: PropTypes.object,
-		onFinish: PropTypes.func.isRequired
-	}
+		onFinish: PropTypes.func.isRequired,
+	};
 
-	render () {
+	render() {
 		const { onDismiss, onFinish } = this.props;
 
-		return(
+		return (
 			<Dialog>
-				<PackageWizard onDismiss={onDismiss} onCancel={onDismiss} onFinish={onFinish} bundle={this.props.bundle} />
+				<PackageWizard
+					onDismiss={onDismiss}
+					onCancel={onDismiss}
+					onFinish={onFinish}
+					bundle={this.props.bundle}
+				/>
 			</Dialog>
 		);
 	}

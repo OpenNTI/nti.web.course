@@ -2,9 +2,9 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {decorate} from '@nti/lib-commons';
-import {Loading, Button} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { decorate } from '@nti/lib-commons';
+import { Loading, Button } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import Store from './Store';
 import Tab from './Tab';
@@ -16,11 +16,11 @@ const t = scoped('course.navigation.tabs.editor.View', {
 	save: 'Save',
 	cancel: 'Cancel',
 	unknownError: 'Unable to load course tabs',
-	unknownSavingError: 'Unable to save tab changes'
+	unknownSavingError: 'Unable to save tab changes',
 });
 
 class CourseNavigationTabsEditor extends React.Component {
-	static deriveBindingFromProps (props) {
+	static deriveBindingFromProps(props) {
 		return props.course;
 	}
 
@@ -39,58 +39,61 @@ class CourseNavigationTabsEditor extends React.Component {
 			PropTypes.shape({
 				id: PropTypes.string,
 				default: PropTypes.string,
-				label: PropTypes.string
+				label: PropTypes.string,
 			})
 		),
 		updateTabLabel: PropTypes.func,
 		cancelChanges: PropTypes.func,
-		saveChanges: PropTypes.func
-	}
-
+		saveChanges: PropTypes.func,
+	};
 
 	onTabChange = (id, label) => {
-		const {updateTabLabel} = this.props;
+		const { updateTabLabel } = this.props;
 
 		if (updateTabLabel) {
 			updateTabLabel(id, label);
 		}
-	}
-
+	};
 
 	onCancel = () => {
-		const {cancelChanges} = this.props;
+		const { cancelChanges } = this.props;
 
 		if (cancelChanges) {
 			cancelChanges();
 		}
-	}
-
+	};
 
 	onSave = () => {
-		const {saveChanges} = this.props;
+		const { saveChanges } = this.props;
 
 		if (saveChanges) {
 			saveChanges();
 		}
-	}
+	};
 
-
-	render () {
-		const {loading, saving, error, page} = this.props;
+	render() {
+		const { loading, saving, error, page } = this.props;
 
 		return (
-			<div className={cx('nti-course-tab-editor', {'tab-editor-page': page})}>
-				{loading && (<Loading.Mask />)}
-				{!loading && saving && (<div className="saving-container"><Loading.Mask message={t('saving')} /></div>)}
+			<div
+				className={cx('nti-course-tab-editor', {
+					'tab-editor-page': page,
+				})}
+			>
+				{loading && <Loading.Mask />}
+				{!loading && saving && (
+					<div className="saving-container">
+						<Loading.Mask message={t('saving')} />
+					</div>
+				)}
 				{!loading && error && this.renderError()}
 				{!loading && !error && this.renderTabs()}
 			</div>
 		);
 	}
 
-
-	renderError () {
-		const {error} = this.props;
+	renderError() {
+		const { error } = this.props;
 
 		return (
 			<div className="loading-error">
@@ -99,36 +102,57 @@ class CourseNavigationTabsEditor extends React.Component {
 		);
 	}
 
+	renderTabs() {
+		const { tabs, canEdit, valid, hasChanged, savingError } = this.props;
 
-	renderTabs () {
-		const {tabs, canEdit, valid, hasChanged, savingError} = this.props;
-
-		if (!tabs) { return null; }
+		if (!tabs) {
+			return null;
+		}
 
 		return (
 			<>
 				<div className="title">{t('title')}</div>
 				<div className="description">{t('description')}</div>
-				{
-					savingError && (
-						<div className="saving-error">
-							{savingError.Message || savingError.message || t('unknownSavingError')}
-						</div>
-					)
-				}
+				{savingError && (
+					<div className="saving-error">
+						{savingError.Message ||
+							savingError.message ||
+							t('unknownSavingError')}
+					</div>
+				)}
 				<ul className="tabs">
-					{tabs.map((tab) => {
+					{tabs.map(tab => {
 						return (
 							<li key={tab.id}>
-								<Tab tab={tab} onTabChange={this.onTabChange} readonly={!canEdit}/>
+								<Tab
+									tab={tab}
+									onTabChange={this.onTabChange}
+									readonly={!canEdit}
+								/>
 							</li>
 						);
 					})}
 				</ul>
 				{canEdit && (
 					<div className="controls">
-						<Button className="save" rounded onClick={this.onSave} disabled={!hasChanged || !valid}>{t('save')}</Button>
-						{hasChanged && (<Button className="cancel" secondary rounded onClick={this.onCancel}>{t('cancel')}</Button>)}
+						<Button
+							className="save"
+							rounded
+							onClick={this.onSave}
+							disabled={!hasChanged || !valid}
+						>
+							{t('save')}
+						</Button>
+						{hasChanged && (
+							<Button
+								className="cancel"
+								secondary
+								rounded
+								onClick={this.onCancel}
+							>
+								{t('cancel')}
+							</Button>
+						)}
 					</div>
 				)}
 			</>
@@ -148,6 +172,6 @@ export default decorate(CourseNavigationTabsEditor, [
 		'tabs',
 		'updateTabLabel',
 		'cancelChanges',
-		'saveChanges'
-	])
+		'saveChanges',
+	]),
 ]);

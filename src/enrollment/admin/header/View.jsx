@@ -13,14 +13,15 @@ export default class CourseEnrollmentAdminHeader extends React.Component {
 		user: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 		userLocked: PropTypes.bool,
 		onUserSelected: PropTypes.func,
-		onCourseSelected: PropTypes.func
-	}
+		onCourseSelected: PropTypes.func,
+	};
 
+	render() {
+		const { stages } = this.props;
 
-	render () {
-		const {stages} = this.props;
-
-		if (!stages) { return null; }
+		if (!stages) {
+			return null;
+		}
 
 		return (
 			<div className="nti-course-enrollment-admin-header">
@@ -28,42 +29,47 @@ export default class CourseEnrollmentAdminHeader extends React.Component {
 					{stages.map((stage, index) => {
 						const cmp = this.renderStage(stage, stages[index - 1]);
 
-						if (!cmp) { return null; }
+						if (!cmp) {
+							return null;
+						}
 
-						return (
-							<li key={index}>
-								{cmp}
-							</li>
-						);
+						return <li key={index}>{cmp}</li>;
 					})}
 				</ul>
 			</div>
 		);
 	}
 
+	renderStage(stage, prevStage) {
+		if (prevStage && !prevStage.isDone(this.props)) {
+			return null;
+		}
 
-	renderStage (stage, prevStage) {
-		if (prevStage && !prevStage.isDone(this.props)) { return null; }
-
-		if (stage.name === 'user') { return this.renderUser(); }
-		if (stage.name === 'course') { return this.renderCourse(); }
+		if (stage.name === 'user') {
+			return this.renderUser();
+		}
+		if (stage.name === 'course') {
+			return this.renderCourse();
+		}
 	}
 
-
-	renderUser () {
-		const {user, userLocked, onUserSelected} = this.props;
+	renderUser() {
+		const { user, userLocked, onUserSelected } = this.props;
 
 		return (
-			<User user={user} locked={userLocked} onSelected={onUserSelected}/>
+			<User user={user} locked={userLocked} onSelected={onUserSelected} />
 		);
 	}
 
-
-	renderCourse () {
-		const {course, courseLocked, onCourseSelected} = this.props;
+	renderCourse() {
+		const { course, courseLocked, onCourseSelected } = this.props;
 
 		return (
-			<Course course={course} locked={courseLocked} onSelected={onCourseSelected} />
+			<Course
+				course={course}
+				locked={courseLocked}
+				onSelected={onCourseSelected}
+			/>
 		);
 	}
 }

@@ -4,22 +4,29 @@ import React, { useMemo } from 'react';
 
 import Notification from '../Notification';
 
-const Template = ({show, certificate}) => {
-	const course = useMemo(() => ({
-		PreferredAccess: Object.assign(new EventEmitter(), {
-			hasCompletionAcknowledgmentRequest: show,
-			AcknowledgeCompletion: true,
-			acknowledgeCourseCompletion () {
-				this.hasCompletionAcknowledgmentRequest = false;
-				this.emit('change');
-			}
-		})
-	}), [show]);
+const Template = ({ show, certificate }) => {
+	const course = useMemo(
+		() => ({
+			PreferredAccess: Object.assign(new EventEmitter(), {
+				hasCompletionAcknowledgmentRequest: show,
+				AcknowledgeCompletion: true,
+				acknowledgeCourseCompletion() {
+					this.hasCompletionAcknowledgmentRequest = false;
+					this.emit('change');
+				},
+			}),
+		}),
+		[show]
+	);
 
-	const certTarget = !certificate ? null : ({href: certificate, target: '_blank'});
+	const certTarget = !certificate
+		? null
+		: { href: certificate, target: '_blank' };
 
-	return !show ? <></> : (
-		<Notification course={course} viewCertificateAction={certTarget}/>
+	return !show ? (
+		<></>
+	) : (
+		<Notification course={course} viewCertificateAction={certTarget} />
 	);
 };
 
@@ -28,8 +35,6 @@ Example.args = {
 	certificate: '#/certificate.pdf',
 	show: true,
 };
-
-
 
 export default {
 	title: 'Completion Notification',

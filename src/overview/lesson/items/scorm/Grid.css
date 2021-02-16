@@ -50,7 +50,8 @@
 	box-shadow: 1px 0 2px 0 rgba(0, 0, 0, 0.1);
 }
 
-.scorm-grid-card :global(.nti-lesson-overview.grid-layout .require-control-value) {
+.scorm-grid-card
+	:global(.nti-lesson-overview.grid-layout .require-control-value) {
 	height: 20px;
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {Grid, List} from '../../Constants';
+import { Grid, List } from '../../Constants';
 import Registry from '../Registry';
 import PaddedContainer from '../../common/PaddedContainer';
 
@@ -10,15 +10,15 @@ import GridCmp from './Grid';
 
 export default class LessonOverviewVideo extends React.Component {
 	static propTypes = {
-		layout: PropTypes.oneOf([Grid, List])
-	}
+		layout: PropTypes.oneOf([Grid, List]),
+	};
 
-	render () {
-		const {layout, ...otherProps} = this.props;
+	render() {
+		const { layout, ...otherProps } = this.props;
 
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
-		if(layout === List) {
+		if (layout === List) {
 			return <Cmp layout={layout} {...otherProps} />;
 		}
 

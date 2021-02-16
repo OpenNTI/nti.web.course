@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .nti-course-enrollment-option-list-item {
 	cursor: pointer;
@@ -12,7 +12,9 @@
 		color: var(--tertiary-grey);
 		font: normal 400 0.875rem/1.3 var(--body-font-family);
 
-		.price, .separator, .enrolled {
+		.price,
+		.separator,
+		.enrolled {
 			display: inline-block;
 			vertical-align: middle;
 		}

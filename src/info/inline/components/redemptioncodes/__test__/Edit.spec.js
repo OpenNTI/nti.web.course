@@ -17,9 +17,7 @@ describe('Redemption codes edit test', () => {
 		// 		getID: () => { }
 		// 	}
 		// ];
-
 		// const result = render(<Edit redemptionCodes={redemptionCodes}/>);
-
 		// expect(result.container.innerHtml).toEqual('<div></div>');
 	});
 });

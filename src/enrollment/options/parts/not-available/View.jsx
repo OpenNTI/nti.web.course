@@ -1,34 +1,32 @@
 import React from 'react';
-import {scoped} from '@nti/lib-locale';
-import {LinkTo} from '@nti/web-routing';
+import { scoped } from '@nti/lib-locale';
+import { LinkTo } from '@nti/web-routing';
 
 import Title from '../../common/Title';
 import Description from '../../common/Description';
 
 const t = scoped('course.enrollment.options.NotAvailable', {
 	title: 'Not Available',
-	description: 'This course is not available at this time. For further assistance please contact the {{ContactLink`help desk.`}}'
+	description:
+		'This course is not available at this time. For further assistance please contact the {{ContactLink`help desk.`}}',
 });
 
-
-function ContactLink (props) {
+function ContactLink(props) {
 	const obj = {
 		type: 'contact-support',
 		message: '',
-		subject: ''
+		subject: '',
 	};
 
-	return (
-		<LinkTo.Object object={obj} {...props} />
-	);
+	return <LinkTo.Object object={obj} {...props} />;
 }
 
 const LocaleComponents = {
-	ContactLink
+	ContactLink,
 };
 
 const MARK_UP_REGEX = /{{([^}}]*)}}/g;
-const getMatches = (str) => {
+const getMatches = str => {
 	const matches = [];
 
 	let match;
@@ -40,29 +38,30 @@ const getMatches = (str) => {
 };
 
 const MATCH_REGEX = /^([^`]*)`([^`]*)`$/;
-const getComponentForMatch = (cmpMatch) =>{
+const getComponentForMatch = cmpMatch => {
 	const match = cmpMatch.match(MATCH_REGEX);
 
-	if (!match) { return cmpMatch; }
+	if (!match) {
+		return cmpMatch;
+	}
 
 	const html = match[2];
 	const CmpName = match[1];
 	const Cmp = LocaleComponents[CmpName];
 
-
 	if (!Cmp) {
 		return html;
 	}
 
-	return (
-		<Cmp key={cmpMatch}>{html}</Cmp>
-	);
+	return <Cmp key={cmpMatch}>{html}</Cmp>;
 };
 
-function compileLocaleString (str) {
+function compileLocaleString(str) {
 	const matches = getMatches(str);
 
-	if (!matches || !matches.length) { return str; }
+	if (!matches || !matches.length) {
+		return str;
+	}
 
 	let pointer = 0;
 	let compiled = [];
@@ -76,15 +75,11 @@ function compileLocaleString (str) {
 	return compiled;
 }
 
-export default function CourseEnrollmentOptionsNotAvailable () {
+export default function CourseEnrollmentOptionsNotAvailable() {
 	return (
 		<div>
-			<Title>
-				{t('title')}
-			</Title>
-			<Description>
-				{compileLocaleString(t('description'))}
-			</Description>
+			<Title>{t('title')}</Title>
+			<Description>{compileLocaleString(t('description'))}</Description>
 		</div>
 	);
 }

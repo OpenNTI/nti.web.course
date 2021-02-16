@@ -11,9 +11,9 @@ describe('CourseCard test', () => {
 	const mockID = 'Mock ID';
 
 	const course = {
-		getDefaultAssetRoot () {},
+		getDefaultAssetRoot() {},
 		title: mockTitle,
-		ProviderUniqueID: mockID
+		ProviderUniqueID: mockID,
 	};
 
 	let result;

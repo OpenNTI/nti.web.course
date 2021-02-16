@@ -7,11 +7,11 @@ import AssignmentTitle from '../AssignmentTitle';
 describe('Course overview assignment title test', () => {
 	test('Title only', async () => {
 		const assignment = {
-			title: 'My Assignment'
+			title: 'My Assignment',
 		};
 
 		const cmp = renderer.create(
-			<AssignmentTitle assignment={assignment}/>
+			<AssignmentTitle assignment={assignment} />
 		);
 
 		const tree = cmp.toJSON();
@@ -22,11 +22,11 @@ describe('Course overview assignment title test', () => {
 	test('Title with totalPoints', async () => {
 		const assignment = {
 			title: 'My Assignment',
-			totalPoints: 5
+			totalPoints: 5,
 		};
 
 		const cmp = renderer.create(
-			<AssignmentTitle assignment={assignment}/>
+			<AssignmentTitle assignment={assignment} />
 		);
 
 		const tree = cmp.toJSON();

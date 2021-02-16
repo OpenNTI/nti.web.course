@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .admin-course-options {
 	color: black;
@@ -50,7 +50,8 @@
 		right: 10px;
 	}
 
-	.course-controls:hover, .cover:hover + .course-controls {
+	.course-controls:hover,
+	.cover:hover + .course-controls {
 		opacity: 1;
 	}
 

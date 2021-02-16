@@ -22,28 +22,30 @@ const LABELS = {
 	unknownError: 'Unable to upload file.',
 	courseSuccessfullyImported: 'Scorm package successfully uploaded',
 	importSuccess: 'Upload Success',
-	importPermissionError: 'You do not have permission to upload a Scorm package'
+	importPermissionError:
+		'You do not have permission to upload a Scorm package',
 };
 
 const TRANSFER_PCT = 25.0;
 
 const t = scoped('components.course.editor.scorm-import.wizardpanel', LABELS);
 
-const handleError = (error) => {
-	if (!error) { return t('unknownError'); }
+const handleError = error => {
+	if (!error) {
+		return t('unknownError');
+	}
 
 	try {
 		const parsedError = JSON.parse((error && error.responseText) || error);
 		return parsedError.message || t('unknownError');
-	}
-	catch (e) {
+	} catch (e) {
 		return t('unknownError');
 	}
 };
 
 export default class ScormImport extends React.Component {
-	static tabName = 'Import Scorm'
-	static tabDescription = 'Import Scorm Package'
+	static tabName = 'Import Scorm';
+	static tabDescription = 'Import Scorm Package';
 
 	static propTypes = {
 		saveCmp: PropTypes.func,
@@ -55,95 +57,102 @@ export default class ScormImport extends React.Component {
 		type: PropTypes.string,
 		catalogEntry: PropTypes.object,
 		bundle: PropTypes.object,
-		onFinish: PropTypes.func
-	}
+		onFinish: PropTypes.func,
+	};
 
 	static defaultProps = {
-		type: 'ImportSCORM'
-	}
+		type: 'ImportSCORM',
+	};
 
 	state = {
 		error: '',
-		file: null
-	}
+		file: null,
+	};
 
-	renderTitle () {
-		return (<div className="scorm-import-header-title">{t('defaultTitle')}</div>);
+	renderTitle() {
+		return (
+			<div className="scorm-import-header-title">{t('defaultTitle')}</div>
+		);
 	}
 
 	updateImportFile = file => {
 		this.setState({ file, error: '' });
-	}
+	};
 
-	onError = (error) => {
+	onError = error => {
 		this.setState({ error });
-	}
+	};
 
-
-	onComplete = (newBundle) => {
+	onComplete = newBundle => {
 		this.setState({ completed: true, newBundle });
 		this.checkStatus();
-	}
+	};
 
-
-	onFailure = (error) => {
+	onFailure = error => {
 		const { createdEntry } = this.state;
 
-		if(createdEntry) {
-			createdEntry.delete().then(() => {
-				this.setState({error: handleError(error), saveDisabled: true});
-			}).catch(() => {
-				this.setState({error: t('unknownError'), saveDisabled: true});
-			});
-		}
-		else {
-			this.setState({error: handleError(error), saveDisabled: true});
+		if (createdEntry) {
+			createdEntry
+				.delete()
+				.then(() => {
+					this.setState({
+						error: handleError(error),
+						saveDisabled: true,
+					});
+				})
+				.catch(() => {
+					this.setState({
+						error: t('unknownError'),
+						saveDisabled: true,
+					});
+				});
+		} else {
+			this.setState({ error: handleError(error), saveDisabled: true });
 		}
 
 		this.checkStatus();
-	}
+	};
 
-
-	onProgress = (e) => {
+	onProgress = e => {
 		this.setState({
 			pctComplete: TRANSFER_PCT * (e.loaded / (e.total || 1)),
-			uploadDone: e.loaded === e.total
+			uploadDone: e.loaded === e.total,
 		});
-	}
-
+	};
 
 	checkStatus = () => {
 		const { completed, error, uploadDone, newBundle } = this.state;
 		const { onFinish } = this.props;
 
-		if(error) {
+		if (error) {
 			clearInterval(this.progressChecker);
 
-			this.setState({loading: false});
+			this.setState({ loading: false });
 
-			const {exitProgressState} = this.props;
+			const { exitProgressState } = this.props;
 
 			if (exitProgressState) {
 				exitProgressState();
 			}
 		}
 
-		if(uploadDone && completed) {
+		if (uploadDone && completed) {
 			// close this modal and show success message
 			if (onFinish) {
 				onFinish(newBundle);
 			}
 
-			Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'), { promptType: 'info' });
+			Prompt.alert(t('courseSuccessfullyImported'), t('importSuccess'), {
+				promptType: 'info',
+			});
 		}
-	}
+	};
 
-
-	onSave = async (done) => {
+	onSave = async done => {
 		const { file } = this.state;
 
-		if(!file) {
-			this.setState({ error: t('missingInputs')});
+		if (!file) {
+			this.setState({ error: t('missingInputs') });
 
 			return;
 		}
@@ -151,59 +160,83 @@ export default class ScormImport extends React.Component {
 		try {
 			const { catalogEntry, type, bundle } = this.props;
 			const service = await getService();
-			const courseInstance = bundle || await service.getObject(catalogEntry && catalogEntry.CourseNTIID);
+			const courseInstance =
+				bundle ||
+				(await service.getObject(
+					catalogEntry && catalogEntry.CourseNTIID
+				));
 			const link = courseInstance.getLink(type);
 
-			if(!link) {
-				this.setState({error: t('importPermissionError')});
+			if (!link) {
+				this.setState({ error: t('importPermissionError') });
 				return;
 			}
 
-			this.setState({loading: true, completed: false, saveDisabled: false, error: null, pctComplete: 0});
+			this.setState({
+				loading: true,
+				completed: false,
+				saveDisabled: false,
+				error: null,
+				pctComplete: 0,
+			});
 
-			const {enterProgressState} = this.props;
+			const { enterProgressState } = this.props;
 
 			if (enterProgressState) {
 				enterProgressState();
 			}
 
-			const onComplete = (newBundle) => {
+			const onComplete = newBundle => {
 				this.onComplete(newBundle);
 				done();
 			};
 
-			Upload(link, file, onComplete, this.onFailure, this.onProgress, type);
+			Upload(
+				link,
+				file,
+				onComplete,
+				this.onFailure,
+				this.onProgress,
+				type
+			);
 		} catch (error) {
 			this.setState({ error: t('unknownError') });
 		}
-	}
+	};
 
-
-	renderProgress () {
+	renderProgress() {
 		const { pctComplete } = this.state;
 
 		return (
 			<div className="progress">
 				<div className="bar">
-					<div className="indicator" style={{width: `${pctComplete}%`}} />
+					<div
+						className="indicator"
+						style={{ width: `${pctComplete}%` }}
+					/>
 				</div>
 			</div>
 		);
 	}
 
-
-	renderFileForm () {
-		const {file} = this.state;
+	renderFileForm() {
+		const { file } = this.state;
 
 		return (
 			<div className="import-file">
-				<Input.FileDrop getString={t} placeholder={t('importFile')} value={file} accept=".zip" onChange={this.updateImportFile} onError={this.onError} />
+				<Input.FileDrop
+					getString={t}
+					placeholder={t('importFile')}
+					value={file}
+					accept=".zip"
+					onChange={this.updateImportFile}
+					onError={this.onError}
+				/>
 			</div>
 		);
 	}
 
-
-	renderBody () {
+	renderBody() {
 		const { loading } = this.state;
 
 		return (
@@ -213,36 +246,38 @@ export default class ScormImport extends React.Component {
 		);
 	}
 
-
-	renderSaveCmp () {
+	renderSaveCmp() {
 		const { buttonLabel, saveCmp: Cmp } = this.props;
 		const { loading, saveDisabled } = this.state;
 
 		// TODO: if error, disable until file change?
-		if(saveDisabled) {
+		if (saveDisabled) {
 			return null;
 		}
 
-
-		if(Cmp && !loading) {
-			return (<Cmp onSave={this.onSave} label={buttonLabel}/>);
+		if (Cmp && !loading) {
+			return <Cmp onSave={this.onSave} label={buttonLabel} />;
 		}
 
 		return null;
 	}
 
-
-	renderCancelCmp () {
+	renderCancelCmp() {
 		const { loading } = this.state;
 
-		if(this.props.onCancel && !loading) {
-			return (<div className="course-panel-cancel" onClick={this.props.onCancel}>{t('cancel')}</div>);
+		if (this.props.onCancel && !loading) {
+			return (
+				<div
+					className="course-panel-cancel"
+					onClick={this.props.onCancel}
+				>
+					{t('cancel')}
+				</div>
+			);
 		}
 	}
 
-
-
-	render () {
+	render() {
 		const { error } = this.state;
 		return (
 			<div className="scorm-import-panel">

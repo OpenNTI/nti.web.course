@@ -1,6 +1,6 @@
 import './View.scss';
 import React, { Component } from 'react';
-import {decorate} from '@nti/lib-commons';
+import { decorate } from '@nti/lib-commons';
 import { Button, Loading } from '@nti/web-commons';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
@@ -13,7 +13,7 @@ import ToolList from './components/tools/ToolList';
 const DEFAULT_TEXT = {
 	header: 'LTI Tool Configuration',
 	add: 'Add Tool',
-	empty: 'LTI is not configured for this course.'
+	empty: 'LTI is not configured for this course.',
 };
 
 const t = scoped('nti-web-course.admin-tools.advanced.lti', DEFAULT_TEXT);
@@ -27,19 +27,19 @@ class LTITools extends Component {
 		error: PropTypes.string,
 		store: PropTypes.shape({
 			loadItems: PropTypes.func.isRequired,
-			setCourse: PropTypes.func.isRequired
+			setCourse: PropTypes.func.isRequired,
 		}).isRequired,
-	}
+	};
 
 	state = {
 		addIsVisible: false,
-	}
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setupCourse();
 	}
 
-	componentDidUpdate (prevProps) {
+	componentDidUpdate(prevProps) {
 		if (prevProps.course.NTIID !== this.props.course.NTIID) {
 			this.setupCourse();
 		}
@@ -49,31 +49,27 @@ class LTITools extends Component {
 		const { store, course } = this.props;
 
 		store.setCourse(course);
-	}
+	};
 
 	onAddTool = () => {
 		this.setState({ addIsVisible: true });
-	}
+	};
 
-	onAddDismiss = (addedItem) => {
+	onAddDismiss = addedItem => {
 		this.setState({ addIsVisible: false });
 
-		const {store} = this.props;
+		const { store } = this.props;
 
-		if(addedItem) {
+		if (addedItem) {
 			store.loadItems();
 		}
-	}
+	};
 
 	renderEmpty = () => {
-		return (
-			<div className="lti-tools-emptystate">
-				{t('empty')}
-			</div>
-		);
-	}
+		return <div className="lti-tools-emptystate">{t('empty')}</div>;
+	};
 
-	render () {
+	render() {
 		const { addIsVisible } = this.state;
 		const { course, page, items, loading, error, store } = this.props;
 		const hasLTI = course.hasLink('lti-configured-tools');
@@ -83,15 +79,31 @@ class LTITools extends Component {
 		}
 
 		return (
-			<div className={cx('lti-tools-config', {'lti-page': page})}>
+			<div className={cx('lti-tools-config', { 'lti-page': page })}>
 				<div className="lti-tools-config-headerBar">
 					<div className="lti-tools-config-header">{t('header')}</div>
-					{!error && <Button className="lti-tools-add" onClick={this.onAddTool}>{t('add')}</Button>}
+					{!error && (
+						<Button
+							className="lti-tools-add"
+							onClick={this.onAddTool}
+						>
+							{t('add')}
+						</Button>
+					)}
 				</div>
-				{error && <span className="lti-tools-config-error">{ error }</span>}
+				{error && (
+					<span className="lti-tools-config-error">{error}</span>
+				)}
 				{loading && <Loading.Spinner size={40} />}
-				{Array.isArray(items) && <ToolList items={items} store={store}/>}
-				{addIsVisible && <AddTool onBeforeDismiss={this.onAddDismiss} store={this.props.store}/>}
+				{Array.isArray(items) && (
+					<ToolList items={items} store={store} />
+				)}
+				{addIsVisible && (
+					<AddTool
+						onBeforeDismiss={this.onAddDismiss}
+						store={this.props.store}
+					/>
+				)}
 			</div>
 		);
 	}
@@ -101,6 +113,6 @@ export default decorate(LTITools, [
 	Store.connect({
 		loading: 'loading',
 		error: 'error',
-		items: 'items'
-	})
+		items: 'items',
+	}),
 ]);

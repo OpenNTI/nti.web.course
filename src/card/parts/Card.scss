@@ -2,8 +2,14 @@
 
 //TODO: figure out how not to have this be specific to the catalog...
 $CUSTOM_RANGES: (
-	mobile: (null, 736px),
-	portrait-tablet: (737px, 1023px)
+	mobile: (
+		null,
+		736px,
+	),
+	portrait-tablet: (
+		737px,
+		1023px,
+	),
 );
 
 @mixin card-layout {

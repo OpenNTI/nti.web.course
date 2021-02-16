@@ -11,10 +11,12 @@ describe('Description edit test', () => {
 		const desc = 'DESC123';
 
 		const catalogEntry = {
-			'RichDescription': desc
+			RichDescription: desc,
 		};
 
-		const x = render(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
+		const x = render(
+			<Edit onValueChange={onChange} catalogEntry={catalogEntry} />
+		);
 		const input = x.container.querySelector('.rich-text-editor');
 
 		expect(input.textContent).toEqual(desc);

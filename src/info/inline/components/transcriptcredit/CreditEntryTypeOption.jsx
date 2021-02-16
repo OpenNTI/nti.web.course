@@ -4,20 +4,24 @@ import PropTypes from 'prop-types';
 export default class CreditEntryTypeOption extends React.Component {
 	static propTypes = {
 		option: PropTypes.object.isRequired,
-		onClick: PropTypes.func
-	}
+		onClick: PropTypes.func,
+	};
 
 	onClick = () => {
-		const {onClick} = this.props;
+		const { onClick } = this.props;
 
-		if(onClick) {
+		if (onClick) {
 			onClick(this.props.option);
 		}
-	}
+	};
 
-	render () {
-		const {option} = this.props;
+	render() {
+		const { option } = this.props;
 
-		return <div className="credit-entry-type-option" onClick={this.onClick}>{option.type + ' ' + option.unit}</div>;
+		return (
+			<div className="credit-entry-type-option" onClick={this.onClick}>
+				{option.type + ' ' + option.unit}
+			</div>
+		);
 	}
 }

@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 CourseCardAuthors.propTypes = {
 	course: PropTypes.shape({
-		getAuthorLine: PropTypes.func.isRequired
-	}).isRequired
+		getAuthorLine: PropTypes.func.isRequired,
+	}).isRequired,
 };
-export default function CourseCardAuthors ({course}) {
+export default function CourseCardAuthors({ course }) {
 	return (
 		<div data-testid="course-authors" className="nti-course-card-authors">
 			{course.getAuthorLine()}

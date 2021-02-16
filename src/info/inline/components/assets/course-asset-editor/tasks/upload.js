@@ -1,5 +1,5 @@
-export default function uploadAssetsToCourse (course, assets, onProgress) {
-	return new Promise ((fulfill, reject) => {
+export default function uploadAssetsToCourse(course, assets, onProgress) {
+	return new Promise((fulfill, reject) => {
 		const link = course.getLink('presentation-assets');
 
 		if (!link) {
@@ -28,7 +28,7 @@ export default function uploadAssetsToCourse (course, assets, onProgress) {
 				} else {
 					reject({
 						status: xhr.status,
-						responseText: xhr.responseText
+						responseText: xhr.responseText,
 					});
 				}
 			}

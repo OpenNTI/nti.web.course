@@ -9,13 +9,19 @@ CourseProgressPage.propTypes = {
 	page: PropTypes.object,
 	error: PropTypes.object,
 	pageHeight: PropTypes.number,
-	course: PropTypes.object
+	course: PropTypes.object,
 };
-export default function CourseProgressPage ({loading, page, error, pageHeight, course}) {
+export default function CourseProgressPage({
+	loading,
+	page,
+	error,
+	pageHeight,
+	course,
+}) {
 	return (
 		<div>
-			{loading && (<Loading pageHeight={pageHeight} />)}
-			{page && (<Items items={page.Items} course={course} />)}
+			{loading && <Loading pageHeight={pageHeight} />}
+			{page && <Items items={page.Items} course={course} />}
 		</div>
 	);
 }

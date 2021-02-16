@@ -1,14 +1,13 @@
 import './Edit.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {TimePicker} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { TimePicker } from '@nti/web-commons';
 
 import Day from '../../../../editor/panels/daytime/Day';
 
 import { getWeekdaysFrom, getDateStr } from './utils';
 import Disclaimer from './Disclaimer';
-
 
 const t = scoped('course.info.inline.components.meettimes.Edit', {
 	label: 'Meet Times',
@@ -17,91 +16,118 @@ const t = scoped('course.info.inline.components.meettimes.Edit', {
 export default class MeetTimesEdit extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
-		onValueChange: PropTypes.func
-	}
+		onValueChange: PropTypes.func,
+	};
 
 	static FIELD_NAME = 'Schedule';
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {
-			startTime: getDateStr(this.props.catalogEntry && this.props.catalogEntry.Schedule && this.props.catalogEntry.Schedule.times[0]),
-			endTime: getDateStr(this.props.catalogEntry && this.props.catalogEntry.Schedule && this.props.catalogEntry.Schedule.times[1]),
+			startTime: getDateStr(
+				this.props.catalogEntry &&
+					this.props.catalogEntry.Schedule &&
+					this.props.catalogEntry.Schedule.times[0]
+			),
+			endTime: getDateStr(
+				this.props.catalogEntry &&
+					this.props.catalogEntry.Schedule &&
+					this.props.catalogEntry.Schedule.times[1]
+			),
 			selectedWeekdays: getWeekdaysFrom(this.props.catalogEntry),
 		};
 	}
 
-	buildSaveableValue () {
+	buildSaveableValue() {
 		// gather up the currently selected days/times
 		let times = [];
 
-		const pad = (value) => {
-			if(value < 10) {
+		const pad = value => {
+			if (value < 10) {
 				return '0' + value;
 			}
 
 			return value;
 		};
 
-		if(this.state.startTime) {
-			times.push(pad(this.state.startTime.getHours()) + ':' + pad(this.state.startTime.getMinutes()) + ':00-05:00');
+		if (this.state.startTime) {
+			times.push(
+				pad(this.state.startTime.getHours()) +
+					':' +
+					pad(this.state.startTime.getMinutes()) +
+					':00-05:00'
+			);
 		}
-		if(this.state.endTime) {
-			times.push(pad(this.state.endTime.getHours()) + ':' + pad(this.state.endTime.getMinutes()) + ':00-05:00');
+		if (this.state.endTime) {
+			times.push(
+				pad(this.state.endTime.getHours()) +
+					':' +
+					pad(this.state.endTime.getMinutes()) +
+					':00-05:00'
+			);
 		}
 
 		const schedule = {
-			days: this.state.selectedWeekdays.map((d) => {
-				if(d === 'thursday') {
+			days: this.state.selectedWeekdays.map(d => {
+				if (d === 'thursday') {
 					return 'R';
 				}
 
-				if(d === 'sunday') {
+				if (d === 'sunday') {
 					return 'N';
 				}
 
 				return d.toUpperCase().charAt(0);
 			}),
-			times: times
+			times: times,
 		};
 
-		this.props.onValueChange && this.props.onValueChange(MeetTimesEdit.FIELD_NAME, schedule);
+		this.props.onValueChange &&
+			this.props.onValueChange(MeetTimesEdit.FIELD_NAME, schedule);
 	}
 
-	onDayClick = (day) => {
-		let selectedWeekdays = this.state.selectedWeekdays ? [...this.state.selectedWeekdays] : [];
+	onDayClick = day => {
+		let selectedWeekdays = this.state.selectedWeekdays
+			? [...this.state.selectedWeekdays]
+			: [];
 
-		if(selectedWeekdays.includes(day.name)) {
+		if (selectedWeekdays.includes(day.name)) {
 			selectedWeekdays.splice(selectedWeekdays.indexOf(day.name), 1);
-		}
-		else {
+		} else {
 			selectedWeekdays.push(day.name);
 		}
 
-		this.setState({selectedWeekdays : selectedWeekdays}, this.buildSaveableValue);
-	}
+		this.setState(
+			{ selectedWeekdays: selectedWeekdays },
+			this.buildSaveableValue
+		);
+	};
 
 	renderDay = (day, index) => {
 		return (
-			<Day key={day.name}
+			<Day
+				key={day.name}
 				day={day}
 				className="course-editor-day"
 				onClick={this.onDayClick}
-				selected={this.state.selectedWeekdays && this.state.selectedWeekdays.includes(day.name)}
+				selected={
+					this.state.selectedWeekdays &&
+					this.state.selectedWeekdays.includes(day.name)
+				}
 			/>
 		);
 	};
 
-	renderWeekdays () {
+	renderWeekdays() {
 		const days = [
-			{name: 'sunday', code: 'S'},
-			{name: 'monday', code: 'M'},
-			{name: 'tuesday', code: 'T'},
-			{name: 'wednesday', code: 'W'},
-			{name: 'thursday', code: 'T'},
-			{name: 'friday', code: 'F'},
-			{name: 'saturday', code: 'S'}
+			{ name: 'sunday', code: 'S' },
+			{ name: 'monday', code: 'M' },
+			{ name: 'tuesday', code: 'T' },
+			{ name: 'wednesday', code: 'W' },
+			{ name: 'thursday', code: 'T' },
+			{ name: 'friday', code: 'F' },
+			{ name: 'saturday', code: 'S' },
 		];
 
 		return (
@@ -111,7 +137,7 @@ export default class MeetTimesEdit extends React.Component {
 		);
 	}
 
-	renderDaySelection () {
+	renderDaySelection() {
 		return (
 			<div className="course-editor-day-selection">
 				{this.renderWeekdays()}
@@ -119,29 +145,35 @@ export default class MeetTimesEdit extends React.Component {
 		);
 	}
 
-	updateStartTime = (newDate) => {
+	updateStartTime = newDate => {
 		this.setState({ startTime: newDate }, this.buildSaveableValue);
 	};
 
-	updateEndTime = (newDate) => {
+	updateEndTime = newDate => {
 		this.setState({ endTime: newDate }, this.buildSaveableValue);
 	};
 
-	renderTimeSelection () {
+	renderTimeSelection() {
 		return (
 			<div className="course-editor-time-selection">
 				<div className="course-editor-starttime">
-					<TimePicker value={this.state.startTime} onChange={this.updateStartTime}/>
+					<TimePicker
+						value={this.state.startTime}
+						onChange={this.updateStartTime}
+					/>
 				</div>
 				<div className="spacer">-</div>
 				<div className="course-editor-endtime">
-					<TimePicker value={this.state.endTime} onChange={this.updateEndTime}/>
+					<TimePicker
+						value={this.state.endTime}
+						onChange={this.updateEndTime}
+					/>
 				</div>
 			</div>
 		);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="field-info">
 				<div className="field-label">{t('label')}</div>

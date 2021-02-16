@@ -1,46 +1,54 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.info.inline.components.prerequisites.View', {
 	label: 'Prerequisites',
-	none: 'None'
+	none: 'None',
 });
 
 export default class PrerequisitesView extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired
-	}
+		catalogEntry: PropTypes.object.isRequired,
+	};
 
 	static FIELD_NAME = 'Prerequisites';
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {};
 	}
 
-	renderPrereq = (pre) => {
-		return (<div className="prerequisite" key={pre.id}>{pre.title}</div>);
-	}
+	renderPrereq = pre => {
+		return (
+			<div className="prerequisite" key={pre.id}>
+				{pre.title}
+			</div>
+		);
+	};
 
-	renderContent () {
+	renderContent() {
 		const { catalogEntry } = this.props;
 
-		if(!catalogEntry[PrerequisitesView.FIELD_NAME] || catalogEntry[PrerequisitesView.FIELD_NAME].length === 0) {
-			return (<div className="content-column">{t('none')}</div>);
+		if (
+			!catalogEntry[PrerequisitesView.FIELD_NAME] ||
+			catalogEntry[PrerequisitesView.FIELD_NAME].length === 0
+		) {
+			return <div className="content-column">{t('none')}</div>;
 		}
 
 		return (
 			<div className="content-column">
-				{catalogEntry[PrerequisitesView.FIELD_NAME].map(this.renderPrereq)}
+				{catalogEntry[PrerequisitesView.FIELD_NAME].map(
+					this.renderPrereq
+				)}
 			</div>
 		);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="columned">
 				<div className="field-info">

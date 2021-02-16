@@ -12,14 +12,14 @@ const mockService = () => ({
 			},
 			Items: [
 				{
-					name: 'user1'
+					name: 'user1',
 				},
 				{
-					name: 'user2'
-				}
-			]
+					name: 'user2',
+				},
+			],
 		});
-	}
+	},
 });
 
 const onBefore = () => {
@@ -27,37 +27,36 @@ const onBefore = () => {
 		...(global.$AppConfig || {}),
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//un-mock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
 };
 
 Renderer.propTypes = {
 	loading: PropTypes.bool,
-	items: PropTypes.arrayOf(PropTypes.object)
+	items: PropTypes.arrayOf(PropTypes.object),
 };
 
-function Renderer (props) {
-	if(props.loading) {
+function Renderer(props) {
+	if (props.loading) {
 		return <div>Loading...</div>;
 	}
 
-	if(props.items) {
+	if (props.items) {
 		const text = 'Number of items: ' + props.items.length;
 
 		return <div>{text}</div>;
 	}
 
-	return (
-		<div>Nothing to show</div>
-	);
+	return <div>Nothing to show</div>;
 }
 
 /* eslint-env jest */
@@ -69,15 +68,19 @@ describe('Test roster view', () => {
 		const course = {
 			getLink: function (url) {
 				return url;
-			}
+			},
 		};
 
-		const {container} = render(<View hasCourse course={course} renderRoster={Renderer}/>);
+		const { container } = render(
+			<View hasCourse course={course} renderRoster={Renderer} />
+		);
 
 		expect(container.innerHTML).toEqual('<div>Loading...</div>');
 
 		await waitFor(() => {
-			expect(container.innerHTML).toEqual('<div>Number of items: 2</div>');
+			expect(container.innerHTML).toEqual(
+				'<div>Number of items: 2</div>'
+			);
 		});
 	});
 });

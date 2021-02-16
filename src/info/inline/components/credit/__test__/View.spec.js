@@ -10,22 +10,31 @@ const LABEL = 'Enrollment Label';
 describe('Credit view test', () => {
 	test('Test credit view', () => {
 		const catalogEntry = {
-			Credit: [{
-				Hours: 5,
-				Enrollment: {
-					url: URL,
-					label: LABEL
-				}
-			}]
+			Credit: [
+				{
+					Hours: 5,
+					Enrollment: {
+						url: URL,
+						label: LABEL,
+					},
+				},
+			],
 		};
 
 		const enrollmentAccess = {
-			LegacyEnrollmentStatus: 'Open'
+			LegacyEnrollmentStatus: 'Open',
 		};
 
-		const x = render(<View catalogEntry={catalogEntry} enrollmentAccess={enrollmentAccess}/>);
+		const x = render(
+			<View
+				catalogEntry={catalogEntry}
+				enrollmentAccess={enrollmentAccess}
+			/>
+		);
 
-		expect(x.container.querySelector('.hours').textContent).toEqual('5 Credits Available');
+		expect(x.container.querySelector('.hours').textContent).toEqual(
+			'5 Credits Available'
+		);
 
 		const enrollLink = x.container.querySelector('.enroll-link a');
 
@@ -34,19 +43,25 @@ describe('Credit view test', () => {
 
 		const openEnrollment = x.container.querySelector('.open-enrollment');
 
-		expect(openEnrollment.textContent).toMatch(/You’re registered for the open course./);
+		expect(openEnrollment.textContent).toMatch(
+			/You’re registered for the open course./
+		);
 		expect(openEnrollment.textContent).toMatch(/(No Credit)/);
 	});
 
 	test('Test single credit', () => {
 		const catalogEntry = {
-			Credit: [{
-				Hours: 1
-			}]
+			Credit: [
+				{
+					Hours: 1,
+				},
+			],
 		};
 
-		const x = render(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry} />);
 
-		expect(x.container.querySelector('.hours').textContent).toEqual('1 Credit Available');
+		expect(x.container.querySelector('.hours').textContent).toEqual(
+			'1 Credit Available'
+		);
 	});
 });

@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DateTime, Monitor, Hooks, Loading, Errors, Text} from '@nti/web-commons';
+import {
+	DateTime,
+	Monitor,
+	Hooks,
+	Loading,
+	Errors,
+	Text,
+} from '@nti/web-commons';
 
 import Items from '../../../overview/lesson/items';
 import Overview from '../../../overview/lesson/OverviewContents';
@@ -11,16 +18,17 @@ import CompletionStatus from './CompletionStatus';
 
 const dateFormat = DateTime.MONTH_NAME_DAY_YEAR;
 
-const {useResolver, useMobileValue} = Hooks;
-const {isPending, isErrored, isResolved} = useResolver;
+const { useResolver, useMobileValue } = Hooks;
+const { isPending, isErrored, isResolved } = useResolver;
 
-const flatten = (items) => items.reduce((acc, item) => {
-	if (item.Items) {
-		return [...acc, ...flatten(item.Items)];
-	}
+const flatten = items =>
+	items.reduce((acc, item) => {
+		if (item.Items) {
+			return [...acc, ...flatten(item.Items)];
+		}
 
-	return [...acc, item];
-}, []);
+		return [...acc, item];
+	}, []);
 
 const isRequired = item => item?.CompletionRequired;
 const isIncomplete = (item, completedItems) => {
@@ -28,20 +36,29 @@ const isIncomplete = (item, completedItems) => {
 		return CompletionStatus.getCompletedDate(item, completedItems) == null;
 	}
 
-	if (!item.hasCompleted) { return false; }
+	if (!item.hasCompleted) {
+		return false;
+	}
 
 	return !item.hasCompleted() || !item.completedSuccessfully();
 };
 
 const getFilterFn = (completedItems, requiredOnly, incompleteOnly) => {
-	return (item) => (!requiredOnly || isRequired(item, completedItems)) && (!incompleteOnly || isIncomplete(item, completedItems));
+	return item =>
+		(!requiredOnly || isRequired(item, completedItems)) &&
+		(!incompleteOnly || isIncomplete(item, completedItems));
 };
 
-const getItems = (overview, completedItems, requiredOnly, incompleteOnly, itemInclusionFilter) => (
+const getItems = (
+	overview,
+	completedItems,
+	requiredOnly,
+	incompleteOnly,
+	itemInclusionFilter
+) =>
 	flatten(overview?.Items ?? [])
 		.filter(getFilterFn(completedItems, requiredOnly, incompleteOnly))
-		.filter(itemInclusionFilter)
-);
+		.filter(itemInclusionFilter);
 
 const Placeholder = () => (
 	<div className={Styles['page-placeholder']}>
@@ -59,16 +76,16 @@ RemainingItemsPage.propTypes = {
 		title: PropTypes.string,
 		getAvailableBeginning: PropTypes.func,
 		getAvailableEnding: PropTypes.func,
-		getContent: PropTypes.func
+		getContent: PropTypes.func,
 	}),
 
 	onWaterfallLoadContinue: PropTypes.func,
 	itemInclusionFilter: PropTypes.func,
 
 	requiredOnly: PropTypes.bool,
-	incompleteOnly: PropTypes.bool
+	incompleteOnly: PropTypes.bool,
 };
-function RemainingItemsPage ({
+function RemainingItemsPage({
 	lesson,
 	course,
 	enrollment,
@@ -76,7 +93,7 @@ function RemainingItemsPage ({
 	onWaterfallLoadContinue,
 	requiredOnly,
 	incompleteOnly,
-	itemInclusionFilter
+	itemInclusionFilter,
 }) {
 	const extraColumns = useMobileValue(undefined, [CompletionStatus]);
 
@@ -95,8 +112,21 @@ function RemainingItemsPage ({
 	const overview = isResolved(resolver) ? resolver : null;
 
 	const items = React.useMemo(
-		() => getItems(overview, enrollmentCompletedItems, requiredOnly, incompleteOnly, itemInclusionFilter),
-		[overview, enrollmentCompletedItems, requiredOnly, incompleteOnly, itemInclusionFilter]
+		() =>
+			getItems(
+				overview,
+				enrollmentCompletedItems,
+				requiredOnly,
+				incompleteOnly,
+				itemInclusionFilter
+			),
+		[
+			overview,
+			enrollmentCompletedItems,
+			requiredOnly,
+			incompleteOnly,
+			itemInclusionFilter,
+		]
 	);
 	const hasItems = items && items.length > 0;
 
@@ -105,18 +135,31 @@ function RemainingItemsPage ({
 
 	return (
 		<Loading.Placeholder loading={loading} fallback={<Placeholder />}>
-			{error && (<Errors.Message error={error} />)}
+			{error && <Errors.Message error={error} />}
 			{hasItems && (
 				<PaddedContainer className={Styles.header}>
-					{available && (<DateTime className={Styles['sub-title']} format={dateFormat} date={available} />)}
-					{!available && ending && (<DateTime className={Styles['sub-title']} format={dateFormat} date={ending} />)}
-					<Text.Base className={Styles.title}>{overview.title}</Text.Base>
+					{available && (
+						<DateTime
+							className={Styles['sub-title']}
+							format={dateFormat}
+							date={available}
+						/>
+					)}
+					{!available && ending && (
+						<DateTime
+							className={Styles['sub-title']}
+							format={dateFormat}
+							date={ending}
+						/>
+					)}
+					<Text.Base className={Styles.title}>
+						{overview.title}
+					</Text.Base>
 				</PaddedContainer>
 			)}
 			{hasItems && (
 				<Items
 					className={Styles.items}
-
 					items={items}
 					overview={overview}
 					outlineNode={lesson}
@@ -124,14 +167,11 @@ function RemainingItemsPage ({
 					enrollment={enrollment}
 					completedItemsOverride={enrollmentCompletedItems}
 					layout={Overview.List}
-
 					requiredOnly={requiredOnly}
 					incompleteOnly={incompleteOnly}
-
 					extraColumns={extraColumns}
 				/>
 			)}
-
 		</Loading.Placeholder>
 	);
 }
@@ -140,11 +180,14 @@ const MonitorElement = styled('div')`
 	min-height: 10vh;
 `;
 
-export default function RemainingItemsPageContainer (props) {
+export default function RemainingItemsPageContainer(props) {
 	const [onScreen, setOnScreen] = React.useState(false);
-	const tripLikeIDo = React.useCallback((x) => setOnScreen(onScreen || x), [setOnScreen, onScreen]);
+	const tripLikeIDo = React.useCallback(x => setOnScreen(onScreen || x), [
+		setOnScreen,
+		onScreen,
+	]);
 	return !onScreen ? (
-		<Monitor.OnScreen onChange={tripLikeIDo} as={MonitorElement}/>
+		<Monitor.OnScreen onChange={tripLikeIDo} as={MonitorElement} />
 	) : (
 		<RemainingItemsPage {...props} />
 	);

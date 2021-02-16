@@ -1,25 +1,35 @@
 import './Overview.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DialogButtons, RemoveButton, DateTime, Prompt} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
-import {ImageUpload} from '@nti/web-whiteboard';
+import {
+	DialogButtons,
+	RemoveButton,
+	DateTime,
+	Prompt,
+} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { ImageUpload } from '@nti/web-whiteboard';
 
 import PositionSelect from '../../../../common/PositionSelect';
 
-const t = scoped('course.overview.lesson.items.webinar.editor.panels.Overview', {
-	addToLesson: 'Add to Lesson',
-	addAnImage: 'Add an Image',
-	save: 'Save',
-	cancel: 'Cancel',
-	position: 'Position',
-	autoCompletion: 'Auto Completion',
-	autoCompletionDesc: 'Define what is required for learners to complete this webinar.',
-	requiredSubmissions: 'Required Submissions',
-	minimumPercentWatched: 'Minimum Percent Watched',
-	infoTip: 'Guarantee all learners have access to your content by reviewing your GoToWebinar registration and attendee limits.',
-	delete: 'Delete'
-});
+const t = scoped(
+	'course.overview.lesson.items.webinar.editor.panels.Overview',
+	{
+		addToLesson: 'Add to Lesson',
+		addAnImage: 'Add an Image',
+		save: 'Save',
+		cancel: 'Cancel',
+		position: 'Position',
+		autoCompletion: 'Auto Completion',
+		autoCompletionDesc:
+			'Define what is required for learners to complete this webinar.',
+		requiredSubmissions: 'Required Submissions',
+		minimumPercentWatched: 'Minimum Percent Watched',
+		infoTip:
+			'Guarantee all learners have access to your content by reviewing your GoToWebinar registration and attendee limits.',
+		delete: 'Delete',
+	}
+);
 
 export default class WebinarOverviewEditor extends React.Component {
 	static propTypes = {
@@ -30,12 +40,12 @@ export default class WebinarOverviewEditor extends React.Component {
 		onCancel: PropTypes.func,
 		onAddToLesson: PropTypes.func,
 		onDelete: PropTypes.func,
-		saveDisabled: PropTypes.bool
-	}
+		saveDisabled: PropTypes.bool,
+	};
 
-	state = {}
+	state = {};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		const nearestSession = props.webinar.getNearestSession();
@@ -47,64 +57,87 @@ export default class WebinarOverviewEditor extends React.Component {
 			selectedRank: (props.overviewGroup.Items || []).length + 1,
 			webinar: props.webinar,
 			// check icon for null string.  if we remove an icon and PUT to the record, it won't be null, but "null"
-			img: props.item && props.item.icon && props.item.icon !== 'null' && {src: props.item.icon}
+			img: props.item &&
+				props.item.icon &&
+				props.item.icon !== 'null' && { src: props.item.icon },
 		};
 	}
 
-	renderDate () {
-		const {startDate} = this.state;
+	renderDate() {
+		const { startDate } = this.state;
 
 		return (
 			<div className="date">
-				<div className="month">{DateTime.format(startDate, DateTime.MONTH_ABBR)}</div>
-				<div className="day">{DateTime.format(startDate, DateTime.DAY_OF_THE_MONTH)}</div>
+				<div className="month">
+					{DateTime.format(startDate, DateTime.MONTH_ABBR)}
+				</div>
+				<div className="day">
+					{DateTime.format(startDate, DateTime.DAY_OF_THE_MONTH)}
+				</div>
 			</div>
 		);
 	}
 
-	renderWebinarInfo () {
-		const {webinar} = this.props;
-		const {startDate, img} = this.state;
+	renderWebinarInfo() {
+		const { webinar } = this.props;
+		const { startDate, img } = this.state;
 
 		return (
 			<div className="webinar-info">
 				<div className="title">{webinar.subject}</div>
 				<div className="time-info">
 					<span>Live</span>
-					<DateTime.Duration webinar={webinar} longAbbreviations/>
+					<DateTime.Duration webinar={webinar} longAbbreviations />
 					<span>Webinar</span>
-					<span className="date">{DateTime.format(startDate, DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE)}</span>
+					<span className="date">
+						{DateTime.format(
+							startDate,
+							DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE
+						)}
+					</span>
 				</div>
 				<div className="image-and-description">
-					<ImageUpload img={img} onChange={imgBlob => this.setState({imgBlob})}/>
+					<ImageUpload
+						img={img}
+						onChange={imgBlob => this.setState({ imgBlob })}
+					/>
 					<pre className="description">{webinar.description}</pre>
 				</div>
 			</div>
 		);
 	}
 
-	renderInfoBanner () {
-		if(this.state.hideBanner) {
+	renderInfoBanner() {
+		if (this.state.hideBanner) {
 			return null;
 		}
 
 		return (
 			<div className="info-banner">
 				<div className="info-text">{t('infoTip')}</div>
-				<RemoveButton onRemove={() => { this.setState({hideBanner: true}); }}/>
+				<RemoveButton
+					onRemove={() => {
+						this.setState({ hideBanner: true });
+					}}
+				/>
 			</div>
 		);
 	}
 
 	onPositionChange = (selectedSection, selectedRank) => {
-		this.setState({selectedSection, selectedRank});
-	}
+		this.setState({ selectedSection, selectedRank });
+	};
 
-	renderPosition () {
+	renderPosition() {
 		return (
 			<div className="position-section">
 				<div className="section-title">{t('position')}</div>
-				<PositionSelect item={this.props.item} lessonOverview={this.props.lessonOverview} overviewGroup={this.state.selectedSection} onChange={this.onPositionChange}/>
+				<PositionSelect
+					item={this.props.item}
+					lessonOverview={this.props.lessonOverview}
+					overviewGroup={this.state.selectedSection}
+					onChange={this.onPositionChange}
+				/>
 			</div>
 		);
 	}
@@ -128,55 +161,70 @@ export default class WebinarOverviewEditor extends React.Component {
 	// 	);
 	// }
 
-
 	onDelete = () => {
-		const {onDelete} = this.props;
+		const { onDelete } = this.props;
 
-		Prompt.areYouSure('Do you want to remove this webinar from the lesson?').then(() => {
+		Prompt.areYouSure(
+			'Do you want to remove this webinar from the lesson?'
+		).then(() => {
 			onDelete();
 		});
-	}
+	};
 
-	renderOtherInfo () {
-		const {onDelete} = this.props;
+	renderOtherInfo() {
+		const { onDelete } = this.props;
 
 		return (
 			<div className="other-info">
 				{this.renderPosition()}
-				{onDelete && <div className="delete-button" onClick={() => { onDelete(); }}>{t('delete')}</div>}
+				{onDelete && (
+					<div
+						className="delete-button"
+						onClick={() => {
+							onDelete();
+						}}
+					>
+						{t('delete')}
+					</div>
+				)}
 				{/* {this.renderAutoCompletion()} */}
 			</div>
 		);
 	}
 
 	onCancel = () => {
-		const {onCancel} = this.props;
+		const { onCancel } = this.props;
 
-		if(onCancel) {
+		if (onCancel) {
 			onCancel();
 		}
-	}
+	};
 
 	onSave = () => {
-		const {onAddToLesson} = this.props;
-		const {selectedSection, selectedRank, img, webinar, imgBlob} = this.state;
+		const { onAddToLesson } = this.props;
+		const {
+			selectedSection,
+			selectedRank,
+			img,
+			webinar,
+			imgBlob,
+		} = this.state;
 
-		if(onAddToLesson) {
+		if (onAddToLesson) {
 			let blobValue = null;
 
-			if(img && !imgBlob) {
+			if (img && !imgBlob) {
 				blobValue = undefined; // an image was provided, but no changes were made
-			}
-			else {
+			} else {
 				blobValue = imgBlob || null;
 			}
 
 			onAddToLesson(selectedSection, selectedRank, blobValue, webinar);
 		}
-	}
+	};
 
-	renderButtons () {
-		const {saveDisabled} = this.props;
+	renderButtons() {
+		const { saveDisabled } = this.props;
 
 		return (
 			<DialogButtons
@@ -188,14 +236,14 @@ export default class WebinarOverviewEditor extends React.Component {
 					{
 						label: this.props.item ? t('save') : t('addToLesson'),
 						disabled: saveDisabled,
-						onClick: this.onSave
-					}
+						onClick: this.onSave,
+					},
 				]}
 			/>
 		);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="webinar-overview-editor">
 				<div className="contents">

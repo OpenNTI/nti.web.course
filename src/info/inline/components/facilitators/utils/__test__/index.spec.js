@@ -2,7 +2,7 @@ import { saveFacilitators, mergeAllFacilitators, getAvailableRoles } from '../';
 
 let savedData = null;
 
-const mockService = (putData) => ({
+const mockService = putData => ({
 	put: (link, data) => {
 		const key = `put-${link}`;
 
@@ -15,13 +15,13 @@ const mockService = (putData) => ({
 
 		savedData[key] = newData;
 	},
-	delete: (link) => {
+	delete: link => {
 		const key = 'delete-' + link.split('/')[0];
 
 		let newData = [...(savedData[key] || []), link.split('/')[1]];
 
 		savedData[key] = newData;
-	}
+	},
 });
 
 const onBefore = () => {
@@ -30,14 +30,15 @@ const onBefore = () => {
 		...(global.$AppConfig || {}),
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//unmock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	savedData = null;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
@@ -53,18 +54,18 @@ describe('Test saveFacilitators', () => {
 		const putData = {};
 		const service = mockService(putData);
 		const catalogEntry = {
-			save: (data) => {
+			save: data => {
 				savedData.Instructors = data.Instructors;
-			}
+			},
 		};
 
 		const courseInstance = {
-			getLink: (name) => {
+			getLink: name => {
 				return name;
 			},
 			hasLink: name => Boolean(name),
 			postToLink: (...args) => service.post(...args),
-			putToLink: (...args) => service.put(...args)
+			putToLink: (...args) => service.put(...args),
 		};
 
 		const facilitators = [
@@ -74,8 +75,9 @@ describe('Test saveFacilitators', () => {
 				JobTitle: 'exists only in instructors',
 				Name: 'I Only',
 				username: 'ionly',
-				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-				Class: 'CourseCatalogInstructorLegacyInfo'
+				MimeType:
+					'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+				Class: 'CourseCatalogInstructorLegacyInfo',
 			},
 			{
 				role: 'editor',
@@ -83,8 +85,9 @@ describe('Test saveFacilitators', () => {
 				JobTitle: 'exists only in editors',
 				Name: 'E Only',
 				username: 'eonly',
-				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-				Class: 'CourseCatalogInstructorLegacyInfo'
+				MimeType:
+					'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+				Class: 'CourseCatalogInstructorLegacyInfo',
 			},
 			{
 				role: 'instructor',
@@ -92,8 +95,9 @@ describe('Test saveFacilitators', () => {
 				JobTitle: 'exists in both instructors and editors',
 				Name: 'Both',
 				username: 'both',
-				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-				Class: 'CourseCatalogInstructorLegacyInfo'
+				MimeType:
+					'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+				Class: 'CourseCatalogInstructorLegacyInfo',
 			},
 			{
 				role: 'assistant',
@@ -101,8 +105,9 @@ describe('Test saveFacilitators', () => {
 				Name: 'Hidden Instructor',
 				JobTitle: '-',
 				username: 'hiddenInstructor',
-				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-				Class: 'CourseCatalogInstructorLegacyInfo'
+				MimeType:
+					'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+				Class: 'CourseCatalogInstructorLegacyInfo',
 			},
 			{
 				role: 'instructor',
@@ -110,8 +115,9 @@ describe('Test saveFacilitators', () => {
 				Name: 'Hidden Both',
 				JobTitle: '-',
 				username: 'hiddenBoth',
-				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-				Class: 'CourseCatalogInstructorLegacyInfo'
+				MimeType:
+					'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+				Class: 'CourseCatalogInstructorLegacyInfo',
 			},
 			{
 				role: 'editor',
@@ -119,8 +125,9 @@ describe('Test saveFacilitators', () => {
 				Name: 'Hidden Editor',
 				JobTitle: '-',
 				username: 'hiddenEditor',
-				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-				Class: 'CourseCatalogInstructorLegacyInfo'
+				MimeType:
+					'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+				Class: 'CourseCatalogInstructorLegacyInfo',
 			},
 			{
 				role: '',
@@ -128,16 +135,22 @@ describe('Test saveFacilitators', () => {
 				Name: 'To Remove',
 				JobTitle: '-',
 				username: 'toRemove',
-				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-				Class: 'CourseCatalogInstructorLegacyInfo'
-			}
+				MimeType:
+					'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+				Class: 'CourseCatalogInstructorLegacyInfo',
+			},
 		];
 
 		await saveFacilitators(catalogEntry, courseInstance, facilitators);
 
-		const {roles} = putData['put-roles'];
+		const { roles } = putData['put-roles'];
 		const expectedEditors = ['eonly', 'both', 'hiddenBoth', 'hiddenEditor'];
-		const expectedInstructors = ['ionly', 'both', 'hiddenInstructor', 'hiddenBoth'];
+		const expectedInstructors = [
+			'ionly',
+			'both',
+			'hiddenInstructor',
+			'hiddenBoth',
+		];
 
 		expect(roles.editors.sort()).toEqual(expectedEditors.sort());
 		expect(roles.instructors.sort()).toEqual(expectedInstructors.sort());
@@ -150,63 +163,67 @@ describe('Test mergeAllFacilitators', () => {
 			{
 				username: 'ionly',
 				JobTitle: 'exists only in instructors',
-				Name: 'I Only'
+				Name: 'I Only',
 			},
 			{
 				username: 'eonly',
 				JobTitle: 'exists only in editors',
-				Name: 'E Only'
+				Name: 'E Only',
 			},
 			{
 				username: 'both',
 				JobTitle: 'exists in both instructors and editors',
-				Name: 'Both'
-			}
+				Name: 'Both',
+			},
 		];
 
 		const instructors = [
 			{
 				alias: 'I Only',
-				Username: 'ionly'
+				Username: 'ionly',
 			},
 			{
 				alias: 'Both',
-				Username: 'both'
+				Username: 'both',
 			},
 			{
 				alias: 'Hidden Instructor',
-				Username: 'hiddenInstructor'
+				Username: 'hiddenInstructor',
 			},
 			{
 				alias: 'Hidden Both',
-				Username: 'hiddenBoth'
-			}
+				Username: 'hiddenBoth',
+			},
 		];
 
 		const editors = [
 			{
 				alias: 'E Only',
-				Username: 'eonly'
+				Username: 'eonly',
 			},
 			{
 				alias: 'Both',
-				Username: 'both'
+				Username: 'both',
 			},
 			{
 				alias: 'Hidden Editor',
-				Username: 'hiddenEditor'
+				Username: 'hiddenEditor',
 			},
 			{
 				alias: 'Hidden Both',
-				Username: 'hiddenBoth'
-			}
+				Username: 'hiddenBoth',
+			},
 		];
 
-		const merged = mergeAllFacilitators(catalogInstructors, instructors, editors);
+		const merged = mergeAllFacilitators(
+			catalogInstructors,
+			instructors,
+			editors
+		);
 
 		expect(merged.length).toBe(6);
 
-		const findUser = (name) => {
+		const findUser = name => {
 			return merged.filter(x => x.username === name)[0];
 		};
 
@@ -219,22 +236,45 @@ describe('Test mergeAllFacilitators', () => {
 			expect(user.JobTitle).toEqual(jobTitle);
 		};
 
-		verifyUser('ionly', true, 'assistant', 'I Only', 'exists only in instructors');
+		verifyUser(
+			'ionly',
+			true,
+			'assistant',
+			'I Only',
+			'exists only in instructors'
+		);
 		verifyUser('eonly', true, 'editor', 'E Only', 'exists only in editors');
-		verifyUser('both', true, 'instructor', 'Both', 'exists in both instructors and editors');
-		verifyUser('hiddenInstructor', false, 'assistant', 'Hidden Instructor', 'Assistant');
+		verifyUser(
+			'both',
+			true,
+			'instructor',
+			'Both',
+			'exists in both instructors and editors'
+		);
+		verifyUser(
+			'hiddenInstructor',
+			false,
+			'assistant',
+			'Hidden Instructor',
+			'Assistant'
+		);
 		verifyUser('hiddenEditor', false, 'editor', 'Hidden Editor', 'Editor');
-		verifyUser('hiddenBoth', false, 'instructor', 'Hidden Both', 'Instructor');
+		verifyUser(
+			'hiddenBoth',
+			false,
+			'instructor',
+			'Hidden Both',
+			'Instructor'
+		);
 	});
 });
-
 
 describe('Test getAvailableRoles', () => {
 	test('Test all options', () => {
 		const courseInstance = {
-			hasLink: (link) => {
+			hasLink: link => {
 				return link === 'Instructors' || link === 'Editors';
-			}
+			},
 		};
 
 		const available = getAvailableRoles(courseInstance);
@@ -248,9 +288,9 @@ describe('Test getAvailableRoles', () => {
 
 	test('Test only instructor', () => {
 		const courseInstance = {
-			hasLink: (link) => {
+			hasLink: link => {
 				return link === 'Instructors';
-			}
+			},
 		};
 
 		const available = getAvailableRoles(courseInstance);
@@ -262,9 +302,9 @@ describe('Test getAvailableRoles', () => {
 
 	test('Test only editor', () => {
 		const courseInstance = {
-			hasLink: (link) => {
+			hasLink: link => {
 				return link === 'Editors';
-			}
+			},
 		};
 
 		const available = getAvailableRoles(courseInstance);
@@ -276,9 +316,9 @@ describe('Test getAvailableRoles', () => {
 
 	test('Test none', () => {
 		const courseInstance = {
-			hasLink: (link) => {
+			hasLink: link => {
 				return false;
-			}
+			},
 		};
 
 		const available = getAvailableRoles(courseInstance);

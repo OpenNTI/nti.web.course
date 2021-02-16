@@ -7,29 +7,33 @@ import Registry from './Registry';
 
 export default class RelatedWorkRefProgressItem extends React.Component {
 	static propTypes = {
-		item: PropTypes.object
-	}
+		item: PropTypes.object,
+	};
 
-
-	render () {
-		const {item} = this.props;
+	render() {
+		const { item } = this.props;
 
 		return (
-			<Base item={item} className="related-work-ref-progress-item" renderIcon={this.renderIcon}/>
+			<Base
+				item={item}
+				className="related-work-ref-progress-item"
+				renderIcon={this.renderIcon}
+			/>
 		);
 	}
 
-
 	renderIcon = () => {
-		const {item} = this.props;
-		const {icon} = item;
+		const { item } = this.props;
+		const { icon } = item;
 
 		return (
 			<div className="related-work-ref-progress-item-icon">
 				<img src={icon} />
 			</div>
 		);
-	}
+	};
 }
 
-Registry.register('application/vnd.nextthought.relatedworkref')(RelatedWorkRefProgressItem);
+Registry.register('application/vnd.nextthought.relatedworkref')(
+	RelatedWorkRefProgressItem
+);

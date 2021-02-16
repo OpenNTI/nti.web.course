@@ -1,11 +1,17 @@
 import './EventOverview.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
-import {DialogButtons, DateTime, Prompt, Input, Loading} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
-import {ImageUpload} from '@nti/web-whiteboard';
-import {Connectors} from '@nti/lib-store';
+import { decorate } from '@nti/lib-commons';
+import {
+	DialogButtons,
+	DateTime,
+	Prompt,
+	Input,
+	Loading,
+} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { ImageUpload } from '@nti/web-whiteboard';
+import { Connectors } from '@nti/lib-store';
 import cx from 'classnames';
 
 import PositionSelect from '../../../common/PositionSelect';
@@ -27,7 +33,7 @@ const t = scoped('course.overview.lesson.items.event.common.Overview', {
 	event: 'Event',
 	areYouSure: 'Do you want to remove this event from the lesson?',
 	start: 'Start',
-	end: 'End'
+	end: 'End',
 });
 
 class EventOverviewEditor extends React.Component {
@@ -43,15 +49,15 @@ class EventOverviewEditor extends React.Component {
 		createEvent: PropTypes.func,
 		createError: PropTypes.string,
 		saveDisabled: PropTypes.bool,
-		saving: PropTypes.bool
-	}
+		saving: PropTypes.bool,
+	};
 
-	state = {}
+	state = {};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
-		const {event} = props;
+		const { event } = props;
 
 		let defaultStartDate = new Date();
 		defaultStartDate.setSeconds(0);
@@ -60,7 +66,9 @@ class EventOverviewEditor extends React.Component {
 
 		this.state = {
 			startDate: event ? event.getStartTime() : defaultStartDate,
-			endDate: event ? event.getEndTime() : new Date(defaultStartDate.getTime() + (60 * 60 * 1000)),
+			endDate: event
+				? event.getEndTime()
+				: new Date(defaultStartDate.getTime() + 60 * 60 * 1000),
 			title: event && event.title,
 			description: event && event.description,
 			location: event && event.location,
@@ -68,111 +76,180 @@ class EventOverviewEditor extends React.Component {
 			selectedRank: (props.overviewGroup.Items || []).length + 1,
 			event: props.event,
 			// check icon for null string.  if we remove an icon and PUT to the record, it won't be null, but "null"
-			img: props.event && props.event.icon && props.event.icon !== 'null' && {src: props.event.icon}
+			img: props.event &&
+				props.event.icon &&
+				props.event.icon !== 'null' && { src: props.event.icon },
 		};
 	}
 
-	renderDate () {
-		const {startDate} = this.state;
+	renderDate() {
+		const { startDate } = this.state;
 
-		return (
-			<DateTime.DateIcon minimal className="date" date={startDate} />
-		);
+		return <DateTime.DateIcon minimal className="date" date={startDate} />;
 	}
 
-	renderEventInfo () {
-		const {startDate, title, description, img} = this.state;
+	renderEventInfo() {
+		const { startDate, title, description, img } = this.state;
 
 		return (
 			<div className="event-info">
-				<div className="title"><Input.Text placeholder={t('eventTitle')} value={title} onChange={(val) => this.setState({title: val})} maxLength="140"/></div>
+				<div className="title">
+					<Input.Text
+						placeholder={t('eventTitle')}
+						value={title}
+						onChange={val => this.setState({ title: val })}
+						maxLength="140"
+					/>
+				</div>
 				<div className="time-info">
-					<span className="date">{DateTime.format(startDate, DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE)}</span>
+					<span className="date">
+						{DateTime.format(
+							startDate,
+							DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE
+						)}
+					</span>
 				</div>
 				<div className="image-and-description">
-					<ImageUpload img={img} onChange={imgBlob => this.setState({imgBlob})}/>
-					<Input.TextArea value={description} onChange={(val) => this.setState({description: val})} placeholder={t('eventDescription')}/>
+					<ImageUpload
+						img={img}
+						onChange={imgBlob => this.setState({ imgBlob })}
+					/>
+					<Input.TextArea
+						value={description}
+						onChange={val => this.setState({ description: val })}
+						placeholder={t('eventDescription')}
+					/>
 				</div>
 			</div>
 		);
 	}
 
 	onPositionChange = (selectedSection, selectedRank) => {
-		this.setState({selectedSection, selectedRank});
-	}
+		this.setState({ selectedSection, selectedRank });
+	};
 
-	renderPosition () {
+	renderPosition() {
 		return (
 			<div className="input-section position">
 				<div className="section-title">{t('position')}</div>
-				<PositionSelect item={this.props.item} lessonOverview={this.props.lessonOverview} overviewGroup={this.state.selectedSection} onChange={this.onPositionChange}/>
+				<PositionSelect
+					item={this.props.item}
+					lessonOverview={this.props.lessonOverview}
+					overviewGroup={this.state.selectedSection}
+					onChange={this.onPositionChange}
+				/>
 			</div>
 		);
 	}
 
-	renderLocation () {
-		const {location} = this.state;
+	renderLocation() {
+		const { location } = this.state;
 
 		return (
 			<div className="input-section location">
 				<div className="section-title">{t('location')}</div>
-				<Input.Text placeholder={t('eventLocation')} value={location} onChange={(val) => this.setState({location: val})} maxLength="140"/>
+				<Input.Text
+					placeholder={t('eventLocation')}
+					value={location}
+					onChange={val => this.setState({ location: val })}
+					maxLength="140"
+				/>
 			</div>
 		);
 	}
 
-	renderDateInputs () {
+	renderDateInputs() {
 		return (
 			<div className="input-section times">
 				<div className="section-title">{t('datesTimes')}</div>
-				<DateInput date={this.state.startDate} label={t('start')} onChange={(val) => this.setState({startDate: val})}/>
-				<DateInput date={this.state.endDate} label={t('end')} onChange={(val) => this.setState({endDate: val})}/>
+				<DateInput
+					date={this.state.startDate}
+					label={t('start')}
+					onChange={val => this.setState({ startDate: val })}
+				/>
+				<DateInput
+					date={this.state.endDate}
+					label={t('end')}
+					onChange={val => this.setState({ endDate: val })}
+				/>
 			</div>
 		);
 	}
 
 	onDelete = () => {
-		const {onDelete} = this.props;
+		const { onDelete } = this.props;
 
 		Prompt.areYouSure(t('areYouSure')).then(() => {
 			onDelete();
 		});
-	}
+	};
 
-	renderOtherInfo () {
-		const {onDelete} = this.props;
+	renderOtherInfo() {
+		const { onDelete } = this.props;
 
 		return (
 			<div className="other-info">
 				{this.renderPosition()}
 				{this.renderLocation()}
 				{this.renderDateInputs()}
-				{onDelete && <div className="delete-button" onClick={() => { this.onDelete(); }}>{t('delete')}</div>}
+				{onDelete && (
+					<div
+						className="delete-button"
+						onClick={() => {
+							this.onDelete();
+						}}
+					>
+						{t('delete')}
+					</div>
+				)}
 			</div>
 		);
 	}
 
 	onCancel = () => {
-		const {onCancel} = this.props;
+		const { onCancel } = this.props;
 
-		if(onCancel) {
+		if (onCancel) {
 			onCancel();
 		}
-	}
+	};
 
 	onSave = async () => {
-		const {onAddToLesson, course, event, createEvent} = this.props;
-		const {selectedSection, selectedRank, title, description, location, startDate, endDate, imgBlob} = this.state;
+		const { onAddToLesson, course, event, createEvent } = this.props;
+		const {
+			selectedSection,
+			selectedRank,
+			title,
+			description,
+			location,
+			startDate,
+			endDate,
+			imgBlob,
+		} = this.state;
 
-		const calendarEvent = await createEvent(course, event, title, description, location, startDate, endDate, imgBlob);
+		const calendarEvent = await createEvent(
+			course,
+			event,
+			title,
+			description,
+			location,
+			startDate,
+			endDate,
+			imgBlob
+		);
 
-		if(calendarEvent) {
-			onAddToLesson(selectedSection, selectedRank, imgBlob, calendarEvent);
+		if (calendarEvent) {
+			onAddToLesson(
+				selectedSection,
+				selectedRank,
+				imgBlob,
+				calendarEvent
+			);
 		}
-	}
+	};
 
-	renderButtons () {
-		const {saveDisabled} = this.props;
+	renderButtons() {
+		const { saveDisabled } = this.props;
 
 		return (
 			<DialogButtons
@@ -184,29 +261,31 @@ class EventOverviewEditor extends React.Component {
 					{
 						label: this.props.item ? t('save') : t('addToLesson'),
 						disabled: saveDisabled,
-						onClick: this.onSave
-					}
+						onClick: this.onSave,
+					},
 				]}
 			/>
 		);
 	}
 
-	renderError () {
-		const {createError} = this.props;
+	renderError() {
+		const { createError } = this.props;
 
-		if(createError) {
+		if (createError) {
 			return <div className="error">{createError}</div>;
 		}
 	}
 
-	render () {
-		const {saving, saveDisabled} = this.props;
-		const cls = cx('event-overview-editor', {saving: saving || saveDisabled});
+	render() {
+		const { saving, saveDisabled } = this.props;
+		const cls = cx('event-overview-editor', {
+			saving: saving || saveDisabled,
+		});
 
 		return (
 			<div className={cls}>
 				{this.renderError()}
-				{saving && <Loading.Mask/>}
+				{saving && <Loading.Mask />}
 				<div className="contents">
 					<div className="header-info">
 						{this.renderDate()}
@@ -220,7 +299,6 @@ class EventOverviewEditor extends React.Component {
 	}
 }
 
-
 export default decorate(EventOverviewEditor, [
-	Connectors.Any.connect(['createEvent', 'createError', 'saving'])
+	Connectors.Any.connect(['createEvent', 'createError', 'saving']),
 ]);

@@ -8,12 +8,12 @@ import ModeSelect from '../ModeSelect';
 describe('ModeSelect view test', () => {
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
+		label: PropTypes.string,
 	};
 
-	function done () {}
+	function done() {}
 
-	function SaveButton ({onSave, label}) {
+	function SaveButton({ onSave, label }) {
 		const saveWithDone = function () {
 			onSave(done);
 		};
@@ -28,23 +28,37 @@ describe('ModeSelect view test', () => {
 	test('Test instructor', async () => {
 		let mode = '';
 
-		const onModeSelect = (newValue) => {
+		const onModeSelect = newValue => {
 			mode = newValue;
 		};
 
 		const x = render(
-			<ModeSelect onModeSelect={onModeSelect} saveCmp={SaveButton}/>
+			<ModeSelect onModeSelect={onModeSelect} saveCmp={SaveButton} />
 		);
 
-		const [updateOption, replaceOption] = x.container.querySelectorAll('.mode-option');
+		const [updateOption, replaceOption] = x.container.querySelectorAll(
+			'.mode-option'
+		);
 
-		expect(updateOption.querySelector('.name').textContent).toEqual('Update Package');
-		expect(updateOption.querySelector('.description').textContent).toEqual('Learner progress will be kept, but it will adjust if content was added or removed.');
-		expect(updateOption.querySelector('.hint').textContent).toEqual('Better for Small Changes');
+		expect(updateOption.querySelector('.name').textContent).toEqual(
+			'Update Package'
+		);
+		expect(updateOption.querySelector('.description').textContent).toEqual(
+			'Learner progress will be kept, but it will adjust if content was added or removed.'
+		);
+		expect(updateOption.querySelector('.hint').textContent).toEqual(
+			'Better for Small Changes'
+		);
 
-		expect(replaceOption.querySelector('.name').textContent).toEqual('Replace Package');
-		expect(replaceOption.querySelector('.description').textContent).toEqual('Replacing a course package will reset learner progress. All progress will be lost.');
-		expect(replaceOption.querySelector('.hint').textContent).toEqual('Better for Larger Changes');
+		expect(replaceOption.querySelector('.name').textContent).toEqual(
+			'Replace Package'
+		);
+		expect(replaceOption.querySelector('.description').textContent).toEqual(
+			'Replacing a course package will reset learner progress. All progress will be lost.'
+		);
+		expect(replaceOption.querySelector('.hint').textContent).toEqual(
+			'Better for Larger Changes'
+		);
 
 		// nothing selected at the beginning
 		expect(updateOption.getAttribute('class')).not.toMatch(/selected/);

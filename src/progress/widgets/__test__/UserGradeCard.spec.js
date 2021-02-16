@@ -26,7 +26,7 @@ describe('Progress widgets user grade card test', () => {
 
 	test('With grade', async () => {
 		const cmp = renderer.create(
-			<UserGradeCard user="testuser" grade={76}/>
+			<UserGradeCard user="testuser" grade={76} />
 		);
 
 		const tree = cmp.toJSON();
@@ -35,9 +35,7 @@ describe('Progress widgets user grade card test', () => {
 	});
 
 	test('Without grade', async () => {
-		const cmp = renderer.create(
-			<UserGradeCard user="testuser"/>
-		);
+		const cmp = renderer.create(<UserGradeCard user="testuser" />);
 
 		const tree = cmp.toJSON();
 

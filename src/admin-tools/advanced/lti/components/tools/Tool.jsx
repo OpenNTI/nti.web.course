@@ -11,26 +11,29 @@ const DEFAULT_TEXT = {
 	delete: 'Delete',
 };
 
-const t = scoped('nti-web-course.admin-tools.advanced.lti.tools.Tool', DEFAULT_TEXT);
+const t = scoped(
+	'nti-web-course.admin-tools.advanced.lti.tools.Tool',
+	DEFAULT_TEXT
+);
 
 export default class Tool extends Component {
 	static propTypes = {
 		store: PropTypes.object.isRequired,
 		item: PropTypes.shape({
 			title: PropTypes.string.isRequired,
-			delete: PropTypes.func.isRequired
-		}).isRequired
-	}
+			delete: PropTypes.func.isRequired,
+		}).isRequired,
+	};
 
 	state = {
-		showEditor: false
-	}
+		showEditor: false,
+	};
 
-	attachFlyoutRef = x => this.flyout = x;
+	attachFlyoutRef = x => (this.flyout = x);
 
 	hideEditor = () => {
 		this.setState({ showEditor: false });
-	}
+	};
 
 	onShowEditor = () => {
 		if (this.flyout) {
@@ -38,17 +41,17 @@ export default class Tool extends Component {
 		}
 
 		this.setState({ showEditor: true });
-	}
+	};
 
 	delete = () => {
-		const {store} = this.props;
+		const { store } = this.props;
 		store.deleteItem(this.props.item);
-	}
+	};
 
 	onItemChange = () => {
-		const {store} = this.props;
+		const { store } = this.props;
 		store.itemChange(this.props.item);
-	}
+	};
 
 	renderOptions = () => {
 		const trigger = (
@@ -65,20 +68,26 @@ export default class Tool extends Component {
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 			>
 				<React.Fragment>
-					<div className="lti-configured-tool-edit" onClick={this.onShowEditor}>
+					<div
+						className="lti-configured-tool-edit"
+						onClick={this.onShowEditor}
+					>
 						<i className="icon-edit" />
 						{t('edit')}
 					</div>
-					<div className="lti-configured-tool-delete" onClick={this.delete}>
+					<div
+						className="lti-configured-tool-delete"
+						onClick={this.delete}
+					>
 						<i className="icon-delete" />
 						{t('delete')}
 					</div>
 				</React.Fragment>
 			</Flyout.Triggered>
 		);
-	}
+	};
 
-	render () {
+	render() {
 		const { item } = this.props;
 		const { showEditor } = this.state;
 
@@ -87,7 +96,12 @@ export default class Tool extends Component {
 				<li className="lti-configured-tool">
 					<div className="lti-tool-title">{item.title}</div>
 					{this.renderOptions()}
-					{showEditor && <EditTool item={item} onBeforeDismiss={this.hideEditor} />}
+					{showEditor && (
+						<EditTool
+							item={item}
+							onBeforeDismiss={this.hideEditor}
+						/>
+					)}
 				</li>
 			</HOC.ItemChanges>
 		);

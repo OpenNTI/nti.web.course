@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import EnrollmentCard from '../common/EnrollmentCard';
-import OptionText, {TITLE, DESCRIPTION} from '../common/OptionText';
+import OptionText, { TITLE, DESCRIPTION } from '../common/OptionText';
 
 export default class FiveMinuteEnrollment extends React.Component {
 	static propTypes = {
-		option: PropTypes.object.isRequired
-	}
+		option: PropTypes.object.isRequired,
+	};
 
-	state = {}
+	state = {};
 
 	//	'Price', 'CRN', 'Term'
 
-	render () {
-		const {option} = this.props;
+	render() {
+		const { option } = this.props;
 
 		return (
 			<EnrollmentCard

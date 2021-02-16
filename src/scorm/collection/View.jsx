@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {decorate} from '@nti/lib-commons';
-import {Loading, EmptyState} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { decorate } from '@nti/lib-commons';
+import { Loading, EmptyState } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import Styles from './View.css';
 import Store from './Store';
@@ -12,15 +12,15 @@ import PackageList from './components/PackageList';
 
 const cx = classnames.bind(Styles);
 const t = scoped('course.scorm.collection.View', {
-	unavailable: 'SCORM is not available in this course.'
+	unavailable: 'SCORM is not available in this course.',
 });
 
 class ScormCollection extends React.Component {
-	static deriveBindingFromProps (props) {
+	static deriveBindingFromProps(props) {
 		return {
 			course: props.course,
 			onPackageUploaded: props.onPackageUploaded,
-			onPackageDeleted: props.onPackageDeleted
+			onPackageDeleted: props.onPackageDeleted,
 		};
 	}
 
@@ -35,20 +35,19 @@ class ScormCollection extends React.Component {
 		loading: PropTypes.bool,
 		error: PropTypes.any,
 		empty: PropTypes.bool,
-		uploadError: PropTypes.object
-	}
+		uploadError: PropTypes.object,
+	};
 
-
-	render () {
-		const {initialLoad, unavailable, error, empty, selected} = this.props;
+	render() {
+		const { initialLoad, unavailable, error, empty, selected } = this.props;
 		let content = null;
 
 		if (unavailable || error) {
-			content = (<EmptyState subHeader={t('unavailable')} />);
+			content = <EmptyState subHeader={t('unavailable')} />;
 		} else if (empty) {
-			content = (<Empty />);
+			content = <Empty />;
 		} else {
-			content = (<PackageList selectedPackages={selected} />);
+			content = <PackageList selectedPackages={selected} />;
 		}
 
 		return (
@@ -64,7 +63,13 @@ class ScormCollection extends React.Component {
 	}
 }
 
-
 export default decorate(ScormCollection, [
-	Store.connect(['initialLoad', 'unavailable', 'error', 'empty', 'fullPackages', 'uploadError'])
+	Store.connect([
+		'initialLoad',
+		'unavailable',
+		'error',
+		'empty',
+		'fullPackages',
+		'uploadError',
+	]),
 ]);

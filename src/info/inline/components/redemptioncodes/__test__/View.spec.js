@@ -8,26 +8,27 @@ describe('Redemption codes view test', () => {
 	test('Test Redemption code items', () => {
 		const redemptionCodes = [
 			{
-				Code: 'RC1'
+				Code: 'RC1',
 			},
 			{
-				Code: 'RC2'
-			}
+				Code: 'RC2',
+			},
 		];
 
-		const x = render(<View redemptionCodes={redemptionCodes}/>);
-
+		const x = render(<View redemptionCodes={redemptionCodes} />);
 
 		const items = x.container.querySelectorAll('.redemption-code');
 
-		for(let i = 0; i < redemptionCodes.length; i++) {
+		for (let i = 0; i < redemptionCodes.length; i++) {
 			expect(items[i].textContent).toEqual(redemptionCodes[i].Code);
 		}
 	});
 
 	test('Test no items', () => {
-		const x = render(<View/>);
+		const x = render(<View />);
 
-		expect(x.container.querySelector('.content-column').textContent).toEqual('None');
+		expect(
+			x.container.querySelector('.content-column').textContent
+		).toEqual('None');
 	});
 });

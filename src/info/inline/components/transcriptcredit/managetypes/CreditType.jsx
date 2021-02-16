@@ -1,7 +1,7 @@
 import './CreditType.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Input, Prompt} from '@nti/web-commons';
+import { Input, Prompt } from '@nti/web-commons';
 import cx from 'classnames';
 
 export default class CreditType extends React.Component {
@@ -14,92 +14,95 @@ export default class CreditType extends React.Component {
 		onExitEditMode: PropTypes.func,
 		onNewEntryCancel: PropTypes.func,
 		disabled: PropTypes.bool,
-		inEditMode: PropTypes.bool
-	}
+		inEditMode: PropTypes.bool,
+	};
 
-	state = {}
+	state = {};
 
-
-	constructor () {
+	constructor() {
 		super();
 	}
 
-	componentDidMount () {
-		this.setState({definition: this.props.type});
+	componentDidMount() {
+		this.setState({ definition: this.props.type });
 	}
 
-	typesAreDifferent (typeA, typeB) {
-		const {unit: oldUnit, type: oldType} = typeA || {};
-		const {unit: newUnit, type: newType} = typeB || {};
+	typesAreDifferent(typeA, typeB) {
+		const { unit: oldUnit, type: oldType } = typeA || {};
+		const { unit: newUnit, type: newType } = typeB || {};
 
 		return oldUnit !== newUnit || oldType !== newType;
 	}
 
-	componentDidUpdate (oldProps) {
-		if(this.typesAreDifferent(oldProps.type, this.props.type)) {
-			this.setState({definition: this.props.type});
+	componentDidUpdate(oldProps) {
+		if (this.typesAreDifferent(oldProps.type, this.props.type)) {
+			this.setState({ definition: this.props.type });
 		}
-
 	}
 
-	onTypeChange = (val) => {
-		this.setState({definition: {...this.state.definition, type: val}});
-	}
+	onTypeChange = val => {
+		this.setState({ definition: { ...this.state.definition, type: val } });
+	};
 
-	onUnitChange = (val) => {
-		this.setState({definition: {...this.state.definition, unit: val}});
-	}
+	onUnitChange = val => {
+		this.setState({ definition: { ...this.state.definition, unit: val } });
+	};
 
 	onRemove = () => {
-		const {onRemove, type} = this.props;
+		const { onRemove, type } = this.props;
 
-		Prompt.areYouSure('Do you want to remove this credit definition?').then(() => {
-			if(onRemove) {
-				onRemove(type);
+		Prompt.areYouSure('Do you want to remove this credit definition?').then(
+			() => {
+				if (onRemove) {
+					onRemove(type);
+				}
 			}
-		});
-	}
+		);
+	};
 
 	enterEdit = () => {
-		const {onEnterEditMode, type} = this.props;
+		const { onEnterEditMode, type } = this.props;
 
-		if(onEnterEditMode) {
+		if (onEnterEditMode) {
 			onEnterEditMode(type);
 		}
-	}
+	};
 
 	onCancel = () => {
-		const {type} = this.props;
-		const {onNewEntryCancel} = this.props;
+		const { type } = this.props;
+		const { onNewEntryCancel } = this.props;
 
-		this.setState({definition: type});
+		this.setState({ definition: type });
 
 		this.exitEdit();
 
-		if(type.addedRow && onNewEntryCancel) {
+		if (type.addedRow && onNewEntryCancel) {
 			onNewEntryCancel();
 		}
-	}
+	};
 
 	exitEdit = () => {
-		const {onExitEditMode, type} = this.props;
+		const { onExitEditMode, type } = this.props;
 
-		if(onExitEditMode) {
+		if (onExitEditMode) {
 			onExitEditMode(type);
 		}
-	}
+	};
 
 	onConfirm = async () => {
-		const {store} = this.props;
-		const {definition} = this.state;
+		const { store } = this.props;
+		const { definition } = this.state;
 
-		if(definition.addedRow || this.typesAreDifferent(this.props.type, definition)) {
+		if (
+			definition.addedRow ||
+			this.typesAreDifferent(this.props.type, definition)
+		) {
 			await store.saveValues([definition]);
 
 			const error = store.getError();
 
-			if(error) {
-				this.setState({error});
+			if (error) {
+				this.setState({ error });
 				return;
 			}
 
@@ -107,31 +110,43 @@ export default class CreditType extends React.Component {
 		}
 
 		this.exitEdit();
-	}
+	};
 
-	renderEditable (cls) {
-		const {definition, error} = this.state;
+	renderEditable(cls) {
+		const { definition, error } = this.state;
 
-		if(!definition) {
+		if (!definition) {
 			return null;
 		}
 
 		return (
 			<div className={cls}>
 				{error && <div className="error">{error}</div>}
-				<Input.Text className="type" value={definition.type} onChange={this.onTypeChange}/>
-				<Input.Text className="unit" value={definition.unit} onChange={this.onUnitChange}/>
-				<div className="confirm" onClick={this.onConfirm}>OK</div>
-				<div className="cancel" onClick={this.onCancel}>Cancel</div>
+				<Input.Text
+					className="type"
+					value={definition.type}
+					onChange={this.onTypeChange}
+				/>
+				<Input.Text
+					className="unit"
+					value={definition.unit}
+					onChange={this.onUnitChange}
+				/>
+				<div className="confirm" onClick={this.onConfirm}>
+					OK
+				</div>
+				<div className="cancel" onClick={this.onCancel}>
+					Cancel
+				</div>
 			</div>
 		);
 	}
 
-	renderViewable (cls) {
-		const {disabled} = this.props;
-		const {definition} = this.state;
+	renderViewable(cls) {
+		const { disabled } = this.props;
+		const { definition } = this.state;
 
-		if(!definition) {
+		if (!definition) {
 			return null;
 		}
 
@@ -139,16 +154,20 @@ export default class CreditType extends React.Component {
 			<div className={cls}>
 				<div className="credit-value">{definition.type}</div>
 				<div className="credit-value">{definition.unit}</div>
-				{!disabled && <i className="icon-edit" onClick={this.enterEdit}/>}
-				{!disabled && !disabled && <i className="icon-remove" onClick={this.onRemove}/>}
+				{!disabled && (
+					<i className="icon-edit" onClick={this.enterEdit} />
+				)}
+				{!disabled && !disabled && (
+					<i className="icon-remove" onClick={this.onRemove} />
+				)}
 			</div>
 		);
 	}
 
-	render () {
-		const {disabled, inEditMode} = this.props;
+	render() {
+		const { disabled, inEditMode } = this.props;
 
-		const cls = cx('credit-type', {disabled, edit: inEditMode});
+		const cls = cx('credit-type', { disabled, edit: inEditMode });
 
 		return inEditMode ? this.renderEditable(cls) : this.renderViewable(cls);
 	}

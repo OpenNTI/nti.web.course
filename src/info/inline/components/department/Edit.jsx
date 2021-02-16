@@ -5,24 +5,22 @@ import PropTypes from 'prop-types';
 export default class DepartmentEdit extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
-		onValueChange: PropTypes.func
-	}
+		onValueChange: PropTypes.func,
+	};
 
 	//static FIELD_NAME = '';
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = { value: props.catalogEntry.Title };
 	}
 
-	onChange = (val) => {
+	onChange = val => {};
 
-	}
-
-	render () {
+	render() {
 		// TODO: Implement editing these, not sure what to do for editing these yet
 
-		return (<div/>);
+		return <div />;
 	}
 }

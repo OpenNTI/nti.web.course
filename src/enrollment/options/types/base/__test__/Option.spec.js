@@ -29,16 +29,30 @@ describe('Course enrollment open option test', () => {
 	});
 
 	test('Test enrolledBeforeArchived', () => {
-		let enrollment = new Option({}, null, { getEndDate: () => new Date('10/22/2017')});
+		let enrollment = new Option({}, null, {
+			getEndDate: () => new Date('10/22/2017'),
+		});
 		expect(Boolean(enrollment.enrolledBeforeArchived())).toBe(false);
 
-		enrollment = new Option({}, { getCreatedTime: () => new Date('10/21/2017')}, { getEndDate: () => new Date('10/22/2017')});
+		enrollment = new Option(
+			{},
+			{ getCreatedTime: () => new Date('10/21/2017') },
+			{ getEndDate: () => new Date('10/22/2017') }
+		);
 		expect(Boolean(enrollment.enrolledBeforeArchived())).toBe(true);
 
-		enrollment = new Option({}, { getCreatedTime: () => new Date('10/23/2017')}, { getEndDate: () => new Date('10/22/2017')});
+		enrollment = new Option(
+			{},
+			{ getCreatedTime: () => new Date('10/23/2017') },
+			{ getEndDate: () => new Date('10/22/2017') }
+		);
 		expect(Boolean(enrollment.enrolledBeforeArchived())).toBe(false);
 
-		enrollment = new Option({}, { getCreatedTime: () => new Date('10/21/2017')}, { getEndDate: () => null});
+		enrollment = new Option(
+			{},
+			{ getCreatedTime: () => new Date('10/21/2017') },
+			{ getEndDate: () => null }
+		);
 		expect(Boolean(enrollment.enrolledBeforeArchived())).toBe(true);
 	});
 
@@ -55,7 +69,10 @@ describe('Course enrollment open option test', () => {
 		enrollment = new Option({ enrolled: true }, { isAdministrative: true });
 		expect(Boolean(enrollment.isAvailable())).toBe(false);
 
-		enrollment = new Option({ enrolled: true }, { isAdministrative: false });
+		enrollment = new Option(
+			{ enrolled: true },
+			{ isAdministrative: false }
+		);
 		expect(Boolean(enrollment.isAvailable())).toBe(true);
 	});
 
@@ -89,36 +106,50 @@ describe('Course enrollment open option test', () => {
 
 	test('Test getTitle', () => {
 		let enrollment = new Option({ Class: 'TestClass' });
-		expect(enrollment.getTitle()).toEqual('!! Missing Title for TestClass !!');
+		expect(enrollment.getTitle()).toEqual(
+			'!! Missing Title for TestClass !!'
+		);
 	});
 
 	test('Test getDescription', () => {
 		let enrollment = new Option({ Class: 'TestClass' });
-		expect(enrollment.getDescription()).toEqual('!! Missing Description for TestClass !!');
+		expect(enrollment.getDescription()).toEqual(
+			'!! Missing Description for TestClass !!'
+		);
 	});
 
 	test('Test getEnrollButtonLabel', () => {
 		let enrollment = new Option({ Class: 'TestClass' });
-		expect(enrollment.getEnrollButtonLabel()).toEqual('!! Missing Enroll Button Label for TestClass !!');
+		expect(enrollment.getEnrollButtonLabel()).toEqual(
+			'!! Missing Enroll Button Label for TestClass !!'
+		);
 	});
 
 	test('Test getEnrolledTitle', () => {
 		let enrollment = new Option({ Class: 'TestClass' });
-		expect(enrollment.getEnrolledTitle()).toEqual('!! Missing Enrolled Title for TestClass !!');
+		expect(enrollment.getEnrolledTitle()).toEqual(
+			'!! Missing Enrolled Title for TestClass !!'
+		);
 	});
 
 	test('Test getEnrolledDescription', () => {
 		let enrollment = new Option({ Class: 'TestClass' });
-		expect(enrollment.getEnrolledDescription()).toEqual('!! Missing Enrolled Description for TestClass !!');
+		expect(enrollment.getEnrolledDescription()).toEqual(
+			'!! Missing Enrolled Description for TestClass !!'
+		);
 	});
 
 	test('Test getDropButtonLabel', () => {
 		let enrollment = new Option({ Class: 'TestClass' });
-		expect(enrollment.getDropButtonLabel()).toEqual('!! Missing Enrolled Description for TestClass !!');
+		expect(enrollment.getDropButtonLabel()).toEqual(
+			'!! Missing Enrolled Description for TestClass !!'
+		);
 	});
 
 	test('Test getOpenButtonLabel', () => {
 		let enrollment = new Option({ Class: 'TestClass' });
-		expect(enrollment.getOpenButtonLabel()).toEqual('!! Missing Open Button label for TestClass !!');
+		expect(enrollment.getOpenButtonLabel()).toEqual(
+			'!! Missing Open Button label for TestClass !!'
+		);
 	});
 });

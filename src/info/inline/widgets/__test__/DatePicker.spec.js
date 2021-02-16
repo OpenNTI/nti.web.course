@@ -5,10 +5,10 @@ import DatePicker from '../DatePicker';
 
 /* eslint-env jest */
 describe('DatePicker test', () => {
-	const date = new Date(2017,2,3);
+	const date = new Date(2017, 2, 3);
 
 	test('Test empty text', () => {
-		const x = render(<DatePicker/>);
+		const x = render(<DatePicker />);
 
 		const dateEl = x.container.querySelector('.date');
 
@@ -17,7 +17,7 @@ describe('DatePicker test', () => {
 	});
 
 	test('Test date text', () => {
-		const x = render(<DatePicker date={date}/>);
+		const x = render(<DatePicker date={date} />);
 
 		const dateEl = x.container.querySelector('.date');
 

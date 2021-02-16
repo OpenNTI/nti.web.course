@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 import { getService } from '@nti/web-client';
 import { Prompt, Flyout, Presentation } from '@nti/web-commons';
 import cx from 'classnames';
 
 import CourseMenu from './CourseMenu';
 
-
 const t = scoped('course.components.listing.CourseCard', {
-	confirmDelete: 'Do you want to delete this course?'
+	confirmDelete: 'Do you want to delete this course?',
 });
 
 export default class CourseCard extends React.Component {
@@ -20,33 +19,40 @@ export default class CourseCard extends React.Component {
 		onModification: PropTypes.func,
 		isAdministrative: PropTypes.bool,
 		onToggle: PropTypes.func,
-		selected: PropTypes.bool
-	}
+		selected: PropTypes.bool,
+	};
 
-	attachOptionsFlyoutRef = x => this.optionsFlyout = x
+	attachOptionsFlyoutRef = x => (this.optionsFlyout = x);
 
-	deleteCourse = (e) => {
+	deleteCourse = e => {
 		const { course, onModification } = this.props;
 
 		e.stopPropagation();
 		e.preventDefault();
 
 		Prompt.areYouSure(t('confirmDelete')).then(() => {
-			this.setState( { loading: true }, () => {
-				getService().then((service) => {
-					return service.getObject(course.CourseNTIID).then((courseInstance) => {
-						return courseInstance.delete();
+			this.setState({ loading: true }, () => {
+				getService()
+					.then(service => {
+						return service
+							.getObject(course.CourseNTIID)
+							.then(courseInstance => {
+								return courseInstance.delete();
+							});
+					})
+					.then(() => {
+						onModification && onModification();
+					})
+					.catch(() => {
+						// timeout here because there is a 500 ms delay on the areYouSure dialog being dismissed
+						// so if the deletion fails too fast, we risk automatically dismissing this alert dialog
+						// when the areYouSure dialog is dismissed
+						setTimeout(() => {
+							Prompt.alert(
+								"You don't have permission to delete this course"
+							);
+						}, 505);
 					});
-				}).then(() => {
-					onModification && onModification();
-				}).catch(() => {
-					// timeout here because there is a 500 ms delay on the areYouSure dialog being dismissed
-					// so if the deletion fails too fast, we risk automatically dismissing this alert dialog
-					// when the areYouSure dialog is dismissed
-					setTimeout(() => {
-						Prompt.alert('You don\'t have permission to delete this course');
-					}, 505);
-				});
 			});
 		});
 	};
@@ -55,41 +61,49 @@ export default class CourseCard extends React.Component {
 		const { onEdit, course } = this.props;
 
 		onEdit && onEdit(course);
-	}
+	};
 
 	doExport = () => {
 		const { course } = this.props;
 
-		if(course.hasLink('Export')) {
+		if (course.hasLink('Export')) {
 			this.optionsFlyout && this.optionsFlyout.dismiss();
 
 			global.location.href = course.getLink('Export');
 		}
-	}
+	};
 
-	renderDelete () {
+	renderDelete() {
 		const { course } = this.props;
 
-		if(!course.hasLink('delete') || !this.props.isAdministrative) {
+		if (!course.hasLink('delete') || !this.props.isAdministrative) {
 			return null;
 		}
 
-		return (<div className="course-delete" onClick={this.deleteCourse}><i className="icon-trash"/></div>);
+		return (
+			<div className="course-delete" onClick={this.deleteCourse}>
+				<i className="icon-trash" />
+			</div>
+		);
 	}
 
-	renderInstructors () {
+	renderInstructors() {
 		const { course } = this.props;
 
-		if(course.Instructors && course.Instructors.length > 0) {
-			const instructorStr = course.Instructors.map(x => x.Name).reduce((acc, val) => { return acc + ', ' + val; });
+		if (course.Instructors && course.Instructors.length > 0) {
+			const instructorStr = course.Instructors.map(x => x.Name).reduce(
+				(acc, val) => {
+					return acc + ', ' + val;
+				}
+			);
 
-			return (<div className="course-instructors">{instructorStr}</div>);
+			return <div className="course-instructors">{instructorStr}</div>;
 		}
 
 		return null;
 	}
 
-	renderControls () {
+	renderControls() {
 		return (
 			<div className="course-controls">
 				{this.renderPreview()}
@@ -99,52 +113,58 @@ export default class CourseCard extends React.Component {
 		);
 	}
 
-	renderPreview () {
+	renderPreview() {
 		const { course } = this.props;
 
-		if(course.Preview) {
-			return (<div className="preview">Preview</div>);
+		if (course.Preview) {
+			return <div className="preview">Preview</div>;
 		}
 
 		return null;
 	}
 
-	renderBadge () {
+	renderBadge() {
 		return null;
 	}
 
-	renderOptionsButton () {
-		return (<div className="options"><i className="icon-settings"/></div>);
+	renderOptionsButton() {
+		return (
+			<div className="options">
+				<i className="icon-settings" />
+			</div>
+		);
 	}
 
-	renderOptionsHeader () {
+	renderOptionsHeader() {
 		const { course } = this.props;
 
 		return (
 			<div>
 				<div className="course-name">{course.title}</div>
-				<div className="course-status">{this.props.isAdministrative ? 'Administering' : ''}</div>
+				<div className="course-status">
+					{this.props.isAdministrative ? 'Administering' : ''}
+				</div>
 			</div>
 		);
 	}
 
-	renderDefaultOptions () {
-		if(this.props.isAdministrative) {
+	renderDefaultOptions() {
+		if (this.props.isAdministrative) {
 			return null;
 		}
 
 		return this.renderOptions();
 	}
 
-	renderAdminOptions () {
-		if(!this.props.isAdministrative) {
+	renderAdminOptions() {
+		if (!this.props.isAdministrative) {
 			return null;
 		}
 
-		return (<div className="admin-controls">{this.renderOptions()}</div>);
+		return <div className="admin-controls">{this.renderOptions()}</div>;
 	}
 
-	renderOptions () {
+	renderOptions() {
 		return (
 			<Flyout.Triggered
 				className="admin-course-options"
@@ -154,7 +174,12 @@ export default class CourseCard extends React.Component {
 				ref={this.attachOptionsFlyoutRef}
 				arrow
 			>
-				<CourseMenu course={this.props.course} doEdit={this.doEdit} doExport={this.doExport} doDelete={this.deleteCourse}/>
+				<CourseMenu
+					course={this.props.course}
+					doEdit={this.doEdit}
+					doExport={this.doExport}
+					doDelete={this.deleteCourse}
+				/>
 			</Flyout.Triggered>
 		);
 	}
@@ -163,35 +188,39 @@ export default class CourseCard extends React.Component {
 		const { course, onClick } = this.props;
 
 		onClick && onClick(course);
-	}
+	};
 
-	onCheckClick = (e) => {
+	onCheckClick = e => {
 		e.stopPropagation();
 		e.preventDefault();
 
 		const { course, selected, onToggle } = this.props;
 
 		onToggle && onToggle(course, !selected);
-	}
+	};
 
-	renderCheckbox () {
-		const {selected} = this.props;
-		const clsName = cx('toggler', {selected});
+	renderCheckbox() {
+		const { selected } = this.props;
+		const clsName = cx('toggler', { selected });
 
 		return (
 			<div className="toggler-container" onClick={this.onCheckClick}>
-				<div className={clsName}/>
+				<div className={clsName} />
 			</div>
 		);
 	}
 
-	render () {
+	render() {
 		const { course } = this.props;
 
 		return (
 			<div className="course-item" onClick={this.onCourseClick}>
 				<div className="cover">
-					<Presentation.AssetBackground className="course-image" contentPackage={course} type="landing"/>
+					<Presentation.AssetBackground
+						className="course-image"
+						contentPackage={course}
+						type="landing"
+					/>
 				</div>
 				{this.renderControls()}
 				<div className="course-meta">

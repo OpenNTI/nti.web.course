@@ -1,17 +1,17 @@
-import {Stores} from '@nti/lib-store';
-import {getService, User} from '@nti/web-client';
+import { Stores } from '@nti/lib-store';
+import { getService, User } from '@nti/web-client';
 
-import {getTypeFor, Unknown} from '../../options/types';
+import { getTypeFor, Unknown } from '../../options/types';
 
-async function resolveUser (user) {
+async function resolveUser(user) {
 	try {
-		return User.resolve({entity: user});
+		return User.resolve({ entity: user });
 	} catch (e) {
 		return null;
 	}
 }
 
-async function resolveCourse (course) {
+async function resolveCourse(course) {
 	if (course && typeof course !== 'string') {
 		return course.CatalogEntry || course;
 	}
@@ -26,7 +26,7 @@ async function resolveCourse (course) {
 	}
 }
 
-async function getUserEnrollment (user, course) {
+async function getUserEnrollment(user, course) {
 	try {
 		const enrollments = await user.fetchLinkParsed('UserEnrollments');
 
@@ -40,15 +40,19 @@ async function getUserEnrollment (user, course) {
 	}
 }
 
-async function getEnrollmentOptions (catalogEntry, enrollment) {
-	const catalogOptions = Array.from(catalogEntry.getEnrollmentOptions() || []);
+async function getEnrollmentOptions(catalogEntry, enrollment) {
+	const catalogOptions = Array.from(
+		catalogEntry.getEnrollmentOptions() || []
+	);
 
 	const options = await Promise.all(
 		(catalogOptions || [])
-			.map((option) => {
+			.map(option => {
 				const type = getTypeFor(option, enrollment, catalogEntry);
 
-				return type ? type.load(option, enrollment, catalogEntry) : null;
+				return type
+					? type.load(option, enrollment, catalogEntry)
+					: null;
 			})
 			.filter(x => !!x)
 	);
@@ -65,17 +69,21 @@ async function getEnrollmentOptions (catalogEntry, enrollment) {
 }
 
 export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
-	constructor () {
+	constructor() {
 		super();
 
 		this.set({
-			loading: true
+			loading: true,
 		});
 	}
 
-
-	async load () {
-		if (this.binding.course === this.course && this.binding.user === this.user) { return; }
+	async load() {
+		if (
+			this.binding.course === this.course &&
+			this.binding.user === this.user
+		) {
+			return;
+		}
 
 		this.course = await resolveCourse(this.binding.course);
 		this.user = await resolveUser(this.binding.user);
@@ -85,7 +93,7 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 			this.set({
 				loading: false,
 				record: null,
-				notAuthorized: true
+				notAuthorized: true,
 			});
 			return;
 		}
@@ -93,18 +101,19 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 		this.set({
 			loading: true,
 			record: null,
-			notAuthorized: false
+			notAuthorized: false,
 		});
 
-
 		try {
-			const enrollment = this.enrollment || await getUserEnrollment(this.user, this.course);
+			const enrollment =
+				this.enrollment ||
+				(await getUserEnrollment(this.user, this.course));
 
 			if (enrollment && !enrollment.hasLink('CourseDrop')) {
 				this.set({
 					loading: false,
 					record: null,
-					notAuthorized: true
+					notAuthorized: true,
 				});
 				return;
 			}
@@ -114,23 +123,24 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 			this.set({
 				loading: false,
 				record: enrollment,
-				options
+				options,
 			});
 		} catch (e) {
 			this.set({
 				loading: false,
-				notAuthorized: true
+				notAuthorized: true,
 			});
 		}
 	}
 
-
-	async dropCourse () {
+	async dropCourse() {
 		const enrollment = this.get('record');
 
-		if (!enrollment) { return; }
+		if (!enrollment) {
+			return;
+		}
 
-		this.set({loading: true, error: null});
+		this.set({ loading: true, error: null });
 
 		try {
 			await enrollment.requestLink('CourseDrop', 'delete');
@@ -140,28 +150,26 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 			this.set({
 				loading: false,
 				record: null,
-				options
+				options,
 			});
 
 			if (this.binding.onChange) {
 				this.binding.onChange();
 			}
-
 		} catch (e) {
 			this.set({
 				loading: false,
-				error: e
+				error: e,
 			});
 		}
 	}
 
+	async enrollInScope(scope) {
+		const { course, user } = this;
 
-	async enrollInScope (scope) {
-		const {course, user} = this;
+		this.set({ loading: true, error: null });
 
-		this.set({loading: true, error: null});
-
-		const params = {ntiid: course.NTIID};
+		const params = { ntiid: course.NTIID };
 
 		if (scope) {
 			params.scope = scope;
@@ -169,13 +177,16 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 
 		try {
 			const service = await getService();
-			const enrollment = await service.postParseResponse(user.getLink('EnrollUser'), params);
+			const enrollment = await service.postParseResponse(
+				user.getLink('EnrollUser'),
+				params
+			);
 
 			if (!enrollment || !enrollment.hasLink('CourseDrop')) {
 				this.set({
 					loading: false,
 					record: null,
-					notAuthorized: true
+					notAuthorized: true,
 				});
 				return;
 			}
@@ -185,7 +196,7 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 			this.set({
 				loading: false,
 				record: enrollment,
-				options
+				options,
 			});
 
 			if (this.binding.onChange) {
@@ -194,13 +205,12 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 		} catch (e) {
 			this.set({
 				loading: false,
-				error: e
+				error: e,
 			});
 		}
 	}
 
-
-	enrollInOption (option) {
+	enrollInOption(option) {
 		return this.enrollInScope(option && option.getScope());
 	}
 }

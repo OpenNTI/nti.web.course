@@ -5,11 +5,19 @@
 }
 
 .scorm-completion-header.success {
-	background-image: linear-gradient(rgba(63, 179, 70, 0.2) 0%, rgba(63, 179, 70, 0.05) 10%, rgba(63, 179, 79, 0) 100%);
+	background-image: linear-gradient(
+		rgba(63, 179, 70, 0.2) 0%,
+		rgba(63, 179, 70, 0.05) 10%,
+		rgba(63, 179, 79, 0) 100%
+	);
 }
 
 .scorm-completion-header.failed {
-	background-image: linear-gradient(rgba(243, 82, 82, 0.2) 0%, rgba(243, 82, 82, 0.05) 10%, rgba(243, 82, 82, 0) 100%);
+	background-image: linear-gradient(
+		rgba(243, 82, 82, 0.2) 0%,
+		rgba(243, 82, 82, 0.05) 10%,
+		rgba(243, 82, 82, 0) 100%
+	);
 }
 
 .icon {

@@ -7,11 +7,11 @@ import FiveMinute from '../../../types/five-minute';
 
 const catalogEntry = {
 	getStartDate: () => new Date('10/22/2017'),
-	getEndDate: () => new Date('10/31/2017')
+	getEndDate: () => new Date('10/31/2017'),
 };
 
 const access = {
-	getCreatedTime: () => new Date('10/21/2017')
+	getCreatedTime: () => new Date('10/21/2017'),
 };
 
 /* eslint-env jest */
@@ -19,7 +19,9 @@ describe('Course enrollment enrolled view', () => {
 	test('No options', async () => {
 		const options = [];
 
-		const cmp = renderer.create(<View catalogEntry={catalogEntry} options={options}/>);
+		const cmp = renderer.create(
+			<View catalogEntry={catalogEntry} options={options} />
+		);
 
 		const tree = cmp.toJSON();
 
@@ -28,10 +30,12 @@ describe('Course enrollment enrolled view', () => {
 
 	test('One option, enrolled, upgrade available', async () => {
 		const options = [
-			new Open({ enrolled: true, available: true }, access, catalogEntry)
+			new Open({ enrolled: true, available: true }, access, catalogEntry),
 		];
 
-		const cmp = renderer.create(<View catalogEntry={catalogEntry} options={options}/>);
+		const cmp = renderer.create(
+			<View catalogEntry={catalogEntry} options={options} />
+		);
 
 		const tree = cmp.toJSON();
 
@@ -41,10 +45,12 @@ describe('Course enrollment enrolled view', () => {
 	test('Two options, second enrolled', async () => {
 		const options = [
 			new Open({ enrolled: true }, access, catalogEntry),
-			new FiveMinute({ enrolled: false}, access, catalogEntry)
+			new FiveMinute({ enrolled: false }, access, catalogEntry),
 		];
 
-		const cmp = renderer.create(<View catalogEntry={catalogEntry} options={options}/>);
+		const cmp = renderer.create(
+			<View catalogEntry={catalogEntry} options={options} />
+		);
 
 		const tree = cmp.toJSON();
 

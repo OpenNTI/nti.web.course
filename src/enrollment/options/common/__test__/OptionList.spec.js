@@ -7,11 +7,11 @@ import OptionList from '../OptionList';
 class TestCmp extends React.Component {
 	static propTypes = {
 		option: PropTypes.object,
-		selected: PropTypes.bool
-	}
+		selected: PropTypes.bool,
+	};
 
-	render () {
-		const {option, selected} = this.props;
+	render() {
+		const { option, selected } = this.props;
 
 		return (
 			<div>
@@ -27,18 +27,20 @@ describe('Course enrollment options common option list ', () => {
 	test('Two items, second selected', async () => {
 		const selected = {
 			ListItem: TestCmp,
-			id: '2'
+			id: '2',
 		};
 
 		const options = [
 			{
 				ListItem: TestCmp,
-				id: '1'
+				id: '1',
 			},
-			selected
+			selected,
 		];
 
-		const cmp = renderer.create(<OptionList options={options} selected={selected}/>);
+		const cmp = renderer.create(
+			<OptionList options={options} selected={selected} />
+		);
 
 		const tree = cmp.toJSON();
 

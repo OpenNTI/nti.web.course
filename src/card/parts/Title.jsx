@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Text} from '@nti/web-commons';
+import { Text } from '@nti/web-commons';
 
-import {getSemesterBadge} from '../../utils/Semester';
+import { getSemesterBadge } from '../../utils/Semester';
 
 const Block = styled.div`
 	overflow: hidden;
@@ -53,7 +53,7 @@ const Token = styled(Text)`
 	}
 `;
 
-const Title = styled(Text).attrs({as: 'h2'})`
+const Title = styled(Text).attrs({ as: 'h2' })`
 	font: normal 700 1rem/1.3 var(--header-font-family);
 	display: block;
 	color: var(--primary-grey);
@@ -75,29 +75,40 @@ const Title = styled(Text).attrs({as: 'h2'})`
 	}
 `;
 
-
 CourseCardTitle.propTypes = {
 	course: PropTypes.shape({
 		ProviderUniqueID: PropTypes.string,
-		Title: PropTypes.string
+		Title: PropTypes.string,
 	}),
 	// hideSemester: PropTypes.bool
 	variant: PropTypes.oneOf(['card', 'list-item']),
 };
 
-export default function CourseCardTitle ({course, variant}) {
+export default function CourseCardTitle({ course, variant }) {
 	const dateText = getSemesterBadge(course);
 
 	return (
-		<Block className="nti-course-card-title" data-testid="nti-course-card-title-block">
+		<Block
+			className="nti-course-card-title"
+			data-testid="nti-course-card-title-block"
+		>
 			<Meta>
-				<Token variant={variant} data-testid="provider-unique-id">{course.ProviderUniqueID}</Token>
-				{dateText &&
-					<Token variant={variant} no-shrink data-testid="course-date">{dateText}</Token>
-				}
+				<Token variant={variant} data-testid="provider-unique-id">
+					{course.ProviderUniqueID}
+				</Token>
+				{dateText && (
+					<Token
+						variant={variant}
+						no-shrink
+						data-testid="course-date"
+					>
+						{dateText}
+					</Token>
+				)}
 			</Meta>
-			<Title variant={variant} limitLines={3} data-testid="course-title">{course.Title}</Title>
+			<Title variant={variant} limitLines={3} data-testid="course-title">
+				{course.Title}
+			</Title>
 		</Block>
 	);
 }
-

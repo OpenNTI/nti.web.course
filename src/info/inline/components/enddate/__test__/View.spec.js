@@ -9,17 +9,19 @@ describe('End date view test', () => {
 		const date = new Date('2015-08-17T08:15:00Z');
 
 		const catalogEntry = {
-			'EndDate': date,
+			EndDate: date,
 			getEndDate: function () {
 				return date;
 			},
 			getStartDate: function () {
 				return null;
-			}
+			},
 		};
 
-		const x = render(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry} />);
 
-		expect(x.container.querySelector('.content-column').textContent).toEqual('August 17, 2015Monday at 08:15 AM UTC');
+		expect(
+			x.container.querySelector('.content-column').textContent
+		).toEqual('August 17, 2015Monday at 08:15 AM UTC');
 	});
 });

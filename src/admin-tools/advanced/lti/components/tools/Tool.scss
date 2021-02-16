@@ -1,4 +1,3 @@
-
 @import '~@nti/style-common';
 
 li.lti-configured-tool {
@@ -24,14 +23,16 @@ li.lti-configured-tool {
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 
-		.lti-configured-tool-edit, .lti-configured-tool-delete {
+		.lti-configured-tool-edit,
+		.lti-configured-tool-delete {
 			margin: 5px 5px;
 			display: flex;
 			align-items: center;
 			cursor: pointer;
 		}
 
-		.lti-configured-tool-edit i, .lti-configured-tool-delete i {
+		.lti-configured-tool-edit i,
+		.lti-configured-tool-delete i {
 			padding-right: 5px;
 		}
 	}

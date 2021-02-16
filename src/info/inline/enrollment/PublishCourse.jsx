@@ -1,31 +1,41 @@
 import './PublishCourse.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {getService} from '@nti/web-client';
-import {Loading, Prompt, Flyout, DateTime, Input, Text} from '@nti/web-commons';
+import { getService } from '@nti/web-client';
+import {
+	Loading,
+	Prompt,
+	Flyout,
+	DateTime,
+	Input,
+	Text,
+} from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
-import {saveCatalogEntry} from '../../../editor/Actions';
+import { saveCatalogEntry } from '../../../editor/Actions';
 
 import EnrollmentOptions from './EnrollmentOptions';
 import Store from './EnrollmentOptionsStore';
 
-
 const t = scoped('course.components.PublishCourse', {
 	ready: 'Ready to Launch?',
-	headerSubText: 'That\'s exciting!  Review a couple settings before the big moment.',
+	headerSubText:
+		"That's exciting!  Review a couple settings before the big moment.",
 	cancel: 'Cancel',
 	done: 'Done',
 	discoverable: {
 		title: 'Discoverable in Catalog',
-		description: 'Learners will be able to find and enroll in courses that are discoverable in the catalog.',
-		draft: 'Draft courses default to OFF but can be switched to ON to allow pre-launch enrollment.',
-		invite: 'Select OFF for private or invitation-only enrollment.'
+		description:
+			'Learners will be able to find and enroll in courses that are discoverable in the catalog.',
+		draft:
+			'Draft courses default to OFF but can be switched to ON to allow pre-launch enrollment.',
+		invite: 'Select OFF for private or invitation-only enrollment.',
 	},
 	status: {
 		title: 'Course Status',
-		description: 'Draft courses are invisible to learners&mdash;which is great for planning out your content. <b>Make sure to publish your course when you\'re ready to launch!</b>'
+		description:
+			"Draft courses are invisible to learners&mdash;which is great for planning out your content. <b>Make sure to publish your course when you're ready to launch!</b>",
 	},
 	publiclyAvailable: 'Visible in Catalog',
 	previewMode: 'Preview Mode',
@@ -36,7 +46,7 @@ const t = scoped('course.components.PublishCourse', {
 	previewOffDesc: 'Content is available to learners',
 	noDateFound: 'No start date found',
 	general: 'General',
-	enrollment: 'Enrollment'
+	enrollment: 'Enrollment',
 });
 
 const GENERAL = 'general-tab';
@@ -44,60 +54,62 @@ const ENROLLMENT = 'enrollment-tab';
 
 export default class PublishCourse extends React.Component {
 	static propTypes = {
-		catalogEntry: PropTypes.oneOfType([
-			PropTypes.object,
-			PropTypes.string
-		]),
+		catalogEntry: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 		instance: PropTypes.object,
 		onFinish: PropTypes.func,
-		onCancel: PropTypes.func
-	}
+		onCancel: PropTypes.func,
+	};
 
-	static show (catalogEntry, instance) {
+	static show(catalogEntry, instance) {
 		let dialog = null;
 
 		return new Promise((fulfill, reject) => {
 			dialog = Prompt.modal(
-				<PublishCourse onFinish={fulfill} onCancel={reject} catalogEntry={catalogEntry} instance={instance}/>,
-				{className: 'publish-course-modal-container'}
+				<PublishCourse
+					onFinish={fulfill}
+					onCancel={reject}
+					catalogEntry={catalogEntry}
+					instance={instance}
+				/>,
+				{ className: 'publish-course-modal-container' }
 			);
-		}).then((savedEntry) => {
-			dialog && dialog.dismiss();
+		})
+			.then(savedEntry => {
+				dialog && dialog.dismiss();
 
-			return savedEntry;
-		}).catch(() => {
-			dialog && dialog.dismiss();
+				return savedEntry;
+			})
+			.catch(() => {
+				dialog && dialog.dismiss();
 
-			Promise.reject();
-		});
+				Promise.reject();
+			});
 	}
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {};
 
 		const { catalogEntry, instance } = props;
 
-		if(typeof catalogEntry === 'string') {
+		if (typeof catalogEntry === 'string') {
 			this.loadCourse();
-		}
-		else {
+		} else {
 			this.state = {
 				catalogEntry,
 				courseInstance: instance,
 				isNonPublic: catalogEntry.isHidden,
 				previewMode: catalogEntry.PreviewRawValue,
-				activeTab: GENERAL
+				activeTab: GENERAL,
 			};
 		}
 
 		this.optionsStore = Store.getStore();
 	}
 
-	attachFlyoutRef = x => this.flyout = x
+	attachFlyoutRef = x => (this.flyout = x);
 
-
-	async loadCourse () {
+	async loadCourse() {
 		const { catalogEntry } = this.props;
 
 		const service = await getService();
@@ -110,16 +122,18 @@ export default class PublishCourse extends React.Component {
 			courseInstance: courseObject,
 			isNonPublic: catalogEntryObj.isHidden,
 			previewMode: catalogEntryObj.PreviewRawValue,
-			activeTab: this.state.activeTab || GENERAL
+			activeTab: this.state.activeTab || GENERAL,
 		});
 	}
 
-	renderHeader () {
+	renderHeader() {
 		return (
 			<div className="header">
 				<div className="text-large">{t('ready')}</div>
 				<div className="text-sub">{t('headerSubText')}</div>
-				<div className="close" onClick={this.cancel}><i className="icon-light-x"/></div>
+				<div className="close" onClick={this.cancel}>
+					<i className="icon-light-x" />
+				</div>
 			</div>
 		);
 	}
@@ -129,90 +143,126 @@ export default class PublishCourse extends React.Component {
 		const { catalogEntry } = this.state;
 
 		onFinish && onFinish(catalogEntry);
-	}
+	};
 
-	renderBottomControls () {
-		if(!this.state.catalogEntry) {
+	renderBottomControls() {
+		if (!this.state.catalogEntry) {
 			return null;
 		}
 
 		return (
 			<div className="bottom-controls">
 				<div className="buttons">
-					<div className="publish" onClick={this.cancel}>{t('done')}</div>
+					<div className="publish" onClick={this.cancel}>
+						{t('done')}
+					</div>
 				</div>
 			</div>
 		);
 	}
 
-	renderPreviewLabel () {
+	renderPreviewLabel() {
 		const { previewMode } = this.state;
 
 		let previewRenderer = () => this.renderPublishOption();
 
-		if (previewMode === null) { previewRenderer = () => this.renderPublishOnDateOption(); }
-		if (previewMode) { previewRenderer = () => this.renderDraftOption(); }
+		if (previewMode === null) {
+			previewRenderer = () => this.renderPublishOnDateOption();
+		}
+		if (previewMode) {
+			previewRenderer = () => this.renderDraftOption();
+		}
 
 		return (
 			<div className="preview-mode-label control">
-				<div className="content">
-					{previewRenderer()}
-				</div>
-				<i className="icon-chevron-down"/>
+				<div className="content">{previewRenderer()}</div>
+				<i className="icon-chevron-down" />
 			</div>
 		);
 	}
 
 	enablePreviewMode = () => {
 		this.onPreviewChange(true);
-	}
+	};
 
 	disablePreviewMode = () => {
 		this.onPreviewChange(false);
-	}
+	};
 
 	nullOutPreviewMode = () => {
 		this.onPreviewChange(null);
-	}
+	};
 
-	renderDraftOption (onClick) {
+	renderDraftOption(onClick) {
 		const selected = Boolean(this.state.previewMode);
 
 		return (
-			<div className={cx('course-preview-option preview-mode-none draft-option', {selected})} onClick={onClick}>
-				<Text.Base as="div" className="course-preview-option-label">{t('previewOn')}</Text.Base>
-				<Text.Base as="div" className="course-preview-option-info">{t('previewOnDesc')}</Text.Base>
-			</div>
-		);
-	}
-
-	renderPublishOption (onClick) {
-		const selected = this.state.previewMode === false;
-
-		return (
-			<div className={cx('course-preview-option preview-mode-none  publish-option', {selected})} onClick={onClick}>
-				<Text.Base as="div" className="course-preview-option-label">{t('previewOff')}</Text.Base>
-				<Text.Base as="div" className="course-preview-option-info">{t('previewOffDesc')}</Text.Base>
-			</div>
-		);
-	}
-
-	renderPublishOnDateOption (onClick) {
-		const selected = this.state.previewMode === null;
-		const startDate = this.state.catalogEntry?.getStartDate?.();
-
-		return (
-			<div className={cx('course-preview-option preview-mode-none  publish-on-date-option', {selected, 'no-date': !startDate})} onClick={onClick}>
-				<Text.Base as="div" className="course-preview-option-label">{t('nullPreview')}</Text.Base>
+			<div
+				className={cx(
+					'course-preview-option preview-mode-none draft-option',
+					{ selected }
+				)}
+				onClick={onClick}
+			>
+				<Text.Base as="div" className="course-preview-option-label">
+					{t('previewOn')}
+				</Text.Base>
 				<Text.Base as="div" className="course-preview-option-info">
-					{startDate ? DateTime.format(startDate, DateTime.MONTH_NAME_ORDINAL_DAY_YEAR_TIME) : t('noDateFound')}
+					{t('previewOnDesc')}
 				</Text.Base>
 			</div>
 		);
 	}
 
+	renderPublishOption(onClick) {
+		const selected = this.state.previewMode === false;
 
-	renderPreviewOption (label, info, warning, visible, onClick) {
+		return (
+			<div
+				className={cx(
+					'course-preview-option preview-mode-none  publish-option',
+					{ selected }
+				)}
+				onClick={onClick}
+			>
+				<Text.Base as="div" className="course-preview-option-label">
+					{t('previewOff')}
+				</Text.Base>
+				<Text.Base as="div" className="course-preview-option-info">
+					{t('previewOffDesc')}
+				</Text.Base>
+			</div>
+		);
+	}
+
+	renderPublishOnDateOption(onClick) {
+		const selected = this.state.previewMode === null;
+		const startDate = this.state.catalogEntry?.getStartDate?.();
+
+		return (
+			<div
+				className={cx(
+					'course-preview-option preview-mode-none  publish-on-date-option',
+					{ selected, 'no-date': !startDate }
+				)}
+				onClick={onClick}
+			>
+				<Text.Base as="div" className="course-preview-option-label">
+					{t('nullPreview')}
+				</Text.Base>
+				<Text.Base as="div" className="course-preview-option-info">
+					{startDate
+						? DateTime.format(
+								startDate,
+								DateTime.MONTH_NAME_ORDINAL_DAY_YEAR_TIME
+						  )
+						: t('noDateFound')}
+				</Text.Base>
+			</div>
+		);
+	}
+
+	renderPreviewOption(label, info, warning, visible, onClick) {
 		const className = cx('preview-date-info', { warning, visible });
 
 		return (
@@ -223,8 +273,7 @@ export default class PublishCourse extends React.Component {
 		);
 	}
 
-
-	renderPreviewWidget () {
+	renderPreviewWidget() {
 		return (
 			<Flyout.Triggered
 				className="preview-mode-widget"
@@ -241,30 +290,62 @@ export default class PublishCourse extends React.Component {
 		);
 	}
 
-	renderGeneralOptions () {
-		if(!this.state.catalogEntry) {
-			return <Loading.Mask/>;
+	renderGeneralOptions() {
+		if (!this.state.catalogEntry) {
+			return <Loading.Mask />;
 		}
 
 		return (
 			<div className="course-options">
 				<div className="publicly-available-option course-option">
 					<div className="course-option-info">
-						<Text.Base localized as="div" className="course-option-label">{t('discoverable.title')}</Text.Base>
-						<Text.Base localized as="div" className="course-option-description">{t('discoverable.description')}</Text.Base>
+						<Text.Base
+							localized
+							as="div"
+							className="course-option-label"
+						>
+							{t('discoverable.title')}
+						</Text.Base>
+						<Text.Base
+							localized
+							as="div"
+							className="course-option-description"
+						>
+							{t('discoverable.description')}
+						</Text.Base>
 						<ul className="course-option-disclaimer">
-							<Text.Base localized as="li">{t('discoverable.draft')}</Text.Base>
-							<Text.Base localized as="li">{t('discoverable.invite')}</Text.Base>
+							<Text.Base localized as="li">
+								{t('discoverable.draft')}
+							</Text.Base>
+							<Text.Base localized as="li">
+								{t('discoverable.invite')}
+							</Text.Base>
 						</ul>
 					</div>
 					<div className="course-option-control">
-						<Input.Toggle className="control" value={!this.state.isNonPublic} onChange={this.onPublicChange} />
+						<Input.Toggle
+							className="control"
+							value={!this.state.isNonPublic}
+							onChange={this.onPublicChange}
+						/>
 					</div>
 				</div>
 				<div className="preview-mode-option course-option">
 					<div className="course-option-info">
-						<Text.Base localized as="div" className="course-option-label">{t('status.title')}</Text.Base>
-						<Text.Base localized as="div" className="course-option-description">{t('status.description')}</Text.Base>
+						<Text.Base
+							localized
+							as="div"
+							className="course-option-label"
+						>
+							{t('status.title')}
+						</Text.Base>
+						<Text.Base
+							localized
+							as="div"
+							className="course-option-description"
+						>
+							{t('status.description')}
+						</Text.Base>
 					</div>
 					<div className="course-option-control">
 						{this.renderPreviewWidget()}
@@ -274,75 +355,110 @@ export default class PublishCourse extends React.Component {
 		);
 	}
 
-	renderEnrollmentOptions () {
-		if(!this.state.catalogEntry) {
-			return <Loading.Mask/>;
+	renderEnrollmentOptions() {
+		if (!this.state.catalogEntry) {
+			return <Loading.Mask />;
 		}
 
-		return <EnrollmentOptions catalogEntry={this.state.catalogEntry} courseInstance={this.state.courseInstance}/>;
+		return (
+			<EnrollmentOptions
+				catalogEntry={this.state.catalogEntry}
+				courseInstance={this.state.courseInstance}
+			/>
+		);
 	}
 
-	renderOption (label, description, value, onChange) {
-		return (<div className="course-option"><div className="course-option-label">{label}</div><Input.Toggle className="control" value={value} onChange={onChange}/></div>);
+	renderOption(label, description, value, onChange) {
+		return (
+			<div className="course-option">
+				<div className="course-option-label">{label}</div>
+				<Input.Toggle
+					className="control"
+					value={value}
+					onChange={onChange}
+				/>
+			</div>
+		);
 	}
 
 	onSave = () => {
 		const { onFinish } = this.props;
 		const { catalogEntry } = this.state;
 
-		saveCatalogEntry(catalogEntry, {
-			ProviderUniqueID: catalogEntry.ProviderUniqueID,
-			['is_non_public']: this.state.isNonPublic,
-			Preview: this.state.previewMode
-		}, () => {
-			onFinish && onFinish(catalogEntry);
+		saveCatalogEntry(
+			catalogEntry,
+			{
+				ProviderUniqueID: catalogEntry.ProviderUniqueID,
+				['is_non_public']: this.state.isNonPublic,
+				Preview: this.state.previewMode,
+			},
+			() => {
+				onFinish && onFinish(catalogEntry);
+			}
+		);
+	};
+
+	onPublicChange = value => {
+		const { catalogEntry } = this.state;
+
+		this.setState({ isNonPublic: !value }, () => {
+			saveCatalogEntry(
+				catalogEntry,
+				{
+					ProviderUniqueID: catalogEntry.ProviderUniqueID,
+					['is_non_public']: this.state.isNonPublic,
+				},
+				() => {
+					if (this.optionsStore) {
+						this.optionsStore.updateVisibility();
+					}
+				}
+			);
 		});
 	};
 
-	onPublicChange = (value) => {
-		const { catalogEntry } = this.state;
-
-		this.setState({isNonPublic: !value}, () => {
-			saveCatalogEntry(catalogEntry, {
-				ProviderUniqueID: catalogEntry.ProviderUniqueID,
-				['is_non_public']: this.state.isNonPublic
-			}, () => {
-				if(this.optionsStore) {
-					this.optionsStore.updateVisibility();
-				}
-			});
-		});
-	}
-
-	onPreviewChange = (value) => {
+	onPreviewChange = value => {
 		const { catalogEntry } = this.state;
 
 		this.flyout && this.flyout.dismiss();
 
-		this.setState({previewMode: value}, () => {
+		this.setState({ previewMode: value }, () => {
 			saveCatalogEntry(catalogEntry, {
 				ProviderUniqueID: catalogEntry.ProviderUniqueID,
-				Preview: this.state.previewMode
+				Preview: this.state.previewMode,
 			});
 		});
-	}
+	};
 
-	renderContents () {
+	renderContents() {
 		return (
 			<div className="contents">
-				{this.state.activeTab === GENERAL && this.renderGeneralOptions()}
-				{this.state.activeTab === ENROLLMENT && this.renderEnrollmentOptions()}
+				{this.state.activeTab === GENERAL &&
+					this.renderGeneralOptions()}
+				{this.state.activeTab === ENROLLMENT &&
+					this.renderEnrollmentOptions()}
 			</div>
 		);
 	}
 
-	renderNavItem (name, label) {
-		const cls = cx('publish-nav-item', {active: this.state.activeTab === name});
+	renderNavItem(name, label) {
+		const cls = cx('publish-nav-item', {
+			active: this.state.activeTab === name,
+		});
 
-		return <div className={cls} onClick={() => { this.setState({activeTab: name}); }}>{label}</div>;
+		return (
+			<div
+				className={cls}
+				onClick={() => {
+					this.setState({ activeTab: name });
+				}}
+			>
+				{label}
+			</div>
+		);
 	}
 
-	renderNavBar () {
+	renderNavBar() {
 		return (
 			<div className="publish-nav-bar">
 				{this.renderNavItem(GENERAL, t('general'))}
@@ -351,7 +467,7 @@ export default class PublishCourse extends React.Component {
 		);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="publish-course">
 				{this.renderHeader()}

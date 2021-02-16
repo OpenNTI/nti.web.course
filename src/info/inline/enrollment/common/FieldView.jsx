@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 export default class FieldView extends React.Component {
 	static propTypes = {
 		label: PropTypes.string,
-		value: PropTypes.string
-	}
+		value: PropTypes.string,
+	};
 
-	render () {
+	render() {
 		return (
 			<div className="field-view">
 				<div className="field-label">{this.props.label}</div>

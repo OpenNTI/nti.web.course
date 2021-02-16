@@ -7,8 +7,6 @@ LessonOverviewSurveyIcon.propTypes = {
 	large: PropTypes.bool,
 };
 
-export default function LessonOverviewSurveyIcon ({large, ...otherProps}) {
-	return (
-		<div {...otherProps} className="lesson-overview-survey-icon" />
-	);
+export default function LessonOverviewSurveyIcon({ large, ...otherProps }) {
+	return <div {...otherProps} className="lesson-overview-survey-icon" />;
 }

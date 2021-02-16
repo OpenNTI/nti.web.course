@@ -10,9 +10,15 @@ LTIExternalToolAssetGridItem.propTypes = {
 	course: PropTypes.object.isRequired,
 	requiredLabel: PropTypes.node,
 	commentLabel: PropTypes.node,
-	noProgress: PropTypes.bool
+	noProgress: PropTypes.bool,
 };
-export default function LTIExternalToolAssetGridItem ({ item, requiredLabel, commentLabel, course, noProgress }) {
+export default function LTIExternalToolAssetGridItem({
+	item,
+	requiredLabel,
+	commentLabel,
+	course,
+	noProgress,
+}) {
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item}>

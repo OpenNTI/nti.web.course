@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
-import {LinkTo} from '@nti/web-routing';
+import { scoped } from '@nti/lib-locale';
+import { LinkTo } from '@nti/web-routing';
 
 import Styles from './Header.css';
 
@@ -11,28 +11,26 @@ const t = scoped('course.content.viewer.parts.Header', {
 	remaining: {
 		requiredItems: {
 			one: '%(count)s Required Item',
-			other: '%(current)s of %(count)s Required Items'
+			other: '%(current)s of %(count)s Required Items',
 		},
 		allItems: {
 			one: '%(count)s Item',
-			other: '%(current)s of %(count)s Items'
-		}
+			other: '%(current)s of %(count)s Items',
+		},
 	},
 	paging: {
 		prefix: 'Page ',
-		separator: ' of '
+		separator: ' of ',
 	},
 	previousItem: 'Previous Item',
-	nextItem: 'Next Item'
+	nextItem: 'Next Item',
 });
 
-
-function isConstrained (next) {
-	const {item} = next || {};
+function isConstrained(next) {
+	const { item } = next || {};
 
 	return item.isOutlineNode && item.contentIsConstrained;
 }
-
 
 export default class Header extends React.Component {
 	static propTypes = {
@@ -41,30 +39,29 @@ export default class Header extends React.Component {
 		lessonInfo: PropTypes.shape({
 			title: PropTypes.string,
 			totalItems: PropTypes.number,
-			currentItemIndex: PropTypes.number
+			currentItemIndex: PropTypes.number,
 		}),
 		location: PropTypes.shape({
 			totalPages: PropTypes.number,
-			currentPage: PropTypes.number
+			currentPage: PropTypes.number,
 		}),
 
 		next: PropTypes.shape({
 			item: PropTypes.object,
 			lesson: PropTypes.object,
-			relatedWorkRef: PropTypes.object
+			relatedWorkRef: PropTypes.object,
 		}),
 		previous: PropTypes.shape({
 			item: PropTypes.object,
 			lesson: PropTypes.object,
-			relatedWorkRef: PropTypes.object
+			relatedWorkRef: PropTypes.object,
 		}),
 
-		noHeader: PropTypes.bool
-	}
+		noHeader: PropTypes.bool,
+	};
 
-
-	render () {
-		const {noHeader} = this.props;
+	render() {
+		const { noHeader } = this.props;
 		const fullHeader = !noHeader;
 
 		return (
@@ -78,9 +75,8 @@ export default class Header extends React.Component {
 		);
 	}
 
-
-	renderClose () {
-		const {dismissPath} = this.props;
+	renderClose() {
+		const { dismissPath } = this.props;
 
 		if (dismissPath) {
 			return (
@@ -93,51 +89,54 @@ export default class Header extends React.Component {
 		return null;
 	}
 
-
-	renderLesson () {
-		const {lessonInfo, requiredOnly} = this.props;
+	renderLesson() {
+		const { lessonInfo, requiredOnly } = this.props;
 
 		if (!lessonInfo) {
-			return (
-				<div className={cx('lesson-loading-skeleton')} />
-			);
+			return <div className={cx('lesson-loading-skeleton')} />;
 		}
 
-		const localeKey = requiredOnly ? 'remaining.requiredItems' : 'remaining.allItems';
+		const localeKey = requiredOnly
+			? 'remaining.requiredItems'
+			: 'remaining.allItems';
 		const current = lessonInfo.currentItemIndex + 1;
 		const count = lessonInfo.totalItems;
 
 		return (
 			<div className={cx('lesson-container')}>
-				<div className={cx('lesson-title')}>
-					{lessonInfo.title}
-				</div>
+				<div className={cx('lesson-title')}>{lessonInfo.title}</div>
 				<div className={cx('lesson-sub-title')}>
-					{t(localeKey, {current, count})}
+					{t(localeKey, { current, count })}
 				</div>
 			</div>
 		);
 	}
 
+	renderLessonProgress() {
+		const { lessonInfo } = this.props;
 
-	renderLessonProgress () {
-		const {lessonInfo} = this.props;
+		if (!lessonInfo) {
+			return null;
+		}
 
-		if (!lessonInfo) { return null; }
-
-		const progress = (lessonInfo.currentItemIndex + 1) / lessonInfo.totalItems;
+		const progress =
+			(lessonInfo.currentItemIndex + 1) / lessonInfo.totalItems;
 		const percentage = Math.round(progress * 100);
 
 		return (
-			<div className={cx('lesson-progress')} style={{width: `${percentage}%`}}/>
+			<div
+				className={cx('lesson-progress')}
+				style={{ width: `${percentage}%` }}
+			/>
 		);
 	}
 
+	renderLocation() {
+		const { location } = this.props;
 
-	renderLocation () {
-		const {location} = this.props;
-
-		if (!location || location.totalPages === 1) { return null; }
+		if (!location || location.totalPages === 1) {
+			return null;
+		}
 
 		return (
 			<div className={cx('location')}>
@@ -157,9 +156,8 @@ export default class Header extends React.Component {
 		);
 	}
 
-
-	renderPaging () {
-		const {next, previous} = this.props;
+	renderPaging() {
+		const { next, previous } = this.props;
 
 		const showNext = next && !isConstrained(next);
 		const showPrev = previous && !isConstrained(previous);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
 import classnames from 'classnames/bind';
 
 import ManageEnrollment from '../enrollment/admin/Prompt';
@@ -14,26 +14,24 @@ import styles from './Toolbar.css';
 
 const cx = classnames.bind(styles);
 const t = scoped('course.roster.toolbar', {
-	manageEnrollments: 'Manage Enrollment'
+	manageEnrollments: 'Manage Enrollment',
 });
 
-
 class Toolbar extends React.Component {
-
 	static propTypes = {
 		course: PropTypes.object,
-		reload: PropTypes.func
-	}
+		reload: PropTypes.func,
+	};
 
-	render () {
-		const {course, reload} = this.props;
-		const {canManageEnrollment} = course || {};
+	render() {
+		const { course, reload } = this.props;
+		const { canManageEnrollment } = course || {};
 
 		return (
 			<div className={cx('toolbar')}>
 				<FilterMenu />
 				<div className={cx('enrollment-controls')}>
-					{ canManageEnrollment && (
+					{canManageEnrollment && (
 						<ManageEnrollment.Trigger
 							course={course}
 							className={cx('manage-enrollment-button')}
@@ -50,7 +48,4 @@ class Toolbar extends React.Component {
 	}
 }
 
-
-export default decorate(Toolbar, [
-	Store.monitor(['reload'])
-]);
+export default decorate(Toolbar, [Store.monitor(['reload'])]);

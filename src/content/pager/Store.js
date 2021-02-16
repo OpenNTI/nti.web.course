@@ -1,5 +1,5 @@
-import {Stores} from '@nti/lib-store';
-import {Array as arr} from '@nti/lib-commons';
+import { Stores } from '@nti/lib-store';
+import { Array as arr } from '@nti/lib-commons';
 
 const COURSE = Symbol('Course');
 const COURSE_TREE = Symbol('Course Tree');
@@ -8,77 +8,99 @@ const LESSON_NODE = Symbol('Lesson Node');
 const SELECTION = Symbol('Selection');
 const SELECTION_NODES = Symbol('Selection Nodes');
 
-
-function isCourse (item) {
+function isCourse(item) {
 	return item && item.isCourse;
 }
 
-function isOutlineNode (item) {
+function isOutlineNode(item) {
 	return item && item.isOutlineNode;
 }
 
-function isContentOutlineNode (item) {
+function isContentOutlineNode(item) {
 	return isOutlineNode && item.hasOverviewContent;
 }
 
-function isConstrainedOutlineNode (item) {
+function isConstrainedOutlineNode(item) {
 	return isOutlineNode(item) && item.contentIsConstrained;
 }
 
-function buildIsSameContentOutlineNode (node) {
+function buildIsSameContentOutlineNode(node) {
 	const contentId = node.getContentId ? node.getContentId() : node;
 	const id = node.getID ? node.getID() : node;
 
-	return (item) => {
-		return isContentOutlineNode(item) && (item.getContentId() === contentId || item.getID() === id);
+	return item => {
+		return (
+			isContentOutlineNode(item) &&
+			(item.getContentId() === contentId || item.getID() === id)
+		);
 	};
 }
 
-function isOverview (item) {
-	return item && item.MimeType === 'application/vnd.nextthought.ntilessonoverview';
+function isOverview(item) {
+	return (
+		item &&
+		item.MimeType === 'application/vnd.nextthought.ntilessonoverview'
+	);
 }
 
-function isOverviewGroup (item) {
-	return item && item.MimeType === 'application/vnd.nextthought.nticourseoverviewgroup';
+function isOverviewGroup(item) {
+	return (
+		item &&
+		item.MimeType === 'application/vnd.nextthought.nticourseoverviewgroup'
+	);
 }
 
-function isVideoRoll (item) {
+function isVideoRoll(item) {
 	return item && item.MimeType === 'application/vnd.nextthought.videoroll';
 }
 
-function isRelatedWorkRef (item) {
-	return item && item.MimeType === 'application/vnd.nextthought.relatedworkref';
+function isRelatedWorkRef(item) {
+	return (
+		item && item.MimeType === 'application/vnd.nextthought.relatedworkref'
+	);
 }
 
-function isCompletionRequired (item) {
+function isCompletionRequired(item) {
 	return item && item.CompletionRequired;
 }
 
-function buildIsSameOverviewItem (node) {
-	const id = node.isVideo ?
-		node.getLinkProperty('ref', 'RefNTIID') :
-		(node.getID ? node.getID() : node);
+function buildIsSameOverviewItem(node) {
+	const id = node.isVideo
+		? node.getLinkProperty('ref', 'RefNTIID')
+		: node.getID
+		? node.getID()
+		: node;
 
-	return (item) => {
+	return item => {
 		if (item && item.isVideo) {
 			const refID = item.getLinkProperty('ref', 'RefNTIID');
 
-			if (refID === id) { return true; }
+			if (refID === id) {
+				return true;
+			}
 		}
 
-		return item && (item.getID() === id || item.target === id || item['target-NTIID'] === id || item['Target-NTIID'] === id);
+		return (
+			item &&
+			(item.getID() === id ||
+				item.target === id ||
+				item['target-NTIID'] === id ||
+				item['Target-NTIID'] === id)
+		);
 	};
 }
 
-function invert (fn) {
+function invert(fn) {
 	return (...args) => !fn(...args);
 }
 
 //Has to match all predicates
-function combine (...fns) {
+function combine(...fns) {
 	return (...args) => {
 		for (let fn of fns) {
-			if (!fn(...args)) { return false; }
+			if (!fn(...args)) {
+				return false;
+			}
 		}
 
 		return true;
@@ -86,10 +108,12 @@ function combine (...fns) {
 }
 
 //Has to match one predicate
-function oneOf (...fns) {
+function oneOf(...fns) {
 	return (...args) => {
 		for (let fn of fns) {
-			if (fn(...args)) { return true; }
+			if (fn(...args)) {
+				return true;
+			}
 		}
 
 		return false;
@@ -98,52 +122,45 @@ function oneOf (...fns) {
 
 const isNotPageableContent = combine(
 	invert(isConstrainedOutlineNode),
-	oneOf(
-		isCourse,
-		isOutlineNode,
-		isOverview,
-		isOverviewGroup,
-		isVideoRoll
-	)
+	oneOf(isCourse, isOutlineNode, isOverview, isOverviewGroup, isVideoRoll)
 );
 
-
 export default class ContentPagerStore extends Stores.BoundStore {
-
-	needsReload () {
-		const {course} = this.binding;
+	needsReload() {
+		const { course } = this.binding;
 
 		return course !== this[COURSE];
 	}
 
-	needsUpdate () {
-		const {selection, lesson} = this.binding;
+	needsUpdate() {
+		const { selection, lesson } = this.binding;
 
 		return selection !== this[SELECTION] || lesson !== this[LESSON];
 	}
 
-	get requiredOnly () {
-		const {course, requiredOnly} = this.binding;
+	get requiredOnly() {
+		const { course, requiredOnly } = this.binding;
 
 		return course && course.CompletionPolicy && requiredOnly;
 	}
 
-	get skipNodes () {
-		return this.requiredOnly ?
-			oneOf(isNotPageableContent, invert(isCompletionRequired)) :
-			isNotPageableContent;
+	get skipNodes() {
+		return this.requiredOnly
+			? oneOf(isNotPageableContent, invert(isCompletionRequired))
+			: isNotPageableContent;
 	}
 
-
-	get ignoreChildrenNodes () {
-		return this.requiredOnly ?
-			combine(invert(isNotPageableContent), invert(isCompletionRequired)) :
-			null;
+	get ignoreChildrenNodes() {
+		return this.requiredOnly
+			? combine(
+					invert(isNotPageableContent),
+					invert(isCompletionRequired)
+			  )
+			: null;
 	}
 
-
-	getCourseContentTree () {
-		const {course} = this.binding;
+	getCourseContentTree() {
+		const { course } = this.binding;
 
 		if (course !== this[COURSE]) {
 			this[COURSE] = course;
@@ -153,10 +170,9 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		return this[COURSE_TREE];
 	}
 
-
-	getLessonNode () {
+	getLessonNode() {
 		const courseTree = this.getCourseContentTree();
-		const {lesson} = this.binding;
+		const { lesson } = this.binding;
 
 		if (lesson !== this[LESSON]) {
 			this[LESSON] = lesson;
@@ -168,12 +184,13 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		return this[LESSON_NODE];
 	}
 
-
-	getSelectionNodes () {
+	getSelectionNodes() {
 		const lessonNode = this.getLessonNode();
-		const {selection} = this.binding;
+		const { selection } = this.binding;
 
-		if (selection === this[SELECTION]) { return this[SELECTION_NODES]; }
+		if (selection === this[SELECTION]) {
+			return this[SELECTION_NODES];
+		}
 
 		this[SELECTION] = selection;
 
@@ -183,14 +200,16 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		let nodes = [];
 
 		for (let item of items) {
-			node = node.find(combine(invert(isOverviewGroup), buildIsSameOverviewItem(item)));
+			node = node.find(
+				combine(invert(isOverviewGroup), buildIsSameOverviewItem(item))
+			);
 			nodes.push(node);
 		}
 
 		return nodes;
 	}
 
-	clear () {
+	clear() {
 		delete this[COURSE];
 		delete this[LESSON];
 		delete this[SELECTION];
@@ -202,30 +221,48 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			const lessonNode = this.getLessonNode();
 			const selectionNodes = this.getSelectionNodes();
 
-			const lessonInfo = await this.getLessonInfo(courseTree, lessonNode, selectionNodes);
-			const location = await this.getLocationInfo(courseTree, lessonNode, selectionNodes);
-			const pagingInfo = await this.getPagingInfo(courseTree, lessonNode, selectionNodes);
+			const lessonInfo = await this.getLessonInfo(
+				courseTree,
+				lessonNode,
+				selectionNodes
+			);
+			const location = await this.getLocationInfo(
+				courseTree,
+				lessonNode,
+				selectionNodes
+			);
+			const pagingInfo = await this.getPagingInfo(
+				courseTree,
+				lessonNode,
+				selectionNodes
+			);
 
 			this.set({
 				loading: false,
 				lessonInfo,
 				location,
-				...pagingInfo
+				...pagingInfo,
 			});
 		} catch (e) {
 			this.set({
 				loading: true,
-				error: e
+				error: e,
 			});
 		}
-	}
+	};
 
-	async updateOnAssignmentSubmit (assignment) {
+	async updateOnAssignmentSubmit(assignment) {
 		const next = this.get('next');
 		const previous = this.get('previous');
 
-		const needsUpdate = (item) => {
-			return item && item.contentIsConstrained && item.contentIsConstrainedBy && item.contentIsConstrainedBy(assignment) && item.refresh();
+		const needsUpdate = item => {
+			return (
+				item &&
+				item.contentIsConstrained &&
+				item.contentIsConstrainedBy &&
+				item.contentIsConstrainedBy(assignment) &&
+				item.refresh()
+			);
 		};
 
 		try {
@@ -240,18 +277,18 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		}
 	}
 
-
-	update () {
+	update() {
 		delete this[SELECTION];
 		this.#doLoad();
 	}
 
-
-	async load () {
+	async load() {
 		const needsReload = this.needsReload();
 		const needsUpdate = this.needsUpdate();
 
-		if (!needsReload && !needsUpdate) { return; }
+		if (!needsReload && !needsUpdate) {
+			return;
+		}
 
 		if (needsReload) {
 			this.set({
@@ -259,46 +296,51 @@ export default class ContentPagerStore extends Stores.BoundStore {
 				location: null,
 				lessonInfo: null,
 				next: null,
-				previous: null
+				previous: null,
 			});
 		} else {
 			this.set({
 				location: null,
 				next: null,
-				previous: null
+				previous: null,
 			});
 		}
 
 		this.#doLoad();
 	}
 
-
-	async getLessonInfo (courseTree, lessonNode, selectionNodes) {
+	async getLessonInfo(courseTree, lessonNode, selectionNodes) {
 		const isEmpty = await lessonNode.isEmptyNode();
 
-		if (isEmpty) { throw new Error('Unable to find lesson.'); }
+		if (isEmpty) {
+			throw new Error('Unable to find lesson.');
+		}
 
 		const overview = await lessonNode.getItem();
 		const lessonWalker = lessonNode.createTreeWalker({
 			skip: this.skipNodes,
-			ignoreChildren: isRelatedWorkRef //don't count sub pages in the lesson counts
+			ignoreChildren: isRelatedWorkRef, //don't count sub pages in the lesson counts
 		});
 
 		const outlineNode = lessonNode && lessonNode.findParent(isOutlineNode);
-		const outline = lessonNode && await outlineNode.getItem();
+		const outline = lessonNode && (await outlineNode.getItem());
 
 		//the first item in the selection should be in a lesson (ex. [RelatedWorkRef, Sub-Page])
 		//most items should just be a list of one node.
 		const selectedNode = selectionNodes && selectionNodes[0];
-		const selectedItem = selectedNode && await selectedNode.getItem();
+		const selectedItem = selectedNode && (await selectedNode.getItem());
 		const isSameSelectedItem = buildIsSameOverviewItem(selectedItem);
 
 		const totalItems = await lessonWalker.getNodeCount();
-		const currentItemIndex = await lessonWalker.getIndexOf(isSameSelectedItem);
+		const currentItemIndex = await lessonWalker.getIndexOf(
+			isSameSelectedItem
+		);
 
-		const remainingNodes = await lessonWalker.getNodesAfter(isSameSelectedItem);
+		const remainingNodes = await lessonWalker.getNodesAfter(
+			isSameSelectedItem
+		);
 		const nextNode = remainingNodes[0];
-		const nextItem = nextNode && await nextNode.getItem();
+		const nextItem = nextNode && (await nextNode.getItem());
 
 		return {
 			href: overview.href,
@@ -307,12 +349,11 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			outlineNodeId: outline && outline.getID(),
 			totalItems,
 			currentItemIndex,
-			nextItem
+			nextItem,
 		};
 	}
 
-
-	async getLocationInfo (courseTree, lessonNode, selectionNodes) {
+	async getLocationInfo(courseTree, lessonNode, selectionNodes) {
 		if (!selectionNodes || !selectionNodes.length) {
 			throw new Error('Unable to find selection');
 		}
@@ -324,7 +365,7 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		return this.getHierarchyLocationInfo(selectionNodes);
 	}
 
-	async getFlatLocationInfo (selectionNode) {
+	async getFlatLocationInfo(selectionNode) {
 		const item = await selectionNode.getItem();
 
 		if (!item) {
@@ -332,7 +373,7 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		}
 
 		const selectionWalker = selectionNode.createTreeWalker({
-			skip: isNotPageableContent
+			skip: isNotPageableContent,
 		});
 
 		const total = await selectionWalker.getNodeCount();
@@ -340,14 +381,16 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		return {
 			item,
 			totalPages: total,
-			currentPage: 0
+			currentPage: 0,
 		};
 	}
 
-	async getHierarchyLocationInfo (selectionNodes) {
+	async getHierarchyLocationInfo(selectionNodes) {
 		const parent = selectionNodes[0];
 
-		const items = await Promise.all(selectionNodes.map(node => node.getItem()));
+		const items = await Promise.all(
+			selectionNodes.map(node => node.getItem())
+		);
 		const item = items[items.length - 1];
 
 		if (!item) {
@@ -356,11 +399,11 @@ export default class ContentPagerStore extends Stores.BoundStore {
 
 		const itemId = item && item.getID();
 		const selectionWalker = parent.createTreeWalker({
-			skip: isNotPageableContent
+			skip: isNotPageableContent,
 		});
 
 		const total = await selectionWalker.getNodeCount();
-		const index = await selectionWalker.getIndexOf((n) => {
+		const index = await selectionWalker.getIndexOf(n => {
 			return n.getID() === itemId;
 		});
 
@@ -368,12 +411,11 @@ export default class ContentPagerStore extends Stores.BoundStore {
 			item,
 			items,
 			totalPages: total,
-			currentPage: index
+			currentPage: index,
 		};
 	}
 
-
-	async getPagingInfo (courseTree, lessonNode, selectionNodes) {
+	async getPagingInfo(courseTree, lessonNode, selectionNodes) {
 		if (!courseTree || !selectionNodes || !selectionNodes.length) {
 			throw new Error('Unable to find paging info.');
 		}
@@ -381,43 +423,53 @@ export default class ContentPagerStore extends Stores.BoundStore {
 		const selection = selectionNodes[selectionNodes.length - 1];
 		const courseWalker = selection.createTreeWalker(courseTree, {
 			skip: this.skipNodes,
-			ignoreChildren: this.ignoreChildrenNodes
+			ignoreChildren: this.ignoreChildrenNodes,
 		});
 
 		const nextNode = await courseWalker.selectNext().getCurrentNode();
 		const prevNode = await courseWalker.selectPrev().getCurrentNode();
 
-		const nextLessonNode = nextNode && nextNode.findParentOrSelf(isOutlineNode);
-		const prevLessonNode = prevNode && prevNode.findParentOrSelf(isOutlineNode);
+		const nextLessonNode =
+			nextNode && nextNode.findParentOrSelf(isOutlineNode);
+		const prevLessonNode =
+			prevNode && prevNode.findParentOrSelf(isOutlineNode);
 
-		const nextLesson = nextLessonNode && await nextLessonNode.getItem();
-		const prevLesson = prevLessonNode && await prevLessonNode.getItem();
+		const nextLesson = nextLessonNode && (await nextLessonNode.getItem());
+		const prevLesson = prevLessonNode && (await prevLessonNode.getItem());
 
-		const nextRelatedWorkRefNode = nextNode && nextNode.findParent(isRelatedWorkRef);
-		const prevRelatedWorkRefNode = prevNode && prevNode.findParent(isRelatedWorkRef);
+		const nextRelatedWorkRefNode =
+			nextNode && nextNode.findParent(isRelatedWorkRef);
+		const prevRelatedWorkRefNode =
+			prevNode && prevNode.findParent(isRelatedWorkRef);
 
-		const nextRelatedWorkRef = nextRelatedWorkRefNode && await nextRelatedWorkRefNode.getItem();
-		const prevRelatedWorkRef = prevRelatedWorkRefNode && await prevRelatedWorkRefNode.getItem();
+		const nextRelatedWorkRef =
+			nextRelatedWorkRefNode && (await nextRelatedWorkRefNode.getItem());
+		const prevRelatedWorkRef =
+			prevRelatedWorkRefNode && (await prevRelatedWorkRefNode.getItem());
 
-		const nextItem = nextNode && await nextNode.getItem();
-		const prevItem = prevNode && await prevNode.getItem();
+		const nextItem = nextNode && (await nextNode.getItem());
+		const prevItem = prevNode && (await prevNode.getItem());
 
-		const next = !nextItem ? null : {
-			isNextLink: true,
-			item: nextItem,
-			lesson: nextLesson,
-			relatedWorkRef: nextRelatedWorkRef
-		};
-		const previous = !prevItem ? null : {
-			isPrevLink: true,
-			item: prevItem,
-			lesson: prevLesson,
-			relatedWorkRef: prevRelatedWorkRef
-		};
+		const next = !nextItem
+			? null
+			: {
+					isNextLink: true,
+					item: nextItem,
+					lesson: nextLesson,
+					relatedWorkRef: nextRelatedWorkRef,
+			  };
+		const previous = !prevItem
+			? null
+			: {
+					isPrevLink: true,
+					item: prevItem,
+					lesson: prevLesson,
+					relatedWorkRef: prevRelatedWorkRef,
+			  };
 
 		return {
 			next,
-			previous
+			previous,
 		};
 	}
 }

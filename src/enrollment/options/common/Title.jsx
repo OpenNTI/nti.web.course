@@ -6,10 +6,13 @@ import cx from 'classnames';
 import PaddedContainer from './PaddedContainer';
 
 CourseEnrollmentTitle.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
 };
-export default function CourseEnrollmentTitle ({className, ...otherProps}) {
+export default function CourseEnrollmentTitle({ className, ...otherProps }) {
 	return (
-		<PaddedContainer className={cx('nti-course-enrollment-title', className)} {...otherProps} />
+		<PaddedContainer
+			className={cx('nti-course-enrollment-title', className)}
+			{...otherProps}
+		/>
 	);
 }

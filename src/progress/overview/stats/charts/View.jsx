@@ -9,24 +9,27 @@ export default class ProgressOverviewStatsCharts extends React.Component {
 	static propTypes = {
 		enrollment: PropTypes.object,
 		course: PropTypes.object,
-		large: PropTypes.bool
-	}
+		large: PropTypes.bool,
+	};
 
+	render() {
+		const { enrollment, course, large } = this.props;
 
-	render () {
-		const {enrollment, course, large} = this.props;
-
-		if (!course || !course.hasLink('ProgressStats')) { return null; }
+		if (!course || !course.hasLink('ProgressStats')) {
+			return null;
+		}
 
 		return (
-			<div className={cx('progress-overview-stats-charts', {large})}>
+			<div className={cx('progress-overview-stats-charts', { large })}>
 				<div className="switcher">
-					<span className="chart">
-						{CourseStanding.label}
-					</span>
+					<span className="chart">{CourseStanding.label}</span>
 				</div>
 				<div className="active-chart">
-					<CourseStanding course={course} enrollment={enrollment} large={large} />
+					<CourseStanding
+						course={course}
+						enrollment={enrollment}
+						large={large}
+					/>
 				</div>
 			</div>
 		);

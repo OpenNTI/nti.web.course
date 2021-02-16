@@ -1,9 +1,9 @@
 import './Grid.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
-import {CircularProgress} from '@nti/web-charts';
+import { Button } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { CircularProgress } from '@nti/web-charts';
 
 import Base from '../../common/BaseAssessmentGridItem';
 
@@ -13,7 +13,7 @@ import Label from './Label';
 const DEFAULT_TEXT = {
 	review: 'Review',
 	closed: 'Closed',
-	take: 'Take'
+	take: 'Take',
 };
 const t = scoped('course.overview.lesson.items.survey.Grid', DEFAULT_TEXT);
 
@@ -21,11 +21,11 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
 		noProgress: PropTypes.bool,
-		onRequirementChange: PropTypes.func
-	}
+		onRequirementChange: PropTypes.func,
+	};
 
-	render () {
-		const {item} = this.props;
+	render() {
+		const { item } = this.props;
 
 		return (
 			<Base
@@ -37,19 +37,17 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 		);
 	}
 
+	renderCompletedStatus() {
+		const { item, noProgress } = this.props;
 
-	renderCompletedStatus () {
-		const {item, noProgress} = this.props;
-
-		if(!noProgress && item.hasCompleted && item.hasCompleted()) {
+		if (!noProgress && item.hasCompleted && item.hasCompleted()) {
 			return (
 				<div className="progress-icon">
-					<CircularProgress width={20} height={20} isComplete/>
+					<CircularProgress width={20} height={20} isComplete />
 				</div>
 			);
 		}
 	}
-
 
 	renderIcon = () => {
 		return (
@@ -58,19 +56,16 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 				{this.renderCompletedStatus()}
 			</div>
 		);
-	}
-
+	};
 
 	renderLabels = () => {
-		const {item, onRequirementChange} = this.props;
+		const { item, onRequirementChange } = this.props;
 
-		return (
-			<Label item={item} onRequirementChange={onRequirementChange}/>
-		);
-	}
+		return <Label item={item} onRequirementChange={onRequirementChange} />;
+	};
 
 	renderButton = () => {
-		const {item} = this.props;
+		const { item } = this.props;
 
 		const startDate = item.getTargetAssignedDate();
 		const now = new Date();
@@ -87,12 +82,14 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 			text = t('take');
 		}
 
-		if (!text) { return null; }
+		if (!text) {
+			return null;
+		}
 
 		return (
 			<Button as="span" rounded>
 				{text}
 			</Button>
 		);
-	}
+	};
 }

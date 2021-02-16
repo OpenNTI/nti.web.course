@@ -6,7 +6,7 @@ import { Summary } from '@nti/lib-interfaces';
 import View from '../View';
 import { List, Grid, Unpublished } from '../../../Constants';
 
-function itemBuilder () {
+function itemBuilder() {
 	return {
 		_id: 'item1',
 		_MimeType: 'application/vnd.nextthought.relatedworkref',
@@ -60,33 +60,33 @@ function itemBuilder () {
 				icon: this._icon,
 				MimeType: this._MimeType,
 				[Summary]: {
-					ItemCount: this._commentCount
+					ItemCount: this._commentCount,
 				},
 				isCompletable: () => this._completable,
 				CompletionRequired: this._CompletionRequired,
 				title: this._title,
 				description: this._description,
 				byline: this._byline,
-				TargetPublishState: this._TargetPublishState
+				TargetPublishState: this._TargetPublishState,
 			};
-		}
+		},
 	};
 }
 
 class ContextProvider extends React.Component {
 	static propTypes = {
-		children: PropTypes.any
-	}
+		children: PropTypes.any,
+	};
 
 	static childContextTypes = {
 		analyticsManager: PropTypes.object,
-	}
+	};
 
 	getChildContext = () => ({
-		analyticsManager: {}
-	})
+		analyticsManager: {},
+	});
 
-	render () {
+	render() {
 		return this.props.children;
 	}
 }
@@ -94,9 +94,17 @@ class ContextProvider extends React.Component {
 /* eslint-env jest */
 describe('Course overview related work ref item test', () => {
 	test('Grid item with 5 comments, completable, required', async () => {
-		const item = itemBuilder().commentCount(5).completable().required().build();
+		const item = itemBuilder()
+			.commentCount(5)
+			.completable()
+			.required()
+			.build();
 
-		const cmp = renderer.create(<ContextProvider><View item={item} layout={Grid}/></ContextProvider>);
+		const cmp = renderer.create(
+			<ContextProvider>
+				<View item={item} layout={Grid} />
+			</ContextProvider>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -105,7 +113,11 @@ describe('Course overview related work ref item test', () => {
 	test('Grid item with no comments, completable, not required', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<ContextProvider><View item={item} layout={Grid}/></ContextProvider>);
+		const cmp = renderer.create(
+			<ContextProvider>
+				<View item={item} layout={Grid} />
+			</ContextProvider>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -114,7 +126,15 @@ describe('Course overview related work ref item test', () => {
 	test('Grid item with no comments, completable, requirement editable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<ContextProvider><View item={item} onRequirementChange={()=>{}} layout={Grid}/></ContextProvider>);
+		const cmp = renderer.create(
+			<ContextProvider>
+				<View
+					item={item}
+					onRequirementChange={() => {}}
+					layout={Grid}
+				/>
+			</ContextProvider>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -123,16 +143,28 @@ describe('Course overview related work ref item test', () => {
 	test('Grid item unpublished', async () => {
 		const item = itemBuilder().unpublished().build();
 
-		const cmp = renderer.create(<ContextProvider><View item={item} layout={Grid}/></ContextProvider>);
+		const cmp = renderer.create(
+			<ContextProvider>
+				<View item={item} layout={Grid} />
+			</ContextProvider>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
 	});
 
 	test('List item with 5 comments, completable, required', async () => {
-		const item = itemBuilder().commentCount(5).completable().required().build();
+		const item = itemBuilder()
+			.commentCount(5)
+			.completable()
+			.required()
+			.build();
 
-		const cmp = renderer.create(<ContextProvider><View item={item} layout={List}/></ContextProvider>);
+		const cmp = renderer.create(
+			<ContextProvider>
+				<View item={item} layout={List} />
+			</ContextProvider>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -141,7 +173,11 @@ describe('Course overview related work ref item test', () => {
 	test('List item with no comments, completable, not required', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<ContextProvider><View item={item} layout={List}/></ContextProvider>);
+		const cmp = renderer.create(
+			<ContextProvider>
+				<View item={item} layout={List} />
+			</ContextProvider>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -150,7 +186,11 @@ describe('Course overview related work ref item test', () => {
 	test('List item unpublished', async () => {
 		const item = itemBuilder().unpublished().build();
 
-		const cmp = renderer.create(<ContextProvider><View item={item} layout={List}/></ContextProvider>);
+		const cmp = renderer.create(
+			<ContextProvider>
+				<View item={item} layout={List} />
+			</ContextProvider>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();
@@ -159,7 +199,15 @@ describe('Course overview related work ref item test', () => {
 	test('List item with no comments, completable, requirement editable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(<ContextProvider><View item={item} onRequirementChange={()=>{}} layout={List}/></ContextProvider>);
+		const cmp = renderer.create(
+			<ContextProvider>
+				<View
+					item={item}
+					onRequirementChange={() => {}}
+					layout={List}
+				/>
+			</ContextProvider>
+		);
 
 		const tree = cmp.toJSON();
 		expect(tree).toMatchSnapshot();

@@ -7,14 +7,18 @@ import PaddedContainer from './PaddedContainer';
 
 CourseEnrollmentDescription.propTypes = {
 	className: PropTypes.string,
-	children: PropTypes.node
+	children: PropTypes.node,
 };
-export default function CourseEnrollmentDescription ({className, children, ...otherProps}) {
+export default function CourseEnrollmentDescription({
+	className,
+	children,
+	...otherProps
+}) {
 	const child = React.Children.toArray(children);
 	let extraProps = {};
 
 	if (child.length === 1 && typeof child[0] === 'string') {
-		extraProps.dangerouslySetInnerHTML = {__html: child[0]};
+		extraProps.dangerouslySetInnerHTML = { __html: child[0] };
 	} else {
 		extraProps.children = children;
 	}

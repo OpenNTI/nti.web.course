@@ -1,8 +1,14 @@
 @import '~@nti/style-common';
 
 $header-ranges: (
-	short: (null, 500px),
-	wide: (500px, null)
+	short: (
+		null,
+		500px,
+	),
+	wide: (
+		500px,
+		null,
+	),
 );
 
 .event-base-item {
@@ -89,13 +95,15 @@ $header-ranges: (
 					color: var(--primary-red);
 				}
 
-				.event-duration, .incomplete-label, .completion-label {
+				.event-duration,
+				.incomplete-label,
+				.completion-label {
 					position: relative;
 					padding-right: 12px;
 					margin-right: 2px;
 
 					&::after {
-						content: "·";
+						content: '·';
 						margin-right: 2px;
 						font-size: 20px;
 						line-height: 0;
@@ -116,7 +124,7 @@ $header-ranges: (
 
 		button {
 			border-radius: 4px;
-			background-color: var(--primary-green);//var(--secondary-green);
+			background-color: var(--primary-green); //var(--secondary-green);
 			color: #fff;
 			font-family: var(--body-font-family);
 			font-size: 16px;
@@ -244,7 +252,7 @@ $header-ranges: (
 						position: relative;
 
 						&::before {
-							content: "·";
+							content: '·';
 							margin-right: 4px;
 							font-size: 24px;
 							line-height: 0;

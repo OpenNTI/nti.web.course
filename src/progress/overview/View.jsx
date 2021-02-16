@@ -1,9 +1,9 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
-import {Prompt, Layouts, Loading} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { decorate } from '@nti/lib-commons';
+import { Prompt, Layouts, Loading } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import Store from './Store';
 import Header from './Header';
@@ -12,42 +12,36 @@ import DefaultContents from './contents';
 import ScormContents from './scorm-contents';
 
 const t = scoped('course.progress.overview.View', {
-	error: 'Unable to load Progress.'
+	error: 'Unable to load Progress.',
 });
 
-const {InfiniteLoad} = Layouts;
-
-
+const { InfiniteLoad } = Layouts;
 
 class ProgressOverview extends React.Component {
-	static showForBatchLink (batch, course) {
-		return new Promise ((fulfill) => {
+	static showForBatchLink(batch, course) {
+		return new Promise(fulfill => {
 			const Cmp = this;
 
-			Prompt.modal((
+			Prompt.modal(
 				<Cmp
 					batchLink={batch}
 					course={course}
 					onClose={fulfill}
 					modal
-				/>
-			), 'course-progress-overview-prompt');
-
+				/>,
+				'course-progress-overview-prompt'
+			);
 		});
 	}
 
-	static showForCourse (course) {
-		return new Promise ((fulfill) => {
+	static showForCourse(course) {
+		return new Promise(fulfill => {
 			const Cmp = this;
 
-			Prompt.modal((
-				<Cmp
-					course={course}
-					onClose={fulfill}
-					singleItem
-					modal
-				/>
-			), 'course-progress-overview-prompt');
+			Prompt.modal(
+				<Cmp course={course} onClose={fulfill} singleItem modal />,
+				'course-progress-overview-prompt'
+			);
 		});
 	}
 
@@ -70,26 +64,36 @@ class ProgressOverview extends React.Component {
 		hasNextItem: PropTypes.bool,
 		hasPrevItem: PropTypes.bool,
 		loadNextItem: PropTypes.func,
-		loadPrevItem: PropTypes.func
-	}
+		loadPrevItem: PropTypes.func,
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
+	componentDidUpdate(oldProps) {
+		const {
+			course: oldCourse,
+			enrollment: oldEnrollment,
+			batchLink: oldBatch,
+		} = oldProps;
+		const {
+			course: newCourse,
+			enrollment: newEnrollment,
+			batchLink: newBatch,
+		} = this.props;
 
-	componentDidUpdate (oldProps) {
-		const {course:oldCourse, enrollment:oldEnrollment, batchLink:oldBatch} = oldProps;
-		const {course:newCourse, enrollment:newEnrollment, batchLink:newBatch} = this.props;
-
-		if (oldCourse !== newCourse || oldEnrollment !== newEnrollment || oldBatch !== newBatch) {
+		if (
+			oldCourse !== newCourse ||
+			oldEnrollment !== newEnrollment ||
+			oldBatch !== newBatch
+		) {
 			this.setupFor(this.props);
 		}
 	}
 
-
-	setupFor (props) {
-		const {store, course, enrollment, batchLink} = this.props;
+	setupFor(props) {
+		const { store, course, enrollment, batchLink } = this.props;
 
 		if (batchLink) {
 			store.loadBatchLink(batchLink);
@@ -98,36 +102,69 @@ class ProgressOverview extends React.Component {
 		}
 	}
 
-
 	doClose = () => {
-		const {onClose, onDismiss} = this.props;
+		const { onClose, onDismiss } = this.props;
 
-		if (onDismiss) { onDismiss(); }
-		if (onClose) { onClose(); }
-	}
+		if (onDismiss) {
+			onDismiss();
+		}
+		if (onClose) {
+			onClose();
+		}
+	};
 
-
-	render () {
-		const {course, currentItem, loading, error, modal, singleItem} = this.props;
-		const Contents = course.isScormInstance ? ScormContents : DefaultContents;
+	render() {
+		const {
+			course,
+			currentItem,
+			loading,
+			error,
+			modal,
+			singleItem,
+		} = this.props;
+		const Contents = course.isScormInstance
+			? ScormContents
+			: DefaultContents;
 
 		const contents = (
 			<div className="progress-overview">
-				{modal && (<Header {...this.props} doClose={this.doClose} singleItem={singleItem} />)}
-				{loading && (<div className="loading-mask"><Loading.Mask /></div>)}
-				{!loading && error && (<div className="error">{t('error')}</div>)}
+				{modal && (
+					<Header
+						{...this.props}
+						doClose={this.doClose}
+						singleItem={singleItem}
+					/>
+				)}
+				{loading && (
+					<div className="loading-mask">
+						<Loading.Mask />
+					</div>
+				)}
+				{!loading && error && <div className="error">{t('error')}</div>}
 				{!loading && !error && (
 					<React.Fragment>
-						<Stats course={course} enrollment={currentItem} singleItem={singleItem}/>
-						<Contents course={course} enrollment={currentItem} singleItem={singleItem}/>
+						<Stats
+							course={course}
+							enrollment={currentItem}
+							singleItem={singleItem}
+						/>
+						<Contents
+							course={course}
+							enrollment={currentItem}
+							singleItem={singleItem}
+						/>
 					</React.Fragment>
 				)}
 			</div>
 		);
 
-		return modal ?
-			(<InfiniteLoad.Container className="progress-overview-container">{contents}</InfiniteLoad.Container>) :
-			contents;
+		return modal ? (
+			<InfiniteLoad.Container className="progress-overview-container">
+				{contents}
+			</InfiniteLoad.Container>
+		) : (
+			contents
+		);
 	}
 }
 
@@ -141,6 +178,6 @@ export default decorate(ProgressOverview, [
 		hasNextItem: 'hasNextItem',
 		hasPrevItem: 'hasPrevItem',
 		loadNextItem: 'loadNextItem',
-		loadPrevItem: 'loadPrevItem'
-	})
+		loadPrevItem: 'loadPrevItem',
+	}),
 ]);

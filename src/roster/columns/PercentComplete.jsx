@@ -8,16 +8,17 @@ import styles from './PercentComplete.css';
 const logger = Logger.get('roster.component.percent-complete');
 const cx = classnames.bind(styles);
 
-function clamp (p) {
+function clamp(p) {
 	if (p < 0 || p > 1) {
-		logger.warn(`Expected a fractional value between 0 and 1. Received ${p}. Clamping to stay in range.`);
+		logger.warn(
+			`Expected a fractional value between 0 and 1. Received ${p}. Clamping to stay in range.`
+		);
 		return Math.min(Math.max(0, p), 1);
 	}
 	return p;
 }
 
-export default function PercentComplete ({className, percentage: p = 0}) {
-
+export default function PercentComplete({ className, percentage: p = 0 }) {
 	const percentage = clamp(p);
 	const progressAsInt = global.parseInt(percentage * 100);
 	const positive = percentage > 0;
@@ -34,22 +35,27 @@ export default function PercentComplete ({className, percentage: p = 0}) {
 		strokeWidth,
 		strokeDashoffset,
 		fill: 'none',
-		stroke: '#eee'
+		stroke: '#eee',
 	};
 
 	const completedProps = {
 		...props,
 		strokeDasharray,
-		stroke: '#3fb34f'
+		stroke: '#3fb34f',
 	};
 
 	return (
-		<div className={cx('percent-complete-container', {positive}, className)} data-progress-percent={percentage}>
+		<div
+			className={cx(
+				'percent-complete-container',
+				{ positive },
+				className
+			)}
+			data-progress-percent={percentage}
+		>
 			<svg width="25" height="25" viewBox={`0 0 ${size} ${size}`}>
 				<circle {...props} />
-				{positive && (
-					<circle {...completedProps} />
-				)}
+				{positive && <circle {...completedProps} />}
 			</svg>
 			<span className={cx('text')}>{progressAsInt}%</span>
 		</div>
@@ -57,6 +63,5 @@ export default function PercentComplete ({className, percentage: p = 0}) {
 }
 
 PercentComplete.propTypes = {
-	percentage: PropTypes.number.isRequired
+	percentage: PropTypes.number.isRequired,
 };
-

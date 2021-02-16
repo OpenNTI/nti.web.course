@@ -5,37 +5,48 @@ import CourseVisibility from '../CourseVisibility';
 
 /* eslint-env jest */
 describe('CourseVisibility test', () => {
-	function makeCatalogEntry (Preview, isHidden, StartDate, optionNames) {
+	function makeCatalogEntry(Preview, isHidden, StartDate, optionNames) {
 		let Items = {};
 
 		(optionNames || []).forEach(o => {
 			Items[o] = {
-				enabled: true
+				enabled: true,
 			};
 		});
 
 		return {
 			getEnrollmentOptions: function () {
 				return {
-					Items
+					Items,
 				};
 			},
 			Preview,
 			isHidden,
 			StartDate,
 			getStartDate: StartDate && (() => StartDate),
-			hasLink (rel) {
-				if (rel === 'edit') { return true;}
-			}
+			hasLink(rel) {
+				if (rel === 'edit') {
+					return true;
+				}
+			},
 		};
 	}
 
-
 	describe('Preview mode tests', () => {
 		test('Test preview mode with start date', () => {
-			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, new Date('10/31/2015'))}/>);
+			const x = render(
+				<CourseVisibility
+					catalogEntry={makeCatalogEntry(
+						true,
+						true,
+						new Date('10/31/2015')
+					)}
+				/>
+			);
 
-			const labeledContentItems = x.container.querySelector('.labeled-content');
+			const labeledContentItems = x.container.querySelector(
+				'.labeled-content'
+			);
 			const previewLabel = labeledContentItems.querySelector('.label');
 			const dateValue = labeledContentItems.querySelector('.content');
 
@@ -48,9 +59,13 @@ describe('CourseVisibility test', () => {
 		});
 
 		test('Test preview mode with no start date', () => {
-			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
+			const x = render(
+				<CourseVisibility catalogEntry={makeCatalogEntry(true, true)} />
+			);
 
-			const labeledContentItems = x.container.querySelector('.labeled-content');
+			const labeledContentItems = x.container.querySelector(
+				'.labeled-content'
+			);
 			const previewLabel = labeledContentItems.querySelector('.label');
 			const dateValue = labeledContentItems.querySelector('.content');
 
@@ -59,9 +74,15 @@ describe('CourseVisibility test', () => {
 		});
 
 		test('Test no preview', () => {
-			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(false, true)}/>);
+			const x = render(
+				<CourseVisibility
+					catalogEntry={makeCatalogEntry(false, true)}
+				/>
+			);
 
-			const labeledContentItems = x.container.querySelector('.labeled-content');
+			const labeledContentItems = x.container.querySelector(
+				'.labeled-content'
+			);
 			const firstLabel = labeledContentItems.querySelector('.label');
 
 			// there shouldn't be a preview label so the first label we find should have
@@ -69,7 +90,6 @@ describe('CourseVisibility test', () => {
 			expect(firstLabel.getAttribute('class')).not.toMatch(/preview/);
 		});
 	});
-
 
 	// describe('Allowing enrollment tests', () => {
 	// 	test('Test none', () => {
@@ -150,22 +170,35 @@ describe('CourseVisibility test', () => {
 	// 	});
 	// });
 
-
 	describe('Visible in catalog tests', () => {
 		test('Test is visible in catalog', () => {
-			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, false)}/>);
+			const x = render(
+				<CourseVisibility
+					catalogEntry={makeCatalogEntry(true, false)}
+				/>
+			);
 
-			const labeledContentItems = Array.from(x.container.querySelectorAll('.labeled-content'));
-			const visibilityContent = labeledContentItems.pop().querySelector('.content');
+			const labeledContentItems = Array.from(
+				x.container.querySelectorAll('.labeled-content')
+			);
+			const visibilityContent = labeledContentItems
+				.pop()
+				.querySelector('.content');
 
 			expect(visibilityContent.textContent).toEqual('Yes');
 		});
 
 		test('Test is not visible in catalog', () => {
-			const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
+			const x = render(
+				<CourseVisibility catalogEntry={makeCatalogEntry(true, true)} />
+			);
 
-			const labeledContentItems = Array.from(x.container.querySelectorAll('.labeled-content'));
-			const visibilityContent = labeledContentItems.pop().querySelector('.content');
+			const labeledContentItems = Array.from(
+				x.container.querySelectorAll('.labeled-content')
+			);
+			const visibilityContent = labeledContentItems
+				.pop()
+				.querySelector('.content');
 
 			expect(visibilityContent.textContent).toEqual('No');
 		});

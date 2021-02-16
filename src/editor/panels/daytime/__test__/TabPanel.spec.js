@@ -14,13 +14,10 @@ describe('DayTime TabPanel test', () => {
 		},
 		Schedule: {
 			days: [
-				'MRF'	// monday, thursday, friday selected
+				'MRF', // monday, thursday, friday selected
 			],
-			times: [
-				'8:15',
-				'10:30'
-			]
-		}
+			times: ['8:15', '10:30'],
+		},
 	};
 	const onCancel = jest.fn();
 	const afterSave = jest.fn();
@@ -41,10 +38,10 @@ describe('DayTime TabPanel test', () => {
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
+		label: PropTypes.string,
 	};
 
-	function SaveButton ({onSave, label}) {
+	function SaveButton({ onSave, label }) {
 		return (
 			<div onClick={onSave}>
 				<div className="course-panel-continue">{label}</div>
@@ -72,13 +69,18 @@ describe('DayTime TabPanel test', () => {
 
 		fireEvent.click(node);
 
-		await waitFor(() =>
-			expect(onCancel).toHaveBeenCalled());
+		await waitFor(() => expect(onCancel).toHaveBeenCalled());
 	});
 
-
 	test('Test weekday fields', () => {
-		const [/*sun*/ ,monday, /*tues*/, wednesday, thursday, friday] = result.container.querySelectorAll('.course-panel-day');
+		const [
+			,
+			/*sun*/ monday /*tues*/,
+			,
+			wednesday,
+			thursday,
+			friday,
+		] = result.container.querySelectorAll('.course-panel-day');
 
 		// initial state (mon, thurs, fri should be selected)
 		expect(monday.getAttribute('class')).toMatch(/selected/);
@@ -97,7 +99,7 @@ describe('DayTime TabPanel test', () => {
 	});
 
 	const verifyTime = (time, node) => {
-		const [ hours, minutes ] = time.split(':');
+		const [hours, minutes] = time.split(':');
 
 		const hourNode = node.querySelector('input[name="hours"]');
 		const minuteNode = node.querySelector('input[name="minutes"]');
@@ -107,11 +109,12 @@ describe('DayTime TabPanel test', () => {
 	};
 
 	test('Test time fields', () => {
-		const startTime = result.container.querySelector('.course-panel-starttime');
+		const startTime = result.container.querySelector(
+			'.course-panel-starttime'
+		);
 		const endTime = result.container.querySelector('.course-panel-endtime');
 
 		verifyTime(catalogEntry.Schedule.times[0], startTime);
 		verifyTime(catalogEntry.Schedule.times[1], endTime);
 	});
-
 });

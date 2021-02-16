@@ -7,11 +7,11 @@ import AssessmentLabel from '../AssessmentLabel';
 describe('Course overview asessment label test', () => {
 	test('Question count', async () => {
 		const assessment = {
-			'question-count': 15
+			'question-count': 15,
 		};
 
 		const cmp = renderer.create(
-			<AssessmentLabel assessment={assessment}/>
+			<AssessmentLabel assessment={assessment} />
 		);
 
 		const tree = cmp.toJSON();
@@ -21,16 +21,19 @@ describe('Course overview asessment label test', () => {
 
 	test('Question count with correct/incorrect', async () => {
 		const assessment = {
-			'question-count': 15
+			'question-count': 15,
 		};
 
 		const assessmentSubmission = {
 			getCorrect: () => 5,
-			getIncorrect: () => 10
+			getIncorrect: () => 10,
 		};
 
 		const cmp = renderer.create(
-			<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission}/>
+			<AssessmentLabel
+				assessment={assessment}
+				assessmentSubmission={assessmentSubmission}
+			/>
 		);
 
 		const tree = cmp.toJSON();
@@ -40,11 +43,11 @@ describe('Course overview asessment label test', () => {
 
 	test('Question count, required', async () => {
 		const assessment = {
-			'question-count': 15
+			'question-count': 15,
 		};
 
 		const cmp = renderer.create(
-			<AssessmentLabel assessment={assessment} required/>
+			<AssessmentLabel assessment={assessment} required />
 		);
 
 		const tree = cmp.toJSON();
@@ -54,15 +57,19 @@ describe('Course overview asessment label test', () => {
 
 	test('Question count, required editable', async () => {
 		const assessment = {
-			'question-count': 15
+			'question-count': 15,
 		};
 
 		const overviewItemRef = {
-			isCompletable: () => true
+			isCompletable: () => true,
 		};
 
 		const cmp = renderer.create(
-			<AssessmentLabel assessment={assessment} overviewItemRef={overviewItemRef} onRequirementChange={()=>{}}/>
+			<AssessmentLabel
+				assessment={assessment}
+				overviewItemRef={overviewItemRef}
+				onRequirementChange={() => {}}
+			/>
 		);
 
 		const tree = cmp.toJSON();

@@ -11,17 +11,17 @@ describe('Basic WizardPanel test', () => {
 		save: () => {
 			mockSave();
 			return Promise.resolve();
-		}
+		},
 	};
 	const onCancel = jest.fn();
 	const afterSave = jest.fn();
 	const buttonLabel = 'Test Label';
 
-	let result,root, cmp;
+	let result, root, cmp;
 	beforeEach(() => {
 		result = render(
 			<WizardPanel
-				ref={x => cmp = x}
+				ref={x => (cmp = x)}
 				catalogEntry={catalogEntry}
 				saveCmp={SaveButton}
 				onCancel={onCancel}
@@ -34,10 +34,10 @@ describe('Basic WizardPanel test', () => {
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
+		label: PropTypes.string,
 	};
 
-	function SaveButton ({onSave, label}) {
+	function SaveButton({ onSave, label }) {
 		return (
 			<div onClick={onSave}>
 				<div className="course-panel-continue">{label}</div>
@@ -65,16 +65,16 @@ describe('Basic WizardPanel test', () => {
 
 		fireEvent.click(node);
 
-		await waitFor(() =>
-
-			expect(onCancel).toHaveBeenCalled());
+		await waitFor(() => expect(onCancel).toHaveBeenCalled());
 	});
 
 	const verifyInput = async (placeholder, stateField, value) => {
-		cmp.setState({[stateField]: value});
+		cmp.setState({ [stateField]: value });
 
 		await waitFor(() => {
-			const node = root.querySelector('[placeholder="' + placeholder + '"]');
+			const node = root.querySelector(
+				'[placeholder="' + placeholder + '"]'
+			);
 
 			expect(node.value).toEqual(value);
 		});
@@ -82,8 +82,11 @@ describe('Basic WizardPanel test', () => {
 
 	test('Test fields', async () => {
 		await verifyInput('Course Name', 'courseName', 'Test course name');
-		await verifyInput('Identification Number (i.e. UCOL-3224)', 'identifier', 'Test ID');
+		await verifyInput(
+			'Identification Number (i.e. UCOL-3224)',
+			'identifier',
+			'Test ID'
+		);
 		await verifyInput('Description', 'description', 'Test description');
 	});
-
 });

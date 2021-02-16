@@ -1,14 +1,21 @@
 import './EnrollmentOptions.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {Loading, Input} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { Loading, Input } from '@nti/web-commons';
 
 import Store from './EnrollmentOptionsStore';
-import {CustomExternalEnrollment, ExternalEnrollment, IMSEnrollment, OpenEnrollment, FiveMinuteEnrollment, StoreEnrollment} from './options';
+import {
+	CustomExternalEnrollment,
+	ExternalEnrollment,
+	IMSEnrollment,
+	OpenEnrollment,
+	FiveMinuteEnrollment,
+	StoreEnrollment,
+} from './options';
 import AddEnrollmentOption from './AddEnrollmentOption';
-import {MIME_TYPES} from './common/OptionText';
+import { MIME_TYPES } from './common/OptionText';
 
 const t = scoped('course.components.EnrollmentOptions', {
 	enrollmentOptions: 'Enrollment',
@@ -17,7 +24,7 @@ const t = scoped('course.components.EnrollmentOptions', {
 	addOption: 'Add an option',
 	allowOpen: 'Allow Open Enrollment',
 	allowCustomExternal: 'Allow External Enrollment',
-	emptyText: 'There are no enrollment options available.'
+	emptyText: 'There are no enrollment options available.',
 });
 
 const cmpMap = {
@@ -26,7 +33,7 @@ const cmpMap = {
 	[MIME_TYPES.FIVE_MINUTE]: FiveMinuteEnrollment,
 	[MIME_TYPES.CUSTOM_EXTERNAL]: CustomExternalEnrollment,
 	[MIME_TYPES.EXTERNAL]: ExternalEnrollment,
-	[MIME_TYPES.IMS]: IMSEnrollment
+	[MIME_TYPES.IMS]: IMSEnrollment,
 };
 
 class EnrollmentOptions extends React.Component {
@@ -39,30 +46,30 @@ class EnrollmentOptions extends React.Component {
 		availableOptions: PropTypes.array,
 		loading: PropTypes.bool,
 		warning: PropTypes.string,
-		error: PropTypes.string
-	}
+		error: PropTypes.string,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
 
-	componentDidMount () {
-		const {store, catalogEntry, courseInstance} = this.props;
+	componentDidMount() {
+		const { store, catalogEntry, courseInstance } = this.props;
 
 		store.loadEnrollmentOptions(catalogEntry, courseInstance);
 	}
 
-	state = {}
+	state = {};
 
-	getCmpFor (option) {
+	getCmpFor(option) {
 		// default to open or return null?
 		return cmpMap[option.MimeType];
 	}
 
-	renderOption (option, addable) {
+	renderOption(option, addable) {
 		const Cmp = this.getCmpFor(option);
 
-		if(!Cmp) {
+		if (!Cmp) {
 			return;
 		}
 
@@ -77,26 +84,34 @@ class EnrollmentOptions extends React.Component {
 
 	renderExistingOption = (option, addable) => {
 		return this.renderOption(option, false);
-	}
+	};
 
 	launchAddDialog = () => {
-		AddEnrollmentOption.show(this.props.availableOptions, this.props.enrollmentOptions).then(selectedType => {
+		AddEnrollmentOption.show(
+			this.props.availableOptions,
+			this.props.enrollmentOptions
+		).then(selectedType => {
 			this.props.store.addEnrollmentOption(selectedType);
 		});
-	}
+	};
 
-	renderAddButton () {
-		const {availableOptions} = this.props;
+	renderAddButton() {
+		const { availableOptions } = this.props;
 
-		if(!availableOptions || availableOptions.length === 0) {
+		if (!availableOptions || availableOptions.length === 0) {
 			return null;
 		}
 
-		return <div className="add enrollment-card" onClick={this.launchAddDialog}><div className="icon">+</div><div className="text">{t('addOption')}</div></div>;
+		return (
+			<div className="add enrollment-card" onClick={this.launchAddDialog}>
+				<div className="icon">+</div>
+				<div className="text">{t('addOption')}</div>
+			</div>
+		);
 	}
 
-	renderOptions () {
-		const {enrollmentOptions} = this.props;
+	renderOptions() {
+		const { enrollmentOptions } = this.props;
 
 		return (
 			<div className="options-list">
@@ -107,77 +122,78 @@ class EnrollmentOptions extends React.Component {
 	}
 
 	enterEditMode = () => {
-		this.setState({editMode: true});
-	}
+		this.setState({ editMode: true });
+	};
 
 	exitEditMode = () => {
-		this.setState({editMode: false});
+		this.setState({ editMode: false });
+	};
+
+	renderCustomizeButton() {
+		return (
+			<div className="customize-button" onClick={this.enterEditMode}>
+				{t('customize')}
+			</div>
+		);
 	}
 
-	renderCustomizeButton () {
-		return <div className="customize-button" onClick={this.enterEditMode}>{t('customize')}</div>;
+	renderDoneCustomizingButton() {
+		return (
+			<div className="customize-button" onClick={this.exitEditMode}>
+				{t('doneCustomizing')}
+			</div>
+		);
 	}
 
-	renderDoneCustomizingButton () {
-		return <div className="customize-button" onClick={this.exitEditMode}>{t('doneCustomizing')}</div>;
-	}
+	canCustomize() {
+		const { availableOptions, enrollmentOptions } = this.props;
 
-	canCustomize () {
-		const {availableOptions, enrollmentOptions} = this.props;
-
-		if(availableOptions && availableOptions.length > 0) {
+		if (availableOptions && availableOptions.length > 0) {
 			return true;
 		}
 
-		const editableOptions = (enrollmentOptions || []).filter(x => x.hasLink('edit'));
+		const editableOptions = (enrollmentOptions || []).filter(x =>
+			x.hasLink('edit')
+		);
 
 		return editableOptions.length > 0;
 	}
 
-	renderEmptyState () {
+	renderEmptyState() {
 		return <div className="empty-state">{t('emptyText')}</div>;
 	}
 
 	toggleOpenEnrollment = () => {
 		this.props.store.toggleOpenEnrollment(!this.props.allowOpenEnrollment);
-	}
+	};
 
 	toggleExternalEnrollment = () => {
-		const {availableOptions, enrollmentOptions} = this.props;
+		const { availableOptions, enrollmentOptions } = this.props;
 
-		const customExternalOption =
-				((availableOptions || []).concat(enrollmentOptions || []))
-					.filter(x => x.MimeType.match(/ensyncimisexternalenrollmentoption/))[0];
+		const customExternalOption = (availableOptions || [])
+			.concat(enrollmentOptions || [])
+			.filter(x =>
+				x.MimeType.match(/ensyncimisexternalenrollmentoption/)
+			)[0];
 
-		if(!customExternalOption) {
+		if (!customExternalOption) {
 			return;
 		}
 
-		if(this.hasExternalEnrollment()) {
+		if (this.hasExternalEnrollment()) {
 			this.props.store.removeOption(customExternalOption);
-		}
-		else {
+		} else {
 			this.props.store.addEnrollmentOption(customExternalOption);
 		}
-	}
+	};
 
-	allowsExternalEnrollment () {
-		const {availableOptions} = this.props;
+	allowsExternalEnrollment() {
+		const { availableOptions } = this.props;
 
-		if(availableOptions) {
-			const filtered = availableOptions.filter(x => x.MimeType.match(/ensyncimisexternalenrollmentoption/));
-
-			return filtered.length > 0;
-		}
-
-		return false;
-	}
-
-	hasExternalEnrollment () {
-		const {enrollmentOptions} = this.props;
-
-		if(enrollmentOptions) {
-			const filtered = enrollmentOptions.filter(x => x.MimeType.match(/ensyncimisexternalenrollmentoption/));
+		if (availableOptions) {
+			const filtered = availableOptions.filter(x =>
+				x.MimeType.match(/ensyncimisexternalenrollmentoption/)
+			);
 
 			return filtered.length > 0;
 		}
@@ -185,15 +201,31 @@ class EnrollmentOptions extends React.Component {
 		return false;
 	}
 
-	render () {
-		const {loading, warning /*, availableOptions, enrollmentOptions*/} = this.props;
+	hasExternalEnrollment() {
+		const { enrollmentOptions } = this.props;
 
-		if(loading) {
-			return <Loading.Ellipsis/>;
+		if (enrollmentOptions) {
+			const filtered = enrollmentOptions.filter(x =>
+				x.MimeType.match(/ensyncimisexternalenrollmentoption/)
+			);
+
+			return filtered.length > 0;
+		}
+
+		return false;
+	}
+
+	render() {
+		const {
+			loading,
+			warning /*, availableOptions, enrollmentOptions*/,
+		} = this.props;
+
+		if (loading) {
+			return <Loading.Ellipsis />;
 		}
 
 		// let isEmpty = (!availableOptions || availableOptions.length === 0) && (!enrollmentOptions || enrollmentOptions.length === 0);
-
 
 		return (
 			<div className="enrollment-options">
@@ -202,12 +234,23 @@ class EnrollmentOptions extends React.Component {
 				{warning && <div className="warning">{warning}</div>}
 				<div className="enrollment-option">
 					<div className="label">{t('allowOpen')}</div>
-					<div className="control"><Input.Toggle value={this.props.allowOpenEnrollment} onChange={this.toggleOpenEnrollment}/></div>
+					<div className="control">
+						<Input.Toggle
+							value={this.props.allowOpenEnrollment}
+							onChange={this.toggleOpenEnrollment}
+						/>
+					</div>
 				</div>
-				{(this.allowsExternalEnrollment() || this.hasExternalEnrollment()) && (
+				{(this.allowsExternalEnrollment() ||
+					this.hasExternalEnrollment()) && (
 					<div className="enrollment-option">
 						<div className="label">{t('allowCustomExternal')}</div>
-						<div className="control"><Input.Toggle value={this.hasExternalEnrollment()} onChange={this.toggleExternalEnrollment}/></div>
+						<div className="control">
+							<Input.Toggle
+								value={this.hasExternalEnrollment()}
+								onChange={this.toggleExternalEnrollment}
+							/>
+						</div>
 					</div>
 				)}
 				{/* {isEmpty && this.renderEmptyState()}
@@ -227,6 +270,6 @@ export default decorate(EnrollmentOptions, [
 		allowOpenEnrollment: 'allowOpenEnrollment',
 		error: 'error',
 		warning: 'warning',
-		loading: 'loading'
-	})
+		loading: 'loading',
+	}),
 ]);

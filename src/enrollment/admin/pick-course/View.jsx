@@ -5,20 +5,23 @@ import CourseSelector from '../../../selector';
 
 export default class EnrollmentAdminPickCourse extends React.Component {
 	static propTypes = {
-		onCourseSelected: PropTypes.func
-	}
+		onCourseSelected: PropTypes.func,
+	};
 
-	onSelect = (course) => {
-		const {onCourseSelected} = this.props;
+	onSelect = course => {
+		const { onCourseSelected } = this.props;
 
 		if (onCourseSelected) {
 			onCourseSelected(course);
 		}
-	}
+	};
 
-	render () {
+	render() {
 		return (
-			<CourseSelector onSelect={this.onSelect} collection="AdministeredCourses" />
+			<CourseSelector
+				onSelect={this.onSelect}
+				collection="AdministeredCourses"
+			/>
 		);
 	}
 }

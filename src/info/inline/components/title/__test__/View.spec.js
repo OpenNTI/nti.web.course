@@ -9,11 +9,13 @@ describe('Title view test', () => {
 		const title = 'A Title';
 
 		const catalogEntry = {
-			'title': title
+			title: title,
 		};
 
-		const x = render(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry} />);
 
-		expect(x.container.querySelector('.course-view-title').textContent).toEqual(title);
+		expect(
+			x.container.querySelector('.course-view-title').textContent
+		).toEqual(title);
 	});
 });

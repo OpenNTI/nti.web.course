@@ -6,20 +6,27 @@ import PaddedContainer from '../../common/PaddedContainer';
 import Registry from '../Registry';
 import View from '../View';
 
-import {COLLATED_MIME_TYPE, DiscussionGroup} from './Collator';
+import { COLLATED_MIME_TYPE, DiscussionGroup } from './Collator';
 
 export default class Group extends React.Component {
 	static propTypes = {
 		item: PropTypes.instanceOf(DiscussionGroup),
 		course: PropTypes.object,
-		layout: PropTypes.any
-	}
+		layout: PropTypes.any,
+	};
 
-	render () {
-		const {item: {Items: items}, ...props} = this.props;
+	render() {
+		const {
+			item: { Items: items },
+			...props
+		} = this.props;
 		return (
 			<PaddedContainer>
-				<View className="lesson-overview-collated-discussion-grid-items" items={items} {...props}/>
+				<View
+					className="lesson-overview-collated-discussion-grid-items"
+					items={items}
+					{...props}
+				/>
 			</PaddedContainer>
 		);
 	}

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Summary} from '@nti/lib-interfaces';
-import {scoped} from '@nti/lib-locale';
+import { Summary } from '@nti/lib-interfaces';
+import { scoped } from '@nti/lib-locale';
 
 import Registry from '../Registry';
 import { List, Grid } from '../../Constants';
@@ -15,9 +15,9 @@ import GridCmp from './Grid';
 const t = scoped('course.overview.lessons.items.scorm', {
 	comments: {
 		one: '%(count)s Comment',
-		other: '%(count)s Comments'
+		other: '%(count)s Comments',
 	},
-	viewComments: 'View Comments'
+	viewComments: 'View Comments',
 });
 
 export default class LessonOverviewScormItem extends React.Component {
@@ -26,23 +26,46 @@ export default class LessonOverviewScormItem extends React.Component {
 		item: PropTypes.object,
 		course: PropTypes.object,
 		editMode: PropTypes.bool,
-		onRequirementChange: PropTypes.func
-	}
+		onRequirementChange: PropTypes.func,
+	};
 
-	render () {
-		const {layout, item, editMode, onRequirementChange, ...otherProps} = this.props;
+	render() {
+		const {
+			layout,
+			item,
+			editMode,
+			onRequirementChange,
+			...otherProps
+		} = this.props;
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
-		const completionLabel = item.hasCompleted && item.hasCompleted() ? (<CompletionLabel item={item} />) : null;
+		const completionLabel =
+			item.hasCompleted && item.hasCompleted() ? (
+				<CompletionLabel item={item} />
+			) : null;
 
 		const commentCount = item[Summary] && item[Summary].ItemCount;
-		const commentLabel = typeof commentCount !== 'number' ? t('viewComments') : t('comments', {count: commentCount});
+		const commentLabel =
+			typeof commentCount !== 'number'
+				? t('viewComments')
+				: t('comments', { count: commentCount });
 
-		const requireChange = (value) => onRequirementChange(value, item.ScormContentInfo);
+		const requireChange = value =>
+			onRequirementChange(value, item.ScormContentInfo);
 		const required = item.CompletionRequired;
-		const requiredLabel = item && item.isCompletable && item.isCompletable() && onRequirementChange ?
-			(<RequirementControl key={`${item.scormId}-requirement`} record={item.ScormContentInfo} onChange={requireChange} />) :
-			required && (<Required key="required-label" />);
+		const requiredLabel =
+			item &&
+			item.isCompletable &&
+			item.isCompletable() &&
+			onRequirementChange ? (
+				<RequirementControl
+					key={`${item.scormId}-requirement`}
+					record={item.ScormContentInfo}
+					onChange={requireChange}
+				/>
+			) : (
+				required && <Required key="required-label" />
+			);
 
 		return (
 			<Cmp
@@ -57,4 +80,6 @@ export default class LessonOverviewScormItem extends React.Component {
 	}
 }
 
-Registry.register('application/vnd.nextthought.scormcontentref')(LessonOverviewScormItem);
+Registry.register('application/vnd.nextthought.scormcontentref')(
+	LessonOverviewScormItem
+);

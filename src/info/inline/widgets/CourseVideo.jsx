@@ -3,12 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Video, { EmbedInput, getCanonicalUrlFrom } from '@nti/web-video';
 import { Prompt } from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
-
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.info.inline.widgets.CourseVideo', {
 	change: 'Change',
-	remove: 'Remove'
+	remove: 'Remove',
 });
 
 export default class CourseVideo extends React.Component {
@@ -16,26 +15,29 @@ export default class CourseVideo extends React.Component {
 		catalogEntry: PropTypes.object.isRequired,
 		editable: PropTypes.bool,
 		onSetVideo: PropTypes.func,
-		onRemoveVideo: PropTypes.func
-	}
+		onRemoveVideo: PropTypes.func,
+	};
 
 	launchVideoInput = () => {
-		EmbedInput.show().then((value) => {
+		EmbedInput.show().then(value => {
 			const src = getCanonicalUrlFrom(value);
 
 			const { onSetVideo } = this.props;
 
 			onSetVideo && onSetVideo(src);
 		});
-	}
+	};
 
-	renderVideoEditor () {
+	renderVideoEditor() {
 		const { editable } = this.props;
 
-		if(editable) {
+		if (editable) {
 			return (
 				<div className="course-info-video-editor">
-					<div className="video-button" onClick={this.launchVideoInput}>
+					<div
+						className="video-button"
+						onClick={this.launchVideoInput}
+					>
 						<div className="icon">+</div>
 						<div className="label">Cover Video</div>
 					</div>
@@ -47,22 +49,30 @@ export default class CourseVideo extends React.Component {
 	}
 
 	removeVideo = () => {
-		Prompt.areYouSure('This will remove this video from the course').then(() => {
-			const { onRemoveVideo } = this.props;
+		Prompt.areYouSure('This will remove this video from the course').then(
+			() => {
+				const { onRemoveVideo } = this.props;
 
-			onRemoveVideo && onRemoveVideo();
-		});
-	}
+				onRemoveVideo && onRemoveVideo();
+			}
+		);
+	};
 
-	renderVideoControls () {
+	renderVideoControls() {
 		const { editable } = this.props;
 
-		if(editable) {
+		if (editable) {
 			return (
 				<div className="admin-controls">
 					<div className="buttons">
-						<div className="change" onClick={this.launchVideoInput}><i className="icon-add"/>{t('change')}</div>
-						<div className="remove" onClick={this.removeVideo}><i className="icon-remove"/>{t('remove')}</div>
+						<div className="change" onClick={this.launchVideoInput}>
+							<i className="icon-add" />
+							{t('change')}
+						</div>
+						<div className="remove" onClick={this.removeVideo}>
+							<i className="icon-remove" />
+							{t('remove')}
+						</div>
 					</div>
 				</div>
 			);
@@ -71,18 +81,17 @@ export default class CourseVideo extends React.Component {
 		return null;
 	}
 
-	render () {
+	render() {
 		const { catalogEntry } = this.props;
 
-		if(catalogEntry.Video) {
+		if (catalogEntry.Video) {
 			return (
 				<div className="course-video-container">
-					<Video src={catalogEntry.Video}/>
+					<Video src={catalogEntry.Video} />
 					{this.renderVideoControls()}
 				</div>
 			);
-		}
-		else {
+		} else {
 			return this.renderVideoEditor();
 		}
 	}

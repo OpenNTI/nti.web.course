@@ -5,7 +5,7 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 import CourseEditor from '../CourseEditor';
 
 const mockService = () => ({
-	getObject: (o) => Promise.resolve(o)
+	getObject: o => Promise.resolve(o),
 });
 
 const onBefore = () => {
@@ -13,14 +13,15 @@ const onBefore = () => {
 		...(global.$AppConfig || {}),
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//unmock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
 };
@@ -40,29 +41,30 @@ describe('CourseEditor test', () => {
 			mockSave();
 			return Promise.resolve();
 		},
-		getDefaultAssetRoot () {},
+		getDefaultAssetRoot() {},
 		title: mockTitle,
 		ProviderUniqueID: mockID,
-		description: mockDescription
+		description: mockDescription,
 	};
 
-	const getCmp = () => render(
-		<CourseEditor
-			title={mockTitle}
-			catalogEntry={catalogEntry}
-			onCancel={onCancelMock}
-			onFinish={onFinishMock}
-			onSave={onSaveMock}
-			saveCmp={SaveButton}
-		/>
-	);
+	const getCmp = () =>
+		render(
+			<CourseEditor
+				title={mockTitle}
+				catalogEntry={catalogEntry}
+				onCancel={onCancelMock}
+				onFinish={onFinishMock}
+				onSave={onSaveMock}
+				saveCmp={SaveButton}
+			/>
+		);
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
+		label: PropTypes.string,
 	};
 
-	function SaveButton ({onSave, label}) {
+	function SaveButton({ onSave, label }) {
 		return (
 			<div onClick={onSave}>
 				<div className="course-panel-continue">{label}</div>
@@ -74,14 +76,16 @@ describe('CourseEditor test', () => {
 	afterEach(onAfter);
 
 	test('Test labels', () => {
-		const {container:root} = getCmp();
+		const { container: root } = getCmp();
 
 		expect(root.querySelector('.course-id').textContent).toEqual(mockID);
-		expect(root.querySelector('.course-title').textContent).toEqual(mockTitle);
+		expect(root.querySelector('.course-title').textContent).toEqual(
+			mockTitle
+		);
 	});
 
 	test('Test save', async () => {
-		const {container: root} = getCmp();
+		const { container: root } = getCmp();
 
 		const saveButton = root.querySelector('.course-panel-continue');
 
@@ -93,7 +97,7 @@ describe('CourseEditor test', () => {
 	});
 
 	test('Test close', async () => {
-		const {container: root} = getCmp();
+		const { container: root } = getCmp();
 
 		const closeButton = root.querySelector('.close');
 
@@ -105,7 +109,7 @@ describe('CourseEditor test', () => {
 	});
 
 	test('Test cancel', async () => {
-		const {container: root} = getCmp();
+		const { container: root } = getCmp();
 
 		const cancelButton = root.querySelector('.course-panel-cancel');
 

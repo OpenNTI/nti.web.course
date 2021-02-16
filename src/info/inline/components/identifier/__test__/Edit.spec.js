@@ -11,18 +11,21 @@ describe('Department edit test', () => {
 		const identifier = 'ABC123';
 
 		const catalogEntry = {
-			'ProviderUniqueID': identifier
+			ProviderUniqueID: identifier,
 		};
 
-		const {container} = render(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
+		const { container } = render(
+			<Edit onValueChange={onChange} catalogEntry={catalogEntry} />
+		);
 
 		const input = container.querySelector('input.identifier-input');
 
 		expect(input.value).toEqual(identifier);
 
-		fireEvent.change(input, {target: {value: 'nope'}});
+		fireEvent.change(input, { target: { value: 'nope' } });
 
 		await waitFor(() =>
-			expect(onChange).toHaveBeenCalledWith('ProviderUniqueID', 'nope'));
+			expect(onChange).toHaveBeenCalledWith('ProviderUniqueID', 'nope')
+		);
 	});
 });

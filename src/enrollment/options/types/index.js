@@ -6,7 +6,7 @@ import Registry from './Registry';
 
 const registry = Registry.getInstance();
 
-export function getTypeFor (...args) {
+export function getTypeFor(...args) {
 	return registry.getItemFor(...args);
 }
 

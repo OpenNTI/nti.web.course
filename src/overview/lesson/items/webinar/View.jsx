@@ -8,22 +8,23 @@ import Registry from '../Registry';
 import BaseItem from './BaseItem';
 
 export default class LessonOverviewWebinarAsset extends React.Component {
-
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		item: PropTypes.object.isRequired,
-		layout: PropTypes.any
-	}
+		layout: PropTypes.any,
+	};
 
-	render () {
+	render() {
 		const { layout, ...otherProps } = this.props;
 
 		return (
 			<PaddedContainer>
-				<BaseItem {...otherProps} isMinimal={layout === List}/>
+				<BaseItem {...otherProps} isMinimal={layout === List} />
 			</PaddedContainer>
 		);
 	}
 }
 
-Registry.register('application/vnd.nextthought.webinarasset')(LessonOverviewWebinarAsset);
+Registry.register('application/vnd.nextthought.webinarasset')(
+	LessonOverviewWebinarAsset
+);

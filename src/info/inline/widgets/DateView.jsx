@@ -6,16 +6,16 @@ export default class DateView extends React.Component {
 	static propTypes = {
 		date: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 		label: PropTypes.string.isRequired,
-		disclaimer: PropTypes.node
-	}
+		disclaimer: PropTypes.node,
+	};
 
 	static FIELD_NAME = 'StartDate';
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 	}
 
-	render () {
+	render() {
 		const { date, label, disclaimer } = this.props;
 
 		return (
@@ -25,8 +25,15 @@ export default class DateView extends React.Component {
 					{disclaimer || null}
 				</div>
 				<div className="content-column">
-					<div className="date-value">{(date && DateTime.format(date)) || '-'}</div>
-					<div className="date-info">{DateTime.format(date, DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE)}</div>
+					<div className="date-value">
+						{(date && DateTime.format(date)) || '-'}
+					</div>
+					<div className="date-info">
+						{DateTime.format(
+							date,
+							DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE
+						)}
+					</div>
 				</div>
 			</div>
 		);

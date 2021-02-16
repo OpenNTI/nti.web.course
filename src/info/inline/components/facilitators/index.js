@@ -1,8 +1,8 @@
-import {canAddFacilitators} from './utils';
+import { canAddFacilitators } from './utils';
 
 export { default as View } from './View';
 export { default as Edit } from './Edit';
 export const ID = 'FACILITATORS';
-export function isEditable (catalog, courseInstance) {
+export function isEditable(catalog, courseInstance) {
 	return canAddFacilitators(courseInstance);
 }

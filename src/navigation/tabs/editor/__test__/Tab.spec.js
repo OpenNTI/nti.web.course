@@ -1,26 +1,26 @@
 /* eslint-env jest */
 import React from 'react';
 import TestRenderer from 'react-test-renderer';
-import {Input} from '@nti/web-commons';
+import { Input } from '@nti/web-commons';
 
 import Tab from '../Tab';
 
 describe('Course Navigation Tabs Editor Tab', () => {
 	test('snapshot', () => {
-		const tab = {id: 'activity', label: 'Stream', default: 'Activity'};
+		const tab = { id: 'activity', label: 'Stream', default: 'Activity' };
 
-		const testRender = TestRenderer.create(
-			<Tab tab={tab} />
-		);
+		const testRender = TestRenderer.create(<Tab tab={tab} />);
 
 		expect(testRender.toJSON()).toMatchSnapshot();
 	});
 
 	test('Renders a text input with appropriate value and placeholder', () => {
-		const tab = {id: 'activity', label: 'Test Tab', default: 'Test Tab Default'};
-		const testRender = TestRenderer.create(
-			<Tab tab={tab} />
-		);
+		const tab = {
+			id: 'activity',
+			label: 'Test Tab',
+			default: 'Test Tab Default',
+		};
+		const testRender = TestRenderer.create(<Tab tab={tab} />);
 
 		const inputCmp = testRender.root.findByType(Input.Text);
 
@@ -29,7 +29,11 @@ describe('Course Navigation Tabs Editor Tab', () => {
 	});
 
 	test('Changing the input calls onTabChange with the correct arguments', () => {
-		const tab = {id: 'activity', label: 'Test Tab', default: 'Test TabDefault'};
+		const tab = {
+			id: 'activity',
+			label: 'Test Tab',
+			default: 'Test TabDefault',
+		};
 		const onTabChange = jest.fn();
 		const testRender = TestRenderer.create(
 			<Tab tab={tab} onTabChange={onTabChange} />

@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .progress-pager {
 	display: flex;
@@ -18,7 +18,8 @@
 			margin-right: 18px;
 		}
 
-		.next, .prev {
+		.next,
+		.prev {
 			font-size: 24px;
 			color: var(--primary-blue);
 			cursor: pointer;

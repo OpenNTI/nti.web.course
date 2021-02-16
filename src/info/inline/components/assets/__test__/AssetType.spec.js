@@ -4,14 +4,14 @@ import { render } from '@testing-library/react';
 import AssetType from '../AssetType';
 
 const mockService = () => ({
-	getObject: (o) => Promise.resolve(o),
-	get: (url) => {
-		if(url === 'badURL') {
+	getObject: o => Promise.resolve(o),
+	get: url => {
+		if (url === 'badURL') {
 			return Promise.reject('Bad URL');
 		}
 
 		return Promise.resolve();
-	}
+	},
 });
 
 const onBefore = () => {
@@ -20,14 +20,15 @@ const onBefore = () => {
 		username: 'TestUser',
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//unmock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
 };
@@ -39,13 +40,17 @@ describe('AssetType test', () => {
 
 	test('Test img src is correct', () => {
 		const catalogEntry = {
-			presentationroot: '/root/'
+			presentationroot: '/root/',
 		};
 
-		const x = render(<AssetType catalogEntry={catalogEntry} type="background"/>);
+		const x = render(
+			<AssetType catalogEntry={catalogEntry} type="background" />
+		);
 
 		const img = x.container.querySelector('img');
 
-		expect(img.getAttribute('src').indexOf('/root/background.png')).toEqual(0);
+		expect(img.getAttribute('src').indexOf('/root/background.png')).toEqual(
+			0
+		);
 	});
 });

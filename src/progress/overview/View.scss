@@ -1,7 +1,9 @@
 @import '~@nti/style-common';
 
 .course-progress-overview-prompt {
-	& > .icon-close { display: none; }
+	& > .icon-close {
+		display: none;
+	}
 }
 
 .progress-overview-container {

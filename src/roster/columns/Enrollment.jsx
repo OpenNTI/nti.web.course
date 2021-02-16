@@ -4,7 +4,7 @@ import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
 import classnames from 'classnames/bind';
 
-import {DEFAULT_ENROLLMENT_SCOPE_NAMES} from '../../enrollment/Constants';
+import { DEFAULT_ENROLLMENT_SCOPE_NAMES } from '../../enrollment/Constants';
 
 import styles from './Enrollment.css';
 
@@ -15,26 +15,30 @@ const localeScope = 'roster.columns.enrollment';
 
 const t = scoped(localeScope, {
 	header: 'Enrollment',
-	status: DEFAULT_ENROLLMENT_SCOPE_NAMES
+	status: DEFAULT_ENROLLMENT_SCOPE_NAMES,
 });
 
-const missingLocaleString = (fallback) => (key) => {
-	logger.warn(`Missing locale string for ${localeScope}${key}. Rendering '${fallback}'`);
+const missingLocaleString = fallback => key => {
+	logger.warn(
+		`Missing locale string for ${localeScope}${key}. Rendering '${fallback}'`
+	);
 	return fallback;
 };
 
 export default class Progress extends React.Component {
 	static propTypes = {
-		item: PropTypes.object
-	}
+		item: PropTypes.object,
+	};
 
-	static Name = t('header')
+	static Name = t('header');
 	static cssClassName = cx('enrollment-cell');
 
-	render () {
-		const {item: {status} = {}} = this.props;
+	render() {
+		const { item: { status } = {} } = this.props;
 		return (
-			<div>{t(`status.${status}`, {fallback: missingLocaleString('')})}</div>
+			<div>
+				{t(`status.${status}`, { fallback: missingLocaleString('') })}
+			</div>
 		);
 	}
 }

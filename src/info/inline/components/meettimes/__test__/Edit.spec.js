@@ -8,29 +8,28 @@ import Edit from '../Edit';
 describe('Meeting times editor test', () => {
 	const Schedule = {
 		days: ['M', 'W', 'F'],
-		times: ['10:30:00-05:00', '12:20:00-05:00']
+		times: ['10:30:00-05:00', '12:20:00-05:00'],
 	};
 
 	const catalogEntry = {
-		Schedule
+		Schedule,
 	};
 
 	test('Test view', () => {
-		const x = render(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry} />);
 
 		const days = x.container.querySelectorAll('div.course-editor-day');
-		const selectedIndexList = [1,3,5];
+		const selectedIndexList = [1, 3, 5];
 
 		// console.log(days.debug());
 		expect(days.length).toBe(7);
 
-		for(let i = 0; i < 7; i++) {
+		for (let i = 0; i < 7; i++) {
 			const day = days[i];
 
-			if(selectedIndexList.includes(i)) {
+			if (selectedIndexList.includes(i)) {
 				expect(day.getAttribute('class')).toMatch(/selected/);
-			}
-			else{
+			} else {
 				expect(day.getAttribute('class')).not.toMatch(/selected/);
 			}
 		}
@@ -44,7 +43,9 @@ describe('Meeting times editor test', () => {
 
 			expect(hours.value).toEqual(hour.toString());
 			expect(minutes.value).toEqual(minute.toString());
-			expect(dateCmp.querySelector('.option-label').textContent).toEqual(amPm);
+			expect(dateCmp.querySelector('.option-label').textContent).toEqual(
+				amPm
+			);
 		};
 
 		verifyDate(startTime, 10, 30, 'AM');
@@ -54,7 +55,9 @@ describe('Meeting times editor test', () => {
 	test('Test interactivity', async () => {
 		const onChange = jest.fn();
 
-		const x = render(<Edit catalogEntry={catalogEntry} onValueChange={onChange}/>);
+		const x = render(
+			<Edit catalogEntry={catalogEntry} onValueChange={onChange} />
+		);
 
 		let days = x.container.querySelectorAll('div.course-editor-day');
 
@@ -62,23 +65,28 @@ describe('Meeting times editor test', () => {
 
 		await wait();
 
-		expect(onChange).toHaveBeenCalledWith('Schedule', { days: ['M', 'F'], times: ['10:30:00-05:00', '12:20:00-05:00']});
+		expect(onChange).toHaveBeenCalledWith('Schedule', {
+			days: ['M', 'F'],
+			times: ['10:30:00-05:00', '12:20:00-05:00'],
+		});
 
 		fireEvent.click(days[4]);
 
-		expect(onChange).toHaveBeenCalledWith('Schedule', { days: ['M', 'F', 'R'], times: ['10:30:00-05:00', '12:20:00-05:00']});
+		expect(onChange).toHaveBeenCalledWith('Schedule', {
+			days: ['M', 'F', 'R'],
+			times: ['10:30:00-05:00', '12:20:00-05:00'],
+		});
 
 		// after clicking wednesday and thursday, wednesday should now be unselected,
 		// thursday should now be selected
-		const selectedIndexList = [1,4,5];
+		const selectedIndexList = [1, 4, 5];
 
-		for(let i = 0; i < 7; i++) {
+		for (let i = 0; i < 7; i++) {
 			const day = days[i];
 
-			if(selectedIndexList.includes(i)) {
+			if (selectedIndexList.includes(i)) {
 				expect(day.getAttribute('class')).toMatch(/selected/);
-			}
-			else{
+			} else {
 				expect(day.getAttribute('class')).not.toMatch(/selected/);
 			}
 		}
@@ -87,20 +95,40 @@ describe('Meeting times editor test', () => {
 		const startTime = x.container.querySelector('.course-editor-starttime');
 		const endTime = x.container.querySelector('.course-editor-endtime');
 
-		fireEvent.change(startTime.querySelector('[name="hours"]'), {target: {value: '8'}});
+		fireEvent.change(startTime.querySelector('[name="hours"]'), {
+			target: { value: '8' },
+		});
 
-		expect(onChange).toHaveBeenCalledWith('Schedule', { days: ['M', 'F', 'R'], times: ['08:30:00-05:00', '12:20:00-05:00']});
+		expect(onChange).toHaveBeenCalledWith('Schedule', {
+			days: ['M', 'F', 'R'],
+			times: ['08:30:00-05:00', '12:20:00-05:00'],
+		});
 
-		fireEvent.change(startTime.querySelector('[name="minutes"]'), {target: {value: '53'}});
+		fireEvent.change(startTime.querySelector('[name="minutes"]'), {
+			target: { value: '53' },
+		});
 
-		expect(onChange).toHaveBeenCalledWith('Schedule', { days: ['M', 'F', 'R'], times: ['08:53:00-05:00', '12:20:00-05:00']});
+		expect(onChange).toHaveBeenCalledWith('Schedule', {
+			days: ['M', 'F', 'R'],
+			times: ['08:53:00-05:00', '12:20:00-05:00'],
+		});
 
-		fireEvent.change(endTime.querySelector('[name="hours"]'), {target: {value: '2'}});
+		fireEvent.change(endTime.querySelector('[name="hours"]'), {
+			target: { value: '2' },
+		});
 
-		expect(onChange).toHaveBeenCalledWith('Schedule', { days: ['M', 'F', 'R'], times: ['08:53:00-05:00', '14:20:00-05:00']});
+		expect(onChange).toHaveBeenCalledWith('Schedule', {
+			days: ['M', 'F', 'R'],
+			times: ['08:53:00-05:00', '14:20:00-05:00'],
+		});
 
-		fireEvent.change(endTime.querySelector('[name="minutes"]'), {target: {value: '27'}});
+		fireEvent.change(endTime.querySelector('[name="minutes"]'), {
+			target: { value: '27' },
+		});
 
-		expect(onChange).toHaveBeenCalledWith('Schedule', { days: ['M', 'F', 'R'], times: ['08:53:00-05:00', '14:27:00-05:00']});
+		expect(onChange).toHaveBeenCalledWith('Schedule', {
+			days: ['M', 'F', 'R'],
+			times: ['08:53:00-05:00', '14:27:00-05:00'],
+		});
 	});
 });

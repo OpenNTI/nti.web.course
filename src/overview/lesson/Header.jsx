@@ -2,20 +2,20 @@ import './Header.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
-import {Checkbox, Layouts, DateTime} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Checkbox, Layouts, DateTime } from '@nti/web-commons';
 
-import {List, Grid} from './Constants';
+import { List, Grid } from './Constants';
 import PaddedContainer from './common/PaddedContainer';
 
 const t = scoped('course.overview.lesson.Header', {
 	dateRangeSeparator: ' - ',
 	requiredFilter: 'Only Required',
 	list: 'List View',
-	grid: 'Grid View'
+	grid: 'Grid View',
 });
 
-const {Responsive} = Layouts;
+const { Responsive } = Layouts;
 
 const LAYOUT_GROUP = 'nti-lesson-view-layout';
 
@@ -29,41 +29,39 @@ export default class CourseOverviewLessonHeader extends React.Component {
 		requiredOnly: PropTypes.bool,
 
 		setLayout: PropTypes.func,
-		setRequiredOnly: PropTypes.func
-	}
-
+		setRequiredOnly: PropTypes.func,
+	};
 
 	selectGrid = () => {
-		const {setLayout} = this.props;
+		const { setLayout } = this.props;
 
 		if (setLayout) {
 			setLayout(Grid);
 		}
-	}
-
+	};
 
 	selectList = () => {
-		const {setLayout} = this.props;
+		const { setLayout } = this.props;
 
 		if (setLayout) {
 			setLayout(List);
 		}
-	}
+	};
 
-
-	onRequiredFilterChange = (e) => {
-		const {setRequiredOnly} = this.props;
+	onRequiredFilterChange = e => {
+		const { setRequiredOnly } = this.props;
 
 		if (setRequiredOnly) {
 			setRequiredOnly(e.target.checked);
 		}
-	}
+	};
 
+	render() {
+		const { overview, outlineNode, layout } = this.props;
 
-	render () {
-		const {overview, outlineNode, layout} = this.props;
-
-		if (!overview || !outlineNode) { return null; }
+		if (!overview || !outlineNode) {
+			return null;
+		}
 
 		return (
 			<div className={cx('course-overview-lesson-header', layout)}>
@@ -73,8 +71,7 @@ export default class CourseOverviewLessonHeader extends React.Component {
 		);
 	}
 
-
-	renderList () {
+	renderList() {
 		return (
 			<React.Fragment>
 				<PaddedContainer className="bar">
@@ -90,8 +87,7 @@ export default class CourseOverviewLessonHeader extends React.Component {
 		);
 	}
 
-
-	renderGrid () {
+	renderGrid() {
 		return (
 			<React.Fragment>
 				<PaddedContainer className="bar">
@@ -99,40 +95,56 @@ export default class CourseOverviewLessonHeader extends React.Component {
 					<div className="spacer" />
 					{this.renderLayoutToggle()}
 				</PaddedContainer>
-				<PaddedContainer>
-					{this.renderTitle()}
-				</PaddedContainer>
+				<PaddedContainer>{this.renderTitle()}</PaddedContainer>
 			</React.Fragment>
 		);
 	}
 
+	renderFilterCheckbox() {
+		const { course, requiredOnly } = this.props;
 
-	renderFilterCheckbox () {
-		const {course, requiredOnly} = this.props;
-
-		if (!course.CompletionPolicy) { return null; }
+		if (!course.CompletionPolicy) {
+			return null;
+		}
 
 		return (
 			<div className="required-filter">
-				<Checkbox label={t('requiredFilter')} onChange={this.onRequiredFilterChange} checked={requiredOnly} />
+				<Checkbox
+					label={t('requiredFilter')}
+					onChange={this.onRequiredFilterChange}
+					checked={requiredOnly}
+				/>
 			</div>
 		);
 	}
 
-
-	renderLayoutToggle () {
-		const {layout} = this.props;
+	renderLayoutToggle() {
+		const { layout } = this.props;
 
 		return (
 			<div className="layout-toggle">
 				<label className="grid">
-					<input type="radio" group={LAYOUT_GROUP} name="grid" checked={layout === Grid} onChange={this.selectGrid} aria-label={t('grid')}/>
+					<input
+						type="radio"
+						group={LAYOUT_GROUP}
+						name="grid"
+						checked={layout === Grid}
+						onChange={this.selectGrid}
+						aria-label={t('grid')}
+					/>
 					<div className="toggle">
 						<i className="icon-grid" />
 					</div>
 				</label>
 				<label className="list">
-					<input type="radio" group={LAYOUT_GROUP} name="list" checked={layout === List} onChange={this.selectList} aria-label={t('list')}/>
+					<input
+						type="radio"
+						group={LAYOUT_GROUP}
+						name="list"
+						checked={layout === List}
+						onChange={this.selectList}
+						aria-label={t('list')}
+					/>
 					<div className="toggle">
 						<i className="icon-list" />
 					</div>
@@ -141,55 +153,65 @@ export default class CourseOverviewLessonHeader extends React.Component {
 		);
 	}
 
-
-	renderOutlineNodeDates () {
+	renderOutlineNodeDates() {
 		return (
 			<React.Fragment>
-				<Responsive.Item query={Responsive.isMobile} render={this.renderSmallDates} />
-				<Responsive.Item query={Responsive.isTablet} render={this.renderLargeDates} />
-				<Responsive.Item query={Responsive.isDesktop} render={this.renderLargeDates} />
+				<Responsive.Item
+					query={Responsive.isMobile}
+					render={this.renderSmallDates}
+				/>
+				<Responsive.Item
+					query={Responsive.isTablet}
+					render={this.renderLargeDates}
+				/>
+				<Responsive.Item
+					query={Responsive.isDesktop}
+					render={this.renderLargeDates}
+				/>
 			</React.Fragment>
 		);
 	}
 
-
 	renderSmallDates = () => {
 		return this.renderDates(DateTime.WEEKDAY_ABBR_MONTH_ABBR_ORDINAL_DAY);
-	}
-
+	};
 
 	renderLargeDates = () => {
 		return this.renderDates(DateTime.WEEKDAY_MONTH_NAME_ORDINAL_DAY);
-	}
+	};
 
+	renderDates(format) {
+		const { outlineNode, course } = this.props;
 
-	renderDates (format) {
-		const {outlineNode, course} = this.props;
-
-		if (!outlineNode) { return null; }
+		if (!outlineNode) {
+			return null;
+		}
 
 		const beginning = outlineNode.getAvailableBeginning();
 		const ending = outlineNode.getAvailableEnding();
 		const courseStart = course.CatalogEntry.getStartDate();
 
-		if (!beginning && !courseStart) { return null; }
+		if (!beginning && !courseStart) {
+			return null;
+		}
 
 		return (
 			<div className="dates">
-				{beginning && (<DateTime date={beginning} format={format} />)}
-				{!beginning && courseStart && (<DateTime date={courseStart} format={format} />)}
-				{ending && (<span className="separator">{t('dateRangeSeparator')}</span>)}
-				{ending && (<DateTime date={ending} format={format} />)}
+				{beginning && <DateTime date={beginning} format={format} />}
+				{!beginning && courseStart && (
+					<DateTime date={courseStart} format={format} />
+				)}
+				{ending && (
+					<span className="separator">{t('dateRangeSeparator')}</span>
+				)}
+				{ending && <DateTime date={ending} format={format} />}
 			</div>
 		);
 	}
 
+	renderTitle() {
+		const { overview } = this.props;
 
-	renderTitle () {
-		const {overview} = this.props;
-
-		return (
-			<h1 className="title">{overview.title}</h1>
-		);
+		return <h1 className="title">{overview.title}</h1>;
 	}
 }

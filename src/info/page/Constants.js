@@ -4,5 +4,5 @@ export const RouteNames = {
 	Roster: 'course-roster',
 	Completion: 'course-completion',
 	LTI: 'course-lti',
-	Navigation: 'course-navigation'
+	Navigation: 'course-navigation',
 };

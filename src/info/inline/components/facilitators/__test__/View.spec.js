@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import View from '../View';
 
 const mockService = () => ({
-	getObject: (o) => Promise.resolve(o)
+	getObject: o => Promise.resolve(o),
 });
 
 const onBefore = () => {
@@ -12,14 +12,15 @@ const onBefore = () => {
 		...(global.$AppConfig || {}),
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//unmock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
 };
@@ -31,8 +32,9 @@ const facilitators = [
 		JobTitle: 'visible',
 		Name: 'Visible Assistant',
 		username: 'visibleAssistant',
-		MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-		Class: 'CourseCatalogInstructorLegacyInfo'
+		MimeType:
+			'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+		Class: 'CourseCatalogInstructorLegacyInfo',
 	},
 	{
 		role: 'editor',
@@ -40,13 +42,14 @@ const facilitators = [
 		JobTitle: 'hidden',
 		Name: 'Hidden Editor',
 		username: 'hiddenEditor',
-		MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-		Class: 'CourseCatalogInstructorLegacyInfo'
-	}
+		MimeType:
+			'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+		Class: 'CourseCatalogInstructorLegacyInfo',
+	},
 ];
 
 const courseInstance = {
-	hasLink: () => false
+	hasLink: () => false,
 };
 
 /* eslint-env jest */
@@ -55,7 +58,9 @@ describe('Facilitators view test', () => {
 	afterEach(onAfter);
 
 	test('Test non-editor view', () => {
-		const x = render(<View facilitators={facilitators} courseInstance={courseInstance}/>);
+		const x = render(
+			<View facilitators={facilitators} courseInstance={courseInstance} />
+		);
 
 		const find = _ => x.container.querySelector(`.facilitator ${_}`);
 
@@ -65,7 +70,13 @@ describe('Facilitators view test', () => {
 	});
 
 	test('Test editor view', () => {
-		const x = render(<View facilitators={facilitators} courseInstance={courseInstance} editable/>);
+		const x = render(
+			<View
+				facilitators={facilitators}
+				courseInstance={courseInstance}
+				editable
+			/>
+		);
 
 		const find = _ => x.container.querySelector(`.facilitator ${_}`);
 

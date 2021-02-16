@@ -1,10 +1,11 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .credit-entry {
 	display: flex;
 	margin-bottom: 5px;
 
-	.nti-number-input, .nti-text-input {
+	.nti-number-input,
+	.nti-text-input {
 		width: 3rem;
 		font-size: 14px;
 		color: var(--primary-grey);

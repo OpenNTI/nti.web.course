@@ -11,10 +11,25 @@ SubTitle.propTypes = {
 	blue: PropTypes.bool,
 	dark: PropTypes.bool,
 	white: PropTypes.bool,
-	green: PropTypes.bool
+	green: PropTypes.bool,
 };
-export default function SubTitle ({className, blue, dark, white, green, ...otherProps}) {
+export default function SubTitle({
+	className,
+	blue,
+	dark,
+	white,
+	green,
+	...otherProps
+}) {
 	return (
-		<span className={cx('scorm-collection-sub-title', className, {blue, dark, white, green})} {...otherProps} />
+		<span
+			className={cx('scorm-collection-sub-title', className, {
+				blue,
+				dark,
+				white,
+				green,
+			})}
+			{...otherProps}
+		/>
 	);
 }

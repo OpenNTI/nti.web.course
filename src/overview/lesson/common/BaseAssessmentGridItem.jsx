@@ -1,9 +1,9 @@
 import './BaseAssessmentGridItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {LinkTo} from '@nti/web-routing';
+import { LinkTo } from '@nti/web-routing';
 import cx from 'classnames';
-import {InlineEditor} from '@nti/web-assignment-editor';
+import { InlineEditor } from '@nti/web-assignment-editor';
 
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';
@@ -25,64 +25,86 @@ export default class BaseAssessmentGridItem extends React.Component {
 		inlineEditorExpanded: PropTypes.bool,
 		onEditorDismiss: PropTypes.func,
 
-		className: PropTypes.string
-	}
+		className: PropTypes.string,
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setState({
-			editorExpanded: this.props.inlineEditorExpanded
+			editorExpanded: this.props.inlineEditorExpanded,
 		});
 	}
 
-
-	componentDidUpdate (oldProps) {
-		if(oldProps.inlineEditorExpanded && !this.props.inlineEditorExpanded) {
-			this.setState({
-				editorTransitioning: true
-			}, () => {
-				setTimeout(() => {
-					this.setState({
-						editorExpanded: false,
-						editorTransitioning: false
-					});
-				}, 500);
-			});
-		}
-		else if(this.props.inlineEditorExpanded && !this.state.editorExpanded && !this.state.editorTransitioning) {
-			this.setState({
-				editorTransitioning: true
-			}, () => {
-				setTimeout(() => {
-					this.setState({
-						editorExpanded: true,
-						editorTransitioning: false
-					});
-				}, 500);
-			});
+	componentDidUpdate(oldProps) {
+		if (oldProps.inlineEditorExpanded && !this.props.inlineEditorExpanded) {
+			this.setState(
+				{
+					editorTransitioning: true,
+				},
+				() => {
+					setTimeout(() => {
+						this.setState({
+							editorExpanded: false,
+							editorTransitioning: false,
+						});
+					}, 500);
+				}
+			);
+		} else if (
+			this.props.inlineEditorExpanded &&
+			!this.state.editorExpanded &&
+			!this.state.editorTransitioning
+		) {
+			this.setState(
+				{
+					editorTransitioning: true,
+				},
+				() => {
+					setTimeout(() => {
+						this.setState({
+							editorExpanded: true,
+							editorTransitioning: false,
+						});
+					}, 500);
+				}
+			);
 		}
 	}
 
+	render() {
+		const {
+			item,
+			assignment,
+			linkToObject,
+			linkToContext,
+			inlineEditorExpanded,
+		} = this.props;
+		const { editorTransitioning } = this.state;
 
-	render () {
-		const {item, assignment, linkToObject, linkToContext, inlineEditorExpanded} = this.props;
-		const {editorTransitioning} = this.state;
-
-		const statusCls = inlineEditorExpanded ? 'status-open' : 'status-closed';
+		const statusCls = inlineEditorExpanded
+			? 'status-open'
+			: 'status-closed';
 		const statusOpening = editorTransitioning && 'status-transitioning';
 
-		const className = cx('container', statusCls, statusOpening, this.props.className);
+		const className = cx(
+			'container',
+			statusCls,
+			statusOpening,
+			this.props.className
+		);
 
 		return (
 			<PaddedContainer className="lesson-overview-base-assessment-grid-item">
 				<div className={className}>
-					<LinkTo.Object object={linkToObject || item} context={linkToContext} data-ntiid={item.NTIID}>
+					<LinkTo.Object
+						object={linkToObject || item}
+						context={linkToContext}
+						data-ntiid={item.NTIID}
+					>
 						<div className="target">
 							<div className="icon-container">
-								<div className="icon">
-									{this.renderIcon()}
-								</div>
+								<div className="icon">{this.renderIcon()}</div>
 							</div>
 							<div className="info-container">
 								<TextPart className="title-container">
@@ -98,8 +120,13 @@ export default class BaseAssessmentGridItem extends React.Component {
 						</div>
 					</LinkTo.Object>
 					<div className="editor-container">
-						{(this.state.editorTransitioning || this.state.editorExpanded) && (
-							<InlineEditor assignment={assignment} assignmentRef={item} onDismiss={this.onEditorDismiss}/>
+						{(this.state.editorTransitioning ||
+							this.state.editorExpanded) && (
+							<InlineEditor
+								assignment={assignment}
+								assignmentRef={item}
+								onDismiss={this.onEditorDismiss}
+							/>
 						)}
 					</div>
 				</div>
@@ -107,40 +134,38 @@ export default class BaseAssessmentGridItem extends React.Component {
 		);
 	}
 
-
-	renderTitle () {
-		const {renderTitle, item} = this.props;
+	renderTitle() {
+		const { renderTitle, item } = this.props;
 		const title = renderTitle ? renderTitle() : null;
 
-		return title || (<span className="title">{item.title || item.label}</span>);
+		return (
+			title || <span className="title">{item.title || item.label}</span>
+		);
 	}
 
-
-	renderLabels () {
-		const {renderLabels} = this.props;
+	renderLabels() {
+		const { renderLabels } = this.props;
 
 		return renderLabels ? renderLabels() : null;
 	}
 
-
-	renderIcon () {
-		const {renderIcon} = this.props;
+	renderIcon() {
+		const { renderIcon } = this.props;
 
 		return renderIcon ? renderIcon() : null;
 	}
 
-
-	renderButton () {
-		const {renderButton} = this.props;
+	renderButton() {
+		const { renderButton } = this.props;
 
 		return renderButton ? renderButton() : null;
 	}
 
-	onEditorDismiss = (savedData) => {
-		const {onEditorDismiss} = this.props;
+	onEditorDismiss = savedData => {
+		const { onEditorDismiss } = this.props;
 
-		if(onEditorDismiss) {
+		if (onEditorDismiss) {
 			onEditorDismiss(savedData);
 		}
-	}
+	};
 }

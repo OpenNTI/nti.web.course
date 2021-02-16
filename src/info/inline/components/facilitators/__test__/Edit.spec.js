@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 import Edit from '../Edit';
 
 const mockService = () => ({
-	getObject: (o) => Promise.resolve(o)
+	getObject: o => Promise.resolve(o),
 });
 
 const onBefore = () => {
@@ -12,14 +12,15 @@ const onBefore = () => {
 		...(global.$AppConfig || {}),
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//un-mock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
 };
@@ -31,8 +32,9 @@ const facilitators = [
 		JobTitle: 'visible',
 		Name: 'Visible Assistant',
 		username: 'visibleAssistant',
-		MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-		Class: 'CourseCatalogInstructorLegacyInfo'
+		MimeType:
+			'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+		Class: 'CourseCatalogInstructorLegacyInfo',
 	},
 	{
 		role: 'editor',
@@ -40,9 +42,10 @@ const facilitators = [
 		JobTitle: 'hidden',
 		Name: 'Hidden Editor',
 		username: 'hiddenEditor',
-		MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-		Class: 'CourseCatalogInstructorLegacyInfo'
-	}
+		MimeType:
+			'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+		Class: 'CourseCatalogInstructorLegacyInfo',
+	},
 ];
 
 /* eslint-env jest */
@@ -52,35 +55,47 @@ describe('Facilitators edit test', () => {
 
 	test('Test editable', () => {
 		const courseInstance = {
-			hasLink: (l) => l === 'Instructors' || l === 'Editors'
+			hasLink: l => l === 'Instructors' || l === 'Editors',
 		};
 
 		let newValues;
 
-		function onValueChange (key, value) {
+		function onValueChange(key, value) {
 			newValues = value;
 		}
 
-		const x = render(<Edit facilitators={facilitators} courseInstance={courseInstance} onValueChange={onValueChange}/>);
+		const x = render(
+			<Edit
+				facilitators={facilitators}
+				courseInstance={courseInstance}
+				onValueChange={onValueChange}
+			/>
+		);
 
-		const facilitatorItems = x.container.querySelectorAll('.facilitator.edit');
+		const facilitatorItems = x.container.querySelectorAll(
+			'.facilitator.edit'
+		);
 
 		expect(facilitatorItems.length).toBe(2);
 
 		const deleteBtn = x.container.querySelector('.delete-facilitator');
 
 		fireEvent.click(deleteBtn);
-		const [visibleAssistant] = newValues.filter(({key}) => key === 'visibleAssistant');
+		const [visibleAssistant] = newValues.filter(
+			({ key }) => key === 'visibleAssistant'
+		);
 
 		expect(visibleAssistant.role).toEqual(''); // empty role flags for removal
 	});
 
 	test('Test non-editable (assistant role)', () => {
 		const courseInstance = {
-			hasLink: (l) => l === 'Instructors'
+			hasLink: l => l === 'Instructors',
 		};
 
-		const x = render(<Edit facilitators={facilitators} courseInstance={courseInstance}/>);
+		const x = render(
+			<Edit facilitators={facilitators} courseInstance={courseInstance} />
+		);
 
 		const editableItems = x.container.querySelectorAll('.facilitator.edit');
 
@@ -94,10 +109,12 @@ describe('Facilitators edit test', () => {
 
 	test('Test non-editable (editor role)', () => {
 		const courseInstance = {
-			hasLink: (l) => l === 'Editors'
+			hasLink: l => l === 'Editors',
 		};
 
-		const x = render(<Edit facilitators={facilitators} courseInstance={courseInstance}/>);
+		const x = render(
+			<Edit facilitators={facilitators} courseInstance={courseInstance} />
+		);
 
 		const editableItems = x.container.querySelectorAll('.facilitator.edit');
 

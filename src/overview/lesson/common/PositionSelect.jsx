@@ -1,10 +1,10 @@
 import './PositionSelect.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Flyout, Input, DialogButtons} from '@nti/web-commons';
-import {getService} from '@nti/web-client';
+import { Flyout, Input, DialogButtons } from '@nti/web-commons';
+import { getService } from '@nti/web-client';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.overview.lesson.common.PositionSelect', {
 	save: 'Save',
@@ -14,7 +14,7 @@ const t = scoped('course.overview.lesson.common.PositionSelect', {
 	noLink: 'No content link.',
 	addNew: '+ Create a section',
 	sectionName: 'Section Name',
-	chooseColor: 'Choose a Color'
+	chooseColor: 'Choose a Color',
 });
 
 // TODO: belongs in OverviewGroup model or somewhere else?
@@ -34,7 +34,7 @@ const COLOR_CHOICES = [
 	'F5A620',
 	'7B8CDF',
 	'D3545B',
-	'728957'
+	'728957',
 ];
 
 const hex16Re = /^#?([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/i;
@@ -45,28 +45,30 @@ const isValidHexColor = function (code) {
 };
 
 export default class LessonOverviewPositionSelect extends React.Component {
-	attachSectionFlyoutRef = x => this.sectionFlyout = x
-	attachRankFlyoutRef = x => this.rankFlyout = x
+	attachSectionFlyoutRef = x => (this.sectionFlyout = x);
+	attachRankFlyoutRef = x => (this.rankFlyout = x);
 
 	static propTypes = {
 		lessonOverview: PropTypes.object.isRequired,
 		overviewGroup: PropTypes.object.isRequired,
 		item: PropTypes.object,
-		onChange: PropTypes.func
-	}
+		onChange: PropTypes.func,
+	};
 
-	state = {}
+	state = {};
 
-	async componentDidMount () {
-		const {lessonOverview, overviewGroup, onChange, item} = this.props;
+	async componentDidMount() {
+		const { lessonOverview, overviewGroup, onChange, item } = this.props;
 
-		const providedOverviewGroup = lessonOverview.Items.filter(x=>x.getID() === overviewGroup.getID())[0];
+		const providedOverviewGroup = lessonOverview.Items.filter(
+			x => x.getID() === overviewGroup.getID()
+		)[0];
 
 		let selectedRank = (providedOverviewGroup.Items || []).length + 1;
 
-		if(item) {
+		if (item) {
 			(providedOverviewGroup.Items || []).forEach((i, index) => {
-				if(i.NTIID === item.NTIID) {
+				if (i.NTIID === item.NTIID) {
 					selectedRank = index + 1;
 				}
 			});
@@ -78,25 +80,30 @@ export default class LessonOverviewPositionSelect extends React.Component {
 		this.setState({
 			selectedRank,
 			selectedSection: providedOverviewGroup,
-			canInputColor: service.capabilities.canDoAdvancedEditing
+			canInputColor: service.capabilities.canDoAdvancedEditing,
 		});
 
-		if(onChange) {
+		if (onChange) {
 			onChange(providedOverviewGroup, selectedRank);
 		}
 	}
 
-	renderSectionInfo (section) {
+	renderSectionInfo(section) {
 		return (
 			<div className="section-select-info">
-				<div className="color-preview" style={{backgroundColor: '#' + section.accentColor}}/>
+				<div
+					className="color-preview"
+					style={{ backgroundColor: '#' + section.accentColor }}
+				/>
 				<div className="name">{section.title}</div>
 			</div>
 		);
 	}
 
-	renderSectionOption = (section) => {
-		const className = cx('section-option', {selected: section === this.state.selectedSection});
+	renderSectionOption = section => {
+		const className = cx('section-option', {
+			selected: section === this.state.selectedSection,
+		});
 
 		return (
 			<div
@@ -104,9 +111,12 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				key={section.getID()}
 				onClick={() => {
 					// auto-select the last rank available for the newly selected section
-					this.updateValues(section, (section.Items || []).length + 1);
+					this.updateValues(
+						section,
+						(section.Items || []).length + 1
+					);
 
-					if(this.sectionFlyout) {
+					if (this.sectionFlyout) {
 						this.sectionFlyout.dismiss();
 					}
 				}}
@@ -114,102 +124,134 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				{this.renderSectionInfo(section)}
 			</div>
 		);
-	}
+	};
 
 	enterCreateMode = () => {
-		this.setState({inCreationMode: true, hexValue: COLOR_CHOICES[0]});
-	}
+		this.setState({ inCreationMode: true, hexValue: COLOR_CHOICES[0] });
+	};
 
 	onCancel = () => {
-		this.setState({inCreationMode: false, hexValue: null, sectionName: null});
-	}
+		this.setState({
+			inCreationMode: false,
+			hexValue: null,
+			sectionName: null,
+		});
+	};
 
-	updateValues (selectedSection, selectedRank) {
-		const {onChange} = this.props;
+	updateValues(selectedSection, selectedRank) {
+		const { onChange } = this.props;
 
-		this.setState({selectedSection, selectedRank});
+		this.setState({ selectedSection, selectedRank });
 
-		if(onChange) {
+		if (onChange) {
 			onChange(selectedSection, selectedRank);
 		}
 	}
 
 	onSave = async () => {
-		const {lessonOverview} = this.props;
-		const {sectionName, hexValue} = this.state;
+		const { lessonOverview } = this.props;
+		const { sectionName, hexValue } = this.state;
 
-		this.setState({savingSection: true, error: null, errorField: null});
+		this.setState({ savingSection: true, error: null, errorField: null });
 
-		if(!sectionName) {
-			this.setState({savingSection: false, error: t('missingRequired'), errorField: 'sectionName'});
+		if (!sectionName) {
+			this.setState({
+				savingSection: false,
+				error: t('missingRequired'),
+				errorField: 'sectionName',
+			});
 			return;
 		}
 
-		if(!hexValue || !isValidHexColor(hexValue)) {
-			this.setState({savingSection: false, error: t('invalidColor')});
+		if (!hexValue || !isValidHexColor(hexValue)) {
+			this.setState({ savingSection: false, error: t('invalidColor') });
 			return;
 		}
 
 		try {
 			const contentsLink = lessonOverview.getLink('ordered-contents');
 
-			if(!contentsLink) {
-				this.setState({error: t('noLink')});
+			if (!contentsLink) {
+				this.setState({ error: t('noLink') });
 				return;
 			}
 
 			const content = {
 				MimeType: 'application/vnd.nextthought.nticourseoverviewgroup',
 				accentColor: hexValue && hexValue.replace(/#/g, ''),
-				title: sectionName
+				title: sectionName,
 			};
 
 			const service = await getService();
-			const newSection = await service.postParseResponse(contentsLink, content);
+			const newSection = await service.postParseResponse(
+				contentsLink,
+				content
+			);
 			await lessonOverview.refresh();
 
 			this.updateValues(newSection, 1);
 
-			this.setState({savingSection: false, inCreationMode: false, hexValue: null, sectionName: null});
+			this.setState({
+				savingSection: false,
+				inCreationMode: false,
+				hexValue: null,
+				sectionName: null,
+			});
+		} catch (e) {
+			this.setState({ savingSection: false, error: e.message || e });
 		}
-		catch (e) {
-			this.setState({savingSection: false, error: e.message || e});
-		}
-	}
+	};
 
-	sectionNameChange = (val) => {
-		this.setState({sectionName: val});
-	}
+	sectionNameChange = val => {
+		this.setState({ sectionName: val });
+	};
 
-	hexValueChange = (val) => {
-		this.setState({hexValue: val});
-	}
+	hexValueChange = val => {
+		this.setState({ hexValue: val });
+	};
 
-	renderColorPreview = (hex) => {
-		const cls = cx('color-sample', {selected: hex === this.state.hexValue});
+	renderColorPreview = hex => {
+		const cls = cx('color-sample', {
+			selected: hex === this.state.hexValue,
+		});
 
 		return (
 			<li
 				className={cls}
-				onClick={() => {this.setState({hexValue: hex});}}
-				style={{backgroundColor: '#' + hex}}
+				onClick={() => {
+					this.setState({ hexValue: hex });
+				}}
+				style={{ backgroundColor: '#' + hex }}
 			/>
 		);
-	}
+	};
 
-	renderCreateNewSection () {
-		const {error, errorField, savingSection, canInputColor} = this.state;
+	renderCreateNewSection() {
+		const { error, errorField, savingSection, canInputColor } = this.state;
 
-		const sectionNameInputCls = cx('name-input', {invalid: errorField === 'sectionName'});
+		const sectionNameInputCls = cx('name-input', {
+			invalid: errorField === 'sectionName',
+		});
 
 		return (
 			<div className="create-section-form">
 				{error && <div className="error">{error}</div>}
 				<div className="contents">
-					<Input.Text className={sectionNameInputCls} value={this.state.sectionName} onChange={this.sectionNameChange} placeholder={t('sectionName')}/>
+					<Input.Text
+						className={sectionNameInputCls}
+						value={this.state.sectionName}
+						onChange={this.sectionNameChange}
+						placeholder={t('sectionName')}
+					/>
 					<div className="label">{t('chooseColor')}</div>
 					{canInputColor && <span>#</span>}
-					{canInputColor && <Input.Text value={this.state.hexValue} onChange={this.hexValueChange} className="hex-input"/>}
+					{canInputColor && (
+						<Input.Text
+							value={this.state.hexValue}
+							onChange={this.hexValueChange}
+							className="hex-input"
+						/>
+					)}
 					<ul className="color-samples">
 						{COLOR_CHOICES.map(this.renderColorPreview)}
 					</ul>
@@ -223,40 +265,61 @@ export default class LessonOverviewPositionSelect extends React.Component {
 						{
 							label: t('save'),
 							disabled: savingSection,
-							onClick: this.onSave
-						}
+							onClick: this.onSave,
+						},
 					]}
 				/>
 			</div>
 		);
 	}
 
-	renderSectionSelect () {
+	renderSectionSelect() {
 		return (
 			<Flyout.Triggered
 				className="section-select"
-				trigger={<div className="section-trigger">{this.renderSectionInfo(this.state.selectedSection || {})}<i className="icon-chevron-down"/></div>}
+				trigger={
+					<div className="section-trigger">
+						{this.renderSectionInfo(
+							this.state.selectedSection || {}
+						)}
+						<i className="icon-chevron-down" />
+					</div>
+				}
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 				sizing={Flyout.SIZES.MATCH_SIDE}
 				ref={this.attachSectionFlyoutRef}
 			>
 				<div className="section-select-flyout">
-					{!this.state.inCreationMode && this.props.lessonOverview.Items.map(this.renderSectionOption)}
-					{!this.state.inCreationMode && <div className="add-new" onClick={this.enterCreateMode}>{t('addNew')}</div>}
+					{!this.state.inCreationMode &&
+						this.props.lessonOverview.Items.map(
+							this.renderSectionOption
+						)}
+					{!this.state.inCreationMode && (
+						<div className="add-new" onClick={this.enterCreateMode}>
+							{t('addNew')}
+						</div>
+					)}
 					{this.state.inCreationMode && this.renderCreateNewSection()}
 				</div>
 			</Flyout.Triggered>
 		);
 	}
 
-	renderRankTrigger (disabled) {
-		const className = cx('rank-trigger', {disabled});
+	renderRankTrigger(disabled) {
+		const className = cx('rank-trigger', { disabled });
 
-		return <div className={className}>{this.state.selectedRank}<i className="icon-chevron-down"/></div>;
+		return (
+			<div className={className}>
+				{this.state.selectedRank}
+				<i className="icon-chevron-down" />
+			</div>
+		);
 	}
 
-	renderRankOption = (rank) => {
-		const className = cx('rank-option', {selected: rank + 1 === this.state.selectedRank});
+	renderRankOption = rank => {
+		const className = cx('rank-option', {
+			selected: rank + 1 === this.state.selectedRank,
+		});
 
 		return (
 			<li
@@ -264,7 +327,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				onClick={() => {
 					this.updateValues(this.state.selectedSection, rank + 1);
 
-					if(this.rankFlyout) {
+					if (this.rankFlyout) {
 						this.rankFlyout.dismiss();
 					}
 				}}
@@ -273,24 +336,24 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				{rank + 1}
 			</li>
 		);
-	}
+	};
 
-	renderRankSelect () {
-		const {selectedSection} = this.state;
+	renderRankSelect() {
+		const { selectedSection } = this.state;
 
-		if(!selectedSection) {
+		if (!selectedSection) {
 			return null;
 		}
 
-		const {Items} = selectedSection;
+		const { Items } = selectedSection;
 
-		if(!Items || Items.length === 0) {
+		if (!Items || Items.length === 0) {
 			return this.renderRankTrigger(true);
 		}
 
 		let availableRanks = Items.map((val, i) => i);
 
-		if(!this.props.item) {
+		if (!this.props.item) {
 			// if we're editing, the extra position option doesn't make sense
 			// so only append this option when there is no provided item
 			availableRanks.push(availableRanks.length);
@@ -312,7 +375,12 @@ export default class LessonOverviewPositionSelect extends React.Component {
 		);
 	}
 
-	render () {
-		return <div className="overview-position-select">{this.renderSectionSelect()}{this.renderRankSelect()}</div>;
+	render() {
+		return (
+			<div className="overview-position-select">
+				{this.renderSectionSelect()}
+				{this.renderRankSelect()}
+			</div>
+		);
 	}
 }

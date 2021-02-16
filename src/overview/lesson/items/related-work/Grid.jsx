@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Card} from '@nti/web-commons';
-import {LinkTo} from '@nti/web-routing';
+import { Card } from '@nti/web-commons';
+import { LinkTo } from '@nti/web-routing';
 
 import PaddedContainer from '../../common/PaddedContainer';
 import './Grid.scss';
@@ -30,7 +30,6 @@ External Links:
 	visibility:		"everyone"
 */
 
-
 LessonOverviewRelatedWorkGridItem.propTypes = {
 	item: PropTypes.object.isRequired,
 	course: PropTypes.object,
@@ -38,9 +37,17 @@ LessonOverviewRelatedWorkGridItem.propTypes = {
 	requiredLabel: PropTypes.node,
 	publishLabel: PropTypes.node,
 	onClick: PropTypes.func,
-	noProgress: PropTypes.bool
+	noProgress: PropTypes.bool,
 };
-export default function LessonOverviewRelatedWorkGridItem ({item, course, commentLabel, requiredLabel, publishLabel, onClick, noProgress}) {
+export default function LessonOverviewRelatedWorkGridItem({
+	item,
+	course,
+	commentLabel,
+	requiredLabel,
+	publishLabel,
+	onClick,
+	noProgress,
+}) {
 	return (
 		<PaddedContainer>
 			<LinkTo.Object object={item} onClick={onClick}>

@@ -14,14 +14,15 @@ const facilitator = {
 	Username: userName,
 	key: userName,
 	Name: display,
-	MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+	MimeType:
+		'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
 	Class: 'CourseCatalogInstructorLegacyInfo',
 	username: userName,
-	JobTitle: title
+	JobTitle: title,
 };
 
 const courseInstance = {
-	hasLink: () => true
+	hasLink: () => true,
 };
 
 /* eslint-env jest */
@@ -31,7 +32,14 @@ describe('AddFacilitators component test', () => {
 		const existing = [];
 
 		let cmp;
-		const x = render(<AddFacilitators ref={_ => cmp = _} courseInstance={courseInstance} onDismiss={onDismiss} facilitatorList={existing}/>);
+		const x = render(
+			<AddFacilitators
+				ref={_ => (cmp = _)}
+				courseInstance={courseInstance}
+				onDismiss={onDismiss}
+				facilitatorList={existing}
+			/>
+		);
 
 		cmp.setState({
 			values: [
@@ -39,16 +47,17 @@ describe('AddFacilitators component test', () => {
 					display,
 					key: userName,
 					value: facilitator,
-					view: TestCmp
-				}
+					view: TestCmp,
+				},
 			],
-			selectedRole: 'instructor'
+			selectedRole: 'instructor',
 		});
-
 
 		await waitFor(() => expect(cmp.state.isVisible).toBe(false));
 
-		fireEvent.click(x.container.querySelector('input[type="checkbox"]'), { target: { checked: false } });
+		fireEvent.click(x.container.querySelector('input[type="checkbox"]'), {
+			target: { checked: false },
+		});
 
 		await waitFor(() => expect(cmp.state.isVisible).toBe(true));
 
@@ -60,11 +69,6 @@ describe('AddFacilitators component test', () => {
 	});
 });
 
-
-function TestCmp () {
-	return (
-		<div className="test-cmp">
-			Test Content
-		</div>
-	);
+function TestCmp() {
+	return <div className="test-cmp">Test Content</div>;
 }

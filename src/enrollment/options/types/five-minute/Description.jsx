@@ -1,7 +1,7 @@
 import './Description.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {rawContent} from '@nti/lib-commons';
+import { rawContent } from '@nti/lib-commons';
 
 import Title from '../../common/Title';
 import Description from '../../common/Description';
@@ -24,12 +24,11 @@ export default class CourseEnrollmentOptionsFiveMinuteDescription extends React.
 			getApiDownDescription: PropTypes.func,
 			getAvailableSeats: PropTypes.func,
 			getAvailabelSeatsLabel: PropTypes.func,
-		}).isRequired
-	}
+		}).isRequired,
+	};
 
-
-	render () {
-		const {option} = this.props;
+	render() {
+		const { option } = this.props;
 
 		let content = null;
 
@@ -43,7 +42,6 @@ export default class CourseEnrollmentOptionsFiveMinuteDescription extends React.
 			content = this.renderAvailable();
 		}
 
-
 		return (
 			<div className="nti-course-enrollment-five-minute-description">
 				{content}
@@ -51,33 +49,36 @@ export default class CourseEnrollmentOptionsFiveMinuteDescription extends React.
 		);
 	}
 
-
-	renderPending () {
-		const {option} = this.props;
+	renderPending() {
+		const { option } = this.props;
 
 		return (
 			<React.Fragment>
-				<PaddedContainer className="label" {...rawContent(option.getPendingLabel())} />
+				<PaddedContainer
+					className="label"
+					{...rawContent(option.getPendingLabel())}
+				/>
 				<Description {...rawContent(option.getPendingDescription())} />
 			</React.Fragment>
 		);
 	}
 
-
-	renderRejected () {
-		const {option} = this.props;
+	renderRejected() {
+		const { option } = this.props;
 
 		return (
 			<React.Fragment>
-				<Title className="title" {...rawContent(option.getRejectedTitle())} />
+				<Title
+					className="title"
+					{...rawContent(option.getRejectedTitle())}
+				/>
 				<Description {...rawContent(option.getRejectedDescription())} />
 			</React.Fragment>
 		);
 	}
 
-
-	renderApiDown () {
-		const {option} = this.props;
+	renderApiDown() {
+		const { option } = this.props;
 
 		return (
 			<React.Fragment>
@@ -86,14 +87,16 @@ export default class CourseEnrollmentOptionsFiveMinuteDescription extends React.
 		);
 	}
 
-
-	renderAvailable () {
-		const {option} = this.props;
+	renderAvailable() {
+		const { option } = this.props;
 
 		return (
 			<React.Fragment>
 				{option.getAvailableSeats() <= 10 && (
-					<PaddedContainer className="seats-available label" {...rawContent(option.getAvailabelSeatsLabel())} />
+					<PaddedContainer
+						className="seats-available label"
+						{...rawContent(option.getAvailabelSeatsLabel())}
+					/>
 				)}
 				<OptionDescription {...this.props} />
 			</React.Fragment>

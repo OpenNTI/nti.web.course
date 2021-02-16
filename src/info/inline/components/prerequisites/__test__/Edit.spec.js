@@ -10,19 +10,19 @@ describe('Prerequisites edit test', () => {
 		const prereqs = [
 			{
 				id: 'id1',
-				title: 'PR1'
+				title: 'PR1',
 			},
 			{
 				id: 'id2',
-				title: 'PR2'
-			}
+				title: 'PR2',
+			},
 		];
 
 		const catalogEntry = {
-			'Prerequisites': prereqs
+			Prerequisites: prereqs,
 		};
 
-		const x = render(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry} />);
 
 		expect(x.container.innerHTML).toEqual('<div></div>');
 	});

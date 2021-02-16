@@ -1,23 +1,28 @@
 import './Section.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {Prompt} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Prompt } from '@nti/web-commons';
 import cx from 'classnames';
-
 
 const t = scoped('course.info.inline.components.Section', {
 	edit: 'Edit',
 	cancel: 'Cancel',
 	save: 'Save',
 	done: 'Done',
-	deleteBlock: 'Delete Block'
+	deleteBlock: 'Delete Block',
 });
 
-function isEmpty (value) {
-	if (value instanceof Date) { return false; }
+function isEmpty(value) {
+	if (value instanceof Date) {
+		return false;
+	}
 
-	return !value || (Array.isArray(value) && value.length === 0) || (Object.keys(value).length === 0);
+	return (
+		!value ||
+		(Array.isArray(value) && value.length === 0) ||
+		Object.keys(value).length === 0
+	);
 }
 
 /**
@@ -51,26 +56,29 @@ export default class Section extends React.Component {
 		redemptionCodes: PropTypes.arrayOf(PropTypes.object),
 		title: PropTypes.string,
 		done: PropTypes.bool,
-		hideCancel: PropTypes.bool
-	}
+		hideCancel: PropTypes.bool,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		const { components, catalogEntry, editable } = props;
 
 		let hasData = editable;
 
-		(components || []).forEach((cmp) => {
-			const {getter} = cmp;
-			const value = catalogEntry && (typeof getter === 'function' ? getter(catalogEntry) : catalogEntry[cmp.View.FIELD_NAME]);
+		(components || []).forEach(cmp => {
+			const { getter } = cmp;
+			const value =
+				catalogEntry &&
+				(typeof getter === 'function'
+					? getter(catalogEntry)
+					: catalogEntry[cmp.View.FIELD_NAME]);
 
-			if(cmp.View.hasData) {
+			if (cmp.View.hasData) {
 				// for special fields (like meeting times), it's not sufficient to just check
 				// a single field value, so allow them to define a hasData to determine that
 				hasData = hasData || cmp.View.hasData(catalogEntry, props);
-			}
-			else if((!getter && !cmp.View.FIELD_NAME) || !isEmpty(value)) {
+			} else if ((!getter && !cmp.View.FIELD_NAME) || !isEmpty(value)) {
 				// if no FIELD_NAME is defined, don't assume it's no data, it may be pulled
 				// from an API call rather than an object property
 				hasData = true;
@@ -79,7 +87,7 @@ export default class Section extends React.Component {
 
 		this.state = {
 			hasData,
-			saveable: true
+			saveable: true,
 		};
 	}
 
@@ -87,7 +95,7 @@ export default class Section extends React.Component {
 		const { onBeginEditing } = this.props;
 
 		onBeginEditing && onBeginEditing();
-	}
+	};
 
 	endEditing = () => {
 		const { onEndEditing } = this.props;
@@ -95,9 +103,9 @@ export default class Section extends React.Component {
 		this.setState({ pendingChanges: {}, error: null, saveable: true });
 
 		onEndEditing && onEndEditing();
-	}
+	};
 
-	componentDidUpdate (prevProps) {
+	componentDidUpdate(prevProps) {
 		if (!this.props.isEditing && prevProps.isEditing) {
 			// reset saveable state if we're leaving editing mode
 			this.setState({ saveable: true });
@@ -122,63 +130,76 @@ export default class Section extends React.Component {
 		updated[key] = value;
 
 		this.setState({ pendingChanges: updated, error });
-	}
+	};
 
 	savePendingChanges = () => {
 		const { catalogEntry, onEndEditing, doSave } = this.props;
 		const { pendingChanges, saveable, error } = this.state;
 
-		if(!saveable || error) {
+		if (!saveable || error) {
 			return;
 		}
 
-		if(doSave) {
+		if (doSave) {
 			// instead of doing the default key-value save, do custom logic if specified
-			doSave(pendingChanges).then((value) => {
-				onEndEditing && onEndEditing(value);
-			}).catch(e => this.setState({error: e}));
-		}
-		else if(pendingChanges && Object.keys(pendingChanges).length > 0) {
+			doSave(pendingChanges)
+				.then(value => {
+					onEndEditing && onEndEditing(value);
+				})
+				.catch(e => this.setState({ error: e }));
+		} else if (pendingChanges && Object.keys(pendingChanges).length > 0) {
 			// do a standard key-value PUT on the catalogEntry.  this covers 90%
 			// of save scenarios (title, description, StartDate/EndDate, etc)
-			catalogEntry.save(pendingChanges).then(() => {
-				this.setState({ pendingChanges: {} });
+			catalogEntry
+				.save(pendingChanges)
+				.then(() => {
+					this.setState({ pendingChanges: {} });
 
-				onEndEditing && onEndEditing(catalogEntry);
-			}).catch(e => {
-				this.setState({
-					error: e
+					onEndEditing && onEndEditing(catalogEntry);
+				})
+				.catch(e => {
+					this.setState({
+						error: e,
+					});
 				});
-			});
-		}
-		else {
+		} else {
 			// nothing to save, end editing
 			onEndEditing && onEndEditing();
 		}
-	}
+	};
 
 	deleteBlock = () => {
 		Prompt.areYouSure('This will remove selected field values').then(() => {
 			const { components } = this.props;
 			const valueToSave = {};
 
-			(components || []).forEach((cmp) => {
-				if(cmp.Edit.FIELD_NAME) {
+			(components || []).forEach(cmp => {
+				if (cmp.Edit.FIELD_NAME) {
 					valueToSave[cmp.Edit.FIELD_NAME] = null;
 				}
 			});
 
-			if(Object.keys(valueToSave).length > 0) {
+			if (Object.keys(valueToSave).length > 0) {
 				this.setState({ pendingChanges: valueToSave }, () => {
 					this.savePendingChanges();
 				});
 			}
 		});
-	}
+	};
 
-	renderCmp = (cmp) => {
+	renderCmp = cmp => {
 		const { error } = this.state;
-		const { isEditing, onEndEditing, catalogEntry, courseInstance, redemptionCodes, facilitators, enrollmentAccess, editable, ...otherProps } = this.props;
+		const {
+			isEditing,
+			onEndEditing,
+			catalogEntry,
+			courseInstance,
+			redemptionCodes,
+			facilitators,
+			enrollmentAccess,
+			editable,
+			...otherProps
+		} = this.props;
 
 		const Cmp = isEditing ? cmp.Edit : cmp.View;
 
@@ -198,34 +219,49 @@ export default class Section extends React.Component {
 				toggleSaveable={this.toggleSaveable}
 			/>
 		);
+	};
+
+	toggleSaveable = enabled => {
+		this.setState({ saveable: enabled });
+	};
+
+	isEditable() {
+		const {
+			editable,
+			components,
+			catalogEntry,
+			courseInstance,
+		} = this.props;
+
+		return (
+			editable &&
+			components.some(
+				c => !c.isEditable || c.isEditable(catalogEntry, courseInstance)
+			)
+		);
 	}
 
-	toggleSaveable = (enabled) => {
-		this.setState({saveable : enabled});
-	}
-
-
-	isEditable () {
-		const {editable, components, catalogEntry, courseInstance} = this.props;
-
-		return editable && components.some(c => !c.isEditable || c.isEditable(catalogEntry, courseInstance));
-	}
-
-	renderEditButton () {
-		if(this.props.isEditing) {
+	renderEditButton() {
+		if (this.props.isEditing) {
 			return null;
 		}
 
-		if(this.isEditable()) {
-			const className = cx('edit-course-info', { 'indented' : !this.props.inlinePlacement && !this.props.title });
+		if (this.isEditable()) {
+			const className = cx('edit-course-info', {
+				indented: !this.props.inlinePlacement && !this.props.title,
+			});
 
-			return <div className={className} onClick={this.beginEditing}>{t('edit')}</div>;
+			return (
+				<div className={className} onClick={this.beginEditing}>
+					{t('edit')}
+				</div>
+			);
 		}
 
 		return null;
 	}
 
-	renderTitleWithEditButton () {
+	renderTitleWithEditButton() {
 		const { title } = this.props;
 
 		return (
@@ -236,26 +272,35 @@ export default class Section extends React.Component {
 		);
 	}
 
-	renderDelete () {
+	renderDelete() {
 		const { hideDeleteBlock } = this.props;
 
-		if(!hideDeleteBlock) {
-			return (<div className="delete-block" onClick={this.deleteBlock}><i className="icon-trash"/>{t('deleteBlock')}</div>);
+		if (!hideDeleteBlock) {
+			return (
+				<div className="delete-block" onClick={this.deleteBlock}>
+					<i className="icon-trash" />
+					{t('deleteBlock')}
+				</div>
+			);
 		}
 
 		return null;
 	}
 
-	renderSave () {
-		const {saveable} = this.state;
-		const {done} = this.props;
+	renderSave() {
+		const { saveable } = this.state;
+		const { done } = this.props;
 
 		const className = cx('save', { disabled: !saveable });
 
-		return <div className={className} onClick={this.savePendingChanges}>{done ? t('done') : t('save')}</div>;
+		return (
+			<div className={className} onClick={this.savePendingChanges}>
+				{done ? t('done') : t('save')}
+			</div>
+		);
 	}
 
-	renderControls () {
+	renderControls() {
 		const { isEditing, hideCancel } = this.props;
 
 		if (isEditing) {
@@ -263,7 +308,11 @@ export default class Section extends React.Component {
 				<div className="section-controls">
 					{this.renderDelete()}
 					<div className="buttons">
-						{!hideCancel && <div className="cancel" onClick={this.endEditing}>{t('cancel')}</div>}
+						{!hideCancel && (
+							<div className="cancel" onClick={this.endEditing}>
+								{t('cancel')}
+							</div>
+						)}
 						{this.renderSave()}
 					</div>
 				</div>
@@ -273,13 +322,15 @@ export default class Section extends React.Component {
 		return null;
 	}
 
-	render () {
+	render() {
 		const { hasData } = this.state;
 		const { components, className, title, isEditing } = this.props;
 
-		const containerCls = cx('course-info-editor-section', { 'edit' : isEditing });
+		const containerCls = cx('course-info-editor-section', {
+			edit: isEditing,
+		});
 
-		if(!hasData) {
+		if (!hasData) {
 			return null;
 		}
 

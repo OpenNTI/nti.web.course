@@ -1,23 +1,33 @@
 /* eslint-env jest */
-import {TABS} from '../Constants';
+import { TABS } from '../Constants';
 
 describe('Course Navigation Constants', () => {
 	describe('TABS', () => {
 		describe('access', () => {
 			describe('lessons', () => {
 				test('Non-scorm course, has Outline', () => {
-					expect(TABS.lessons.hasAccess({isScormInstance: false, hasOutline: () => true})).toBeTruthy();
+					expect(
+						TABS.lessons.hasAccess({
+							isScormInstance: false,
+							hasOutline: () => true,
+						})
+					).toBeTruthy();
 				});
 
 				test('Non-scorm course, no outline', () => {
-					expect(TABS.lessons.hasAccess({isScormInstance: false, hasOutline: () => false})).toBeFalsy();
+					expect(
+						TABS.lessons.hasAccess({
+							isScormInstance: false,
+							hasOutline: () => false,
+						})
+					).toBeFalsy();
 				});
 
 				test('Scorm course', () => {
 					const course = {
 						isScormInstance: true,
 						hasOutline: () => true,
-						hasLink: () => false
+						hasLink: () => false,
 					};
 
 					expect(TABS.lessons.hasAccess(course)).toBeFalsy();
@@ -26,16 +36,18 @@ describe('Course Navigation Constants', () => {
 
 			describe('scorm', () => {
 				test('non-scorm course', () => {
-					expect(TABS.scorm.hasAccess({isScormInstance: false})).toBeFalsy();
+					expect(
+						TABS.scorm.hasAccess({ isScormInstance: false })
+					).toBeFalsy();
 				});
 
 				test('scorm course, no import or launch link', () => {
-					const course =  {
+					const course = {
 						isScormInstance: true,
 						hasLink: () => false,
 						Metadata: {
-							hasLink: () => false
-						}
+							hasLink: () => false,
+						},
 					};
 
 					expect(TABS.scorm.hasAccess(course)).toBeFalsy();
@@ -44,7 +56,7 @@ describe('Course Navigation Constants', () => {
 				test('scorm course, with import link', () => {
 					const course = {
 						isScormInstance: true,
-						hasLink: rel => rel === 'ImportScorm'
+						hasLink: rel => rel === 'ImportScorm',
 					};
 
 					expect(TABS.scorm.hasAccess(course)).toBeTruthy();
@@ -55,8 +67,8 @@ describe('Course Navigation Constants', () => {
 						isScormInstance: true,
 						hasLink: () => false,
 						Metadata: {
-							hasLink: rel => rel === 'LaunchScorm'
-						}
+							hasLink: rel => rel === 'LaunchScorm',
+						},
 					};
 
 					expect(TABS.scorm.hasAccess(course)).toBeTruthy();
@@ -65,11 +77,19 @@ describe('Course Navigation Constants', () => {
 
 			describe('assignments', () => {
 				test('course has assignments', () => {
-					expect(TABS.assignments.hasAccess({shouldShowAssignments: () => true})).toBeTruthy();
+					expect(
+						TABS.assignments.hasAccess({
+							shouldShowAssignments: () => true,
+						})
+					).toBeTruthy();
 				});
 
 				test('course does not have assignments', () => {
-					expect(TABS.assignments.hasAccess({shouldShowAssignments: () => false})).toBeFalsy();
+					expect(
+						TABS.assignments.hasAccess({
+							shouldShowAssignments: () => false,
+						})
+					).toBeFalsy();
 				});
 			});
 

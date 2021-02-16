@@ -1,25 +1,44 @@
 import './CourseInfo.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Loading} from '@nti/web-commons';
-import {getService} from '@nti/web-client';
+import { Loading } from '@nti/web-commons';
+import { getService } from '@nti/web-client';
 import cx from 'classnames';
 
-import {InfoPanel} from '../../admin-tools';
+import { InfoPanel } from '../../admin-tools';
 import Store from '../../editor/Store';
 import {
 	COURSE_SAVING,
 	COURSE_SAVED,
-	COURSE_SAVE_ERROR
+	COURSE_SAVE_ERROR,
 } from '../../editor/Constants';
 
 import CourseVisibility from './enrollment/CourseVisibility';
 import CourseVideo from './widgets/CourseVideo';
-import { saveFacilitators, getVisibleFacilitators, getAllFacalitators, hasHiddenFacilitators } from './components/facilitators/utils';
+import {
+	saveFacilitators,
+	getVisibleFacilitators,
+	getAllFacalitators,
+	hasHiddenFacilitators,
+} from './components/facilitators/utils';
 import Section from './components/Section';
-import { Identifier, Title, Description, Tags, StartDate, EndDate, MeetTimes, Badges,
-	RedemptionCodes, Prerequisites, Access, Department, Facilitators, Assets, TranscriptCredit } from './components';
-
+import {
+	Identifier,
+	Title,
+	Description,
+	Tags,
+	StartDate,
+	EndDate,
+	MeetTimes,
+	Badges,
+	RedemptionCodes,
+	Prerequisites,
+	Access,
+	Department,
+	Facilitators,
+	Assets,
+	TranscriptCredit,
+} from './components';
 
 const EDITORS = {
 	COURSE_INFO: 'CourseInfo',
@@ -29,7 +48,7 @@ const EDITORS = {
 	FACILITATORS: 'Facilitators',
 	TRANSCRIPT_CREDIT: 'TranscriptCredit',
 	REDEMPTION_CODES: 'RedemptionCodes',
-	COURSE_ACCESS: 'Access'
+	COURSE_ACCESS: 'Access',
 };
 
 /**
@@ -45,46 +64,55 @@ export default class CourseInfo extends React.Component {
 		onCancel: PropTypes.func,
 		onFinish: PropTypes.func,
 		onSave: PropTypes.func,
-		hasAdminToolsAccess: PropTypes.bool
-	}
+		hasAdminToolsAccess: PropTypes.bool,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		const catalogEntry = props.catalogEntry;
 
-		this.state = {loading: true};
+		this.state = { loading: true };
 
-		if(typeof catalogEntry === 'string') {
+		if (typeof catalogEntry === 'string') {
 			getService().then(service => {
-				service.getObject(catalogEntry).then((value) => {
+				service.getObject(catalogEntry).then(value => {
 					// be flexible on the kind of data we're given
-					this.initializeCourseData(value.CatalogEntry || value.CourseCatalogEntry || value);
+					this.initializeCourseData(
+						value.CatalogEntry || value.CourseCatalogEntry || value
+					);
 				});
 			});
-		}
-		else {
+		} else {
 			this.initializeCourseData(catalogEntry);
 		}
 	}
 
-	getCourseInstance (service, catalogEntry) {
-		return service.getObject(catalogEntry.CourseNTIID).then((courseInstance) => {
-			return courseInstance;
-		}).catch(() => {
-			return null;
-		});
+	getCourseInstance(service, catalogEntry) {
+		return service
+			.getObject(catalogEntry.CourseNTIID)
+			.then(courseInstance => {
+				return courseInstance;
+			})
+			.catch(() => {
+				return null;
+			});
 	}
 
-	async initializeCourseData (catalogEntry) {
+	async initializeCourseData(catalogEntry) {
 		const service = await getService();
 
-		const courseInstance = await this.getCourseInstance(service, catalogEntry);
+		const courseInstance = await this.getCourseInstance(
+			service,
+			catalogEntry
+		);
 
 		let redemptionCodes = null;
 
 		try {
-			redemptionCodes = courseInstance ? await courseInstance.getAccessTokens() : null;
+			redemptionCodes = courseInstance
+				? await courseInstance.getAccessTokens()
+				: null;
 		} catch (e) {
 			// some users may not have access to the tokens
 			redemptionCodes = null;
@@ -93,14 +121,22 @@ export default class CourseInfo extends React.Component {
 		let enrollmentAccess;
 
 		try {
-			enrollmentAccess = await catalogEntry.fetchLinkParsed('UserCoursePreferredAccess');
+			enrollmentAccess = await catalogEntry.fetchLinkParsed(
+				'UserCoursePreferredAccess'
+			);
 		} catch (e) {
 			// may not have access at all
 			enrollmentAccess = null;
 		}
 
-		const facilitators = await getVisibleFacilitators(catalogEntry, courseInstance);
-		const hasMoreFacilitators = hasHiddenFacilitators(catalogEntry, courseInstance);
+		const facilitators = await getVisibleFacilitators(
+			catalogEntry,
+			courseInstance
+		);
+		const hasMoreFacilitators = hasHiddenFacilitators(
+			catalogEntry,
+			courseInstance
+		);
 
 		this.setState({
 			catalogEntry,
@@ -109,91 +145,95 @@ export default class CourseInfo extends React.Component {
 			enrollmentAccess,
 			facilitators,
 			hasMoreFacilitators,
-			loading: false
+			loading: false,
 		});
 	}
 
-	saveFacilitators = (pending) => {
+	saveFacilitators = pending => {
 		const facilitators = (pending || {}).facilitators;
 
-		if(!pending || !facilitators) {
+		if (!pending || !facilitators) {
 			return Promise.resolve();
 		}
 
-		return saveFacilitators(this.state.catalogEntry, this.state.courseInstance, facilitators).then((saved) => {
+		return saveFacilitators(
+			this.state.catalogEntry,
+			this.state.courseInstance,
+			facilitators
+		).then(saved => {
 			this.setState({ facilitators: saved });
 
 			return this.state.catalogEntry;
 		});
-	}
+	};
 
-	saveTranscriptCredits = (values) => {
+	saveTranscriptCredits = values => {
 		// TODO: Save changes to course
 
 		return Promise.resolve();
-	}
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		Store.addChangeListener(this.onStoreChange);
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		Store.removeChangeListener(this.onStoreChange);
 	}
 
-	componentDidUpdate (prevProps) {
-		const {catalogEntry} = this.props;
-		if(prevProps.catalogEntry !== catalogEntry) {
-			this.setState({catalogEntry});
+	componentDidUpdate(prevProps) {
+		const { catalogEntry } = this.props;
+		if (prevProps.catalogEntry !== catalogEntry) {
+			this.setState({ catalogEntry });
 		}
 	}
 
-	onStoreChange = (data) => {
+	onStoreChange = data => {
 		if (data.type === COURSE_SAVING) {
-			this.setState({loading: true});
+			this.setState({ loading: true });
 		} else if (data.type === COURSE_SAVE_ERROR) {
-			this.setState({loading: false, errorMsg: data.errorMsg});
+			this.setState({ loading: false, errorMsg: data.errorMsg });
 		} else if (data.type === COURSE_SAVED) {
-			this.setState({loading: false, hasSaved: true});
+			this.setState({ loading: false, hasSaved: true });
 		}
-	}
+	};
 
 	activateCourseInfoEditor = () => {
-		this.setState({activeEditor: EDITORS.COURSE_INFO});
-	}
+		this.setState({ activeEditor: EDITORS.COURSE_INFO });
+	};
 
 	activateStartDateEditor = () => {
-		this.setState({activeEditor: EDITORS.START_DATE});
-	}
+		this.setState({ activeEditor: EDITORS.START_DATE });
+	};
 
 	activateEndDateEditor = () => {
-		this.setState({activeEditor: EDITORS.END_DATE});
-	}
+		this.setState({ activeEditor: EDITORS.END_DATE });
+	};
 
 	activateMeetTimesEditor = () => {
-		this.setState({activeEditor: EDITORS.MEET_TIMES});
-	}
+		this.setState({ activeEditor: EDITORS.MEET_TIMES });
+	};
 
 	activateAccessEditor = () => {
-		this.setState({activeEditor: EDITORS.COURSE_ACCESS});
-	}
+		this.setState({ activeEditor: EDITORS.COURSE_ACCESS });
+	};
 
 	hideFullFacilitatorSet = async () => {
 		this.setState({
-			showingFullFacilitatorSet: false
+			showingFullFacilitatorSet: false,
 		});
-	}
+	};
 
 	showFullFacilitatorSet = async () => {
-		this.loadFullFacilitatorsSet({showingFullFacilitatorSet: true});
-	}
+		this.loadFullFacilitatorsSet({ showingFullFacilitatorSet: true });
+	};
 
 	loadFullFacilitatorsSet = async (extraState = {}) => {
 		const {
 			catalogEntry,
 			courseInstance,
 			facilitatorsFullyLoaded,
-			loadingFullFacilitators
+			loadingFullFacilitators,
 		} = this.state;
 
 		if (facilitatorsFullyLoaded || loadingFullFacilitators) {
@@ -202,52 +242,60 @@ export default class CourseInfo extends React.Component {
 		}
 
 		this.setState({
-			loadingFullFacilitators: true
+			loadingFullFacilitators: true,
 		});
 
 		try {
-			const facilitators = await getAllFacalitators(catalogEntry, courseInstance);
-
+			const facilitators = await getAllFacalitators(
+				catalogEntry,
+				courseInstance
+			);
 
 			this.setState({
 				...extraState,
 				loadingFullFacilitators: false,
 				facilitatorsFullyLoaded: true,
-				facilitators
+				facilitators,
 			});
 		} catch (e) {
 			this.setState({
 				...extraState,
-				loadingFullFacilitators: false
+				loadingFullFacilitators: false,
 			});
 		}
-	}
+	};
 
 	activateFacilitatorsEditor = async () => {
-		this.setState({
-			showingFacilitatorEditor: true,
-		}, () => {
-			this.loadFullFacilitatorsSet({activeEditor: EDITORS.FACILITATORS, showingFacilitatorEditor: false});
-		});
-	}
+		this.setState(
+			{
+				showingFacilitatorEditor: true,
+			},
+			() => {
+				this.loadFullFacilitatorsSet({
+					activeEditor: EDITORS.FACILITATORS,
+					showingFacilitatorEditor: false,
+				});
+			}
+		);
+	};
 
 	activateTranscriptCreditEditor = () => {
-		this.setState({activeEditor: EDITORS.TRANSCRIPT_CREDIT});
-	}
+		this.setState({ activeEditor: EDITORS.TRANSCRIPT_CREDIT });
+	};
 
 	activateRedemptionEditor = () => {
 		this.setState({ activeEditor: EDITORS.REDEMPTION_CODES });
-	}
+	};
 
-	endEditing = (savedCatalogEntry) => {
+	endEditing = savedCatalogEntry => {
 		const { onSave } = this.props;
 
-		this.setState({activeEditor: undefined});
+		this.setState({ activeEditor: undefined });
 
-		if(savedCatalogEntry) {
+		if (savedCatalogEntry) {
 			onSave && onSave(savedCatalogEntry);
 		}
-	}
+	};
 
 	endCodeEditing = async () => {
 		const { courseInstance, catalogEntry } = this.state;
@@ -255,15 +303,16 @@ export default class CourseInfo extends React.Component {
 		this.setState({ redemptionCodes });
 
 		this.endEditing(catalogEntry);
-	}
+	};
 
-	renderRedemptionWidget () {
+	renderRedemptionWidget() {
 		const { editable } = this.props;
 		const { redemptionCodes, activeEditor, courseInstance } = this.state;
 
-		let canCreate = courseInstance && courseInstance.hasLink('CreateCourseInvitation');
+		let canCreate =
+			courseInstance && courseInstance.hasLink('CreateCourseInvitation');
 
-		if(!editable) {
+		if (!editable) {
 			return null;
 		}
 
@@ -284,24 +333,24 @@ export default class CourseInfo extends React.Component {
 		);
 	}
 
-	endAssetEditing = (catalogEntry) => {
+	endAssetEditing = catalogEntry => {
 		this.endEditing(catalogEntry);
 
 		this.setState({ uploadCompleting: true }, () => {
 			this.setState({ uploadCompleting: false });
 		});
-	}
+	};
 
-	renderAssetUploadWidget () {
+	renderAssetUploadWidget() {
 		const { editable } = this.props;
 		const { catalogEntry, uploadCompleting } = this.state;
 
-		if(!editable) {
+		if (!editable) {
 			return null;
 		}
 
-		if(uploadCompleting) {
-			return <Loading.Mask/>;
+		if (uploadCompleting) {
+			return <Loading.Mask />;
 		}
 
 		return (
@@ -309,36 +358,47 @@ export default class CourseInfo extends React.Component {
 				className="course-assets"
 				components={[Assets]}
 				catalogEntry={catalogEntry}
-				onEndEditing={this.endAssetEditing}/>
+				onEndEditing={this.endAssetEditing}
+			/>
 		);
 	}
 
-	onSetVideo = (src) => {
-		this.state.catalogEntry.save({
-			Video: src
-		}).then(() => {
-			this.endEditing();
-		});
-	}
+	onSetVideo = src => {
+		this.state.catalogEntry
+			.save({
+				Video: src,
+			})
+			.then(() => {
+				this.endEditing();
+			});
+	};
 
 	onRemoveVideo = () => {
-		this.state.catalogEntry.save({
-			Video: null
-		}).then(() => {
-			this.endEditing();
-		});
-	}
+		this.state.catalogEntry
+			.save({
+				Video: null,
+			})
+			.then(() => {
+				this.endEditing();
+			});
+	};
 
-	renderCourseVisibilityWidget () {
+	renderCourseVisibilityWidget() {
 		const { editable } = this.props;
 		const { catalogEntry, courseInstance } = this.state;
 
-		if(editable) {
-			return <CourseVisibility catalogEntry={catalogEntry} courseInstance={courseInstance} onVisibilityChanged={this.endEditing}/>;
+		if (editable) {
+			return (
+				<CourseVisibility
+					catalogEntry={catalogEntry}
+					courseInstance={courseInstance}
+					onVisibilityChanged={this.endEditing}
+				/>
+			);
 		}
 	}
 
-	render () {
+	render() {
 		const { editable, hasAdminToolsAccess } = this.props;
 		const {
 			activeEditor,
@@ -350,14 +410,20 @@ export default class CourseInfo extends React.Component {
 			showingFacilitatorEditor,
 			showingFullFacilitatorSet,
 			loadingFullFacilitators,
-			loading
+			loading,
 		} = this.state;
 
-		if(loading || !catalogEntry) {
-			return (<div className="course-inline-editor loading"><Loading.Mask/></div>);
+		if (loading || !catalogEntry) {
+			return (
+				<div className="course-inline-editor loading">
+					<Loading.Mask />
+				</div>
+			);
 		}
 
-		const classname = cx('course-inline-editor', { 'view-only' : !editable });
+		const classname = cx('course-inline-editor', {
+			'view-only': !editable,
+		});
 
 		return (
 			<div className={classname}>
@@ -366,7 +432,8 @@ export default class CourseInfo extends React.Component {
 					catalogEntry={catalogEntry}
 					editable={editable}
 					onSetVideo={this.onSetVideo}
-					onRemoveVideo={this.onRemoveVideo}/>
+					onRemoveVideo={this.onRemoveVideo}
+				/>
 				<div className="sections">
 					<Section
 						className="basic-info-section"
@@ -377,7 +444,8 @@ export default class CourseInfo extends React.Component {
 						onBeginEditing={this.activateCourseInfoEditor}
 						onEndEditing={this.endEditing}
 						inlinePlacement
-						hideDeleteBlock/>
+						hideDeleteBlock
+					/>
 					{this.renderAssetUploadWidget()}
 					<Section
 						className="pricing-section"
@@ -387,7 +455,13 @@ export default class CourseInfo extends React.Component {
 						enrollmentAccess={enrollmentAccess}
 						editable={editable}
 						isEditing={activeEditor === EDITORS.COURSE_ACCESS}
-						doSave={pending => Access.saveAccess(catalogEntry, courseInstance, pending)}
+						doSave={pending =>
+							Access.saveAccess(
+								catalogEntry,
+								courseInstance,
+								pending
+							)
+						}
 						onBeginEditing={this.activateAccessEditor}
 						onEndEditing={this.endEditing}
 						hideDeleteBlock
@@ -408,11 +482,13 @@ export default class CourseInfo extends React.Component {
 						editable={editable}
 						isEditing={activeEditor === EDITORS.TRANSCRIPT_CREDIT}
 						onBeginEditing={this.activateTranscriptCreditEditor}
-						onEndEditing={this.endEditing}/>
+						onEndEditing={this.endEditing}
+					/>
 					<Section
 						className="prerequisites-section"
 						components={[Prerequisites]}
-						catalogEntry={catalogEntry}/>
+						catalogEntry={catalogEntry}
+					/>
 					{this.renderRedemptionWidget()}
 					<Section
 						className="start-date-section"
@@ -421,7 +497,8 @@ export default class CourseInfo extends React.Component {
 						isEditing={activeEditor === EDITORS.START_DATE}
 						editable={editable}
 						onBeginEditing={this.activateStartDateEditor}
-						onEndEditing={this.endEditing}/>
+						onEndEditing={this.endEditing}
+					/>
 					<Section
 						className="end-date-section"
 						components={[EndDate]}
@@ -429,11 +506,13 @@ export default class CourseInfo extends React.Component {
 						isEditing={activeEditor === EDITORS.END_DATE}
 						editable={editable}
 						onBeginEditing={this.activateEndDateEditor}
-						onEndEditing={this.endEditing}/>
+						onEndEditing={this.endEditing}
+					/>
 					<Section
 						className="department-section"
 						components={[Department]}
-						catalogEntry={catalogEntry}/>
+						catalogEntry={catalogEntry}
+					/>
 					<Section
 						className="meet-times-section"
 						components={[MeetTimes]}
@@ -441,7 +520,8 @@ export default class CourseInfo extends React.Component {
 						isEditing={activeEditor === EDITORS.MEET_TIMES}
 						editable={editable}
 						onBeginEditing={this.activateMeetTimesEditor}
-						onEndEditing={this.endEditing}/>
+						onEndEditing={this.endEditing}
+					/>
 					<Section
 						className="facilitators-section"
 						components={[Facilitators]}
@@ -460,9 +540,10 @@ export default class CourseInfo extends React.Component {
 						loadingFullFacilitators={loadingFullFacilitators}
 						showFullFacilitatorSet={this.showFullFacilitatorSet}
 						hideFullFacilitatorSet={this.hideFullFacilitatorSet}
-						hideDeleteBlock/>
+						hideDeleteBlock
+					/>
 				</div>
-				{hasAdminToolsAccess && <InfoPanel {...this.props}/>}
+				{hasAdminToolsAccess && <InfoPanel {...this.props} />}
 			</div>
 		);
 	}

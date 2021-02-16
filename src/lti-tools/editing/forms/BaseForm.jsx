@@ -13,15 +13,26 @@ const DEFAULT_TEXT = {
 
 const t = scoped('nti-web-course.lti-tools.editing.EditTool', DEFAULT_TEXT);
 
-const BaseForm = ({ item, onChange, children, onSubmit, renderButtons}) => (
+const BaseForm = ({ item, onChange, children, onSubmit, renderButtons }) => (
 	<form className="lti-base-form" onSubmit={onSubmit}>
 		<div className="lti-base-fields">
 			<div className="split-input">
 				<Label label={t('consumerKey')}>
-					<Text value={item['consumer_key']} onChange={value => onChange('consumer_key', value)} className="lti-tool-'consumer_key'" placeholder={t('consumerKey')} />
+					<Text
+						value={item['consumer_key']}
+						onChange={value => onChange('consumer_key', value)}
+						className="lti-tool-'consumer_key'"
+						placeholder={t('consumerKey')}
+					/>
 				</Label>
 				<Label label={t('secret')}>
-					<Text value={item.secret} onChange={value => onChange('secret', value)} className="lti-tool-Scret" placeholder={t('secret')} type="password" />
+					<Text
+						value={item.secret}
+						onChange={value => onChange('secret', value)}
+						className="lti-tool-Scret"
+						placeholder={t('secret')}
+						type="password"
+					/>
 				</Label>
 			</div>
 			{children}
@@ -35,10 +46,10 @@ BaseForm.propTypes = {
 	children: PropTypes.node,
 	onChange: PropTypes.func.isRequired,
 	item: PropTypes.shape({
-		'consumer_key': PropTypes.string.isRequired,
-		secret: PropTypes.string.isRequired
+		consumer_key: PropTypes.string.isRequired,
+		secret: PropTypes.string.isRequired,
 	}).isRequired,
-	onSubmit: PropTypes.func.isRequired
+	onSubmit: PropTypes.func.isRequired,
 };
 
 export default BaseForm;

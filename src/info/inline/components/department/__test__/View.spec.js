@@ -9,11 +9,13 @@ describe('Department view test', () => {
 		const depName = 'ABC123';
 
 		const catalogEntry = {
-			'ProviderDepartmentTitle': depName
+			ProviderDepartmentTitle: depName,
 		};
 
-		const x = render(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry} />);
 
-		expect(x.container.querySelector('.content-column').textContent).toEqual(depName);
+		expect(
+			x.container.querySelector('.content-column').textContent
+		).toEqual(depName);
 	});
 });

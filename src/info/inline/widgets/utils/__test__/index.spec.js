@@ -1,4 +1,4 @@
-import {validateTag} from '../index';
+import { validateTag } from '../index';
 
 /* eslint-env jest */
 describe('validateTag test', () => {
@@ -29,13 +29,13 @@ describe('validateTag test', () => {
 	test('Test single slash', () => {
 		const result = validateTag('/');
 
-		expect(result[0]).toEqual('\'/\' characters are not allowed');
+		expect(result[0]).toEqual("'/' characters are not allowed");
 	});
 
 	test('Test slash in text', () => {
 		const result = validateTag('some/tag');
 
-		expect(result[0]).toEqual('\'/\' characters are not allowed');
+		expect(result[0]).toEqual("'/' characters are not allowed");
 	});
 
 	test('Test valid period', () => {

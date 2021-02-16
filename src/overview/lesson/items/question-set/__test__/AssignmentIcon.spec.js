@@ -12,17 +12,20 @@ describe('Course overview assignment icon test', () => {
 
 		const assignment = {
 			getDueDate: () => new Date('10/22/2017'),
-			isNonSubmit: () => false
+			isNonSubmit: () => false,
 		};
 
 		const assignmentHistory = {
 			Submission: {
-				getCreatedTime: () => new Date('10/24/2017')
-			}
+				getCreatedTime: () => new Date('10/24/2017'),
+			},
 		};
 
 		const cmp = renderer.create(
-			<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory}/>
+			<AssignmentIcon
+				assignment={assignment}
+				assignmentHistory={assignmentHistory}
+			/>
 		);
 
 		const tree = cmp.toJSON();
@@ -33,12 +36,10 @@ describe('Course overview assignment icon test', () => {
 	test('Non submit', async () => {
 		const assignment = {
 			getDueDate: () => null,
-			isNonSubmit: () => true
+			isNonSubmit: () => true,
 		};
 
-		const cmp = renderer.create(
-			<AssignmentIcon assignment={assignment}/>
-		);
+		const cmp = renderer.create(<AssignmentIcon assignment={assignment} />);
 
 		const tree = cmp.toJSON();
 
@@ -48,17 +49,20 @@ describe('Course overview assignment icon test', () => {
 	test('Completed on time', async () => {
 		const assignment = {
 			getDueDate: () => Date.now(),
-			isNonSubmit: () => true
+			isNonSubmit: () => true,
 		};
 
 		const assignmentHistory = {
 			Submission: {
-				getCreatedTime: () => new Date('10/24/2017')
-			}
+				getCreatedTime: () => new Date('10/24/2017'),
+			},
 		};
 
 		const cmp = renderer.create(
-			<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory}/>
+			<AssignmentIcon
+				assignment={assignment}
+				assignmentHistory={assignmentHistory}
+			/>
 		);
 
 		const tree = cmp.toJSON();

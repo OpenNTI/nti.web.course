@@ -12,26 +12,28 @@ describe('CourseMenu test', () => {
 	const doRequestSupport = jest.fn();
 
 	const course = {
-		title: 'Test Course'
+		title: 'Test Course',
 	};
 
 	let result;
 	beforeEach(() => {
-		result = render(<CourseMenu
-			course={course}
-			doEdit={doEdit}
-			doExport={doExport}
-			doDelete={doDelete}
-			doDrop={doDrop}
-			doRequestSupport={doRequestSupport}
-			registered="registered"
-		/>);
+		result = render(
+			<CourseMenu
+				course={course}
+				doEdit={doEdit}
+				doExport={doExport}
+				doDelete={doDelete}
+				doDrop={doDrop}
+				doRequestSupport={doRequestSupport}
+				registered="registered"
+			/>
+		);
 	});
 
 	const find = x => result.container.querySelector(x);
 	const findAll = x => [...result.container.querySelectorAll(x)];
 
-	const getOption = (text) => {
+	const getOption = text => {
 		let node = findAll('.option').find(n => n.textContent === text);
 
 		return node;
@@ -48,9 +50,11 @@ describe('CourseMenu test', () => {
 	};
 
 	test('Test simple course with title', () => {
-		let {container: simple} = render(<CourseMenu course={course}/>);
+		let { container: simple } = render(<CourseMenu course={course} />);
 
-		expect(simple.querySelector('.course-name').textContent).toBe(course.title);
+		expect(simple.querySelector('.course-name').textContent).toBe(
+			course.title
+		);
 
 		// no registered status was provided, so there should be no registered message
 		expect(simple.querySelector('.course-status').textContent).toBe('');
@@ -66,8 +70,7 @@ describe('CourseMenu test', () => {
 	test('Test edit option', async () =>
 		verifyOption('Edit Course Information', doEdit));
 
-	test('Test export option', async () =>
-		verifyOption('Export', doExport));
+	test('Test export option', async () => verifyOption('Export', doExport));
 
 	test('Test support option', async () =>
 		verifyOption('Contact Support', doRequestSupport));
@@ -75,10 +78,9 @@ describe('CourseMenu test', () => {
 	test('Test delete option', async () =>
 		verifyOption('Delete Course', doDelete));
 
-	test('Test drop option', async () =>
-		verifyOption('Drop Course', doDrop));
+	test('Test drop option', async () => verifyOption('Drop Course', doDrop));
 
 	test('Test status', () => {
-		expect(find('.course-status').textContent).toBe('You\'re Registered');
+		expect(find('.course-status').textContent).toBe("You're Registered");
 	});
 });

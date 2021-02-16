@@ -2,10 +2,8 @@ import { Basic, Instructors } from '../panels';
 
 export const Blank = {
 	name: 'Blank',
-	description: 'Create a new course by providing all of the course information',
+	description:
+		'Create a new course by providing all of the course information',
 
-	panels: [
-		Basic,
-		Instructors
-	]
+	panels: [Basic, Instructors],
 };

@@ -2,9 +2,9 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {decorate} from '@nti/lib-commons';
+import { decorate } from '@nti/lib-commons';
 import { Loading, HOC } from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import Store from './Store';
 import Administrating from './parts/administrating';
@@ -15,97 +15,102 @@ import Gifting from './parts/gifting';
 
 const t = scoped('course.enrollment.options', {
 	unavailable: 'This course is unavailable for enrollment at this time',
-	notEnrolledLabel: 'Enroll Today'
+	notEnrolledLabel: 'Enroll Today',
 });
 
 class CourseEnrollmentOptions extends React.Component {
 	static propTypes = {
 		className: PropTypes.string,
 		catalogEntry: PropTypes.shape({
-			getEnrollmentOptions: PropTypes.func
+			getEnrollmentOptions: PropTypes.func,
 		}),
 
 		store: PropTypes.shape({
 			cleanUp: PropTypes.func,
 			setup: PropTypes.func,
-			load: PropTypes.func
+			load: PropTypes.func,
 		}),
 		loading: PropTypes.bool,
 		error: PropTypes.any,
 		enrolled: PropTypes.bool,
 		administrative: PropTypes.bool,
 		options: PropTypes.array,
-		access: PropTypes.object
-	}
+		access: PropTypes.object,
+	};
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
-
-	componentWillUnmount () {
-		const {store} = this.props;
+	componentWillUnmount() {
+		const { store } = this.props;
 
 		store.cleanUp();
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {catalogEntry:oldEntry} = prevProps;
-		const {catalogEntry:newEntry} = this.props;
+	componentDidUpdate(prevProps) {
+		const { catalogEntry: oldEntry } = prevProps;
+		const { catalogEntry: newEntry } = this.props;
 
 		if (oldEntry !== newEntry) {
 			this.setupFor(this.props);
 		}
 	}
 
-	setupFor (props) {
-		const {catalogEntry, store} = props;
+	setupFor(props) {
+		const { catalogEntry, store } = props;
 
 		store.load(catalogEntry);
 	}
 
-
 	onItemChange = () => {
 		const { store } = this.props;
 		store.setup();
-	}
+	};
 
-	render () {
-		const {className, loading, error, enrolled, catalogEntry} = this.props;
+	render() {
+		const {
+			className,
+			loading,
+			error,
+			enrolled,
+			catalogEntry,
+		} = this.props;
 
 		return (
-			<HOC.ItemChanges item={catalogEntry} onItemChanged={this.onItemChange}>
-				<div className={cx('nti-course-enrollment-options', className, {'is-enrolled': enrolled})}>
+			<HOC.ItemChanges
+				item={catalogEntry}
+				onItemChanged={this.onItemChange}
+			>
+				<div
+					className={cx('nti-course-enrollment-options', className, {
+						'is-enrolled': enrolled,
+					})}
+				>
 					<div className="enrollment-container">
-						{loading && (<Loading.Spinner />)}
-						{!loading && error && (this.renderError())}
-						{!loading && !error && (this.renderOptions())}
+						{loading && <Loading.Spinner />}
+						{!loading && error && this.renderError()}
+						{!loading && !error && this.renderOptions()}
 					</div>
 					<div className="gift-container">
-						{!loading && !error && (this.renderGift())}
+						{!loading && !error && this.renderGift()}
 					</div>
 				</div>
 			</HOC.ItemChanges>
 		);
 	}
 
-
-	renderError () {
-		return (
-			<span className="error">{t('unavailable')}</span>
-		);
+	renderError() {
+		return <span className="error">{t('unavailable')}</span>;
 	}
 
-
-	renderOptions () {
+	renderOptions() {
 		const {
 			enrolled,
 			administrative,
 			catalogEntry,
 			options,
-			access
+			access,
 		} = this.props;
 
 		let Cmp = null;
@@ -121,22 +126,23 @@ class CourseEnrollmentOptions extends React.Component {
 		}
 
 		return (
-			<Cmp options={options} catalogEntry={catalogEntry} access={access} />
+			<Cmp
+				options={options}
+				catalogEntry={catalogEntry}
+				access={access}
+			/>
 		);
 	}
 
+	renderGift() {
+		const { options } = this.props;
 
-	renderGift () {
-		const {options} = this.props;
+		if (!options) {
+			return null;
+		}
 
-		if (!options) { return null; }
-
-		return (
-			<Gifting options={options} />
-		);
+		return <Gifting options={options} />;
 	}
-
-
 }
 
 export default decorate(CourseEnrollmentOptions, [
@@ -146,7 +152,6 @@ export default decorate(CourseEnrollmentOptions, [
 		enrolled: 'enrolled',
 		administrative: 'administrative',
 		options: 'options',
-		access: 'access'
-	})
+		access: 'access',
+	}),
 ]);
-

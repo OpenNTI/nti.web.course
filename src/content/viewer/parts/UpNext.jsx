@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {LinkTo} from '@nti/web-routing';
-import {scoped} from '@nti/lib-locale';
+import { LinkTo } from '@nti/web-routing';
+import { scoped } from '@nti/lib-locale';
 
-import {Constants} from '../../../overview/lesson/';
+import { Constants } from '../../../overview/lesson/';
 import OverviewItems from '../../../overview/lesson/items';
 
 import Styles from './UpNext.css';
@@ -14,61 +14,64 @@ const cx = classnames.bind(Styles);
 const t = scoped('course.content.viewer.parts.UpNext', {
 	nextPage: 'Next Page',
 	lessonFinished: 'Next Lesson',
-	upNext: 'Up Next'
+	upNext: 'Up Next',
 });
 
-function isEndOfCourse (next) {
+function isEndOfCourse(next) {
 	return !next;
 }
 
+function isEndOfLesson(next, lessonInfo) {
+	const { lesson } = next || {};
+	const { href, id: lessonId, outlineNodeId } = lessonInfo;
 
-function isEndOfLesson (next, lessonInfo) {
-	const {lesson} = next || {};
-	const {href, id:lessonId, outlineNodeId} = lessonInfo;
-
-	if (!lesson) { return false; }
+	if (!lesson) {
+		return false;
+	}
 
 	const idsToCheckMap = {
 		[lessonId]: true,
-		[outlineNodeId]: true
+		[outlineNodeId]: true,
 	};
 
-	const isSameLesson = idsToCheckMap[lesson.NTIID]
-		|| idsToCheckMap[lesson.ContentNTIID]
-		|| lesson.getLink('overview-content') === href;
+	const isSameLesson =
+		idsToCheckMap[lesson.NTIID] ||
+		idsToCheckMap[lesson.ContentNTIID] ||
+		lesson.getLink('overview-content') === href;
 
 	return lesson && !isSameLesson;
 }
 
-function nextIsSubPage (next, lessonInfo) {
-	const {item} = next || {};
-	const {nextItem} = lessonInfo || {};
+function nextIsSubPage(next, lessonInfo) {
+	const { item } = next || {};
+	const { nextItem } = lessonInfo || {};
 
 	return item && (!nextItem || nextItem.getID() !== item.getID());
 }
 
-function isConstrained (next) {
-	const {item} = next || {};
+function isConstrained(next) {
+	const { item } = next || {};
 
 	return item.isOutlineNode && item.contentIsConstrained;
 }
-
 
 export default class UpNext extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
 		lessonInfo: PropTypes.shape({
-			remainingItems: PropTypes.array
+			remainingItems: PropTypes.array,
 		}),
 		next: PropTypes.shape({
-			item: PropTypes.object
-		})
-	}
+			item: PropTypes.object,
+		}),
+	};
 
-	render () {
-		const {lessonInfo, next} = this.props;
+	render() {
+		const { lessonInfo, next } = this.props;
 
-		if (!lessonInfo) { return null; }
+		if (!lessonInfo) {
+			return null;
+		}
 
 		const endOfCourse = isEndOfCourse(next, lessonInfo);
 		const endOfLesson = isEndOfLesson(next, lessonInfo);
@@ -76,29 +79,41 @@ export default class UpNext extends React.Component {
 		const constrained = endOfLesson && isConstrained(next, lessonInfo);
 
 		return (
-			<div className={cx('up-next', {disabled: constrained})}>
+			<div className={cx('up-next', { disabled: constrained })}>
 				{endOfCourse && this.renderEndOfCourse(next, lessonInfo)}
-				{!endOfCourse && endOfLesson && this.renderEndOfLesson(next, lessonInfo)}
-				{!endOfCourse && !endOfLesson && subPage && this.renderSubPage(next, lessonInfo)}
-				{!endOfCourse && !endOfLesson && !subPage && this.renderNextItem(next, lessonInfo)}
+				{!endOfCourse &&
+					endOfLesson &&
+					this.renderEndOfLesson(next, lessonInfo)}
+				{!endOfCourse &&
+					!endOfLesson &&
+					subPage &&
+					this.renderSubPage(next, lessonInfo)}
+				{!endOfCourse &&
+					!endOfLesson &&
+					!subPage &&
+					this.renderNextItem(next, lessonInfo)}
 			</div>
 		);
 	}
 
-
-	renderEndOfCourse () {
+	renderEndOfCourse() {
 		//TODO: figure out what we need to do here
 		return null;
 	}
 
+	renderEndOfLesson(next) {
+		const { lesson } = next || {};
 
-	renderEndOfLesson (next) {
-		const {lesson} = next || {};
-
-		if (!lesson) { return null; }
+		if (!lesson) {
+			return null;
+		}
 
 		return (
-			<LinkTo.Object object={next.item} context={next} className={cx('next-lesson')}>
+			<LinkTo.Object
+				object={next.item}
+				context={next}
+				className={cx('next-lesson')}
+			>
 				<div className={cx('sub-title')}>
 					<i className="icon-check" />
 					<span>{t('lessonFinished')}</span>
@@ -111,29 +126,42 @@ export default class UpNext extends React.Component {
 		);
 	}
 
-
-	renderSubPage (next) {
-		if (!next || !next.item) { return null; }
+	renderSubPage(next) {
+		if (!next || !next.item) {
+			return null;
+		}
 
 		return (
-			<LinkTo.Object object={next.item} context={next} className={cx('next-page')}>
+			<LinkTo.Object
+				object={next.item}
+				context={next}
+				className={cx('next-page')}
+			>
 				<span className={cx('next-page-label')}>{t('nextPage')}</span>
 				<span className={cx('next-page-icon')} />
 			</LinkTo.Object>
 		);
 	}
 
+	renderNextItem(next) {
+		if (!next || !next.item) {
+			return null;
+		}
 
-	renderNextItem (next) {
-		if (!next || !next.item) { return null; }
-
-		const {course} = this.props;
+		const { course } = this.props;
 
 		return (
-			<LinkTo.Object object={next.item} className={cx('remaining-items-link')} >
+			<LinkTo.Object
+				object={next.item}
+				className={cx('remaining-items-link')}
+			>
 				<div className={cx('remaining-items')}>
 					<div className={cx('title')}>{t('upNext')}</div>
-					<OverviewItems layout={Constants.List} items={[next.item]} course={course} />
+					<OverviewItems
+						layout={Constants.List}
+						items={[next.item]}
+						course={course}
+					/>
 				</div>
 			</LinkTo.Object>
 		);

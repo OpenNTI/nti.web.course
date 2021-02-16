@@ -9,11 +9,13 @@ describe('Description view test', () => {
 		const desc = 'DESC123';
 
 		const catalogEntry = {
-			'description': desc
+			description: desc,
 		};
 
-		const x = render(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry} />);
 
-		expect(x.container.querySelector('.course-view-description').textContent).toEqual(desc);
+		expect(
+			x.container.querySelector('.course-view-description').textContent
+		).toEqual(desc);
 	});
 });

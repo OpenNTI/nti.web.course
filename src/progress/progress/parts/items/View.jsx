@@ -9,17 +9,19 @@ const registry = Registry.getInstance();
 
 CourseProgressItems.propTypes = {
 	items: PropTypes.array,
-	className: PropTypes.string
+	className: PropTypes.string,
 };
-export default function CourseProgressItems ({items, className, ...otherProps}) {
+export default function CourseProgressItems({
+	items,
+	className,
+	...otherProps
+}) {
 	return (
 		<ul className={cx('course-progress-items', className)}>
 			{items.map((item, index) => {
 				const Cmp = registry.getItemFor(item.MimeType);
 
-				return (
-					<Cmp key={index} item={item} {...otherProps} />
-				);
+				return <Cmp key={index} item={item} {...otherProps} />;
 			})}
 		</ul>
 	);

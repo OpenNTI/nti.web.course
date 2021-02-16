@@ -3,47 +3,46 @@ import PropTypes from 'prop-types';
 
 import Failed from './Failed';
 
-export default
-class UploadedFailedPackage extends React.Component {
+export default class UploadedFailedPackage extends React.Component {
 	static propTypes = {
 		package: PropTypes.object,
-		deletePackage: PropTypes.func
-	}
+		deletePackage: PropTypes.func,
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setup();
 	}
 
-	componentDidUpdate (prevProps) {
-		const {package:pack} = this.props;
-		const {package:oldPack} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { package: pack } = this.props;
+		const { package: oldPack } = prevProps;
 
 		if (pack !== oldPack) {
 			this.setup();
 		}
 	}
 
-	async setup () {
-		const {package: pack} = this.props;
+	async setup() {
+		const { package: pack } = this.props;
 
 		try {
 			await pack;
 		} catch (e) {
 			this.setState({
-				error: e
+				error: e,
 			});
 		}
 	}
 
-	render () {
-		const {error} = this.state;
+	render() {
+		const { error } = this.state;
 
-		if (!error) { return null; }
+		if (!error) {
+			return null;
+		}
 
-		return (
-			<Failed {...this.props} error={error} />
-		);
+		return <Failed {...this.props} error={error} />;
 	}
 }

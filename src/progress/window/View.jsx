@@ -1,9 +1,9 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {DisplayName} from '@nti/web-commons';
-import {getService} from '@nti/web-client';
+import { scoped } from '@nti/lib-locale';
+import { DisplayName } from '@nti/web-commons';
+import { getService } from '@nti/web-client';
 
 import UserGradeCard from '../widgets/UserGradeCard';
 
@@ -12,7 +12,7 @@ import Pager from './Pager';
 const t = scoped('course.components.progress-window.View', {
 	email: 'Email',
 	export: 'Export',
-	search: 'Search'
+	search: 'Search',
 });
 
 export default class ProgressWindow extends React.Component {
@@ -23,86 +23,94 @@ export default class ProgressWindow extends React.Component {
 		onClose: PropTypes.func,
 		onEmail: PropTypes.func,
 		prevLink: PropTypes.string,
-		nextLink: PropTypes.string
-	}
+		nextLink: PropTypes.string,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {
 			currentPage: props.initialPage,
 			currentUser: props.user,
 			prevLink: props.prevLink,
-			nextLink: props.nextLink
+			nextLink: props.nextLink,
 		};
 	}
 
 	close = () => {
-		const {onClose} = this.props;
+		const { onClose } = this.props;
 
 		onClose && onClose();
-	}
+	};
 
-	onPageChange = async (newPage) => {
-		const {prevLink, nextLink, currentPage} = this.state;
+	onPageChange = async newPage => {
+		const { prevLink, nextLink, currentPage } = this.state;
 		const service = await getService();
 
 		let newData;
 
-		if(newPage > currentPage && nextLink) {
+		if (newPage > currentPage && nextLink) {
 			newData = await service.get(nextLink);
-		}
-		else if(newPage < currentPage && prevLink) {
+		} else if (newPage < currentPage && prevLink) {
 			newData = await service.get(prevLink);
 		}
 
-		if(newData) {
+		if (newData) {
 			this.setState({
 				currentPage: newPage,
-				prevLink: newData.Links && newData.Links.filter(x => x.rel === 'batch-prev').map(x => x.href)[0],
-				nextLink: newData.Links && newData.Links.filter(x => x.rel === 'batch-next').map(x => x.href)[0],
-				currentUser: newData.Items[0].Username
+				prevLink:
+					newData.Links &&
+					newData.Links.filter(x => x.rel === 'batch-prev').map(
+						x => x.href
+					)[0],
+				nextLink:
+					newData.Links &&
+					newData.Links.filter(x => x.rel === 'batch-next').map(
+						x => x.href
+					)[0],
+				currentUser: newData.Items[0].Username,
 			});
 		}
-	}
+	};
 
-	renderHeader () {
+	renderHeader() {
 		return (
 			<div className="header">
-				<DisplayName entity={this.state.currentUser}/>
+				<DisplayName entity={this.state.currentUser} />
 				<Pager
 					current={this.state.currentPage}
 					total={this.props.totalPages}
 					onPageChange={this.onPageChange}
 					prevLink={this.state.prevLink}
-					nextLink={this.state.nextLink}/>
+					nextLink={this.state.nextLink}
+				/>
 				<div className="close-button" onClick={this.close}>
-					<i className="icon-light-x"/>
+					<i className="icon-light-x" />
 				</div>
 			</div>
 		);
 	}
 
-	renderStudentInfo () {
+	renderStudentInfo() {
 		// TODO: Pull actual user grade data
 		return (
 			<div className="student-info">
-				<UserGradeCard grade={87} user={this.state.currentUser}/>
+				<UserGradeCard grade={87} user={this.state.currentUser} />
 			</div>
 		);
 	}
 
-	onSearchChange = (searchTerm) => {
-		this.setState({searchTerm});
-	}
+	onSearchChange = searchTerm => {
+		this.setState({ searchTerm });
+	};
 
 	onEmail = () => {
-		const {onEmail} = this.props;
+		const { onEmail } = this.props;
 
 		onEmail && onEmail(this.state.currentUser);
-	}
+	};
 
-	renderControls () {
+	renderControls() {
 		// when searching is supported, add these in the toolbar
 		// <i className="icon-search"/>
 		// <Input.Text placeholder={t('search')} value={this.state.searchTerm} onChange={this.onSearchChange}/>
@@ -112,24 +120,24 @@ export default class ProgressWindow extends React.Component {
 
 		return (
 			<div className="toolbar">
-				{this.props.onEmail ? <div className="btn primary" onClick={this.onEmail}>{t('email')}</div> : null}
+				{this.props.onEmail ? (
+					<div className="btn primary" onClick={this.onEmail}>
+						{t('email')}
+					</div>
+				) : null}
 			</div>
 		);
 	}
 
-	renderContent () {
+	renderContent() {
 		// insert infinite-scrolling content item list
 	}
 
-	renderItems () {
-		return (
-			<div className="content-items">
-				{this.renderContent()}
-			</div>
-		);
+	renderItems() {
+		return <div className="content-items">{this.renderContent()}</div>;
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="progress-window">
 				{this.renderHeader()}

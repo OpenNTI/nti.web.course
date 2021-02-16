@@ -1,7 +1,7 @@
 import { Stores } from '@nti/lib-store';
 
 export default class CodeStore extends Stores.SimpleStore {
-	constructor () {
+	constructor() {
 		super();
 
 		this.set('loading', false);
@@ -10,14 +10,18 @@ export default class CodeStore extends Stores.SimpleStore {
 		this.course = null;
 	}
 
-	setCourse (course) {
+	setCourse(course) {
 		this.course = course;
 		this.loadItems();
 	}
 
-	async createItem () {
+	async createItem() {
 		try {
-			const item = await this.course.postToLink('CreateCourseInvitation', null, true);
+			const item = await this.course.postToLink(
+				'CreateCourseInvitation',
+				null,
+				true
+			);
 			const items = this.get('items') || [];
 
 			this.set('items', [...items, item]);
@@ -26,14 +30,15 @@ export default class CodeStore extends Stores.SimpleStore {
 			const defaultError = 'There was an error with creating a code.';
 
 			if (err) {
-				const error = typeof err === 'string' ? err : (err.message || defaultError);
+				const error =
+					typeof err === 'string' ? err : err.message || defaultError;
 				this.set('error', error);
 				this.emitChange('error');
 			}
 		}
 	}
 
-	async deleteItem (item) {
+	async deleteItem(item) {
 		try {
 			await item.delete();
 			this.loadItems();
@@ -43,7 +48,7 @@ export default class CodeStore extends Stores.SimpleStore {
 		}
 	}
 
-	async loadItems () {
+	async loadItems() {
 		this.set('loading', true);
 		this.set('error', null);
 
@@ -60,5 +65,4 @@ export default class CodeStore extends Stores.SimpleStore {
 			this.emitChange('error', 'loading');
 		}
 	}
-
 }

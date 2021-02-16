@@ -6,17 +6,17 @@ import View from '../View';
 
 const { tearDownTestClient, setupTestClient } = TestUtils;
 
-const getMockService = (mimeTypes) => {
+const getMockService = mimeTypes => {
 	return {
 		get: () => {
 			return {
-				'mime_types': mimeTypes
+				mime_types: mimeTypes,
 			};
-		}
+		},
 	};
 };
 
-const onBefore = (mimeTypes) => {
+const onBefore = mimeTypes => {
 	jest.useFakeTimers();
 	setupTestClient(getMockService(mimeTypes));
 };
@@ -29,34 +29,38 @@ const flushPromises = () => new Promise(resolve => setImmediate(resolve));
 
 /* eslint-env jest */
 describe('Course admin advanced completion test (with requirables)', () => {
-	beforeEach(() => onBefore(['application/vnd.nextthought.assessment.assignment',
-		'application/vnd.nextthought.assessment.timedassignment',
-		'application/vnd.nextthought.assessment.discussionassignment',
-		'application/vnd.nextthought.webinarasset',
-		'application/vnd.nextthought.ntivideo',
-		'application/vnd.nextthought.videoroll',
-		'application/vnd.nextthought.surveyref',
-		'application/vnd.nextthought.nasurvey',
-		'application/vnd.nextthought.relatedworkref',
-		'application/vnd.nextthought.ltiexternaltoolasset']));
+	beforeEach(() =>
+		onBefore([
+			'application/vnd.nextthought.assessment.assignment',
+			'application/vnd.nextthought.assessment.timedassignment',
+			'application/vnd.nextthought.assessment.discussionassignment',
+			'application/vnd.nextthought.webinarasset',
+			'application/vnd.nextthought.ntivideo',
+			'application/vnd.nextthought.videoroll',
+			'application/vnd.nextthought.surveyref',
+			'application/vnd.nextthought.nasurvey',
+			'application/vnd.nextthought.relatedworkref',
+			'application/vnd.nextthought.ltiexternaltoolasset',
+		])
+	);
 	afterEach(onAfter);
 
 	test('renders completable, certificate, percentage, default required', async () => {
 		const course = {
 			CatalogEntry: {
-				hasLink: () => true
+				hasLink: () => true,
 			},
 			CompletionPolicy: {
 				hasLink: () => true,
 				getLink: () => 'mockLink',
 				offersCompletionCertificate: true,
-				percentage: 0.5
+				percentage: 0.5,
 			},
 			getID: () => 'testCourse',
-			hasLink: () => true
+			hasLink: () => true,
 		};
 
-		const cmp = renderer.create(<View course={course}/>);
+		const cmp = renderer.create(<View course={course} />);
 
 		jest.runAllTimers();
 		await flushPromises();
@@ -70,13 +74,13 @@ describe('Course admin advanced completion test (with requirables)', () => {
 	test('renders not completable', async () => {
 		const course = {
 			CatalogEntry: {
-				hasLink: () => false
+				hasLink: () => false,
 			},
 			getID: () => 'testCourse',
-			hasLink: () => false
+			hasLink: () => false,
 		};
 
-		const cmp = renderer.create(<View course={course}/>);
+		const cmp = renderer.create(<View course={course} />);
 
 		jest.runAllTimers();
 		await flushPromises();
@@ -90,7 +94,7 @@ describe('Course admin advanced completion test (with requirables)', () => {
 	test('renders completable, no certificate, no percentage', async () => {
 		const course = {
 			CatalogEntry: {
-				hasLink: () => true
+				hasLink: () => true,
 			},
 			CompletionPolicy: {
 				hasLink: () => true,
@@ -98,10 +102,10 @@ describe('Course admin advanced completion test (with requirables)', () => {
 				offersCompletionCertificate: false,
 			},
 			getID: () => 'testCourse',
-			hasLink: () => true
+			hasLink: () => true,
 		};
 
-		const cmp = renderer.create(<View course={course}/>);
+		const cmp = renderer.create(<View course={course} />);
 
 		jest.runAllTimers();
 		await flushPromises();
@@ -115,18 +119,18 @@ describe('Course admin advanced completion test (with requirables)', () => {
 	test('renders completable, no certificate, no percentage, default required disabled', async () => {
 		const course = {
 			CatalogEntry: {
-				hasLink: () => true
+				hasLink: () => true,
 			},
 			CompletionPolicy: {
-				hasLink: (l) => l !== 'UpdateDefaultRequiredPolicy',
+				hasLink: l => l !== 'UpdateDefaultRequiredPolicy',
 				getLink: () => 'mockLink',
 				offersCompletionCertificate: false,
 			},
 			getID: () => 'testCourse',
-			hasLink: () => true
+			hasLink: () => true,
 		};
 
-		const cmp = renderer.create(<View course={course}/>);
+		const cmp = renderer.create(<View course={course} />);
 
 		jest.runAllTimers();
 		await flushPromises();
@@ -145,19 +149,19 @@ describe('Course admin advanced completion test (no requirables)', () => {
 	test('renders completable, certificate, percentage, default required', async () => {
 		const course = {
 			CatalogEntry: {
-				hasLink: () => true
+				hasLink: () => true,
 			},
 			CompletionPolicy: {
 				hasLink: () => true,
 				getLink: () => 'mockLink',
 				offersCompletionCertificate: true,
-				percentage: 0.5
+				percentage: 0.5,
 			},
 			getID: () => 'testCourse',
-			hasLink: () => true
+			hasLink: () => true,
 		};
 
-		const cmp = renderer.create(<View course={course}/>);
+		const cmp = renderer.create(<View course={course} />);
 
 		jest.runAllTimers();
 		await flushPromises();

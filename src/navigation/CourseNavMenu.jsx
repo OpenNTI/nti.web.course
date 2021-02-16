@@ -1,9 +1,9 @@
 import './CourseNavMenu.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt} from '@nti/web-commons';
-import {getService} from '@nti/web-client';
-import {ContentNavMenu} from '@nti/web-content';
+import { Prompt } from '@nti/web-commons';
+import { getService } from '@nti/web-client';
+import { ContentNavMenu } from '@nti/web-content';
 
 import PublishCourse from '../info/inline/enrollment/PublishCourse';
 
@@ -15,10 +15,10 @@ export default class CourseNavMenu extends React.Component {
 		goToEditor: PropTypes.func,
 		onDelete: PropTypes.func,
 		onVisibilityChanged: PropTypes.func,
-		isAdministrator: PropTypes.bool
-	}
+		isAdministrator: PropTypes.bool,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 		this.state = {};
 	}
@@ -27,7 +27,7 @@ export default class CourseNavMenu extends React.Component {
 		const { goToEditor, activeCourse } = this.props;
 
 		goToEditor && goToEditor(activeCourse);
-	}
+	};
 
 	launchPublishDialog = () => {
 		const { activeCourse, onItemClick } = this.props;
@@ -38,10 +38,12 @@ export default class CourseNavMenu extends React.Component {
 
 		let courseId = activeCourse.id;
 
-		if(subItems) {
-			const filteredToSelected = subItems.filter(x => x.cls === 'current')[0];
+		if (subItems) {
+			const filteredToSelected = subItems.filter(
+				x => x.cls === 'current'
+			)[0];
 
-			if(filteredToSelected) {
+			if (filteredToSelected) {
 				courseId = filteredToSelected.id;
 			}
 		}
@@ -51,38 +53,47 @@ export default class CourseNavMenu extends React.Component {
 				const { onVisibilityChanged } = this.props;
 
 				onVisibilityChanged && onVisibilityChanged(savedEntry);
-			}).catch(e => {
+			})
+			.catch(e => {
 				// cancelled dialog
 			});
-	}
+	};
 
 	delete = () => {
 		const { activeCourse } = this.props;
 
-		Prompt.areYouSure('Do you want to delete this course?').then(() => {
-			return getService();
-		}).then((service) => {
-			return service.getObject(activeCourse.id);
-		}).then((courseInstance) => {
-			return courseInstance.delete('delete').then(() => {
-				return true;
-			}).catch((resp) => {
-				if(resp && resp.message) {
-					alert(resp.message);
-				}
-				else {
-					alert('You don\'t have permission to delete this course');
-				}
-				return false;
+		Prompt.areYouSure('Do you want to delete this course?')
+			.then(() => {
+				return getService();
+			})
+			.then(service => {
+				return service.getObject(activeCourse.id);
+			})
+			.then(courseInstance => {
+				return courseInstance
+					.delete('delete')
+					.then(() => {
+						return true;
+					})
+					.catch(resp => {
+						if (resp && resp.message) {
+							alert(resp.message);
+						} else {
+							alert(
+								"You don't have permission to delete this course"
+							);
+						}
+						return false;
+					});
+			})
+			.then(success => {
+				const { onDelete } = this.props;
+
+				onDelete && onDelete(activeCourse.id);
 			});
-		}).then((success) => {
-			const { onDelete } = this.props;
+	};
 
-			onDelete && onDelete(activeCourse.id);
-		});
-	}
-
-	render () {
+	render() {
 		return (
 			<div className="course-nav-menu">
 				<ContentNavMenu

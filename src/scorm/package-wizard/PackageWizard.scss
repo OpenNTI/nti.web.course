@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .scorm-package {
 	width: 768px;
@@ -11,7 +11,9 @@
 		-moz-osx-font-smoothing: grayscale;
 	}
 
-	.close, .back, .course-panel-cancel {
+	.close,
+	.back,
+	.course-panel-cancel {
 		color: var(--tertiary-grey);
 	}
 }

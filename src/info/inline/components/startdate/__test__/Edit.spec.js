@@ -10,16 +10,16 @@ describe('Start date edit test', () => {
 		const date = new Date('2015-08-17T05:00:00Z');
 
 		const catalogEntry = {
-			'StartDate': date,
+			StartDate: date,
 			getStartDate: function () {
 				return date;
 			},
 			getEndDate: function () {
 				return null;
-			}
+			},
 		};
 
-		const x = render(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry} />);
 
 		const dateEl = x.container.querySelector('.date');
 
@@ -37,15 +37,16 @@ describe('Start date edit test', () => {
 			},
 			getEndDate: function () {
 				return null;
-			}
+			},
 		};
 
-		const x = render(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry} />);
 
 		const dateEl = x.container.querySelector('.date');
 
 		const now = new Date();
-		const expectedDateStr = DateTime.format(now) + DateTime.format(now, 'eeee \'at 12:00 AM\' z');
+		const expectedDateStr =
+			DateTime.format(now) + DateTime.format(now, "eeee 'at 12:00 AM' z");
 
 		expect(dateEl.textContent).toMatch(expectedDateStr);
 	});

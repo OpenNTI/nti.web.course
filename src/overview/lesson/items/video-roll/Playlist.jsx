@@ -14,42 +14,50 @@ export default class VideoRollPlaylist extends React.Component {
 		onRequirementChange: PropTypes.func,
 		readOnly: PropTypes.bool,
 		editMode: PropTypes.bool,
-		noProgress: PropTypes.bool
-	}
+		noProgress: PropTypes.bool,
+	};
 
 	state = {
-		selected: 0
-	}
+		selected: 0,
+	};
 
-	handleSelect = (item) => {
-		const {item: {Items: items}} = this.props;
+	handleSelect = item => {
+		const {
+			item: { Items: items },
+		} = this.props;
 		const selected = items.indexOf(item);
-		this.setState({selected});
-	}
+		this.setState({ selected });
+	};
 
-	render () {
+	render() {
 		const {
 			props: {
-				item: {Items: items, NTIID},
+				item: { Items: items, NTIID },
 				readOnly,
 				editMode,
 				noProgress,
-				onRequirementChange
+				onRequirementChange,
 			},
-			state: {
-				selected
-			}
+			state: { selected },
 		} = this;
 
 		const active = items[selected];
 
 		return (
-			<div className="lesson-overview-video-roll-playlist-container" data-ntiid={NTIID}>
+			<div
+				className="lesson-overview-video-roll-playlist-container"
+				data-ntiid={NTIID}
+			>
 				<div className="stage">
-					<CompletionMonitor {...this.props} item={active} component={Video} badges={false} />
+					<CompletionMonitor
+						{...this.props}
+						item={active}
+						component={Video}
+						badges={false}
+					/>
 				</div>
 				<ul className="playlist">
-					{items.map((x => (
+					{items.map(x => (
 						<CompletionMonitor
 							item={x}
 							component={PlaylistItem}
@@ -61,7 +69,7 @@ export default class VideoRollPlaylist extends React.Component {
 							editMode={editMode}
 							noProgress={noProgress}
 						/>
-					)))}
+					))}
 				</ul>
 			</div>
 		);

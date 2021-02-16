@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
-import {Page, HOC} from '@nti/web-commons';
-import {LinkTo} from '@nti/web-routing';
+import { scoped } from '@nti/lib-locale';
+import { Page, HOC } from '@nti/web-commons';
+import { LinkTo } from '@nti/web-routing';
 
-import {RouteNames} from '../Constants';
+import { RouteNames } from '../Constants';
 
-const {Navigation: {Outline}} = Page;
-const {Variant} = HOC;
+const {
+	Navigation: { Outline },
+} = Page;
+const { Variant } = HOC;
 
 const t = scoped('course.info.page.components.NavBar', {
 	title: 'Course Info',
@@ -16,10 +18,13 @@ const t = scoped('course.info.page.components.NavBar', {
 	roster: 'Roster',
 	completion: 'Completion',
 	lti: 'LTI Tools',
-	navigation: 'Navigation'
+	navigation: 'Navigation',
 });
 
-const NameLink = Variant(Outline.Item, {as: LinkTo.Name, activeClassName: Outline.Item.activeClassName});
+const NameLink = Variant(Outline.Item, {
+	as: LinkTo.Name,
+	activeClassName: Outline.Item.activeClassName,
+});
 
 const hasRoster = course => course?.hasLink('CourseEnrollmentRoster');
 const hasReports = course => course?.Reports?.length;
@@ -29,9 +34,9 @@ const hasNavigation = course => course?.hasLink('UpdateCourseTabPreferences');
 
 CoursePageNavBar.propTypes = {
 	access: PropTypes.object,
-	instance: PropTypes.object
+	instance: PropTypes.object,
 };
-export default function CoursePageNavBar ({access, instance}) {
+export default function CoursePageNavBar({ access, instance }) {
 	return (
 		<Outline>
 			<Outline.Header title={t('title')} />
@@ -39,14 +44,10 @@ export default function CoursePageNavBar ({access, instance}) {
 				{t('about')}
 			</NameLink>
 			{hasRoster(instance) && (
-				<NameLink name={RouteNames.Roster}>
-					{t('roster')}
-				</NameLink>
+				<NameLink name={RouteNames.Roster}>{t('roster')}</NameLink>
 			)}
 			{hasReports(instance) && (
-				<NameLink name={RouteNames.Reports}>
-					{t('reports')}
-				</NameLink>
+				<NameLink name={RouteNames.Reports}>{t('reports')}</NameLink>
 			)}
 			{hasCompletion(instance, access) && (
 				<NameLink name={RouteNames.Completion}>
@@ -54,9 +55,7 @@ export default function CoursePageNavBar ({access, instance}) {
 				</NameLink>
 			)}
 			{hasLTI(instance) && (
-				<NameLink name={RouteNames.LTI}>
-					{t('lti')}
-				</NameLink>
+				<NameLink name={RouteNames.LTI}>{t('lti')}</NameLink>
 			)}
 			{hasNavigation(instance) && (
 				<NameLink name={RouteNames.Navigation}>

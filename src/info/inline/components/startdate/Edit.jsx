@@ -1,28 +1,27 @@
 import './Edit.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import DatePicker from '../../widgets/DatePicker';
 
 import Disclaimer from './Disclaimer';
 
-
 const t = scoped('course.info.inline.components.startdate.Edit', {
 	label: 'Start Date',
-	invalid: 'Start date cannot be after end date'
+	invalid: 'Start date cannot be after end date',
 });
 
 export default class StartDateEdit extends React.Component {
 	static propTypes = {
 		catalogEntry: PropTypes.object.isRequired,
 		onValueChange: PropTypes.func,
-		toggleSaveable: PropTypes.func
-	}
+		toggleSaveable: PropTypes.func,
+	};
 
 	static FIELD_NAME = 'StartDate';
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		const StartDate = this.props.catalogEntry.getStartDate();
@@ -31,31 +30,29 @@ export default class StartDateEdit extends React.Component {
 
 		const state = { StartDate: StartDate || initialDate };
 
-		if(StartDate) {
+		if (StartDate) {
 			state.invalid = false;
 			this.state = state;
-		}
-		else {
+		} else {
 			const validationState = this.validateDate(initialDate);
 			this.state = { StartDate: initialDate, ...validationState };
 		}
 	}
 
-	validateDate (date) {
+	validateDate(date) {
 		const { onValueChange, toggleSaveable } = this.props;
 
 		const isValid = !this.disabledDays(date);
 
 		const newState = {};
 
-		if(isValid) {
+		if (isValid) {
 			newState.invalid = false;
 
 			toggleSaveable && toggleSaveable(true);
 
 			onValueChange && onValueChange(StartDateEdit.FIELD_NAME, date);
-		}
-		else {
+		} else {
 			toggleSaveable && toggleSaveable(false);
 
 			newState.invalid = true;
@@ -64,42 +61,48 @@ export default class StartDateEdit extends React.Component {
 		return newState;
 	}
 
-	onChange = (newDate) => {
+	onChange = newDate => {
 		const validationState = this.validateDate(newDate);
 
-		this.setState({ StartDate: newDate, ...validationState});
-	}
+		this.setState({ StartDate: newDate, ...validationState });
+	};
 
-	disabledDays = (value) => {
+	disabledDays = value => {
 		const EndDate = this.props.catalogEntry.getEndDate();
 
-		if(!EndDate) {
+		if (!EndDate) {
 			return false;
 		}
 
 		return value > EndDate;
+	};
+
+	startOfDay(date) {
+		return new Date(
+			date.getFullYear(),
+			date.getMonth(),
+			date.getDate(),
+			0,
+			0,
+			0
+		);
 	}
 
-	startOfDay (date) {
-		return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0);
-	}
-
-	startOfEndDay () {
+	startOfEndDay() {
 		const EndDate = this.props.catalogEntry.getEndDate();
 
-		if(!EndDate) {
+		if (!EndDate) {
 			return null;
 		}
 
 		return this.startOfDay(EndDate);
 	}
 
-	startOfToday () {
+	startOfToday() {
 		return this.startOfDay(new Date());
 	}
 
-
-	render () {
+	render() {
 		const { StartDate } = this.state;
 
 		return (
@@ -109,8 +112,14 @@ export default class StartDateEdit extends React.Component {
 					<Disclaimer />
 				</div>
 				<div className="content-column">
-					<DatePicker date={StartDate} disabledDays={this.disabledDays} onChange={this.onChange}/>
-					{this.state.invalid ? (<div className="error-message">{t('invalid')}</div>) : null}
+					<DatePicker
+						date={StartDate}
+						disabledDays={this.disabledDays}
+						onChange={this.onChange}
+					/>
+					{this.state.invalid ? (
+						<div className="error-message">{t('invalid')}</div>
+					) : null}
 				</div>
 			</div>
 		);

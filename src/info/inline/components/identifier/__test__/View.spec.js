@@ -9,11 +9,13 @@ describe('Department view test', () => {
 		const identifier = 'ABC123';
 
 		const catalogEntry = {
-			'ProviderUniqueID': identifier
+			ProviderUniqueID: identifier,
 		};
 
-		const x = render(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry} />);
 
-		expect(x.container.querySelector('.course-view-identifier').textContent).toEqual(identifier);
+		expect(
+			x.container.querySelector('.course-view-identifier').textContent
+		).toEqual(identifier);
 	});
 });

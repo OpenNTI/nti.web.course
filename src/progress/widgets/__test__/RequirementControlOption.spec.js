@@ -7,7 +7,7 @@ import RequirementControlOption from '../RequirementControlOption';
 describe('Progress widgets requirement control option test', () => {
 	test('Not selected', async () => {
 		const cmp = renderer.create(
-			<RequirementControlOption option={{label: 'Option 1'}}/>
+			<RequirementControlOption option={{ label: 'Option 1' }} />
 		);
 
 		const tree = cmp.toJSON();
@@ -17,7 +17,10 @@ describe('Progress widgets requirement control option test', () => {
 
 	test('Selected', async () => {
 		const cmp = renderer.create(
-			<RequirementControlOption option={{label: 'Option 1'}} isSelected/>
+			<RequirementControlOption
+				option={{ label: 'Option 1' }}
+				isSelected
+			/>
 		);
 
 		const tree = cmp.toJSON();

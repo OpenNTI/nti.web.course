@@ -5,27 +5,26 @@ import { scoped } from '@nti/lib-locale';
 
 import Base from './Base';
 
-
 const DEFAULT_TEXT = {
 	title: 'Add Tool',
-	invalid: 'There was an error with creating the tool.'
+	invalid: 'There was an error with creating the tool.',
 };
 
 const t = scoped('nti-web-course.lti-tools.editing.AddTool', DEFAULT_TEXT);
 
 export default class AddTool extends Component {
-	static propTypes  = {
+	static propTypes = {
 		store: PropTypes.object.isRequired,
 		onBeforeDismiss: PropTypes.func.isRequired,
-		modal: PropTypes.bool
-	}
+		modal: PropTypes.bool,
+	};
 
 	state = {
 		loading: false,
-		error: null
-	}
+		error: null,
+	};
 
-	onSubmit = async (item) => {
+	onSubmit = async item => {
 		const { onBeforeDismiss, store, modal } = this.props;
 
 		this.setState({ loading: true });
@@ -40,26 +39,34 @@ export default class AddTool extends Component {
 			if (!modal) {
 				store.loadItems();
 			}
-
 		} catch (error) {
 			const msg = t('invalid');
 			if (error.suberrors) {
 				this.setState({ error: error.suberrors, loading: false });
 			} else if (error.code && error.field && error.message) {
-				this.setState({ error: [error], loading: false});
+				this.setState({ error: [error], loading: false });
 			} else {
-				this.setState({ error: error.Message || error.message || msg, loading: false });
+				this.setState({
+					error: error.Message || error.message || msg,
+					loading: false,
+				});
 			}
 		}
-	}
+	};
 
-	render () {
+	render() {
 		const { onBeforeDismiss, modal } = this.props;
 		const { loading, error } = this.state;
 
 		return (
-			<Base onSubmit={this.onSubmit} title={t('title')} onBeforeDismiss={onBeforeDismiss} loading={loading} error={error} modal={modal} />
+			<Base
+				onSubmit={this.onSubmit}
+				title={t('title')}
+				onBeforeDismiss={onBeforeDismiss}
+				loading={loading}
+				error={error}
+				modal={modal}
+			/>
 		);
 	}
-
 }

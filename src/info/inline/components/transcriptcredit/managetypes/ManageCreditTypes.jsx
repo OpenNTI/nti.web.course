@@ -1,20 +1,23 @@
 import './ManageCreditTypes.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
-import {ConflictResolution} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
-import {Connectors} from '@nti/lib-store';
+import { decorate } from '@nti/lib-commons';
+import { ConflictResolution } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { Connectors } from '@nti/lib-store';
 
 import AddButton from '../../../widgets/AddButton';
 
 import CreditType from './CreditType';
 
-const t = scoped('course.info.inline.components.transcriptcredit.managetypes.ManageCreditTypes', {
-	addNewType: 'Add New Type',
-	type: 'Type',
-	unit: 'Unit'
-});
+const t = scoped(
+	'course.info.inline.components.transcriptcredit.managetypes.ManageCreditTypes',
+	{
+		addNewType: 'Add New Type',
+		type: 'Type',
+		unit: 'Unit',
+	}
+);
 
 class ManageCreditTypes extends React.Component {
 	static propTypes = {
@@ -22,63 +25,65 @@ class ManageCreditTypes extends React.Component {
 		types: PropTypes.arrayOf(PropTypes.object),
 		error: PropTypes.string,
 		store: PropTypes.object,
-		onValuesUpdated: PropTypes.func
-	}
+		onValuesUpdated: PropTypes.func,
+	};
 
+	state = {};
 
-	state = {}
+	componentDidMount() {
+		const { store } = this.props;
 
+		ConflictResolution.registerHandler(
+			'DuplicateCreditDefinitionError',
+			this.saveConflictHandler
+		);
 
-	componentDidMount () {
-		const {store} = this.props;
-
-		ConflictResolution.registerHandler('DuplicateCreditDefinitionError', this.saveConflictHandler);
-
-		if(store) {
+		if (store) {
 			store.loadAllTypes();
 		}
 	}
 
-
-	componentWillUnmount () {
-		ConflictResolution.unregisterHandler('DuplicateCreditDefinitionError', this.saveConflictHandler);
+	componentWillUnmount() {
+		ConflictResolution.unregisterHandler(
+			'DuplicateCreditDefinitionError',
+			this.saveConflictHandler
+		);
 	}
 
-	saveConflictHandler = (challenge) => {
+	saveConflictHandler = challenge => {
 		return new Promise((confirm, reject) => {
 			challenge.reject();
 		});
-	}
+	};
 
-
-	componentDidUpdate (oldProps) {
-		if(oldProps.types !== this.props.types) {
+	componentDidUpdate(oldProps) {
+		if (oldProps.types !== this.props.types) {
 			this.setState({
 				types: this.props.types,
-				flaggedForRemoval: null
+				flaggedForRemoval: null,
 			});
 		}
 	}
 
 	updateValues = () => {
-		const {onValuesUpdated} = this.props;
+		const { onValuesUpdated } = this.props;
 
-		if(onValuesUpdated) {
+		if (onValuesUpdated) {
 			onValuesUpdated(this.state.types, this.state.flaggedForRemoval);
 		}
-	}
+	};
 
-	onEntryChange = (updatedEntry) => {
+	onEntryChange = updatedEntry => {
 		const newTypes = this.state.types.map(x => {
-			if(this.getEffectiveId(x) === this.getEffectiveId(updatedEntry)) {
+			if (this.getEffectiveId(x) === this.getEffectiveId(updatedEntry)) {
 				return updatedEntry;
 			}
 
 			return x;
 		});
 
-		this.setState({types: newTypes}, this.updateValues);
-	}
+		this.setState({ types: newTypes }, this.updateValues);
+	};
 
 	addEntry = () => {
 		const newType = {
@@ -86,45 +91,48 @@ class ManageCreditTypes extends React.Component {
 			type: '',
 			unit: '',
 			disabled: false,
-			addedRow: true
+			addedRow: true,
 		};
 
 		const newTypes = [...this.state.types, newType];
 
-		this.setState({types: newTypes, typeInEditMode: newType}, this.updateValues);
-	}
+		this.setState(
+			{ types: newTypes, typeInEditMode: newType },
+			this.updateValues
+		);
+	};
 
-	onEntryRemove = async (removedEntry) => {
+	onEntryRemove = async removedEntry => {
 		await this.props.store.removeValues([removedEntry]);
 
 		await this.props.store.loadAllTypes();
-	}
+	};
 
-	onExitEditMode = (type) => {
-		this.setState({typeInEditMode: null});
-	}
+	onExitEditMode = type => {
+		this.setState({ typeInEditMode: null });
+	};
 
-	onEnterEditMode = (type) => {
-		this.setState({typeInEditMode: type});
-	}
+	onEnterEditMode = type => {
+		this.setState({ typeInEditMode: type });
+	};
 
 	onNewEntryCancel = () => {
 		const newTypes = this.state.types.filter(x => !x.addedRow);
 
-		this.setState({types: newTypes});
-	}
+		this.setState({ types: newTypes });
+	};
 
-	renderType = (type) => {
-		const {typeInEditMode} = this.state;
+	renderType = type => {
+		const { typeInEditMode } = this.state;
 
 		let disabled = true;
 		let inEditMode = false;
 
-		if(typeInEditMode == null) {
+		if (typeInEditMode == null) {
 			disabled = false;
 		}
 
-		if(this.getEffectiveId(typeInEditMode) === this.getEffectiveId(type)) {
+		if (this.getEffectiveId(typeInEditMode) === this.getEffectiveId(type)) {
 			disabled = false;
 			inEditMode = true;
 		}
@@ -140,29 +148,32 @@ class ManageCreditTypes extends React.Component {
 				onRemove={this.onEntryRemove}
 				onNewEntryCancel={this.onNewEntryCancel}
 				disabled={disabled}
-				inEditMode={inEditMode}/>
+				inEditMode={inEditMode}
+			/>
 		);
-	}
+	};
 
-
-	getEffectiveId (entry) {
+	getEffectiveId(entry) {
 		return entry && (entry.NTIID || entry.addID);
 	}
 
-	findNewID () {
+	findNewID() {
 		const existingIDs = this.state.types
 			.filter(x => x.addID)
 			.map(x => parseInt(x.addID, 10))
 			.sort();
 
-		let newID = existingIDs.length === 0 ? 1 : existingIDs[existingIDs.length - 1] + 1;
+		let newID =
+			existingIDs.length === 0
+				? 1
+				: existingIDs[existingIDs.length - 1] + 1;
 		return newID.toString();
 	}
 
-	renderTypesEditor () {
-		const {types, typeInEditMode} = this.state;
+	renderTypesEditor() {
+		const { types, typeInEditMode } = this.state;
 
-		if(!types) {
+		if (!types) {
 			return null;
 		}
 
@@ -177,15 +188,18 @@ class ManageCreditTypes extends React.Component {
 				{types.map(this.renderType)}
 				{typeInEditMode == null && (
 					<div className="add-type">
-						<AddButton label={t('addNewType')} clickHandler={this.addEntry}/>
+						<AddButton
+							label={t('addNewType')}
+							clickHandler={this.addEntry}
+						/>
 					</div>
 				)}
 			</div>
 		);
 	}
 
-	render () {
-		const {error} = this.state;
+	render() {
+		const { error } = this.state;
 
 		return (
 			<div className="manage-credit-types">
@@ -196,11 +210,10 @@ class ManageCreditTypes extends React.Component {
 	}
 }
 
-
 export default decorate(ManageCreditTypes, [
 	Connectors.Any.connect({
 		loading: 'loading',
 		types: 'types',
-		error: 'error'
-	})
+		error: 'error',
+	}),
 ]);

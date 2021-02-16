@@ -2,14 +2,18 @@ import './BaseItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {decorate} from '@nti/lib-commons';
-import {DateTime} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
-import {LinkTo} from '@nti/web-routing';
-import {Hooks, Events} from '@nti/web-session';
+import { decorate } from '@nti/lib-commons';
+import { DateTime } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { LinkTo } from '@nti/web-routing';
+import { Hooks, Events } from '@nti/web-session';
 
-function isToday (a, b) {
-	return a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear();
+function isToday(a, b) {
+	return (
+		a.getDate() === b.getDate() &&
+		a.getMonth() === b.getMonth() &&
+		a.getFullYear() === b.getFullYear()
+	);
 }
 
 const t = scoped('course.overview.lesson.items.event.Base', {
@@ -18,9 +22,21 @@ const t = scoped('course.overview.lesson.items.event.Base', {
 	startsFrom: 'Starts %(weekday)s from %(time)s',
 });
 
-const endsAt = f => t('endsAt', { date: f(DateTime.WEEKDAY_MONTH_NAME_DAY_YEAR), time: f(DateTime.TIME_PADDED_WITH_ZONE) });
-const startsAt = f => t('startsAt', { weekday: f(DateTime.WEEKDAY), time: f(DateTime.TIME_PADDED) });
-const startsFrom = f => t('startsFrom', { weekday: f(DateTime.WEEKDAY), time: f(DateTime.TIME_PADDED) });
+const endsAt = f =>
+	t('endsAt', {
+		date: f(DateTime.WEEKDAY_MONTH_NAME_DAY_YEAR),
+		time: f(DateTime.TIME_PADDED_WITH_ZONE),
+	});
+const startsAt = f =>
+	t('startsAt', {
+		weekday: f(DateTime.WEEKDAY),
+		time: f(DateTime.TIME_PADDED),
+	});
+const startsFrom = f =>
+	t('startsFrom', {
+		weekday: f(DateTime.WEEKDAY),
+		time: f(DateTime.TIME_PADDED),
+	});
 class EventBaseItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object.isRequired,
@@ -28,62 +44,79 @@ class EventBaseItem extends React.Component {
 		isMinimal: PropTypes.bool,
 		hideControls: PropTypes.bool,
 		editMode: PropTypes.bool,
-		onRequirementChange: PropTypes.func
-	}
+		onRequirementChange: PropTypes.func,
+	};
 
+	state = {};
 
-	state = {}
-
-	onEventUpdated = async (newEvent) => {
-		const {item} = this.props;
-		const {CalendarEvent: event} = item;
+	onEventUpdated = async newEvent => {
+		const { item } = this.props;
+		const { CalendarEvent: event } = item;
 
 		if (event.NTIID === newEvent.NTIID) {
 			await event.refresh(newEvent);
 			this.forceUpdate();
 		}
-	}
+	};
 
-	renderDate () {
-		const {item} = this.props;
-		const {CalendarEvent: event} = item;
+	renderDate() {
+		const { item } = this.props;
+		const { CalendarEvent: event } = item;
 
-		if(!event) {
+		if (!event) {
 			return null;
 		}
 
 		return (
-			<DateTime.DateIcon minimal date={event.getStartTime()} className="date" />
+			<DateTime.DateIcon
+				minimal
+				date={event.getStartTime()}
+				className="date"
+			/>
 		);
 	}
 
-	renderImageAndDescription () {
-		const {item} = this.props;
-		const {CalendarEvent: event} = item;
+	renderImageAndDescription() {
+		const { item } = this.props;
+		const { CalendarEvent: event } = item;
 
 		const hasIcon = event.icon && event.icon !== 'null';
 
 		return (
-			<div className={cx('image-and-description', {iconless: !hasIcon})}>
-				{hasIcon && <div className="image"><img src={event.icon}/></div>}
+			<div
+				className={cx('image-and-description', { iconless: !hasIcon })}
+			>
+				{hasIcon && (
+					<div className="image">
+						<img src={event.icon} />
+					</div>
+				)}
 				<div className="event-info">
-					{event.location && <div className="location">{event.location}</div>}
+					{event.location && (
+						<div className="location">{event.location}</div>
+					)}
 					<pre className="description">{event.description}</pre>
 				</div>
 			</div>
 		);
 	}
 
-	renderAvailability () {
-		const {item: {CalendarEvent: event}} = this.props;
+	renderAvailability() {
+		const {
+			item: { CalendarEvent: event },
+		} = this.props;
 
 		// default case, render 'Starts [day] from [startTime] - [endTime]'
-		let timeDisplay = DateTime.format(event.getStartTime(), startsFrom)
-			+ ' - ' + DateTime.format(event.getEndTime(), DateTime.TIME_PADDED_WITH_ZONE);
+		let timeDisplay =
+			DateTime.format(event.getStartTime(), startsFrom) +
+			' - ' +
+			DateTime.format(event.getEndTime(), DateTime.TIME_PADDED_WITH_ZONE);
 
-		if(!isToday(event.getStartTime(), event.getEndTime())) {
-			timeDisplay = DateTime.format(event.getStartTime(), startsAt)
-				+ ' - ' + DateTime.format(event.getEndTime(), endsAt);
+		if (!isToday(event.getStartTime(), event.getEndTime())) {
+			timeDisplay =
+				DateTime.format(event.getStartTime(), startsAt) +
+				' - ' +
+				DateTime.format(event.getEndTime(), endsAt);
 		}
 
 		return (
@@ -93,9 +126,13 @@ class EventBaseItem extends React.Component {
 		);
 	}
 
-
-	renderContents () {
-		const {item: {CalendarEvent: event}, isMinimal, hideControls, editMode} = this.props;
+	renderContents() {
+		const {
+			item: { CalendarEvent: event },
+			isMinimal,
+			hideControls,
+			editMode,
+		} = this.props;
 
 		return (
 			<div className="contents">
@@ -109,17 +146,19 @@ class EventBaseItem extends React.Component {
 		);
 	}
 
-	renderButton () {
+	renderButton() {}
 
-	}
+	render() {
+		const { item, isMinimal, editMode } = this.props;
 
+		const Wrapper = editMode
+			? 'div'
+			: props => <LinkTo.Object object={item} {...props} />;
 
-	render () {
-		const {item, isMinimal, editMode} = this.props;
-
-		const Wrapper = editMode ? 'div' : props => <LinkTo.Object object={item} {...props} />;
-
-		const cls = cx('event-base-item', {minimal: isMinimal, unavailable: !item || !item.event});
+		const cls = cx('event-base-item', {
+			minimal: isMinimal,
+			unavailable: !item || !item.event,
+		});
 
 		return (
 			<Wrapper object={item} className={cls}>
@@ -131,5 +170,5 @@ class EventBaseItem extends React.Component {
 }
 
 export default decorate(EventBaseItem, [
-	Hooks.onEvent(Events.EVENT_UPDATED, 'onEventUpdated')
+	Hooks.onEvent(Events.EVENT_UPDATED, 'onEventUpdated'),
 ]);

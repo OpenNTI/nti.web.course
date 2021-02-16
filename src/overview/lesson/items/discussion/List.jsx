@@ -13,17 +13,23 @@ export default class LessonOverviewDiscussionListItem extends React.Component {
 		title: PropTypes.string,
 		commentLabel: PropTypes.string,
 		disabled: PropTypes.bool,
-		icon: PropTypes.string
-	}
+		icon: PropTypes.string,
+	};
 
-
-	render () {
-		const {item, title, commentLabel, disabled, topic, ...otherProps} = this.props;
+	render() {
+		const {
+			item,
+			title,
+			commentLabel,
+			disabled,
+			topic,
+			...otherProps
+		} = this.props;
 
 		return (
 			<Base
 				{...otherProps}
-				linkToContext={{topic}}
+				linkToContext={{ topic }}
 				className="lesson-overview-discussion-list-item"
 				item={item}
 				title={title}
@@ -35,12 +41,17 @@ export default class LessonOverviewDiscussionListItem extends React.Component {
 	}
 
 	renderIcon = () => {
-		const {icon} = this.props;
+		const { icon } = this.props;
 
-		const styles = icon ? {backgroundImage: `url(${icon})`} : {};
+		const styles = icon ? { backgroundImage: `url(${icon})` } : {};
 
 		return (
-			<div className={cx('lesson-overview-discussion-list-item-icon', {default: !icon})} style={styles}/>
+			<div
+				className={cx('lesson-overview-discussion-list-item-icon', {
+					default: !icon,
+				})}
+				style={styles}
+			/>
 		);
-	}
+	};
 }

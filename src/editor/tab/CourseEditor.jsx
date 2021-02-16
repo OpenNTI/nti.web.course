@@ -2,19 +2,14 @@ import './CourseEditor.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Prompt, Loading, Presentation } from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
-import {getService} from '@nti/web-client';
+import { scoped } from '@nti/lib-locale';
+import { getService } from '@nti/web-client';
 
 import Store from '../Store';
 import { Edit } from '../templates/Edit';
-import {
-	COURSE_SAVING,
-	COURSE_SAVED,
-	COURSE_SAVE_ERROR
-} from '../Constants';
+import { COURSE_SAVING, COURSE_SAVED, COURSE_SAVE_ERROR } from '../Constants';
 
 import PanelItem from './PanelItem';
-
 
 const t = scoped('course.editor.tab.CourseEditor', {
 	finish: 'Finish',
@@ -28,57 +23,58 @@ export default class CourseEditor extends React.Component {
 		catalogEntry: PropTypes.object.isRequired,
 		onCancel: PropTypes.func,
 		onFinish: PropTypes.func,
-		onSave: PropTypes.func
-	}
+		onSave: PropTypes.func,
+	};
 
-	static showEditor (catalogEntry, onCancel, onSave) {
+	static showEditor(catalogEntry, onCancel, onSave) {
 		let props = {
-			catalogEntry
+			catalogEntry,
 		};
 
-		if(onCancel) {
+		if (onCancel) {
 			props.onCancel = onCancel;
 		}
 
-		if(onSave) {
+		if (onSave) {
 			props.onSave = onSave;
 		}
 
-		return Prompt.modal(<CourseEditor {...props}/>,
-			'course-panel-wizard');
+		return Prompt.modal(<CourseEditor {...props} />, 'course-panel-wizard');
 	}
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {};
 
 		const catalogEntry = props.catalogEntry;
 
-		getService().then((service) => {
-			return service.getObject(catalogEntry.CourseNTIID).then((courseInstance) => {
-				this.setState({courseInstance});
-			});
+		getService().then(service => {
+			return service
+				.getObject(catalogEntry.CourseNTIID)
+				.then(courseInstance => {
+					this.setState({ courseInstance });
+				});
 		});
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		Store.addChangeListener(this.onStoreChange);
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		Store.removeChangeListener(this.onStoreChange);
 	}
 
-	onStoreChange = (data) => {
+	onStoreChange = data => {
 		if (data.type === COURSE_SAVING) {
-			this.setState({loading: true});
+			this.setState({ loading: true });
 		} else if (data.type === COURSE_SAVE_ERROR) {
-			this.setState({loading: false, errorMsg: data.errorMsg});
+			this.setState({ loading: false, errorMsg: data.errorMsg });
 		} else if (data.type === COURSE_SAVED) {
-			this.setState({loading: false, hasSaved: true});
+			this.setState({ loading: false, hasSaved: true });
 		}
-	}
+	};
 
 	cancel = () => {
 		const { hasSaved } = this.state;
@@ -89,29 +85,41 @@ export default class CourseEditor extends React.Component {
 		onCancel && onCancel();
 	};
 
-	renderLoadingMask () {
-		if(this.state.loading) {
-			return (<Loading.Mask message={t('saving')}/>);
+	renderLoadingMask() {
+		if (this.state.loading) {
+			return <Loading.Mask message={t('saving')} />;
 		}
 
 		return null;
 	}
 
-	renderCloseButton () {
-		return (<div className="close" onClick={this.cancel}><i className="icon-light-x"/></div>);
+	renderCloseButton() {
+		return (
+			<div className="close" onClick={this.cancel}>
+				<i className="icon-light-x" />
+			</div>
+		);
 	}
 
-	renderTrigger = (panel) => {
+	renderTrigger = panel => {
 		const tabPanel = panel.TabPanel;
 
-		return (<Switch.Trigger key={tabPanel.tabName} className="course-editor-menu-item" item={tabPanel.tabName}>{tabPanel.tabDescription}</Switch.Trigger>);
-	}
+		return (
+			<Switch.Trigger
+				key={tabPanel.tabName}
+				className="course-editor-menu-item"
+				item={tabPanel.tabName}
+			>
+				{tabPanel.tabDescription}
+			</Switch.Trigger>
+		);
+	};
 
-	renderTriggers () {
+	renderTriggers() {
 		return Edit.panels.map(this.renderTrigger);
 	}
 
-	renderPanel = (panel) => {
+	renderPanel = panel => {
 		const tabPanel = panel.TabPanel;
 
 		return (
@@ -125,31 +133,39 @@ export default class CourseEditor extends React.Component {
 				courseInstance={this.state.courseInstance}
 				onCancel={this.cancel}
 				afterSave={this.props.onSave}
-				saveCmp={SaveButton}/>
+				saveCmp={SaveButton}
+			/>
 		);
-	}
+	};
 
-	renderItems () {
+	renderItems() {
 		return Edit.panels.map(this.renderPanel);
 	}
 
-	render () {
+	render() {
 		const { catalogEntry } = this.props;
 
 		return (
 			<div className="course-editor">
 				{this.renderLoadingMask()}
 				{this.renderCloseButton()}
-				<Switch.Panel className="course-panel editor" active={Edit.panels[0].TabPanel.tabName}>
+				<Switch.Panel
+					className="course-panel editor"
+					active={Edit.panels[0].TabPanel.tabName}
+				>
 					<Switch.Controls className="course-editor-menu">
-						<Presentation.AssetBackground className="course-image" contentPackage={catalogEntry} type="landing"/>
-						<div className="course-id">{catalogEntry.ProviderUniqueID}</div>
+						<Presentation.AssetBackground
+							className="course-image"
+							contentPackage={catalogEntry}
+							type="landing"
+						/>
+						<div className="course-id">
+							{catalogEntry.ProviderUniqueID}
+						</div>
 						<div className="course-title">{catalogEntry.title}</div>
 						{this.renderTriggers()}
 					</Switch.Controls>
-					<Switch.Container>
-						{this.renderItems()}
-					</Switch.Container>
+					<Switch.Container>{this.renderItems()}</Switch.Container>
 				</Switch.Panel>
 			</div>
 		);
@@ -158,11 +174,13 @@ export default class CourseEditor extends React.Component {
 
 SaveButton.propTypes = {
 	onSave: PropTypes.func,
-	label: PropTypes.string
+	label: PropTypes.string,
 };
 
-function SaveButton ({onSave, label}) {
+function SaveButton({ onSave, label }) {
 	return (
-		<div onClick={onSave} className="course-panel-continue">{label || t('save')}</div>
+		<div onClick={onSave} className="course-panel-continue">
+			{label || t('save')}
+		</div>
 	);
 }

@@ -6,57 +6,56 @@ import WizardPanel from '../WizardPanel';
 
 const mockService = () => ({
 	getObject: function (ntiid) {
-		if(ntiid === 'someNTIID') {
+		if (ntiid === 'someNTIID') {
 			// the actual catalogEntry
 			return Promise.resolve({
 				CatalogEntry: {
-					save: function () {
-					},
+					save: function () {},
 					getLink: function () {
 						return 'importLink';
-					}
-				}
+					},
+				},
 			});
 		}
 	},
-	put: (url) => {
-		if(url === 'badURL') {
+	put: url => {
+		if (url === 'badURL') {
 			return Promise.reject('Bad URL');
 		}
 
 		return Promise.resolve();
 	},
 	post: function (url) {
-		if(url === 'defaultURL') {
+		if (url === 'defaultURL') {
 			return Promise.resolve({
-				NTIID: 'someNTIID'
+				NTIID: 'someNTIID',
 			});
 		}
 	},
 	get: function (url) {
-		if(url === 'adminURL') {
+		if (url === 'adminURL') {
 			return Promise.resolve({
 				Items: {
 					DefaultAPIImported: {
-						href: 'defaultURL'
-					}
-				}
+						href: 'defaultURL',
+					},
+				},
 			});
 		}
 
 		return Promise.reject('Invalid url');
 	},
 	getWorkspace: function (name) {
-		if(name === 'Courses') {
+		if (name === 'Courses') {
 			return {
 				getLink: function (rel) {
-					if(rel === 'AdminLevels') {
+					if (rel === 'AdminLevels') {
 						return 'adminURL';
 					}
-				}
+				},
 			};
 		}
-	}
+	},
 });
 
 const onBefore = () => {
@@ -65,14 +64,15 @@ const onBefore = () => {
 		username: 'TestUser',
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//un-mock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
 };
@@ -87,7 +87,7 @@ describe('Import panel test', () => {
 		save: () => {
 			mockSave();
 			return Promise.resolve();
-		}
+		},
 	};
 	const onCancel = jest.fn();
 	const afterSave = jest.fn();
@@ -95,11 +95,11 @@ describe('Import panel test', () => {
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
+		label: PropTypes.string,
 	};
 
-	function SaveButton ({onSave, label}) {
-		function save () {
+	function SaveButton({ onSave, label }) {
+		function save() {
 			onSave();
 		}
 
@@ -111,7 +111,7 @@ describe('Import panel test', () => {
 	}
 
 	test('Test initial appearance is correct', () => {
-		const {container} = render(
+		const { container } = render(
 			<WizardPanel
 				catalogEntry={catalogEntry}
 				saveCmp={SaveButton}

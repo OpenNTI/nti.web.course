@@ -1,7 +1,7 @@
-export function validateTag (value) {
+export function validateTag(value) {
 	let errors = new Set();
 
-	if(!value) {
+	if (!value) {
 		return Array.from(errors); // should this count as invalid?
 	}
 
@@ -9,8 +9,8 @@ export function validateTag (value) {
 
 	const regex = /\.$|\.{2,}/;
 
-	if(parts.length > 1) {
-		errors.add('\'/\' characters are not allowed');
+	if (parts.length > 1) {
+		errors.add("'/' characters are not allowed");
 	}
 
 	const areAllValid = parts.every(x => {
@@ -19,7 +19,7 @@ export function validateTag (value) {
 		return !regex.test(x) && remaining.length > 0;
 	});
 
-	if(!areAllValid) {
+	if (!areAllValid) {
 		errors.add('Invalid tag name');
 	}
 

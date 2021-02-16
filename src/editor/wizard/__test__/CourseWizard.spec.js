@@ -17,10 +17,10 @@ describe('CourseWizard test', () => {
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
+		label: PropTypes.string,
 	};
 
-	function SaveButton ({onSave, label}) {
+	function SaveButton({ onSave, label }) {
 		return (
 			<div onClick={onSave}>
 				<div className="course-panel-continue">{label}</div>
@@ -35,12 +35,14 @@ describe('CourseWizard test', () => {
 			},
 			getCollection: () => {
 				return {
-					accepts: ['application/vnd.nextthought.courses.scormcourseinstance']
+					accepts: [
+						'application/vnd.nextthought.courses.scormcourseinstance',
+					],
 				};
-			}
+			},
 		});
 
-		({container: root} = render(
+		({ container: root } = render(
 			<CourseWizard
 				title={mockTitle}
 				onCancel={onCancelMock}
@@ -56,7 +58,6 @@ describe('CourseWizard test', () => {
 
 	test('Test available templates', async () => {
 		await waitFor(() => {
-
 			const templateNames = root.querySelectorAll('.template-name');
 
 			expect(templateNames.length).toEqual(3);

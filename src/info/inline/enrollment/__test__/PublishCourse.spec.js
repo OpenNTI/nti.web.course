@@ -6,7 +6,7 @@ import PublishCourse from '../PublishCourse';
 let catalogEntry;
 
 const mockService = () => ({
-	getObject: (o) => Promise.resolve(catalogEntry)
+	getObject: o => Promise.resolve(catalogEntry),
 });
 
 const onBefore = () => {
@@ -14,14 +14,15 @@ const onBefore = () => {
 		...(global.$AppConfig || {}),
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//un-mock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
 };
@@ -33,7 +34,7 @@ describe('PublishCourse test', () => {
 
 	const mockSave = jest.fn();
 
-	function makeCatalogEntry (isNonPublic, PreviewRawValue, StartDate) {
+	function makeCatalogEntry(isNonPublic, PreviewRawValue, StartDate) {
 		return {
 			save: () => {
 				mockSave();
@@ -46,84 +47,91 @@ describe('PublishCourse test', () => {
 			Preview: PreviewRawValue ? true : false,
 			getEnrollmentOptions: function () {
 				return {};
-			}
+			},
 		};
 	}
 
 	test('Test not publicly available, preview mode off', async () => {
 		catalogEntry = makeCatalogEntry(true, false, null);
 
-		const x = render(
-			<PublishCourse
-				catalogEntry={catalogEntry}
-			/>
-		);
+		const x = render(<PublishCourse catalogEntry={catalogEntry} />);
 
 		await waitFor(() => {
-			const publiclyAvailableOption = x.container.querySelector('.publicly-available-option');
+			const publiclyAvailableOption = x.container.querySelector(
+				'.publicly-available-option'
+			);
 
-			expect(publiclyAvailableOption.querySelector('.toggle-button').getAttribute('class')).toMatch(/ off/);
+			expect(
+				publiclyAvailableOption
+					.querySelector('.toggle-button')
+					.getAttribute('class')
+			).toMatch(/ off/);
 
-			const previewModeOption = x.container.querySelector('.preview-mode-widget');
+			const previewModeOption = x.container.querySelector(
+				'.preview-mode-widget'
+			);
 
 			expect(previewModeOption.textContent).toMatch(/Published/);
-			expect(previewModeOption.textContent).toMatch(/Content is available to learners/);
+			expect(previewModeOption.textContent).toMatch(
+				/Content is available to learners/
+			);
 		});
 	});
 
 	test('Test publicly available', async () => {
 		catalogEntry = makeCatalogEntry(false, false, null);
 
-		const x = render(
-			<PublishCourse
-				catalogEntry={catalogEntry}
-			/>
-		);
+		const x = render(<PublishCourse catalogEntry={catalogEntry} />);
 
 		await waitFor(() => {
-			const publiclyAvailableOption = x.container.querySelector('.publicly-available-option');
+			const publiclyAvailableOption = x.container.querySelector(
+				'.publicly-available-option'
+			);
 
 			expect(publiclyAvailableOption.textContent).toMatch(/On/);
-			expect(publiclyAvailableOption.querySelector('.toggle-button').getAttribute('class')).toMatch(/ on/);
-
+			expect(
+				publiclyAvailableOption
+					.querySelector('.toggle-button')
+					.getAttribute('class')
+			).toMatch(/ on/);
 		});
 	});
 
 	test('Test null preview, no start date', async () => {
 		catalogEntry = makeCatalogEntry(false, null, null);
 
-		const x = render(
-			<PublishCourse
-				catalogEntry={catalogEntry}
-			/>
-		);
+		const x = render(<PublishCourse catalogEntry={catalogEntry} />);
 
 		await waitFor(() => {
-			const previewModeOption = x.container.querySelector('.preview-mode-widget');
+			const previewModeOption = x.container.querySelector(
+				'.preview-mode-widget'
+			);
 
-			expect(previewModeOption.textContent).toMatch(/Publish on Start Date/);
-			expect(previewModeOption.textContent).toMatch(/No start date found/);
-
-
+			expect(previewModeOption.textContent).toMatch(
+				/Publish on Start Date/
+			);
+			expect(previewModeOption.textContent).toMatch(
+				/No start date found/
+			);
 		});
 	});
 
 	test('Test null preview with start date', async () => {
 		catalogEntry = makeCatalogEntry(false, null, new Date('4/5/2017'));
 
-		const x = render(
-			<PublishCourse
-				catalogEntry={catalogEntry}
-			/>
-		);
+		const x = render(<PublishCourse catalogEntry={catalogEntry} />);
 
 		await waitFor(() => {
-			const previewModeOption = x.container.querySelector('.preview-mode-widget');
+			const previewModeOption = x.container.querySelector(
+				'.preview-mode-widget'
+			);
 
-			expect(previewModeOption.textContent).toMatch(/Publish on Start Date/);
-			expect(previewModeOption.textContent).toMatch(/April 5th 2017, 12:00 AM/);
-
+			expect(previewModeOption.textContent).toMatch(
+				/Publish on Start Date/
+			);
+			expect(previewModeOption.textContent).toMatch(
+				/April 5th 2017, 12:00 AM/
+			);
 		});
 	});
-
 });

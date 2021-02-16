@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .course-video-container {
 	position: relative;
@@ -30,7 +30,7 @@
 				&::after {
 					background-color: white;
 					border-radius: 10px;
-					content: "";
+					content: '';
 					display: block;
 					position: absolute;
 					width: 15px;
@@ -45,7 +45,8 @@
 				margin-right: 12px;
 			}
 
-			.remove, .change {
+			.remove,
+			.change {
 				background-color: #333;
 				border-radius: 16px;
 				padding: 7px 15px 7px 10px;

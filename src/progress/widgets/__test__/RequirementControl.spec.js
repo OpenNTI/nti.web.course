@@ -9,12 +9,10 @@ describe('Progress widgets requirement control test', () => {
 		const record = {
 			IsCompletionDefaultState: true,
 			CompletionRequired: false,
-			CompletionDefaultState: true
+			CompletionDefaultState: true,
 		};
 
-		const cmp = renderer.create(
-			<RequirementControl record={record}/>
-		);
+		const cmp = renderer.create(<RequirementControl record={record} />);
 
 		const tree = cmp.toJSON();
 
@@ -25,12 +23,10 @@ describe('Progress widgets requirement control test', () => {
 		const record = {
 			IsCompletionDefaultState: true,
 			CompletionRequired: false,
-			CompletionDefaultState: false
+			CompletionDefaultState: false,
 		};
 
-		const cmp = renderer.create(
-			<RequirementControl record={record}/>
-		);
+		const cmp = renderer.create(<RequirementControl record={record} />);
 
 		const tree = cmp.toJSON();
 
@@ -41,12 +37,10 @@ describe('Progress widgets requirement control test', () => {
 		const record = {
 			IsCompletionDefaultState: false,
 			CompletionRequired: true,
-			CompletionDefaultState: true
+			CompletionDefaultState: true,
 		};
 
-		const cmp = renderer.create(
-			<RequirementControl record={record}/>
-		);
+		const cmp = renderer.create(<RequirementControl record={record} />);
 
 		const tree = cmp.toJSON();
 
@@ -57,12 +51,10 @@ describe('Progress widgets requirement control test', () => {
 		const record = {
 			IsCompletionDefaultState: false,
 			CompletionRequired: false,
-			CompletionDefaultState: true
+			CompletionDefaultState: true,
 		};
 
-		const cmp = renderer.create(
-			<RequirementControl record={record}/>
-		);
+		const cmp = renderer.create(<RequirementControl record={record} />);
 
 		const tree = cmp.toJSON();
 

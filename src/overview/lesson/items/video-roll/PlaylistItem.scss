@@ -1,6 +1,8 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
-%circle-white-check { background-image: url(../assets/circle-check-white-20.png); }
+%circle-white-check {
+	background-image: url(../assets/circle-check-white-20.png);
+}
 
 $selected: #4699b0;
 $text-color: #ebebeb;
@@ -49,7 +51,8 @@ $text-color: #ebebeb;
 	&.selected {
 		background: $selected;
 
-		&, a {
+		&,
+		a {
 			cursor: default;
 		}
 	}

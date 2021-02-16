@@ -7,30 +7,30 @@ import CompletedDate from '../contents/CompletedDate';
 export default class ScormProgressOverviewContents extends React.Component {
 	static propTypes = {
 		course: PropTypes.object,
-		enrollment: PropTypes.object
+		enrollment: PropTypes.object,
 	};
 
 	state = {
-		overview: {}
+		overview: {},
 	};
 
 	static childContextTypes = {
-		router: PropTypes.object
-	}
+		router: PropTypes.object,
+	};
 
-	getChildContext () {
+	getChildContext() {
 		return {
 			router: {
-				disabled: true
-			}
+				disabled: true,
+			},
 		};
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		this.setup();
 	}
 
-	componentDidUpdate (prevProps) {
+	componentDidUpdate(prevProps) {
 		const { course: oldCourse, enrollment: oldEnrollment } = prevProps;
 		const { course: newCourse, enrollment: newEnrollment } = this.props;
 
@@ -39,7 +39,7 @@ export default class ScormProgressOverviewContents extends React.Component {
 		}
 	}
 
-	async setup (props = this.props) {
+	async setup(props = this.props) {
 		const { course, enrollment } = props;
 
 		if (!enrollment) {
@@ -51,7 +51,9 @@ export default class ScormProgressOverviewContents extends React.Component {
 
 			// Need to resolve the completion since there isn't a overview
 			if (assignments?.length > 0) {
-				assignments.forEach(assignment => assignment.updateCompletedState?.(enrollment));
+				assignments.forEach(assignment =>
+					assignment.updateCompletedState?.(enrollment)
+				);
 			}
 
 			const overview = {
@@ -60,17 +62,18 @@ export default class ScormProgressOverviewContents extends React.Component {
 			};
 
 			this.setState({
-				overview
+				overview,
 			});
 		} catch (e) {
 			//its fine if it throws
 		}
 	}
 
-	render () {
+	render() {
 		const { overview } = this.state;
 		const { course } = this.props;
-		const shouldRenderOverview = overview && overview.Items && overview.Items.length > 0;
+		const shouldRenderOverview =
+			overview && overview.Items && overview.Items.length > 0;
 
 		return (
 			<div className="progress-overview-contents">
@@ -88,5 +91,4 @@ export default class ScormProgressOverviewContents extends React.Component {
 			</div>
 		);
 	}
-
 }

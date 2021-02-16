@@ -5,10 +5,19 @@ import cx from 'classnames';
 
 CourseEnrollmentOptiontsButton.propTypes = {
 	className: PropTypes.string,
-	caution: PropTypes.bool
+	caution: PropTypes.bool,
 };
-export default function CourseEnrollmentOptiontsButton ({className, caution, ...otherProps}) {
+export default function CourseEnrollmentOptiontsButton({
+	className,
+	caution,
+	...otherProps
+}) {
 	return (
-		<div className={cx('nti-course-enrollment-option-button', className, {caution})} {...otherProps} />
+		<div
+			className={cx('nti-course-enrollment-option-button', className, {
+				caution,
+			})}
+			{...otherProps}
+		/>
 	);
 }

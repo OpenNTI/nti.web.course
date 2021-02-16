@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {DialogButtons, Loading, Input} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { DialogButtons, Loading, Input } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import Header from './Header';
 import EmailsInput from './EmailsInput';
@@ -16,47 +16,47 @@ const cx = classnames.bind(styles);
 const t = scoped(BASE_LOCALE_SCOPE, {
 	placeholders: {
 		emails: 'Add an email address',
-		message: '(Optional) Type a message…'
+		message: '(Optional) Type a message…',
 	},
-	uploadButtonLabel: 'Bulk'
+	uploadButtonLabel: 'Bulk',
 });
 
-
 export default class View extends React.Component {
-
 	static propTypes = {
 		onSuccess: PropTypes.func,
 		onCancel: PropTypes.func,
-		course: PropTypes.object.isRequired
-	}
+		course: PropTypes.object.isRequired,
+	};
 
-	state = {}
+	state = {};
 
 	onEmailsChange = emails => {
-		this.setState({emails});
-	}
+		this.setState({ emails });
+	};
 
 	onFileChange = async file => {
 		if (!file) {
 			return;
 		}
 
-		const {course} = this.props;
-		let {emails} = this.state;
+		const { course } = this.props;
+		let { emails } = this.state;
 		let error, invalid;
 
 		this.setState({
 			error,
 			invalid,
-			busy: true
+			busy: true,
 		});
 
 		try {
-			const {Items: items, InvalidEmails: invalidEmails} = await course.preflightInvitationsCsv(file);
+			const {
+				Items: items,
+				InvalidEmails: invalidEmails,
+			} = await course.preflightInvitationsCsv(file);
 			invalid = (invalidEmails || {}).Items;
-			emails = items.map(({email}) => email);
-		}
-		catch (e) {
+			emails = items.map(({ email }) => email);
+		} catch (e) {
 			error = e;
 		}
 
@@ -64,49 +64,42 @@ export default class View extends React.Component {
 			emails,
 			error,
 			invalid,
-			busy: false
+			busy: false,
 		});
-	}
-	
+	};
+
 	onMessageChange = message => {
-		this.setState({message});
-	}
+		this.setState({ message });
+	};
 
 	onSend = async () => {
 		const {
-			props: {course, onSuccess},
-			state: {emails, message}
+			props: { course, onSuccess },
+			state: { emails, message },
 		} = this;
 		let error;
 		this.setState({
 			error,
-			busy: true
+			busy: true,
 		});
 
 		try {
 			const result = await course.sendInvitations(emails, message);
 			return onSuccess(result);
-		}
-		catch (e) {
+		} catch (e) {
 			error = e;
 		}
 
 		this.setState({
 			error,
-			busy: false
+			busy: false,
 		});
-	}
+	};
 
-	render () {
+	render() {
 		const {
-			props: {course, onCancel},
-			state: {
-				emails = [],
-				invalid,
-				message = '',
-				error,
-				busy
-			}
+			props: { course, onCancel },
+			state: { emails = [], invalid, message = '', error, busy },
 		} = this;
 
 		const canSend = !!emails.length && (course || {}).canInvite;
@@ -114,13 +107,13 @@ export default class View extends React.Component {
 		const buttons = [
 			{
 				label: 'Cancel',
-				onClick: onCancel
+				onClick: onCancel,
 			},
 			{
 				label: 'Send',
 				onClick: this.onSend,
-				disabled: !canSend
-			}
+				disabled: !canSend,
+			},
 		];
 
 		return (

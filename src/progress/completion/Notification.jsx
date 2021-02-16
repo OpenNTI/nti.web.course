@@ -1,7 +1,7 @@
 import React, { useCallback, useReducer } from 'react';
 import PropTypes from 'prop-types';
 // import cx from 'classnames';
-import {Prompt, Hooks} from '@nti/web-commons';
+import { Prompt, Hooks } from '@nti/web-commons';
 
 import {
 	Frame,
@@ -11,23 +11,26 @@ import {
 	ViewCertificate,
 } from './notification-parts';
 
-const Receiver = ({children: renderer, ...props}) => renderer(props);
+const Receiver = ({ children: renderer, ...props }) => renderer(props);
 
 Notification.propTypes = {
 	course: PropTypes.shape({
 		PreferredAccess: PropTypes.shape({
 			acknowledgeCourseCompletion: PropTypes.func,
 			hasCompletionAcknowledgmentRequest: PropTypes.bool,
-		})
+		}),
 	}),
 	viewCertificateAction: PropTypes.shape({
 		href: PropTypes.string,
-		onClick: PropTypes.func
-	})
+		onClick: PropTypes.func,
+	}),
 };
 
-export default function Notification ({course, viewCertificateAction: viewCertificate}) {
-	const {PreferredAccess: enrollment} = course || {};
+export default function Notification({
+	course,
+	viewCertificateAction: viewCertificate,
+}) {
+	const { PreferredAccess: enrollment } = course || {};
 	Hooks.useChanges(enrollment);
 
 	const [hide, trip] = useReducer(() => true, false);
@@ -42,16 +45,16 @@ export default function Notification ({course, viewCertificateAction: viewCertif
 	return !isComplete || hide ? null : (
 		<Prompt.Dialog onBeforeDismiss={acknowledge} closeOnMaskClick={false}>
 			<Receiver>
-				{({onDismiss}) => (
+				{({ onDismiss }) => (
 					<Frame onDismiss={onDismiss}>
+						<CertificateIcon />
 
-						<CertificateIcon/>
-
-						{viewCertificate && <ViewCertificate {...viewCertificate} />}
+						{viewCertificate && (
+							<ViewCertificate {...viewCertificate} />
+						)}
 
 						<Heading />
-						<Description/>
-
+						<Description />
 					</Frame>
 				)}
 			</Receiver>

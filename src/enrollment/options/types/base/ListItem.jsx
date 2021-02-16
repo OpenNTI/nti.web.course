@@ -12,21 +12,19 @@ export default class BaseEnrollmentListItem extends React.Component {
 			isEnrolled: PropTypes.func.isRequired,
 		}),
 		selected: PropTypes.bool,
-		onSelect: PropTypes.func
-	}
-
+		onSelect: PropTypes.func,
+	};
 
 	onSelect = () => {
-		const {option, onSelect} = this.props;
+		const { option, onSelect } = this.props;
 
 		if (onSelect) {
 			onSelect(option);
 		}
-	}
+	};
 
-
-	render () {
-		const {option, selected} = this.props;
+	render() {
+		const { option, selected } = this.props;
 
 		return (
 			<ListItem

@@ -4,10 +4,5 @@ export const Edit = {
 	name: 'Edit',
 	description: 'Edit an existing course',
 
-	panels: [
-		Basic,
-		DayTime,
-		Dates,
-		Settings
-	]
+	panels: [Basic, DayTime, Dates, Settings],
 };

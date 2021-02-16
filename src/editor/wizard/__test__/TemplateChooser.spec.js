@@ -7,14 +7,14 @@ import TemplateChooser from '../TemplateChooser';
 class SaveButton extends React.Component {
 	static propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
-	}
+		label: PropTypes.string,
+	};
 
 	doSave = () => {
 		this.props.onSave(() => {});
-	}
+	};
 
-	render () {
+	render() {
 		return (
 			<div onClick={this.doSave}>
 				<div className="course-panel-continue">{this.props.label}</div>
@@ -33,7 +33,7 @@ describe('TemplateChooser test', () => {
 
 	let root;
 	beforeEach(() => {
-		({container: root} = render(
+		({ container: root } = render(
 			<TemplateChooser
 				title={mockTitle}
 				onCancel={onCancelMock}

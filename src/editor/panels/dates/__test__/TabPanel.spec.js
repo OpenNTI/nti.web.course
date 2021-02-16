@@ -4,8 +4,6 @@ import { render, fireEvent, waitFor } from '@testing-library/react';
 
 import TabPanel from '../TabPanel';
 
-
-
 /* eslint-env jest */
 describe('Dates TabPanel test', () => {
 	const mockSave = jest.fn();
@@ -15,7 +13,7 @@ describe('Dates TabPanel test', () => {
 			return Promise.resolve();
 		},
 		StartDate: new Date(2017, 8, 22), // month is 0-indexed, 8 = Sep
-		EndDate: new Date(2017, 11, 24) // month is 0-indexed, 11 = Dec
+		EndDate: new Date(2017, 11, 24), // month is 0-indexed, 11 = Dec
 	};
 	const onCancel = jest.fn();
 	const afterSave = jest.fn();
@@ -36,10 +34,10 @@ describe('Dates TabPanel test', () => {
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
+		label: PropTypes.string,
 	};
 
-	function SaveButton ({onSave, label}) {
+	function SaveButton({ onSave, label }) {
 		return (
 			<div onClick={onSave}>
 				<div className="course-panel-continue">{label}</div>
@@ -67,8 +65,7 @@ describe('Dates TabPanel test', () => {
 
 		fireEvent.click(node);
 
-		await waitFor(() =>
-			expect(onCancel).toHaveBeenCalled());
+		await waitFor(() => expect(onCancel).toHaveBeenCalled());
 	});
 
 	test('Test date fields', async () => {
@@ -90,5 +87,4 @@ describe('Dates TabPanel test', () => {
 			expect(endDate.getAttribute('class')).toMatch(/selected/);
 		});
 	});
-
 });

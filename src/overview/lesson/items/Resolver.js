@@ -2,19 +2,19 @@ const INSTANCE = Symbol.for('Instance');
 const CACHE = Symbol('Cache');
 
 export default class Resolver {
-	static resolve (...args) {
+	static resolve(...args) {
 		const Cls = this;
 
-		this[INSTANCE] = this[INSTANCE] || new Cls;
+		this[INSTANCE] = this[INSTANCE] || new Cls();
 
 		return this[INSTANCE].resolve(...args);
 	}
 
-	constructor () {
+	constructor() {
 		this[CACHE] = new WeakMap();
 	}
 
-	getCachedValue (parentage) {
+	getCachedValue(parentage) {
 		if (!Array.isArray(parentage)) {
 			parentage = [parentage];
 		}
@@ -24,13 +24,15 @@ export default class Resolver {
 		for (let parent of parentage) {
 			cache = cache.get(parent);
 
-			if (!cache) { return null; }
+			if (!cache) {
+				return null;
+			}
 		}
 
 		return cache;
 	}
 
-	setCachedValue (parentage, value) {
+	setCachedValue(parentage, value) {
 		if (!Array.isArray(parentage)) {
 			parentage = [parentage];
 		}
@@ -50,12 +52,10 @@ export default class Resolver {
 			cache = parentCache;
 		}
 
-
 		cache.set(lastParent, value);
 	}
 
-
-	resolve () {
+	resolve() {
 		throw new Error('resolve must be implemented by the subclass.');
 	}
 }

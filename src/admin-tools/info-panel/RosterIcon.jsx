@@ -10,7 +10,7 @@ const RosterIcon = ({ totalLearners = 0 }) => (
 );
 
 RosterIcon.propTypes = {
-	totalLearners: PropTypes.number
+	totalLearners: PropTypes.number,
 };
 
 export default RosterIcon;

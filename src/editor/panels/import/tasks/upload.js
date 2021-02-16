@@ -1,4 +1,10 @@
-export default function uploadCourseData (catalogEntry, zipFile, onComplete, onFailure, onProgress) {
+export default function uploadCourseData(
+	catalogEntry,
+	zipFile,
+	onComplete,
+	onFailure,
+	onProgress
+) {
 	const link = catalogEntry.getLink('Import');
 
 	if (!link) {
@@ -26,7 +32,7 @@ export default function uploadCourseData (catalogEntry, zipFile, onComplete, onF
 			} else {
 				onFailure({
 					status: xhr.status,
-					responseText: xhr.responseText
+					responseText: xhr.responseText,
 				});
 			}
 		}

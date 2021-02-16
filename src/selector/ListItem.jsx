@@ -9,27 +9,25 @@ export default class CourseSelectorListItem extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		onSelect: PropTypes.func,
-		selected: PropTypes.bool
-	}
+		selected: PropTypes.bool,
+	};
 
-
-	onClick = (e) => {
+	onClick = e => {
 		e.preventDefault();
 
-		const {course, onSelect} = this.props;
+		const { course, onSelect } = this.props;
 
 		if (onSelect) {
 			onSelect(course);
 		}
-	}
+	};
 
-
-	render () {
-		const {course, selected} = this.props;
+	render() {
+		const { course, selected } = this.props;
 
 		return (
 			<CourseCard
-				className={cx('nti-course-selector-list-item', {selected})}
+				className={cx('nti-course-selector-list-item', { selected })}
 				course={course.CatalogEntry || course}
 				onClick={this.onClick}
 				list

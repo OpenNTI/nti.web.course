@@ -5,20 +5,20 @@ import CourseListing from '../CourseListing';
 
 const mockService = () => ({
 	get: function (url) {
-		if(url === 'coursesURL') {
+		if (url === 'coursesURL') {
 			return Promise.resolve({
 				Items: [
 					{
 						title: 'Course1',
 						ProviderUniqueID: 'CRS1',
-						getDefaultAssetRoot () {}
+						getDefaultAssetRoot() {},
 					},
 					{
 						title: 'Course2',
 						ProviderUniqueID: 'CRS2',
-						getDefaultAssetRoot () {}
-					}
-				]
+						getDefaultAssetRoot() {},
+					},
+				],
 			});
 		}
 	},
@@ -26,12 +26,12 @@ const mockService = () => ({
 		return Promise.resolve(objects);
 	},
 	getCollection: function (name, subname) {
-		if(name === 'AllCourses' && subname === 'Courses') {
+		if (name === 'AllCourses' && subname === 'Courses') {
 			return {
-				href: 'coursesURL'
+				href: 'coursesURL',
 			};
 		}
-	}
+	},
 });
 
 const onBefore = () => {
@@ -40,14 +40,15 @@ const onBefore = () => {
 		username: 'TestUser',
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//un-mock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
 };
@@ -63,7 +64,7 @@ describe('CourseListing test', () => {
 		let cmp;
 		const x = render(
 			<CourseListing
-				ref={_ => cmp = _}
+				ref={_ => (cmp = _)}
 				onCourseClick={onClick}
 				isAdministrative
 			/>
@@ -96,10 +97,7 @@ describe('CourseListing test', () => {
 
 		let cmp;
 		const x = render(
-			<CourseListing
-				ref={_ => cmp = _}
-				onCourseClick={onClick}
-			/>
+			<CourseListing ref={_ => (cmp = _)} onCourseClick={onClick} />
 		);
 
 		const find = s => x.container.querySelector(s);

@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import Tool from './Tool';
 
 const ToolList = ({ items, store }) => {
-
 	if (items.length === 0) {
 		return (
 			<div className="list-tool-list empty-state">
@@ -17,7 +16,9 @@ const ToolList = ({ items, store }) => {
 	return (
 		<div className="lti-tool-list">
 			<ul className="lti-configured-tools">
-				{items.map(tool => <Tool key={tool.getID()} item={tool} store={store}/>)}
+				{items.map(tool => (
+					<Tool key={tool.getID()} item={tool} store={store} />
+				))}
 			</ul>
 		</div>
 	);
@@ -25,7 +26,7 @@ const ToolList = ({ items, store }) => {
 
 ToolList.propTypes = {
 	store: PropTypes.object.isRequired,
-	items: PropTypes.array.isRequired
+	items: PropTypes.array.isRequired,
 };
 
 export default ToolList;

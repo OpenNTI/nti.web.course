@@ -15,22 +15,31 @@ import GridCmp from './Grid';
 const DEFAULT_TEXT = {
 	comments: {
 		one: '%(count)s Comment',
-		other: '%(count)s Comments'
+		other: '%(count)s Comments',
 	},
-	viewComments: 'View Comments'
+	viewComments: 'View Comments',
 };
-const t = scoped('course.overview.lessons.items.ltiexternaltoolasset', DEFAULT_TEXT);
+const t = scoped(
+	'course.overview.lessons.items.ltiexternaltoolasset',
+	DEFAULT_TEXT
+);
 
 export default class LTIExternalToolAsset extends React.Component {
 	static propTypes = {
 		layout: PropTypes.oneOf([Grid, List]),
 		item: PropTypes.object,
 		editMode: PropTypes.bool,
-		onRequirementChange: PropTypes.func
-	}
+		onRequirementChange: PropTypes.func,
+	};
 
-	render () {
-		const { layout, item, editMode, onRequirementChange, ...otherProps } = this.props;
+	render() {
+		const {
+			layout,
+			item,
+			editMode,
+			onRequirementChange,
+			...otherProps
+		} = this.props;
 
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
@@ -43,30 +52,48 @@ export default class LTIExternalToolAsset extends React.Component {
 		if (typeof commentCount !== 'number') {
 			commentCount = t('viewComments');
 		} else {
-			commentCount = t('comments', {count: commentCount });
+			commentCount = t('comments', { count: commentCount });
 		}
 
 		const commentLabel = (
-			<LinkTo.Object key={item.getID()} object={item} context="discussions" className="comment-count">
+			<LinkTo.Object
+				key={item.getID()}
+				object={item}
+				context="discussions"
+				className="comment-count"
+			>
 				{commentCount}
 			</LinkTo.Object>
 		);
 
 		const required = item.CompletionRequired;
 
-		const requiredLabel = item && item.isCompletable && item.isCompletable() && onRequirementChange ? (
-			<RequirementControl
-				key={item.getID() + '-requirement'}
-				record={item}
-				onChange={onRequirementChange}/>
-		) : required && (
-			<Required key="required-label"/>
-		);
+		const requiredLabel =
+			item &&
+			item.isCompletable &&
+			item.isCompletable() &&
+			onRequirementChange ? (
+				<RequirementControl
+					key={item.getID() + '-requirement'}
+					record={item}
+					onChange={onRequirementChange}
+				/>
+			) : (
+				required && <Required key="required-label" />
+			);
 
 		return (
-			<Cmp layout={layout} item={item} requiredLabel={requiredLabel} {...otherProps} commentLabel={!editMode && commentLabel}/>
+			<Cmp
+				layout={layout}
+				item={item}
+				requiredLabel={requiredLabel}
+				{...otherProps}
+				commentLabel={!editMode && commentLabel}
+			/>
 		);
 	}
 }
 
-Registry.register('application/vnd.nextthought.ltiexternaltoolasset')(LTIExternalToolAsset);
+Registry.register('application/vnd.nextthought.ltiexternaltoolasset')(
+	LTIExternalToolAsset
+);

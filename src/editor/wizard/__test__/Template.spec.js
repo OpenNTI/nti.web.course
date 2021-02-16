@@ -12,17 +12,22 @@ describe('Template test', () => {
 
 		const template = {
 			name: templateName,
-			description: templateDescription
+			description: templateDescription,
 		};
 
-		const {container: root} = render(<Template template={template} onClick={onClick}/>);
+		const { container: root } = render(
+			<Template template={template} onClick={onClick} />
+		);
 
-		expect(root.querySelector('.template-name').textContent).toEqual(templateName);
-		expect(root.querySelector('.template-description').textContent).toEqual(templateDescription);
+		expect(root.querySelector('.template-name').textContent).toEqual(
+			templateName
+		);
+		expect(root.querySelector('.template-description').textContent).toEqual(
+			templateDescription
+		);
 
 		fireEvent.click(root.querySelector('.item'));
 
-		await waitFor(() =>
-			expect(onClick).toHaveBeenCalled());
+		await waitFor(() => expect(onClick).toHaveBeenCalled());
 	});
 });

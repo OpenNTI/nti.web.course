@@ -3,12 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-
 PaddedContainer.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
 };
-export default function PaddedContainer ({className, ...otherProps}) {
+export default function PaddedContainer({ className, ...otherProps }) {
 	return (
-		<div className={cx('nti-course-enrollment-padded-container', className)} {...otherProps} />
+		<div
+			className={cx('nti-course-enrollment-padded-container', className)}
+			{...otherProps}
+		/>
 	);
 }

@@ -4,30 +4,41 @@ import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.components.GradeCard', {
-	currentGrade: 'Current Grade'
+	currentGrade: 'Current Grade',
 });
 
 export default class GradeCard extends React.Component {
 	static propTypes = {
 		pointsEarned: PropTypes.number,
-		totalPoints: PropTypes.number
-	}
+		totalPoints: PropTypes.number,
+	};
 
-	renderGrade () {
+	renderGrade() {
 		const { pointsEarned, totalPoints } = this.props;
 
-		const grade = totalPoints ? parseInt(100 * (pointsEarned / totalPoints), 10) : 0;
+		const grade = totalPoints
+			? parseInt(100 * (pointsEarned / totalPoints), 10)
+			: 0;
 
-		return <div className="grade"><span>{grade}</span><span className="pct">%</span></div>;
+		return (
+			<div className="grade">
+				<span>{grade}</span>
+				<span className="pct">%</span>
+			</div>
+		);
 	}
 
-	renderPoints () {
+	renderPoints() {
 		const { pointsEarned, totalPoints } = this.props;
 
-		return <div className="points">{pointsEarned} / {totalPoints}</div>;
+		return (
+			<div className="points">
+				{pointsEarned} / {totalPoints}
+			</div>
+		);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="grade-card">
 				{this.renderGrade()}

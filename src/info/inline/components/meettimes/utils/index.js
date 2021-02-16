@@ -1,30 +1,31 @@
-export function getWeekdaysFrom (entry) {
-	if(entry && entry.Schedule ) {
+export function getWeekdaysFrom(entry) {
+	if (entry && entry.Schedule) {
 		// days could either be old format (["MWF"]) or new format (["M", "W", "F"])
 		// so just join entries together to make the old format and treat it that way
-		const days = (entry.Schedule.days && entry.Schedule.days.join('')) || '';
+		const days =
+			(entry.Schedule.days && entry.Schedule.days.join('')) || '';
 
 		let selectedWeekdays = [];
 
-		if(days.indexOf('N') >= 0) {
+		if (days.indexOf('N') >= 0) {
 			selectedWeekdays.push('sunday');
 		}
-		if(days.indexOf('M') >= 0) {
+		if (days.indexOf('M') >= 0) {
 			selectedWeekdays.push('monday');
 		}
-		if(days.indexOf('T') >= 0) {
+		if (days.indexOf('T') >= 0) {
 			selectedWeekdays.push('tuesday');
 		}
-		if(days.indexOf('W') >= 0) {
+		if (days.indexOf('W') >= 0) {
 			selectedWeekdays.push('wednesday');
 		}
-		if(days.indexOf('R') >= 0) {
+		if (days.indexOf('R') >= 0) {
 			selectedWeekdays.push('thursday');
 		}
-		if(days.indexOf('F') >= 0) {
+		if (days.indexOf('F') >= 0) {
 			selectedWeekdays.push('friday');
 		}
-		if(days.indexOf('S') >= 0) {
+		if (days.indexOf('S') >= 0) {
 			selectedWeekdays.push('saturday');
 		}
 
@@ -34,8 +35,8 @@ export function getWeekdaysFrom (entry) {
 	return [];
 }
 
-export function getDateStr (dateStr) {
-	if(!dateStr) {
+export function getDateStr(dateStr) {
+	if (!dateStr) {
 		let d = new Date();
 		d.setHours(9);
 		d.setMinutes(0);
@@ -53,8 +54,8 @@ export function getDateStr (dateStr) {
 	return d;
 }
 
-export function convertToTimeStr (time) {
-	if(!time) {
+export function convertToTimeStr(time) {
+	if (!time) {
 		return '';
 	}
 

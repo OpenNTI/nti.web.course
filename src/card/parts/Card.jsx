@@ -7,7 +7,6 @@ import Image from './Image';
 import Title from './Title';
 import Authors from './Authors';
 
-
 CourseCard.propTypes = {
 	className: PropTypes.string,
 	course: PropTypes.object.isRequired,
@@ -20,14 +19,27 @@ CourseCard.propTypes = {
 	collapseToList: PropTypes.bool,
 
 	progress: PropTypes.number,
-	onClick: PropTypes.func
+	onClick: PropTypes.func,
 };
-export default function CourseCard ({className, course, badges, card = true, list, collapseToList, progress, onClick}) {
-	const variant = (!list && !collapseToList) ? 'card' : 'list-item';
+export default function CourseCard({
+	className,
+	course,
+	badges,
+	card = true,
+	list,
+	collapseToList,
+	progress,
+	onClick,
+}) {
+	const variant = !list && !collapseToList ? 'card' : 'list-item';
 	return (
 		<div
 			onClick={onClick}
-			className={cx(className, 'nti-course-card-container', {card: card && !list && !collapseToList, list, 'collapse-to-list': collapseToList})}
+			className={cx(className, 'nti-course-card-container', {
+				card: card && !list && !collapseToList,
+				list,
+				'collapse-to-list': collapseToList,
+			})}
 		>
 			<Image course={course} />
 			<div className="meta">
@@ -37,18 +49,18 @@ export default function CourseCard ({className, course, badges, card = true, lis
 			{badges && (
 				<ul className="badges">
 					{badges.map((badge, key) => {
-						return (
-							<li key={key}>
-								{badge}
-							</li>
-						);
+						return <li key={key}>{badge}</li>;
 					})}
 				</ul>
 			)}
 
-			{progress !== undefined && progress > 0 &&
-				<div className="progress" data-testid="progress-bar" style={{width: progress * 100 + '%'}} />
-			}
+			{progress !== undefined && progress > 0 && (
+				<div
+					className="progress"
+					data-testid="progress-bar"
+					style={{ width: progress * 100 + '%' }}
+				/>
+			)}
 		</div>
 	);
 }

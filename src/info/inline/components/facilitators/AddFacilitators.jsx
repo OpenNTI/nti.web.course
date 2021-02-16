@@ -3,12 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TokenEditor, Avatar, Prompt } from '@nti/web-commons';
 import { getService } from '@nti/web-client';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
 import RoleSelect from './RoleSelect';
-import {getAvailableRoles} from './utils';
-
+import { getAvailableRoles } from './utils';
 
 const t = scoped('course.info.inline.components.facilitators.AddFacilitators', {
 	addFacilitators: 'Add Facilitators',
@@ -19,7 +18,7 @@ const t = scoped('course.info.inline.components.facilitators.AddFacilitators', {
 	assistant: 'Assistant',
 	editor: 'Editor',
 	instructor: 'Instructor',
-	visible: 'Visible to Learners'
+	visible: 'Visible to Learners',
 });
 
 const DELIMITER_KEYS = ['Enter', 'Tab', ','];
@@ -29,72 +28,92 @@ export default class AddFacilitators extends React.Component {
 		courseInstance: PropTypes.object.isRequired,
 		facilitatorList: PropTypes.arrayOf(PropTypes.object),
 		onDismiss: PropTypes.func,
-		onConfirm: PropTypes.func
-	}
+		onConfirm: PropTypes.func,
+	};
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
-		const {courseInstance} = props;
+		const { courseInstance } = props;
 
 		const options = getAvailableRoles(courseInstance);
 
 		this.state = {
 			selectedRole: 'instructor',
 			isVisible: false,
-			options
+			options,
 		};
 	}
 
 	onClose = () => {
 		this.props.onDismiss();
-	}
+	};
 
-	onMessageChange = (value) => {
-		this.setState({message: value});
-	}
+	onMessageChange = value => {
+		this.setState({ message: value });
+	};
 
-	suggestionProvider = (value) => {
+	suggestionProvider = value => {
 		return getService()
 			.then(s => s.getContacts())
-			.then((contacts) => {
-				return contacts.search(value, { allowAppUser: true, allowAnyEntityType: false, allowContacts: true })
-					.then((results) => {
-						const users = results.filter(entity => entity.isUser );
+			.then(contacts => {
+				return contacts
+					.search(value, {
+						allowAppUser: true,
+						allowAnyEntityType: false,
+						allowContacts: true,
+					})
+					.then(results => {
+						const users = results.filter(entity => entity.isUser);
 
 						return users.map(x => {
 							return {
 								key: x.Username,
 								display: x.alias,
 								value: x,
-								view: (<Suggestion user={x} showUsername={users.filter(y => y.alias === x.alias).length > 1}/>)
+								view: (
+									<Suggestion
+										user={x}
+										showUsername={
+											users.filter(
+												y => y.alias === x.alias
+											).length > 1
+										}
+									/>
+								),
 							};
 						});
 					});
 			});
-	}
+	};
 
-	onChange = (values) => {
-		this.setState({values});
-	}
+	onChange = values => {
+		this.setState({ values });
+	};
 
-	doConfirm (values) {
+	doConfirm(values) {
 		const { onConfirm } = this.props;
 
 		// for now, filter down to actual users via suggestions, we'll handle non-user entities later
-		onConfirm && onConfirm(values.filter(x => x.value).map(x => {
-			return {
-				visible: this.state.isVisible,
-				role: this.state.selectedRole,
-				key: x.value.Username,
-				// mimic an Instructor object for the server-side with these fields
-				Name: x.value.alias,
-				MimeType: 'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
-				Class: 'CourseCatalogInstructorLegacyInfo',
-				username: x.value.Username,
-				// JobTitle: t(this.state.selectedRole)
-			};
-		}));
+		onConfirm &&
+			onConfirm(
+				values
+					.filter(x => x.value)
+					.map(x => {
+						return {
+							visible: this.state.isVisible,
+							role: this.state.selectedRole,
+							key: x.value.Username,
+							// mimic an Instructor object for the server-side with these fields
+							Name: x.value.alias,
+							MimeType:
+								'application/vnd.nextthought.courses.coursecataloginstructorlegacyinfo',
+							Class: 'CourseCatalogInstructorLegacyInfo',
+							username: x.value.Username,
+							// JobTitle: t(this.state.selectedRole)
+						};
+					})
+			);
 
 		this.onClose();
 	}
@@ -105,12 +124,16 @@ export default class AddFacilitators extends React.Component {
 
 		let conflicts = [];
 
-		if(!values || values.length === 0) {
+		if (!values || values.length === 0) {
 			return;
 		}
 
 		const filtered = values.filter(u => {
-			if(facilitatorList.some(f => f.username === u.value.Username && f.role !== '')) {
+			if (
+				facilitatorList.some(
+					f => f.username === u.value.Username && f.role !== ''
+				)
+			) {
 				conflicts.push(u.value);
 
 				return false;
@@ -119,49 +142,60 @@ export default class AddFacilitators extends React.Component {
 			return true;
 		});
 
-		if(conflicts.length > 0) {
+		if (conflicts.length > 0) {
 			let userStr = '<br/><br/>';
 
 			conflicts.forEach(c => {
 				userStr += '<div>' + c.alias + '</div>';
 			});
 
-			Prompt.areYouSure('These users already exist as facilitators and will not be added: ' + userStr).then(() => {
+			Prompt.areYouSure(
+				'These users already exist as facilitators and will not be added: ' +
+					userStr
+			).then(() => {
 				this.doConfirm(filtered);
 			});
-		}
-		else {
+		} else {
 			this.doConfirm(filtered);
 		}
-	}
+	};
 
-	renderHeader () {
+	renderHeader() {
 		return (
 			<div className="header">
 				<div className="label">{t('addFacilitators')}</div>
-				<div className="close" onClick={this.onClose}><i className="icon-light-x"/></div>
+				<div className="close" onClick={this.onClose}>
+					<i className="icon-light-x" />
+				</div>
 			</div>
 		);
 	}
 
+	onRoleSelect = role => {
+		this.setState({ selectedRole: role });
+	};
 
-	onRoleSelect = (role) => {
-		this.setState({selectedRole: role});
-	}
-
-	renderRoleSelect () {
+	renderRoleSelect() {
 		const { options, selectedRole } = this.state;
 
-		return (!options || options.length <= 1)
-			? <div className="role-value">{this.state.options[0] && t(this.state.options[0])}</div>
-			: <RoleSelect options={options} value={selectedRole} onChange={this.onRoleSelect} />;
+		return !options || options.length <= 1 ? (
+			<div className="role-value">
+				{this.state.options[0] && t(this.state.options[0])}
+			</div>
+		) : (
+			<RoleSelect
+				options={options}
+				value={selectedRole}
+				onChange={this.onRoleSelect}
+			/>
+		);
 	}
 
-	onVisibilityChanged = (e) => {
-		this.setState({isVisible: e.target.checked});
-	}
+	onVisibilityChanged = e => {
+		this.setState({ isVisible: e.target.checked });
+	};
 
-	renderBody () {
+	renderBody() {
 		return (
 			<div className="input">
 				<TokenEditor
@@ -170,33 +204,45 @@ export default class AddFacilitators extends React.Component {
 					suggestionProvider={this.suggestionProvider}
 					onChange={this.onChange}
 					tokenDelimiterKeys={DELIMITER_KEYS}
-					onlyAllowSuggestions/>
+					onlyAllowSuggestions
+				/>
 				<div className="role">
 					<div className="field-label">{t('role')}</div>
 					<div className="role-select">{this.renderRoleSelect()}</div>
 				</div>
 				<label className="visibility">
-					<input type="checkbox" checked={this.state.isVisible} onChange={this.onVisibilityChanged}/>
+					<input
+						type="checkbox"
+						checked={this.state.isVisible}
+						onChange={this.onVisibilityChanged}
+					/>
 					<span>{t('visible')}</span>
 				</label>
 			</div>
 		);
 	}
 
-	renderControls () {
-		const confirmCls = cx('confirm', this.state.values && this.state.values.length > 0 ? '' : 'disabled');
+	renderControls() {
+		const confirmCls = cx(
+			'confirm',
+			this.state.values && this.state.values.length > 0 ? '' : 'disabled'
+		);
 
 		return (
 			<div className="controls">
 				<div className="buttons">
-					<div className="cancel" onClick={this.onClose}>{t('cancel')}</div>
-					<div className={confirmCls} onClick={this.addFacilitators}>{t('add')}</div>
+					<div className="cancel" onClick={this.onClose}>
+						{t('cancel')}
+					</div>
+					<div className={confirmCls} onClick={this.addFacilitators}>
+						{t('add')}
+					</div>
 				</div>
 			</div>
 		);
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="add-facilitators">
 				{this.renderHeader()}
@@ -209,17 +255,19 @@ export default class AddFacilitators extends React.Component {
 
 Suggestion.propTypes = {
 	user: PropTypes.object.isRequired,
-	showUsername: PropTypes.bool
+	showUsername: PropTypes.bool,
 };
 
-function Suggestion ({user, showUsername}) {
+function Suggestion({ user, showUsername }) {
 	return (
 		<div className="user-suggestion">
-			<Avatar className="image" entity={user}/>
+			<Avatar className="image" entity={user} />
 			<div className="user-info">
 				<div className="alias">
 					<span>{user.alias}</span>
-					{showUsername ? (<span className="user-name">({user.Username})</span>) : null}
+					{showUsername ? (
+						<span className="user-name">({user.Username})</span>
+					) : null}
 				</div>
 				<div className="email">{user.email}</div>
 			</div>

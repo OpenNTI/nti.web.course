@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import OptionText, {TITLE, DESCRIPTION} from '../common/OptionText';
+import OptionText, { TITLE, DESCRIPTION } from '../common/OptionText';
 
 import ExternalEnrollment from './ExternalEnrollment';
 
 CustomExternalEnrollment.propTypes = {
-	option: PropTypes.object.isRequired
+	option: PropTypes.object.isRequired,
 };
 
-export default function CustomExternalEnrollment (props) {
-	const {option} = props;
+export default function CustomExternalEnrollment(props) {
+	const { option } = props;
 
 	return (
 		<ExternalEnrollment

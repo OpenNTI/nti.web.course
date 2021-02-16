@@ -9,32 +9,47 @@ export const createCourse = (onCourseModified, template) => {
 
 	return new Promise((fulfill, reject) => {
 		dialog = Prompt.modal(
-			<CourseWizard template={template} onFinish={fulfill} onCancel={reject} onCourseModified={onCourseModified}/>,
-			{className: CourseWizard.modalClassName}
+			<CourseWizard
+				template={template}
+				onFinish={fulfill}
+				onCancel={reject}
+				onCourseModified={onCourseModified}
+			/>,
+			{ className: CourseWizard.modalClassName }
 		);
-	}).then((savedEntry) => {
-		dialog && dialog.dismiss();
+	})
+		.then(savedEntry => {
+			dialog && dialog.dismiss();
 
-		return savedEntry;
-	}).catch(() => {
-		dialog && dialog.dismiss();
+			return savedEntry;
+		})
+		.catch(() => {
+			dialog && dialog.dismiss();
 
-		Promise.reject();
-	});
+			Promise.reject();
+		});
 };
 
-export const editCourse = (course) => {
+export const editCourse = course => {
 	let dialog = null;
 
 	return new Promise((fulfill, reject) => {
-		dialog = Prompt.modal(<CourseEditor catalogEntry={course} onFinish={fulfill} onCancel={reject}/>);
-	}).then((savedEntry) => {
-		dialog && dialog.dismiss();
+		dialog = Prompt.modal(
+			<CourseEditor
+				catalogEntry={course}
+				onFinish={fulfill}
+				onCancel={reject}
+			/>
+		);
+	})
+		.then(savedEntry => {
+			dialog && dialog.dismiss();
 
-		return savedEntry;
-	}).catch(() => {
-		dialog && dialog.dismiss();
+			return savedEntry;
+		})
+		.catch(() => {
+			dialog && dialog.dismiss();
 
-		Promise.reject();
-	});
+			Promise.reject();
+		});
 };

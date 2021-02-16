@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .enrollment-card {
 	width: 335px;
@@ -83,7 +83,7 @@
 		&::before {
 			display: inline-block;
 			vertical-align: middle;
-			content: "·";
+			content: '·';
 			font-size: 1rem;
 			line-height: 0.875;
 			margin-left: 0.3rem;

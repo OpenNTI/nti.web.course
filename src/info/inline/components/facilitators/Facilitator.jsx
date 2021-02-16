@@ -1,15 +1,14 @@
 import './Facilitator.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Avatar, Input, Flyout} from '@nti/web-commons';
+import { Avatar, Input, Flyout } from '@nti/web-commons';
 import cx from 'classnames';
-import {scoped} from '@nti/lib-locale';
-import {getService} from '@nti/web-client';
+import { scoped } from '@nti/lib-locale';
+import { getService } from '@nti/web-client';
 import isTouch from '@nti/util-detection-touch';
 
 import RoleSelect from './RoleSelect';
-import {getAvailableRoles} from './utils';
-
+import { getAvailableRoles } from './utils';
 
 const t = scoped('course.info.inline.components.facilitators.Facilitator', {
 	visible: 'Visible',
@@ -25,95 +24,124 @@ export default class Facilitator extends React.Component {
 		onChange: PropTypes.func,
 		onRemove: PropTypes.func,
 		editable: PropTypes.bool,
-		adminView: PropTypes.bool
-	}
+		adminView: PropTypes.bool,
+	};
 
-	attachRoleFlyoutRef = x => this.roleFlyout = x
-	attachVisibilityFlyoutRef = x => this.visibilityFlyout = x
+	attachRoleFlyoutRef = x => (this.roleFlyout = x);
+	attachVisibilityFlyoutRef = x => (this.visibilityFlyout = x);
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {
 			JobTitle: props.facilitator.JobTitle,
-			Biography: props.facilitator.Biography
+			Biography: props.facilitator.Biography,
 		};
 	}
 
-	validateImage (props) {
+	validateImage(props) {
 		const { facilitator } = props;
 
-		if(facilitator.imageUrl) {
+		if (facilitator.imageUrl) {
 			getService().then(service => {
-				service.get(facilitator.imageUrl).then(() => {
-					this.setState({validImage: true});
-				}).catch(() => {
-					this.setState({validImage: false});
-				});
+				service
+					.get(facilitator.imageUrl)
+					.then(() => {
+						this.setState({ validImage: true });
+					})
+					.catch(() => {
+						this.setState({ validImage: false });
+					});
 			});
 		}
 	}
 
-	componentDidMount () {
+	componentDidMount() {
 		const { facilitator } = this.props;
 
-		if(facilitator.imageUrl) {
+		if (facilitator.imageUrl) {
 			this.validateImage(this.props);
 		}
 	}
 
-	componentDidUpdate (prevProps) {
-		if(this.props.facilitator.imageUrl !== prevProps.facilitator.imageUrl) {
-			this.setState({
-				validImage: false
-			}, () => {
-				this.validateImage(this.props);
-			});
+	componentDidUpdate(prevProps) {
+		if (
+			this.props.facilitator.imageUrl !== prevProps.facilitator.imageUrl
+		) {
+			this.setState(
+				{
+					validImage: false,
+				},
+				() => {
+					this.validateImage(this.props);
+				}
+			);
 		}
 	}
 
-	renderVisibilityTrigger () {
-		const text = this.props.facilitator.visible ? t('visible') : t('hidden');
+	renderVisibilityTrigger() {
+		const text = this.props.facilitator.visible
+			? t('visible')
+			: t('hidden');
 
-		return <div className="trigger">{text}<i className="icon-chevron-down"/></div>;
+		return (
+			<div className="trigger">
+				{text}
+				<i className="icon-chevron-down" />
+			</div>
+		);
 	}
 
-	onVisibiltyChange = ({target: {checked: hidden}}) => {
-		const {onChange, facilitator} = this.props;
+	onVisibiltyChange = ({ target: { checked: hidden } }) => {
+		const { onChange, facilitator } = this.props;
 
-		onChange && onChange({
-			...facilitator,
-			visible: !hidden
-		});
-	}
+		onChange &&
+			onChange({
+				...facilitator,
+				visible: !hidden,
+			});
+	};
 
-	renderVisibilitySelect () {
-		const {facilitator: {visible}} = this.props;
+	renderVisibilitySelect() {
+		const {
+			facilitator: { visible },
+		} = this.props;
 
 		return (
 			<label>
-				<input type="checkbox" onChange={this.onVisibiltyChange} checked={!visible} />
+				<input
+					type="checkbox"
+					onChange={this.onVisibiltyChange}
+					checked={!visible}
+				/>
 				<span className="label-text">{t('hidden')}</span>
 			</label>
 		);
 	}
 
-	onRoleSelect = (role) => {
-		const {onChange, facilitator} = this.props;
+	onRoleSelect = role => {
+		const { onChange, facilitator } = this.props;
 
-		onChange && onChange({
-			...facilitator,
-			role
-		});
+		onChange &&
+			onChange({
+				...facilitator,
+				role,
+			});
 
 		this.roleFlyout && this.roleFlyout.dismiss();
 	};
 
-	renderRoleSelect (options) {
-		const {facilitator: {role}} = this.props;
+	renderRoleSelect(options) {
+		const {
+			facilitator: { role },
+		} = this.props;
 
 		return (
-			<RoleSelect options={options} value={role} onChange={this.onRoleSelect} />
+			<RoleSelect
+				options={options}
+				value={role}
+				onChange={this.onRoleSelect}
+			/>
 		);
 	}
 
@@ -121,13 +149,20 @@ export default class Facilitator extends React.Component {
 		const { onRemove } = this.props;
 
 		onRemove && onRemove(this.props.facilitator);
+	};
+
+	renderDelete() {
+		return (
+			<div
+				className="delete-facilitator"
+				onClick={this.removeFacilitator}
+			>
+				<i className="icon-bold-x" />
+			</div>
+		);
 	}
 
-	renderDelete () {
-		return (<div className="delete-facilitator" onClick={this.removeFacilitator}><i className="icon-bold-x"/></div>);
-	}
-
-	renderControls () {
+	renderControls() {
 		const { editable } = this.props;
 
 		return !editable ? null : (
@@ -141,68 +176,85 @@ export default class Facilitator extends React.Component {
 		);
 	}
 
-	canEdit () {
+	canEdit() {
 		const { courseInstance } = this.props;
 
-		return courseInstance && courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors');
+		return (
+			courseInstance &&
+			courseInstance.hasLink('Instructors') &&
+			courseInstance.hasLink('Editors')
+		);
 	}
 
-	renderRole () {
+	renderRole() {
 		const { editable, courseInstance, facilitator, adminView } = this.props;
-		const {role} = facilitator || {};
+		const { role } = facilitator || {};
 
 		const options = getAvailableRoles(courseInstance);
 
 		// only allow selecting roles if they're editable and there is more than one
 		// option available to choose
-		if(editable && options && options.length > 1) {
+		if (editable && options && options.length > 1) {
 			return (
 				<div className="role">
-					<RoleSelect options={options} value={role} onChange={this.onRoleSelect} />
+					<RoleSelect
+						options={options}
+						value={role}
+						onChange={this.onRoleSelect}
+					/>
 				</div>
 			);
 		}
 
 		if (editable || adminView) {
-			return (<div className="role">{role && t(role)}</div>);
+			return <div className="role">{role && t(role)}</div>;
 		}
 
 		// if not editable, don't show role
 		return null;
 	}
 
-	renderImage () {
+	renderImage() {
 		const { facilitator } = this.props;
 		const className = 'image';
 
-		if(facilitator.imageUrl && this.state.validImage) {
+		if (facilitator.imageUrl && this.state.validImage) {
 			const style = {
-				backgroundImage: 'url(' + facilitator.imageUrl + ')'
+				backgroundImage: 'url(' + facilitator.imageUrl + ')',
 			};
 
-			return (
-				<div className={className} style={style}/>
-			);
+			return <div className={className} style={style} />;
 		}
 
-		return <Avatar className={className} entity={facilitator.username}/>;
+		return <Avatar className={className} entity={facilitator.username} />;
 	}
 
-	onTitleChange = (e) => {
-		const {onChange, facilitator} = this.props;
+	onTitleChange = e => {
+		const { onChange, facilitator } = this.props;
 
-		onChange && onChange({
-			...facilitator,
-			JobTitle: e
-		});
-	}
+		onChange &&
+			onChange({
+				...facilitator,
+				JobTitle: e,
+			});
+	};
 
-	renderTitle () {
-		const { facilitator: {visible, JobTitle}, editable } = this.props;
+	renderTitle() {
+		const {
+			facilitator: { visible, JobTitle },
+			editable,
+		} = this.props;
 
-		return editable && visible
-			? <Input.Text className="job-title-input" onChange={this.onTitleChange} value={JobTitle} placeholder={t('titlePlaceholder')}/>
-			: <span>{JobTitle}</span>;
+		return editable && visible ? (
+			<Input.Text
+				className="job-title-input"
+				onChange={this.onTitleChange}
+				value={JobTitle}
+				placeholder={t('titlePlaceholder')}
+			/>
+		) : (
+			<span>{JobTitle}</span>
+		);
 	}
 
 	// Are we going to support suffix editing/displaying?
@@ -256,8 +308,12 @@ export default class Facilitator extends React.Component {
 	// 	return null;
 	// }
 
-	renderVisibilityStatus () {
-		const trigger = (<div className="visibility-status-label"><i className="icon-hide"/> {t('hidden')}</div>);
+	renderVisibilityStatus() {
+		const trigger = (
+			<div className="visibility-status-label">
+				<i className="icon-hide" /> {t('hidden')}
+			</div>
+		);
 
 		return (
 			<Flyout.Triggered
@@ -273,10 +329,16 @@ export default class Facilitator extends React.Component {
 		);
 	}
 
-	render () {
-		const { editable, facilitator: {Name, visible} } = this.props;
+	render() {
+		const {
+			editable,
+			facilitator: { Name, visible },
+		} = this.props;
 
-		const className = cx('facilitator', { 'edit': editable, hidden: !visible });
+		const className = cx('facilitator', {
+			edit: editable,
+			hidden: !visible,
+		});
 
 		return (
 			<div className={className}>

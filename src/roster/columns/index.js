@@ -10,14 +10,14 @@ const columns = [
 	{ component: Enrollment },
 	{
 		component: Progress,
-		predicate: course => !!(course || {}).CompletionPolicy
+		predicate: course => !!(course || {}).CompletionPolicy,
 	},
-	{ component: ParticipationReport }
+	{ component: ParticipationReport },
 ];
 
-export default function columnsFor (course) {
+export default function columnsFor(course) {
 	return columns
-		.filter(({predicate}) => !predicate || predicate(course))
-		.map(({component}) => component)
+		.filter(({ predicate }) => !predicate || predicate(course))
+		.map(({ component }) => component)
 		.filter(Boolean);
 }

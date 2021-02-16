@@ -1,8 +1,8 @@
 import './Edit.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Prompt} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { Prompt } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 
 import AddButton from '../../widgets/AddButton';
 
@@ -10,13 +10,13 @@ import Facilitator from './Facilitator';
 import AddFacilitators from './AddFacilitators';
 import * as Utils from './utils';
 
-const {canAddFacilitators} = Utils;
+const { canAddFacilitators } = Utils;
 
 const t = scoped('course.info.inline.components.facilitators.Edit', {
 	addFacilitators: 'Add a Facilitator',
 	assistant: 'Assistant',
 	editor: 'Editor',
-	instructor: 'Instructor'
+	instructor: 'Instructor',
 });
 
 // const DEFAULT_JOB_TITLES = ['Assistant', 'Instructor', 'Editor'];
@@ -27,31 +27,35 @@ export default class FacilitatorsEdit extends React.Component {
 	static propTypes = {
 		courseInstance: PropTypes.object.isRequired,
 		facilitators: PropTypes.arrayOf(PropTypes.object),
-		onValueChange: PropTypes.func
-	}
+		onValueChange: PropTypes.func,
+	};
 
 	// no static FIELD_NAME, facilitators come from a couple different sources
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {
 			facilitatorList: props.facilitators.map(x => {
 				return {
 					...x,
-					key: x.username
+					key: x.username,
 				};
-			})
+			}),
 		};
 	}
 
-	canEdit () {
+	canEdit() {
 		const { courseInstance } = this.props;
 
-		return courseInstance && courseInstance.hasLink('Instructors') && courseInstance.hasLink('Editors');
+		return (
+			courseInstance &&
+			courseInstance.hasLink('Instructors') &&
+			courseInstance.hasLink('Editors')
+		);
 	}
 
-	renderFacilitator = (facilitator) => {
+	renderFacilitator = facilitator => {
 		const canEdit = this.canEdit();
 
 		return (
@@ -61,11 +65,12 @@ export default class FacilitatorsEdit extends React.Component {
 				courseInstance={this.props.courseInstance}
 				onChange={this.updateFacilitator}
 				onRemove={this.removeFacilitator}
-				editable={!facilitator.locked && canEdit}/>
+				editable={!facilitator.locked && canEdit}
+			/>
 		);
-	}
+	};
 
-	updateFacilitatorList = (users) => {
+	updateFacilitatorList = users => {
 		const { facilitatorList } = this.state;
 
 		let replacedUsers = [];
@@ -75,11 +80,13 @@ export default class FacilitatorsEdit extends React.Component {
 			// a scenario where this could happen is the user was 'removed' (flagged for removal so still in the list)
 			// but re-added via the AddFacilitators dialog.  In that case, we want to just replace the existing facilitator
 			// with the re-added user
-			const existingFacilitator = facilitatorList.filter(f => f.username === u.username);
+			const existingFacilitator = facilitatorList.filter(
+				f => f.username === u.username
+			);
 
 			const user = existingFacilitator[0] || u;
 
-			if(existingFacilitator[0]) {
+			if (existingFacilitator[0]) {
 				// track users we are replacing
 				replacedUsers.push(existingFacilitator[0].username);
 			}
@@ -87,7 +94,7 @@ export default class FacilitatorsEdit extends React.Component {
 			let newUser = {
 				...user,
 				visible: u.visible,
-				role: u.role
+				role: u.role,
 			};
 
 			// if(DEFAULT_JOB_TITLES.includes(newUser.JobTitle)) {
@@ -99,79 +106,106 @@ export default class FacilitatorsEdit extends React.Component {
 			return newUser;
 		});
 
-		this.setState({
-			// remove replaced users, which will now come from the transformed list
-			facilitatorList: [...(facilitatorList.filter(x => !replacedUsers.includes(x.username))), ...transformed]
-		}, () => {
-			this.updateValues();
-		});
-	}
+		this.setState(
+			{
+				// remove replaced users, which will now come from the transformed list
+				facilitatorList: [
+					...facilitatorList.filter(
+						x => !replacedUsers.includes(x.username)
+					),
+					...transformed,
+				],
+			},
+			() => {
+				this.updateValues();
+			}
+		);
+	};
 
-	updateFacilitator = (facilitator) => {
+	updateFacilitator = facilitator => {
 		this.replaceFacilitator(facilitator);
-	}
+	};
 
 	launchAddDialog = () => {
-		Prompt.modal(<AddFacilitators onConfirm={this.updateFacilitatorList} courseInstance={this.props.courseInstance} facilitatorList={this.state.facilitatorList}/>);
-	}
+		Prompt.modal(
+			<AddFacilitators
+				onConfirm={this.updateFacilitatorList}
+				courseInstance={this.props.courseInstance}
+				facilitatorList={this.state.facilitatorList}
+			/>
+		);
+	};
 
-	renderAddFacilitator () {
-		const {courseInstance} = this.props;
+	renderAddFacilitator() {
+		const { courseInstance } = this.props;
 
 		if (!canAddFacilitators(courseInstance)) {
 			return null;
 		}
 
-		return <AddButton clickHandler={this.launchAddDialog} className="add-facilitator" label={t('addFacilitators')}/>;
+		return (
+			<AddButton
+				clickHandler={this.launchAddDialog}
+				className="add-facilitator"
+				label={t('addFacilitators')}
+			/>
+		);
 	}
 
-	updateValues () {
+	updateValues() {
 		const { onValueChange } = this.props;
 
-		onValueChange && onValueChange('facilitators', this.state.facilitatorList);
+		onValueChange &&
+			onValueChange('facilitators', this.state.facilitatorList);
 	}
 
-	removeFacilitator = (facilitator) => {
+	removeFacilitator = facilitator => {
 		const { key } = facilitator;
 
-		this.setState({
-			facilitatorList: this.state.facilitatorList.map(x => {
-				if(x.key === key) {
-					return {...x, role: ''};
-				}
+		this.setState(
+			{
+				facilitatorList: this.state.facilitatorList.map(x => {
+					if (x.key === key) {
+						return { ...x, role: '' };
+					}
 
-				return x;
-			})
-		}, () => {
-			this.updateValues();
-		});
-	}
+					return x;
+				}),
+			},
+			() => {
+				this.updateValues();
+			}
+		);
+	};
 
-	replaceFacilitator (facilitator) {
+	replaceFacilitator(facilitator) {
 		const { key } = facilitator;
 
-		this.setState({
-			facilitatorList: this.state.facilitatorList.map(x => {
-				if(x.key === key) {
-					let newUser = {...facilitator};
+		this.setState(
+			{
+				facilitatorList: this.state.facilitatorList.map(x => {
+					if (x.key === key) {
+						let newUser = { ...facilitator };
 
-					// if(DEFAULT_JOB_TITLES.includes(newUser.JobTitle)) {
-					// 	// we assigned a default job title, meaning we didn't have one initially, so just reflect
-					// 	// the role
-					// 	newUser.JobTitle = t(newUser.role);
-					// }
+						// if(DEFAULT_JOB_TITLES.includes(newUser.JobTitle)) {
+						// 	// we assigned a default job title, meaning we didn't have one initially, so just reflect
+						// 	// the role
+						// 	newUser.JobTitle = t(newUser.role);
+						// }
 
-					return newUser;
-				}
+						return newUser;
+					}
 
-				return x;
-			})
-		}, () => {
-			this.updateValues();
-		});
+					return x;
+				}),
+			},
+			() => {
+				this.updateValues();
+			}
+		);
 	}
 
-	render () {
+	render() {
 		return (
 			<div>
 				<div className="facilitators-header">
@@ -179,7 +213,9 @@ export default class FacilitatorsEdit extends React.Component {
 					{this.renderAddFacilitator()}
 				</div>
 				<div className="facilitators">
-					{(this.state.facilitatorList || []).filter(x => x.role && x.role !== '').map(this.renderFacilitator)}
+					{(this.state.facilitatorList || [])
+						.filter(x => x.role && x.role !== '')
+						.map(this.renderFacilitator)}
 				</div>
 			</div>
 		);

@@ -2,9 +2,9 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {decorate} from '@nti/lib-commons';
-import {scoped} from '@nti/lib-locale';
-import {Loading, Input, EmptyState} from '@nti/web-commons';
+import { decorate } from '@nti/lib-commons';
+import { scoped } from '@nti/lib-locale';
+import { Loading, Input, EmptyState } from '@nti/web-commons';
 
 import Store from './Store';
 import ListItem from './ListItem';
@@ -15,13 +15,13 @@ const t = scoped('course.selector', {
 	searchPlaceholder: 'Search',
 	empty: {
 		searchTerm: 'There are no courses. Please update your query.',
-		noSearchTerm: 'There are no courses.'
+		noSearchTerm: 'There are no courses.',
 	},
-	loadMore: 'Load More'
+	loadMore: 'Load More',
 });
 
 class CourseSelector extends React.Component {
-	static deriveBindingFromProps (props) {
+	static deriveBindingFromProps(props) {
 		return props.collection || 'catalog';
 	}
 
@@ -40,104 +40,111 @@ class CourseSelector extends React.Component {
 		errorLoadingMore: PropTypes.any,
 
 		searchTerm: PropTypes.string,
-		updateSearchTerm: PropTypes.func
-	}
-
+		updateSearchTerm: PropTypes.func,
+	};
 
 	static defaultProps = {
-		collection: 'catalog'
-	}
+		collection: 'catalog',
+	};
 
+	isSelected(course) {
+		const { selected } = this.props;
 
-	isSelected (course) {
-		const {selected} = this.props;
-
-		if (!selected || !selected.length) { return; }
+		if (!selected || !selected.length) {
+			return;
+		}
 
 		return selected.map(c => c === course).length > 0;
 	}
 
-
 	loadMore = () => {
-		const {loadMore} = this.props;
+		const { loadMore } = this.props;
 
 		if (loadMore) {
 			loadMore();
 		}
-	}
+	};
 
-
-	onSelect = (course) => {
-		const {onSelect} = this.props;
+	onSelect = course => {
+		const { onSelect } = this.props;
 
 		if (onSelect) {
 			onSelect(course);
 		}
-	}
+	};
 
-
-	onSearchChange = (value) => {
-		const {updateSearchTerm} = this.props;
+	onSearchChange = value => {
+		const { updateSearchTerm } = this.props;
 
 		if (updateSearchTerm) {
 			updateSearchTerm(value);
 		}
-	}
+	};
 
-	render () {
-		const {loading, error} = this.props;
+	render() {
+		const { loading, error } = this.props;
 
 		return (
 			<div className="nti-course-selector">
 				{this.renderSearch()}
-				{loading && (<Loading.Mask />)}
+				{loading && <Loading.Mask />}
 				{!loading && error && this.renderError()}
 				{!loading && !error && this.renderCourses()}
 			</div>
 		);
 	}
 
-
-	renderSearch () {
-		const {searchTerm} = this.props;
+	renderSearch() {
+		const { searchTerm } = this.props;
 
 		return (
 			<div className="search">
-				<Input.Text value={searchTerm || ''} placeholder={t('searchPlaceholder')} onChange={this.onSearchChange} />
+				<Input.Text
+					value={searchTerm || ''}
+					placeholder={t('searchPlaceholder')}
+					onChange={this.onSearchChange}
+				/>
 				<i className="icon-search" />
 			</div>
 		);
 	}
 
-
-	renderError () {
-		return (
-			<span className="error">
-				{t('error')}
-			</span>
-		);
+	renderError() {
+		return <span className="error">{t('error')}</span>;
 	}
 
+	renderCourses() {
+		const { courses, hasMore, loadingMore, errorLoadingMore } = this.props;
 
-	renderCourses () {
-		const {courses, hasMore, loadingMore, errorLoadingMore} = this.props;
-
-		if (!courses || !courses.length) { return this.renderEmpty(); }
+		if (!courses || !courses.length) {
+			return this.renderEmpty();
+		}
 
 		return (
 			<div className="courses">
 				<ul>
-					{courses.map((course) => {
+					{courses.map(course => {
 						return (
 							<li key={course.getID()}>
-								<ListItem course={course} onSelect={this.onSelect} selected={this.isSelected(course)} />
+								<ListItem
+									course={course}
+									onSelect={this.onSelect}
+									selected={this.isSelected(course)}
+								/>
 							</li>
 						);
 					})}
 				</ul>
 				{(hasMore || loadingMore) && !errorLoadingMore && (
-					<div className={cx('load-more', {loading: loadingMore})} onClick={this.loadMore}>
-						{loadingMore ? (<Loading.Spinner white />) : t('loadMore')}
+					<div
+						className={cx('load-more', { loading: loadingMore })}
+						onClick={this.loadMore}
+					>
+						{loadingMore ? (
+							<Loading.Spinner white />
+						) : (
+							t('loadMore')
+						)}
 					</div>
 				)}
 				{errorLoadingMore && (
@@ -147,12 +154,15 @@ class CourseSelector extends React.Component {
 		);
 	}
 
-
-	renderEmpty () {
-		const {searchTerm} = this.props;
+	renderEmpty() {
+		const { searchTerm } = this.props;
 
 		return (
-			<EmptyState header={searchTerm ? t('empty.searchTerm') : t('empty.noSearchTerm')} />
+			<EmptyState
+				header={
+					searchTerm ? t('empty.searchTerm') : t('empty.noSearchTerm')
+				}
+			/>
 		);
 	}
 }
@@ -167,6 +177,6 @@ export default decorate(CourseSelector, [
 		'hasMore',
 		'loadingMore',
 		'loadMore',
-		'errorLoadingMore'
-	])
+		'errorLoadingMore',
+	]),
 ]);

@@ -1,8 +1,8 @@
 import './List.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {DateTime} from '@nti/web-commons';
-import {Poster} from '@nti/web-video';
+import { DateTime } from '@nti/web-commons';
+import { Poster } from '@nti/web-video';
 
 import Base from '../../common/BaseListItem';
 import Required from '../../common/Required';
@@ -10,61 +10,61 @@ import Required from '../../common/Required';
 export default class LessonOverviewVideoListItem extends React.Component {
 	static propTypes = {
 		item: PropTypes.object,
-		course: PropTypes.object
-	}
+		course: PropTypes.object,
+	};
 
-	state = {poster: null}
+	state = { poster: null };
 
-
-	componentDidMount () {
+	componentDidMount() {
 		this.setupFor(this.props);
 	}
 
-
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unmounted = this;
 		this.setState = () => {};
 	}
 
-
-	componentDidUpdate (prevProps) {
-		const {item:nextItem} = this.props;
-		const {item:oldItem} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { item: nextItem } = this.props;
+		const { item: oldItem } = prevProps;
 
 		if (nextItem !== oldItem) {
 			this.setupFor(this.props);
 		}
 	}
 
-
-	async setupFor (props) {
-		const {item, course} = this.props;
+	async setupFor(props) {
+		const { item, course } = this.props;
 
 		try {
-			const v = item.sources != null ? item : (await course.getVideoIndex()).get(item.getID());
+			const v =
+				item.sources != null
+					? item
+					: (await course.getVideoIndex()).get(item.getID());
 			const thumb = await v.getThumbnail();
 			const poster = await v.getPoster();
 			const duration = await v.getDuration();
 
-			this.setState({thumb: thumb || poster, duration});
+			this.setState({ thumb: thumb || poster, duration });
 		} catch (e) {
 			//Its alright if it fails. Nothing to do here
 		}
 	}
 
-	render () {
-		const {item, ...otherProps} = this.props;
-		const {duration} = this.state;
-		const formattedDuration = duration != null ? DateTime.formatDuration(duration) : '';
+	render() {
+		const { item, ...otherProps } = this.props;
+		const { duration } = this.state;
+		const formattedDuration =
+			duration != null ? DateTime.formatDuration(duration) : '';
 		const required = item.CompletionRequired;
 
 		let labels = [];
 
-		if(required) {
-			labels.push(<Required key="required-label"/>);
+		if (required) {
+			labels.push(<Required key="required-label" />);
 		}
 
-		if(formattedDuration) {
+		if (formattedDuration) {
 			labels.push(formattedDuration);
 		}
 
@@ -79,9 +79,8 @@ export default class LessonOverviewVideoListItem extends React.Component {
 		);
 	}
 
-
 	renderIcon = () => {
-		const {item} = this.props;
+		const { item } = this.props;
 
 		return (
 			<Poster
@@ -90,5 +89,5 @@ export default class LessonOverviewVideoListItem extends React.Component {
 				progress={item.getPercentageCompleted()}
 			/>
 		);
-	}
+	};
 }

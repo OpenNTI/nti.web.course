@@ -1,7 +1,7 @@
 import './Progress.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {CircularProgress} from '@nti/web-charts';
+import { CircularProgress } from '@nti/web-charts';
 import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
@@ -15,7 +15,7 @@ const t = scoped('scorm.progress', {
 	failedMsg: 'Unfortunately, you did not earn a satisfactory score.',
 	contactInstructor: 'Contact Instructor',
 	noData: 'No Data Yet',
-	noDataMsg: 'Data about your course will appear here.'
+	noDataMsg: 'Data about your course will appear here.',
 });
 
 export default class Progress extends Component {
@@ -24,56 +24,55 @@ export default class Progress extends Component {
 			getScormCourse: PropTypes.func.isRequired,
 			getID: PropTypes.func.isRequired,
 			getLink: PropTypes.func.isRequired,
-			fetchLink: PropTypes.func.isRequired
+			fetchLink: PropTypes.func.isRequired,
 		}),
-		isAdmin: PropTypes.bool
-	}
+		isAdmin: PropTypes.bool,
+	};
 
-	state = {
-	}
+	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.loadData(this.props.bundle);
 	}
 
-
-	componentDidUpdate (prevProps) {
-		if(prevProps.bundle !== this.props.bundle) {
+	componentDidUpdate(prevProps) {
+		if (prevProps.bundle !== this.props.bundle) {
 			this.loadData(this.props.bundle);
 		}
 	}
 
-	async loadData (bundle) {
-		if(this.props.isAdmin) {
+	async loadData(bundle) {
+		if (this.props.isAdmin) {
 			// load ProgressStats
 			const courseProgress = await bundle.fetchLink('ProgressStats');
 
 			this.setState({
-				pctProgress: Math.floor((courseProgress.PercentageProgress || 0) * 100),
-				courseProgress
+				pctProgress: Math.floor(
+					(courseProgress.PercentageProgress || 0) * 100
+				),
+				courseProgress,
 			});
-		}
-		else {
+		} else {
 			// get from PreferredAccess
-			const {PreferredAccess} = bundle;
+			const { PreferredAccess } = bundle;
 
 			const courseProgress = PreferredAccess.CourseProgress;
 
 			const completedItem = (courseProgress || {}).CompletedItem;
 
-			const completedDate = courseProgress && courseProgress.getCompletedDate();
+			const completedDate =
+				courseProgress && courseProgress.getCompletedDate();
 			const isCompleted = Boolean(completedDate);
 
 			this.setState({
 				completedDate,
 				completedItem,
-				isCompleted
+				isCompleted,
 			});
 		}
 	}
 
-
-	renderLabeledValue (label, value, className) {
+	renderLabeledValue(label, value, className) {
 		const cls = cx('labeled-value', className);
 
 		return (
@@ -84,17 +83,20 @@ export default class Progress extends Component {
 		);
 	}
 
-
-	renderAdmin () {
+	renderAdmin() {
 		return (
 			<div className="admin-view">
-				{this.state.courseProgress && <CircularProgress value={this.state.pctProgress} showPercentSymbol/>}
+				{this.state.courseProgress && (
+					<CircularProgress
+						value={this.state.pctProgress}
+						showPercentSymbol
+					/>
+				)}
 			</div>
 		);
 	}
 
-
-	renderNotCompleted () {
+	renderNotCompleted() {
 		return (
 			<div className="not-completed">
 				<div className="title">{t('noData')}</div>
@@ -103,9 +105,8 @@ export default class Progress extends Component {
 		);
 	}
 
-
-	renderCompletionStatus (passed) {
-		if(passed == null) {
+	renderCompletionStatus(passed) {
+		if (passed == null) {
 			return this.renderNotCompleted();
 		}
 
@@ -117,20 +118,20 @@ export default class Progress extends Component {
 
 		return (
 			<div className={statusCls}>
-				<div className={className}/>
+				<div className={className} />
 				<div className="title">{title}</div>
 				<div className="message">{message}</div>
 			</div>
 		);
 	}
 
-	renderStudent () {
+	renderStudent() {
 		// TODO: get success flag from course progress
-		const {completedItem} = this.state;
+		const { completedItem } = this.state;
 
 		let passed = null;
 
-		if(completedItem) {
+		if (completedItem) {
 			passed = completedItem.Success;
 		}
 
@@ -144,9 +145,8 @@ export default class Progress extends Component {
 		);
 	}
 
-
-	render () {
-		const {isAdmin} = this.props;
+	render() {
+		const { isAdmin } = this.props;
 
 		return (
 			<div className="scorm-progress">

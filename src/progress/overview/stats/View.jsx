@@ -8,15 +8,25 @@ import Charts from './charts';
 ProgressOverviewStats.propTypes = {
 	course: PropTypes.object.isRequired,
 	enrollment: PropTypes.object,
-	singleItem: PropTypes.bool
+	singleItem: PropTypes.bool,
 };
-export default function ProgressOverviewStats ({course, enrollment, singleItem}) {
+export default function ProgressOverviewStats({
+	course,
+	enrollment,
+	singleItem,
+}) {
 	const showEnrollment = enrollment && !singleItem;
 
 	return (
 		<div className="progress-overview-stats">
-			{showEnrollment && (<EnrollmentProgress course={course} enrollment={enrollment} />)}
-			<Charts course={course} enrollment={enrollment} large={!showEnrollment} />
+			{showEnrollment && (
+				<EnrollmentProgress course={course} enrollment={enrollment} />
+			)}
+			<Charts
+				course={course}
+				enrollment={enrollment}
+				large={!showEnrollment}
+			/>
 		</div>
 	);
 }

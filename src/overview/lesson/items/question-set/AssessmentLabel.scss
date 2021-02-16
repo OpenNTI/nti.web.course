@@ -9,8 +9,10 @@
 	}
 
 	.submitted {
-		.correct, .incorrect {
-			i, span {
+		.correct,
+		.incorrect {
+			i,
+			span {
 				display: inline-block;
 				vertical-align: middle;
 			}

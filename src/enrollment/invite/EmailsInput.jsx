@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Input, TokenEditor} from '@nti/web-commons';
+import { Input, TokenEditor } from '@nti/web-commons';
 import classnames from 'classnames/bind';
-import {validate as isEmail} from 'email-validator';
+import { validate as isEmail } from 'email-validator';
 
 import styles from './EmailsInput.css';
 
@@ -14,21 +14,27 @@ export default class EmailsInput extends React.Component {
 		onChange: PropTypes.func,
 		onFileChange: PropTypes.func,
 		placeholder: PropTypes.string,
-		uploadButtonLabel: PropTypes.string
-	}
+		uploadButtonLabel: PropTypes.string,
+	};
 
-	validator = (value) => {
+	validator = value => {
 		let errors = [];
 
-		if(!value || !isEmail(value)) {
+		if (!value || !isEmail(value)) {
 			errors.push('Invalid email address');
 		}
 
 		return errors;
-	}
+	};
 
-	render () {
-		const {value, placeholder, onChange, onFileChange, uploadButtonLabel} = this.props;
+	render() {
+		const {
+			value,
+			placeholder,
+			onChange,
+			onFileChange,
+			uploadButtonLabel,
+		} = this.props;
 		const isEmpty = (value || []).length === 0;
 
 		return (
@@ -41,10 +47,15 @@ export default class EmailsInput extends React.Component {
 					validator={this.validator}
 				/>
 				{isEmpty && (
-					<Input.File className={cx('file-input')} accept="text/csv" onFileChange={onFileChange} onError={this.onFileError} label={uploadButtonLabel} />
+					<Input.File
+						className={cx('file-input')}
+						accept="text/csv"
+						onFileChange={onFileChange}
+						onError={this.onFileError}
+						label={uploadButtonLabel}
+					/>
 				)}
 			</div>
 		);
 	}
 }
-

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {Text} from '@nti/web-commons';
+import { Text } from '@nti/web-commons';
 
 import Styles from './Style.css';
 
@@ -12,18 +12,26 @@ RemainingItemsTab.propTypes = {
 	name: PropTypes.string,
 
 	selected: PropTypes.bool,
-	onSelect: PropTypes.func
+	onSelect: PropTypes.func,
 };
-export default function RemainingItemsTab ({label, name, selected, onSelect}) {
-	const onChange = React.useCallback((e) => {
-		if (!selected && e.target.checked) {
-			onSelect?.(name);
-		}
-	}, [selected, onSelect]);
+export default function RemainingItemsTab({ label, name, selected, onSelect }) {
+	const onChange = React.useCallback(
+		e => {
+			if (!selected && e.target.checked) {
+				onSelect?.(name);
+			}
+		},
+		[selected, onSelect]
+	);
 
 	return (
-		<label className={cx(Styles.tab, {[Styles.selected]: selected})}>
-			<input type="radio" name={Group} checked={selected} onChange={onChange} />
+		<label className={cx(Styles.tab, { [Styles.selected]: selected })}>
+			<input
+				type="radio"
+				name={Group}
+				checked={selected}
+				onChange={onChange}
+			/>
 			<Text.Base>{label}</Text.Base>
 		</label>
 	);

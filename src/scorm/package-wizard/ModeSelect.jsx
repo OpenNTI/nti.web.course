@@ -1,7 +1,7 @@
 import './ModeSelect.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
 // TODO: Update the labels to match design
@@ -9,11 +9,13 @@ import cx from 'classnames';
 const t = scoped('course.scorm.package-wizard.ModeSelect', {
 	cancel: 'Cancel',
 	updateTitle: 'Update Package',
-	updateDescription: 'Learner progress will be kept, but it will adjust if content was added or removed.',
+	updateDescription:
+		'Learner progress will be kept, but it will adjust if content was added or removed.',
 	updateHint: 'Better for Small Changes',
 	replaceTitle: 'Replace Package',
-	replaceDescription: 'Replacing a course package will reset learner progress. All progress will be lost.',
-	replaceHint: 'Better for Larger Changes'
+	replaceDescription:
+		'Replacing a course package will reset learner progress. All progress will be lost.',
+	replaceHint: 'Better for Larger Changes',
 });
 
 // TODO: Match the update key to match the server API.  Replace key should already
@@ -26,14 +28,12 @@ export default class ModeSelect extends React.Component {
 		onModeSelect: PropTypes.func.isRequired,
 		saveCmp: PropTypes.func,
 		onCancel: PropTypes.func,
-		buttonLabel: PropTypes.string
-	}
+		buttonLabel: PropTypes.string,
+	};
 
+	state = {};
 
-	state = {}
-
-
-	renderModeOption (name, description, hint, selected, clickHandler) {
+	renderModeOption(name, description, hint, selected, clickHandler) {
 		const className = cx('mode-option', { selected });
 
 		return (
@@ -45,51 +45,51 @@ export default class ModeSelect extends React.Component {
 		);
 	}
 
-
-	onSave = (done) => {
+	onSave = done => {
 		const { onModeSelect } = this.props;
 
 		onModeSelect && onModeSelect(this.state.selected);
 
 		done();
-	}
+	};
 
-
-	renderSaveCmp () {
+	renderSaveCmp() {
 		const { buttonLabel, saveCmp: Cmp } = this.props;
 
-		if(Cmp) {
-			return (<Cmp onSave={this.onSave} label={buttonLabel}/>);
+		if (Cmp) {
+			return <Cmp onSave={this.onSave} label={buttonLabel} />;
 		}
 
 		return null;
 	}
 
-
-	renderCancelCmp () {
-		if(this.props.onCancel) {
-			return (<div className="course-panel-cancel" onClick={this.props.onCancel}>{t('cancel')}</div>);
+	renderCancelCmp() {
+		if (this.props.onCancel) {
+			return (
+				<div
+					className="course-panel-cancel"
+					onClick={this.props.onCancel}
+				>
+					{t('cancel')}
+				</div>
+			);
 		}
 	}
 
-
-	updateSelected = (template) => {
-		this.setState({selected: template});
-	}
-
+	updateSelected = template => {
+		this.setState({ selected: template });
+	};
 
 	selectUpdate = () => {
-		this.setState({selected: UPDATE_KEY});
-	}
-
+		this.setState({ selected: UPDATE_KEY });
+	};
 
 	selectReplace = () => {
-		this.setState({selected: REPLACE_KEY});
-	}
+		this.setState({ selected: REPLACE_KEY });
+	};
 
-
-	render () {
-		const {selected} = this.state;
+	render() {
+		const { selected } = this.state;
 
 		return (
 			<div className="course-panel-templatechooser">
@@ -100,13 +100,15 @@ export default class ModeSelect extends React.Component {
 							t('updateDescription'),
 							t('updateHint'),
 							UPDATE_KEY === selected,
-							this.selectUpdate)}
+							this.selectUpdate
+						)}
 						{this.renderModeOption(
 							t('replaceTitle'),
 							t('replaceDescription'),
 							t('replaceHint'),
 							REPLACE_KEY === selected,
-							this.selectReplace)}
+							this.selectReplace
+						)}
 					</div>
 				</div>
 				<div className="course-panel-controls">

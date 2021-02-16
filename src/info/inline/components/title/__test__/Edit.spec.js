@@ -11,16 +11,18 @@ describe('Title edit test', () => {
 		const title = 'A Title';
 
 		const catalogEntry = {
-			'title': title
+			title: title,
 		};
 
-		const x = render(<Edit onValueChange={onChange} catalogEntry={catalogEntry}/>);
+		const x = render(
+			<Edit onValueChange={onChange} catalogEntry={catalogEntry} />
+		);
 
 		const input = x.container.querySelector('.title-input');
 
 		expect(input.value).toEqual(title);
 
-		fireEvent.change(input, {target: {value: 'new'}});
+		fireEvent.change(input, { target: { value: 'new' } });
 
 		expect(onChange).toHaveBeenCalledWith('title', 'new');
 	});

@@ -10,7 +10,9 @@
 			flex: 2;
 		}
 
-		.requirement-main, .score, .target-score {
+		.requirement-main,
+		.score,
+		.target-score {
 			color: var(--tertiary-grey);
 			font-size: 10px;
 			font-weight: bold;

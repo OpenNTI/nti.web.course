@@ -8,17 +8,27 @@ describe('Enrollment Progress', () => {
 	});
 
 	test('Null Completed', () => {
-		const enrollment = { CourseProgress: {}};
+		const enrollment = { CourseProgress: {} };
 		expect(getScormStatus(enrollment)).toBe('');
 	});
 
 	test('Passed', () => {
-		const enrollment = { CourseProgress: { Completed: true, CompletedItem: { Success: true }}};
+		const enrollment = {
+			CourseProgress: {
+				Completed: true,
+				CompletedItem: { Success: true },
+			},
+		};
 		expect(getScormStatus(enrollment)).toBe('passed');
 	});
 
 	test('Failed', () => {
-		const enrollment = { CourseProgress: { Completed: true, CompletedItem: { Success: false } } };
+		const enrollment = {
+			CourseProgress: {
+				Completed: true,
+				CompletedItem: { Success: false },
+			},
+		};
 		expect(getScormStatus(enrollment)).toBe('failed');
 	});
 

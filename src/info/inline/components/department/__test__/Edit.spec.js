@@ -10,10 +10,10 @@ describe('Department edit test', () => {
 		const depName = 'ABC123';
 
 		const catalogEntry = {
-			'ProviderDepartmentTitle': depName
+			ProviderDepartmentTitle: depName,
 		};
 
-		const x = render(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry} />);
 
 		expect(x.container.innerHTML).toEqual('<div></div>');
 	});

@@ -11,29 +11,35 @@ const t = scoped('course.pass-fail.requirement-details', {
 	done: 'Done',
 	cancel: 'Cancel',
 	assignmentReq: 'ASSIGNMENT NAME',
-	message: 'The following items have not satisfied the requirements of this course.'
+	message:
+		'The following items have not satisfied the requirements of this course.',
 });
 
 export default class RequirementDetails extends React.Component {
 	static propTypes = {
 		onBeforeDismiss: PropTypes.func.isRequired,
-		course: PropTypes.object.isRequired
-	}
+		course: PropTypes.object.isRequired,
+	};
 
 	state = {
-		items: []
-	}
+		items: [],
+	};
 
-	async componentDidMount () {
-		const {course} = this.props;
+	async componentDidMount() {
+		const { course } = this.props;
 
 		if (course) {
-			const CompletionMetadata = (((course.PreferredAccess || {}).CourseProgress || {}).CompletedItem || {}).CompletionMetadata;
+			const CompletionMetadata = (
+				((course.PreferredAccess || {}).CourseProgress || {})
+					.CompletedItem || {}
+			).CompletionMetadata;
 
-			if(CompletionMetadata && CompletionMetadata.Items) {
-				const failedItems = CompletionMetadata.Items.filter(item => !item.Success);
+			if (CompletionMetadata && CompletionMetadata.Items) {
+				const failedItems = CompletionMetadata.Items.filter(
+					item => !item.Success
+				);
 
-				this.setState({items: failedItems});
+				this.setState({ items: failedItems });
 			}
 		}
 	}
@@ -44,9 +50,9 @@ export default class RequirementDetails extends React.Component {
 		if (onBeforeDismiss) {
 			onBeforeDismiss();
 		}
-	}
+	};
 
-	render () {
+	render() {
 		const { items } = this.state;
 		const buttons = [
 			{ label: t('cancel'), onClick: this.onBeforeDismiss },
@@ -54,15 +60,14 @@ export default class RequirementDetails extends React.Component {
 		];
 
 		return (
-			<Prompt.Dialog
-				closeOnMaskClick
-			>
+			<Prompt.Dialog closeOnMaskClick>
 				<div className="requirement-details-prompt">
-					<Panels.TitleBar title={t('title')} iconAction={this.onBeforeDismiss} />
+					<Panels.TitleBar
+						title={t('title')}
+						iconAction={this.onBeforeDismiss}
+					/>
 					<div className="contents-container">
-						<div className="req-message">
-							{t('message')}
-						</div>
+						<div className="req-message">{t('message')}</div>
 						<Requirement title={t('assignmentReq')} items={items} />
 					</div>
 					<DialogButtons buttons={buttons} />

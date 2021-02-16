@@ -1,8 +1,8 @@
 import './Grid.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button} from '@nti/web-commons';
-import {scoped} from '@nti/lib-locale';
+import { Button } from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
 
 import Base from '../../common/BaseAssessmentGridItem';
@@ -18,7 +18,7 @@ const DEFAULT_TEXT = {
 	tryAgain: 'Try Again',
 	review: 'Review',
 	start: 'Start',
-	view: 'View'
+	view: 'View',
 };
 const t = scoped('course.overview.lesson.items.questionset.Grid', DEFAULT_TEXT);
 
@@ -33,31 +33,29 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		assessmentSubmission: PropTypes.object,
 
 		onRequirementChange: PropTypes.func,
-		editMode: PropTypes.bool
-	}
+		editMode: PropTypes.bool,
+	};
 
 	state = {
-		statusExpanded: false
-	}
+		statusExpanded: false,
+	};
 
-
-	render () {
-		const {item, assignment, assessment} = this.props;
-		const {inlineEditorExpanded} = this.state;
-		const className = cx('lesson-overview-question-set-grid-item', { disabled: !(assignment || assessment) });
+	render() {
+		const { item, assignment, assessment } = this.props;
+		const { inlineEditorExpanded } = this.state;
+		const className = cx('lesson-overview-question-set-grid-item', {
+			disabled: !(assignment || assessment),
+		});
 		return (
 			<div>
 				<Base
 					className={className}
 					item={item}
-
 					assignment={assignment}
-
 					renderTitle={this.renderTitle}
 					renderIcon={this.renderIcon}
 					renderLabels={this.renderLabels}
 					renderButton={this.renderButton}
-
 					inlineEditorExpanded={inlineEditorExpanded}
 					onEditorDismiss={this.onEditorDismiss}
 				/>
@@ -65,50 +63,71 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		);
 	}
 
-	onEditorDismiss = (savedData) => {
-		this.setState({inlineEditorExpanded: false});
-	}
+	onEditorDismiss = savedData => {
+		this.setState({ inlineEditorExpanded: false });
+	};
 
 	renderTitle = () => {
-		const {assignment} = this.props;
+		const { assignment } = this.props;
 
 		if (assignment) {
-			return (
-				<AssignmentTitle assignment={assignment} />
-			);
+			return <AssignmentTitle assignment={assignment} />;
 		}
-	}
-
+	};
 
 	renderIcon = () => {
-		const {assignment, assignmentHistory, assessment, assessmentSubmission, item} = this.props;
+		const {
+			assignment,
+			assignmentHistory,
+			assessment,
+			assessmentSubmission,
+			item,
+		} = this.props;
 
-		const CompletedItem = item?.CompletedItem || assignment?.CompletedItem || assessment?.CompletedItem;
+		const CompletedItem =
+			item?.CompletedItem ||
+			assignment?.CompletedItem ||
+			assessment?.CompletedItem;
 		const failed = CompletedItem && !CompletedItem.Success;
 
-		if(item && item.hasCompleted && item.hasCompleted() && !failed) {
+		if (item && item.hasCompleted && item.hasCompleted() && !failed) {
 			return (
 				<div className="completable">
-					<GridCompleteIcon/>
+					<GridCompleteIcon />
 				</div>
 			);
 		}
 
 		return assignment ? (
-			<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory} large />
+			<AssignmentIcon
+				assignment={assignment}
+				assignmentHistory={assignmentHistory}
+				large
+			/>
 		) : assessment ? (
-			<AssessmentIcon assessment={assessment} assessmentSubmission={assessmentSubmission} />
+			<AssessmentIcon
+				assessment={assessment}
+				assessmentSubmission={assessmentSubmission}
+			/>
 		) : null;
-	}
-
+	};
 
 	onInlineEditorExpanded = () => {
-		this.setState({inlineEditorExpanded: !this.state.inlineEditorExpanded});
-	}
-
+		this.setState({
+			inlineEditorExpanded: !this.state.inlineEditorExpanded,
+		});
+	};
 
 	renderLabels = () => {
-		const {assignment, assignmentHistory, assessment, assessmentSubmission, onRequirementChange, item, editMode} = this.props;
+		const {
+			assignment,
+			assignmentHistory,
+			assessment,
+			assessmentSubmission,
+			onRequirementChange,
+			item,
+			editMode,
+		} = this.props;
 
 		const required = item.CompletionRequired;
 
@@ -134,23 +153,24 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 					assessment={assessment}
 					assessmentSubmission={assessmentSubmission}
 					onRequirementChange={onRequirementChange}
-					required={required} />
+					required={required}
+				/>
 			);
 		}
-	}
-
+	};
 
 	renderButton = () => {
-		const {assignment} = this.props;
+		const { assignment } = this.props;
 
-		return assignment ? this.renderAssignmentButton() : this.renderAssessmentButton();
-	}
+		return assignment
+			? this.renderAssignmentButton()
+			: this.renderAssessmentButton();
+	};
 
-
-	renderAssignmentButton () {
-		const {assignment, assignmentHistory} = this.props;
+	renderAssignmentButton() {
+		const { assignment, assignmentHistory } = this.props;
 		const parts = assignment.parts || [];
-		const {maxSubmissions, submissionCount} = assignment;
+		const { maxSubmissions, submissionCount } = assignment;
 		const success = assignment?.CompletedItem?.Success;
 		const startDate = assignment.getAvailableForSubmissionBeginning();
 		const dueDate = assignment.getAvailableForSubmissionEnding();
@@ -161,7 +181,12 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		if (assignment.isNonSubmit()) {
 			text = t('view');
 		} else if (assignmentHistory) {
-			text = maxSubmissions == null || success || maxSubmissions === submissionCount ? t('review') : t('tryAgain');
+			text =
+				maxSubmissions == null ||
+				success ||
+				maxSubmissions === submissionCount
+					? t('review')
+					: t('tryAgain');
 		} else if (dueDate && dueDate < now) {
 			text = t('start');
 		} else if (!startDate || now >= startDate) {
@@ -175,9 +200,8 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		return this.renderButtonText(text);
 	}
 
-
-	renderAssessmentButton () {
-		const {assessmentSubmission} = this.props;
+	renderAssessmentButton() {
+		const { assessmentSubmission } = this.props;
 
 		let text = '';
 
@@ -190,11 +214,15 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 		return this.renderButtonText(text);
 	}
 
-	renderButtonText (text) {
-		const {assignment, assessment} = this.props;
+	renderButtonText(text) {
+		const { assignment, assessment } = this.props;
 		const blockNavigation = !(assessment || assignment);
 		return !text ? null : (
-			<Button as="span" disabled={this.state.inlineEditorExpanded || blockNavigation} rounded>
+			<Button
+				as="span"
+				disabled={this.state.inlineEditorExpanded || blockNavigation}
+				rounded
+			>
 				{text}
 			</Button>
 		);

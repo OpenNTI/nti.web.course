@@ -7,7 +7,7 @@
 // 	description: 'Delay when people can start.'
 // });
 
-export default function StartDateDisclaimer () {
+export default function StartDateDisclaimer() {
 	return null;
 	// return (
 	// 	<Description>{t('description')}</Description>

@@ -6,24 +6,24 @@ export default class RequirementControlOption extends React.Component {
 	static propTypes = {
 		option: PropTypes.object.isRequired,
 		onChange: PropTypes.func,
-		isSelected: PropTypes.bool
-	}
+		isSelected: PropTypes.bool,
+	};
 
-	onClick = (e) => {
+	onClick = e => {
 		e.preventDefault();
 		e.stopPropagation();
 
-		const {onChange} = this.props;
+		const { onChange } = this.props;
 
-		if(onChange) {
+		if (onChange) {
 			onChange(this.props.option.value);
 		}
-	}
+	};
 
-	render () {
+	render() {
 		return (
 			<div className="require-control-option" onClick={this.onClick}>
-				{this.props.isSelected && <i className="icon-check"/>}
+				{this.props.isSelected && <i className="icon-check" />}
 				{this.props.option.label}
 			</div>
 		);

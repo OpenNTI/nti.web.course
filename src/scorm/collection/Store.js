@@ -1,26 +1,29 @@
-import {Stores} from '@nti/lib-store';
+import { Stores } from '@nti/lib-store';
 
-	
 //PIN any package that is uploading, processing, or errord.
-function isPinnedPackage (p) {
+function isPinnedPackage(p) {
 	return p.isTask || p.isProcessing || p.isErrored;
 }
 
-function packageMatches (p, filter) {
-	if (isPinnedPackage(p)) { return true; }
+function packageMatches(p, filter) {
+	if (isPinnedPackage(p)) {
+		return true;
+	}
 
-	const {title} = p;
+	const { title } = p;
 
 	return title && title.toLowerCase().indexOf(filter) >= 0;
 }
 
-function filterPackages (packages, filter) {
-	if (!filter) { return packages; }
+function filterPackages(packages, filter) {
+	if (!filter) {
+		return packages;
+	}
 
 	return packages.filter(p => packageMatches(p, filter));
 }
 
-function getFormData (file) {
+function getFormData(file) {
 	const data = new FormData();
 
 	data.append('source', file);
@@ -28,38 +31,37 @@ function getFormData (file) {
 	return data;
 }
 
-
-function replaceIn (original, replacement, list) {
-	return list.map((item) => item === original ? replacement : item);
+function replaceIn(original, replacement, list) {
+	return list.map(item => (item === original ? replacement : item));
 }
 
 export default class ScormCollectionStore extends Stores.BoundStore {
-	constructor () {
+	constructor() {
 		super();
 
 		this.set({
-			initialLoad: false
+			initialLoad: false,
 		});
 	}
 
-
-	get empty () {
+	get empty() {
 		const fullPackages = this.get('fullPackages');
 
-		return (fullPackages && fullPackages.length === 0);
+		return fullPackages && fullPackages.length === 0;
 	}
 
+	async load() {
+		const { course } = this.binding;
 
-	async load () {
-		const {course} = this.binding;
-
-		if (course === this.course) { return; }
+		if (course === this.course) {
+			return;
+		}
 
 		this.course = course;
 
 		if (!course.hasLink('ScormInstances')) {
 			this.set({
-				unavailable: true
+				unavailable: true,
 			});
 			return;
 		}
@@ -74,8 +76,12 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 		try {
 			const packages = await course.fetchLinkParsed('ScormInstances');
 			const sorted = packages.sort((a, b) => {
-				if (isPinnedPackage(a) && !isPinnedPackage(b)) { return -1; }
-				if (!isPinnedPackage(a) && isPinnedPackage(b)) { return 1; }
+				if (isPinnedPackage(a) && !isPinnedPackage(b)) {
+					return -1;
+				}
+				if (!isPinnedPackage(a) && isPinnedPackage(b)) {
+					return 1;
+				}
 
 				return a.getCreatedTime() - b.getCreatedTime();
 			});
@@ -84,19 +90,18 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 				initialLoad: true,
 				loading: false,
 				packages: sorted,
-				fullPackages: sorted
+				fullPackages: sorted,
 			});
 		} catch (e) {
 			this.set({
 				inititalLoad: true,
 				loading: false,
-				error: e
+				error: e,
 			});
 		}
 	}
 
-
-	_prependPackage (p) {
+	_prependPackage(p) {
 		const oldPackages = this.get('fullPackages');
 		const filter = this.get('filter');
 
@@ -104,30 +109,38 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 
 		this.set({
 			packages: filterPackages(newPackages, filter),
-			fullPackages: newPackages
+			fullPackages: newPackages,
 		});
 	}
 
-
-	_replacePackage (oldPackage, newPackage) {
+	_replacePackage(oldPackage, newPackage) {
 		this.set({
 			packages: replaceIn(oldPackage, newPackage, this.get('packages')),
-			fullPackages: replaceIn(oldPackage, newPackage, this.get('fullPackages'))
+			fullPackages: replaceIn(
+				oldPackage,
+				newPackage,
+				this.get('fullPackages')
+			),
 		});
 	}
 
-	_removePackage (pack) {
+	_removePackage(pack) {
 		this.set({
 			packages: (this.get('packages') || []).filter(p => p !== pack),
-			fullPackages: (this.get('fullPackages') || []).filter(p => p !== pack)
+			fullPackages: (this.get('fullPackages') || []).filter(
+				p => p !== pack
+			),
 		});
 	}
 
+	async uploadPackage(file) {
+		const { course } = this.binding;
 
-	async uploadPackage (file) {
-		const {course} = this.binding;
-
-		const upload = course.putUploadToLink('ScormInstances', getFormData(file), true);
+		const upload = course.putUploadToLink(
+			'ScormInstances',
+			getFormData(file),
+			true
+		);
 
 		upload.setName(file.name);
 		this._prependPackage(upload);
@@ -140,7 +153,6 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 			if (this.binding.onPackageUploaded) {
 				this.binding.onPackageUploaded(newPackage);
 			}
-
 		} catch (e) {
 			if (e.wasCanceled) {
 				this._removePackage(upload);
@@ -148,8 +160,7 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 		}
 	}
 
-
-	async deletePackage (pack) {
+	async deletePackage(pack) {
 		if (pack.isTask) {
 			return this._removePackage(pack);
 		}
@@ -175,13 +186,12 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 		}
 	}
 
-
-	setFilter (filter) {
+	setFilter(filter) {
 		const packages = this.get('fullPackages');
 
 		this.setImmediate({
 			filter,
-			packages: filterPackages(packages, filter.toLowerCase())
+			packages: filterPackages(packages, filter.toLowerCase()),
 		});
 	}
 }

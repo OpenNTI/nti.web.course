@@ -1,4 +1,11 @@
-export default function uploadCourseData (link, zipFile, onComplete, onFailure, onProgress, type) {
+export default function uploadCourseData(
+	link,
+	zipFile,
+	onComplete,
+	onFailure,
+	onProgress,
+	type
+) {
 	if (!link) {
 		onFailure(new Error('No Link'));
 	}
@@ -32,7 +39,7 @@ export default function uploadCourseData (link, zipFile, onComplete, onFailure, 
 			} else {
 				onFailure({
 					status: xhr.status,
-					responseText: xhr.responseText
+					responseText: xhr.responseText,
 				});
 			}
 		}

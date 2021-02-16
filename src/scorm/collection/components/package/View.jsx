@@ -8,42 +8,41 @@ import ProcessingFailed from './ProcessingFailed';
 import Ready from './Ready';
 
 const STATES = [
-	(pack) => pack.isTask && pack.isRejected ? UploadingFailed : null,
-	(pack) => pack.isTask ? Uploading : null,
-	(pack) => pack.isErrored ? ProcessingFailed : null,
-	(pack) => pack.isProcessing ? Processing : null,
-	() => Ready
+	pack => (pack.isTask && pack.isRejected ? UploadingFailed : null),
+	pack => (pack.isTask ? Uploading : null),
+	pack => (pack.isErrored ? ProcessingFailed : null),
+	pack => (pack.isProcessing ? Processing : null),
+	() => Ready,
 ];
 
 export default class SCORMPackageView extends React.Component {
 	static propTypes = {
-		package: PropTypes.object.isRequired
-	}
+		package: PropTypes.object.isRequired,
+	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.addListener();
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.removeListener();
 	}
 
-	componentDidUpdate (prevProps) {
-		const {package: pack} = this.props;
-		const {package: oldPack} = prevProps;
+	componentDidUpdate(prevProps) {
+		const { package: pack } = this.props;
+		const { package: oldPack } = prevProps;
 
 		if (pack !== oldPack) {
 			this.addListener();
 		}
 	}
 
-
-	addListener () {
+	addListener() {
 		if (this.cleanupListener) {
 			this.cleanupListener();
 		}
 
-		const {package: pack} = this.props;
+		const { package: pack } = this.props;
 		const onChange = () => this.forceUpdate();
 
 		if (pack.addChangeListener) {
@@ -61,21 +60,20 @@ export default class SCORMPackageView extends React.Component {
 		}
 	}
 
-	removeListener () {
+	removeListener() {
 		if (this.cleanupListener) {
 			this.cleanupListener();
 		}
 	}
 
-
-	render () {
-		const {package: pack} = this.props;
+	render() {
+		const { package: pack } = this.props;
 
 		for (let state of STATES) {
 			const Cmp = state(pack);
 
 			if (Cmp) {
-				return (<Cmp {...this.props} />);
+				return <Cmp {...this.props} />;
 			}
 		}
 

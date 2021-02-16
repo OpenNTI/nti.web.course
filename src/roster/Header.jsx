@@ -9,7 +9,7 @@ import styles from './Header.css';
 const cx = classnames.bind(styles);
 
 export default class Header extends React.Component {
-	render () {
+	render() {
 		return (
 			<header className={cx('header')}>
 				<EnrollmentCount />

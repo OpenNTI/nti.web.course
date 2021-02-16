@@ -11,7 +11,7 @@ describe('DayTime WizardPanel test', () => {
 		save: () => {
 			mockSave();
 			return Promise.resolve();
-		}
+		},
 	};
 	const onCancel = jest.fn();
 	const afterSave = jest.fn();
@@ -19,7 +19,7 @@ describe('DayTime WizardPanel test', () => {
 
 	let root;
 	beforeEach(() => {
-		({container: root} = render(
+		({ container: root } = render(
 			<WizardPanel
 				catalogEntry={catalogEntry}
 				saveCmp={SaveButton}
@@ -32,10 +32,10 @@ describe('DayTime WizardPanel test', () => {
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
+		label: PropTypes.string,
 	};
 
-	function SaveButton ({onSave, label}) {
+	function SaveButton({ onSave, label }) {
 		return (
 			<div onClick={onSave}>
 				<div className="course-panel-continue">{label}</div>
@@ -63,12 +63,18 @@ describe('DayTime WizardPanel test', () => {
 
 		fireEvent.click(node);
 
-		await waitFor(() =>
-			expect(onCancel).toHaveBeenCalled());
+		await waitFor(() => expect(onCancel).toHaveBeenCalled());
 	});
 
 	test('Test date fields', async () => {
-		const [/*sun*/, monday, /* tues */, wednesday, /*thurs*/, friday] = root.querySelectorAll('.course-panel-day');
+		const [
+			,
+			/*sun*/ monday /* tues */,
+			,
+			wednesday /*thurs*/,
+			,
+			friday,
+		] = root.querySelectorAll('.course-panel-day');
 
 		// initial state is unselected
 		expect(monday.getAttribute('class')).not.toMatch(/selected/);
@@ -85,5 +91,4 @@ describe('DayTime WizardPanel test', () => {
 			expect(friday.getAttribute('class')).toMatch(/selected/);
 		});
 	});
-
 });

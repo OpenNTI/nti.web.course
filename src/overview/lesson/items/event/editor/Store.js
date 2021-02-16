@@ -1,14 +1,17 @@
-import {getService} from '@nti/web-client';
-import {Stores} from '@nti/lib-store';
-import {Models} from '@nti/lib-interfaces';
+import { getService } from '@nti/web-client';
+import { Stores } from '@nti/lib-store';
+import { Models } from '@nti/lib-interfaces';
 import AppDispatcher from '@nti/lib-dispatcher';
-import {Events} from '@nti/web-session';
+import { Events } from '@nti/web-session';
 
-function safeContains (fieldValue, target) {
-	return fieldValue && fieldValue.toLowerCase().indexOf(target.toLowerCase()) >= 0;
+function safeContains(fieldValue, target) {
+	return (
+		fieldValue &&
+		fieldValue.toLowerCase().indexOf(target.toLowerCase()) >= 0
+	);
 }
 
-function getFormDataForCreation (data) {
+function getFormDataForCreation(data) {
 	const formData = new FormData();
 	const keys = Object.keys(data);
 
@@ -23,11 +26,11 @@ function getFormDataForCreation (data) {
 	return formData;
 }
 
-function getFormDataForUpdate (newData, oldData) {
+function getFormDataForUpdate(newData, oldData) {
 	const formData = new FormData();
 	let didChange = false;
 
-	const maybeAdd = (key) => {
+	const maybeAdd = key => {
 		if (newData[key] !== oldData[key]) {
 			didChange = true;
 			formData.append(key, newData[key]);
@@ -50,33 +53,42 @@ function getFormDataForUpdate (newData, oldData) {
 }
 
 export default class CourseEventsStore extends Stores.BoundStore {
-	constructor () {
+	constructor() {
 		super();
 
 		this.set({
 			loading: true,
 			createError: null,
-			events: []
+			events: [],
 		});
 	}
 
-	async deleteEvent (event) {
+	async deleteEvent(event) {
 		await event.delete();
 
 		AppDispatcher.handleRequestAction({
 			type: 'Calendar-Event-Deleted',
 			data: {
-				calendarEvent: event
-			}
+				calendarEvent: event,
+			},
 		});
 
 		await this.load(this.searchTerm);
 	}
 
-	async createEvent (course, event, title, description, location, startDate, endDate, img) {
+	async createEvent(
+		course,
+		event,
+		title,
+		description,
+		location,
+		startDate,
+		endDate,
+		img
+	) {
 		this.set({
 			saving: true,
-			createError: null
+			createError: null,
 		});
 
 		try {
@@ -84,22 +96,31 @@ export default class CourseEventsStore extends Stores.BoundStore {
 			const service = await getService();
 			const newData = {
 				MimeType: Models.calendar.CourseCalendarEvent.MimeType,
-				title, description, location,
+				title,
+				description,
+				location,
 				icon: img,
-				'start_time': startDate && startDate.toISOString(),
-				'end_time': endDate && endDate.toISOString()
+				start_time: startDate && startDate.toISOString(),
+				end_time: endDate && endDate.toISOString(),
 			};
-			const oldData = !event ? null :
-				{
-					MimeType: event.MimeType,
-					title: event.title,
-					description: event.description,
-					location: event.location,
-					icon: event.icon,
-					'start_time': event.getStartTime() && event.getStartTime().toISOString(),
-					'end_time': event.getEndTime() && event.getEndTime().toISOString()
-				};
-			const formData = oldData ? getFormDataForUpdate(newData, oldData) : getFormDataForCreation(newData);
+			const oldData = !event
+				? null
+				: {
+						MimeType: event.MimeType,
+						title: event.title,
+						description: event.description,
+						location: event.location,
+						icon: event.icon,
+						start_time:
+							event.getStartTime() &&
+							event.getStartTime().toISOString(),
+						end_time:
+							event.getEndTime() &&
+							event.getEndTime().toISOString(),
+				  };
+			const formData = oldData
+				? getFormDataForUpdate(newData, oldData)
+				: getFormDataForCreation(newData);
 
 			if (!formData && event) {
 				return event;
@@ -108,55 +129,56 @@ export default class CourseEventsStore extends Stores.BoundStore {
 			let calendarEvent;
 			let type = 'Calendar-Event-Created';
 
-			if(event) {
+			if (event) {
 				type = 'Calendar-Event-Changed';
 				const raw = await service.put(event.getLink('edit'), formData);
 				await event.refresh(calendarEvent);
 				calendarEvent = event;
 				Events.emit(Events.EVENT_UPDATED, raw);
-			}
-			else {
-				calendarEvent = await service.postParseResponse(calendar.getLink('create_calendar_event'), formData);
+			} else {
+				calendarEvent = await service.postParseResponse(
+					calendar.getLink('create_calendar_event'),
+					formData
+				);
 			}
 
 			// on successful event creation, call load to resync with server?
 
 			this.set({
-				saving: false
+				saving: false,
 			});
 
 			AppDispatcher.handleRequestAction({
 				type,
 				data: {
-					calendarEvent
-				}
+					calendarEvent,
+				},
 			});
 
 			return calendarEvent;
-		}
-		catch (e) {
+		} catch (e) {
 			let createError = e.message || e;
 
-			if(e.code === 'RequiredMissing') {
+			if (e.code === 'RequiredMissing') {
 				createError = 'Missing required field: ' + e.field;
 			}
 
 			this.set({
 				loading: false,
 				saving: false,
-				createError
+				createError,
 			});
 
 			return null;
 		}
 	}
 
-	doSearch (term) {
+	doSearch(term) {
 		this.searchTerm = term;
-		this.set({searchTerm: term, loading: true});
+		this.set({ searchTerm: term, loading: true });
 
 		this.searchTimeout = setTimeout(() => {
-			if(this.searchTerm !== term) {
+			if (this.searchTerm !== term) {
 				return;
 			}
 
@@ -164,37 +186,37 @@ export default class CourseEventsStore extends Stores.BoundStore {
 		}, 500);
 	}
 
-	async load (searchTerm) {
-
-		if(this.searchTerm && this.searchTerm !== searchTerm) {
+	async load(searchTerm) {
+		if (this.searchTerm && this.searchTerm !== searchTerm) {
 			return;
 		}
 
 		let events, error;
 
 		try {
-			const {course} = this.binding;
+			const { course } = this.binding;
 			const calendar = await course.fetchLinkParsed('CourseCalendar');
-			events = await calendar.fetchLinkParsed('contents', {'exclude_dynamic_events': true});
+			events = await calendar.fetchLinkParsed('contents', {
+				exclude_dynamic_events: true,
+			});
 
-			if(this.searchTerm) {
+			if (this.searchTerm) {
 				events = events.filter(i => {
-					return safeContains(i.title, this.searchTerm)
-					|| safeContains(i.description, this.searchTerm)
-					|| safeContains(i.location, this.searchTerm);
+					return (
+						safeContains(i.title, this.searchTerm) ||
+						safeContains(i.description, this.searchTerm) ||
+						safeContains(i.location, this.searchTerm)
+					);
 				});
 			}
-
-		}
-		catch (e) {
+		} catch (e) {
 			error = e;
 		}
 
 		this.set({
 			loading: false,
 			events,
-			error
+			error,
 		});
-
 	}
 }

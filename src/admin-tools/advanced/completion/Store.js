@@ -1,20 +1,29 @@
-import {Stores} from '@nti/lib-store';
-import {getService} from '@nti/web-client';
-import {Models} from '@nti/lib-interfaces';
+import { Stores } from '@nti/lib-store';
+import { getService } from '@nti/web-client';
+import { Models } from '@nti/lib-interfaces';
 
-const {Assignment, TimedAssignment, DiscussionAssignment} = Models.assessment.assignment;
-const {WebinarAsset} = Models.integrations;
-const {VideoRoll} = Models.courses.overview;
-const {SurveyReference, Survey} = Models.assessment.survey;
-const {RelatedWorkReference, LTIExternalToolAsset, Package, RenderablePackage} = Models.content;
-const {Video} = Models.media;
-const {SCORMContentInfo} = Models.courses.scorm;
+const {
+	Assignment,
+	TimedAssignment,
+	DiscussionAssignment,
+} = Models.assessment.assignment;
+const { WebinarAsset } = Models.integrations;
+const { VideoRoll } = Models.courses.overview;
+const { SurveyReference, Survey } = Models.assessment.survey;
+const {
+	RelatedWorkReference,
+	LTIExternalToolAsset,
+	Package,
+	RenderablePackage,
+} = Models.content;
+const { Video } = Models.media;
+const { SCORMContentInfo } = Models.courses.scorm;
 
 const DEFAULT_REQUIRED_POLICY_LINKS = {
 	FETCH: 'GetDefaultRequiredPolicy',
 	UPDATEDEFAULT: 'UpdateDefaultRequiredPolicy',
 	UPDATE: 'UpdateCompletionPolicy',
-	RESET: 'ResetCompletionPolicy'
+	RESET: 'ResetCompletionPolicy',
 };
 
 const TYPES = {
@@ -26,23 +35,30 @@ const TYPES = {
 	RELATED_WORK: 'External Links and Uploads',
 	LTI: 'LTI Tools',
 	READINGS: 'Readings',
-	SCORM: 'SCORM Packages'
+	SCORM: 'SCORM Packages',
 };
 
 const MIME_TYPES_MAP = {
-	[TYPES.ASSIGNMENTS]: [Assignment.MimeType, TimedAssignment.MimeType, DiscussionAssignment.MimeType],
+	[TYPES.ASSIGNMENTS]: [
+		Assignment.MimeType,
+		TimedAssignment.MimeType,
+		DiscussionAssignment.MimeType,
+	],
 	[TYPES.RELATED_WORK]: [RelatedWorkReference.MimeType],
 	[TYPES.LTI]: [LTIExternalToolAsset.MimeType],
-	[TYPES.READINGS]: ['application/vnd.nextthought.persistentcontentpackage', Package.MimeType, RenderablePackage.MimeType],
+	[TYPES.READINGS]: [
+		'application/vnd.nextthought.persistentcontentpackage',
+		Package.MimeType,
+		RenderablePackage.MimeType,
+	],
 	[TYPES.SURVEYS]: [SurveyReference.MimeType, Survey.MimeType],
 	[TYPES.VIDEOS]: [VideoRoll.MimeType, ...Video.MimeTypes],
 	[TYPES.WEBINARS]: [WebinarAsset.MimeType],
-	[TYPES.SCORM]: [SCORMContentInfo.MimeType]
+	[TYPES.SCORM]: [SCORMContentInfo.MimeType],
 };
 
 export default class CourseAdminCompletionStore extends Stores.SimpleStore {
-
-	constructor () {
+	constructor() {
 		super();
 
 		this.set({
@@ -50,17 +66,17 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			defaultRequirables: Object.keys(MIME_TYPES_MAP).map(k => {
 				return {
 					label: k,
-					isDefault: false
+					isDefault: false,
 				};
-			})
+			}),
 		});
 	}
 
-	async saveDefaultPolicy (label, value) {
+	async saveDefaultPolicy(label, value) {
 		let defaultRequirables = [...(this.get('defaultRequirables') || [])];
 
-		for(let i in defaultRequirables) {
-			if(defaultRequirables[i].label === label) {
+		for (let i in defaultRequirables) {
+			if (defaultRequirables[i].label === label) {
 				defaultRequirables[i].isDefault = value;
 			}
 		}
@@ -69,11 +85,17 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		this.set('defaultRequirables', defaultRequirables);
 
 		try {
-			let types = defaultRequirables.reduce((acc, a) => acc.concat(a.isDefault ? MIME_TYPES_MAP[a.label] : []), []);
+			let types = defaultRequirables.reduce(
+				(acc, a) =>
+					acc.concat(a.isDefault ? MIME_TYPES_MAP[a.label] : []),
+				[]
+			);
 
-			await this.course.CompletionPolicy.putToLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATEDEFAULT, { 'mime_types': types });
-		}
-		catch (e) {
+			await this.course.CompletionPolicy.putToLink(
+				DEFAULT_REQUIRED_POLICY_LINKS.UPDATEDEFAULT,
+				{ mime_types: types }
+			);
+		} catch (e) {
 			this.set('error', e.message || e);
 
 			// reload to make sure we're synced with the server
@@ -81,33 +103,34 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		}
 	}
 
-	async save (completable, percentage, certificationPolicy) {
+	async save(completable, percentage, certificationPolicy) {
 		const service = await getService();
 
 		// optimistically emit changes so controls widgets update their state immediately
 		// if there is an error, we'll revert and emit the old values with the error
-		this.set({completable, certificationPolicy});
+		this.set({ completable, certificationPolicy });
 
 		try {
-			if(completable) {
+			if (completable) {
 				await service.put(this.course.getLink('CompletionPolicy'), {
-					MimeType: 'application/vnd.nextthought.completion.aggregatecompletionpolicy',
+					MimeType:
+						'application/vnd.nextthought.completion.aggregatecompletionpolicy',
 					percentage: percentage ? percentage / 100.0 : 0,
-					'offers_completion_certificate': Boolean(certificationPolicy)
+					offers_completion_certificate: Boolean(certificationPolicy),
 				});
-			}
-			else {
+			} else {
 				// delete from CompletionPolicy?
 				const encodedID = encodeURIComponent(this.course.NTIID);
 
-				await service.delete(this.course.getLink('CompletionPolicy') + '/' + encodedID);
+				await service.delete(
+					this.course.getLink('CompletionPolicy') + '/' + encodedID
+				);
 			}
 
 			await this.course.refresh();
 
 			this.load(this.course, true);
-		}
-		catch (e) {
+		} catch (e) {
 			this.set('error', e.message || e);
 
 			// reload to make sure we're synced with the server
@@ -115,13 +138,13 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		}
 	}
 
-	isTypeDefault (obj, type) {
+	isTypeDefault(obj, type) {
 		let isDefault = true;
 
 		const mimeTypes = obj.mimeTypes || obj['mime_types'];
 
-		for(let t of MIME_TYPES_MAP[type]) {
-			if(type) {
+		for (let t of MIME_TYPES_MAP[type]) {
+			if (type) {
 				isDefault = isDefault && mimeTypes.includes(t);
 			}
 		}
@@ -129,10 +152,10 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		return isDefault;
 	}
 
-	async load (course, skipLoad) {
+	async load(course, skipLoad) {
 		this.course = course;
 
-		if(!skipLoad) {
+		if (!skipLoad) {
 			this.set('loading', true);
 		}
 
@@ -140,7 +163,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 
 		const service = await getService();
 
-		const {CatalogEntry} = course;
+		const { CatalogEntry } = course;
 
 		let state = {
 			completable: false,
@@ -148,42 +171,60 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			percentage: 0.0,
 			disabled: !CatalogEntry || !CatalogEntry.hasLink('edit'),
 			defaultRequiredDisabled: false,
-			completableToggleDisabled: !this.course.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.RESET),
-			updateDisabled: !this.course.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATE)
+			completableToggleDisabled: !this.course.hasLink(
+				DEFAULT_REQUIRED_POLICY_LINKS.RESET
+			),
+			updateDisabled: !this.course.hasLink(
+				DEFAULT_REQUIRED_POLICY_LINKS.UPDATE
+			),
 		};
 
-		if(this.course.CompletionPolicy) {
-			if(this.course.CompletionPolicy.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.FETCH)) {
-				const policy = await service.get(this.course.CompletionPolicy.getLink(DEFAULT_REQUIRED_POLICY_LINKS.FETCH));
+		if (this.course.CompletionPolicy) {
+			if (
+				this.course.CompletionPolicy.hasLink(
+					DEFAULT_REQUIRED_POLICY_LINKS.FETCH
+				)
+			) {
+				const policy = await service.get(
+					this.course.CompletionPolicy.getLink(
+						DEFAULT_REQUIRED_POLICY_LINKS.FETCH
+					)
+				);
 
 				let defaultRequirables = [];
 
-				for(let k of Object.keys(MIME_TYPES_MAP)) {
+				for (let k of Object.keys(MIME_TYPES_MAP)) {
 					defaultRequirables.push({
 						label: k,
-						isDefault: this.isTypeDefault(policy, k)
+						isDefault: this.isTypeDefault(policy, k),
 					});
 				}
 
 				state.defaultRequirables = defaultRequirables;
 			}
 
-			if(!this.course.CompletionPolicy.hasLink(DEFAULT_REQUIRED_POLICY_LINKS.UPDATEDEFAULT)) {
+			if (
+				!this.course.CompletionPolicy.hasLink(
+					DEFAULT_REQUIRED_POLICY_LINKS.UPDATEDEFAULT
+				)
+			) {
 				state.defaultRequiredDisabled = true;
 			}
 
 			state.completable = true;
-			state.certificationPolicy = Boolean(this.course.CompletionPolicy.offersCompletionCertificate);
-			state.percentage = (this.course.CompletionPolicy.percentage || 0) * 100;
-		}
-		else {
+			state.certificationPolicy = Boolean(
+				this.course.CompletionPolicy.offersCompletionCertificate
+			);
+			state.percentage =
+				(this.course.CompletionPolicy.percentage || 0) * 100;
+		} else {
 			// no completion policy, no default requirables either
 			let defaultRequirables = [];
 
-			for(let k of Object.keys(MIME_TYPES_MAP)) {
+			for (let k of Object.keys(MIME_TYPES_MAP)) {
 				defaultRequirables.push({
 					label: k,
-					isDefault: false
+					isDefault: false,
 				});
 			}
 

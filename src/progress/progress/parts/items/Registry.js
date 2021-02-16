@@ -5,7 +5,7 @@ const ITEMS = Symbol('Items');
 
 const DEFAULT = Symbol('Default');
 
-function getTypeMap (types) {
+function getTypeMap(types) {
 	return types.reduce((acc, type) => {
 		acc[type] = true;
 
@@ -14,34 +14,33 @@ function getTypeMap (types) {
 }
 
 export default class Registry {
-	static DEFAULT = DEFAULT
+	static DEFAULT = DEFAULT;
 
-	static register (types) {
+	static register(types) {
 		const registry = this;
 
-		return function decorator (item) {
+		return function decorator(item) {
 			registry.registerItem(types, item);
 		};
 	}
 
-	static getInstance () {
+	static getInstance() {
 		const Register = this;
 
-		this[INSTANCE] = this[INSTANCE] || new Register;
+		this[INSTANCE] = this[INSTANCE] || new Register();
 
 		return this[INSTANCE];
 	}
 
-	static registerItem (types, item) {
+	static registerItem(types, item) {
 		this.getInstance().register(types, item);
 	}
 
-
-	constructor () {
+	constructor() {
 		this[ITEMS] = [];
 	}
 
-	register (types, item) {
+	register(types, item) {
 		if (types === DEFAULT) {
 			this[DEFAULT] = item;
 			return;
@@ -59,12 +58,11 @@ export default class Registry {
 
 		this[ITEMS].push({
 			types: getTypeMap(types),
-			item
+			item,
 		});
 	}
 
-
-	getItemFor (type) {
+	getItemFor(type) {
 		for (let item of this[ITEMS]) {
 			if (item.types[type]) {
 				return item.item;
@@ -74,8 +72,7 @@ export default class Registry {
 		return this[DEFAULT];
 	}
 
-
-	getItems () {
+	getItems() {
 		return this[ITEMS].map(item => item.item);
 	}
 }

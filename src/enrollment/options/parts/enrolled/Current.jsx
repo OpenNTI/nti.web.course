@@ -1,14 +1,14 @@
 import './Current.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import PaddedContainer from '../../common/PaddedContainer';
 import ActionItem from '../../common/ActionItem';
 
 const t = scoped('course.enrollment.options.parts.enrolled.Current', {
 	label: 'Enrolled',
-	upgrade: 'Upgrade'
+	upgrade: 'Upgrade',
 });
 
 export default class CourseEnrollmentOptionsEnrolledCurrent extends React.Component {
@@ -17,29 +17,27 @@ export default class CourseEnrollmentOptionsEnrolledCurrent extends React.Compon
 			EnrolledTitle: PropTypes.func.isRequired,
 			EnrolledDescription: PropTypes.func.isRequired,
 			DropButton: PropTypes.func,
-			OpenButton: PropTypes.func
+			OpenButton: PropTypes.func,
 		}),
 		hasUpdates: PropTypes.bool,
-		doUpgrade: PropTypes.func
-	}
-
+		doUpgrade: PropTypes.func,
+	};
 
 	onUpgrade = () => {
-		const {doUpgrade} = this.props;
+		const { doUpgrade } = this.props;
 
 		if (doUpgrade) {
 			doUpgrade();
 		}
-	}
+	};
 
-
-	render () {
-		const {option, hasUpdates} = this.props;
+	render() {
+		const { option, hasUpdates } = this.props;
 		const {
 			EnrolledTitle,
 			EnrolledDescription,
 			DropButton,
-			OpenButton
+			OpenButton,
 		} = option;
 
 		return (
@@ -52,13 +50,16 @@ export default class CourseEnrollmentOptionsEnrolledCurrent extends React.Compon
 					<EnrolledTitle option={option} />
 					<EnrolledDescription option={option} />
 					{hasUpdates && (
-						<ActionItem className="upgrade" onClick={this.onUpgrade}>
+						<ActionItem
+							className="upgrade"
+							onClick={this.onUpgrade}
+						>
 							{t('upgrade')}
 						</ActionItem>
 					)}
 				</div>
-				{DropButton && (<DropButton option={option} />)}
-				{OpenButton && (<OpenButton option={option} />)}
+				{DropButton && <DropButton option={option} />}
+				{OpenButton && <OpenButton option={option} />}
 			</div>
 		);
 	}

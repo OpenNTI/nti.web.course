@@ -111,11 +111,15 @@
 	padding-right: 0;
 }
 
-.remaining-items :global(li .webinar-base-item button) { /* hide the webinar register/join button. TODO: find a better place for this */
+.remaining-items :global(li .webinar-base-item button) {
+	/* hide the webinar register/join button. TODO: find a better place for this */
 	display: none;
 }
 
 .remaining-items :global(li:last-of-type .webinar-base-item),
-.remaining-items :global(li:last-of-type .lesson-overview-base-list-item-container .lesson-overview-base-list-item-table-row) {
+.remaining-items
+	:global(li:last-of-type
+		.lesson-overview-base-list-item-container
+		.lesson-overview-base-list-item-table-row) {
 	box-shadow: none;
 }

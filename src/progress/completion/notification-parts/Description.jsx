@@ -1,6 +1,9 @@
-import {Translate} from './strings';
+import { Translate } from './strings';
 
-export const Description = styled(Translate).attrs({as: 'p', localeKey:'description'})`
+export const Description = styled(Translate).attrs({
+	as: 'p',
+	localeKey: 'description',
+})`
 	margin: 1.25rem auto 3.125rem;
 	color: var(--secondary-grey);
 	font-size: 1rem;

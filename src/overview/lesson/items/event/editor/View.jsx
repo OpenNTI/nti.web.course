@@ -1,7 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {decorate} from '@nti/lib-commons';
+import { decorate } from '@nti/lib-commons';
 
 import Overview from '../common/EventOverview';
 import Browse from '../common/Browse';
@@ -10,7 +10,6 @@ import Store from './Store';
 
 const BROWSE_LIST = 'browse-list';
 const OVERVIEW = 'overview';
-
 
 class EventEditor extends React.Component {
 	static propTypes = {
@@ -23,50 +22,63 @@ class EventEditor extends React.Component {
 		onAddToLesson: PropTypes.func,
 		onAddAsExternalLink: PropTypes.func,
 		onDelete: PropTypes.func,
-		saveDisabled: PropTypes.bool
-	}
+		saveDisabled: PropTypes.bool,
+	};
 
-	static deriveBindingFromProps ({course}) {
+	static deriveBindingFromProps({ course }) {
 		return {
-			course
+			course,
 		};
 	}
 
 	state = {
-		activePanel: BROWSE_LIST
-	}
+		activePanel: BROWSE_LIST,
+	};
 
-	componentDidMount () {
-		const {event, activePanel} = this.props;
+	componentDidMount() {
+		const { event, activePanel } = this.props;
 
-		if(event) {
-			this.setState({activePanel: OVERVIEW, event: event.CalendarEvent});
-		}
-		else if(activePanel) {
-			this.setState({activePanel: activePanel});
+		if (event) {
+			this.setState({
+				activePanel: OVERVIEW,
+				event: event.CalendarEvent,
+			});
+		} else if (activePanel) {
+			this.setState({ activePanel: activePanel });
 		}
 	}
 
 	togglePanel = () => {
-		if(this.state.activePanel === BROWSE_LIST) {
-			this.setState({activePanel: OVERVIEW});
+		if (this.state.activePanel === BROWSE_LIST) {
+			this.setState({ activePanel: OVERVIEW });
+		} else {
+			this.setState({ activePanel: BROWSE_LIST });
 		}
-		else {
-			this.setState({activePanel: BROWSE_LIST});
-		}
-	}
+	};
 
-	render () {
-		const {course, onCancel, onAddToLesson, onDelete, lessonOverview, overviewGroup, saveDisabled, event: eventRef} = this.props;
-		const {event} = this.state;
+	render() {
+		const {
+			course,
+			onCancel,
+			onAddToLesson,
+			onDelete,
+			lessonOverview,
+			overviewGroup,
+			saveDisabled,
+			event: eventRef,
+		} = this.props;
+		const { event } = this.state;
 
 		return (
 			<div className="event-editor">
 				{this.state.activePanel === BROWSE_LIST && (
 					<Browse
 						course={course}
-						onSelect={(selectedEvent) => {
-							this.setState({event: selectedEvent, activePanel: OVERVIEW});
+						onSelect={selectedEvent => {
+							this.setState({
+								event: selectedEvent,
+								activePanel: OVERVIEW,
+							});
 						}}
 					/>
 				)}
@@ -88,6 +100,4 @@ class EventEditor extends React.Component {
 	}
 }
 
-export default decorate(EventEditor, [
-	Store.connect(['loading', 'events'])
-]);
+export default decorate(EventEditor, [Store.connect(['loading', 'events'])]);

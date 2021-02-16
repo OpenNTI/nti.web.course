@@ -12,18 +12,22 @@ describe('Section test', () => {
 
 		const catalogEntry = {
 			title,
-			description
+			description,
 		};
 
-		const {container:root} = render(
+		const { container: root } = render(
 			<Section
 				components={[Title, Description]}
 				catalogEntry={catalogEntry}
 			/>
 		);
 
-		expect(root.querySelector('.course-view-title').textContent).toEqual(title);
-		expect(root.querySelector('.course-view-description').textContent).toEqual(description);
+		expect(root.querySelector('.course-view-title').textContent).toEqual(
+			title
+		);
+		expect(
+			root.querySelector('.course-view-description').textContent
+		).toEqual(description);
 		expect(root.querySelector('.edit-course-info')).toBeFalsy();
 	});
 
@@ -31,14 +35,11 @@ describe('Section test', () => {
 		const description = 'Some description';
 
 		const catalogEntry = {
-			description
+			description,
 		};
 
-		const {container} = render(
-			<Section
-				components={[MeetTimes]}
-				catalogEntry={catalogEntry}
-			/>
+		const { container } = render(
+			<Section components={[MeetTimes]} catalogEntry={catalogEntry} />
 		);
 
 		// if there is no data for the contents of the Section, then nothing should be rendered
@@ -52,10 +53,10 @@ describe('Section test', () => {
 
 		const catalogEntry = {
 			title,
-			description
+			description,
 		};
 
-		const {container: root} = render(
+		const { container: root } = render(
 			<Section
 				components={[Title, Description]}
 				catalogEntry={catalogEntry}
@@ -63,8 +64,12 @@ describe('Section test', () => {
 			/>
 		);
 
-		expect(root.querySelector('.course-view-title').textContent).toEqual(title);
-		expect(root.querySelector('.course-view-description').textContent).toEqual(description);
+		expect(root.querySelector('.course-view-title').textContent).toEqual(
+			title
+		);
+		expect(
+			root.querySelector('.course-view-description').textContent
+		).toEqual(description);
 		expect(root.querySelector('.edit-course-info')).toBeTruthy();
 	});
 
@@ -72,10 +77,10 @@ describe('Section test', () => {
 		const description = 'Some description';
 
 		const catalogEntry = {
-			description
+			description,
 		};
 
-		const {container: root} = render(
+		const { container: root } = render(
 			<Section
 				components={[Title]}
 				catalogEntry={catalogEntry}
@@ -99,10 +104,10 @@ describe('Section interactivity test', () => {
 
 		const catalogEntry = {
 			title,
-			description
+			description,
 		};
 
-		const {container: root} = render(
+		const { container: root } = render(
 			<Section
 				components={[Title, Description]}
 				catalogEntry={catalogEntry}
@@ -130,17 +135,17 @@ describe('Section interactivity test', () => {
 		const catalogEntry = {
 			title,
 			description,
-			save: (obj) => {
+			save: obj => {
 				mockSave();
 				actualSavedTitle = obj.title;
 				return Promise.resolve();
-			}
+			},
 		};
 
 		let cmp;
-		const {container: root} = render(
+		const { container: root } = render(
 			<Section
-				ref={x => cmp = x}
+				ref={x => (cmp = x)}
 				components={[Title, Description]}
 				catalogEntry={catalogEntry}
 				onEndEditing={endEditing}
@@ -162,7 +167,7 @@ describe('Section interactivity test', () => {
 		expect(endEditing).toHaveBeenCalled();
 		expect(mockSave).not.toHaveBeenCalled();
 
-		cmp.setState({pendingChanges: { title : titleToSave }});
+		cmp.setState({ pendingChanges: { title: titleToSave } });
 
 		fireEvent.click(save);
 

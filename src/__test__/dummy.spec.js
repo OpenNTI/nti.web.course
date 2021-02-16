@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import {DateTime} from '@nti/web-commons';
+import { DateTime } from '@nti/web-commons';
 // import moment from 'moment-timezone'; //eslint-disable-line
 
 test('sanity check tz', () => {

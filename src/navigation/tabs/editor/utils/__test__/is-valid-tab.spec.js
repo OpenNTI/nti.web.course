@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import isValidTab from '../is-valid-tab';
 
-import {VALID_TABS, INVALID_TABS} from './Constants';
+import { VALID_TABS, INVALID_TABS } from './Constants';
 
 describe('getTabError', () => {
 	test('returns true if the tab is valid', () => {

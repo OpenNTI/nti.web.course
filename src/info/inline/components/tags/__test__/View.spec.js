@@ -9,16 +9,16 @@ describe('Tags view test', () => {
 		const tags = ['ab', 'cd', '12'];
 
 		const catalogEntry = {
-			tags
+			tags,
 		};
 
-		const x = render(<View catalogEntry={catalogEntry}/>);
+		const x = render(<View catalogEntry={catalogEntry} />);
 
 		const tagCmps = x.container.querySelectorAll('.tag');
 
 		expect(tagCmps.length).toBe(3);
 
-		for(let i = 0; i < tags.length; i++) {
+		for (let i = 0; i < tags.length; i++) {
 			expect(tagCmps[i].textContent).toEqual(tags[i]);
 		}
 	});

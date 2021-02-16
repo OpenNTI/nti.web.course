@@ -1,41 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 import Disclaimer from './Disclaimer';
 
 const t = scoped('course.info.inline.components.redemptioncodes.View', {
-	label: 'Redemption Code'
+	label: 'Redemption Code',
 });
 
 export default class RedemptionCodesView extends React.Component {
 	static propTypes = {
-		redemptionCodes: PropTypes.arrayOf(PropTypes.object)
-	}
+		redemptionCodes: PropTypes.arrayOf(PropTypes.object),
+	};
 
 	// no static FIELD_NAME, codes are pulled through the API, not off the object directly
 
-	constructor (props) {
+	constructor(props) {
 		super(props);
 
 		this.state = {};
 	}
 
-	renderCode = (code) => {
-		return (<div key={code.Code} className="redemption-code">{code.Code}</div>);
-	}
+	renderCode = code => {
+		return (
+			<div key={code.Code} className="redemption-code">
+				{code.Code}
+			</div>
+		);
+	};
 
-	renderCodes () {
+	renderCodes() {
 		const { redemptionCodes } = this.props;
 
-		if(!redemptionCodes || redemptionCodes.length === 0) {
-			return (<div>None</div>);
+		if (!redemptionCodes || redemptionCodes.length === 0) {
+			return <div>None</div>;
 		}
 
-		return (<div>{redemptionCodes.map(this.renderCode)}</div>);
+		return <div>{redemptionCodes.map(this.renderCode)}</div>;
 	}
 
-	render () {
+	render() {
 		return (
 			<div className="columned">
 				<div className="field-info">

@@ -2,27 +2,35 @@ import './BaseListItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import {isIterable} from '@nti/lib-commons';
-import {List, AssetIcon, Card, Table} from '@nti/web-commons';
-import {isNTIID} from '@nti/lib-ntiids';
-import {LinkTo} from '@nti/web-routing';
-import {CircularProgress} from '@nti/web-charts';
+import { isIterable } from '@nti/lib-commons';
+import { List, AssetIcon, Card, Table } from '@nti/web-commons';
+import { isNTIID } from '@nti/lib-ntiids';
+import { LinkTo } from '@nti/web-routing';
+import { CircularProgress } from '@nti/web-charts';
 
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';
 
-const isExternal = (item) => /external/i.test(item.type) || !isNTIID(item.href);
+const isExternal = item => /external/i.test(item.type) || !isNTIID(item.href);
 
-function getCompletedDate (item, completed) {
-	if (!item) { return null; }
-	if (!completed) { return item.getCompletedDate?.(); }
+function getCompletedDate(item, completed) {
+	if (!item) {
+		return null;
+	}
+	if (!completed) {
+		return item.getCompletedDate?.();
+	}
 
-	return completed[item.NTIID] || completed[item.href] || completed[item['Target-NTIID']] || completed['target-NTIID'];
+	return (
+		completed[item.NTIID] ||
+		completed[item.href] ||
+		completed[item['Target-NTIID']] ||
+		completed['target-NTIID']
+	);
 }
 
-
 class LessonOverviewBaseListItemInfo extends React.Component {
-	static cssClassName = 'lesson-overview-base-list-item-table-info-cell'
+	static cssClassName = 'lesson-overview-base-list-item-table-info-cell';
 
 	static propTypes = {
 		className: PropTypes.string,
@@ -43,16 +51,16 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 		linkToContext: PropTypes.any,
 		onClick: PropTypes.func,
 
-		noCompletedStatus: PropTypes.bool
-	}
+		noCompletedStatus: PropTypes.bool,
+	};
 
-	state = {}
+	state = {};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.resolveIcon(this.props);
 	}
 
-	componentDidUpdate (oldProps) {
+	componentDidUpdate(oldProps) {
 		const { item: nextItem } = this.props;
 		const { item: oldItem } = oldProps;
 
@@ -61,36 +69,50 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 		}
 	}
 
-	componentWillUnmount () {
+	componentWillUnmount() {
 		this.unmounted = this;
-		this.setState = () => { };
+		this.setState = () => {};
 	}
 
-	async resolveIcon (props) {
-		const {course, item = {}, renderIcon} = props;
+	async resolveIcon(props) {
+		const { course, item = {}, renderIcon } = props;
 
-		if (renderIcon) { return; }
+		if (renderIcon) {
+			return;
+		}
 
 		const icon = await Card.resolveIcon(item, course);
 
-		this.setState({icon});
+		this.setState({ icon });
 	}
 
-
-	render () {
-		const {className, disabled, item, linkToObject, linkToContext, onClick} = this.props;
+	render() {
+		const {
+			className,
+			disabled,
+			item,
+			linkToObject,
+			linkToContext,
+			onClick,
+		} = this.props;
 
 		const title = this.renderTitle();
 
 		return (
 			<LinkTo.Object
 				data-ntiid={item.NTIID}
-				className={cx('lesson-overview-base-list-item-link', { disabled: disabled })}
+				className={cx('lesson-overview-base-list-item-link', {
+					disabled: disabled,
+				})}
 				object={linkToObject || item}
 				context={linkToContext}
 				onClick={onClick}
 			>
-				<div className={cx('lesson-overview-base-list-item', className, {disabled})}>
+				<div
+					className={cx('lesson-overview-base-list-item', className, {
+						disabled,
+					})}
+				>
 					<div className="icon-container">
 						<div className="icon">
 							{this.renderIcon()}
@@ -98,7 +120,11 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 						</div>
 					</div>
 					<div className="right">
-						<TextPart className={cx('title', {plain: typeof title === 'string'})}>
+						<TextPart
+							className={cx('title', {
+								plain: typeof title === 'string',
+							})}
+						>
 							<>{title}</>
 						</TextPart>
 						<TextPart className="labels">
@@ -110,12 +136,16 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 		);
 	}
 
-	renderIcon () {
-		const {renderIcon, item} = this.props;
-		const {icon} = this.state;
-		const type = [item.type || item.MimeType, item.targetMimeType].filter(x => x);
+	renderIcon() {
+		const { renderIcon, item } = this.props;
+		const { icon } = this.state;
+		const type = [item.type || item.MimeType, item.targetMimeType].filter(
+			x => x
+		);
 
-		if (renderIcon) { return renderIcon(); }
+		if (renderIcon) {
+			return renderIcon();
+		}
 
 		return (
 			<AssetIcon
@@ -124,22 +154,25 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 				mimeType={type}
 				href={item.href}
 			>
-				{isExternal(item) && (<div className="external" />)}
+				{isExternal(item) && <div className="external" />}
 			</AssetIcon>
 		);
 	}
 
+	renderCompletedStatus() {
+		const { item, noCompletedStatus, completedItemsOverride } = this.props;
+		const isCompleted = Boolean(
+			getCompletedDate(item, completedItemsOverride)
+		);
 
-	renderCompletedStatus () {
-		const {item, noCompletedStatus, completedItemsOverride} = this.props;
-		const isCompleted = Boolean(getCompletedDate(item, completedItemsOverride));
-
-		if (noCompletedStatus) { return null; }
+		if (noCompletedStatus) {
+			return null;
+		}
 
 		if (isCompleted && item.completedSuccessfully()) {
 			return (
 				<div className="progress-icon">
-					<CircularProgress width={20} height={20} isComplete/>
+					<CircularProgress width={20} height={20} isComplete />
 				</div>
 			);
 		}
@@ -153,38 +186,45 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 		}
 	}
 
+	renderTitle() {
+		const { title, item, renderTitle } = this.props;
 
-	renderTitle () {
-		const {title, item, renderTitle} = this.props;
+		if (renderTitle) {
+			return renderTitle();
+		}
 
-		if (renderTitle) { return renderTitle(); }
-
-		return title != null ? title : (item.title || item.label);
+		return title != null ? title : item.title || item.label;
 	}
 
+	renderLabels() {
+		const { labels, renderLabels } = this.props;
 
-	renderLabels () {
-		const {labels, renderLabels} = this.props;
+		if (renderLabels) {
+			return renderLabels();
+		}
 
-		if (renderLabels) { return renderLabels(); }
+		if (!labels) {
+			return null;
+		}
 
-		if (!labels) { return null; }
-
-		return (
-			<List.SeparatedInline>
-				{labels}
-			</List.SeparatedInline>
-		);
+		return <List.SeparatedInline>{labels}</List.SeparatedInline>;
 	}
 }
 
 LessonOverviewBaseListItem.propTypes = {
 	item: PropTypes.object,
-	extraColumns: PropTypes.array
+	extraColumns: PropTypes.array,
 };
-export default function LessonOverviewBaseListItem ({item, extraColumns = [], ...otherProps}) {
-	const columns = [LessonOverviewBaseListItemInfo, ...(isIterable(extraColumns) ? extraColumns : [])];
-	const extraProps = {item, ...otherProps};
+export default function LessonOverviewBaseListItem({
+	item,
+	extraColumns = [],
+	...otherProps
+}) {
+	const columns = [
+		LessonOverviewBaseListItemInfo,
+		...(isIterable(extraColumns) ? extraColumns : []),
+	];
+	const extraProps = { item, ...otherProps };
 
 	return (
 		<PaddedContainer className="lesson-overview-base-list-item-container">

@@ -1,8 +1,8 @@
-import {parseNTIID} from '@nti/lib-ntiids';
+import { parseNTIID } from '@nti/lib-ntiids';
 
 const SPECIAL_ID_REGEX = /^Topic:EnrolledCourse(Section|Root)$/;
 
-export default function maybeFixNTIID (ntiid, course) {
+export default function maybeFixNTIID(ntiid, course) {
 	const parts = parseNTIID(ntiid);
 	const catalogEntry = course && course.CatalogEntry;
 
@@ -24,7 +24,9 @@ export default function maybeFixNTIID (ntiid, course) {
 	 */
 
 	if (catalogEntry && parts && SPECIAL_ID_REGEX.test(parts.specific.type)) {
-		parts.specific.$$provider = (catalogEntry.ProviderUniqueID || '').replace(/[\W-]/g, '_');
+		parts.specific.$$provider = (
+			catalogEntry.ProviderUniqueID || ''
+		).replace(/[\W-]/g, '_');
 	}
 
 	return parts.toString();

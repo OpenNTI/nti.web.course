@@ -7,14 +7,14 @@ import TagInput from '../TagInput';
 describe('TagInput test', () => {
 	test('Test existing value', () => {
 		const values = ['abc', '123', 'def'];
-		const x = render(<TagInput value={values}/>);
+		const x = render(<TagInput value={values} />);
 
 		// there should be three tokens for the existing values
 		const tokens = x.container.querySelectorAll('div.token');
 
 		expect(tokens.length).toEqual(3);
 
-		for(let i = 0; i < values.length; i++) {
+		for (let i = 0; i < values.length; i++) {
 			expect(tokens[i].textContent).toEqual(values[i]);
 		}
 

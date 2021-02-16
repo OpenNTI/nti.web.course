@@ -1,11 +1,11 @@
 const ROUTE_CACHE = {};
 
 export default {
-	set (root, route) {
+	set(root, route) {
 		ROUTE_CACHE[root] = route;
 	},
 
-	get (root) {
+	get(root) {
 		return ROUTE_CACHE[root] || root;
-	}
+	},
 };

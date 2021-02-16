@@ -19,11 +19,11 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 		assignmentHistory: PropTypes.object,
 
 		assessment: PropTypes.object,
-		assessmentSubmission: PropTypes.object
-	}
+		assessmentSubmission: PropTypes.object,
+	};
 
-	render () {
-		const {item, assignment, assessment, ...otherProps} = this.props;
+	render() {
+		const { item, assignment, assessment, ...otherProps } = this.props;
 
 		return (
 			<Base
@@ -36,67 +36,83 @@ export default class LessonOverviewQuestionSetListItem extends React.Component {
 				renderTitle={this.renderTitle}
 				renderIcon={this.renderIcon}
 				renderLabels={this.renderLabels}
-
 				noCompletedStatus={!!assignment}
 			/>
 		);
 	}
 
-
 	renderTitle = () => {
-		const {assignment, item} = this.props;
+		const { assignment, item } = this.props;
 
 		if (assignment) {
-			return (
-				<AssignmentTitle assignment={assignment} />
-			);
+			return <AssignmentTitle assignment={assignment} />;
 		}
 
-		return (item.title || item.label);
-	}
-
+		return item.title || item.label;
+	};
 
 	renderIcon = () => {
-		const {assignment, assignmentHistory, assessment, assessmentSubmission, item} = this.props;
+		const {
+			assignment,
+			assignmentHistory,
+			assessment,
+			assessmentSubmission,
+			item,
+		} = this.props;
 
-		const CompletedItem = item?.CompletedItem || assignment?.CompletedItem || assessment?.CompletedItem;
+		const CompletedItem =
+			item?.CompletedItem ||
+			assignment?.CompletedItem ||
+			assessment?.CompletedItem;
 		const failed = CompletedItem && !CompletedItem.Success;
 
-		if(item && item.hasCompleted && item.hasCompleted() && !failed) {
-			return (
-				<GridCompleteIcon/>
-			);
+		if (item && item.hasCompleted && item.hasCompleted() && !failed) {
+			return <GridCompleteIcon />;
 		}
 
 		if (assignment) {
 			return (
-				<AssignmentIcon assignment={assignment} assignmentHistory={assignmentHistory} />
+				<AssignmentIcon
+					assignment={assignment}
+					assignmentHistory={assignmentHistory}
+				/>
 			);
 		}
-
 
 		if (assessment) {
 			return (
-				<AssessmentIcon assessment={assessment} assessmentSubmission={assessmentSubmission} />
+				<AssessmentIcon
+					assessment={assessment}
+					assessmentSubmission={assessmentSubmission}
+				/>
 			);
 		}
 
-
-		return (
-			<div className="fallback-questionset-icon" />
-		);
-	}
-
+		return <div className="fallback-questionset-icon" />;
+	};
 
 	renderLabels = () => {
-		const {assignment, assignmentHistory, assessment, assessmentSubmission} = this.props;
+		const {
+			assignment,
+			assignmentHistory,
+			assessment,
+			assessmentSubmission,
+		} = this.props;
 
 		const required = (assignment || assessment || {}).CompletionRequired;
 
 		return assignment ? (
-			<AssignmentLabel assignment={assignment} assignmentHistory={assignmentHistory} required={required}/>
+			<AssignmentLabel
+				assignment={assignment}
+				assignmentHistory={assignmentHistory}
+				required={required}
+			/>
 		) : assessment ? (
-			<AssessmentLabel assessment={assessment} assessmentSubmission={assessmentSubmission} required={required}/>
+			<AssessmentLabel
+				assessment={assessment}
+				assessmentSubmission={assessmentSubmission}
+				required={required}
+			/>
 		) : null;
-	}
+	};
 }

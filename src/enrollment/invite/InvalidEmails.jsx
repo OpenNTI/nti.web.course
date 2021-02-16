@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import {scoped} from '@nti/lib-locale';
+import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.roster.invite', {
-	'message': {
+	message: {
 		one: 'The following email is invalid:',
-		other: 'The following emails are invalid:'
+		other: 'The following emails are invalid:',
 	},
-	'message-more': '…and %(count)s more.'
+	'message-more': '…and %(count)s more.',
 });
 
 import styles from './InvalidEmails.css';
@@ -23,14 +23,13 @@ const count = (acc, item) => {
 const limit = 5;
 
 export default class InvalidEmails extends React.PureComponent {
-
 	static propTypes = {
-		invalid: PropTypes.array
-	}
+		invalid: PropTypes.array,
+	};
 
-	render () {
-		const {invalid} = this.props;
-		
+	render() {
+		const { invalid } = this.props;
+
 		if (!invalid || invalid.length === 0) {
 			return null;
 		}
@@ -42,22 +41,26 @@ export default class InvalidEmails extends React.PureComponent {
 
 		return (
 			<div className={cx('invalid-emails')}>
-				<div className={cx('message')}>{t('message', {count: show.length})}</div>
+				<div className={cx('message')}>
+					{t('message', { count: show.length })}
+				</div>
 				<ul>
 					{show.map(([email, occurrences]) => (
 						<li key={email}>
 							<span className={cx('email')}>{email}</span>
 							{occurrences > 1 && (
-								<span className={cx('count')}>({occurrences})</span>
+								<span className={cx('count')}>
+									({occurrences})
+								</span>
 							)}
 						</li>
 					))}
 				</ul>
-				{
-					remaining > 0 && (
-						<div className={cx('message-more')}>{t('message-more', {count: remaining})}</div>
-					)
-				}
+				{remaining > 0 && (
+					<div className={cx('message-more')}>
+						{t('message-more', { count: remaining })}
+					</div>
+				)}
 			</div>
 		);
 	}

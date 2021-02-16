@@ -1,4 +1,4 @@
-@import "~@nti/style-common";
+@import '~@nti/style-common';
 
 .course-date-picker-flyout {
 	// why do we need to set the width on the calendar..?
@@ -82,7 +82,7 @@
 		margin-top: 5px;
 		color: var(--tertiary-grey);
 
-		i[class^="icon-"].small {
+		i[class^='icon-'].small {
 			font-size: 12px !important;
 		}
 	}

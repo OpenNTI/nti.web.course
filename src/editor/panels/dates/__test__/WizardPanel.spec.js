@@ -11,7 +11,7 @@ describe('Dates WizardPanel test', () => {
 		save: () => {
 			mockSave();
 			return Promise.resolve();
-		}
+		},
 	};
 	const onCancel = jest.fn();
 	const afterSave = jest.fn();
@@ -33,10 +33,10 @@ describe('Dates WizardPanel test', () => {
 
 	SaveButton.propTypes = {
 		onSave: PropTypes.func,
-		label: PropTypes.string
+		label: PropTypes.string,
 	};
 
-	function SaveButton ({onSave, label}) {
+	function SaveButton({ onSave, label }) {
 		return (
 			<div onClick={onSave}>
 				<div className="course-panel-continue">{label}</div>
@@ -64,8 +64,7 @@ describe('Dates WizardPanel test', () => {
 
 		fireEvent.click(node);
 
-		await waitFor(() =>
-			expect(onCancel).toHaveBeenCalled());
+		await waitFor(() => expect(onCancel).toHaveBeenCalled());
 	});
 
 	test('Test date fields', async () => {
@@ -83,5 +82,4 @@ describe('Dates WizardPanel test', () => {
 			expect(endDate.getAttribute('class')).toMatch(/selected/);
 		});
 	});
-
 });

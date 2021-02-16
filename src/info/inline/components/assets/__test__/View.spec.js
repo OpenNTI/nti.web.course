@@ -1,12 +1,12 @@
 const mockService = () => ({
-	getObject: (o) => Promise.resolve(o),
-	put: (url) => {
-		if(url === 'badURL') {
+	getObject: o => Promise.resolve(o),
+	put: url => {
+		if (url === 'badURL') {
 			return Promise.reject('Bad URL');
 		}
 
 		return Promise.resolve();
-	}
+	},
 });
 
 const onBefore = () => {
@@ -15,14 +15,15 @@ const onBefore = () => {
 		username: 'TestUser',
 		nodeService: mockService(),
 		nodeInterface: {
-			getServiceDocument: () => Promise.resolve(global.$AppConfig.nodeService)
-		}
+			getServiceDocument: () =>
+				Promise.resolve(global.$AppConfig.nodeService),
+		},
 	};
 };
 
 const onAfter = () => {
 	//unmock getService()
-	const {$AppConfig} = global;
+	const { $AppConfig } = global;
 	delete $AppConfig.nodeInterface;
 	delete $AppConfig.nodeService;
 };
@@ -37,22 +38,16 @@ describe('Asset view test', () => {
 		// 	presentationroot: '/root/',
 		// 	PlatformPresentationResources: {}
 		// };
-
 		// const cmp = mount(<View catalogEntry={catalogEntry}/>);
-
 		// function verifyType (type, expectedSrc) {
 		// 	const preview = cmp.find('.asset.' + type).first();
-
 		// 	expect(preview.find('.asset-label').first().text()).toEqual(type);
 		// 	expect(preview.find('img').first().prop('src')).toEqual(expectedSrc);
 		// }
-
 		// verifyType('thumb', '/root/contentpackage-thumb-60x60.png');
 		// verifyType('landing', '/root/contentpackage-landing-232x170.png');
 		// verifyType('background', '/root/background.png');
-
 		// const input = cmp.find('input').first();
-
 		// expect(input.prop('type')).toEqual('file');
 		// expect(input.prop('accept')).toEqual('.zip');
 	});
@@ -120,7 +115,6 @@ describe('Asset view test', () => {
 	// 		expect(cmp.state().uploadInProgress).toBe(false);
 	// 		expect(cmp.state().uploadSuccess).toBe(false);
 	// 		expect(cmp.find('.error').first().text()).toEqual('Upload failed');
-
 
 	// 		done();
 	// 	}, 200);

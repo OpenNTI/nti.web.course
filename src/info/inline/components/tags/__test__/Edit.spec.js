@@ -9,16 +9,16 @@ describe('Tags edit test', () => {
 		const tags = ['ab', 'cd', '12'];
 
 		const catalogEntry = {
-			tags
+			tags,
 		};
 
-		const x = render(<Edit catalogEntry={catalogEntry}/>);
+		const x = render(<Edit catalogEntry={catalogEntry} />);
 
 		const tokens = x.container.querySelectorAll('div.token');
 
 		expect(tokens.length).toEqual(3);
 
-		for(let i = 0; i < tags.length; i++) {
+		for (let i = 0; i < tags.length; i++) {
 			expect(tokens[i].textContent).toEqual(tags[i].toUpperCase());
 		}
 
