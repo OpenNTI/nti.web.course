@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
 	Presentation,
-	DeferredImage
+	Image
 } from '@nti/web-commons';
 
 CourseCardImage.propTypes = {
@@ -13,7 +13,7 @@ export default function CourseCardImage ({course}) {
 	return (
 		<div className="nti-course-card-image">
 			<Presentation.Asset contentPackage={course} propName="src" type="landing">
-				<DeferredImage alt="" />
+				<Image.Deferred alt="" />
 			</Presentation.Asset>
 		</div>
 	);
