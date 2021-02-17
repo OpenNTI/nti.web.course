@@ -9,11 +9,7 @@ CourseCardImage.propTypes = {
 export default function CourseCardImage({ course }) {
 	return (
 		<div className="nti-course-card-image">
-			<Presentation.Asset
-				contentPackage={course}
-				propName="src"
-				type="landing"
-			>
+			<Presentation.Asset contentPackage={course} type="landing">
 				<Image.Deferred alt="" />
 			</Presentation.Asset>
 		</div>
