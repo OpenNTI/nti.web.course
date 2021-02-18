@@ -51,7 +51,7 @@ GroupHeader.propTypes = {
 
 	getSectionTitle: PropTypes.func
 };
-export default function GroupHeader ({group, getSectionTitle}) {
+export default function GroupHeader ({group, getSectionTitle = getLocale}) {
 	const background = Theme.useThemeProperty('background');
 	const lightBackground = background === 'light';
 
@@ -62,12 +62,12 @@ export default function GroupHeader ({group, getSectionTitle}) {
 		<Header>
 			{name && (
 				<Name light={!lightBackground}>
-					{getLocale(name)}
+					{getSectionTitle(name)}
 				</Name>
 			)}
 			{sub && (
 				<Sub light={!lightBackground}>
-					{getLocale(sub)}
+					{getSectionTitle(sub)}
 				</Sub>
 			)}
 		</Header>
