@@ -19,13 +19,19 @@ const t = scoped('course.card.type.administering', {
 	confirmDelete: 'Do you want to delete this course?',
 });
 
+const Link = styled(LinkTo.Object)`
+	position: relative;
+	display:  inline-block;
+`;
+
 export default class Administrative extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		onEdit: PropTypes.func,
 		onModification: PropTypes.func,
-		onClick: PropTypes.func,
-	};
+		onDelete: PropTypes.func,
+		onClick: PropTypes.func
+	}
 
 	static contextTypes = {
 		router: PropTypes.object,
@@ -34,7 +40,7 @@ export default class Administrative extends React.Component {
 	attachOptionsFlyoutRef = x => (this.optionsFlyout = x);
 
 	deleteCourse = e => {
-		const { course, onModification } = this.props;
+		const { course, onModification, onDelete } = this.props;
 
 		e.stopPropagation();
 		e.preventDefault();
@@ -51,6 +57,7 @@ export default class Administrative extends React.Component {
 					})
 					.then(() => {
 						onModification && onModification();
+						onDelete?.(course);
 					})
 					.catch(err => {
 						console.error(err); //eslint-disable-line
@@ -165,7 +172,7 @@ export default class Administrative extends React.Component {
 		}
 
 		return (
-			<LinkTo.Object object={course} onClick={onClick}>
+			<Link object={course} onClick={onClick}>
 				<Card
 					{...otherProps}
 					course={course.CatalogEntry}
@@ -173,7 +180,7 @@ export default class Administrative extends React.Component {
 					className="no-padding"
 				/>
 				{Responsive.isWebappContext() && this.renderOptions()}
-			</LinkTo.Object>
+			</Link>
 		);
 	}
 }

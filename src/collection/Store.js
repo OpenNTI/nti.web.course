@@ -1,0 +1,157 @@
+import {Stores, Interfaces} from '@nti/lib-store';
+import {getService} from '@nti/web-client';
+
+import combineGroups from './utils/combine-groups';
+import getSemester from './utils/get-semester';
+
+const BatchSize = 40;
+
+const Sections = {
+	'AdministeredCourses': [
+		{rel: 'upcoming'},
+		{rel: 'current'},
+		{rel: 'archived', grouper: getSemester}
+	],
+	'EnrolledCourses': [
+		{rel: 'upcoming'},
+		{rel: 'current'},
+		{rel: 'archived', grouper: getSemester}
+	]
+};
+
+function getSection (collection, section, extraParams = {}) {
+	let offset = 0;
+	let done = false;
+
+	const loadNextGroups = async () => {
+		if (done) { return  {}; }
+
+		const params = {
+			...extraParams,
+			batchSize: BatchSize,
+			batchStart: offset
+		};
+
+		try {
+			const service = await getService();
+			const batch = await service.getBatch(collection.getLink(section.rel), params);
+
+			//if we got back less than the batch size this section is done
+			if (batch.Items.length < params.batchSize) { done = done || true; }//I know
+
+			if (!section.grouper) {
+				return [{name: section.rel, Items: batch.Items}];
+			}
+
+			return combineGroups(
+				batch.Items.map(item => ({
+					name: section.grouper(item),
+					parent: section.rel,
+					Items: [item]
+				}))
+			);
+		} catch (e) {
+			return [{name: e, error: e}];
+		}
+	};
+
+	return {
+		loadNextGroups,
+		get done () { return done; }
+	};
+}
+
+function getSections (collection, extraParams) {
+	const sections = (Sections[collection.Title] ?? [{rel: 'self'}])
+		.map(s => getSection(collection, s, extraParams));
+
+	const loadNext = async (prev = []) => {
+		const current = sections.find(s => !s.done);
+
+		if (!current) { return prev; }
+
+		const next = await current.loadNextGroups();
+		const result = combineGroups(prev, next);
+		const count = result.reduce((acc, g) => acc + g.Items.length);
+
+		if (count > BatchSize) {
+			return result;
+		}
+
+		return loadNext(result);
+	};
+
+	return {
+		loadNextGroups: () => loadNext(),
+		get done () { return sections.every(s => s.done);},
+	};
+}
+
+
+class CourseCollectionStore extends Stores.BoundStore {
+	async load () {
+		if (this.searchTerm) { return this.loadSearchTerm(); }
+		if (this.binding.collection === this.collection) { return; }
+
+		const collection = this.collection = this.binding.collection;
+
+		this.setImmediate({
+			collection,
+			loading: true,
+			error: null,
+			groups: null,
+			hasMore: false
+		});
+
+		try {
+			this.sections = getSections(collection);
+			const initialGroups = await this.sections.loadNextGroups();
+
+			this.set({
+				loading: false,
+				groups: initialGroups,
+				hasMore: !this.sections.done
+			});
+		} catch (e) {
+			this.set({
+				loading: false,
+				error: e
+			});
+		}
+
+	}
+
+	async loadMore () {
+		if (this.sections.done) { return; }
+
+		this.setImmediate({
+			loading: true
+		});
+
+		const current = this.get('groups');
+		const next = this.sections.getNextGroups();
+
+		this.set({
+			groups: combineGroups(current, next),
+			hasMore: !this.sections.done
+		});
+	}
+
+	loadSearchTerm () {
+
+	}
+
+	onCourseDelete (course) {
+		this.setImmediate({
+			groups: (this.get('groups') ?? []).map((group) => {
+				return {
+					...group,
+					Items: (group.Items ?? []).filter(c => c !== course)
+				};
+			})
+		});
+	}
+
+}
+
+export default Interfaces.Searchable(CourseCollectionStore);
