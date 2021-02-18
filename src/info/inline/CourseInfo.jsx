@@ -118,16 +118,7 @@ export default class CourseInfo extends React.Component {
 			redemptionCodes = null;
 		}
 
-		let enrollmentAccess;
-
-		try {
-			enrollmentAccess = await catalogEntry.fetchLinkParsed(
-				'UserCoursePreferredAccess'
-			);
-		} catch (e) {
-			// may not have access at all
-			enrollmentAccess = null;
-		}
+		let enrollmentAccess = courseInstance.PreferredAccess;
 
 		const facilitators = await getVisibleFacilitators(
 			catalogEntry,
