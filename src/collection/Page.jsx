@@ -13,7 +13,8 @@ const {useMobileValue} = Hooks;
 
 const t = scoped('course.collection.Page', {
 	search: {
-		'AdministeredCourses': 'Administered Courses'
+		'AdministeredCourses': 'Administered Courses',
+		'EnrolledCourses': 'Enrolled Courses'
 	},
 	results: 'Showing Results for "%(term)s"'
 });
