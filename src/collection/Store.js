@@ -88,7 +88,7 @@ function getSections (collection, extraParams) {
 
 	return {
 		loadNextGroups: () => {
-			activeLoad = (activeLoad || Promise.resolve).then(() => loadNext());
+			activeLoad = (activeLoad || Promise.resolve()).then(() => loadNext());
 
 			return activeLoad;
 		},
