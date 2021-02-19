@@ -37,7 +37,10 @@ function getSection (collection, section, extraParams = {}) {
 			const batch = await service.getBatch(collection.getLink(section.rel), params);
 
 			//if we got back less than the batch size this section is done
-			if (batch.Items.length < params.batchSize) { done = done || true; }//I know
+			//I know `done || true` is the same as `true`, but lint doesn't like just true
+			if (batch.Items.length < params.batchSize) { done = done || true; }
+
+			offset += batch.Items.length;
 
 			if (!section.grouper) {
 				return [{name: section.rel, Items: batch.Items}];
