@@ -84,8 +84,14 @@ function getSections (collection, extraParams) {
 		return loadNext(result);
 	};
 
+	let activeLoad = null;
+
 	return {
-		loadNextGroups: () => loadNext(),
+		loadNextGroups: () => {
+			activeLoad = (activeLoad || Promise.resolve).then(() => loadNext());
+
+			return activeLoad;
+		},
 		get done () { return sections.every(s => s.done);},
 	};
 }
