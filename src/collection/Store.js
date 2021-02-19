@@ -89,11 +89,34 @@ function getSections (collection, extraParams) {
 
 
 class CourseCollectionStore extends Stores.BoundStore {
+	bindingDidUpdate (prevBinding) {
+		return prevBinding.collection !== this.binding.collection;
+	}
+
+	applySearchTerm (term) {
+		if (term !== this.lastSearchTerm) {
+			this.setImmediate({
+				loading: true,
+				groups: null
+			});
+		}
+
+	}
+
 	async load () {
-		if (this.searchTerm) { return this.loadSearchTerm(); }
-		if (this.binding.collection === this.collection) { return; }
+		if (this.lastSearchTerm === this.searchTerm) { return; }
 
 		const collection = this.collection = this.binding.collection;
+		const searchTerm = this.lastSearchTerm = this.searchTerm;
+
+		if (!collection) {
+			this.set({
+				groups: [{name: 'empty', Items: []}],
+				hasMore: false
+			});
+
+			return;
+		}
 
 		this.setImmediate({
 			collection,
@@ -104,8 +127,13 @@ class CourseCollectionStore extends Stores.BoundStore {
 		});
 
 		try {
-			this.sections = getSections(collection);
+			this.sections = searchTerm ?
+				getSection(collection, {rel: 'self'}, {filter: searchTerm}) :
+				getSections(collection);
+
 			const initialGroups = await this.sections.loadNextGroups();
+
+			if (this.searchTerm !== searchTerm) { return; }
 
 			this.set({
 				loading: false,
@@ -113,6 +141,8 @@ class CourseCollectionStore extends Stores.BoundStore {
 				hasMore: !this.sections.done
 			});
 		} catch (e) {
+			if (this.searchTerm !== searchTerm) { return; }
+
 			this.set({
 				loading: false,
 				error: e
@@ -135,10 +165,6 @@ class CourseCollectionStore extends Stores.BoundStore {
 			groups: combineGroups(current, next),
 			hasMore: !this.sections.done
 		});
-	}
-
-	loadSearchTerm () {
-
 	}
 
 	onCourseDelete (course) {

@@ -58,6 +58,8 @@ export default function GroupHeader ({group, getSectionTitle = getLocale}) {
 	const name = group.parent ?? group.name;
 	const sub = group.parent ? group.name : null;
 
+	 if (name === 'self') { return null; }
+
 	return (
 		<Header>
 			{name && (
