@@ -77,7 +77,7 @@ function getSections (collection, extraParams) {
 		const result = combineGroups(prev, next);
 		const count = result.reduce((acc, g) => acc + g.Items.length);
 
-		if (count > BatchSize) {
+		if (count >= BatchSize) {
 			return result;
 		}
 
