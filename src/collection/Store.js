@@ -4,7 +4,7 @@ import {getService} from '@nti/web-client';
 import combineGroups from './utils/combine-groups';
 import getSemester from './utils/get-semester';
 
-const BatchSize = 40;
+const BatchSize = 20;
 
 const Sections = {
 	'AdministeredCourses': [
