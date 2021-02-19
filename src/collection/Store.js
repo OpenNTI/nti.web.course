@@ -162,7 +162,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 		});
 
 		const current = this.get('groups');
-		const next = this.sections.loadNextGroups();
+		const next = await this.sections.loadNextGroups();
 
 		this.set({
 			groups: combineGroups(current, next),
