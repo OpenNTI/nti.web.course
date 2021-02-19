@@ -20,6 +20,11 @@ const t = scoped('course.card.type.Enrollment', {
 	viewDetails: 'View Details',
 });
 
+const Link = styled(LinkTo.Object)`
+	position: relative;
+	display:  inline-block;
+`;
+
 export default class EnrollmentCard extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -124,7 +129,7 @@ export default class EnrollmentCard extends React.Component {
 		}
 
 		return (
-			<LinkTo.Object object={course}>
+			<Link object={course}>
 				<Card
 					{...otherProps}
 					course={course.CatalogEntry}
@@ -141,7 +146,7 @@ export default class EnrollmentCard extends React.Component {
 						}
 					/>
 				)}
-			</LinkTo.Object>
+			</Link>
 		);
 	}
 }
