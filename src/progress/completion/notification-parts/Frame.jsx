@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Dismiss from './Dismiss';
 import Close from './Close';
 
-const styles = css`
+const styles = stylesheet`
 	.centered {
 		display: flex;
 		flex-direction: column;

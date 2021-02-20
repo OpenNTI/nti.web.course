@@ -4,7 +4,7 @@ import { Button } from '@nti/web-commons';
 
 import { Translate } from './strings';
 
-const styles = css`
+const styles = stylesheet`
 	.button {
 		cursor: pointer;
 		border: 1px solid var(--tertiary-grey);
