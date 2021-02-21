@@ -161,7 +161,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 	}
 
 	async loadMore () {
-		if (this.sections.done) { return; }
+		if (this.sections.done || this.get('loading')) { return; }
 
 		this.setImmediate({
 			loading: true
@@ -171,6 +171,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 		const next = await this.sections.loadNextGroups();
 
 		this.set({
+			loading: false,
 			groups: combineGroups(current, next),
 			hasMore: !this.sections.done
 		});
