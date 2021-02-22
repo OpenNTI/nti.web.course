@@ -1,5 +1,5 @@
-import {Stores, Interfaces} from '@nti/lib-store';
-import {getService} from '@nti/web-client';
+import { Stores, Interfaces } from '@nti/lib-store';
+import { getService } from '@nti/web-client';
 
 import combineGroups from './utils/combine-groups';
 import getSemester from './utils/get-semester';
@@ -7,71 +7,83 @@ import getSemester from './utils/get-semester';
 const BatchSize = 20;
 
 const Sections = {
-	'AdministeredCourses': [
-		{rel: 'upcoming'},
-		{rel: 'current'},
-		{rel: 'archived', grouper: getSemester}
+	AdministeredCourses: [
+		{ rel: 'upcoming' },
+		{ rel: 'current' },
+		{ rel: 'archived', grouper: getSemester },
 	],
-	'EnrolledCourses': [
-		{rel: 'upcoming'},
-		{rel: 'current'},
-		{rel: 'archived', grouper: getSemester}
-	]
+	EnrolledCourses: [
+		{ rel: 'upcoming' },
+		{ rel: 'current' },
+		{ rel: 'archived', grouper: getSemester },
+	],
 };
 
-function getSection (collection, section, extraParams = {}) {
+function getSection(collection, section, extraParams = {}) {
 	let offset = 0;
 	let done = false;
 
 	const loadNextGroups = async () => {
-		if (done) { return  {}; }
+		if (done) {
+			return {};
+		}
 
 		const params = {
 			...extraParams,
 			batchSize: BatchSize,
-			batchStart: offset
+			batchStart: offset,
 		};
 
 		try {
 			const service = await getService();
-			const batch = await service.getBatch(collection.getLink(section.rel), params);
+			const batch = await service.getBatch(
+				collection.getLink(section.rel),
+				params
+			);
 
 			//if we got back less than the batch size this section is done
 			//I know `done || true` is the same as `true`, but lint doesn't like just true
-			if (batch.Items.length < params.batchSize) { done = done || true; }
+			if (batch.Items.length < params.batchSize) {
+				done = done || true;
+			}
 
 			offset += batch.Items.length;
 
 			if (!section.grouper) {
-				return [{name: section.rel, Items: batch.Items}];
+				return [{ name: section.rel, Items: batch.Items }];
 			}
 
 			return combineGroups(
 				batch.Items.map(item => ({
 					name: section.grouper(item),
 					parent: section.rel,
-					Items: [item]
+					Items: [item],
 				}))
 			);
 		} catch (e) {
-			return [{name: e, error: e}];
+			return [{ name: e, error: e }];
 		}
 	};
 
 	return {
 		loadNextGroups,
-		get done () { return done; }
+		get done() {
+			return done;
+		},
 	};
 }
 
-function getSections (collection, extraParams) {
-	const sections = (Sections[collection.Title] ?? [{rel: 'self'}])
-		.map(s => getSection(collection, s, extraParams));
+function getSections(collection, extraParams) {
+	const sections = (Sections[collection.Title] ?? [{ rel: 'self' }]).map(s =>
+		getSection(collection, s, extraParams)
+	);
 
 	const loadNext = async (prev = []) => {
 		const current = sections.find(s => !s.done);
 
-		if (!current) { return prev; }
+		if (!current) {
+			return prev;
+		}
 
 		const next = await current.loadNextGroups();
 		const result = combineGroups(prev, next);
@@ -88,40 +100,44 @@ function getSections (collection, extraParams) {
 
 	return {
 		loadNextGroups: () => {
-			activeLoad = (activeLoad || Promise.resolve()).then(() => loadNext());
+			activeLoad = (activeLoad || Promise.resolve()).then(() =>
+				loadNext()
+			);
 
 			return activeLoad;
 		},
-		get done () { return sections.every(s => s.done);},
+		get done() {
+			return sections.every(s => s.done);
+		},
 	};
 }
 
-
 class CourseCollectionStore extends Stores.BoundStore {
-	bindingDidUpdate (prevBinding) {
+	bindingDidUpdate(prevBinding) {
 		return prevBinding.collection !== this.binding.collection;
 	}
 
-	applySearchTerm (term) {
+	applySearchTerm(term) {
 		if (term !== this.lastSearchTerm) {
 			this.setImmediate({
 				loading: true,
-				groups: null
+				groups: null,
 			});
 		}
-
 	}
 
-	async load () {
-		if (this.lastSearchTerm === this.searchTerm) { return; }
+	async load() {
+		if (this.lastSearchTerm === this.searchTerm) {
+			return;
+		}
 
-		const collection = this.collection = this.binding.collection;
-		const searchTerm = this.lastSearchTerm = this.searchTerm;
+		const collection = (this.collection = this.binding.collection);
+		const searchTerm = (this.lastSearchTerm = this.searchTerm);
 
 		if (!collection) {
 			this.set({
-				groups: [{name: 'empty', Items: []}],
-				hasMore: false
+				groups: [{ name: 'empty', Items: [] }],
+				hasMore: false,
 			});
 
 			return;
@@ -132,39 +148,48 @@ class CourseCollectionStore extends Stores.BoundStore {
 			loading: true,
 			error: null,
 			groups: null,
-			hasMore: false
+			hasMore: false,
 		});
 
 		try {
-			this.sections = searchTerm ?
-				getSection(collection, {rel: 'self'}, {filter: searchTerm}) :
-				getSections(collection);
+			this.sections = searchTerm
+				? getSection(
+						collection,
+						{ rel: 'self' },
+						{ filter: searchTerm }
+				  )
+				: getSections(collection);
 
 			const initialGroups = await this.sections.loadNextGroups();
 
-			if (this.searchTerm !== searchTerm) { return; }
+			if (this.searchTerm !== searchTerm) {
+				return;
+			}
 
 			this.set({
 				loading: false,
 				groups: initialGroups,
-				hasMore: !this.sections.done
+				hasMore: !this.sections.done,
 			});
 		} catch (e) {
-			if (this.searchTerm !== searchTerm) { return; }
+			if (this.searchTerm !== searchTerm) {
+				return;
+			}
 
 			this.set({
 				loading: false,
-				error: e
+				error: e,
 			});
 		}
-
 	}
 
-	async loadMore () {
-		if (this.sections.done || this.get('loading')) { return; }
+	async loadMore() {
+		if (this.sections.done || this.get('loading')) {
+			return;
+		}
 
 		this.setImmediate({
-			loading: true
+			loading: true,
 		});
 
 		const current = this.get('groups');
@@ -173,21 +198,20 @@ class CourseCollectionStore extends Stores.BoundStore {
 		this.set({
 			loading: false,
 			groups: combineGroups(current, next),
-			hasMore: !this.sections.done
+			hasMore: !this.sections.done,
 		});
 	}
 
-	onCourseDelete (course) {
+	onCourseDelete(course) {
 		this.setImmediate({
-			groups: (this.get('groups') ?? []).map((group) => {
+			groups: (this.get('groups') ?? []).map(group => {
 				return {
 					...group,
-					Items: (group.Items ?? []).filter(c => c !== course)
+					Items: (group.Items ?? []).filter(c => c !== course),
 				};
-			})
+			}),
 		});
 	}
-
 }
 
 export default Interfaces.Searchable(CourseCollectionStore);

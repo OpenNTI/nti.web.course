@@ -1,16 +1,16 @@
 import React from 'react';
-import {scoped} from '@nti/lib-locale';
-import {EmptyState, Theme} from '@nti/web-commons';
+import { scoped } from '@nti/lib-locale';
+import { EmptyState, Theme } from '@nti/web-commons';
 
 import Store from '../Store';
 
 const t = scoped('course.collection.components.Empty', {
 	noSearch: {
-		'AdministeredCourses': 'No Administered Courses'
+		AdministeredCourses: 'No Administered Courses',
 	},
 	search: {
-		'AdministeredCourses': 'No Matching Administered Courses'
-	}
+		AdministeredCourses: 'No Matching Administered Courses',
+	},
 });
 
 const Empty = styled(EmptyState)`
@@ -23,20 +23,17 @@ const Empty = styled(EmptyState)`
 	}
 `;
 
-export default function EmptyCourseCollection () {
-	const {
-		collection,
-		searchTerm
-	} = Store.useValue();
+export default function EmptyCourseCollection() {
+	const { collection, searchTerm } = Store.useValue();
 
 	const background = Theme.useThemeProperty('background');
 	const lightBackground = background === 'light';
 
 	const key = `${searchTerm ? 'search' : 'noSearch'}.${collection.Title}`;
 
-	if (t.isMissing(key)) { return null; }
+	if (t.isMissing(key)) {
+		return null;
+	}
 
-	return (
-		<Empty header={t(key)} dark={lightBackground} />
-	);
+	return <Empty header={t(key)} dark={lightBackground} />;
 }

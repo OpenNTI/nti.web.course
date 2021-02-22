@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Errors} from '@nti/web-commons';
+import { Errors } from '@nti/web-commons';
 
 import Card from '../../card/View';
 
@@ -38,28 +38,37 @@ const getKey = item => item.getID() ?? item.CatalogEntryNTIID;
 CourseCollectionGroup.propTypes = {
 	group: PropTypes.shape({
 		Items: PropTypes.array,
-		error: PropTypes.any
+		error: PropTypes.any,
 	}),
 
 	mobile: PropTypes.bool,
 
 	getSectionTitle: PropTypes.func,
-	onCourseDelete: PropTypes.func
+	onCourseDelete: PropTypes.func,
 };
-export default function CourseCollectionGroup ({group, mobile, getSectionTitle, onCourseDelete}) {
+export default function CourseCollectionGroup({
+	group,
+	mobile,
+	getSectionTitle,
+	onCourseDelete,
+}) {
 	if (group.error) {
-		return (
-			<Errors.Message as="p" error={group.error} />
-		);
+		return <Errors.Message as="p" error={group.error} />;
 	}
 
-	if (!group?.Items || group.Items.length === 0 ) { return null; }
+	if (!group?.Items || group.Items.length === 0) {
+		return null;
+	}
 
 	return (
 		<Section mobile={mobile}>
-			<GroupHeader group={group} mobile={mobile} getSectionTitle={getSectionTitle} />
+			<GroupHeader
+				group={group}
+				mobile={mobile}
+				getSectionTitle={getSectionTitle}
+			/>
 			<List mobile={mobile}>
-				{group.Items.map((item) => (
+				{group.Items.map(item => (
 					<li key={getKey(item)}>
 						<Card course={item} onDelete={onCourseDelete} />
 					</li>

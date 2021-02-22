@@ -6,7 +6,7 @@
  * @param  {...any} groupArgs set of groups to combine
  * @returns {Array} the combined set of groups
  */
-export default function combineGroups (...groupArgs) {
+export default function combineGroups(...groupArgs) {
 	const combined = [];
 
 	for (let groups of groupArgs) {

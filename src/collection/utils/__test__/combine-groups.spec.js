@@ -4,8 +4,14 @@ import combineGroups from '../combine-groups';
 describe('combine course collection groups', () => {
 	test('combines if the adjacent group names are the same', () => {
 		const combined = combineGroups(
-			[{name: 'group1', Items: ['first']}, {name: 'group2', Items: ['second']}],
-			[{name: 'group2', Items: ['third']}, {name: 'group3', Items: ['fourth']}]
+			[
+				{ name: 'group1', Items: ['first'] },
+				{ name: 'group2', Items: ['second'] },
+			],
+			[
+				{ name: 'group2', Items: ['third'] },
+				{ name: 'group3', Items: ['fourth'] },
+			]
 		);
 
 		expect(combined.length).toBe(3);

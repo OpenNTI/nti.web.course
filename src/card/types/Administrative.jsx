@@ -21,7 +21,7 @@ const t = scoped('course.card.type.administering', {
 
 const Link = styled(LinkTo.Object)`
 	position: relative;
-	display:  inline-block;
+	display: inline-block;
 `;
 
 export default class Administrative extends React.Component {
@@ -30,8 +30,8 @@ export default class Administrative extends React.Component {
 		onEdit: PropTypes.func,
 		onModification: PropTypes.func,
 		onDelete: PropTypes.func,
-		onClick: PropTypes.func
-	}
+		onClick: PropTypes.func,
+	};
 
 	static contextTypes = {
 		router: PropTypes.object,
