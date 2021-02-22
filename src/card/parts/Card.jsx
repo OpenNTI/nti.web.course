@@ -34,6 +34,7 @@ export default function CourseCard({
 	const variant = !list && !collapseToList ? 'card' : 'list-item';
 	return (
 		<div
+			data-testid="course-card"
 			onClick={onClick}
 			className={cx(className, 'nti-course-card-container', {
 				card: card && !list && !collapseToList,
