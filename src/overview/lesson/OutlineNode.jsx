@@ -75,15 +75,15 @@ export default class LessonView extends React.Component {
 				values
 			)
 		) {
-			this.setupFor(this.props);
+			this.setup();
 		}
 	}
 
 	componentDidMount() {
-		this.setupFor(this.props);
+		this.setup();
 	}
 
-	async setupFor(props = this.props) {
+	async setup() {
 		const { requiredOnly, layout } = this.state;
 		const { outlineNode, course } = this.props;
 
