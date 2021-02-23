@@ -33,7 +33,7 @@ const List = styled('ul')`
 	}
 `;
 
-const getKey = item => item.getID() ?? item.CatalogEntryNTIID;
+const getKey = item => item.getID() ?? item.CatalogEntry?.getID();
 
 CourseCollectionGroup.propTypes = {
 	group: PropTypes.shape({
