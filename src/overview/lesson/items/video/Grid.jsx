@@ -220,7 +220,10 @@ export default class LessonOverviewVideoGrid extends React.Component {
 				data-ntiid={item.NTIID}
 			>
 				{error && (
-					<ErrorWidget error={{ message: 'Unable to load video.' }} />
+					<ErrorWidget
+						error={error}
+						message="Unable to load video."
+					/>
 				)}
 				{error || !video || !renderVideoFully ? null : (
 					<Video
