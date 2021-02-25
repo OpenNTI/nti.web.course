@@ -62,7 +62,7 @@ export default class CourseTagInput extends React.Component {
 			match ? { filter: match } : null
 		);
 
-		return suggestions ? suggestions.Items.map(s => s.toUpperCase()) : null;
+		return suggestions ? suggestions.Items.map(s => s.tag.toUpperCase()) : null;
 	};
 
 	validateTag = value => {
