@@ -7,9 +7,11 @@ import Store from '../Store';
 const t = scoped('course.collection.components.Empty', {
 	noSearch: {
 		AdministeredCourses: 'No Administered Courses',
+		default: 'No Courses',
 	},
 	search: {
 		AdministeredCourses: 'No Matching Administered Courses',
+		default: 'No Matching Courses',
 	},
 });
 
@@ -28,8 +30,11 @@ export default function EmptyCourseCollection() {
 
 	const background = Theme.useThemeProperty('background');
 	const lightBackground = background === 'light';
+	const getKey = scope => `${searchTerm ? 'search' : 'noSearch'}.${scope}`;
 
-	const key = `${searchTerm ? 'search' : 'noSearch'}.${collection.Title}`;
+	let key = [collection?.Title, 'default']
+		.map(getKey)
+		.find(x => !t.isMissing(x));
 
 	if (t.isMissing(key)) {
 		return null;
