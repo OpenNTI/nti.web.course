@@ -46,7 +46,7 @@ function CourseCollection({ getSectionTitle }) {
 	const initialLoading = loading && !error && !groups;
 	const loadingMore = loading && !initialLoading;
 
-	const empty = groups && groups.every(g => g.Items && g.Items.length === 0);
+	const empty = !groups?.length || groups?.every(g => g.Items && g.Items.length === 0);
 
 	const scrollerRef = React.useRef();
 
