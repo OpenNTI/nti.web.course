@@ -9,7 +9,7 @@ const t = scoped('course.collection.components.ResultsLabel', {
 	results: 'Showing results for "%(searchTerm)s"',
 });
 
-const ResultsFor = styled(Text.Base).attrs({ as: 'div' })`
+const Label = styled(Text.Base).attrs({ as: 'div' })`
 	font-size: 1.125rem;
 	text-align: center;
 	color: white;
@@ -33,8 +33,8 @@ export default function ResultsLabel({ empty }) {
 	}
 
 	return (
-		<ResultsFor dark={lightBackground}>
+		<Label dark={lightBackground}>
 			{t('results', { searchTerm })}
-		</ResultsFor>
+		</Label>
 	);
 }
