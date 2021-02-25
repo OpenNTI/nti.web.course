@@ -92,32 +92,6 @@ $CUSTOM_RANGES: (
 			opacity: 0.5;
 		}
 	}
-
-	@include respond-to(handhelds) {
-		height: 270px;
-		width: 185px;
-		padding: 4px 0;
-
-		.meta {
-			padding: 0 15px;
-
-			.nti-course-card-authors {
-				margin-top: 5px;
-			}
-		}
-
-		.nti-course-card-badge.settings {
-			display: none;
-		}
-
-		.badges {
-			height: 44px;
-		}
-
-		.nti-course-card-image {
-			height: 150px;
-		}
-	}
 }
 
 @mixin list-layout {
@@ -151,12 +125,6 @@ $CUSTOM_RANGES: (
 			display: block;
 			white-space: nowrap;
 		}
-	}
-}
-
-@include respond-to(handhelds) {
-	.no-padding.nti-course-card-container.card {
-		padding: 0;
 	}
 }
 
