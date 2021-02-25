@@ -13,9 +13,9 @@ const t = scoped('course.selector', {
 	error: 'Unable to load courses.',
 	errorLoadingMore: 'Unable to load more courses.',
 	searchPlaceholder: 'Search',
-	empty: {
-		searchTerm: 'There are no courses. Please update your query.',
-		noSearchTerm: 'There are no courses.',
+	empty: 'There are no courses.',
+	search: {
+		empty: 'There are no courses. Please update your query.',
 	},
 	loadMore: 'Load More',
 });
@@ -158,11 +158,7 @@ class CourseSelector extends React.Component {
 		const { searchTerm } = this.props;
 
 		return (
-			<EmptyState
-				header={
-					searchTerm ? t('empty.searchTerm') : t('empty.noSearchTerm')
-				}
-			/>
+			<EmptyState header={searchTerm ? t('search.empty') : t('empty')} />
 		);
 	}
 }
