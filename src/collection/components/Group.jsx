@@ -4,6 +4,7 @@ import { Errors } from '@nti/web-commons';
 
 import Card from '../../card/View';
 
+import Grid from './Grid';
 import GroupHeader from './GroupHeader';
 
 const Section = styled('section')`
@@ -11,25 +12,6 @@ const Section = styled('section')`
 
 	&.mobile {
 		padding: 0 0.625rem;
-	}
-`;
-
-const List = styled('ul')`
-	list-style: none;
-	padding: 0;
-	margin: 0 -8px;
-	width: calc(100% + 16px);
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-
-	&.mobile {
-		margin: 0;
-	}
-
-	& > li {
-		display: inline-block;
-		margin: 7px 9px;
 	}
 `;
 
@@ -67,13 +49,13 @@ export default function CourseCollectionGroup({
 				mobile={mobile}
 				getSectionTitle={getSectionTitle}
 			/>
-			<List mobile={mobile}>
+			<Grid as="ul">
 				{group.Items.map(item => (
 					<li key={getKey(item)}>
 						<Card course={item} onDelete={onCourseDelete} />
 					</li>
 				))}
-			</List>
+			</Grid>
 		</Section>
 	);
 }

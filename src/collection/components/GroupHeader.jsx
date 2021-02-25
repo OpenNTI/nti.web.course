@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 import { Text, Theme } from '@nti/web-commons';
 
+import Grid from './Grid';
+
 //TODO: move the locale strings here from library/components/SectionTitle
 const t = scoped('course.collection.GroupHeader', {
 	upcoming: 'Upcoming Courses',
@@ -63,11 +65,13 @@ export default function GroupHeader({ group, getSectionTitle = getLocale }) {
 	}
 
 	return (
-		<Header>
-			{name && (
-				<Name light={!lightBackground}>{getSectionTitle(name)}</Name>
-			)}
-			{sub && <Sub light={!lightBackground}>{getSectionTitle(sub)}</Sub>}
-		</Header>
+		<Grid singleColumn>
+			<Header>
+				{name && (
+					<Name light={!lightBackground}>{getSectionTitle(name)}</Name>
+				)}
+				{sub && <Sub light={!lightBackground}>{getSectionTitle(sub)}</Sub>}
+			</Header>
+		</Grid>
 	);
 }
