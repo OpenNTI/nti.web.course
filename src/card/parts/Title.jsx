@@ -10,7 +10,9 @@ const Block = styled.div`
 `;
 
 const Meta = styled.div`
+
 	--gap: 5px;
+
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
@@ -63,7 +65,6 @@ const Title = styled(Text).attrs({ as: 'h2' })`
 	margin: 0;
 
 	@media (--respond-to-handhelds) {
-		font-weight: 300;
 		margin-bottom: 5px;
 		white-space: normal;
 	}
