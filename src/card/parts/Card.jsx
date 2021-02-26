@@ -15,11 +15,7 @@ CourseCard.propTypes = {
 	course: PropTypes.object.isRequired,
 	badges: PropTypes.arrayOf(PropTypes.node),
 
-	// FIXME: these three booleans should be a single prop enum
-	// ie: variant=PropTypes.oneOf(['card', 'list-item', 'auto'])
-	card: PropTypes.bool,
-	list: PropTypes.bool,
-	collapseToList: PropTypes.bool,
+	variant: PropTypes.oneOf(['card', 'list-item', 'auto']),
 
 	progress: PropTypes.number,
 	onClick: PropTypes.func,
@@ -28,14 +24,14 @@ export default function CourseCard({
 	className,
 	course,
 	badges,
-	card = true,
-	list,
-	collapseToList,
+	variant = 'card',
 	progress,
 	onClick,
 }) {
 	const { matches } = useMediaQuery('(max-width: 736px)');
-	const variant = list || (collapseToList && matches) ? 'list-item' : 'card';
+	if (variant === 'auto') {
+		variant = matches ? 'list-item' : 'card';
+	}
 
 	return (
 		<div
