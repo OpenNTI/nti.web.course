@@ -21,7 +21,7 @@ const t = scoped('course.card.type.administering', {
 
 const Link = styled(LinkTo.Object)`
 	position: relative;
-	display: inline-block;
+	display: block;
 `;
 
 export default class Administrative extends React.Component {
