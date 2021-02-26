@@ -63,18 +63,10 @@ export default function LessonOverviewScormGridItem({
 						mimeType={item.MimeType}
 					/>
 					<div className={cx('meta')}>
-						<Text
-							limitLines={1}
-							overflow={Text.Overflow.Ellipsis}
-							className={cx('title')}
-						>
+						<Text limitLines={1} className={cx('title')}>
 							{item.title}
 						</Text>
-						<Text
-							limitLines={2}
-							overflow={Text.Overflow.Ellipsis}
-							className={cx('description')}
-						>
+						<Text limitLines={2} className={cx('description')}>
 							{item.description}
 						</Text>
 						<List.SeparatedInline className={cx('list')}>
