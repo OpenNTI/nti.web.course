@@ -1,17 +1,5 @@
 @import '~@nti/style-common';
 
-//TODO: figure out how not to have this be specific to the catalog...
-$CUSTOM_RANGES: (
-	mobile: (
-		null,
-		736px,
-	),
-	portrait-tablet: (
-		737px,
-		1023px,
-	),
-);
-
 @mixin card-layout {
 	background: white;
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
@@ -133,22 +121,8 @@ $CUSTOM_RANGES: (
 		@include card-layout;
 	}
 
-	&.list {
+	&.list-item {
 		@include list-layout;
-	}
-
-	&.collapse-to-list {
-		@include card-layout;
-
-		@include responsive-range(mobile, $CUSTOM_RANGES) {
-			@include list-layout;
-
-			//override card styles
-			width: initial;
-			height: initial;
-			box-shadow: none;
-			background: none;
-		}
 	}
 }
 

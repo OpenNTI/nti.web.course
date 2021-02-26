@@ -2,10 +2,13 @@ import './Card.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Hooks } from '@nti/web-commons';
 
 import Image from './Image';
 import Title from './Title';
 import Authors from './Authors';
+
+const { useMediaQuery } = Hooks;
 
 CourseCard.propTypes = {
 	className: PropTypes.string,
@@ -31,16 +34,14 @@ export default function CourseCard({
 	progress,
 	onClick,
 }) {
-	const variant = !list && !collapseToList ? 'card' : 'list-item';
+	const { matches } = useMediaQuery('(max-width: 736px)');
+	const variant = list || (collapseToList && matches) ? 'list-item' : 'card';
+
 	return (
 		<div
 			data-testid="course-card"
 			onClick={onClick}
-			className={cx(className, 'nti-course-card-container', {
-				card: card && !list && !collapseToList,
-				list,
-				'collapse-to-list': collapseToList,
-			})}
+			className={cx(className, 'nti-course-card-container', variant)}
 		>
 			<Image course={course} />
 			<div className="meta">
