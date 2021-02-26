@@ -10,7 +10,6 @@ const Block = styled.div`
 `;
 
 const Meta = styled.div`
-
 	--gap: 5px;
 
 	display: flex;
@@ -70,9 +69,7 @@ const Title = styled(Text).attrs({ as: 'h2' })`
 	}
 
 	&.variant-list-item {
-		font-weight: 400;
 		margin-bottom: 0.5rem;
-		white-space: nowrap;
 	}
 `;
 
@@ -107,7 +104,11 @@ export default function CourseCardTitle({ course, variant }) {
 					</Token>
 				)}
 			</Meta>
-			<Title variant={variant} limitLines={3} data-testid="course-title">
+			<Title
+				variant={variant}
+				limitLines={variant === 'card' ? 3 : 1}
+				data-testid="course-title"
+			>
 				{course.Title}
 			</Title>
 		</Block>
