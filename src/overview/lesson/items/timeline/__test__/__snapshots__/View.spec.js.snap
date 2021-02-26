@@ -5,7 +5,7 @@ exports[`Course overview timeline item test Grid item completable, requirement e
   className="lesson-overview-padded-container"
 >
   <div
-    className="nti-link-to-path"
+    className="pathLink nti-link-to-path"
     to="#"
   >
     <div
@@ -39,7 +39,7 @@ exports[`Course overview timeline item test Grid item with 5 comments, completab
   className="lesson-overview-padded-container"
 >
   <div
-    className="nti-link-to-path"
+    className="pathLink nti-link-to-path"
     to="#"
   >
     <div
@@ -79,7 +79,7 @@ exports[`Course overview timeline item test List item completable, requirement e
       className="lesson-overview-base-list-item-table-info-cell"
     >
       <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
+        className="pathLink nti-link-to-path lesson-overview-base-list-item-link"
         to="#"
       >
         <div
@@ -131,7 +131,7 @@ exports[`Course overview timeline item test List item with 5 comments, completab
       className="lesson-overview-base-list-item-table-info-cell"
     >
       <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
+        className="pathLink nti-link-to-path lesson-overview-base-list-item-link"
         to="#"
       >
         <div

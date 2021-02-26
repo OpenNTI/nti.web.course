@@ -2,7 +2,7 @@
 
 exports[`Course overview discussion item test Grid item with 5 comments, completable, required 1`] = `
 <div
-  className="nti-link-to-path lesson-overview-discussion-link"
+  className="pathLink nti-link-to-path lesson-overview-discussion-link"
   to="#"
 >
   <div
