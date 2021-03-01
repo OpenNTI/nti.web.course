@@ -51,6 +51,12 @@ const Token = styled(Text)`
 
 	&.variant-list-item {
 		line-height: 1.5;
+		font-weight: 600;
+
+		&.course-date {
+			order: -1;
+			color: var(--primary-blue);
+		}
 	}
 `;
 
@@ -70,6 +76,7 @@ const Title = styled(Text).attrs({ as: 'h2' })`
 
 	&.variant-list-item {
 		margin-bottom: 0.5rem;
+		margin-top: 0.25rem;
 	}
 `;
 
@@ -98,6 +105,7 @@ export default function CourseCardTitle({ course, variant }) {
 					<Token
 						variant={variant}
 						no-shrink
+						courseDate
 						data-testid="course-date"
 					>
 						{dateText}
