@@ -10,12 +10,22 @@ import Authors from './Authors';
 
 const { useMediaQuery } = Hooks;
 
+const VARIANTS = {
+	LIST: 'list-item',
+	CARD: 'card',
+	AUTO: 'auto',
+};
+
+const ASSETS = {
+	[VARIANTS.LIST]: 'thumb',
+};
+
 CourseCard.propTypes = {
 	className: PropTypes.string,
 	course: PropTypes.object.isRequired,
 	badges: PropTypes.arrayOf(PropTypes.node),
 
-	variant: PropTypes.oneOf(['card', 'list-item', 'auto']),
+	variant: PropTypes.oneOf(Object.values(VARIANTS)),
 
 	progress: PropTypes.number,
 	onClick: PropTypes.func,
@@ -39,7 +49,7 @@ export default function CourseCard({
 			onClick={onClick}
 			className={cx(className, 'nti-course-card-container', variant)}
 		>
-			<Image course={course} />
+			<Image course={course} type={ASSETS[variant]} />
 			<div className="meta">
 				<Title course={course} variant={variant} />
 				<Authors course={course} variant={variant} />
