@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Hooks } from '@nti/web-commons';
+import { Hooks, Text } from '@nti/web-commons';
 
 const Authors = styled(Text.Base).attrs({ as: 'div' })`
 	font: normal 700 0.625rem/1.4 var(--body-font-family);
