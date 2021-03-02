@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { getComponentFor } from './types';
+import Placeholder from './parts/Placeholder';
 
+CourseCard.Placeholder = Placeholder;
 CourseCard.propTypes = {
 	course: PropTypes.object,
 };

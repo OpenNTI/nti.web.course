@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text } from '@nti/web-commons';
+import { Text, Placeholder } from '@nti/web-commons';
 
 import { getSemesterBadge } from '../../utils/Semester';
 
@@ -122,3 +122,14 @@ export default function CourseCardTitle({ course, variant }) {
 		</Block>
 	);
 }
+
+CourseCardTitle.Placeholder = ({variant}) => (
+	<Placeholder.Container as={Block}>
+		<Placeholder.Container as={Meta}>
+			<Placeholder.Text as={Token} variant={variant} text="TestId" />
+		</Placeholder.Container>
+		<Placeholder.Text as={Title} variant={variant} text="Course Title" />
+	</Placeholder.Container>
+);
+
+CourseCardTitle.Placeholder.propTypes = CourseCardTitle.propTypes;
