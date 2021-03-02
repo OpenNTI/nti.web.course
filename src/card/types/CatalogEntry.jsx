@@ -18,6 +18,11 @@ const t = scoped('course.card.type.catalogEntry', {
 	finished: 'Finished %(date)s',
 });
 
+const Link = styled(LinkTo.Object)`
+	position: relative;
+	display: inline-block;
+`;
+
 export default class CatalogEntryType extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
@@ -67,9 +72,9 @@ export default class CatalogEntryType extends React.Component {
 		}
 
 		return (
-			<LinkTo.Object object={course} onClick={onClick}>
+			<Link object={course} onClick={onClick}>
 				<Card {...otherProps} course={course} badges={badges} />
-			</LinkTo.Object>
+			</Link>
 		);
 	}
 }
