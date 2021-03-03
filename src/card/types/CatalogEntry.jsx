@@ -20,7 +20,7 @@ const t = scoped('course.card.type.catalogEntry', {
 
 const Link = styled(LinkTo.Object)`
 	position: relative;
-	display: inline-block;
+	display: block;
 `;
 
 export default class CatalogEntryType extends React.Component {
