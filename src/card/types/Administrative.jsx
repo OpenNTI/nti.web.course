@@ -158,7 +158,7 @@ export default class Administrative extends React.Component {
 			badges.push(<Badge blue>{DateTime.format(startDate)}</Badge>);
 		} else if (finished) {
 			badges.push(
-				<Badge black>
+				<Badge grey>
 					<ArchivedIcon />
 					{getSemesterBadge(course)}
 				</Badge>
