@@ -62,13 +62,17 @@ export default function CourseCard({
 				</ul>
 			)}
 
-			{progress !== undefined && progress > 0 && (
-				<div
-					className="progress"
-					data-testid="progress-bar"
-					style={{ width: progress * 100 + '%' }}
-				/>
-			)}
+			<Progress progress={progress} />
 		</div>
 	);
 }
+
+const Progress = ({ progress = 0 }) => {
+	return !progress ? null : (
+		<div
+			className="progress"
+			data-testid="progress-bar"
+			style={{ '--progress-value': progress * 100 + '%' }}
+		/>
+	);
+};

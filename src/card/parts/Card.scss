@@ -115,8 +115,15 @@
 	}
 
 	.progress.progress {
-		left: 90px;
-		height: 0.25rem;
+		height: 4px;
+		width: 90px;
+		right: auto;
+		background-color: transparent;
+		background-image:
+			// value
+			linear-gradient(to right, var(--secondary-green) var(--progress-value, 0), rgba(255, 255, 255, 0.75) var(--progress-value, 0)),
+			// stripes
+		    repeating-linear-gradient(-45deg, lightgrey 0, lightgrey 2px, white 3px, white 5px);
 	}
 }
 
@@ -127,7 +134,8 @@
 		position: absolute;
 		bottom: 0;
 		left: 0;
-		background: var(--secondary-green);
+		right: 0;
+		background: linear-gradient(to right, var(--secondary-green) var(--progress-value), transparent var(--progress-value));
 		height: 0.5rem;
 		margin-bottom: 0;
 		padding: 0;
