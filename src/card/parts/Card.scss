@@ -13,17 +13,6 @@
 		height: 170px;
 	}
 
-	.progress.progress {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		background: var(--secondary-green);
-		height: 0.5rem;
-		margin-bottom: 0;
-		padding: 0;
-		border: none;
-	}
-
 	.badges {
 		list-style: none;
 		padding: 5px;
@@ -123,10 +112,26 @@
 			font-weight: 600;
 		}
 	}
+
+	.progress.progress {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		background: var(--secondary-green);
+		height: 0.5rem;
+		margin-bottom: 0;
+		padding: 0;
+		border: none;
+	}
 }
 
 .nti-course-card-container {
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+
+	.progress.progress {
+		left: 90px;
+		height: 0.25rem;
+	}
 
 	&.card {
 		@include card-layout;
