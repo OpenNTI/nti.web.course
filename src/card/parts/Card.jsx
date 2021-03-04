@@ -34,13 +34,11 @@ export default function CourseCard({
 	className,
 	course,
 	badges,
-	variant = 'card',
+	variant: v = 'card',
 	progress,
 	onClick,
 }) {
-	if (variant === 'auto') {
-		variant = useListItemVariant();
-	}
+	const variant = useListItemVariant(v);
 
 	return (
 		<div
