@@ -6,14 +6,10 @@ const Authors = styled(Text.Base).attrs({ as: 'div' })`
 	font: normal 700 0.625rem/1.4 var(--body-font-family);
 	color: var(--primary-blue);
 	text-transform: uppercase;
-	overflow: hidden;
-	text-overflow: ellipsis;
 
 	&.variant-mobile {
 		font-weight: 400;
 		margin-top: 5px;
-		white-space: normal;
-		display: block;
 	}
 `;
 
