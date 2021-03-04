@@ -84,6 +84,7 @@ function CourseCollection({ getSectionTitle }) {
 		<Scroll.BoundaryMonitor
 			ref={scrollerRef}
 			window
+			onBottom={hasMore ? loadMore : null}
 		>
 			<Page>
 				<Page.Content card={false}>
