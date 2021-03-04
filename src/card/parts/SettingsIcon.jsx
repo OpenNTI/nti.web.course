@@ -26,6 +26,10 @@ const Settings = styled(Badge).attrs({
 			opacity: 1;
 		}
 	}
+
+	:global(.no-touch) *:hover + & {
+		opacity: 0.5;
+	}
 `;
 
 export default Settings;
