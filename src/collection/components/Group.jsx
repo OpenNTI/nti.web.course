@@ -50,11 +50,13 @@ export default function CourseCollectionGroup({
 				getSectionTitle={getSectionTitle}
 			/>
 			<Grid as="ul">
-				{group.Items.map(item => (
-					<li key={getKey(item)}>
-						<Card course={item} onDelete={onCourseDelete} />
-					</li>
-				))}
+				{(columns) => (
+					group.Items.map(item => (
+						<li key={getKey(item)}>
+							<Card course={item} onDelete={onCourseDelete} variant={columns === 1 ? 'list-item' : 'card'} />
+						</li>
+					))
+				)}
 			</Grid>
 		</Section>
 	);
