@@ -123,7 +123,7 @@
 			// value
 			linear-gradient(to right, var(--secondary-green) var(--progress-value, 0), rgba(255, 255, 255, 0.75) var(--progress-value, 0)),
 			// stripes
-		    repeating-linear-gradient(-45deg, lightgrey 0, lightgrey 2px, white 3px, white 5px);
+		    // repeating-linear-gradient(-45deg, lightgrey 0, lightgrey 2px, white 3px, white 5px);
 	}
 }
 
