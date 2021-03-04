@@ -60,14 +60,6 @@
 			transform: scale(1.05, 1.05);
 		}
 	}
-
-	.no-touch &:hover + .nti-course-card-badge.settings {
-		opacity: 1;
-
-		.icon-settings {
-			opacity: 0.5;
-		}
-	}
 }
 
 @mixin list-layout {

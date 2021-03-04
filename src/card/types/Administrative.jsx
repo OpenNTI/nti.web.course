@@ -6,9 +6,11 @@ import { getService } from '@nti/web-client';
 import { DateTime, Prompt, Flyout, Layouts } from '@nti/web-commons';
 
 import { getSemesterBadge } from '../../utils/Semester';
+import ArchivedIcon from '../parts/ArchivedIcon';
 import Card from '../parts/Card';
 import Badge from '../parts/Badge';
 import CourseMenu from '../parts/CourseSettingsMenu';
+import Settings from '../parts/SettingsIcon';
 
 import Registry from './Registry';
 
@@ -110,14 +112,6 @@ export default class Administrative extends React.Component {
 		}
 	};
 
-	renderOptionsButton() {
-		return (
-			<div className="nti-course-card-badge black settings">
-				<i className="icon-settings" />
-			</div>
-		);
-	}
-
 	renderOptions() {
 		const { course } = this.props;
 		const canExport =
@@ -128,7 +122,7 @@ export default class Administrative extends React.Component {
 		return (
 			<Flyout.Triggered
 				className="admin-course-options"
-				trigger={this.renderOptionsButton()}
+				trigger={<Settings />}
 				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
 				ref={this.attachOptionsFlyoutRef}
 			>
@@ -165,7 +159,7 @@ export default class Administrative extends React.Component {
 		} else if (finished) {
 			badges.push(
 				<Badge black>
-					<i className="icon-clock-archive" />
+					<ArchivedIcon />
 					{getSemesterBadge(course)}
 				</Badge>
 			);

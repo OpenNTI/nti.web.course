@@ -5,9 +5,12 @@ import { LinkTo } from '@nti/web-routing';
 import { DateTime, Flyout, Layouts } from '@nti/web-commons';
 
 import { getSemesterBadge } from '../../utils/Semester';
-import Card from '../parts/Card';
+import ArchivedIcon from '../parts/ArchivedIcon';
 import Badge from '../parts/Badge';
+import Card from '../parts/Card';
+import CompletedCheck from '../parts/CompletedCheckIcon';
 import CourseMenu from '../parts/CourseSettingsMenu';
+import Settings from '../parts/SettingsIcon';
 import { RequirementDetails } from '../../pass-fail';
 
 import Registry from './Registry';
@@ -44,11 +47,7 @@ export default class EnrollmentCard extends React.Component {
 	};
 
 	renderOptionsButton() {
-		return (
-			<div className="nti-course-card-badge black settings">
-				<i className="icon-settings" />
-			</div>
-		);
+		return <Settings />;
 	}
 
 	renderOptions() {
@@ -101,7 +100,7 @@ export default class EnrollmentCard extends React.Component {
 			if (CompletedItem.Success) {
 				badges.push(
 					<Badge green>
-						<i className="icon-check-10 completed-check" />
+						<CompletedCheck />
 						<span>{t('completed')}</span>
 					</Badge>
 				);
@@ -122,7 +121,7 @@ export default class EnrollmentCard extends React.Component {
 		} else if (finished) {
 			badges.push(
 				<Badge black>
-					<i className="icon-clock-archive" />
+					<ArchivedIcon />
 					{getSemesterBadge(course)}
 				</Badge>
 			);
