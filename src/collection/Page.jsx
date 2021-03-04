@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
-import { Loading, Scroll, Page, Hooks } from '@nti/web-commons';
+import { Loading, Scroll, Page, Hooks, Button } from '@nti/web-commons';
 import { WithSearch } from '@nti/web-search';
 
 import Store from './Store';
@@ -17,7 +17,19 @@ const t = scoped('course.collection.Page', {
 		EnrolledCourses: 'Enrolled Courses',
 	},
 	results: 'Showing Results for "%(term)s"',
+	loadMore: 'Load More'
 });
+
+const Footer = styled.div`
+	margin-bottom: 2rem;
+	text-align: center;
+`;
+
+const LoadMore = styled(Button)`
+	width: 98%;
+	display: block;
+	margin: 0 auto;
+`;
 
 CourseCollection.propTypes = {
 	collection: PropTypes.shape({
@@ -72,7 +84,6 @@ function CourseCollection({ getSectionTitle }) {
 		<Scroll.BoundaryMonitor
 			ref={scrollerRef}
 			window
-			onBottom={hasMore ? loadMore : null}
 		>
 			<Page>
 				<Page.Content card={false}>
@@ -94,7 +105,12 @@ function CourseCollection({ getSectionTitle }) {
 								onCourseDelete={onCourseDelete}
 							/>
 						))}
-						{loadingMore && <Loading.Spinner />}
+						<Footer>
+							{loadingMore && <Loading.Spinner />}
+							{!loadingMore && hasMore && (
+								<LoadMore rounded onClick={loadMore}>{t('loadMore')}</LoadMore>
+							)}
+						</Footer>
 					</Loading.Placeholder>
 				</Page.Content>
 			</Page>
