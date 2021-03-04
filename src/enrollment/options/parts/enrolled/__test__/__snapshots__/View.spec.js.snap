@@ -48,7 +48,7 @@ exports[`Course enrollment enrolled view One option, enrolled, upgrade available
       </div>
     </div>
     <div
-      className="pathLink nti-link-to-path course-enrollment-options-base-type-drop-button"
+      className="nti-link-to-path course-enrollment-options-base-type-drop-button"
       to="#"
     >
       <div
@@ -61,7 +61,7 @@ exports[`Course enrollment enrolled view One option, enrolled, upgrade available
       />
     </div>
     <div
-      className="pathLink nti-link-to-path"
+      className="nti-link-to-path"
       to="#"
     >
       <div
@@ -119,7 +119,7 @@ exports[`Course enrollment enrolled view Two options, second enrolled 1`] = `
       </div>
     </div>
     <div
-      className="pathLink nti-link-to-path course-enrollment-options-base-type-drop-button"
+      className="nti-link-to-path course-enrollment-options-base-type-drop-button"
       to="#"
     >
       <div
@@ -132,7 +132,7 @@ exports[`Course enrollment enrolled view Two options, second enrolled 1`] = `
       />
     </div>
     <div
-      className="pathLink nti-link-to-path"
+      className="nti-link-to-path"
       to="#"
     >
       <div

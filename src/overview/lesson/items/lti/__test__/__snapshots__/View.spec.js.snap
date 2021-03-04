@@ -5,7 +5,7 @@ exports[`Course overview LTI item test Grid item with 5 comments, completable, r
   className="lesson-overview-padded-container"
 >
   <div
-    className="pathLink nti-link-to-path"
+    className="nti-link-to-path"
     to="#"
   >
     <div
@@ -45,7 +45,7 @@ exports[`Course overview LTI item test Grid item with 5 comments, completable, r
         </li>
         <li>
           <div
-            className="pathLink nti-link-to-path comment-count"
+            className="nti-link-to-path comment-count"
             to="#"
           >
             5 Comments
@@ -62,7 +62,7 @@ exports[`Course overview LTI item test Grid item with no comments, completable, 
   className="lesson-overview-padded-container"
 >
   <div
-    className="pathLink nti-link-to-path"
+    className="nti-link-to-path"
     to="#"
   >
     <div
@@ -95,7 +95,7 @@ exports[`Course overview LTI item test Grid item with no comments, completable, 
       >
         <li>
           <div
-            className="pathLink nti-link-to-path comment-count"
+            className="nti-link-to-path comment-count"
             to="#"
           >
             View Comments
@@ -112,7 +112,7 @@ exports[`Course overview LTI item test Grid item with no comments, completable, 
   className="lesson-overview-padded-container"
 >
   <div
-    className="pathLink nti-link-to-path"
+    className="nti-link-to-path"
     to="#"
   >
     <div
@@ -163,7 +163,7 @@ exports[`Course overview LTI item test Grid item with no comments, completable, 
         </li>
         <li>
           <div
-            className="pathLink nti-link-to-path comment-count"
+            className="nti-link-to-path comment-count"
             to="#"
           >
             View Comments
@@ -186,7 +186,7 @@ exports[`Course overview LTI item test List item with 5 comments, completable, r
       className="lesson-overview-base-list-item-table-info-cell"
     >
       <div
-        className="pathLink nti-link-to-path lesson-overview-base-list-item-link"
+        className="nti-link-to-path lesson-overview-base-list-item-link"
         to="#"
       >
         <div
@@ -234,7 +234,7 @@ exports[`Course overview LTI item test List item with 5 comments, completable, r
                 </li>
                 <li>
                   <div
-                    className="pathLink nti-link-to-path comment-count"
+                    className="nti-link-to-path comment-count"
                     to="#"
                   >
                     5 Comments
@@ -261,7 +261,7 @@ exports[`Course overview LTI item test List item with no comments, completable, 
       className="lesson-overview-base-list-item-table-info-cell"
     >
       <div
-        className="pathLink nti-link-to-path lesson-overview-base-list-item-link"
+        className="nti-link-to-path lesson-overview-base-list-item-link"
         to="#"
       >
         <div
@@ -302,7 +302,7 @@ exports[`Course overview LTI item test List item with no comments, completable, 
                 </li>
                 <li>
                   <div
-                    className="pathLink nti-link-to-path comment-count"
+                    className="nti-link-to-path comment-count"
                     to="#"
                   >
                     View Comments
@@ -329,7 +329,7 @@ exports[`Course overview LTI item test List item with no comments, completable, 
       className="lesson-overview-base-list-item-table-info-cell"
     >
       <div
-        className="pathLink nti-link-to-path lesson-overview-base-list-item-link"
+        className="nti-link-to-path lesson-overview-base-list-item-link"
         to="#"
       >
         <div
@@ -388,7 +388,7 @@ exports[`Course overview LTI item test List item with no comments, completable, 
                 </li>
                 <li>
                   <div
-                    className="pathLink nti-link-to-path comment-count"
+                    className="nti-link-to-path comment-count"
                     to="#"
                   >
                     View Comments

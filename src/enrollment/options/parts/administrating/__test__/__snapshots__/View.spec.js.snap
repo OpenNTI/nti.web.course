@@ -18,7 +18,7 @@ exports[`Course enrollment administering view Test with access 1`] = `
     }
   />
   <div
-    className="pathLink nti-link-to-path"
+    className="nti-link-to-path"
     to="#"
   >
     <div

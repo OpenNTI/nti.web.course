@@ -5,7 +5,7 @@ exports[`Course overview related work ref item test Grid item unpublished 1`] = 
   className="lesson-overview-padded-container"
 >
   <div
-    className="pathLink nti-link-to-path"
+    className="nti-link-to-path"
     onClick={[Function]}
     to="#"
   >
@@ -42,7 +42,7 @@ exports[`Course overview related work ref item test Grid item unpublished 1`] = 
         >
           <li>
             <div
-              className="pathLink nti-link-to-path comment-count"
+              className="nti-link-to-path comment-count"
               to="#"
             >
               View Comments
@@ -67,7 +67,7 @@ exports[`Course overview related work ref item test Grid item with 5 comments, c
   className="lesson-overview-padded-container"
 >
   <div
-    className="pathLink nti-link-to-path"
+    className="nti-link-to-path"
     onClick={[Function]}
     to="#"
   >
@@ -111,7 +111,7 @@ exports[`Course overview related work ref item test Grid item with 5 comments, c
           </li>
           <li>
             <div
-              className="pathLink nti-link-to-path comment-count"
+              className="nti-link-to-path comment-count"
               to="#"
             >
               5 Comments
@@ -129,7 +129,7 @@ exports[`Course overview related work ref item test Grid item with no comments, 
   className="lesson-overview-padded-container"
 >
   <div
-    className="pathLink nti-link-to-path"
+    className="nti-link-to-path"
     onClick={[Function]}
     to="#"
   >
@@ -166,7 +166,7 @@ exports[`Course overview related work ref item test Grid item with no comments, 
         >
           <li>
             <div
-              className="pathLink nti-link-to-path comment-count"
+              className="nti-link-to-path comment-count"
               to="#"
             >
               View Comments
@@ -184,7 +184,7 @@ exports[`Course overview related work ref item test Grid item with no comments, 
   className="lesson-overview-padded-container"
 >
   <div
-    className="pathLink nti-link-to-path"
+    className="nti-link-to-path"
     onClick={[Function]}
     to="#"
   >
@@ -239,7 +239,7 @@ exports[`Course overview related work ref item test Grid item with no comments, 
           </li>
           <li>
             <div
-              className="pathLink nti-link-to-path comment-count"
+              className="nti-link-to-path comment-count"
               to="#"
             >
               View Comments
@@ -263,7 +263,7 @@ exports[`Course overview related work ref item test List item unpublished 1`] = 
       className="lesson-overview-base-list-item-table-info-cell"
     >
       <div
-        className="pathLink nti-link-to-path lesson-overview-base-list-item-link"
+        className="nti-link-to-path lesson-overview-base-list-item-link"
         onClick={[Function]}
         to="#"
       >
@@ -305,7 +305,7 @@ exports[`Course overview related work ref item test List item unpublished 1`] = 
                 </li>
                 <li>
                   <div
-                    className="pathLink nti-link-to-path comment-count"
+                    className="nti-link-to-path comment-count"
                     to="#"
                   >
                     View Comments
@@ -339,7 +339,7 @@ exports[`Course overview related work ref item test List item with 5 comments, c
       className="lesson-overview-base-list-item-table-info-cell"
     >
       <div
-        className="pathLink nti-link-to-path lesson-overview-base-list-item-link"
+        className="nti-link-to-path lesson-overview-base-list-item-link"
         onClick={[Function]}
         to="#"
       >
@@ -388,7 +388,7 @@ exports[`Course overview related work ref item test List item with 5 comments, c
                 </li>
                 <li>
                   <div
-                    className="pathLink nti-link-to-path comment-count"
+                    className="nti-link-to-path comment-count"
                     to="#"
                   >
                     5 Comments
@@ -415,7 +415,7 @@ exports[`Course overview related work ref item test List item with no comments, 
       className="lesson-overview-base-list-item-table-info-cell"
     >
       <div
-        className="pathLink nti-link-to-path lesson-overview-base-list-item-link"
+        className="nti-link-to-path lesson-overview-base-list-item-link"
         onClick={[Function]}
         to="#"
       >
@@ -457,7 +457,7 @@ exports[`Course overview related work ref item test List item with no comments, 
                 </li>
                 <li>
                   <div
-                    className="pathLink nti-link-to-path comment-count"
+                    className="nti-link-to-path comment-count"
                     to="#"
                   >
                     View Comments
@@ -484,7 +484,7 @@ exports[`Course overview related work ref item test List item with no comments, 
       className="lesson-overview-base-list-item-table-info-cell"
     >
       <div
-        className="pathLink nti-link-to-path lesson-overview-base-list-item-link"
+        className="nti-link-to-path lesson-overview-base-list-item-link"
         onClick={[Function]}
         to="#"
       >
@@ -544,7 +544,7 @@ exports[`Course overview related work ref item test List item with no comments, 
                 </li>
                 <li>
                   <div
-                    className="pathLink nti-link-to-path comment-count"
+                    className="nti-link-to-path comment-count"
                     to="#"
                   >
                     View Comments
