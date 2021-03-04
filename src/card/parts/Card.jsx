@@ -8,7 +8,7 @@ import Image from './Image';
 import Title from './Title';
 import Authors from './Authors';
 
-const { useMediaQuery } = Hooks;
+const { useListItemVariant } = Hooks;
 
 const VARIANTS = {
 	LIST: 'list-item',
@@ -34,14 +34,11 @@ export default function CourseCard({
 	className,
 	course,
 	badges,
-	variant = 'card',
+	variant: v = 'card',
 	progress,
 	onClick,
 }) {
-	const { matches } = useMediaQuery('(max-width: 736px)');
-	if (variant === 'auto') {
-		variant = matches ? 'list-item' : 'card';
-	}
+	const variant = useListItemVariant(v);
 
 	return (
 		<div
