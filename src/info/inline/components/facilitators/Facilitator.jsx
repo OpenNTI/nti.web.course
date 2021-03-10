@@ -1,8 +1,9 @@
 import './Facilitator.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Avatar, Input, Flyout } from '@nti/web-commons';
 import cx from 'classnames';
+
+import { Avatar, Input, Flyout } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { getService } from '@nti/web-client';
 import isTouch from '@nti/util-detection-touch';

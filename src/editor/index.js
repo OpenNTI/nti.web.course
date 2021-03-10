@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Prompt } from '@nti/web-commons';
 
 import CourseWizard from './wizard/CourseWizard';

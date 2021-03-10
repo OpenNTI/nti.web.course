@@ -2,6 +2,7 @@ import './Grid.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { LinkTo } from '@nti/web-routing';
 
 LessonOverviewDiscussionGridItem.propTypes = {

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { TranscriptedVideo } from '@nti/web-content';
 
 import TypeRegistry from '../Registry';

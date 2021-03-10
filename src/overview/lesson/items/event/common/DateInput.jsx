@@ -1,8 +1,9 @@
 import './DateInput.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DayPicker, Flyout, DateTime } from '@nti/web-commons';
 import cx from 'classnames';
+
+import { DayPicker, Flyout, DateTime } from '@nti/web-commons';
 
 const MINUTES_INCREMENT = 15;
 

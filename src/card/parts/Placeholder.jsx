@@ -2,6 +2,7 @@ import './Card.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import {Placeholder} from '@nti/web-commons';
 
 import Title from './Title';

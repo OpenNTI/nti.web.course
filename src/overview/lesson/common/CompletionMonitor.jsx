@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { InactivityMonitor } from '@nti/lib-dom';
 import { Hooks } from '@nti/web-session';
 import { HOC } from '@nti/web-commons';

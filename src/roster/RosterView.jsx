@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { decorate } from '@nti/lib-commons';
 import { searchable, contextual } from '@nti/web-search';
 import { scoped } from '@nti/lib-locale';

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { Prompt, DialogButtons } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-import cx from 'classnames';
 
 const t = scoped('course.info.inline.enrollment.common.EditableItem', {
 	areYouSure: 'Do you want to remove this enrollment option from the course?',

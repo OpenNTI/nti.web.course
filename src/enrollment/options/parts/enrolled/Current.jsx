@@ -1,6 +1,7 @@
 import './Current.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { scoped } from '@nti/lib-locale';
 
 import PaddedContainer from '../../common/PaddedContainer';

@@ -1,8 +1,9 @@
 import './ModeSelect.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { scoped } from '@nti/lib-locale';
 import cx from 'classnames';
+
+import { scoped } from '@nti/lib-locale';
 
 // TODO: Update the labels to match design
 // Also, need to style based on design

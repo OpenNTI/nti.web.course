@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
+
 import { LinkTo } from '@nti/web-routing';
 import { Avatar, DisplayName } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-import classnames from 'classnames/bind';
 
 import styles from './Student.css';
 

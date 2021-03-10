@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
+
 import { Models } from '@nti/lib-interfaces';
 
 import OutlineHeader from '../OutlineHeader';

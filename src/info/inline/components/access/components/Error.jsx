@@ -1,4 +1,5 @@
 import classnames from 'classnames/bind';
+
 import { Errors, HOC } from '@nti/web-commons';
 
 import Styles from './Error.css';

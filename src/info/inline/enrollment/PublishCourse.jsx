@@ -1,6 +1,8 @@
 import './PublishCourse.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { getService } from '@nti/web-client';
 import {
 	Loading,
@@ -11,7 +13,6 @@ import {
 	Text,
 } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-import cx from 'classnames';
 
 import { saveCatalogEntry } from '../../../editor/Actions';
 

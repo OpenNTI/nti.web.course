@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { scoped } from '@nti/lib-locale';
 import { Page, Hooks, Loading } from '@nti/web-commons';
 import { View } from '@nti/web-routing';

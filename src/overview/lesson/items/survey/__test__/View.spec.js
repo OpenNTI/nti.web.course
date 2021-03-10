@@ -1,5 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
+
 import { Summary } from '@nti/lib-interfaces';
 
 import View from '../View';

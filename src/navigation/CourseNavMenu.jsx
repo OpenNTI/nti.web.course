@@ -1,6 +1,7 @@
 import './CourseNavMenu.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Prompt } from '@nti/web-commons';
 import { getService } from '@nti/web-client';
 import { ContentNavMenu } from '@nti/web-content';

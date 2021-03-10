@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
+
 import { decorate } from '@nti/lib-commons';
 import { Select } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-import classnames from 'classnames/bind';
 
 import { DEFAULT_ENROLLMENT_SCOPE_NAMES } from '../enrollment/Constants';
 

@@ -1,7 +1,8 @@
 import URL from 'url';
 
-import Logger from '@nti/util-logger';
 import QS from 'query-string';
+
+import Logger from '@nti/util-logger';
 
 const logger = Logger.get('roster.utils.batch-link-encoding');
 

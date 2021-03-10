@@ -1,6 +1,7 @@
 import './ManageCreditTypes.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { decorate } from '@nti/lib-commons';
 import { ConflictResolution } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';

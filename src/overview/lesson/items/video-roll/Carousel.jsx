@@ -1,6 +1,7 @@
 import './Carousel.scss';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+
 import { Error as ErrorWidget, Loading } from '@nti/web-commons';
 import Logger from '@nti/util-logger';
 

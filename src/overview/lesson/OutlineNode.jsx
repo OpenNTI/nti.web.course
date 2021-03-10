@@ -2,6 +2,7 @@ import './OutlineNode.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import Storage from '@nti/web-storage';
 import { getAppUsername } from '@nti/web-client';
 import { Loading, Error as ErrorCmp } from '@nti/web-commons';

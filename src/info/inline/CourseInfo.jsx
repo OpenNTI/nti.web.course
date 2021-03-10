@@ -1,9 +1,10 @@
 import './CourseInfo.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { Loading } from '@nti/web-commons';
 import { getService } from '@nti/web-client';
-import cx from 'classnames';
 
 import { InfoPanel } from '../../admin-tools';
 import Store from '../../editor/Store';

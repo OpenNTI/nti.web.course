@@ -2,6 +2,7 @@ import './Size.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { ImageEditor } from '@nti/web-whiteboard';
 
 export default class AssetPickerSize extends React.Component {

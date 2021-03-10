@@ -1,6 +1,7 @@
 import './Image.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Presentation, Image } from '@nti/web-commons';
 
 CourseCardImage.propTypes = {

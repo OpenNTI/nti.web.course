@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { getEventTarget } from '@nti/lib-dom';
 import { Summary } from '@nti/lib-interfaces';
 import { scoped } from '@nti/lib-locale';

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { EmptyState } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { Disable } from '@nti/web-routing';

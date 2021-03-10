@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Selector } from '@nti/web-profiles';
 
 export default class EnrollmentAdminPickUser extends React.Component {

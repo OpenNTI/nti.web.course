@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Layouts } from '@nti/web-commons';
 
 import Store from './Store';

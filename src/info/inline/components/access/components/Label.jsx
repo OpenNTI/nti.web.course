@@ -1,4 +1,5 @@
 import classnames from 'classnames/bind';
+
 import { Text, HOC } from '@nti/web-commons';
 
 import Styles from './Label.css';

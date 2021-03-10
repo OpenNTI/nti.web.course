@@ -1,8 +1,9 @@
 import './CreditType.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input, Prompt } from '@nti/web-commons';
 import cx from 'classnames';
+
+import { Input, Prompt } from '@nti/web-commons';
 
 export default class CreditType extends React.Component {
 	static propTypes = {

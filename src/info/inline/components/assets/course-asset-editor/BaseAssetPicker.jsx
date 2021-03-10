@@ -1,6 +1,7 @@
 import './BaseAssetPicker.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { ImageEditor } from '@nti/web-whiteboard';
 import { scoped } from '@nti/lib-locale';
 

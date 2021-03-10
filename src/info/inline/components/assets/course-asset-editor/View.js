@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Prompt, Switch, Loading, Presentation } from '@nti/web-commons';
 import { dispatch } from '@nti/lib-dispatcher';
 

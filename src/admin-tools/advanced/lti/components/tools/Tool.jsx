@@ -1,6 +1,7 @@
 import './Tool.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { Flyout, HOC } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 

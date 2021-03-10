@@ -1,6 +1,7 @@
 import './BrowseWebinars.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { scoped } from '@nti/lib-locale';
 import { GotoWebinar } from '@nti/web-integrations';
 import { getHistory } from '@nti/web-routing';

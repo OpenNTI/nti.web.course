@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { render, fireEvent, waitFor } from '@testing-library/react';
+
 import { TestUtils } from '@nti/web-client';
 
 import CourseWizard from '../CourseWizard';

@@ -1,6 +1,7 @@
 import './Grid.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Component as Video, Poster } from '@nti/web-video';
 import { Error as ErrorWidget } from '@nti/web-commons';
 import { LinkTo } from '@nti/web-routing';

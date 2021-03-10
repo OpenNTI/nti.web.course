@@ -1,10 +1,11 @@
 import './AddFacilitators.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { TokenEditor, Avatar, Prompt } from '@nti/web-commons';
 import { getService } from '@nti/web-client';
 import { scoped } from '@nti/lib-locale';
-import cx from 'classnames';
 
 import RoleSelect from './RoleSelect';
 import { getAvailableRoles } from './utils';

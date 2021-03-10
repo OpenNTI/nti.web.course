@@ -2,6 +2,7 @@ import './PlaylistItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { DateTime, List } from '@nti/web-commons';
 
 import RequirementControl from '../../../../progress/widgets/RequirementControl';

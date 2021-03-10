@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { scoped } from '@nti/lib-locale';
 import { EmptyState, Theme } from '@nti/web-commons';
 

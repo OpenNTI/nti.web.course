@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
+
 import { scoped } from '@nti/lib-locale';
 import { Loading, Errors } from '@nti/web-commons';
 import { getAppUser } from '@nti/web-client';

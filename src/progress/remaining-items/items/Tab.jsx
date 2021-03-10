@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { Text } from '@nti/web-commons';
 
 import Styles from './Style.css';

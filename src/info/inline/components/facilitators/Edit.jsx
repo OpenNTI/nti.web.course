@@ -1,6 +1,7 @@
 import './Edit.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Prompt } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 

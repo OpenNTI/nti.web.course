@@ -1,6 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import { render } from '@testing-library/react';
+
 import { wait } from '@nti/lib-commons';
 
 import Progress from '../Progress';

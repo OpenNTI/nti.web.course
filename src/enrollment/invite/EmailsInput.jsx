@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input, TokenEditor } from '@nti/web-commons';
 import classnames from 'classnames/bind';
 import { validate as isEmail } from 'email-validator';
+
+import { Input, TokenEditor } from '@nti/web-commons';
 
 import styles from './EmailsInput.css';
 

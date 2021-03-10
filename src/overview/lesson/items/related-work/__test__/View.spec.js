@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import renderer from 'react-test-renderer';
+
 import { Summary } from '@nti/lib-interfaces';
 
 import View from '../View';

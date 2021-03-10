@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
+
 import { scoped } from '@nti/lib-locale';
 import Logger from '@nti/util-logger';
-import classnames from 'classnames/bind';
 
 import { DEFAULT_ENROLLMENT_SCOPE_NAMES } from '../../enrollment/Constants';
 

@@ -1,6 +1,7 @@
 import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Models } from '@nti/lib-interfaces';
 
 import PaddedContainer from '../../common/PaddedContainer';

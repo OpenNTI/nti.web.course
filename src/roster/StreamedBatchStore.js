@@ -1,7 +1,8 @@
+import QS from 'query-string';
+
 import { decorate, URL } from '@nti/lib-commons';
 import { Stores, Mixins } from '@nti/lib-store';
 import { mixin } from '@nti/lib-decorators';
-import QS from 'query-string';
 
 import { stripEmptyProperties } from './util';
 

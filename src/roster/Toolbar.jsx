@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames/bind';
+
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
-import classnames from 'classnames/bind';
 
 import ManageEnrollment from '../enrollment/admin/Prompt';
 

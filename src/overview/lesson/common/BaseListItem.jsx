@@ -2,6 +2,7 @@ import './BaseListItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { isIterable } from '@nti/lib-commons';
 import { List, AssetIcon, Card, Table } from '@nti/web-commons';
 import { isNTIID } from '@nti/lib-ntiids';

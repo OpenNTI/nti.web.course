@@ -1,6 +1,7 @@
 import './User.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { User } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { LinkTo } from '@nti/web-routing'; // eslint-disable-line
 import { Layouts } from '@nti/web-commons';
 

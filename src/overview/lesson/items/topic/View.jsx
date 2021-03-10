@@ -2,6 +2,7 @@ import path from 'path';
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { encodeForURI } from '@nti/lib-ntiids';
 
 import Registry from '../Registry';

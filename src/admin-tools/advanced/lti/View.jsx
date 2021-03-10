@@ -1,9 +1,10 @@
 import './View.scss';
 import React, { Component } from 'react';
-import { decorate } from '@nti/lib-commons';
-import { Button, Loading } from '@nti/web-commons';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
+import { decorate } from '@nti/lib-commons';
+import { Button, Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Store from './../../../lti-tools/editing/Store';

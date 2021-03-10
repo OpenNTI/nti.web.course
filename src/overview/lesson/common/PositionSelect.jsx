@@ -1,9 +1,10 @@
 import './PositionSelect.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { Flyout, Input, DialogButtons } from '@nti/web-commons';
 import { getService } from '@nti/web-client';
-import cx from 'classnames';
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.overview.lesson.common.PositionSelect', {

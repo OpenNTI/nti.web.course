@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { decorate } from '@nti/lib-commons';
 import { getService } from '@nti/web-client';
 import { Events, Hooks } from '@nti/web-session';

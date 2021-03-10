@@ -1,6 +1,7 @@
 import './AddTool.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import { scoped } from '@nti/lib-locale';
 
 import Base from './Base';

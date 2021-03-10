@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { scoped } from '@nti/lib-locale';
 import { Text } from '@nti/web-commons';
 import { Credly } from '@nti/web-integrations';

@@ -1,6 +1,7 @@
 import './UserGradeCard.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Avatar, DisplayName } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 

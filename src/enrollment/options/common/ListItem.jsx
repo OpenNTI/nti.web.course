@@ -2,6 +2,7 @@ import './ListItem.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.enrollment.options.common.ListItem', {

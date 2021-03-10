@@ -1,6 +1,8 @@
 import './EventOverview.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
 import { decorate } from '@nti/lib-commons';
 import {
 	DialogButtons,
@@ -12,7 +14,6 @@ import {
 import { scoped } from '@nti/lib-locale';
 import { ImageUpload } from '@nti/web-whiteboard';
 import { Connectors } from '@nti/lib-store';
-import cx from 'classnames';
 
 import PositionSelect from '../../../common/PositionSelect';
 

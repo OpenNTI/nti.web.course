@@ -1,6 +1,7 @@
 import './Tool.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { LinkTo } from '@nti/web-routing';
 
 const Tool = ({ title, bundle, subtitle, icon, link }) => (

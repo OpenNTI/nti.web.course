@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Text, Placeholder } from '@nti/web-commons';
 
 import { getSemesterBadge } from '../../utils/Semester';
