@@ -15,7 +15,7 @@ const t = scoped('course.enrollment.DropCourseButton', {
 	unenrolled: 'You are no longer enrolled in %(course)s.',
 	drop: 'Drop Course',
 	done: 'Done',
-	error: 'Error dropping this course',
+	error: 'Error dropping this course.',
 });
 
 class DropCourseButton extends React.Component {
@@ -42,43 +42,44 @@ class DropCourseButton extends React.Component {
 		return service.getEnrollment();
 	}
 
-	doDrop = e => {
+	doDrop = async e => {
 		const { course } = this.props;
 
 		e.stopPropagation();
 		e.preventDefault();
 
-		Prompt.areYouSure(
-			t('confirmDrop', { course: course.CatalogEntry.title })
-		).then(() => {
-			this.getEnrollmentService()
-				.then(enrollmentService => {
-					return enrollmentService.dropCourse(
-						course.CatalogEntry.CourseNTIID
-					);
-				})
-				.then(() => {
-					dispatch('course:drop');
+		try {
+			await Prompt.areYouSure(
+				t('confirmDrop', { course: course.CatalogEntry.title })
+			);
 
-					Prompt.alert(
-						t('unenrolled', { course: course.CatalogEntry.title }),
-						t('done'),
-						{
-							confirmButtonClass: 'ok-button',
-							iconClass: 'done-icon',
-						}
-					);
-				})
-				.catch(err => {
-					console.error(err); //eslint-disable-line
-					// timeout here because there is a 500 ms delay on the areYouSure dialog being dismissed
-					// so if the dropping fails too fast, we risk automatically dismissing this alert dialog
-					// when the areYouSure dialog is dismissed
-					setTimeout(() => {
-						Prompt.alert(t('error'));
-					}, 505);
-				});
-		});
+			const enrollmentService = await this.getEnrollmentService();
+			await enrollmentService.dropCourse(course.CatalogEntry.CourseNTIID);
+
+			dispatch('course:drop');
+
+			await Prompt.alert(
+				t('unenrolled', { course: course.CatalogEntry.title }),
+				t('done'),
+				{
+					confirmButtonClass: 'ok-button',
+					iconClass: 'done-icon',
+				}
+			);
+		} catch (err) {
+			if (err === 'Prompt Canceled') {
+				return;
+			}
+
+			const { message, Message: msg = message } = err || {};
+
+			if (!msg) {
+				//eslint-disable-next-line
+				console.error(err);
+			}
+
+			Prompt.alert(t('error') + '<br>' + msg);
+		}
 	};
 
 	render() {
