@@ -23,7 +23,8 @@ function getStoragePreferenceJSON() {
 		const rawValue = atob(Storage.getItem(STORAGE_KEY));
 
 		return JSON.parse(rawValue)[getAppUsername()] || {};
-	} catch (e) {
+	} catch {
+		Storage.removeItem(STORAGE_KEY);
 		return {};
 	}
 }
