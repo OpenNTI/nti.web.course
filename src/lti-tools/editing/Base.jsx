@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {
+	Error,
 	Panels,
 	DialogButtons,
 	Select,
@@ -175,7 +176,9 @@ export default class Base extends Component {
 					iconAction={this.onBeforeDismiss}
 				/>
 				{error && typeof error === 'string' && (
-					<span className="lti-base-tool-error">{error}</span>
+					<Error inline error={error} className="lti-base-tool-error">
+						{error}
+					</Error>
 				)}
 				<Label className="config-type-label" label="Configuration Type">
 					<Select value={formselector} onChange={this.onModeSelect}>

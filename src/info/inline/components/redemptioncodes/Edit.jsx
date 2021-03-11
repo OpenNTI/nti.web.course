@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import { Prompt } from '@nti/web-commons';
+import { reportError } from '@nti/web-client';
 
 import Code from './code';
 import Disclaimer from './Disclaimer';
@@ -37,6 +38,7 @@ class RedemptionCodesEdit extends React.Component {
 	}
 
 	componentDidCatch(error, info) {
+		reportError(error);
 		this.setState({ hasError: true });
 	}
 

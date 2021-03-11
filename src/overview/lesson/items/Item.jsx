@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Error } from '@nti/web-commons';
+import { reportError } from '@nti/web-client';
+
 import CompletionMonitor from '../common/CompletionMonitor';
 
 import Registry from './Registry';
@@ -22,6 +25,7 @@ export default class LessonOverviewItem extends React.Component {
 	state = {};
 
 	componentDidCatch(error) {
+		reportError(error);
 		this.setState({ error });
 	}
 
@@ -33,10 +37,10 @@ export default class LessonOverviewItem extends React.Component {
 
 		if (error) {
 			return (
-				<div>
+				<Error error={error} inline>
 					There was an error attempting to render:{' '}
 					{(item || {}).MimeType || 'Unknown Item'}
-				</div>
+				</Error>
 			);
 		}
 
