@@ -74,17 +74,9 @@ export default class PublishCourse extends React.Component {
 				/>,
 				{ className: 'publish-course-modal-container' }
 			);
-		})
-			.then(savedEntry => {
-				dialog && dialog.dismiss();
-
-				return savedEntry;
-			})
-			.catch(() => {
-				dialog && dialog.dismiss();
-
-				Promise.reject();
-			});
+		}).finally(() => {
+			dialog?.dismiss();
+		});
 	}
 
 	constructor(props) {

@@ -32,17 +32,9 @@ export default class AddEnrollmentOption extends React.Component {
 				/>,
 				'add-enrollment-option'
 			);
-		})
-			.then(selectedType => {
-				dialog && dialog.dismiss();
-
-				return selectedType;
-			})
-			.catch(() => {
-				dialog && dialog.dismiss();
-
-				Promise.reject();
-			});
+		}).finally(() => {
+			dialog?.dismiss();
+		});
 	}
 
 	selectOption(option) {

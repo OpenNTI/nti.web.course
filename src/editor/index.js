@@ -18,17 +18,9 @@ export const createCourse = (onCourseModified, template) => {
 			/>,
 			{ className: CourseWizard.modalClassName }
 		);
-	})
-		.then(savedEntry => {
-			dialog && dialog.dismiss();
-
-			return savedEntry;
-		})
-		.catch(() => {
-			dialog && dialog.dismiss();
-
-			Promise.reject();
-		});
+	}).finally(() => {
+		dialog?.dismiss();
+	});
 };
 
 export const editCourse = course => {
@@ -42,15 +34,7 @@ export const editCourse = course => {
 				onCancel={reject}
 			/>
 		);
-	})
-		.then(savedEntry => {
-			dialog && dialog.dismiss();
-
-			return savedEntry;
-		})
-		.catch(() => {
-			dialog && dialog.dismiss();
-
-			Promise.reject();
-		});
+	}).then(() => {
+		dialog?.dismiss();
+	});
 };

@@ -63,7 +63,9 @@ export default class CourseTagInput extends React.Component {
 			match ? { filter: match } : null
 		);
 
-		return suggestions ? suggestions.Items.map(s => s.tag.toUpperCase()) : null;
+		return suggestions
+			? suggestions.Items.map(s => s.tag.toUpperCase())
+			: null;
 	};
 
 	validateTag = value => {
@@ -100,57 +102,3 @@ export default class CourseTagInput extends React.Component {
 		);
 	}
 }
-
-// class xTagInput extends React.Component {
-// 	static propTypes = {
-// 		value: PropTypes.array,
-// 		onChange: PropTypes.func
-// 	}
-
-// 	attachFlyoutRef = x => this.flyout = x
-
-// 	constructor (props) {
-// 		super(props);
-
-// 		this.state = {};
-// 	}
-
-// 	onChange = (values) => {
-// 		this.props.onChange && this.props.onChange(values);
-// 	}
-
-// 	suggestionProvider = (val) => {
-// 		return getService().then(service => {
-// 			const links = service.getCollection('Courses', 'Catalog').Links.filter(x => x.rel === 'SuggestedTags');
-
-// 			if(links.length === 0) {
-// 				return Promise.reject('No SuggestedTags link');
-// 			}
-
-// 			return service.get(links[0].href + '?filter=' + val).then((resp) => {
-// 				return resp.Items;
-// 			});
-// 		});
-// 	}
-
-// 	validator = (value) => {
-// 		return validateTag(value);
-// 	}
-
-// 	render () {
-// 		const { value } = this.props;
-
-// 		return (
-// 			<div className="course-tag-editor">
-// 				<TokenEditor
-// 					value={value}
-// 					onChange={this.onChange}
-// 					placeholder={value && value.length > 0 ? 'Add more categories' : 'Add categories'}
-// 					tokenDelimiterKeys={DELIMITER_KEYS}
-// 					suggestionProvider={this.suggestionProvider}
-// 					validator={this.validator}
-// 					maxTokenLength={64}/>
-// 			</div>
-// 		);
-// 	}
-// }

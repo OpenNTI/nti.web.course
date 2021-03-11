@@ -35,18 +35,21 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		const service = await getService();
 
 		try {
-			const requests = values.map(d => {
-				const deleteLink =
-					d && d.Links && d.Links.filter(l => l.rel === 'delete')[0];
+			const requests = values.map(async d => {
+				const [deleteLink] = d?.Links?.filter(l => l.rel === 'delete');
 
 				if (!deleteLink) {
-					return Promise.reject('No delete link');
+					throw new Error('No Link: delete');
 				}
 
 				return service.delete(deleteLink.href);
 			});
 
-			await Promise.all(requests);
+			const results = await Promise.allSettled(requests);
+			const failures = results.filter(x => x.status === 'rejected');
+			if (failures.length > 0) {
+				throw failures[0].reason || new Error('Unknown failure');
+			}
 		} catch (e) {
 			this.set('error', this.makeNiceError(e));
 			this.set('loading', false);
