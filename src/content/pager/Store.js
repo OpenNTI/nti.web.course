@@ -25,8 +25,8 @@ function isConstrainedOutlineNode(item) {
 }
 
 function buildIsSameContentOutlineNode(node) {
-	const contentId = node.getContentId ? node.getContentId() : node;
-	const id = node.getID ? node.getID() : node;
+	const contentId = node?.getContentId?.() ?? node;
+	const id = node?.getID?.() ?? node;
 
 	return item => {
 		return (
@@ -37,42 +37,34 @@ function buildIsSameContentOutlineNode(node) {
 }
 
 function isOverview(item) {
-	return (
-		item &&
-		item.MimeType === 'application/vnd.nextthought.ntilessonoverview'
-	);
+	return item?.MimeType === 'application/vnd.nextthought.ntilessonoverview';
 }
 
 function isOverviewGroup(item) {
 	return (
-		item &&
-		item.MimeType === 'application/vnd.nextthought.nticourseoverviewgroup'
+		item?.MimeType === 'application/vnd.nextthought.nticourseoverviewgroup'
 	);
 }
 
 function isVideoRoll(item) {
-	return item && item.MimeType === 'application/vnd.nextthought.videoroll';
+	return item?.MimeType === 'application/vnd.nextthought.videoroll';
 }
 
 function isRelatedWorkRef(item) {
-	return (
-		item && item.MimeType === 'application/vnd.nextthought.relatedworkref'
-	);
+	return item?.MimeType === 'application/vnd.nextthought.relatedworkref';
 }
 
 function isCompletionRequired(item) {
-	return item && item.CompletionRequired;
+	return item?.CompletionRequired;
 }
 
 function buildIsSameOverviewItem(node) {
-	const id = node.isVideo
+	const id = node?.isVideo
 		? node.getLinkProperty('ref', 'RefNTIID')
-		: node.getID
-		? node.getID()
-		: node;
+		: node.getID?.() ?? node;
 
 	return item => {
-		if (item && item.isVideo) {
+		if (item?.isVideo) {
 			const refID = item.getLinkProperty('ref', 'RefNTIID');
 
 			if (refID === id) {
