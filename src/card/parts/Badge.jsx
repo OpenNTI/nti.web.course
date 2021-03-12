@@ -25,7 +25,7 @@ export const CourseCardBadge = styled('div').attrs(props => ({
 		justify-content: center;
 
 		@media (--respond-to-handhelds) {
-			font-size: 9px !important;
+			font-size: 10px !important;
 			border-width: 1.5px;
 			width: 11px;
 			height: 11px;
