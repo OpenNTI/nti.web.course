@@ -14,6 +14,10 @@ export const CourseCardBadge = styled('div').attrs(props => ({
 
 	@media (--respond-to-handhelds) {
 		font-size: 8px;
+
+		i {
+			font-size: 8px;
+		}
 	}
 
 	i {
