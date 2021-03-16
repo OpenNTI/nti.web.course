@@ -104,7 +104,7 @@ export default class TranscriptCreditEntry extends React.Component {
 				maxLength="6"
 				value={(this.props.entry.amount || '').toString()}
 				onChange={this.valueChanged}
-				pattern="[0-9]+([.,][0-9]+)?"
+				pattern="[0-9]*[.,]?[0-9]+"
 				ref={this.attachInputRef}
 			/>
 		);
