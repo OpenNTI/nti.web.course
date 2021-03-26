@@ -10,8 +10,8 @@ import { getSemesterBadge } from '../../utils/Semester';
 import ArchivedIcon from '../parts/ArchivedIcon';
 import Card from '../parts/Card';
 import Badge from '../parts/Badge';
-import CourseMenu from '../parts/CourseSettingsMenu';
 import Settings from '../parts/SettingsIcon';
+import CourseMenu from '../../SettingsMenu';
 
 import Registry from './Registry';
 
@@ -77,14 +77,6 @@ export default class Administrative extends React.Component {
 		});
 	};
 
-	doRequestSupport = e => {
-		e.stopPropagation();
-		e.preventDefault();
-
-		global.location.href =
-			'mailto:support@nextthought.com?subject=Support%20Request';
-	};
-
 	doEdit = e => {
 		const { onEdit, course } = this.props;
 
@@ -131,10 +123,9 @@ export default class Administrative extends React.Component {
 					registered
 					admin
 					course={course}
-					doEdit={this.doEdit}
-					doExport={canExport ? this.doExport : null}
-					doDelete={this.deleteCourse}
-					doRequestSupport={this.doRequestSupport}
+					onEdit={this.doEdit}
+					onExport={canExport ? this.doExport : null}
+					onDelete={this.deleteCourse}
 				/>
 			</Flyout.Triggered>
 		);

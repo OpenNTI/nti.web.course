@@ -10,8 +10,8 @@ import ArchivedIcon from '../parts/ArchivedIcon';
 import Badge from '../parts/Badge';
 import Card from '../parts/Card';
 import CompletedCheck from '../parts/CompletedCheckIcon';
-import CourseMenu from '../parts/CourseSettingsMenu';
 import Settings from '../parts/SettingsIcon';
+import CourseMenu from '../../SettingsMenu';
 import { RequirementDetails } from '../../pass-fail';
 
 import Registry from './Registry';
@@ -39,14 +39,6 @@ export default class EnrollmentCard extends React.Component {
 
 	state = {};
 
-	doRequestSupport = e => {
-		e.stopPropagation();
-		e.preventDefault();
-
-		global.location.href =
-			'mailto:support@nextthought.com?subject=Support%20Request';
-	};
-
 	renderOptionsButton() {
 		return <Settings />;
 	}
@@ -59,11 +51,7 @@ export default class EnrollmentCard extends React.Component {
 				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
 				ref={this.attachOptionsFlyoutRef}
 			>
-				<CourseMenu
-					course={this.props.course}
-					doRequestSupport={this.doRequestSupport}
-					registered
-				/>
+				<CourseMenu course={this.props.course} registered />
 			</Flyout.Triggered>
 		);
 	}

@@ -10,7 +10,7 @@ export { default as ManageTranscriptCredits } from './info/inline/components/tra
 export * as Progress from './progress';
 export { default as ProgressWindow } from './progress/window';
 export * as ProgressWidgets from './progress/widgets';
-export { default as CourseMenu } from './listing/CourseMenu';
+export { default as CourseMenu } from './SettingsMenu';
 export { default as EnrollmentListItem } from './listing/EnrollmentListItem';
 export * as Enrollment from './enrollment';
 export { default as CourseItem } from './info/Item';

@@ -1,31 +1,30 @@
+/* eslint-env jest */
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
-import CourseMenu from '../CourseMenu';
+import { SettingsMenu } from '../SettingsMenu';
 
-/* eslint-env jest */
-describe('CourseMenu test', () => {
-	const doEdit = jest.fn();
-	const doExport = jest.fn();
-	const doDelete = jest.fn();
-	const doDrop = jest.fn();
-	const doRequestSupport = jest.fn();
+describe('Course SettingsMenu test', () => {
+	const onEdit = jest.fn();
+	const onExport = jest.fn();
+	const onDelete = jest.fn();
+	const onDrop = jest.fn();
 
 	const course = {
 		title: 'Test Course',
 	};
 
 	let result;
-	beforeEach(() => {
+	beforeEach(async () => {
 		result = render(
-			<CourseMenu
+			<SettingsMenu
 				course={course}
-				doEdit={doEdit}
-				doExport={doExport}
-				doDelete={doDelete}
-				doDrop={doDrop}
-				doRequestSupport={doRequestSupport}
-				registered="registered"
+				onEdit={onEdit}
+				onExport={onExport}
+				onDelete={onDelete}
+				onDrop={onDrop}
+				supportLink="foo@bar.baz"
+				registered
 			/>
 		);
 	});
@@ -50,7 +49,7 @@ describe('CourseMenu test', () => {
 	};
 
 	test('Test simple course with title', () => {
-		let { container: simple } = render(<CourseMenu course={course} />);
+		let { container: simple } = render(<SettingsMenu course={course} />);
 
 		expect(simple.querySelector('.course-name').textContent).toBe(
 			course.title
@@ -59,8 +58,8 @@ describe('CourseMenu test', () => {
 		// no registered status was provided, so there should be no registered message
 		expect(simple.querySelector('.course-status').textContent).toBe('');
 
-		// no action handlers were provided, so there should be no options
-		expect(simple.querySelectorAll('.option')).toHaveLength(0);
+		// no action handlers were provided, so there should be only contact support
+		expect(simple.querySelectorAll('.option')).toHaveLength(1);
 	});
 
 	test('All options present', () => {
@@ -68,17 +67,14 @@ describe('CourseMenu test', () => {
 	});
 
 	test('Test edit option', async () =>
-		verifyOption('Edit Course Information', doEdit));
+		verifyOption('Edit Course Information', onEdit));
 
-	test('Test export option', async () => verifyOption('Export', doExport));
-
-	test('Test support option', async () =>
-		verifyOption('Contact Support', doRequestSupport));
+	test('Test export option', async () => verifyOption('Export', onExport));
 
 	test('Test delete option', async () =>
-		verifyOption('Delete Course', doDelete));
+		verifyOption('Delete Course', onDelete));
 
-	test('Test drop option', async () => verifyOption('Drop Course', doDrop));
+	test('Test drop option', async () => verifyOption('Drop Course', onDrop));
 
 	test('Test status', () => {
 		expect(find('.course-status').textContent).toBe("You're Registered");

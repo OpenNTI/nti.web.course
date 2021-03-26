@@ -6,7 +6,7 @@ import { scoped } from '@nti/lib-locale';
 import { getService } from '@nti/web-client';
 import { Prompt, Flyout, Presentation } from '@nti/web-commons';
 
-import CourseMenu from './CourseMenu';
+import CourseMenu from '../SettingsMenu';
 
 const t = scoped('course.components.listing.CourseCard', {
 	confirmDelete: 'Do you want to delete this course?',
@@ -177,9 +177,9 @@ export default class CourseCard extends React.Component {
 			>
 				<CourseMenu
 					course={this.props.course}
-					doEdit={this.doEdit}
-					doExport={this.doExport}
-					doDelete={this.deleteCourse}
+					onEdit={this.doEdit}
+					onExport={this.doExport}
+					onDelete={this.deleteCourse}
 				/>
 			</Flyout.Triggered>
 		);
