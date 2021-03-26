@@ -7,6 +7,9 @@ import { getService } from '@nti/web-client';
 import DropCourse from './DropCourse';
 import { DestructiveOption, Menu, Header, Option } from './SettingsMenuParts';
 
+const ensureProtocol = x =>
+	!x || /^(mailto|https?):/i.test(x) ? x : `mailto:${x}`;
+
 const t = scoped('course.components.listing.CourseMenu', {
 	edit: 'Edit Course Information',
 	export: 'Export',
@@ -39,7 +42,11 @@ export function SettingsMenu({
 			<Header course={course} registered={registered} t={t} />
 			<Option onClick={onEdit}>{t('edit')}</Option>
 			<Option onClick={onExport}>{t('export')}</Option>
-			<Option as="a" className="option" href={`mailto:${supportContact}`}>
+			<Option
+				as="a"
+				className="option"
+				href={ensureProtocol(supportContact)}
+			>
 				{t('contactSupport')}
 			</Option>
 			<DestructiveOption onClick={onDelete} data-testid="delete-course">
