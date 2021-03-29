@@ -28,24 +28,28 @@ const getSizes = () => {
 			name: t('icon'),
 			id: 'icon',
 			formatting: { crop: { aspectRatio: 1 } },
+			outputSize: {maxHeight: 120},
 			fileName: 'catalog-entry-thumbnail',
 		},
 		{
 			name: t('promo'),
 			id: 'promo',
 			formatting: { crop: { aspectRatio: 16 / 9 } },
+			outputSize: {maxHeight: 1440},
 			fileName: 'catalog-promo-large',
 		},
 		{
 			name: t('cover'),
 			id: 'cover',
 			formatting: { crop: { aspectRatio: 232 / 170 } },
+			outputSize: {maxHeight: 340},
 			fileName: 'catalog-entry-cover',
 		},
 		{
 			name: t('background'),
 			id: 'background',
 			formatting: { crop: { aspectRatio: 3 / 2 }, blur: { radius: 50 } },
+			outputSize: {maxHeight: 2000},
 			fileName: 'catalog-background',
 		},
 	];
@@ -104,14 +108,16 @@ export default class AssetsPicker extends React.Component {
 						ImageEditor.getEditorState(asset, size.formatting);
 
 					const blob = await ImageEditor.getBlobForEditorState(
-						editorState
+						editorState,
+						size.outputSize
 					);
 
 					return { blob, fileName: size.fileName };
 				})
 			);
 			const baseBlob = await ImageEditor.getBlobForEditorState(
-				ImageEditor.getEditorState(baseAsset, {})
+				ImageEditor.getEditorState(baseAsset, {}),
+				{maxHeight: 2000}
 			);
 
 			onSave([...images, { fileName: 'catalog-source', blob: baseBlob }]);
