@@ -2,6 +2,7 @@ import './OutlineNode.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { Base64 } from 'js-base64';
 
 import Storage from '@nti/web-storage';
 import { getAppUsername } from '@nti/web-client';
@@ -20,7 +21,7 @@ const changed = (A, B, keys = []) => keys.some(x => A[x] !== B[x]);
 
 function getStoragePreferenceJSON() {
 	try {
-		const rawValue = atob(Storage.getItem(STORAGE_KEY));
+		const rawValue = Base64.decode(Storage.getItem(STORAGE_KEY));
 
 		return JSON.parse(rawValue)[getAppUsername()] || {};
 	} catch {
@@ -40,7 +41,7 @@ function setStoragePreference(key, value) {
 		[getAppUsername()]: { ...getStoragePreferenceJSON(), [key]: value },
 	});
 
-	Storage.setItem(STORAGE_KEY, btoa(rawValue));
+	Storage.setItem(STORAGE_KEY, Base64.encode(rawValue));
 }
 
 export default class LessonView extends React.Component {
