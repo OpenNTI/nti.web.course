@@ -4,12 +4,8 @@
   "author": "nextthought",
   "description": "ReactJS components for course management",
   "license": "UNLICENSED",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "module": "src/index.js",
-  "files": [
-    "lib",
-    "src"
-  ],
   "scripts": {
     "check": "cmp-scripts check",
     "clean": "cmp-scripts clean",
