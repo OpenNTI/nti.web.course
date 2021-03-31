@@ -1,4 +1,4 @@
-import { Translate } from './strings';
+import { Translate } from './strings.js';
 
 export const Heading = styled(Translate).attrs({
 	as: 'h1',
@@ -10,5 +10,3 @@ export const Heading = styled(Translate).attrs({
 	font-weight: 300;
 	line-height: 1.34375;
 `;
-
-export default Heading;

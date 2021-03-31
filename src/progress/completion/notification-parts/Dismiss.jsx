@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Button } from '@nti/web-commons';
 
-import { Translate } from './strings';
+import { Translate } from './strings.js';
 
 const styles = stylesheet`
 	.button {
@@ -24,7 +24,7 @@ Dismiss.propTypes = {
 	onClick: PropTypes.func,
 };
 
-export default function Dismiss({ onClick }) {
+export function Dismiss({ onClick }) {
 	return (
 		<Button onClick={onClick} className={styles.button} plain>
 			<Translate localeKey="dismiss" />

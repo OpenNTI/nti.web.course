@@ -2,7 +2,7 @@ import EventEmitter from 'events';
 
 import React, { useMemo } from 'react';
 
-import Notification from '../Notification';
+import Notification from '../Notification.jsx';
 
 const Template = ({ show, certificate }) => {
 	const course = useMemo(

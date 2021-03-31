@@ -12,7 +12,6 @@ export const Close = styled('a').attrs(props => ({
 }))`
 	/* produces a 22px square glyph box with 6px padding all around */
 	font-size: 34px;
-
 	cursor: pointer;
 	text-decoration: none;
 
@@ -28,5 +27,3 @@ export const Close = styled('a').attrs(props => ({
 		opacity: 1;
 	}
 `;
-
-export default Close;

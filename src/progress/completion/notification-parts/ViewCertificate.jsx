@@ -1,4 +1,4 @@
-import { Translate } from './strings';
+import { Translate } from './strings.js';
 
 export const ViewCertificate = styled(Translate).attrs({
 	as: 'a',
@@ -11,5 +11,3 @@ export const ViewCertificate = styled(Translate).attrs({
 	line-height: 1.8125;
 	text-decoration: none;
 `;
-
-export default ViewCertificate;

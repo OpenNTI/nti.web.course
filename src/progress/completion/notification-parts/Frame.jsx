@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import Dismiss from './Dismiss';
-import Close from './Close';
+import { Dismiss } from './Dismiss.jsx';
+import { Close } from './Close.jsx';
 
 const styles = stylesheet`
 	.centered {
@@ -15,7 +15,6 @@ const styles = stylesheet`
 
 const Box = styled('div')`
 	composes: ${styles.centered};
-
 	max-width: 100vw;
 	width: 1024px;
 	height: 700px;

@@ -10,7 +10,7 @@ import {
 	Heading,
 	Description,
 	ViewCertificate,
-} from './notification-parts';
+} from './notification-parts/index.js';
 
 const Receiver = ({ children: renderer, ...props }) => renderer(props);
 

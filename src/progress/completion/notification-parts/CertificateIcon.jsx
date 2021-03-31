@@ -5,5 +5,3 @@ export const CertificateIcon = styled('img').attrs({
 })`
 	/* border: 1px solid red; */
 `;
-
-export default CertificateIcon;

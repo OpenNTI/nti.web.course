@@ -1,4 +1,4 @@
-import { Translate } from './strings';
+import { Translate } from './strings.js';
 
 export const Description = styled(Translate).attrs({
 	as: 'p',
@@ -11,5 +11,3 @@ export const Description = styled(Translate).attrs({
 	text-align: center;
 	white-space: pre-wrap;
 `;
-
-export default Description;
