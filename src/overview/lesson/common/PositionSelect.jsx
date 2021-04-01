@@ -207,8 +207,6 @@ export default class LessonOverviewPositionSelect extends React.Component {
 			invalid: errorField === 'sectionName',
 		});
 
-		debugger;
-
 		return (
 			<div className="create-section-form">
 				{error && <div className="error">{error}</div>}
