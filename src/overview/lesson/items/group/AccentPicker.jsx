@@ -8,6 +8,7 @@ const Presets = [
 	(['#B6BAC9', '#FFB99B', '#FB9DC7', '#5AECFF', '#65CD9E', '#ACCE69', '#FFDE0A', '#DBC4AE']).map(x => ({color: Color.fromHex(x)}))
 ];
 
+AccentPicker.defaultColor = Presets[0][0].color;
 export function AccentPicker (props) {
 	return (
 		<Input.Color.Flyout

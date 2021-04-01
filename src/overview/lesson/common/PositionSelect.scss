@@ -81,6 +81,18 @@
 
 		.contents {
 			padding: 0.7rem;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+
+			& *:first-child {
+				flex: 1 1 auto;
+			}
+
+			& *:last-child {
+				flex: 0 0 auto;
+				margin-left: 0.5rem
+			}
 
 			.label {
 				font-size: 0.625em;
@@ -93,51 +105,6 @@
 
 				&.invalid {
 					border: solid 1px var(--primary-red);
-				}
-
-				&.name-input {
-					margin-bottom: 1.25rem;
-				}
-
-				&.hex-input {
-					font-size: 11px;
-					height: 21px;
-				}
-			}
-
-			.color-samples {
-				margin: 0;
-				padding: 0;
-				margin-top: 0.5rem;
-				max-width: 240px;
-				list-style: none;
-
-				.color-sample {
-					display: inline-block;
-					width: 20px;
-					height: 20px;
-					margin-right: 9px;
-					cursor: pointer;
-					padding: 8px 7px;
-					border: 1px solid transparent;
-					border-radius: 3px;
-					margin-bottom: 4px;
-
-					&.selected {
-						position: relative;
-
-						&::after {
-							content: '';
-							display: block;
-							position: absolute;
-							top: -4px;
-							left: -4px;
-							right: -4px;
-							bottom: -4px;
-							box-shadow: 0 0 0 1px #979797;
-							border-radius: 4px;
-						}
-					}
 				}
 			}
 		}

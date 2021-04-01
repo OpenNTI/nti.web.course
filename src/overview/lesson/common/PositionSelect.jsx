@@ -7,6 +7,8 @@ import { Flyout, Input, DialogButtons } from '@nti/web-commons';
 import { getService } from '@nti/web-client';
 import { scoped } from '@nti/lib-locale';
 
+import {AccentPicker} from '../items/group';
+
 const t = scoped('course.overview.lesson.common.PositionSelect', {
 	save: 'Save',
 	cancel: 'Cancel',
@@ -17,33 +19,6 @@ const t = scoped('course.overview.lesson.common.PositionSelect', {
 	sectionName: 'Section Name',
 	chooseColor: 'Choose a Color',
 });
-
-// TODO: belongs in OverviewGroup model or somewhere else?
-const COLOR_CHOICES = [
-	'F9824E',
-	'F5D420',
-	'81C8DC',
-	'A5C959',
-	'F9869E',
-	'A8699D',
-	'C7D470',
-	'6B718E',
-	'D8AF7E',
-	'59C997',
-	'5474D6',
-	'CE78E0',
-	'F5A620',
-	'7B8CDF',
-	'D3545B',
-	'728957',
-];
-
-const hex16Re = /^#?([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])([0-9a-f][0-9a-f])$/i;
-const hex8Re = /^#?([0-9a-f])([0-9a-f])([0-9a-f])$/i;
-
-const isValidHexColor = function (code) {
-	return hex16Re.test(code) || hex8Re.test(code);
-};
 
 export default class LessonOverviewPositionSelect extends React.Component {
 	attachSectionFlyoutRef = x => (this.sectionFlyout = x);
@@ -128,7 +103,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 	};
 
 	enterCreateMode = () => {
-		this.setState({ inCreationMode: true, hexValue: COLOR_CHOICES[0] });
+		this.setState({ inCreationMode: true, accentColor: AccentPicker.defaultColor});
 	};
 
 	onCancel = () => {
@@ -151,7 +126,8 @@ export default class LessonOverviewPositionSelect extends React.Component {
 
 	onSave = async () => {
 		const { lessonOverview } = this.props;
-		const { sectionName, hexValue } = this.state;
+		const { sectionName, accentColor } = this.state;
+		const hexValue = accentColor.hex.toString();
 
 		this.setState({ savingSection: true, error: null, errorField: null });
 
@@ -161,11 +137,6 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				error: t('missingRequired'),
 				errorField: 'sectionName',
 			});
-			return;
-		}
-
-		if (!hexValue || !isValidHexColor(hexValue)) {
-			this.setState({ savingSection: false, error: t('invalidColor') });
 			return;
 		}
 
@@ -211,6 +182,8 @@ export default class LessonOverviewPositionSelect extends React.Component {
 		this.setState({ hexValue: val });
 	};
 
+	onAccentChange = accentColor => this.setState({accentColor});
+
 	renderColorPreview = hex => {
 		const cls = cx('color-sample', {
 			selected: hex === this.state.hexValue,
@@ -228,11 +201,13 @@ export default class LessonOverviewPositionSelect extends React.Component {
 	};
 
 	renderCreateNewSection() {
-		const { error, errorField, savingSection, canInputColor } = this.state;
+		const { error, errorField, savingSection } = this.state;
 
 		const sectionNameInputCls = cx('name-input', {
 			invalid: errorField === 'sectionName',
 		});
+
+		debugger;
 
 		return (
 			<div className="create-section-form">
@@ -244,18 +219,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 						onChange={this.sectionNameChange}
 						placeholder={t('sectionName')}
 					/>
-					<div className="label">{t('chooseColor')}</div>
-					{canInputColor && <span>#</span>}
-					{canInputColor && (
-						<Input.Text
-							value={this.state.hexValue}
-							onChange={this.hexValueChange}
-							className="hex-input"
-						/>
-					)}
-					<ul className="color-samples">
-						{COLOR_CHOICES.map(this.renderColorPreview)}
-					</ul>
+					<AccentPicker value={this.state.accentColor} onChange={this.onAccentChange} />
 				</div>
 				<DialogButtons
 					buttons={[
@@ -275,6 +239,13 @@ export default class LessonOverviewPositionSelect extends React.Component {
 	}
 
 	renderSectionSelect() {
+		const flyoutProps = {};
+
+		if (this.state.inCreationMode) {
+			flyoutProps.open = true;
+		}
+
+
 		return (
 			<Flyout.Triggered
 				className="section-select"
@@ -289,6 +260,7 @@ export default class LessonOverviewPositionSelect extends React.Component {
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 				sizing={Flyout.SIZES.MATCH_SIDE}
 				ref={this.attachSectionFlyoutRef}
+				{...flyoutProps}
 			>
 				<div className="section-select-flyout">
 					{!this.state.inCreationMode &&
