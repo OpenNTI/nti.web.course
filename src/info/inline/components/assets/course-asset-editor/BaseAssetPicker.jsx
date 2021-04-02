@@ -15,7 +15,7 @@ const t = scoped(
 	{
 		continue: 'Continue',
 		cancel: 'Cancel',
-		disclaimer: 'We recommend choosing an image that will work well in both landscape and portraits crop ratios.'
+		disclaimer: 'We recommend choosing an image that will work well in both landscape and portrait crop ratios.'
 	}
 );
 
