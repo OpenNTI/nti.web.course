@@ -82,7 +82,7 @@ async function dropCourse(course) {
 			}
 		);
 	} catch (err) {
-		if (err === 'Prompt Canceled') {
+		if (err.message === 'Prompt Canceled') {
 			return;
 		}
 
