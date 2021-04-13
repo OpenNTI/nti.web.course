@@ -67,7 +67,7 @@ class CourseAdminCompletion extends React.Component {
 
 		this.onSave(
 			isCompletable,
-			isCompletable ? 100 : this.props.percentage,
+			isCompletable ? 100 : this.props.percentage ?? 100,
 			this.props.certificationPolicy
 		);
 	};
