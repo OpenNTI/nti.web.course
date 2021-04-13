@@ -45,7 +45,6 @@ export default class Administrative extends React.Component {
 	deleteCourse = e => {
 		const { course, onModification, onDelete } = this.props;
 
-		e.stopPropagation();
 		e.preventDefault();
 
 		Prompt.areYouSure(t('confirmDelete')).then(() => {

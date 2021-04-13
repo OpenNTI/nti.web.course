@@ -44,7 +44,6 @@ function DropCourseOption({
 
 	const drop = useCallback(
 		e => {
-			e.stopPropagation();
 			e.preventDefault();
 			if (onDrop) onDrop();
 			else dropCourse(course);
