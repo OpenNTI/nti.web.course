@@ -173,6 +173,7 @@ export default class CourseCard extends React.Component {
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 				sizing={Flyout.SIZES.MATCH_SIDE}
 				ref={this.attachOptionsFlyoutRef}
+				autoDismissOnAction
 				arrow
 			>
 				<CourseMenu

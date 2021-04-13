@@ -117,6 +117,7 @@ export default class Administrative extends React.Component {
 				trigger={<Settings />}
 				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
 				ref={this.attachOptionsFlyoutRef}
+				autoDismissOnAction
 			>
 				<CourseMenu
 					registered

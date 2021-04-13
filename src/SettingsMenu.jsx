@@ -26,7 +26,6 @@ SettingsMenu.propTypes = {
 	onDrop: PropTypes.func,
 	registered: PropTypes.bool,
 	supportContact: PropTypes.string,
-	dismissFlyout: PropTypes.func,
 };
 
 export function SettingsMenu({
@@ -37,10 +36,9 @@ export function SettingsMenu({
 	onExport,
 	registered,
 	supportContact,
-	dismissFlyout,
 }) {
 	return (
-		<Menu onClick={dismissFlyout}>
+		<Menu>
 			<Header course={course} registered={registered} t={t} />
 			<Option onClick={onEdit}>{t('edit')}</Option>
 			<Option onClick={onExport}>{t('export')}</Option>

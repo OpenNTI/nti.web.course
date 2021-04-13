@@ -50,6 +50,7 @@ export default class EnrollmentCard extends React.Component {
 				trigger={this.renderOptionsButton()}
 				horizontalAlign={Flyout.ALIGNMENTS.RIGHT}
 				ref={this.attachOptionsFlyoutRef}
+				autoDismissOnAction
 			>
 				<CourseMenu course={this.props.course} registered />
 			</Flyout.Triggered>
