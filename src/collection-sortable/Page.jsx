@@ -5,18 +5,18 @@ import { scoped } from '@nti/lib-locale';
 import {
 	Loading,
 	Scroll,
-	Page,
+	Page as CommonsPage,
 	Hooks,
 	Button,
 	Layouts,
 } from '@nti/web-commons';
 import { WithSearch } from '@nti/web-search';
 
-import Store from './Store';
-import Grid from './components/Grid';
-import Group from './components/Group';
-import Empty from './components/Empty';
-import ResultsLabel from './components/ResultsLabel';
+import { Store } from './Store';
+import { Grid } from './components/Grid';
+import { CourseCollectionGroup as Group } from './components/Group';
+import { Empty } from './components/Empty';
+import { ResultsLabel } from './components/ResultsLabel';
 
 const { useMobileValue } = Hooks;
 
@@ -105,14 +105,14 @@ function CourseCollection({ getSectionTitle, children }) {
 			window
 			onBottom={hasMore ? loadMore : null}
 		>
-			<Page>
-				<Page.Content card={false}>
+			<CommonsPage>
+				<CommonsPage.Content card={false}>
 					<ResultsLabel empty={empty} />
 					<Loading.Placeholder
 						loading={initialLoading}
-						fallback={<Page.Content.Loading />}
+						fallback={<CommonsPage.Content.Loading />}
 					>
-						{error && <Page.Content.Error error={error} />}
+						{error && <CommonsPage.Content.Error error={error} />}
 						{!error && empty && (
 							<Empty collection={collection} searchTerm />
 						)}
@@ -144,8 +144,8 @@ function CourseCollection({ getSectionTitle, children }) {
 							)}
 						</Footer>
 					</Loading.Placeholder>
-				</Page.Content>
-			</Page>
+				</CommonsPage.Content>
+			</CommonsPage>
 		</Scroll.BoundaryMonitor>
 	);
 }
@@ -161,7 +161,7 @@ const Connected = Store.compose(CourseCollection, {
 const title = collection =>
 	typeof collection === 'string' ? collection : collection?.Title;
 
-export default WithSearch(Connected, {
+export const Page = WithSearch(Connected, {
 	context: ({ collection }) => title(collection),
 	label: ({ collection }) => t(`search.${title(collection)}`),
 });

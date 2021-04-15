@@ -1,9 +1,9 @@
 import { scoped } from '@nti/lib-locale';
 
-export { default as Page } from './Page';
-export { default as Grid } from './components/Grid';
-export { default as Group } from './components/Group';
-export { default as Store } from './Store';
+export { Page } from './Page';
+export { Grid } from './components/Grid';
+export { CourseCollectionGroup as Group } from './components/Group';
+export { Store } from './Store';
 
 export const getSortOptionText = scoped('course.sorting', {
 	availability: 'By Availability',

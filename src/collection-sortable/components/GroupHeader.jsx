@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 import { Text, Theme } from '@nti/web-commons';
 
-import Grid from './Grid';
+import { Grid } from './Grid';
 
 //TODO: move the locale strings here from library/components/SectionTitle
 const t = scoped('course.collection.GroupHeader', {
@@ -53,7 +53,7 @@ GroupHeader.propTypes = {
 	}),
 	getSectionTitle: PropTypes.func,
 };
-export default function GroupHeader({ group, getSectionTitle = getLocale }) {
+export function GroupHeader({ group, getSectionTitle = getLocale }) {
 	const background = Theme.useThemeProperty('background');
 	const lightBackground = background === 'light';
 

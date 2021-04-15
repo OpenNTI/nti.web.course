@@ -5,8 +5,8 @@ import { Errors } from '@nti/web-commons';
 
 import Card from '../../card/View';
 
-import Grid from './Grid';
-import GroupHeader from './GroupHeader';
+import { Grid } from './Grid';
+import { GroupHeader } from './GroupHeader';
 
 const Section = styled('section')`
 	margin-bottom: 2rem;
@@ -30,7 +30,7 @@ CourseCollectionGroup.propTypes = {
 	onCourseDelete: PropTypes.func,
 	onSortChange: PropTypes.func,
 };
-export default function CourseCollectionGroup({
+export function CourseCollectionGroup({
 	group,
 	mobile,
 	getSectionTitle,

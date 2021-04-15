@@ -16,13 +16,6 @@ async function resolveCollection(collection) {
 	return service.getCollection(collection, 'Courses');
 }
 
-// const courseSortOptions = [
-// 	'createdTime',
-// 	'provideruniqueid',
-// 	'lastSeenTime',
-// 	'title',
-// ];
-
 const Generators = [
 	{
 		handles: (collection, params) => params.sortOn === 'availability',
@@ -200,4 +193,4 @@ class CourseCollectionStore extends Stores.BoundStore {
 	}
 }
 
-export default Interfaces.Searchable(CourseCollectionStore);
+export const Store = Interfaces.Searchable(CourseCollectionStore);
