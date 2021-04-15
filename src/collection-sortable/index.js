@@ -1,0 +1,15 @@
+import { scoped } from '@nti/lib-locale';
+
+export { default as Page } from './Page';
+export { default as Grid } from './components/Grid';
+export { default as Group } from './components/Group';
+export { default as Store } from './Store';
+
+export const getSortOptionText = scoped('course.sorting', {
+	availability: 'By Availability',
+	favorites: 'By Magic',
+	createdTime: 'By Date Added',
+	provideruniqueid: 'By ID',
+	lastSeenTime: 'By Last Opened',
+	title: 'By Title',
+});
