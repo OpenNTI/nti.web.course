@@ -10,8 +10,8 @@ exports[`Course Navigation Tabs Editor Tab snapshot 1`] = `
     <input
       className="nti-text-input"
       onChange={[Function]}
+      onFocus={[Function]}
       placeholder="Activity"
-      type="text"
       value="Stream"
     />
     <div
