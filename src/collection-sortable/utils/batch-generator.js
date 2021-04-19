@@ -13,8 +13,8 @@ export default async function* batchGenerator(collection, params, grouper) {
 
 	while (!done) {
 		const batch = await service.getBatch(collection.getLink(rel), {
-			...params,
 			batchSize: BatchSize,
+			...params,
 			batchStart: offset,
 		});
 
