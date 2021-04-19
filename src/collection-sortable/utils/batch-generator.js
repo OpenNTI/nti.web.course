@@ -12,10 +12,12 @@ export default async function* batchGenerator(collection, params, grouper) {
 	let done = false;
 
 	while (!done) {
+		const { batchSize = BatchSize } = params;
+
 		const batch = await service.getBatch(collection.getLink(rel), {
-			batchSize: BatchSize,
 			...params,
 			batchStart: offset,
+			batchSize,
 		});
 
 		if (batch.Items.length < BatchSize) {
