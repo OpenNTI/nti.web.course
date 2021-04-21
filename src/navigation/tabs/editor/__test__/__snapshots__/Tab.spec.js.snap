@@ -12,6 +12,7 @@ exports[`Course Navigation Tabs Editor Tab snapshot 1`] = `
       onChange={[Function]}
       onFocus={[Function]}
       placeholder="Activity"
+      type="text"
       value="Stream"
     />
     <div
