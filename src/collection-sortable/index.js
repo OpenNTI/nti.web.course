@@ -7,7 +7,7 @@ export { Store } from './Store';
 
 export const getSortOptionText = scoped('course.sorting', {
 	availability: 'By Availability',
-	favorites: 'By Magic',
+	favorites: 'Default (Current and Upcoming)',
 	createdTime: 'By Date Added',
 	provideruniqueid: 'By ID',
 	lastSeenTime: 'By Last Opened',
