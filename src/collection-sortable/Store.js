@@ -18,7 +18,8 @@ async function resolveCollection(collection) {
 
 const Generators = [
 	{
-		handles: (collection, params) => params.sortOn === 'availability',
+		handles: (collection, params) =>
+			params.sortOn === 'availability' && !params.filter,
 		generator: async function* (collection, params) {
 			const fixedParams = {
 				...params,
