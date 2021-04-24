@@ -2,7 +2,7 @@ import { Stores, Interfaces } from '@nti/lib-store';
 import { Iterable } from '@nti/lib-commons';
 import { getService } from '@nti/web-client';
 
-import batchGenerator from './utils/batch-generator';
+import { batchGenerator, BatchSize } from './utils/batch-generator';
 import combineGroups from './utils/combine-groups';
 import getSemester from './utils/get-semester';
 
@@ -15,6 +15,12 @@ async function resolveCollection(collection) {
 
 	return service.getCollection(collection, 'Courses');
 }
+
+// util for getting the combined length of items returned by a single generator.next call
+const getLength = value =>
+	!value?.length
+		? 0
+		: value.reduce((acc, { Items: { length } = [] }) => acc + length, 0);
 
 const Generators = [
 	{
@@ -168,8 +174,47 @@ class CourseCollectionStore extends Stores.BoundStore {
 			loading: true,
 		});
 
-		const current = this.get('groups');
-		const next = await generator.next();
+		const { batchSize = BatchSize } = this.getParams();
+
+		/*
+		For a generator using chained iterators internally like we do for fetching 'current' courses
+		followed by 'administered' courses the following scenario may arise:
+
+		- We've exhausted the 'current courses' iterator
+
+		- The generator isn't 'done' because it still has the 'administered courses' iterator to consume
+
+		- We show a 'Load More' button in the UI accordingly
+
+		- The user has no administered courses so the 'Load More' button doesn't appear to do anything,
+		  leaving the impression that it was displayed erroneously.
+
+		To remedy this: If the number of items we get back is less than the batch size but the
+		generator isn't 'done' we'll call generator.next() again.
+		*/
+		const getNext = async (
+			current = this.get('groups'),
+			currentDepth = 0 // cutoff to prevent infinite recursion (just in case)
+		) => {
+			if (currentDepth > 5) {
+				return current;
+			}
+			const next = await generator.next();
+			const groups = next.value
+				? combineGroups(current, next.value)
+				: current;
+			if (
+				generator === this.generator &&
+				next.value &&
+				!next.done &&
+				getLength(next.value) < batchSize
+			) {
+				return getNext(groups, currentDepth + 1);
+			}
+			return { groups, hasMore: !next.done };
+		};
+
+		const { groups, hasMore } = await getNext();
 
 		if (this.generator !== generator) {
 			return;
@@ -177,8 +222,8 @@ class CourseCollectionStore extends Stores.BoundStore {
 
 		this.set({
 			loading: false,
-			groups: next.value ? combineGroups(current, next.value) : current,
-			hasMore: !next.done,
+			groups,
+			hasMore,
 		});
 	}
 
