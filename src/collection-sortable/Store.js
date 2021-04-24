@@ -199,19 +199,17 @@ class CourseCollectionStore extends Stores.BoundStore {
 			if (currentDepth > 5) {
 				return current;
 			}
-			const next = await generator.next();
-			const groups = next.value
-				? combineGroups(current, next.value)
-				: current;
+			const { value, done } = await generator.next();
+			const groups = value ? combineGroups(current, value) : current;
 			if (
 				generator === this.generator &&
-				next.value &&
-				!next.done &&
-				getLength(next.value) < batchSize
+				value &&
+				!done &&
+				getLength(value) < batchSize
 			) {
 				return getNext(groups, currentDepth + 1);
 			}
-			return { groups, hasMore: !next.done };
+			return { groups, hasMore: !done };
 		};
 
 		const { groups, hasMore } = await getNext();
