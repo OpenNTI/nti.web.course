@@ -2,7 +2,7 @@ import { Stores, Interfaces } from '@nti/lib-store';
 import { Iterable } from '@nti/lib-commons';
 import { getService } from '@nti/web-client';
 
-import { batchGenerator, BatchSize } from './utils/batch-generator';
+import { batchGenerator } from './utils/batch-generator';
 import combineGroups from './utils/combine-groups';
 import getSemester from './utils/get-semester';
 
@@ -15,12 +15,6 @@ async function resolveCollection(collection) {
 
 	return service.getCollection(collection, 'Courses');
 }
-
-// util for getting the combined length of items returned by a single generator.next call
-const getLength = value =>
-	!value?.length
-		? 0
-		: value.reduce((acc, { Items: { length } = [] }) => acc + length, 0);
 
 const Generators = [
 	{
@@ -174,8 +168,6 @@ class CourseCollectionStore extends Stores.BoundStore {
 			loading: true,
 		});
 
-		const { batchSize = BatchSize } = this.getParams();
-
 		/*
 		For a generator using chained iterators internally like we do for fetching 'current' courses
 		followed by 'administered' courses the following scenario may arise:
@@ -189,8 +181,9 @@ class CourseCollectionStore extends Stores.BoundStore {
 		- The user has no administered courses so the 'Load More' button doesn't appear to do anything,
 		  leaving the impression that it was displayed erroneously.
 
-		To remedy this: If the number of items we get back is less than the batch size but the
-		generator isn't 'done' we'll call generator.next() again.
+		To remedy this: The batch-generator returns a batchDone field, indicating that the current
+		  iterator is done (independently of whether the generator is done.) If the iterator is done
+		  but the generator isn't we'll call next again.
 		*/
 		const getNext = async (
 			current = this.get('groups'),
@@ -201,14 +194,16 @@ class CourseCollectionStore extends Stores.BoundStore {
 			}
 			const { value, done } = await generator.next();
 			const groups = value ? combineGroups(current, value) : current;
-			if (
-				generator === this.generator &&
-				value &&
-				!done &&
-				getLength(value) < batchSize
-			) {
+
+			const groupDone =
+				Array.isArray(value) &&
+				(value[value.length - 1]?.batchDone ?? true);
+
+			// current group is done but the generator isn't
+			if (generator === this.generator && groupDone && !done) {
 				return getNext(groups, currentDepth + 1);
 			}
+
 			return { groups, hasMore: !done };
 		};
 

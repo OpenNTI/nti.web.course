@@ -34,7 +34,15 @@ export async function* batchGenerator(collection, params, grouper) {
 						Items: [i],
 					}))
 			  )
-			: [{ name: rel, Items: batch.Items }];
+			: [
+					{
+						name: rel,
+						Items: batch.Items,
+						Total: batch.Total,
+						batchSize,
+						batchDone: done,
+					},
+			  ];
 
 		yield groups;
 	}
