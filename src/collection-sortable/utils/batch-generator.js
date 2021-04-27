@@ -2,9 +2,9 @@ import { getService } from '@nti/web-client';
 
 import combineGroups from './combine-groups';
 
-const BatchSize = 20;
+export const BatchSize = 20;
 
-export default async function* batchGenerator(collection, params, grouper) {
+export async function* batchGenerator(collection, params, grouper) {
 	const service = await getService();
 	const rel = params.rel ?? 'self';
 
@@ -34,7 +34,15 @@ export default async function* batchGenerator(collection, params, grouper) {
 						Items: [i],
 					}))
 			  )
-			: [{ name: rel, Items: batch.Items }];
+			: [
+					{
+						name: rel,
+						Items: batch.Items,
+						Total: batch.Total,
+						batchSize,
+						batchDone: done,
+					},
+			  ];
 
 		yield groups;
 	}
