@@ -22,9 +22,9 @@ const Generators = [
 			params.sortOn === 'availability' && !params.filter,
 		generator: async function* (collection, params) {
 			const fixedParams = {
-				...params,
 				sortOn: 'startDate',
 				sortDirection: null,
+				...params,
 			};
 			const iterator = Iterable.chain.async(
 				batchGenerator(collection, { ...fixedParams, rel: 'upcoming' }),
