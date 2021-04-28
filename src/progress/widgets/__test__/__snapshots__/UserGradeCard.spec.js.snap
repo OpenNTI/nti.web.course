@@ -7,6 +7,10 @@ exports[`Progress widgets user grade card test With grade 1`] = `
   <div
     className="avatar-container"
   >
+    <img
+      className="avatar avatar-color-6 avatar"
+      src="unresolved-user-avatar.png"
+    />
     <div
       className="grade-container"
     >
@@ -19,7 +23,12 @@ exports[`Progress widgets user grade card test With grade 1`] = `
   </div>
   <div
     className="user-name"
-  />
+  >
+    <span
+      className="username"
+      rel="author"
+    />
+  </div>
   <div
     className="sub-info"
   >
@@ -35,6 +44,10 @@ exports[`Progress widgets user grade card test Without grade 1`] = `
   <div
     className="avatar-container"
   >
+    <img
+      className="avatar avatar-color-6 avatar"
+      src="unresolved-user-avatar.png"
+    />
     <div
       className="grade-container"
     >
@@ -47,7 +60,12 @@ exports[`Progress widgets user grade card test Without grade 1`] = `
   </div>
   <div
     className="user-name"
-  />
+  >
+    <span
+      className="username"
+      rel="author"
+    />
+  </div>
   <div
     className="sub-info"
   >
