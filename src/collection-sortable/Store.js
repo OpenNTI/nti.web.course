@@ -57,6 +57,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 
 	applySearchTerm(term) {
 		if ((term ?? '') !== (this.lastSearchTerm ?? '')) {
+			delete this.lastParams;
 			this.setImmediate({
 				loading: true,
 				groups: null,
