@@ -28,6 +28,8 @@ CourseCollectionGroup.propTypes = {
 
 	getSectionTitle: PropTypes.func,
 	onCourseDelete: PropTypes.func,
+	onBeforeDrop: PropTypes.func,
+	onAfterDrop: PropTypes.func,
 	onSortChange: PropTypes.func,
 };
 export function CourseCollectionGroup({
@@ -35,6 +37,8 @@ export function CourseCollectionGroup({
 	mobile,
 	getSectionTitle,
 	onCourseDelete,
+	onBeforeDrop,
+	onAfterDrop,
 	onSortChange,
 }) {
 	if (group.error) {
@@ -60,6 +64,8 @@ export function CourseCollectionGroup({
 							<Card
 								course={item}
 								onDelete={onCourseDelete}
+								onBeforeDrop={onBeforeDrop}
+								onAfterDrop={onAfterDrop}
 								variant={columns === 1 ? 'list-item' : 'card'}
 							/>
 						</li>

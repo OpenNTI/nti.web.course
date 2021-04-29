@@ -221,7 +221,9 @@ class CourseCollectionStore extends Stores.BoundStore {
 		});
 	}
 
-	onCourseDelete(course) {
+	onCourseDelete = course => this.#removeCourse(course);
+
+	#removeCourse = course =>
 		this.setImmediate({
 			groups: (this.get('groups') ?? []).map(group => {
 				return {
@@ -230,7 +232,9 @@ class CourseCollectionStore extends Stores.BoundStore {
 				};
 			}),
 		});
-	}
+
+	onAfterDrop = ({ course, error }) =>
+		error ? void 0 : this.#removeCourse(course);
 }
 
 export const Store = Interfaces.Searchable(CourseCollectionStore);

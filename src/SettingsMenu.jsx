@@ -24,6 +24,8 @@ SettingsMenu.propTypes = {
 	onExport: PropTypes.func,
 	onDelete: PropTypes.func,
 	onDrop: PropTypes.func,
+	onBeforeDrop: PropTypes.func,
+	onAfterDrop: PropTypes.func,
 	registered: PropTypes.bool,
 	supportContact: PropTypes.string,
 };
@@ -32,6 +34,8 @@ export function SettingsMenu({
 	course,
 	onDelete,
 	onDrop,
+	onBeforeDrop: beforeDrop,
+	onAfterDrop: afterDrop,
 	onEdit,
 	onExport,
 	registered,
@@ -52,6 +56,7 @@ export function SettingsMenu({
 				as={DestructiveOption}
 				course={course}
 				onDrop={onDrop}
+				listeners={{ beforeDrop, afterDrop }}
 				icon={false}
 				data-testid="drop-course"
 			/>

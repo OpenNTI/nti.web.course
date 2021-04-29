@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
-import { DateTime, Flyout, Layouts } from '@nti/web-commons';
+import { DateTime, Flyout, Layouts, Loading } from '@nti/web-commons';
 
 import { getSemesterBadge } from '../../utils/Semester';
 import ArchivedIcon from '../parts/ArchivedIcon';
@@ -29,10 +29,12 @@ const Link = styled(LinkTo.Object)`
 	display: block;
 `;
 
-export default class EnrollmentCard extends React.Component {
+class EnrollmentCard extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
 		onModification: PropTypes.func,
+		onBeforeDrop: PropTypes.func,
+		onAfterDrop: PropTypes.func,
 	};
 
 	attachOptionsFlyoutRef = x => (this.optionsFlyout = x);
@@ -44,6 +46,7 @@ export default class EnrollmentCard extends React.Component {
 	}
 
 	renderOptions() {
+		const { course } = this.props;
 		return (
 			<Flyout.Triggered
 				className="admin-course-options"
@@ -52,10 +55,27 @@ export default class EnrollmentCard extends React.Component {
 				ref={this.attachOptionsFlyoutRef}
 				autoDismissOnAction
 			>
-				<CourseMenu course={this.props.course} registered />
+				<CourseMenu
+					course={course}
+					onBeforeDrop={this.onBeforeDrop}
+					onAfterDrop={this.onAfterDrop}
+					registered
+				/>
 			</Flyout.Triggered>
 		);
 	}
+
+	onBeforeDrop = event => {
+		// show spinner while drop request is in flight
+		this.setState({ loading: true });
+		return this.props.onBeforeDrop?.(event);
+	};
+
+	onAfterDrop = event => {
+		// hide spinner when drop request completes
+		this.setState({ loading: false });
+		return this.props.onAfterDrop?.(event);
+	};
 
 	viewDetails = e => {
 		e.stopPropagation();
@@ -66,7 +86,7 @@ export default class EnrollmentCard extends React.Component {
 
 	render() {
 		const { course, ...otherProps } = this.props;
-		const { showDetails } = this.state;
+		const { showDetails, loading } = this.state;
 		const startDate = course.getStartDate();
 		const endDate = course.getEndDate();
 		const completed =
@@ -134,6 +154,9 @@ export default class EnrollmentCard extends React.Component {
 							this.setState({ showDetails: false })
 						}
 					/>
+				)}
+				{loading && (
+					<Loading.Overlay loading={true} label={null} large />
 				)}
 			</Link>
 		);

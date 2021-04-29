@@ -69,6 +69,8 @@ function CourseCollection({ getSectionTitle, children }) {
 		hasMore,
 
 		onCourseDelete,
+		onBeforeDrop,
+		onAfterDrop,
 	} = Store.useValue();
 
 	const mobile = useMobileValue(true);
@@ -133,6 +135,8 @@ function CourseCollection({ getSectionTitle, children }) {
 								mobile={mobile}
 								getSectionTitle={getSectionTitle}
 								onCourseDelete={onCourseDelete}
+								onBeforeDrop={onBeforeDrop}
+								onAfterDrop={onAfterDrop}
 							/>
 						))}
 						<Footer>

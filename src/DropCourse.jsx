@@ -26,6 +26,10 @@ DropCourseOption.propTypes = {
 	}),
 	options: PropTypes.array,
 	onDrop: PropTypes.func,
+	listeners: PropTypes.shape({
+		beforeDrop: PropTypes.func,
+		afterDrop: PropTypes.func,
+	}),
 };
 function DropCourseOption({
 	as: Cmp = 'div',
@@ -33,6 +37,7 @@ function DropCourseOption({
 	store,
 	options,
 	onDrop,
+	listeners,
 	...props
 }) {
 	const enrolledOption = options?.find(x => x.isEnrolled());
@@ -46,7 +51,7 @@ function DropCourseOption({
 		e => {
 			e.preventDefault();
 			if (onDrop) onDrop();
-			else dropCourse(course);
+			else dropCourse(course, listeners);
 		},
 		[course, onDrop]
 	);
@@ -60,13 +65,15 @@ function DropCourseOption({
 
 export default decorate(DropCourseOption, [Store.connect(['options'])]);
 
-async function dropCourse(course) {
+async function dropCourse(course, { beforeDrop, afterDrop } = {}) {
 	const service = await getService();
+	let error;
 	try {
 		await Prompt.areYouSure(
 			t('confirmDrop', { course: course.CatalogEntry.title })
 		);
 
+		beforeDrop?.({ course });
 		const enrollmentService = await service.getEnrollment();
 		await enrollmentService.dropCourse(course.CatalogEntry.CourseNTIID);
 
@@ -86,11 +93,14 @@ async function dropCourse(course) {
 		}
 
 		const { message, Message: msg = message } = err || {};
+		error = err;
 
 		if (!msg) {
 			reportError(err);
 		}
 
 		Prompt.alert(t('error') + '<br>' + msg);
+	} finally {
+		afterDrop?.({ course, error });
 	}
 }
