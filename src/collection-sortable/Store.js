@@ -46,6 +46,31 @@ const Generators = [
 ];
 
 class CourseCollectionStore extends Stores.BoundStore {
+	constructor() {
+		super();
+
+		(async () => {
+			// listen for course drop events
+			const enrollmentService = await getService().then(s =>
+				s.getEnrollment()
+			);
+			enrollmentService.addListener('afterdrop', this.#onAfterCourseDrop);
+		})();
+	}
+
+	#onAfterCourseDrop = ({ course, error }) => {
+		if (!error) {
+			this.#removeCourse(course);
+		}
+	};
+
+	async cleanup() {
+		const enrollmentService = await getService().then(s =>
+			s.getEnrollment()
+		);
+		enrollmentService.removeListener('afterdrop', this.#onAfterCourseDrop);
+	}
+
 	bindingDidUpdate(prevBinding) {
 		return (
 			prevBinding.collection !== this.binding.collection ||
@@ -221,15 +246,23 @@ class CourseCollectionStore extends Stores.BoundStore {
 		});
 	}
 
-	onCourseDelete(course) {
+	#removeCourse = course => {
 		this.setImmediate({
 			groups: (this.get('groups') ?? []).map(group => {
 				return {
 					...group,
-					Items: (group.Items ?? []).filter(c => c !== course),
+					Items: (group.Items ?? []).filter(
+						c =>
+							c !== course &&
+							course.NTIID !== c.CatalogEntry?.CourseNTIID
+					),
 				};
 			}),
 		});
+	};
+
+	onCourseDelete(course) {
+		this.#removeCourse(course);
 	}
 }
 
