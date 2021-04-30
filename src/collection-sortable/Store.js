@@ -51,9 +51,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 
 		(async () => {
 			// listen for course drop events
-			const enrollmentService = await getService().then(s =>
-				s.getEnrollment()
-			);
+			const enrollmentService = (await getService()).getEnrollment();
 			enrollmentService.addListener('afterdrop', this.#onAfterCourseDrop);
 		})();
 	}
