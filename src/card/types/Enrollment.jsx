@@ -14,6 +14,7 @@ import Settings from '../parts/SettingsIcon';
 import CourseMenu from '../../SettingsMenu';
 import { RequirementDetails } from '../../pass-fail';
 
+import { EnrollmentDropListener } from './EnrollmentDropListener';
 import Registry from './Registry';
 
 const { Responsive } = Layouts;
@@ -118,24 +119,26 @@ export default class EnrollmentCard extends React.Component {
 		}
 
 		return (
-			<Link object={course}>
-				<Card
-					{...otherProps}
-					course={course.CatalogEntry}
-					badges={badges}
-					progress={progress}
-					className="no-padding"
-				/>
-				{Responsive.isWebappContext() && this.renderOptions()}
-				{showDetails && (
-					<RequirementDetails
-						course={{ PreferredAccess: course }}
-						onBeforeDismiss={() =>
-							this.setState({ showDetails: false })
-						}
+			<EnrollmentDropListener course={course}>
+				<Link object={course}>
+					<Card
+						{...otherProps}
+						course={course.CatalogEntry}
+						badges={badges}
+						progress={progress}
+						className="no-padding"
 					/>
-				)}
-			</Link>
+					{Responsive.isWebappContext() && this.renderOptions()}
+					{showDetails && (
+						<RequirementDetails
+							course={{ PreferredAccess: course }}
+							onBeforeDismiss={() =>
+								this.setState({ showDetails: false })
+							}
+						/>
+					)}
+				</Link>
+			</EnrollmentDropListener>
 		);
 	}
 }

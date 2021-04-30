@@ -1,10 +1,13 @@
 import { Stores, Interfaces } from '@nti/lib-store';
 import { Iterable } from '@nti/lib-commons';
 import { getService } from '@nti/web-client';
+import Logger from '@nti/util-logger';
 
 import { batchGenerator } from './utils/batch-generator';
 import combineGroups from './utils/combine-groups';
 import getSemester from './utils/get-semester';
+
+const logger = Logger.get('source:collection:store');
 
 async function resolveCollection(collection) {
 	if (typeof collection !== 'string') {
@@ -46,6 +49,38 @@ const Generators = [
 ];
 
 class CourseCollectionStore extends Stores.BoundStore {
+	constructor() {
+		super();
+
+		let abort;
+		this.unsubscribeEnrollment = () => void (abort = true);
+
+		(async () => {
+			// listen for course drop events
+			const enrollmentService = (await getService()).getEnrollment();
+			if (abort) {
+				logger.warn('Got unsubscribe call before adding the listener?');
+				return;
+			}
+			enrollmentService.addListener('afterdrop', this.#onAfterCourseDrop);
+			this.unsubscribeEnrollment = () =>
+				enrollmentService.removeListener(
+					'afterdrop',
+					this.#onAfterCourseDrop
+				);
+		})();
+	}
+
+	#onAfterCourseDrop = ({ course, error }) => {
+		if (!error) {
+			this.#removeCourse(course);
+		}
+	};
+
+	async cleanup() {
+		this.unsubscribeEnrollment();
+	}
+
 	bindingDidUpdate(prevBinding) {
 		return (
 			prevBinding.collection !== this.binding.collection ||
@@ -221,15 +256,23 @@ class CourseCollectionStore extends Stores.BoundStore {
 		});
 	}
 
-	onCourseDelete(course) {
+	#removeCourse = course => {
 		this.setImmediate({
 			groups: (this.get('groups') ?? []).map(group => {
 				return {
 					...group,
-					Items: (group.Items ?? []).filter(c => c !== course),
+					Items: (group.Items ?? []).filter(
+						c =>
+							c !== course &&
+							course.NTIID !== c.CatalogEntry?.CourseNTIID
+					),
 				};
 			}),
 		});
+	};
+
+	onCourseDelete(course) {
+		this.#removeCourse(course);
 	}
 }
 
