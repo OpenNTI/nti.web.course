@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Loading } from '@nti/web-commons';
+import { Loading, useService } from '@nti/web-commons';
 import { getService } from '@nti/web-client';
 
 const Relative = styled('div')`
@@ -9,6 +9,7 @@ const Relative = styled('div')`
 `;
 
 export function EnrollmentDropListener({ course, children }) {
+	const service = useService();
 	const [loading, setLoading] = useState();
 	let unmounted;
 
@@ -29,17 +30,12 @@ export function EnrollmentDropListener({ course, children }) {
 	};
 
 	useEffect(() => {
-		const listen = async () => {
-			const enrollment = await getService().then(s => s.getEnrollment());
-			enrollment.addListener('beforedrop', onBeforeDrop);
-			enrollment.addListener('afterdrop', onAfterDrop);
-		};
+		const enrollment = service.getEnrollment();
+		enrollment.addListener('beforedrop', onBeforeDrop);
+		enrollment.addListener('afterdrop', onAfterDrop);
 
-		listen();
-
-		return async () => {
+		return () => {
 			unmounted = true;
-			const enrollment = await getService().then(s => s.getEnrollment());
 			enrollment.removeListener('beforedrop', onBeforeDrop);
 			enrollment.removeListener('afterdrop', onAfterDrop);
 		};

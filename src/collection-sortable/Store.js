@@ -53,6 +53,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 			// listen for course drop events
 			const enrollmentService = (await getService()).getEnrollment();
 			enrollmentService.addListener('afterdrop', this.#onAfterCourseDrop);
+			this.unsubscribeEnrollment = () => enrollmentService.removeListener('afterdrop', this.#onAfterCourseDrop);
 		})();
 	}
 
@@ -63,10 +64,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 	};
 
 	async cleanup() {
-		const enrollmentService = await getService().then(s =>
-			s.getEnrollment()
-		);
-		enrollmentService.removeListener('afterdrop', this.#onAfterCourseDrop);
+		this.unsubscribeEnrollment();
 	}
 
 	bindingDidUpdate(prevBinding) {
