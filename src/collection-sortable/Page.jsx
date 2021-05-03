@@ -150,15 +150,12 @@ function CourseCollection({ getSectionTitle, children }) {
 	);
 }
 
-const defaultSortDirection = (collection, sortOn) =>
-	sortOn === 'lastSeenTime' ? 'descending' : 'ascending';
-
 const Connected = Store.compose(CourseCollection, {
 	deriveBindingFromProps: ({ collection, sortOn, sortDirection }) => ({
 		collection,
 		sortOn,
 		sortDirection:
-			sortDirection || defaultSortDirection(collection, sortOn),
+			sortDirection || Store.defaultSortDirection(collection, sortOn),
 	}),
 });
 

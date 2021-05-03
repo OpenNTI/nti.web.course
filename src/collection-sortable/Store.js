@@ -48,6 +48,8 @@ const Generators = [
 	},
 ];
 
+const descendingSorts = ['createdTime', 'lastSeenTime'];
+
 class CourseCollectionStore extends Stores.BoundStore {
 	constructor() {
 		super();
@@ -70,6 +72,9 @@ class CourseCollectionStore extends Stores.BoundStore {
 				);
 		})();
 	}
+
+	static defaultSortDirection = (collection, sortOn) =>
+		descendingSorts.includes(sortOn) ? 'descending' : 'ascending';
 
 	#onAfterCourseDrop = ({ course, error }) => {
 		if (!error) {
