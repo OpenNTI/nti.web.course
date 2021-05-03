@@ -2,7 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import { Summary } from '@nti/lib-interfaces';
-import { TestUtils } from '@nti/web-client';
+import * as TestUtils from '@nti/web-client/test-utils';
 
 import View from '../View';
 import { Grid } from '../../../Constants';
