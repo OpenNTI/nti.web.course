@@ -1,6 +1,11 @@
 import React from 'react';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
+import {
+	setupTestClient,
+	tearDownTestClient,
+} from '@nti/web-client/test-utils';
+
 import Facilitator from '../Facilitator';
 
 import { labels } from './Role.spec';
@@ -17,22 +22,11 @@ const mockService = () => ({
 });
 
 const onBefore = () => {
-	global.$AppConfig = {
-		...(global.$AppConfig || {}),
-		username: 'TestUser',
-		nodeService: mockService(),
-		nodeInterface: {
-			getServiceDocument: () =>
-				Promise.resolve(global.$AppConfig.nodeService),
-		},
-	};
+	setupTestClient(mockService(), 'TestUser');
 };
 
 const onAfter = () => {
-	//unmock getService()
-	const { $AppConfig } = global;
-	delete $AppConfig.nodeInterface;
-	delete $AppConfig.nodeService;
+	tearDownTestClient();
 };
 
 const display = 'User 1234';

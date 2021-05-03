@@ -1,6 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import {
+	setupTestClient,
+	tearDownTestClient,
+} from '@nti/web-client/test-utils';
+
 import View from '../View';
 
 const mockService = () => ({
@@ -8,21 +13,11 @@ const mockService = () => ({
 });
 
 const onBefore = () => {
-	global.$AppConfig = {
-		...(global.$AppConfig || {}),
-		nodeService: mockService(),
-		nodeInterface: {
-			getServiceDocument: () =>
-				Promise.resolve(global.$AppConfig.nodeService),
-		},
-	};
+	setupTestClient(mockService());
 };
 
 const onAfter = () => {
-	//unmock getService()
-	const { $AppConfig } = global;
-	delete $AppConfig.nodeInterface;
-	delete $AppConfig.nodeService;
+	tearDownTestClient();
 };
 
 const facilitators = [

@@ -1,3 +1,8 @@
+import {
+	setupTestClient,
+	tearDownTestClient,
+} from '@nti/web-client/test-utils';
+
 const mockService = () => ({
 	getObject: o => Promise.resolve(o),
 	put: url => {
@@ -10,22 +15,11 @@ const mockService = () => ({
 });
 
 const onBefore = () => {
-	global.$AppConfig = {
-		...(global.$AppConfig || {}),
-		username: 'TestUser',
-		nodeService: mockService(),
-		nodeInterface: {
-			getServiceDocument: () =>
-				Promise.resolve(global.$AppConfig.nodeService),
-		},
-	};
+	setupTestClient(mockService(), 'TestUser');
 };
 
 const onAfter = () => {
-	//unmock getService()
-	const { $AppConfig } = global;
-	delete $AppConfig.nodeInterface;
-	delete $AppConfig.nodeService;
+	tearDownTestClient();
 };
 
 /* eslint-env jest */

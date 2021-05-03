@@ -2,6 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 
+import {
+	setupTestClient,
+	tearDownTestClient,
+} from '@nti/web-client/test-utils';
+
 import CourseEditor from '../CourseEditor';
 
 const mockService = () => ({
@@ -9,21 +14,11 @@ const mockService = () => ({
 });
 
 const onBefore = () => {
-	global.$AppConfig = {
-		...(global.$AppConfig || {}),
-		nodeService: mockService(),
-		nodeInterface: {
-			getServiceDocument: () =>
-				Promise.resolve(global.$AppConfig.nodeService),
-		},
-	};
+	setupTestClient(mockService());
 };
 
 const onAfter = () => {
-	//unmock getService()
-	const { $AppConfig } = global;
-	delete $AppConfig.nodeInterface;
-	delete $AppConfig.nodeService;
+	tearDownTestClient();
 };
 
 /* eslint-env jest */

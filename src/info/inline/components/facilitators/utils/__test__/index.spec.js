@@ -1,3 +1,8 @@
+import {
+	setupTestClient,
+	tearDownTestClient,
+} from '@nti/web-client/test-utils';
+
 import { saveFacilitators, mergeAllFacilitators, getAvailableRoles } from '../';
 
 let savedData = null;
@@ -26,22 +31,12 @@ const mockService = putData => ({
 
 const onBefore = () => {
 	savedData = {};
-	global.$AppConfig = {
-		...(global.$AppConfig || {}),
-		nodeService: mockService(),
-		nodeInterface: {
-			getServiceDocument: () =>
-				Promise.resolve(global.$AppConfig.nodeService),
-		},
-	};
+	setupTestClient(mockService());
 };
 
 const onAfter = () => {
-	//unmock getService()
-	const { $AppConfig } = global;
 	savedData = null;
-	delete $AppConfig.nodeInterface;
-	delete $AppConfig.nodeService;
+	tearDownTestClient();
 };
 
 /* eslint-env jest */
