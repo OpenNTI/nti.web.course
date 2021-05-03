@@ -154,8 +154,7 @@ const Connected = Store.compose(CourseCollection, {
 	deriveBindingFromProps: ({ collection, sortOn, sortDirection }) => ({
 		collection,
 		sortOn,
-		sortDirection:
-			sortDirection || Store.defaultSortDirection(collection, sortOn),
+		sortDirection: sortDirection || Store.defaultSortDirection(sortOn),
 	}),
 });
 

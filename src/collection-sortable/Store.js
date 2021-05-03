@@ -48,7 +48,12 @@ const Generators = [
 	},
 ];
 
-const descendingSorts = ['createdTime', 'lastSeenTime'];
+const descendingSorts = [
+	'favorites',
+	'availability',
+	'createdTime',
+	'lastSeenTime',
+];
 
 class CourseCollectionStore extends Stores.BoundStore {
 	constructor() {
@@ -73,7 +78,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 		})();
 	}
 
-	static defaultSortDirection = (collection, sortOn) =>
+	static defaultSortDirection = sortOn =>
 		descendingSorts.includes(sortOn) ? 'descending' : 'ascending';
 
 	#onAfterCourseDrop = ({ course, error }) => {
