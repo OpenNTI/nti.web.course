@@ -24,19 +24,10 @@ const Generators = [
 		handles: (collection, params) =>
 			params.sortOn === 'availability' && !params.filter,
 		generator: async function* (collection, params) {
-			const fixedParams = {
-				sortOn: 'startDate',
-				sortOrder: null,
-				...params,
-			};
 			const iterator = Iterable.chain.async(
-				batchGenerator(collection, { ...fixedParams, rel: 'upcoming' }),
-				batchGenerator(collection, { ...fixedParams, rel: 'current' }),
-				batchGenerator(
-					collection,
-					{ ...fixedParams, rel: 'archived' },
-					getSemester
-				)
+				batchGenerator(collection, { rel: 'upcoming' }),
+				batchGenerator(collection, { rel: 'current' }),
+				batchGenerator(collection, { rel: 'archived' }, getSemester)
 			);
 
 			yield* iterator;
