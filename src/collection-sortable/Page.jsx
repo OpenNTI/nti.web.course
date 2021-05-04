@@ -151,10 +151,10 @@ function CourseCollection({ getSectionTitle, children }) {
 }
 
 const Connected = Store.compose(CourseCollection, {
-	deriveBindingFromProps: ({ collection, sortOn, sortDirection }) => ({
+	deriveBindingFromProps: ({ collection, sortOn, sortOrder }) => ({
 		collection,
 		sortOn,
-		sortDirection: sortDirection || Store.defaultSortDirection(sortOn),
+		sortOrder: sortOrder || Store.defaultSortOrder(sortOn),
 	}),
 });
 

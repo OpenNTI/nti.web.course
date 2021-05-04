@@ -26,7 +26,7 @@ const Generators = [
 		generator: async function* (collection, params) {
 			const fixedParams = {
 				sortOn: 'startDate',
-				sortDirection: null,
+				sortOrder: null,
 				...params,
 			};
 			const iterator = Iterable.chain.async(
@@ -78,7 +78,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 		})();
 	}
 
-	static defaultSortDirection = sortOn =>
+	static defaultSortOrder = sortOn =>
 		descendingSorts.includes(sortOn) ? 'descending' : 'ascending';
 
 	#onAfterCourseDrop = ({ course, error }) => {
@@ -95,7 +95,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 		return (
 			prevBinding.collection !== this.binding.collection ||
 			prevBinding.sortOn !== this.binding.sortOn ||
-			prevBinding.sortDirection !== this.binding.sortDirection ||
+			prevBinding.sortOrder !== this.binding.sortOrder ||
 			prevBinding.filter !== this.binding.filter
 		);
 	}
@@ -113,7 +113,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 	getParams() {
 		const params = {
 			sortOn: this.binding.sortOn,
-			sortDirection: this.binding.sortDirection,
+			sortOrder: this.binding.sortOrder,
 			batchSize: this.binding.batchSize,
 		};
 
@@ -129,7 +129,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 
 		return (
 			current.sortOn === params.sortOn &&
-			current.sortDirection === params.sortDirection &&
+			current.sortOrder === params.sortOrder &&
 			current.batchSize === params.batchSize &&
 			current.filter === params.filter
 		);
