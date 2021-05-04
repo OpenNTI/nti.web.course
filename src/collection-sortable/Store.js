@@ -22,6 +22,25 @@ async function resolveCollection(collection) {
 const Generators = [
 	{
 		handles: (collection, params) =>
+			params.sortOn === 'favorites' &&
+			!params.filter &&
+			collection.hasLink('Favorites'),
+		generator: async function* (collection, params) {
+			const service = await getService();
+			const batch = await service.getBatch(
+				collection.getLink('Favorites')
+			);
+
+			yield [
+				{
+					name: 'Favorites',
+					...batch,
+				},
+			];
+		},
+	},
+	{
+		handles: (collection, params) =>
 			params.sortOn === 'availability' && !params.filter,
 		generator: async function* (collection, params) {
 			const iterator = Iterable.chain.async(
