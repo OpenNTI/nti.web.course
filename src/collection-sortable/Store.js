@@ -106,7 +106,8 @@ class CourseCollectionStore extends Stores.BoundStore {
 			prevBinding.collection !== this.binding.collection ||
 			prevBinding.sortOn !== this.binding.sortOn ||
 			prevBinding.sortOrder !== this.binding.sortOrder ||
-			prevBinding.filter !== this.binding.filter
+			prevBinding.filter !== this.binding.filter ||
+			prevBinding.course_filter !== this.binding.course_filter
 		);
 	}
 
@@ -125,6 +126,7 @@ class CourseCollectionStore extends Stores.BoundStore {
 			sortOn: this.binding.sortOn,
 			sortOrder: this.binding.sortOrder,
 			batchSize: this.binding.batchSize,
+			course_filter: this.binding.course_filter,
 		};
 
 		if (this.searchTerm) {
@@ -141,7 +143,8 @@ class CourseCollectionStore extends Stores.BoundStore {
 			current.sortOn === params.sortOn &&
 			current.sortOrder === params.sortOrder &&
 			current.batchSize === params.batchSize &&
-			current.filter === params.filter
+			current.filter === params.filter &&
+			current.course_filter === params.course_filter
 		);
 	}
 
