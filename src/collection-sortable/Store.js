@@ -22,13 +22,13 @@ async function resolveCollection(collection) {
 const Generators = [
 	{
 		handles: (collection, params) =>
-			params.sortOn === 'favorites' &&
-			!params.filter &&
-			collection.hasLink('Favorites'),
+			params.sortOn === 'favorites' && collection.hasLink('Favorites'),
 		generator: async function* (collection, params) {
+			const { filter } = params || {};
 			const service = await getService();
 			const batch = await service.getBatch(
-				collection.getLink('Favorites')
+				collection.getLink('Favorites'),
+				filter ? { filter } : {}
 			);
 
 			yield [
