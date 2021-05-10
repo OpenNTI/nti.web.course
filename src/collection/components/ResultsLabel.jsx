@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import { scoped } from '@nti/lib-locale';
 import { Text, Theme } from '@nti/web-commons';
 
-import Store from '../Store';
+import { Store } from '../Store';
 
 const t = scoped('course.collection.components.ResultsLabel', {
 	results: 'Showing results for "%(searchTerm)s"',
@@ -23,7 +23,7 @@ const Label = styled(Text.Base).attrs({ as: 'div' })`
 ResultsLabel.propTypes = {
 	empty: PropTypes.bool,
 };
-export default function ResultsLabel({ empty }) {
+export function ResultsLabel({ empty }) {
 	const { searchTerm } = Store.useValue();
 
 	const background = Theme.useThemeProperty('background');
@@ -33,9 +33,5 @@ export default function ResultsLabel({ empty }) {
 		return null;
 	}
 
-	return (
-		<Label dark={lightBackground}>
-			{t('results', { searchTerm })}
-		</Label>
-	);
+	return <Label dark={lightBackground}>{t('results', { searchTerm })}</Label>;
 }

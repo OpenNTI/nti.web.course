@@ -2,13 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
-import { Loading, Scroll, Page, Hooks, Button } from '@nti/web-commons';
+import {
+	Loading,
+	Scroll,
+	Page as CommonsPage,
+	Hooks,
+	Button,
+	Layouts,
+} from '@nti/web-commons';
 import { WithSearch } from '@nti/web-search';
 
-import Store from './Store';
-import Group from './components/Group';
-import Empty from './components/Empty';
-import ResultsLabel from './components/ResultsLabel';
+import { Store } from './Store';
+import { Grid } from './components/Grid';
+import { CourseCollectionGroup as Group } from './components/Group';
+import { Empty } from './components/Empty';
+import { ResultsLabel } from './components/ResultsLabel';
 
 const { useMobileValue } = Hooks;
 
@@ -18,7 +26,7 @@ const t = scoped('course.collection.Page', {
 		EnrolledCourses: 'Enrolled Courses',
 	},
 	results: 'Showing Results for "%(term)s"',
-	loadMore: 'Load More'
+	loadMore: 'Load More',
 });
 
 const Footer = styled.div`
@@ -32,15 +40,24 @@ const LoadMore = styled(Button)`
 	margin: 0 auto;
 `;
 
+const ControlsContainer = props => <Grid singleColumn {...props} />;
+const Controls = styled(ControlsContainer)`
+	margin-bottom: var(--gap, 14px);
+`;
+
 CourseCollection.propTypes = {
-	collection: PropTypes.shape({
-		title: PropTypes.string,
-		getLink: PropTypes.func,
-	}),
+	collection: PropTypes.oneOfType([
+		PropTypes.shape({
+			title: PropTypes.string,
+			getLink: PropTypes.func,
+		}),
+		PropTypes.oneOf(['AdministeredCourses', 'EnrolledCourses']),
+	]),
 
 	getSectionTitle: PropTypes.func,
 };
-function CourseCollection({ getSectionTitle }) {
+
+function CourseCollection({ getSectionTitle, children }) {
 	const {
 		collection,
 
@@ -59,7 +76,8 @@ function CourseCollection({ getSectionTitle }) {
 	const initialLoading = loading && !error && !groups;
 	const loadingMore = loading && !initialLoading;
 
-	const empty = !groups?.length || groups?.every(g => g.Items && g.Items.length === 0);
+	const empty =
+		!groups?.length || groups?.every(g => g.Items && g.Items.length === 0);
 
 	const scrollerRef = React.useRef();
 
@@ -87,17 +105,27 @@ function CourseCollection({ getSectionTitle }) {
 			window
 			onBottom={hasMore ? loadMore : null}
 		>
-			<Page>
-				<Page.Content card={false}>
+			<CommonsPage>
+				<CommonsPage.Content card={false}>
 					<ResultsLabel empty={empty} />
 					<Loading.Placeholder
 						loading={initialLoading}
-						fallback={<Page.Content.Loading />}
+						fallback={<CommonsPage.Content.Loading />}
 					>
-						{error && <Page.Content.Error error={error} />}
+						{error && <CommonsPage.Content.Error error={error} />}
 						{!error && empty && (
 							<Empty collection={collection} searchTerm />
 						)}
+						{!error &&
+							!empty &&
+							Layouts.Slot.exists('controls', children) && (
+								<Controls>
+									<Layouts.Slot
+										slot="controls"
+										{...{ children }}
+									/>
+								</Controls>
+							)}
 						{(groups ?? []).map(group => (
 							<Group
 								key={group.name}
@@ -110,21 +138,30 @@ function CourseCollection({ getSectionTitle }) {
 						<Footer>
 							{loadingMore && <Loading.Spinner />}
 							{!loadingMore && hasMore && (
-								<LoadMore rounded onClick={loadMore}>{t('loadMore')}</LoadMore>
+								<LoadMore rounded onClick={loadMore}>
+									{t('loadMore')}
+								</LoadMore>
 							)}
 						</Footer>
 					</Loading.Placeholder>
-				</Page.Content>
-			</Page>
+				</CommonsPage.Content>
+			</CommonsPage>
 		</Scroll.BoundaryMonitor>
 	);
 }
 
 const Connected = Store.compose(CourseCollection, {
-	deriveBindingFromProps: ({ collection }) => ({ collection }),
+	deriveBindingFromProps: ({ collection, sortOn, sortOrder }) => ({
+		collection,
+		sortOn,
+		sortOrder: sortOrder || Store.defaultSortOrder(sortOn),
+	}),
 });
 
-export default WithSearch(Connected, {
-	context: ({ collection }) => collection.Title,
-	label: ({ collection }) => t(`search.${collection.Title}`),
+const title = collection =>
+	typeof collection === 'string' ? collection : collection?.Title;
+
+export const Page = WithSearch(Connected, {
+	context: ({ collection }) => title(collection),
+	label: ({ collection }) => t(`search.${title(collection)}`),
 });

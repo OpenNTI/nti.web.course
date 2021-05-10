@@ -2,7 +2,6 @@ export { default as Card } from './card';
 export { default as Community } from './community';
 export { default as CourseCreateButton } from './CreateButton';
 export * as Collection from './collection';
-export * as CollectionSortable from './collection-sortable';
 export * as Content from './content';
 export * as Editor from './editor';
 export * as Info from './info';
