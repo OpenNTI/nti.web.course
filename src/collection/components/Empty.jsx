@@ -3,7 +3,7 @@ import React from 'react';
 import { scoped } from '@nti/lib-locale';
 import { EmptyState, Theme } from '@nti/web-commons';
 
-import Store from '../Store';
+import { Store } from '../Store';
 
 const t = scoped('course.collection.components.Empty', {
 	AdministeredCourses: 'No Administered Courses',
@@ -14,7 +14,7 @@ const t = scoped('course.collection.components.Empty', {
 	},
 });
 
-const Empty = styled(EmptyState)`
+const EmptyCmp = styled(EmptyState)`
 	color: white;
 	opacity: 0.5;
 
@@ -24,7 +24,7 @@ const Empty = styled(EmptyState)`
 	}
 `;
 
-export default function EmptyCourseCollection() {
+export function Empty() {
 	const { collection, searchTerm } = Store.useValue();
 
 	const background = Theme.useThemeProperty('background');
@@ -39,5 +39,5 @@ export default function EmptyCourseCollection() {
 		return null;
 	}
 
-	return <Empty header={t(key)} dark={lightBackground} />;
+	return <EmptyCmp header={t(key)} dark={lightBackground} />;
 }
