@@ -34,7 +34,9 @@ const Generators = [
 			yield [
 				{
 					name: 'Favorites',
-					...batch,
+					Items: batch.Items,
+					Total: batch.Total,
+					batchDone: true,
 				},
 			];
 		},
