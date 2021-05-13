@@ -51,10 +51,8 @@ class ManageCreditTypes extends React.Component {
 		);
 	}
 
-	saveConflictHandler = challenge => {
-		return new Promise((confirm, reject) => {
-			challenge.reject();
-		});
+	saveConflictHandler = async challenge => {
+		challenge.reject();
 	};
 
 	componentDidUpdate(oldProps) {
