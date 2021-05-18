@@ -87,6 +87,8 @@ export default class LessonView extends React.Component {
 	}
 
 	async setup() {
+		const nonce = {};
+
 		const { requiredOnly, layout } = this.state;
 		const { outlineNode, course } = this.props;
 
@@ -94,6 +96,7 @@ export default class LessonView extends React.Component {
 			return;
 		}
 
+		this.setupTask = nonce;
 		this.setState({ loading: true, error: null });
 
 		try {
@@ -106,16 +109,24 @@ export default class LessonView extends React.Component {
 			// const isAdmin = this.props.course.isAdministrative;
 			// const {Items: progressByItems} = !isAdmin ? {} : await outlineNode.fetchLink('ProgressStatisticsByItem');
 
-			this.setState({
-				loading: false,
-				overview,
-				progressByItems: null,
-			});
+			if (this.setupTask === nonce) {
+				this.setState({
+					loading: false,
+					overview,
+					progressByItems: null,
+				});
+			}
 		} catch (e) {
-			this.setState({
-				loading: false,
-				error: e,
-			});
+			if (this.setupTask === nonce) {
+				this.setState({
+					loading: false,
+					error: e,
+				});
+			}
+		} finally {
+			if (this.setupTask === nonce) {
+				delete this.setupTask;
+			}
 		}
 	}
 
