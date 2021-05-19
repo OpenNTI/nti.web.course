@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
+import { Registry as Base } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 
@@ -33,6 +34,23 @@ function isConstrained(next) {
 	return item.isOutlineNode && item.contentIsConstrained;
 }
 
+export class Registry extends Base.Map {
+	static register(key, item) {
+		this.getInstance().register(key, item);
+	}
+
+	static lookup(item) {
+		const component =
+			item && this.getInstance().getItem(item.MimeType || item);
+
+		return !component?.applies
+			? component
+			: component.applies(item)
+			? component
+			: null;
+	}
+}
+
 export default class Header extends React.Component {
 	static propTypes = {
 		dismissPath: PropTypes.string,
@@ -44,6 +62,7 @@ export default class Header extends React.Component {
 		}),
 		location: PropTypes.shape({
 			totalPages: PropTypes.number,
+			item: PropTypes.any,
 			currentPage: PropTypes.number,
 		}),
 
@@ -90,7 +109,7 @@ export default class Header extends React.Component {
 	}
 
 	renderLesson() {
-		const { lessonInfo, requiredOnly } = this.props;
+		const { lessonInfo, location, requiredOnly } = this.props;
 
 		if (!lessonInfo) {
 			return <div className={cx('lesson-loading-skeleton')} />;
@@ -102,12 +121,23 @@ export default class Header extends React.Component {
 		const current = lessonInfo.currentItemIndex + 1;
 		const count = lessonInfo.totalItems;
 
+		const { item } = location || {};
+		const SpecialCase = Registry.lookup(item);
+
 		return (
 			<div className={cx('lesson-container')}>
-				<div className={cx('lesson-title')}>{lessonInfo.title}</div>
-				<div className={cx('lesson-sub-title')}>
-					{t(localeKey, { current, count })}
-				</div>
+				{SpecialCase ? (
+					<SpecialCase item={item} />
+				) : (
+					<>
+						<div className={cx('lesson-title')}>
+							{lessonInfo.title}
+						</div>
+						<div className={cx('lesson-sub-title')}>
+							{t(localeKey, { current, count })}
+						</div>
+					</>
+				)}
 			</div>
 		);
 	}

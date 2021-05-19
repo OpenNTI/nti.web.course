@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { decorate } from '@nti/lib-commons';
 import { Hooks, Events } from '@nti/web-session';
 
-import Viewer from '../viewer';
+import { Viewer } from '../viewer';
 
 import Store from './Store';
 

@@ -27,8 +27,8 @@ stylesheet`
 }
 `;
 
-CourseContentViewer.ContentTypes = Content.ContentTypes;
-CourseContentViewer.propTypes = {
+Viewer.ContentTypes = Content.ContentTypes;
+Viewer.propTypes = {
 	aside: PropTypes.bool,
 	error: PropTypes.any,
 	location: PropTypes.shape({
@@ -37,8 +37,8 @@ CourseContentViewer.propTypes = {
 		currentPage: PropTypes.number,
 	}),
 };
-
-export default function CourseContentViewer({
+Viewer.displayName = 'CourseContentViewer';
+export function Viewer({
 	className,
 	error,
 	location,
