@@ -9,9 +9,23 @@ import { getHistory } from '@nti/web-routing';
 import Content from './content-renderer';
 import Header from './parts/Header';
 import UpNext from './parts/UpNext';
-import styles from './View.css';
 
 const { Aside } = Layouts;
+
+const Contents = styled.div`
+	background: white;
+`;
+
+stylesheet`
+:global(.nti-course-content-open body > .modal + .modal .modal-mask) {
+	background: rgba(0, 0, 0, 0.7);
+
+	/* ugh. on top of ext .nti-course-content-open .window-container @ 1002.
+	manifests when a webinar registration window is open on top of the
+	lesson viewer. */
+	z-index: 1010;
+}
+`;
 
 CourseContentViewer.ContentTypes = Content.ContentTypes;
 CourseContentViewer.propTypes = {
@@ -56,7 +70,7 @@ export default function CourseContentViewer({
 			ref={domNode}
 			className={cx('nti-course-content', className, { loading })}
 		>
-			<div className={styles.contents}>
+			<Contents>
 				<Header location={location} {...otherProps} />
 				{error && (
 					<Page.Content.NotFound
@@ -68,7 +82,7 @@ export default function CourseContentViewer({
 				)}
 				{!error && <Content location={location} {...otherProps} />}
 				<UpNext location={location} {...otherProps} />
-			</div>
+			</Contents>
 		</Cmp>
 	);
 }
