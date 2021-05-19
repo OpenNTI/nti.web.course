@@ -34,11 +34,20 @@ function isConstrained(next) {
 	return item.isOutlineNode && item.contentIsConstrained;
 }
 
-export class Registry extends Base.Map {
-	static register(key, item) {
-		this.getInstance().register(key, item);
+export class Registry extends Base.Handler {
+	/**
+	 * @param {(item: any) => boolean} predicate
+	 * @param {React.Component | () => React.ReactElement} Component
+	 */
+	static register(predicate, Component) {
+		this.getInstance().register(predicate, Component);
 	}
 
+	/**
+	 *
+	 * @param {any} item
+	 * @returns {React.Component | () => React.ReactElement}
+	 */
 	static lookup(item) {
 		const component =
 			item && this.getInstance().getItem(item.MimeType || item);
