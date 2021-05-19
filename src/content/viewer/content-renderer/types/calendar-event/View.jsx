@@ -42,10 +42,10 @@ export default class CourseContentViewerRendererCalendarEvent extends React.Comp
 		}
 
 		return (
-			<div>
+			<>
 				<Layouts.Aside component={Sidebar} course={course} />
 				<View event={event} dialog={false} controls={false} />
-			</div>
+			</>
 		);
 	}
 }
