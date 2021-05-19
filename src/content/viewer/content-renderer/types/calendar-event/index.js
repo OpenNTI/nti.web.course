@@ -1,2 +1,2 @@
 import './Heading';
-export { default } from './View';
+export * from './View';

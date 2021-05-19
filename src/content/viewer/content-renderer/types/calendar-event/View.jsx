@@ -15,17 +15,14 @@ const View = styled(Event.View)`
 	}
 `;
 
-CourseContentViewerRendererCalendarEvent.propTypes = {
+CalendarEvent.propTypes = {
 	location: PropTypes.shape({
 		item: PropTypes.object,
 	}),
 	course: PropTypes.object.isRequired,
 };
 
-export default function CourseContentViewerRendererCalendarEvent({
-	course,
-	location,
-}) {
+export function CalendarEvent({ course, location }) {
 	const { item: { CalendarEvent: event } = {} } = location || {};
 
 	if (!event) {
@@ -46,4 +43,4 @@ TypeRegistry.register(obj => {
 		MimeType &&
 		Models.calendar.CalendarEventRef.MimeTypes.includes(MimeType)
 	);
-})(CourseContentViewerRendererCalendarEvent);
+})(CalendarEvent);

@@ -1,7 +1,7 @@
+import './calendar-event';
 import './default';
 // import './video';
 
-import Event from './calendar-event';
 import Webinar from './webinar';
 import SCORM from './scorm';
 import TypeRegistry from './Registry';
@@ -9,13 +9,12 @@ import TypeRegistry from './Registry';
 const typeRegistry = TypeRegistry.getInstance();
 
 export const TYPES = {
-	Event,
 	Webinar,
 	SCORM,
 };
 
 export function getCmpFor(overrides, ...args) {
-	const override = overrides ? overrides.getItemFor(...args) : null;
+	const override = overrides?.getItem(...args) || null;
 
-	return override || typeRegistry.getItemFor(...args);
+	return override || typeRegistry.getItem(...args);
 }
