@@ -9,11 +9,25 @@ import TypeRegistry from '../Registry';
 
 import Sidebar from './Sidebar';
 
+//#region Parts
+
 const View = styled(Event.View)`
 	& :global(.calendar-event-editor) {
 		width: auto;
 	}
 `;
+
+//#endregion
+
+//#region Registration & Meta
+
+TypeRegistry.register(obj => {
+	const { MimeType } = obj?.location?.item || {};
+	return (
+		MimeType &&
+		Models.calendar.CalendarEventRef.MimeTypes.includes(MimeType)
+	);
+})(CalendarEvent);
 
 CalendarEvent.propTypes = {
 	location: PropTypes.shape({
@@ -21,6 +35,8 @@ CalendarEvent.propTypes = {
 	}),
 	course: PropTypes.object.isRequired,
 };
+
+//#endregion
 
 export function CalendarEvent({ course, location }) {
 	const { item: { CalendarEvent: event } = {} } = location || {};
@@ -36,11 +52,3 @@ export function CalendarEvent({ course, location }) {
 		</>
 	);
 }
-
-TypeRegistry.register(obj => {
-	const { MimeType } = obj?.location?.item || {};
-	return (
-		MimeType &&
-		Models.calendar.CalendarEventRef.MimeTypes.includes(MimeType)
-	);
-})(CalendarEvent);
