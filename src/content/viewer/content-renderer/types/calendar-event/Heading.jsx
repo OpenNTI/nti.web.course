@@ -90,9 +90,8 @@ const Title = styled(Text)`
 //#region Registration & Meta
 Registry.register(
 	item =>
-		(Models.calendar.CalendarEventRef.MimeType === item.MimeType &&
-			item.hasLink('check-in')) ||
-		isFlag('force-event-check-in'),
+		Models.calendar.CalendarEventRef.MimeType === item.MimeType &&
+		(item.hasLink('check-in') || isFlag('force-event-check-in')),
 	Heading
 );
 
