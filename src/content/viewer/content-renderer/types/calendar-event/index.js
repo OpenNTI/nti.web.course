@@ -1,2 +1,2 @@
-import './Heading';
+import './DetailHeader';
 export * from './View';

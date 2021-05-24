@@ -92,14 +92,14 @@ Registry.register(
 	item =>
 		Models.calendar.CalendarEventRef.MimeType === item.MimeType &&
 		(item.hasLink('check-in') || isFlag('force-event-check-in')),
-	Heading
+	DetailHeader
 );
 
 /**
  * @typedef HeadingProps
  * @property {Models.calendar.CalendarEventRef} item - Event Reference
  */
-Heading.propTypes = {
+DetailHeader.propTypes = {
 	item: PropTypes.instanceOf(Models.calendar.CalendarEventRef).isRequired,
 };
 //#endregion
@@ -110,7 +110,7 @@ Heading.propTypes = {
  * @param {HeadingProps} props
  * @returns {React.ReactElement}
  */
-export default function Heading({ item }) {
+export default function DetailHeader({ item }) {
 	const { CalendarEvent: event } = item;
 
 	return (
