@@ -49,8 +49,7 @@ export class Registry extends Base.Handler {
 	 * @returns {React.Component | () => React.ReactElement}
 	 */
 	static lookup(item) {
-		const component =
-			item && this.getInstance().getItem(item.MimeType || item);
+		const component = item && this.getInstance().getItem(item);
 
 		return !component?.applies
 			? component
