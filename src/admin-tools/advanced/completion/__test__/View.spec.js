@@ -2,6 +2,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 
 import * as TestUtils from '@nti/web-client/test-utils';
+import { flushPromises } from '@nti/lib-commons/test-utils';
 
 import View from '../View';
 
@@ -25,8 +26,6 @@ const onBefore = mimeTypes => {
 const onAfter = () => {
 	tearDownTestClient();
 };
-
-const flushPromises = () => new Promise(resolve => setImmediate(resolve));
 
 /* eslint-env jest */
 describe('Course admin advanced completion test (with requirables)', () => {
