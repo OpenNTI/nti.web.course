@@ -1,3 +1,4 @@
+//FIXME: unify with Presentation Assets in web-commons
 export function getImageUrl(catalogEntry) {
 	const sharedResources = (
 		catalogEntry.PlatformPresentationResources || []
