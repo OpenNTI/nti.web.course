@@ -13,7 +13,7 @@ export const TYPES = {
 	SCORM,
 };
 
-export function getCmpFor(overrides, ...args) {
+export function resolveComponent(overrides, ...args) {
 	const override = overrides?.getItem(...args) || null;
 
 	return override || typeRegistry.getItem(...args);

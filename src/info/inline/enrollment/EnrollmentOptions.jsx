@@ -62,13 +62,13 @@ class EnrollmentOptions extends React.Component {
 
 	state = {};
 
-	getCmpFor(option) {
+	resolveComponent(option) {
 		// default to open or return null?
 		return cmpMap[option.MimeType];
 	}
 
 	renderOption(option, addable) {
-		const Cmp = this.getCmpFor(option);
+		const Cmp = this.resolveComponent(option);
 
 		if (!Cmp) {
 			return;
@@ -217,10 +217,8 @@ class EnrollmentOptions extends React.Component {
 	}
 
 	render() {
-		const {
-			loading,
-			warning /*, availableOptions, enrollmentOptions*/,
-		} = this.props;
+		const { loading, warning /*, availableOptions, enrollmentOptions*/ } =
+			this.props;
 
 		if (loading) {
 			return <Loading.Ellipsis />;

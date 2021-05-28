@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { getCmpFor, TYPES } from './types';
+import { resolveComponent, TYPES } from './types';
 
 export default class ContentViewer extends React.Component {
 	static ContentTypes = TYPES;
@@ -14,7 +14,7 @@ export default class ContentViewer extends React.Component {
 
 	render() {
 		const { overrides, ...otherProps } = this.props;
-		const Cmp = getCmpFor(overrides, otherProps);
+		const Cmp = resolveComponent(overrides, otherProps);
 
 		if (!Cmp) {
 			return null;
