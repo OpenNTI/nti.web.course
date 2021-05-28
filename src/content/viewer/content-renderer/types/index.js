@@ -6,6 +6,7 @@ import Webinar from './webinar';
 import SCORM from './scorm';
 import TypeRegistry from './Registry';
 
+/** @type {TypeRegistry} */
 const typeRegistry = TypeRegistry.getInstance();
 
 export const TYPES = {
@@ -14,7 +15,8 @@ export const TYPES = {
 };
 
 export function resolveComponent(overrides, ...args) {
-	const override = overrides?.getItem(...args) || null;
+	const primary = typeRegistry.getRegistration(...args);
+	const override = overrides?.getItem(...args, primary) || null;
 
-	return override || typeRegistry.getItem(...args);
+	return override || primary.handler;
 }
