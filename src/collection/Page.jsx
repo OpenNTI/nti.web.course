@@ -123,7 +123,7 @@ function CourseCollection({ getSectionTitle, children }) {
 
 			dispatch({ canScroll });
 
-			if (!scrollerRef.current.canScroll() && hasMore) {
+			if (!canScroll && hasMore) {
 				loadMore();
 			}
 		}, 100);
