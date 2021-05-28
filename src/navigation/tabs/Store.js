@@ -12,7 +12,7 @@ function shouldShowTab(key, course) {
 	if (!TABS[key] || !TABS[key].hasAccess(course)) {
 		return false;
 	}
-	if (TABS[key].doNotShowInPreview && course.CatalogEntry.Preview) {
+	if (TABS[key].doNotShowInPreview && course.CatalogEntry?.Preview) {
 		return false;
 	}
 
