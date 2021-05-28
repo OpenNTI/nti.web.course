@@ -81,6 +81,34 @@ function CourseCollection({ getSectionTitle, children }) {
 
 	const scrollerRef = React.useRef();
 
+	// The "load more" button is only here as a fallback for cases where <Scroll.BoundaryMonitor> events
+	// aren't working. This is a mythological occurrence--we've heard tales of it but have never actually
+	// seen it. To avoid having the button flicker in and out--appearing during render and disappearing again
+	// when the next load is triggered--this reducer (along with a dispatch in the onBottom handler below)
+	// keeps track of whether the component has received any boundary monitor events. Once it has we assume
+	// it's safe to not show the load more button.
+	const [{ showLoadMoreButton }, dispatch] = React.useReducer(
+		(state, action) => {
+			const updated = { ...state, ...action };
+			return {
+				...updated,
+				showLoadMoreButton:
+					!loading &&
+					hasMore &&
+					updated.canScroll &&
+					!updated.receivingBoundaryEvents,
+			};
+		},
+		{}
+	);
+
+	const onBoundaryBottom = !hasMore
+		? null
+		: () => {
+				dispatch({ receivingBoundaryEvents: true }); // note that we're receiving these events and don't need to show the 'load more' button.
+				loadMore();
+		  };
+
 	React.useEffect(() => {
 		if (loading) {
 			return;
@@ -90,6 +118,10 @@ function CourseCollection({ getSectionTitle, children }) {
 			if (!scrollerRef.current) {
 				return;
 			}
+
+			const canScroll = scrollerRef.current.canScroll();
+
+			dispatch({ canScroll });
 
 			if (!scrollerRef.current.canScroll() && hasMore) {
 				loadMore();
@@ -103,7 +135,8 @@ function CourseCollection({ getSectionTitle, children }) {
 		<Scroll.BoundaryMonitor
 			ref={scrollerRef}
 			window
-			onBottom={hasMore ? loadMore : null}
+			buffer={200}
+			onBottom={onBoundaryBottom}
 		>
 			<CommonsPage>
 				<CommonsPage.Content card={false}>
@@ -137,7 +170,7 @@ function CourseCollection({ getSectionTitle, children }) {
 						))}
 						<Footer>
 							{loadingMore && <Loading.Spinner />}
-							{!loadingMore && hasMore && (
+							{showLoadMoreButton && (
 								<LoadMore rounded onClick={loadMore}>
 									{t('loadMore')}
 								</LoadMore>
