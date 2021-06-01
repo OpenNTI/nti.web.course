@@ -83,7 +83,7 @@ export default class CourseEnrollmentAdminHeaderCourseItem extends React.Compone
 		return (
 			<div className="course">
 				<Presentation.Asset
-					contentPackage={course}
+					contentPackage={course.CatalogEntry}
 					propName="src"
 					type="landing"
 				>
