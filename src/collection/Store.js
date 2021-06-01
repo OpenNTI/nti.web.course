@@ -250,9 +250,6 @@ class CourseCollectionStore extends Stores.BoundStore {
 			current = this.get('groups'),
 			currentDepth = 0 // cutoff to prevent infinite recursion (just in case)
 		) => {
-			if (currentDepth > 5) {
-				return current;
-			}
 			const { value, done } = await generator.next();
 			const groups = value ? combineGroups(current, value) : current;
 
@@ -261,7 +258,12 @@ class CourseCollectionStore extends Stores.BoundStore {
 				(value[value.length - 1]?.batchDone ?? true);
 
 			// current group is done but the generator isn't
-			if (generator === this.generator && groupDone && !done) {
+			if (
+				generator === this.generator &&
+				groupDone &&
+				!done &&
+				currentDepth <= 5
+			) {
 				return getNext(groups, currentDepth + 1);
 			}
 
