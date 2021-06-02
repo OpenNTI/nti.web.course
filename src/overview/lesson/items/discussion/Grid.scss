@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @import '~@nti/style-common';
 
 .lesson-overview-discussion-link {
@@ -69,7 +71,7 @@
 			background: rgba(0, 0, 0, 0.8);
 			top: 50%;
 			left: 50%;
-			margin-left: -($width/2);
+			margin-left: -(math.div($width, 2));
 			margin-top: -0.75em;
 			text-align: center;
 			border-radius: 2px;
