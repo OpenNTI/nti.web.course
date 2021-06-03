@@ -36,7 +36,7 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 
 		try {
 			const requests = values.map(async d => {
-				const [deleteLink] = d?.Links?.filter(l => l.rel === 'delete');
+				const deleteLink = d?.Links?.find(l => l.rel === 'delete');
 
 				if (!deleteLink) {
 					throw new Error('No Link: delete');
@@ -101,10 +101,7 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 			if (existing) {
 				// PUT to NTIID of def
 				const requests = existing.map(async d => {
-					const editLink =
-						d &&
-						d.Links &&
-						d.Links.filter(l => l.rel === 'edit')[0];
+					const editLink = d?.Links?.find(l => l.rel === 'edit');
 
 					if (!editLink) {
 						throw new Error('No edit link');
@@ -158,7 +155,7 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		const existing = defs
 			.filter(x => x.NTIID)
 			.filter(def => {
-				const match = allItems.filter(i => i.NTIID === def.NTIID)[0];
+				const [match] = allItems.filter(i => i.NTIID === def.NTIID);
 
 				return (
 					match.type !== def['credit_type'] ||
