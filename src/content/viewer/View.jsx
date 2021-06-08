@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import { getScrollParent, scrollElementTo } from '@nti/lib-dom';
 import { Layouts, Page, useExternClassName } from '@nti/web-commons';
-import { getHistory } from '@nti/web-routing';
+import { getHistory, NavigationStackManager } from '@nti/web-routing';
 
 import Content from './content-renderer';
 import Header from './parts/Header';
@@ -70,19 +70,23 @@ export function Viewer({
 			ref={domNode}
 			className={cx('nti-course-content', className, { loading })}
 		>
-			<Contents>
-				<Header location={location} {...otherProps} />
-				{error && (
-					<Page.Content.NotFound
-						error={error}
-						actions={[
-							Page.Content.NotFound.getBackAction(getHistory()),
-						]}
-					/>
-				)}
-				{!error && <Content location={location} {...otherProps} />}
-				<UpNext location={location} {...otherProps} />
-			</Contents>
+			<NavigationStackManager>
+				<Contents>
+					<Header location={location} {...otherProps} />
+					{error && (
+						<Page.Content.NotFound
+							error={error}
+							actions={[
+								Page.Content.NotFound.getBackAction(
+									getHistory()
+								),
+							]}
+						/>
+					)}
+					{!error && <Content location={location} {...otherProps} />}
+					<UpNext location={location} {...otherProps} />
+				</Contents>
+			</NavigationStackManager>
 		</Cmp>
 	);
 }

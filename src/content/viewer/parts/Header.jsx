@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { Registry as Base } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
-import { LinkTo } from '@nti/web-routing';
+import { Icons } from '@nti/web-commons';
+import { LinkTo, NavigationStackContext } from '@nti/web-routing';
 
 import styles from './Header.css';
 
@@ -98,9 +99,27 @@ export default function Header({ header = true, ...props }) {
 }
 
 function Close({ dismissPath }) {
+	const { pop } = useContext(NavigationStackContext);
+
+	const doPop = e => {
+		if (!pop) return;
+
+		e.preventDefault();
+		e.stopPropagation();
+		pop();
+	};
+
 	return !dismissPath ? null : (
-		<LinkTo.Path to={dismissPath} className={styles.closeButton}>
-			<i className="icon-light-x" />
+		<LinkTo.Path
+			to={dismissPath}
+			onClick={doPop}
+			className={styles.closeButton}
+		>
+			{pop ? (
+				<Icons.Chevron.Left skinny />
+			) : (
+				<i className="icon-light-x" />
+			)}
 		</LinkTo.Path>
 	);
 }
@@ -187,12 +206,12 @@ function Paging({ next, previous }) {
 					className={styles.prevLink}
 					title={t('previousItem')}
 				>
-					<i className="icon-chevronup-25" />
+					<Icons.Chevron.Up skinny />
 				</LinkTo.Object>
 			)}
 			{!showPrev && (
 				<span className={styles.prevLinkDisabled}>
-					<i className="icon-chevronup-25" />
+					<Icons.Chevron.Up skinny />
 				</span>
 			)}
 
@@ -203,12 +222,12 @@ function Paging({ next, previous }) {
 					className={styles.nextLink}
 					title={t('nextItem')}
 				>
-					<i className="icon-chevrondown-25" />
+					<Icons.Chevron.Down skinny />
 				</LinkTo.Object>
 			)}
 			{!showNext && (
 				<span className={styles.nextLinkDisabled}>
-					<i className="icon-chevrondown-25" />
+					<Icons.Chevron.Down skinny />
 				</span>
 			)}
 		</div>
