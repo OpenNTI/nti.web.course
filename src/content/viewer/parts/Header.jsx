@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
 
 import { Registry as Base } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 
-import Styles from './Header.css';
+import styles from './Header.css';
 
-const cx = classnames.bind(Styles);
 const t = scoped('course.content.viewer.parts.Header', {
 	remaining: {
 		requiredItems: {
@@ -59,181 +57,160 @@ export class Registry extends Base.Handler {
 	}
 }
 
-export default class Header extends React.Component {
-	static propTypes = {
-		dismissPath: PropTypes.string,
-		requiredOnly: PropTypes.bool,
-		lessonInfo: PropTypes.shape({
-			title: PropTypes.string,
-			totalItems: PropTypes.number,
-			currentItemIndex: PropTypes.number,
-		}),
-		location: PropTypes.shape({
-			totalPages: PropTypes.number,
-			item: PropTypes.any,
-			currentPage: PropTypes.number,
-		}),
+Header.propTypes = {
+	dismissPath: PropTypes.string,
+	requiredOnly: PropTypes.bool,
+	lessonInfo: PropTypes.shape({
+		title: PropTypes.string,
+		totalItems: PropTypes.number,
+		currentItemIndex: PropTypes.number,
+	}),
+	location: PropTypes.shape({
+		totalPages: PropTypes.number,
+		item: PropTypes.any,
+		currentPage: PropTypes.number,
+	}),
 
-		next: PropTypes.shape({
-			item: PropTypes.object,
-			lesson: PropTypes.object,
-			relatedWorkRef: PropTypes.object,
-		}),
-		previous: PropTypes.shape({
-			item: PropTypes.object,
-			lesson: PropTypes.object,
-			relatedWorkRef: PropTypes.object,
-		}),
+	next: PropTypes.shape({
+		item: PropTypes.object,
+		lesson: PropTypes.object,
+		relatedWorkRef: PropTypes.object,
+	}),
+	previous: PropTypes.shape({
+		item: PropTypes.object,
+		lesson: PropTypes.object,
+		relatedWorkRef: PropTypes.object,
+	}),
 
-		header: PropTypes.bool,
-	};
+	header: PropTypes.bool,
+};
 
-	render() {
-		const { header = true } = this.props;
+export default function Header({ header = true, ...props }) {
+	return (
+		<div className={styles.container}>
+			{header && <Close {...props} />}
+			{header && <Lesson {...props} />}
+			{<LessonProgress {...props} />}
+			{header && <Location {...props} />}
+			{header && <Paging {...props} />}
+		</div>
+	);
+}
 
-		return (
-			<div className={cx('container')}>
-				{header && this.renderClose()}
-				{header && this.renderLesson()}
-				{this.renderLessonProgress()}
-				{header && this.renderLocation()}
-				{header && this.renderPaging()}
-			</div>
-		);
+function Close({ dismissPath }) {
+	return !dismissPath ? null : (
+		<LinkTo.Path to={dismissPath} className={styles.closeButton}>
+			<i className="icon-light-x" />
+		</LinkTo.Path>
+	);
+}
+
+function Lesson({ lessonInfo, location, requiredOnly }) {
+	if (!lessonInfo) {
+		return <div className={styles.lessonLoadingSkeleton} />;
 	}
 
-	renderClose() {
-		const { dismissPath } = this.props;
+	const localeKey = requiredOnly
+		? 'remaining.requiredItems'
+		: 'remaining.allItems';
+	const current = lessonInfo?.currentItemIndex + 1;
+	const count = lessonInfo?.totalItems;
 
-		if (dismissPath) {
-			return (
-				<LinkTo.Path to={dismissPath} className={cx('close-button')}>
-					<i className="icon-light-x" />
-				</LinkTo.Path>
-			);
-		}
+	const { item } = location || {};
+	const SpecialCase = Registry.lookup(item);
 
+	return (
+		<div className={styles.lessonContainer}>
+			{SpecialCase ? (
+				<SpecialCase item={item} />
+			) : (
+				<>
+					<div className={styles.lessonTitle}>
+						{lessonInfo?.title}
+					</div>
+					<div className={styles.lessonSubTitle}>
+						{t(localeKey, { current, count })}
+					</div>
+				</>
+			)}
+		</div>
+	);
+}
+
+function LessonProgress({ lessonInfo }) {
+	if (!lessonInfo) {
 		return null;
 	}
 
-	renderLesson() {
-		const { lessonInfo, location, requiredOnly } = this.props;
+	const progress = (lessonInfo.currentItemIndex + 1) / lessonInfo.totalItems;
+	const percentage = Math.round(progress * 100);
 
-		if (!lessonInfo) {
-			return <div className={cx('lesson-loading-skeleton')} />;
-		}
+	return (
+		<div
+			className={styles.lessonProgress}
+			style={{ width: `${percentage}%` }}
+		/>
+	);
+}
 
-		const localeKey = requiredOnly
-			? 'remaining.requiredItems'
-			: 'remaining.allItems';
-		const current = lessonInfo.currentItemIndex + 1;
-		const count = lessonInfo.totalItems;
-
-		const { item } = location || {};
-		const SpecialCase = Registry.lookup(item);
-
-		return (
-			<div className={cx('lesson-container')}>
-				{SpecialCase ? (
-					<SpecialCase item={item} />
-				) : (
-					<>
-						<div className={cx('lesson-title')}>
-							{lessonInfo.title}
-						</div>
-						<div className={cx('lesson-sub-title')}>
-							{t(localeKey, { current, count })}
-						</div>
-					</>
-				)}
-			</div>
-		);
+function Location({ location }) {
+	if (!location || location.totalPages === 1) {
+		return null;
 	}
 
-	renderLessonProgress() {
-		const { lessonInfo } = this.props;
+	return (
+		<div className={styles.location}>
+			<span className={styles.locationPrefix}>{t('paging.prefix')}</span>
+			<span className={styles.locationCurrentIndex}>
+				{location.currentPage + 1}
+			</span>
+			<span className={styles.locationSeparator}>
+				{t('paging.separator')}
+			</span>
+			<span className={styles.locationTotalPages}>
+				{location.totalPages}
+			</span>
+		</div>
+	);
+}
 
-		if (!lessonInfo) {
-			return null;
-		}
+function Paging({ next, previous }) {
+	const showNext = next && !isConstrained(next);
+	const showPrev = previous && !isConstrained(previous);
 
-		const progress =
-			(lessonInfo.currentItemIndex + 1) / lessonInfo.totalItems;
-		const percentage = Math.round(progress * 100);
-
-		return (
-			<div
-				className={cx('lesson-progress')}
-				style={{ width: `${percentage}%` }}
-			/>
-		);
-	}
-
-	renderLocation() {
-		const { location } = this.props;
-
-		if (!location || location.totalPages === 1) {
-			return null;
-		}
-
-		return (
-			<div className={cx('location')}>
-				<span className={cx('location-prefix')}>
-					{t('paging.prefix')}
+	return (
+		<div className={styles.paging}>
+			{showPrev && (
+				<LinkTo.Object
+					object={previous.item}
+					context={previous}
+					className={styles.prevLink}
+					title={t('previousItem')}
+				>
+					<i className="icon-chevronup-25" />
+				</LinkTo.Object>
+			)}
+			{!showPrev && (
+				<span className={styles.prevLinkDisabled}>
+					<i className="icon-chevronup-25" />
 				</span>
-				<span className={cx('location-current-index')}>
-					{location.currentPage + 1}
+			)}
+
+			{showNext && (
+				<LinkTo.Object
+					object={next.item}
+					context={next}
+					className={styles.nextLink}
+					title={t('nextItem')}
+				>
+					<i className="icon-chevrondown-25" />
+				</LinkTo.Object>
+			)}
+			{!showNext && (
+				<span className={styles.nextLinkDisabled}>
+					<i className="icon-chevrondown-25" />
 				</span>
-				<span className={cx('location-separator')}>
-					{t('paging.separator')}
-				</span>
-				<span className={cx('location-totalPages')}>
-					{location.totalPages}
-				</span>
-			</div>
-		);
-	}
-
-	renderPaging() {
-		const { next, previous } = this.props;
-
-		const showNext = next && !isConstrained(next);
-		const showPrev = previous && !isConstrained(previous);
-
-		return (
-			<div className={cx('paging')}>
-				{showPrev && (
-					<LinkTo.Object
-						object={previous.item}
-						context={previous}
-						className={cx('prev-link')}
-						title={t('previousItem')}
-					>
-						<i className="icon-chevronup-25" />
-					</LinkTo.Object>
-				)}
-				{!showPrev && (
-					<span className={cx('prev-link-disabled')}>
-						<i className="icon-chevronup-25" />
-					</span>
-				)}
-
-				{showNext && (
-					<LinkTo.Object
-						object={next.item}
-						context={next}
-						className={cx('next-link')}
-						title={t('nextItem')}
-					>
-						<i className="icon-chevrondown-25" />
-					</LinkTo.Object>
-				)}
-				{!showNext && (
-					<span className={cx('next-link-disabled')}>
-						<i className="icon-chevrondown-25" />
-					</span>
-				)}
-			</div>
-		);
-	}
+			)}
+		</div>
+	);
 }
