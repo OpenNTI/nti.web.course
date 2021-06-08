@@ -91,7 +91,8 @@ const Title = styled(Text)`
 Registry.register(
 	item =>
 		Models.calendar.CalendarEventRef.MimeType === item.MimeType &&
-		(item.hasLink('check-in') || isFlag('force-event-check-in')),
+		item.CalendarEvent?.hasLink('list-attendance') &&
+		isFlag('event-check-ins'),
 	DetailHeader
 );
 
