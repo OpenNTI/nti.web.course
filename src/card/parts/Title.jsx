@@ -62,7 +62,7 @@ const Token = styled(Text)`
 `;
 
 const Title = styled(Text).attrs({ as: 'h2' })`
-	font: normal 700 1rem/1.3 var(--header-font-family);
+	font: normal 700 1rem/1.3 var(--legacy-header-font-family);
 	display: block;
 	color: var(--primary-grey);
 	text-transform: uppercase;
@@ -124,7 +124,7 @@ export default function CourseCardTitle({ course, variant }) {
 	);
 }
 
-CourseCardTitle.Placeholder = ({variant}) => (
+CourseCardTitle.Placeholder = ({ variant }) => (
 	<Placeholder.Container as={Block}>
 		<Placeholder.Container as={Meta}>
 			<Placeholder.Text as={Token} variant={variant} text="TestId" />
