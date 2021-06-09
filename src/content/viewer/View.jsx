@@ -64,13 +64,19 @@ export function Viewer({
 
 	const loading = !location;
 	const Cmp = aside ? Aside.Container : 'div';
+	// Don't reuse stack on new locations, each stack should be
+	// fresh for each Content component instance. We were already
+	// lucking into this but this will force it to happen if this
+	// component or parents start updating vs re-mounting.
+	// (Thanks to ExtJS bridge crap)
+	const locationKey = location?.item?.getID() || Date.now();
 
 	return (
 		<Cmp
 			ref={domNode}
 			className={cx('nti-course-content', className, { loading })}
 		>
-			<NavigationStackManager>
+			<NavigationStackManager key={locationKey}>
 				<Contents>
 					<Header location={location} {...otherProps} />
 					{error && (
