@@ -12,7 +12,7 @@ export default class FacilitatorsView extends React.Component {
 		facilitators: PropTypes.arrayOf(PropTypes.object),
 		showingFullFacilitatorSet: PropTypes.bool,
 		showingFacilitatorEditor: PropTypes.bool,
-		courseInstance: PropTypes.object.isRequired,
+		courseInstance: PropTypes.object,
 	};
 
 	static hasData = (catalogEntry, { facilitators = [] } = {}) =>

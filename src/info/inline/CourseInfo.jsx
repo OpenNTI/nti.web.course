@@ -119,12 +119,9 @@ export default class CourseInfo extends React.Component {
 			redemptionCodes = null;
 		}
 
-		let enrollmentAccess = courseInstance.PreferredAccess;
+		const enrollmentAccess = courseInstance?.PreferredAccess;
 
-		const facilitators = await getVisibleFacilitators(
-			catalogEntry,
-			courseInstance
-		);
+		const facilitators = await getVisibleFacilitators(catalogEntry);
 		const hasMoreFacilitators = hasHiddenFacilitators(
 			catalogEntry,
 			courseInstance

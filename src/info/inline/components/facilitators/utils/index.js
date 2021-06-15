@@ -216,10 +216,10 @@ export function mergeAllFacilitators(
 }
 
 export function hasHiddenFacilitators(entry, instance) {
-	return instance.hasLink('roles');
+	return !!instance?.hasLink('roles');
 }
 
-export function getVisibleFacilitators(entry, instance) {
+export function getVisibleFacilitators(entry) {
 	return mergeAllFacilitators(entry.Instructors, [], [], entry);
 }
 

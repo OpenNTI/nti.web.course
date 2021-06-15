@@ -21,7 +21,7 @@ const t = scoped('course.info.inline.components.facilitators.Facilitator', {
 export default class Facilitator extends React.Component {
 	static propTypes = {
 		facilitator: PropTypes.object.isRequired,
-		courseInstance: PropTypes.object.isRequired,
+		courseInstance: PropTypes.object,
 		onChange: PropTypes.func,
 		onRemove: PropTypes.func,
 		editable: PropTypes.bool,
