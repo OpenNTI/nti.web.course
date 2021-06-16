@@ -27,11 +27,12 @@ const Link = styled(LinkTo.Object)`
 export default class CatalogEntryType extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
+		context: PropTypes.any,
 		onClick: PropTypes.func,
 	};
 
 	render() {
-		const { course, onClick, ...otherProps } = this.props;
+		const { course, context, onClick, ...otherProps } = this.props;
 		const { IsAdmin: isAdmin, IsEnrolled: isEnrolled } = course;
 		const startDate = course.getStartDate();
 		const endDate = course.getEndDate();
@@ -73,7 +74,7 @@ export default class CatalogEntryType extends React.Component {
 		}
 
 		return (
-			<Link object={course} onClick={onClick}>
+			<Link object={course} context={context} onClick={onClick}>
 				<Card {...otherProps} course={course} badges={badges} />
 			</Link>
 		);

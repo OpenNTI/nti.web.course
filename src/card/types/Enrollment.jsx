@@ -33,6 +33,7 @@ const Link = styled(LinkTo.Object)`
 export default class EnrollmentCard extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
+		context: PropTypes.any,
 		onModification: PropTypes.func,
 	};
 
@@ -66,7 +67,7 @@ export default class EnrollmentCard extends React.Component {
 	};
 
 	render() {
-		const { course, ...otherProps } = this.props;
+		const { course, context, ...otherProps } = this.props;
 		const { showDetails } = this.state;
 		const startDate = course.getStartDate();
 		const endDate = course.getEndDate();
@@ -120,7 +121,7 @@ export default class EnrollmentCard extends React.Component {
 
 		return (
 			<EnrollmentDropListener course={course}>
-				<Link object={course}>
+				<Link object={course} context={context}>
 					<Card
 						{...otherProps}
 						course={course.CatalogEntry}

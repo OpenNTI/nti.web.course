@@ -30,6 +30,7 @@ const Link = styled(LinkTo.Object)`
 export default class Administrative extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
+		context: PropTypes.any,
 		onEdit: PropTypes.func,
 		onModification: PropTypes.func,
 		onDelete: PropTypes.func,
@@ -132,7 +133,7 @@ export default class Administrative extends React.Component {
 	}
 
 	render() {
-		const { course, onClick, ...otherProps } = this.props;
+		const { course, context, onClick, ...otherProps } = this.props;
 		const startDate = course.CatalogEntry.getStartDate();
 		const endDate = course.CatalogEntry.getEndDate();
 		const preview = course.CatalogEntry.Preview;
@@ -158,7 +159,7 @@ export default class Administrative extends React.Component {
 		}
 
 		return (
-			<Link object={course} onClick={onClick}>
+			<Link object={course} context={context} onClick={onClick}>
 				<Card
 					{...otherProps}
 					course={course.CatalogEntry}
