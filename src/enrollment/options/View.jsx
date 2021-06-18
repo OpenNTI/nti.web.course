@@ -31,7 +31,6 @@ class CourseEnrollmentOptions extends React.Component {
 			setup: PropTypes.func,
 			load: PropTypes.func,
 		}),
-		anonymous: PropTypes.bool,
 		loading: PropTypes.bool,
 		error: PropTypes.any,
 		enrolled: PropTypes.bool,
@@ -102,14 +101,8 @@ class CourseEnrollmentOptions extends React.Component {
 	}
 
 	renderOptions() {
-		const {
-			enrolled,
-			administrative,
-			catalogEntry,
-			options,
-			access,
-			anonymous,
-		} = this.props;
+		const { enrolled, administrative, catalogEntry, options, access } =
+			this.props;
 
 		let Cmp = null;
 
@@ -125,7 +118,6 @@ class CourseEnrollmentOptions extends React.Component {
 
 		return (
 			<Cmp
-				anonymous={anonymous}
 				options={options}
 				catalogEntry={catalogEntry}
 				access={access}
@@ -150,7 +142,6 @@ export default decorate(CourseEnrollmentOptions, [
 		error: 'error',
 		enrolled: 'enrolled',
 		administrative: 'administrative',
-		anonymous: 'anonymous',
 		options: 'options',
 		access: 'access',
 	}),

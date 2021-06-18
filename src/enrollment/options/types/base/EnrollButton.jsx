@@ -1,53 +1,58 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 
 import { rawContent } from '@nti/lib-commons';
-import { Prompt } from '@nti/web-commons';
+import { Prompt, useService } from '@nti/web-commons';
 
 import Button from '../../common/Button';
 import EnrollLink from '../../common/EnrollmentLink';
 
-export default class CourseEnrollmentBaseTypeEnrollButton extends React.Component {
-	static propTypes = {
-		anonymous: PropTypes.bool,
-		option: PropTypes.shape({
-			option: PropTypes.object.isRequired,
-			getEnrollButtonLabel: PropTypes.func,
-			isDisabled: PropTypes.func,
-			getDisabledDescription: PropTypes.func,
-			getDisabledTitle: PropTypes.func,
-		}).isRequired,
-	};
+const CourseEnrollmentBaseTypeEnrollButton = ({ option }) => {
+	const { isAnonymous } = useService();
 
-	render() {
-		const { option, anonymous } = this.props;
-		const label =
-			option.getEnrollButtonLabel &&
-			option.getEnrollButtonLabel(anonymous);
+	const label =
+		option.getEnrollButtonLabel && option.getEnrollButtonLabel(isAnonymous);
 
-		if (!label) {
-			return null;
+	if (!label) {
+		return null;
+	}
+
+	const disabled = option?.isDisabled();
+	const alert = e => {
+		if (!disabled) {
+			return;
 		}
 
-		const disabled = option?.isDisabled();
-		const alert = e => {
-			if (!disabled) {
-				return;
-			}
+		e.stopPropagation();
+		e.preventDefault();
 
-			e.stopPropagation();
-			e.preventDefault();
-
-			Prompt.alert(
-				option.getDisabledDescription(),
-				option.getDisabledTitle()
-			);
-		};
-
-		return (
-			<EnrollLink option={option} onClick={alert}>
-				<Button {...rawContent(label)} />
-			</EnrollLink>
+		Prompt.alert(
+			option.getDisabledDescription(),
+			option.getDisabledTitle()
 		);
-	}
+	};
+
+	return (
+		<EnrollLink option={option} onClick={alert}>
+			<Button {...rawContent(label)} />
+		</EnrollLink>
+	);
+};
+
+CourseEnrollmentBaseTypeEnrollButton.propTypes = {
+	option: PropTypes.shape({
+		option: PropTypes.object.isRequired,
+		getEnrollButtonLabel: PropTypes.func,
+		isDisabled: PropTypes.func,
+		getDisabledDescription: PropTypes.func,
+		getDisabledTitle: PropTypes.func,
+	}).isRequired,
+};
+
+export default function EnrollButtonWrapper(props) {
+	return (
+		<Suspense fallback={<div />}>
+			<CourseEnrollmentBaseTypeEnrollButton {...props} />
+		</Suspense>
+	);
 }
