@@ -79,7 +79,7 @@ export default class BaseEnrollment {
 		return this.SCOPE;
 	}
 
-	getTitle() {
+	getTitle(anonymous) {
 		if (!this.getString) {
 			return `!! Missing Title for ${this.option.Class} !!`;
 		}
@@ -91,7 +91,8 @@ export default class BaseEnrollment {
 			'notEnrolled.title',
 			this.catalogEntry,
 			this,
-			this.access
+			this.access,
+			anonymous
 		);
 	}
 
@@ -111,7 +112,7 @@ export default class BaseEnrollment {
 		);
 	}
 
-	getEnrollButtonLabel() {
+	getEnrollButtonLabel(isAnonymous) {
 		if (!this.getString) {
 			return `!! Missing Enroll Button Label for ${this.option.Class} !!`;
 		}
@@ -121,7 +122,8 @@ export default class BaseEnrollment {
 			'notEnrolled.buttonLabel',
 			this.catalogEntry,
 			this,
-			this.access
+			this.access,
+			isAnonymous
 		);
 	}
 

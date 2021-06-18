@@ -33,6 +33,7 @@ const t = scoped('course.enrollment.types.five-minute', {
 				'Earn transcripted college credit from the University of Oklahoma.  Not available after %(enrollCutOffDate)s.',
 		},
 		buttonLabel: {
+			anonymous: 'Sign In To Get Started',
 			hasPrice: 'Buy for $%(price)s',
 			noPrice: 'Earn College Credit',
 		},
@@ -43,8 +44,7 @@ const t = scoped('course.enrollment.types.five-minute', {
 			"We're processing your request to earn college credit. This process should take no more than two business days. If you believe there has been an error, please contact <a class='link' href='mailto:support@nextthought.com'>help desk.</a>",
 	},
 	rejected: {
-		title:
-			'We are unable to confirm your eligibility to enroll through this process.',
+		title: 'We are unable to confirm your eligibility to enroll through this process.',
 		description:
 			"<a class='link' href='mailto:support@nextthought.com'>Contact the Help desk</a>",
 	},

@@ -85,6 +85,10 @@ describe('Course enrollment open option test', () => {
 			'Earn College Credit'
 		);
 
+		expect(enrollment.getEnrollButtonLabel(true)).toEqual(
+			'Sign In To Get Started'
+		);
+
 		enrollment = new Option({ OU_Price: 400 }, null, basicCatalogEntry);
 		expect(enrollment.getEnrollButtonLabel().indexOf('Buy for ')).toEqual(
 			0

@@ -13,6 +13,7 @@ const t = scoped('course.enrollment.options.not-enrolled.View', {
 export default class CourseEnrollmentOptionsNotEnrolled extends React.Component {
 	static propTypes = {
 		options: PropTypes.array,
+		anonymous: PropTypes.bool,
 	};
 
 	state = {};
@@ -59,6 +60,7 @@ export default class CourseEnrollmentOptionsNotEnrolled extends React.Component 
 	}
 
 	renderOptions() {
+		const { anonymous } = this.props;
 		const { available, selected } = this.state;
 
 		if (!available) {
@@ -76,7 +78,9 @@ export default class CourseEnrollmentOptionsNotEnrolled extends React.Component 
 					selectOption={this.selectOption}
 				/>
 				{Description && <Description option={selected} />}
-				{EnrollButton && <EnrollButton option={selected} />}
+				{EnrollButton && (
+					<EnrollButton option={selected} anonymous={anonymous} />
+				)}
 			</React.Fragment>
 		);
 	}

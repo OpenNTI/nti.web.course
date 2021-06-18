@@ -1,4 +1,5 @@
 import { Stores } from '@nti/lib-store';
+import { getService } from '@nti/web-client';
 
 import { sortOptions } from './utils';
 import { getTypeFor, Unknown } from './types';
@@ -50,8 +51,9 @@ export default class CourseEnrollmentOptionsStore extends Stores.SimpleStore {
 
 		try {
 			const access = await getPreferredAccess(catalogEntry);
-			const options = await Promise.all(
-				(getEnrollmentOptions(catalogEntry) || [])
+			const [anonymous, ...options] = await Promise.all([
+				(await getService()).isAnonymous,
+				...(getEnrollmentOptions(catalogEntry) || [])
 					.map(option => {
 						const type = getTypeFor(option, access, catalogEntry);
 
@@ -59,8 +61,8 @@ export default class CourseEnrollmentOptionsStore extends Stores.SimpleStore {
 							? type.load(option, access, catalogEntry)
 							: null;
 					})
-					.filter(x => !!x)
-			);
+					.filter(x => !!x),
+			]);
 			const hasEnrolledOption = options.some(x => x.isEnrolled());
 
 			if (access && !hasEnrolledOption) {
@@ -69,6 +71,7 @@ export default class CourseEnrollmentOptionsStore extends Stores.SimpleStore {
 				options.push(unknown);
 			}
 
+			this.set('anonymous', anonymous);
 			this.set('enrolled', !!access);
 			this.set('administrative', access && access.isAdministrative);
 			this.set('access', access);

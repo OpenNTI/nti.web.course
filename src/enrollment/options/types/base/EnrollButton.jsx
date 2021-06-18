@@ -9,6 +9,7 @@ import EnrollLink from '../../common/EnrollmentLink';
 
 export default class CourseEnrollmentBaseTypeEnrollButton extends React.Component {
 	static propTypes = {
+		anonymous: PropTypes.bool,
 		option: PropTypes.shape({
 			option: PropTypes.object.isRequired,
 			getEnrollButtonLabel: PropTypes.func,
@@ -19,9 +20,10 @@ export default class CourseEnrollmentBaseTypeEnrollButton extends React.Componen
 	};
 
 	render() {
-		const { option } = this.props;
+		const { option, anonymous } = this.props;
 		const label =
-			option.getEnrollButtonLabel && option.getEnrollButtonLabel();
+			option.getEnrollButtonLabel &&
+			option.getEnrollButtonLabel(anonymous);
 
 		if (!label) {
 			return null;
