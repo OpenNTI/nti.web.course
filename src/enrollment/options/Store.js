@@ -61,7 +61,7 @@ export default class CourseEnrollmentOptionsStore extends Stores.SimpleStore {
 					})
 					.filter(x => !!x)
 			);
-			const hasEnrolledOption = options.some(x => x.isEnrolled());
+			const hasEnrolledOption = options.some(x => x?.isEnrolled?.());
 
 			if (access && !hasEnrolledOption) {
 				const unknown = await Unknown.load(null, access, catalogEntry);

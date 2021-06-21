@@ -28,7 +28,10 @@ const t = scoped('course.enrollment.types.open', {
 		},
 		description:
 			'Interact with content and connect with a community of learners.',
-		buttonLabel: 'Get for Free',
+		buttonLabel: {
+			anonymous: 'Sign In To Get Started',
+			notAnonymous: 'Get for Free',
+		},
 	},
 });
 

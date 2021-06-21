@@ -70,13 +70,8 @@ class CourseEnrollmentOptions extends React.Component {
 	};
 
 	render() {
-		const {
-			className,
-			loading,
-			error,
-			enrolled,
-			catalogEntry,
-		} = this.props;
+		const { className, loading, error, enrolled, catalogEntry } =
+			this.props;
 
 		return (
 			<HOC.ItemChanges
@@ -106,13 +101,8 @@ class CourseEnrollmentOptions extends React.Component {
 	}
 
 	renderOptions() {
-		const {
-			enrolled,
-			administrative,
-			catalogEntry,
-			options,
-			access,
-		} = this.props;
+		const { enrolled, administrative, catalogEntry, options, access } =
+			this.props;
 
 		let Cmp = null;
 
