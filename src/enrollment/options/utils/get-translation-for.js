@@ -4,7 +4,7 @@ import hasStarted from './has-started';
 
 const ATTRIBUTES = [
 	c => (isArchived(c) ? 'archived' : 'notArchived'),
-	(c, o, a, anonymous) => (anonymous ? 'anonymous' : 'notAnonymous'),
+	(c, o, a, anonymous) => (anonymous ? 'notAuthenticated' : 'authenticated'),
 	c => (c.getEndDate() ? 'endDate' : 'noEndDate'),
 	(c, o) => (o && o.isEnrolled ? 'enrolled' : 'notEnrolled'),
 	c => (c.getStartDate() ? 'startDate' : 'noStartDate'),
