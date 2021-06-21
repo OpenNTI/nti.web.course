@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { decorate } from '@nti/lib-commons';
-import { Input, Loading, Text } from '@nti/web-commons';
+import { Input, Loading, Text, Icons } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 import Store from './Store';
@@ -13,6 +13,10 @@ import Badges from './Badges';
 
 const t = scoped('course.admin-tools.advanced.completion.View', {
 	title: 'Completion Requirements',
+	description:
+		'Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.',
+	disclaimer:
+		'Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.',
 	awardTitle: 'Awards Upon Completion',
 	cancel: 'Cancel',
 	save: 'Save',
@@ -24,7 +28,35 @@ const t = scoped('course.admin-tools.advanced.completion.View', {
 	types: {
 		Assignments: 'Assignments',
 	},
+	typeDescriptions: {
+		Videos: 'Learners must view 95%% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.',
+	},
 });
+
+const Paragraph = styled(Text.Base)`
+	font-size: 0.875rem;
+	line-height: 1.3;
+	color: var(--primary-grey);
+`;
+
+const Disclaimer = styled.div`
+	display: flex;
+	flex-direction: row;
+	margin-top: 1.125rem;
+	padding: 0.75rem 1rem;
+	align-items: flex-start;
+	background: var(--panel-background-alt);
+
+	& > *:first-child {
+		flex: 0 0 auto;
+		font-size: 1.125rem;
+		margin-right: 0.5rem;
+	}
+
+	& ${Paragraph} {
+		flex: 1 1 auto;
+	}
+`;
 
 class CourseAdminCompletion extends React.Component {
 	static propTypes = {
@@ -79,19 +111,35 @@ class CourseAdminCompletion extends React.Component {
 			completableToggleDisabled,
 		} = this.props;
 		const disabled = nonEditor || completableToggleDisabled;
-		const className = cx('completion-control', { disabled });
+		const className = cx('completion-control', 'no-border', { disabled });
 
 		return (
-			<div className={className}>
-				<div className="label">{t('completable')}</div>
-				<div className="control">
-					<Input.Toggle
-						disabled={disabled}
-						value={completable}
-						onChange={this.onCompletionPolicyChange}
-					/>
+			<>
+				<div className={className}>
+					<div className="label">
+						<Text.Base className="title" as="h1">
+							{t('title')}
+						</Text.Base>
+					</div>
+					<div className="control">
+						<Input.Toggle
+							disabled={disabled}
+							value={completable}
+							onChange={this.onCompletionPolicyChange}
+						/>
+					</div>
 				</div>
-			</div>
+				<div className="completion-control no-border">
+					<div className="label">
+						<Paragraph>{t('description')}</Paragraph>
+						<Disclaimer>
+							<Icons.Alert.Round />
+							<Paragraph>{t('disclaimer')}</Paragraph>
+						</Disclaimer>
+					</div>
+					<div className="control" />
+				</div>
+			</>
 		);
 	}
 
@@ -150,25 +198,38 @@ class CourseAdminCompletion extends React.Component {
 	}
 
 	renderDefaultRequiredToggle = (defaultRequirable, disabled) => {
-		const className = cx('completion-control', { disabled });
 		const { label, isDefault } = defaultRequirable;
 		const text = t.isMissing(`types.${label}`)
 			? label
 			: t(`types.${label}`);
 
+		const description = t.isMissing(`typeDescriptions.${label}`)
+			? null
+			: t(`typeDescriptions.${label}`);
+
+		const className = cx('completion-control', {
+			disabled,
+			'has-description': description,
+		});
+
 		return (
-			<div className={className} key={label}>
-				<div className="label">{text}</div>
-				<div className="control">
-					<Input.Toggle
-						disabled={disabled}
-						value={isDefault}
-						onChange={() => {
-							this.saveDefaultPolicy(label, !isDefault);
-						}}
-					/>
+			<>
+				<div className={className} key={label}>
+					<div className="label">{text}</div>
+					<div className="control">
+						<Input.Toggle
+							disabled={disabled}
+							value={isDefault}
+							onChange={() => {
+								this.saveDefaultPolicy(label, !isDefault);
+							}}
+						/>
+					</div>
 				</div>
-			</div>
+				{description && (
+					<Paragraph className="description">{description}</Paragraph>
+				)}
+			</>
 		);
 	};
 
@@ -257,9 +318,6 @@ class CourseAdminCompletion extends React.Component {
 					<div className="content">
 						<div className="error">{error || ''}</div>
 						<div className="group">
-							<Text.Base className="title">
-								{t('title')}
-							</Text.Base>
 							{this.renderCompletableToggle()}
 							{this.renderPercentage()}
 							{this.renderDefaultRequiredSection()}
@@ -269,8 +327,8 @@ class CourseAdminCompletion extends React.Component {
 								{t('awardTitle')}
 							</Text.Base>
 							{/* <Credit course={course} disabled={disabled} /> */}
-							<Badges course={course} disabled={disabled} />
 							{this.renderCertificateToggle()}
+							<Badges course={course} disabled={disabled} />
 						</div>
 					</div>
 				)}
