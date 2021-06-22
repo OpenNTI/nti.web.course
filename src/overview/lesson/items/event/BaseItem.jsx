@@ -1,13 +1,20 @@
 import './BaseItem.scss';
-import React from 'react';
+import React, { useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { decorate } from '@nti/lib-commons';
 import { DateTime } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 import { Hooks, Events } from '@nti/web-session';
+
+import CompleteIcon from '../../common/GridCompleteIcon';
+import Required from '../../common/Required';
+import RequirementControl from '../../../../progress/widgets/RequirementControl';
+
+const floatRight = css`
+	float: right;
+`;
 
 function isToday(a, b) {
 	return (
@@ -38,119 +45,23 @@ const startsFrom = f =>
 		weekday: f(DateTime.WEEKDAY),
 		time: f(DateTime.TIME_PADDED),
 	});
-class EventBaseItem extends React.Component {
-	static propTypes = {
-		item: PropTypes.object.isRequired,
-		course: PropTypes.object.isRequired,
-		isMinimal: PropTypes.bool,
-		hideControls: PropTypes.bool,
-		editMode: PropTypes.bool,
-		onRequirementChange: PropTypes.func,
-	};
 
-	state = {};
+const EventBaseItem = React.forwardRef(
+	({ item, isMinimal, editMode, hideControls, onRequirementChange }, ref) => {
+		useImperativeHandle(
+			ref,
+			() => ({
+				async onEventUpdated(newEvent) {
+					const { CalendarEvent: event } = item;
 
-	onEventUpdated = async newEvent => {
-		const { item } = this.props;
-		const { CalendarEvent: event } = item;
-
-		if (event.NTIID === newEvent.NTIID) {
-			await event.refresh(newEvent);
-			this.forceUpdate();
-		}
-	};
-
-	renderDate() {
-		const { item } = this.props;
-		const { CalendarEvent: event } = item;
-
-		if (!event) {
-			return null;
-		}
-
-		return (
-			<DateTime.DateIcon
-				minimal
-				date={event.getStartTime()}
-				className="date"
-			/>
+					if (event.NTIID === newEvent.NTIID) {
+						await event.refresh(newEvent);
+						this.forceUpdate();
+					}
+				},
+			}),
+			[item]
 		);
-	}
-
-	renderImageAndDescription() {
-		const { item } = this.props;
-		const { CalendarEvent: event } = item;
-
-		const hasIcon = event.icon && event.icon !== 'null';
-
-		return (
-			<div
-				className={cx('image-and-description', { iconless: !hasIcon })}
-			>
-				{hasIcon && (
-					<div className="image">
-						<img src={event.icon} />
-					</div>
-				)}
-				<div className="event-info">
-					{event.location && (
-						<div className="location">{event.location}</div>
-					)}
-					<pre className="description">{event.description}</pre>
-				</div>
-			</div>
-		);
-	}
-
-	renderAvailability() {
-		const {
-			item: { CalendarEvent: event },
-		} = this.props;
-
-		// default case, render 'Starts [day] from [startTime] - [endTime]'
-		let timeDisplay =
-			DateTime.format(event.getStartTime(), startsFrom) +
-			' - ' +
-			DateTime.format(event.getEndTime(), DateTime.TIME_PADDED_WITH_ZONE);
-
-		if (!isToday(event.getStartTime(), event.getEndTime())) {
-			timeDisplay =
-				DateTime.format(event.getStartTime(), startsAt) +
-				' - ' +
-				DateTime.format(event.getEndTime(), endsAt);
-		}
-
-		return (
-			<div className="availability-info">
-				<div className="time-display">{timeDisplay}</div>
-			</div>
-		);
-	}
-
-	renderContents() {
-		const {
-			item: { CalendarEvent: event },
-			isMinimal,
-			hideControls,
-			editMode,
-		} = this.props;
-
-		return (
-			<div className="contents">
-				<div className="header">
-					<div className="title">{event.title}</div>
-					{this.renderAvailability()}
-				</div>
-				{!hideControls && !editMode && this.renderButton()}
-				{event && !isMinimal && this.renderImageAndDescription()}
-			</div>
-		);
-	}
-
-	renderButton() {}
-
-	render() {
-		const { item, isMinimal, editMode } = this.props;
 
 		const Wrapper = editMode
 			? 'div'
@@ -163,13 +74,142 @@ class EventBaseItem extends React.Component {
 
 		return (
 			<Wrapper object={item} className={cls}>
-				{this.renderDate()}
-				{this.renderContents()}
+				<Date item={item} />
+				<RequiredControl
+					onRequirementChange={onRequirementChange}
+					item={item}
+				/>
+				<Contents
+					item={item}
+					isMinimal={isMinimal}
+					hideControls={hideControls}
+					editMode={editMode}
+				/>
 			</Wrapper>
 		);
 	}
+);
+
+EventBaseItem.propTypes = {
+	item: PropTypes.object.isRequired,
+	course: PropTypes.object.isRequired,
+	isMinimal: PropTypes.bool,
+	hideControls: PropTypes.bool,
+	editMode: PropTypes.bool,
+	onRequirementChange: PropTypes.func,
+};
+
+export default Hooks.onEvent(
+	Events.EVENT_UPDATED,
+	'onEventUpdated'
+)(EventBaseItem);
+
+const CompletionBox = styled.div`
+	position: absolute;
+	left: 34px;
+	top: 17px;
+`;
+
+function CompleteStatus({ item, children }) {
+	const failed = item?.CompletedItem && !item.CompletedItem.Success;
+	const completed =
+		item && item.hasCompleted && item.hasCompleted() && !failed;
+	return (
+		<CompletionBox>{completed ? <CompleteIcon /> : children}</CompletionBox>
+	);
 }
 
-export default decorate(EventBaseItem, [
-	Hooks.onEvent(Events.EVENT_UPDATED, 'onEventUpdated'),
-]);
+function RequiredControl({ onRequirementChange, item }) {
+	const required = item.CompletionRequired;
+	return onRequirementChange && item.isCompletable?.() ? (
+		<RequirementControl
+			record={item}
+			onChange={onRequirementChange}
+			className={floatRight}
+		/>
+	) : required ? (
+		<Required className={floatRight} />
+	) : null;
+}
+
+function Date({ item }) {
+	const { CalendarEvent: event } = item;
+
+	if (!event) {
+		return null;
+	}
+
+	return (
+		<CompleteStatus item={item}>
+			<DateTime.DateIcon minimal date={event.getStartTime()} />
+		</CompleteStatus>
+	);
+}
+
+function Availability({ item }) {
+	const { CalendarEvent: event } = item;
+
+	// default case, render 'Starts [day] from [startTime] - [endTime]'
+	let timeDisplay =
+		DateTime.format(event.getStartTime(), startsFrom) +
+		' - ' +
+		DateTime.format(event.getEndTime(), DateTime.TIME_PADDED_WITH_ZONE);
+
+	if (!isToday(event.getStartTime(), event.getEndTime())) {
+		timeDisplay =
+			DateTime.format(event.getStartTime(), startsAt) +
+			' - ' +
+			DateTime.format(event.getEndTime(), endsAt);
+	}
+
+	return (
+		<div className="availability-info">
+			<div className="time-display">{timeDisplay}</div>
+		</div>
+	);
+}
+
+function Contents({
+	item,
+	item: { CalendarEvent: event },
+	isMinimal,
+	hideControls,
+	editMode,
+}) {
+	return (
+		<div className="contents">
+			<div className="header">
+				<div className="title">{event.title}</div>
+				<Availability item={item} />
+			</div>
+			{!hideControls && !editMode && <Button />}
+			{event && !isMinimal && <ImageAndDescription item={item} />}
+		</div>
+	);
+}
+
+function Button() {
+	return null;
+}
+
+function ImageAndDescription({ item }) {
+	const { CalendarEvent: event } = item;
+
+	const hasIcon = event.icon && event.icon !== 'null';
+
+	return (
+		<div className={cx('image-and-description', { iconless: !hasIcon })}>
+			{hasIcon && (
+				<div className="image">
+					<img src={event.icon} />
+				</div>
+			)}
+			<div className="event-info">
+				{event.location && (
+					<div className="location">{event.location}</div>
+				)}
+				<pre className="description">{event.description}</pre>
+			</div>
+		</div>
+	);
+}
