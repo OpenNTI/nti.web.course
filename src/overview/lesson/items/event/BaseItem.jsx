@@ -3,7 +3,7 @@ import React, { useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { DateTime } from '@nti/web-commons';
+import { DateTime, useForceUpdate } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 import { Hooks, Events } from '@nti/web-session';
@@ -48,6 +48,7 @@ const startsFrom = f =>
 
 const EventBaseItem = React.forwardRef(
 	({ item, isMinimal, editMode, hideControls, onRequirementChange }, ref) => {
+		const forceUpdate = useForceUpdate();
 		useImperativeHandle(
 			ref,
 			() => ({
@@ -56,11 +57,11 @@ const EventBaseItem = React.forwardRef(
 
 					if (event.NTIID === newEvent.NTIID) {
 						await event.refresh(newEvent);
-						this.forceUpdate();
+						forceUpdate();
 					}
 				},
 			}),
-			[item]
+			[item, forceUpdate]
 		);
 
 		const Wrapper = editMode
