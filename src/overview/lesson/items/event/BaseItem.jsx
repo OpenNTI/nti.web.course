@@ -74,7 +74,7 @@ const EventBaseItem = React.forwardRef(
 		});
 
 		return (
-			<Wrapper object={item} className={cls}>
+			<Wrapper className={cls}>
 				<Date item={item} />
 				<RequiredControl
 					onRequirementChange={onRequirementChange}
