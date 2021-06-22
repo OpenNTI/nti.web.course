@@ -8,7 +8,7 @@ exports[`Progress widgets user grade card test With grade 1`] = `
     className="avatar-container"
   >
     <img
-      className="avatar avatar-color-6 avatar"
+      className="avatar avatar avatar-color-6 avatar"
       src="unresolved-user-avatar.png"
     />
     <div
@@ -45,7 +45,7 @@ exports[`Progress widgets user grade card test Without grade 1`] = `
     className="avatar-container"
   >
     <img
-      className="avatar avatar-color-6 avatar"
+      className="avatar avatar avatar-color-6 avatar"
       src="unresolved-user-avatar.png"
     />
     <div
