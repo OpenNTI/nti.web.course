@@ -155,18 +155,10 @@ function Date({ item, minimal }) {
 function StatusLine({ item, onRequirementChange }) {
 	const { CalendarEvent: event } = item;
 
+	const today = isToday(event.getStartTime(), event.getEndTime());
 	// default case, render 'Starts [day] from [startTime] - [endTime]'
-	let timeDisplay =
-		DateTime.format(event.getStartTime(), startsFrom) +
-		' - ' +
-		DateTime.format(event.getEndTime(), DateTime.TIME_PADDED_WITH_ZONE);
-
-	if (!isToday(event.getStartTime(), event.getEndTime())) {
-		timeDisplay =
-			DateTime.format(event.getStartTime(), startsAt) +
-			' - ' +
-			DateTime.format(event.getEndTime(), endsAt);
-	}
+	const startFormat = today ? startsFrom : startsAt;
+	const endFormat = today ? DateTime.TIME_PADDED_WITH_ZONE : endsAt;
 
 	return (
 		<div className="event-status-info">
@@ -174,7 +166,10 @@ function StatusLine({ item, onRequirementChange }) {
 				onRequirementChange={onRequirementChange}
 				item={item}
 			/>
-			<div className="time-display">{timeDisplay}</div>
+			<div className="time-display">
+				<DateTime date={event.getStartTime()} format={startFormat} />
+				<DateTime date={event.getEndTime()} format={endFormat} />
+			</div>
 		</div>
 	);
 }
