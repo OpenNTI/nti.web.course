@@ -2,11 +2,9 @@ import { Stores } from '@nti/lib-store';
 import { getService } from '@nti/web-client';
 import { Models } from '@nti/lib-interfaces';
 
-const {
-	Assignment,
-	TimedAssignment,
-	DiscussionAssignment,
-} = Models.assessment.assignment;
+const { Assignment, TimedAssignment, DiscussionAssignment } =
+	Models.assessment.assignment;
+const { CourseCalendarEvent } = Models.calendar;
 const { WebinarAsset } = Models.integrations;
 const { VideoRoll } = Models.courses.overview;
 const { SurveyReference, Survey } = Models.assessment.survey;
@@ -28,6 +26,7 @@ const DEFAULT_REQUIRED_POLICY_LINKS = {
 
 const TYPES = {
 	ASSIGNMENTS: 'Assignments',
+	EVENTS: 'Events',
 	WEBINARS: 'Webinars',
 	VIDEOS: 'Videos',
 	VIDEO_ROLLS: 'Video Rolls',
@@ -44,6 +43,7 @@ const MIME_TYPES_MAP = {
 		TimedAssignment.MimeType,
 		DiscussionAssignment.MimeType,
 	],
+	[TYPES.EVENTS]: [CourseCalendarEvent.MimeType],
 	[TYPES.RELATED_WORK]: [RelatedWorkReference.MimeType],
 	[TYPES.LTI]: [LTIExternalToolAsset.MimeType],
 	[TYPES.READINGS]: [
