@@ -68,18 +68,26 @@ $header-ranges: (
 				width: 100%;
 			}
 
-			.availability-info {
-				font-size: 10px;
-				text-transform: uppercase;
-				color: var(--tertiary-grey);
+			.event-status-info {
 				margin-top: 4px;
 				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
-				display: flex;
 				max-width: 100%;
-				line-height: 20px;
-				font-weight: bold;
+				display: flex;
+				align-items: baseline;
+
+				& > :first-child {
+					margin-right: 0.5em;
+				}
+
+				.time-display {
+					font-size: 10px;
+					text-transform: uppercase;
+					color: var(--tertiary-grey);
+					line-height: 20px;
+					font-weight: bold;
+				}
 
 				.circular-progress {
 					margin-right: 5px;

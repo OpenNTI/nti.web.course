@@ -47,7 +47,7 @@ const startsFrom = f =>
 	});
 
 const EventBaseItem = React.forwardRef(
-	({ item, isMinimal, editMode, hideControls, onRequirementChange }, ref) => {
+	({ item, isMinimal, editMode, ...props }, ref) => {
 		const forceUpdate = useForceUpdate();
 		useImperativeHandle(
 			ref,
@@ -80,12 +80,8 @@ const EventBaseItem = React.forwardRef(
 				<Contents
 					item={item}
 					isMinimal={isMinimal}
-					hideControls={hideControls}
 					editMode={editMode}
-				/>
-				<RequiredControl
-					onRequirementChange={onRequirementChange}
-					item={item}
+					{...props}
 				/>
 			</Wrapper>
 		);
@@ -156,7 +152,7 @@ function Date({ item, minimal }) {
 	);
 }
 
-function Availability({ item }) {
+function StatusLine({ item, onRequirementChange }) {
 	const { CalendarEvent: event } = item;
 
 	// default case, render 'Starts [day] from [startTime] - [endTime]'
@@ -173,7 +169,11 @@ function Availability({ item }) {
 	}
 
 	return (
-		<div className="availability-info">
+		<div className="event-status-info">
+			<RequiredControl
+				onRequirementChange={onRequirementChange}
+				item={item}
+			/>
 			<div className="time-display">{timeDisplay}</div>
 		</div>
 	);
@@ -185,12 +185,13 @@ function Contents({
 	isMinimal,
 	hideControls,
 	editMode,
+	...props
 }) {
 	return (
 		<div className="contents">
 			<div className="header">
 				<div className="title">{event.title}</div>
-				<Availability item={item} />
+				<StatusLine item={item} {...props} />
 			</div>
 			{!hideControls && !editMode && <Button />}
 			{event && !isMinimal && <ImageAndDescription item={item} />}
