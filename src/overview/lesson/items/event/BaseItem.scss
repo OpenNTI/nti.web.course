@@ -47,13 +47,11 @@ $header-ranges: (
 		@include responsive-range(short, $header-ranges) {
 			.header {
 				margin-bottom: 0.5rem;
-				max-width: 100% !important;
 			}
 		}
 
 		.header {
-			flex: 0 0 auto;
-			max-width: calc(100% - 150px);
+			flex: 1 1 auto;
 			margin-right: 0.5rem;
 			display: flex;
 			flex-direction: column;
@@ -70,11 +68,11 @@ $header-ranges: (
 
 			.event-status-info {
 				margin-top: 4px;
-				white-space: nowrap;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				max-width: 100%;
 				display: flex;
+				flex-wrap: wrap;
 				align-items: baseline;
 
 				& > :first-child {
@@ -87,6 +85,11 @@ $header-ranges: (
 					color: var(--tertiary-grey);
 					line-height: 20px;
 					font-weight: bold;
+					flex: 1 1 auto;
+
+					> time:not(:last-child)::after {
+						content: ' - ';
+					}
 				}
 
 				.circular-progress {
