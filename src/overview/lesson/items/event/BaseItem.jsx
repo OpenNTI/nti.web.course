@@ -75,16 +75,17 @@ const EventBaseItem = React.forwardRef(
 
 		return (
 			<Wrapper className={cls}>
-				<Date item={item} />
-				<RequiredControl
-					onRequirementChange={onRequirementChange}
-					item={item}
-				/>
+				<Date item={item} minimal={isMinimal} />
+
 				<Contents
 					item={item}
 					isMinimal={isMinimal}
 					hideControls={hideControls}
 					editMode={editMode}
+				/>
+				<RequiredControl
+					onRequirementChange={onRequirementChange}
+					item={item}
 				/>
 			</Wrapper>
 		);
@@ -106,9 +107,13 @@ export default Hooks.onEvent(
 )(EventBaseItem);
 
 const CompletionBox = styled.div`
-	position: absolute;
-	left: 34px;
-	top: 17px;
+	flex: 0 0 auto;
+	text-align: center;
+	width: 75px;
+
+	&.minimal {
+		width: 80px;
+	}
 `;
 
 function CompleteStatus({ item, children }) {
@@ -133,7 +138,7 @@ function RequiredControl({ onRequirementChange, item }) {
 	) : null;
 }
 
-function Date({ item }) {
+function Date({ item, minimal }) {
 	const { CalendarEvent: event } = item;
 
 	if (!event) {
@@ -141,8 +146,12 @@ function Date({ item }) {
 	}
 
 	return (
-		<CompleteStatus item={item}>
-			<DateTime.DateIcon minimal date={event.getStartTime()} />
+		<CompleteStatus item={item} minimal={minimal}>
+			<DateTime.DateIcon
+				className="date"
+				date={event.getStartTime()}
+				minimal
+			/>
 		</CompleteStatus>
 	);
 }

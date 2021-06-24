@@ -12,31 +12,30 @@ $header-ranges: (
 );
 
 .event-base-item {
-	display: block;
+	display: flex;
+	align-items: flex-start;
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.13);
 	background-color: #fcfcfc;
 	border-radius: 5px;
 	border: 1px solid #e2e2e2;
-	padding: 14px 20px 17px 0;
+	padding: 0.875rem 1.125rem 0;
 	margin: 0.9375rem 0;
 	position: relative;
 	min-height: 70px;
 
+	.require-control-value,
+	.lesson-overview-item-required-label {
+		// margin-top: 1rem;
+	}
 	.require-control-value {
-		margin-left: 90px;
-		margin-top: 1rem;
 		text-transform: uppercase;
 		line-height: 22px;
 	}
 
-	.lesson-overview-item-required-label {
-		margin-left: 90px;
-		margin-top: 1rem;
-	}
-
 	.contents {
+		flex: 1 1 auto;
 		align-items: center;
-		padding-left: 90px;
+		padding: 0 0.625rem;
 
 		@include responsive-range(wide, $header-ranges) {
 			display: flex;
@@ -289,11 +288,6 @@ $header-ranges: (
 	}
 
 	.date {
-		position: absolute;
-		left: 34px;
-		top: 17px;
-		text-align: center;
-
 		.month {
 			text-transform: uppercase;
 			color: var(--primary-red);
@@ -320,11 +314,8 @@ $header-ranges: (
 	&.minimal {
 		box-shadow: inset 0 -1px 0 0 #e2e2e2;
 		border: none;
+		padding: 0;
 		background-color: white;
-
-		.date {
-			top: 12px;
-		}
 
 		.contents {
 			.header {
