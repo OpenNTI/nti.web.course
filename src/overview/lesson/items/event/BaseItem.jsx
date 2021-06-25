@@ -3,7 +3,7 @@ import React, { useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { DateTime, useForceUpdate } from '@nti/web-commons';
+import { DateTime, Text, useForceUpdate } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 import { Hooks, Events } from '@nti/web-session';
@@ -185,7 +185,9 @@ function Contents({
 	return (
 		<div className="contents">
 			<div className="header">
-				<div className="title">{event.title}</div>
+				<Text.Base as="div" limitLines={2} className="title">
+					{event.title}
+				</Text.Base>
 				<StatusLine item={item} {...props} />
 			</div>
 			{!hideControls && !editMode && <Button />}
