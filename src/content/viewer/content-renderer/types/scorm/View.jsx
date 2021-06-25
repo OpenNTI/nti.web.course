@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
 
-import { AssetIcon, Layouts } from '@nti/web-commons';
+import { Layouts } from '@nti/web-commons';
 
 import TypeRegistry from '../Registry';
 
-import Styles from './View.css';
 import Action from './Action';
 import CompletionHeader from './CompletionHeader';
+import Content from './Content';
+import Info from './Info';
 
 const { Aside, Responsive } = Layouts;
-const cx = classnames.bind(Styles);
 
 const MIME_TYPES = {
 	'application/vnd.nextthought.scormcontentref': true,
 };
+
+const ActionAside = styled(Aside).attrs({ component: Action })``;
 
 const handles = obj => {
 	const { location } = obj || {};
@@ -24,55 +25,42 @@ const handles = obj => {
 	return item && MIME_TYPES[item.MimeType];
 };
 
-export default class CourseContentViewerRendererScorm extends React.Component {
-	static propTypes = {
-		location: PropTypes.shape({
-			item: PropTypes.object,
-		}),
-		course: PropTypes.object,
-	};
+CourseContentViewerRendererScorm.propTypes = {
+	location: PropTypes.shape({
+		item: PropTypes.object,
+	}),
+	course: PropTypes.object,
+};
+export default function CourseContentViewerRendererScorm({ course, location }) {
+	const { item } = location || {};
 
-	render() {
-		const { course, location } = this.props;
-		const { item } = location || {};
+	const [expanded, setExpanded] = React.useState();
 
-		return (
-			<div>
-				<CompletionHeader item={item} />
-				<section className={cx('scorm-body')}>
-					<div className={cx('header')}>
-						<AssetIcon
-							className={cx('asset-icon')}
-							src={item.icon}
-							mimeType={item.MimeType}
-						/>
-						<div className={cx('title')}>{item.title}</div>
-					</div>
-					<div className={cx('description')}>{item.description}</div>
-					<Responsive.Item
-						query={Responsive.isMobileContext}
-						render={this.renderMobileAction}
-						course={course}
-						item={item}
-					/>
-					<Responsive.Item
-						query={Responsive.isWebappContext}
-						render={this.renderWebAction}
-						course={course}
-						item={item}
-					/>
-				</section>
-			</div>
-		);
-	}
-
-	renderMobileAction(props) {
-		return <Action {...props} />;
-	}
-
-	renderWebAction(props) {
-		return <Aside component={Action} {...props} />;
-	}
+	return (
+		<div>
+			<CompletionHeader item={item} />
+			<section>
+				<Info item={item} small={expanded} />
+				<Content
+					item={item}
+					expanded={expanded}
+					onExpand={() => setExpanded(true)}
+				/>
+				<Responsive.Item
+					query={Responsive.isMobileContext}
+					component={Action}
+					course={course}
+					item={item}
+				/>
+				<Responsive.Item
+					query={Responsive.isWebappContext}
+					component={ActionAside}
+					course={course}
+					item={item}
+				/>
+			</section>
+		</div>
+	);
 }
 
 TypeRegistry.register(handles)(CourseContentViewerRendererScorm);
