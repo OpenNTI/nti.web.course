@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { isFlag } from '@nti/web-client';
 import { Layouts } from '@nti/web-commons';
 
 import TypeRegistry from '../Registry';
@@ -41,11 +42,13 @@ export default function CourseContentViewerRendererScorm({ course, location }) {
 			<CompletionHeader item={item} />
 			<section>
 				<Info item={item} small={expanded} />
-				<Content
-					item={item}
-					expanded={expanded}
-					onExpand={() => setExpanded(true)}
-				/>
+				{isFlag('inline-scorm-content') && (
+					<Content
+						item={item}
+						expanded={expanded}
+						onExpand={() => setExpanded(true)}
+					/>
+				)}
 				<Responsive.Item
 					query={Responsive.isMobileContext}
 					component={Action}
