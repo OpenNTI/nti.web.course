@@ -59,7 +59,7 @@ class ReadyPackage extends React.Component {
 						{this.renderFileName(pack, selected)}
 					</List.SeparatedInline>
 				</div>
-				{this.renderControls()}
+				{this.renderControls(pack)}
 			</LinkTo.Object>
 		);
 	}
@@ -94,7 +94,7 @@ class ReadyPackage extends React.Component {
 		return <SubTitle>{pack.fileName}</SubTitle>;
 	}
 
-	renderControls() {
+	renderControls(pack) {
 		const trigger = (
 			<span className={cx('control-trigger')}>{t('trigger')}</span>
 		);
@@ -107,6 +107,17 @@ class ReadyPackage extends React.Component {
 			>
 				<ul className={cx('control-list')}>
 					<li onClick={this.deletePackage}>{t('delete')}</li>
+					{pack.hasLink('property-editor') && (
+						<li>
+							<a
+								href={pack.getLink('property-editor')}
+								target="_blank"
+								rel="noreferrer"
+							>
+								Property Editor
+							</a>
+						</li>
+					)}
 				</ul>
 			</Flyout.Triggered>
 		);
