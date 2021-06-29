@@ -110,7 +110,7 @@ class ReadyPackage extends React.Component {
 					{pack.hasLink('property-editor') && (
 						<li>
 							<LinkTo.Path
-								a="a"
+								component="a"
 								href={pack.getLink('property-editor')}
 								target="_blank"
 								rel="noreferrer"
