@@ -3,11 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-CourseEnrollmentOptiontsButton.propTypes = {
+CourseEnrollmentOptionsButton.propTypes = {
 	className: PropTypes.string,
 	caution: PropTypes.bool,
 };
-export default function CourseEnrollmentOptiontsButton({
+export default function CourseEnrollmentOptionsButton({
 	className,
 	caution,
 	...otherProps
