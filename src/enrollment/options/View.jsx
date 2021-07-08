@@ -1,5 +1,5 @@
 import './View.scss';
-import React from 'react';
+import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -74,25 +74,31 @@ class CourseEnrollmentOptions extends React.Component {
 			this.props;
 
 		return (
-			<HOC.ItemChanges
-				item={catalogEntry}
-				onItemChanged={this.onItemChange}
-			>
-				<div
-					className={cx('nti-course-enrollment-options', className, {
-						'is-enrolled': enrolled,
-					})}
+			<Suspense fallback={<div />}>
+				<HOC.ItemChanges
+					item={catalogEntry}
+					onItemChanged={this.onItemChange}
 				>
-					<div className="enrollment-container">
-						{loading && <Loading.Spinner />}
-						{!loading && error && this.renderError()}
-						{!loading && !error && this.renderOptions()}
+					<div
+						className={cx(
+							'nti-course-enrollment-options',
+							className,
+							{
+								'is-enrolled': enrolled,
+							}
+						)}
+					>
+						<div className="enrollment-container">
+							{loading && <Loading.Spinner />}
+							{!loading && error && this.renderError()}
+							{!loading && !error && this.renderOptions()}
+						</div>
+						<div className="gift-container">
+							{!loading && !error && this.renderGift()}
+						</div>
 					</div>
-					<div className="gift-container">
-						{!loading && !error && this.renderGift()}
-					</div>
-				</div>
-			</HOC.ItemChanges>
+				</HOC.ItemChanges>
+			</Suspense>
 		);
 	}
 
