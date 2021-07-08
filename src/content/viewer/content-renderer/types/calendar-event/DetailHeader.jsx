@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { Models } from '@nti/lib-interfaces';
-import { DateTime, Text } from '@nti/web-commons';
+import { Button, DateTime, Text } from '@nti/web-commons';
 import { isFlag } from '@nti/web-client';
 
 import { Registry } from '../../../parts/Header';
@@ -85,6 +85,18 @@ const Title = styled(Text)`
 	font-size: 0.875rem; /* 14px */
 `;
 
+const InfoMapper = props => ({
+	...props,
+	inverted: true,
+	children: <i className="icon-info" />,
+});
+
+const InfoToggle = styled(Button).attrs(InfoMapper)`
+	box-shadow: none !important;
+	padding: 0 0.5em;
+	vertical-align: middle;
+`;
+
 //#endregion
 
 //#region Registration & Meta
@@ -118,7 +130,11 @@ export default function DetailHeader({ item }) {
 		<Block>
 			<DateIcon date={event.getStartTime()} minimal />
 			<Block column>
-				<Title>{event.title}</Title>
+				<Title>
+					{event.title}
+					<InfoToggle onClick={() => event.emit('show-details')} />
+				</Title>
+
 				<List>
 					<Time date={event.getStartTime()} />
 					<Time date={event.getEndTime()} />
