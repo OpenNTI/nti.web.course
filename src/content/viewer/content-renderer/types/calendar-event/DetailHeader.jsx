@@ -132,7 +132,11 @@ export default function DetailHeader({ item }) {
 			<Block column>
 				<Title>
 					{event.title}
-					<InfoToggle onClick={() => event.emit('show-details')} />
+					{event.hasLink('list-attendance') && (
+						<InfoToggle
+							onClick={() => event.emit('show-details')}
+						/>
+					)}
 				</Title>
 
 				<List>
