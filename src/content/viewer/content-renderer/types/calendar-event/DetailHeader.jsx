@@ -47,6 +47,7 @@ const WrapChildren = props => ({
 });
 
 const List = styled('ul').attrs(WrapChildren)`
+	font-size: 0.5rem;
 	list-style: none;
 	line-height: 1;
 	display: flex;
@@ -123,11 +124,11 @@ DetailHeader.propTypes = {
  * @param {HeadingProps} props
  * @returns {React.ReactElement}
  */
-export default function DetailHeader({ item }) {
+export default function DetailHeader({ item, className }) {
 	const { CalendarEvent: event } = item;
 
 	return (
-		<Block>
+		<Block className={className}>
 			<DateIcon date={event.getStartTime()} minimal />
 			<Block column>
 				<Title>
