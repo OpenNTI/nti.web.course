@@ -117,7 +117,7 @@ export default class BasicWizardPanel extends React.Component {
 					/>
 					<Input.TextArea
 						placeholder={t('description')}
-						className="nti-text-input"
+						inputClassName="nti-text-input"
 						value={this.state.description}
 						onChange={this.updateDescription}
 					/>

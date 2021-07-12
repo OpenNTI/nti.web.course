@@ -301,7 +301,7 @@ export default class Facilitator extends React.Component {
 	// 		return (
 	// 			<div className="bio">
 	// 				<div className="label">Bio</div>
-	// 				<Input.TextArea className="bio-input" onChange={this.onBioChange} value={facilitator.Biography}/>
+	// 				<Input.TextArea inputClassName="bio-input" onChange={this.onBioChange} value={facilitator.Biography}/>
 	// 			</div>
 	// 		);
 	// 	}

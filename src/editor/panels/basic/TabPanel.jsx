@@ -169,7 +169,7 @@ export default class BasicTabPanel extends React.Component {
 							ref={this.attachCodeRef}
 							onMouseUp={this.selectCode}
 							value={this.state.accessToken.Code}
-							className="access-code"
+							inputClassName="access-code"
 						/>
 						<div className="copy-controls">
 							<div onClick={this.copyCode} className={copyCls}>
@@ -247,7 +247,7 @@ export default class BasicTabPanel extends React.Component {
 					<div className="basic-label">Description</div>
 					<Input.TextArea
 						placeholder={t('description')}
-						className="nti-text-input"
+						inputClassName="nti-text-input"
 						value={this.state.description}
 						onChange={this.updateDescription}
 					/>
