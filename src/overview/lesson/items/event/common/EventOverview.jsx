@@ -1,41 +1,35 @@
-import './EventOverview.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import { decorate } from '@nti/lib-commons';
-import {
-	DialogButtons,
-	DateTime,
-	Prompt,
-	Input,
-	Loading,
-} from '@nti/web-commons';
+import { DialogButtons, Prompt, Loading } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-import { ImageUpload } from '@nti/web-whiteboard';
+import { Event } from '@nti/web-calendar';
 import { Connectors } from '@nti/lib-store';
+
+const EventEditor = Event.editor;
 
 import PositionSelect from '../../../common/PositionSelect';
 
-import DateInput from './DateInput';
-
 const t = scoped('course.overview.lesson.items.event.common.Overview', {
 	addToLesson: 'Add to Lesson',
-	addAnImage: 'Add an Image',
-	eventTitle: 'Event Title',
-	eventDescription: 'Description...',
-	eventLocation: 'Location',
 	save: 'Save',
 	cancel: 'Cancel',
 	position: 'Position',
-	location: 'Location',
-	datesTimes: 'Dates & Times',
-	delete: 'Delete',
-	event: 'Event',
 	areYouSure: 'Do you want to remove this event from the lesson?',
-	start: 'Start',
-	end: 'End',
 });
+
+const Contents = styled(EventEditor.Contents)`
+	max-height: calc(100vh - 215px);
+`;
+
+const Frame = styled(EventEditor.EditorFrame)`
+	width: 810px;
+`;
+
+const Body = styled(EventEditor.Body)`
+	width: 500px;
+`;
 
 class EventOverviewEditor extends React.Component {
 	static propTypes = {
@@ -58,124 +52,18 @@ class EventOverviewEditor extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const { event } = props;
-
-		let defaultStartDate = new Date();
-		defaultStartDate.setSeconds(0);
-		defaultStartDate.setMinutes(defaultStartDate.getMinutes() + 59);
-		defaultStartDate.setMinutes(0);
+		const { event, overviewGroup } = props;
 
 		this.state = {
-			startDate: event ? event.getStartTime() : defaultStartDate,
-			endDate: event
-				? event.getEndTime()
-				: new Date(defaultStartDate.getTime() + 60 * 60 * 1000),
-			title: event && event.title,
-			description: event && event.description,
-			location: event && event.location,
-			selectedSection: props.overviewGroup,
-			selectedRank: (props.overviewGroup.Items || []).length + 1,
-			event: props.event,
-			// check icon for null string.  if we remove an icon and PUT to the record, it won't be null, but "null"
-			img: props.event &&
-				props.event.icon &&
-				props.event.icon !== 'null' && { src: props.event.icon },
+			selectedSection: overviewGroup,
+			selectedRank: (overviewGroup?.Items?.length ?? 0) + 1,
+			...EventEditor.getStateFromEvent(event),
 		};
-	}
-
-	renderDate() {
-		const { startDate } = this.state;
-
-		return <DateTime.DateIcon minimal className="date" date={startDate} />;
-	}
-
-	renderEventInfo() {
-		const { startDate, title, description, img } = this.state;
-
-		return (
-			<div className="event-info">
-				<div className="title">
-					<Input.Text
-						placeholder={t('eventTitle')}
-						value={title}
-						onChange={val => this.setState({ title: val })}
-						maxLength="140"
-					/>
-				</div>
-				<div className="time-info">
-					<span className="date">
-						{DateTime.format(
-							startDate,
-							DateTime.WEEKDAY_AT_TIME_PADDED_WITH_ZONE
-						)}
-					</span>
-				</div>
-				<div className="image-and-description">
-					<ImageUpload
-						img={img}
-						onChange={imgBlob => this.setState({ imgBlob })}
-					/>
-					<Input.TextArea
-						value={description}
-						onChange={val => this.setState({ description: val })}
-						placeholder={t('eventDescription')}
-					/>
-				</div>
-			</div>
-		);
 	}
 
 	onPositionChange = (selectedSection, selectedRank) => {
 		this.setState({ selectedSection, selectedRank });
 	};
-
-	renderPosition() {
-		return (
-			<div className="input-section position">
-				<div className="section-title">{t('position')}</div>
-				<PositionSelect
-					item={this.props.item}
-					lessonOverview={this.props.lessonOverview}
-					overviewGroup={this.state.selectedSection}
-					onChange={this.onPositionChange}
-				/>
-			</div>
-		);
-	}
-
-	renderLocation() {
-		const { location } = this.state;
-
-		return (
-			<div className="input-section location">
-				<div className="section-title">{t('location')}</div>
-				<Input.Text
-					placeholder={t('eventLocation')}
-					value={location}
-					onChange={val => this.setState({ location: val })}
-					maxLength="140"
-				/>
-			</div>
-		);
-	}
-
-	renderDateInputs() {
-		return (
-			<div className="input-section times">
-				<div className="section-title">{t('datesTimes')}</div>
-				<DateInput
-					date={this.state.startDate}
-					label={t('start')}
-					onChange={val => this.setState({ startDate: val })}
-				/>
-				<DateInput
-					date={this.state.endDate}
-					label={t('end')}
-					onChange={val => this.setState({ endDate: val })}
-				/>
-			</div>
-		);
-	}
 
 	onDelete = () => {
 		const { onDelete } = this.props;
@@ -184,28 +72,6 @@ class EventOverviewEditor extends React.Component {
 			onDelete();
 		});
 	};
-
-	renderOtherInfo() {
-		const { onDelete } = this.props;
-
-		return (
-			<div className="other-info">
-				{this.renderPosition()}
-				{this.renderLocation()}
-				{this.renderDateInputs()}
-				{onDelete && (
-					<div
-						className="delete-button"
-						onClick={() => {
-							this.onDelete();
-						}}
-					>
-						{t('delete')}
-					</div>
-				)}
-			</div>
-		);
-	}
 
 	onCancel = () => {
 		const { onCancel } = this.props;
@@ -249,55 +115,77 @@ class EventOverviewEditor extends React.Component {
 		}
 	};
 
-	renderButtons() {
-		const { saveDisabled } = this.props;
-
-		return (
-			<DialogButtons
-				buttons={[
-					{
-						label: t('cancel'),
-						onClick: this.onCancel,
-					},
-					{
-						label: this.props.item ? t('save') : t('addToLesson'),
-						disabled: saveDisabled,
-						onClick: this.onSave,
-					},
-				]}
-			/>
-		);
-	}
-
-	renderError() {
-		const { createError } = this.props;
-
-		if (createError) {
-			return <div className="error">{createError}</div>;
-		}
-	}
-
 	render() {
-		const { saving, saveDisabled } = this.props;
-		const cls = cx('event-overview-editor', {
-			saving: saving || saveDisabled,
-		});
+		const { saving, saveDisabled, onDelete, createError } = this.props;
 
 		return (
-			<div className={cls}>
-				{this.renderError()}
+			<Frame saving={saving || saveDisabled}>
+				{createError && (
+					<EventEditor.ErrorMessage>
+						{createError}
+					</EventEditor.ErrorMessage>
+				)}
 				{saving && <Loading.Mask />}
-				<div className="contents">
-					<div className="header-info">
-						{this.renderDate()}
-						{this.renderEventInfo()}
-					</div>
-					{this.renderOtherInfo()}
-				</div>
-				{this.renderButtons()}
-			</div>
+				<Contents>
+					<EventEditor.Header
+						dialog
+						{...this.state}
+						onDescriptionChange={val =>
+							this.setState({ description: val })
+						}
+						onTitleChange={val => this.setState({ title: val })}
+						onImageChange={imgBlob => this.setState({ imgBlob })}
+					/>
+					<Body
+						{...this.props}
+						{...this.state}
+						onCalendarSelect={this.onCalendarSelect}
+						onEndDateChange={x => this.setState({ endDate: x })}
+						onLocationChange={val =>
+							this.setState({ location: val })
+						}
+						onStartDateChange={x => this.setState({ startDate: x })}
+						onDelete={onDelete && this.onDelete}
+					>
+						<PositionEditor
+							{...this.props}
+							{...this.state}
+							onChange={this.onPositionChange}
+						/>
+					</Body>
+				</Contents>
+				<DialogButtons
+					buttons={[
+						{
+							label: t('cancel'),
+							onClick: this.onCancel,
+						},
+						{
+							label: this.props.item
+								? t('save')
+								: t('addToLesson'),
+							disabled: saveDisabled,
+							onClick: this.onSave,
+						},
+					]}
+				/>
+			</Frame>
 		);
 	}
+}
+
+function PositionEditor({ item, lessonOverview, selectedSection, onChange }) {
+	return (
+		<div>
+			<EventEditor.SectionTitle>{t('position')}</EventEditor.SectionTitle>
+			<PositionSelect
+				item={item}
+				lessonOverview={lessonOverview}
+				overviewGroup={selectedSection}
+				onChange={onChange}
+			/>
+		</div>
+	);
 }
 
 export default decorate(EventOverviewEditor, [
