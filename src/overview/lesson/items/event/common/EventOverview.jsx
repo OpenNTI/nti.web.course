@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { decorate } from '@nti/lib-commons';
-import { DialogButtons, Prompt, Loading } from '@nti/web-commons';
+import {
+	DialogButtons,
+	Prompt,
+	Loading,
+	useReducerState,
+} from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 import { Event } from '@nti/web-calendar';
 import { Connectors } from '@nti/lib-store';
@@ -31,147 +35,125 @@ const Body = styled(EventEditor.Body)`
 	width: 500px;
 `;
 
-class EventOverviewEditor extends React.Component {
-	static propTypes = {
-		course: PropTypes.object.isRequired,
-		item: PropTypes.object,
-		lessonOverview: PropTypes.object.isRequired,
-		overviewGroup: PropTypes.object.isRequired,
-		event: PropTypes.object,
-		onCancel: PropTypes.func,
-		onAddToLesson: PropTypes.func,
-		onDelete: PropTypes.func,
-		createEvent: PropTypes.func,
-		createError: PropTypes.string,
-		saveDisabled: PropTypes.bool,
-		saving: PropTypes.bool,
-	};
+EventOverviewEditor.propTypes = {
+	course: PropTypes.object.isRequired,
+	item: PropTypes.object,
+	lessonOverview: PropTypes.object.isRequired,
+	overviewGroup: PropTypes.object.isRequired,
+	event: PropTypes.object,
+	onCancel: PropTypes.func,
+	onAddToLesson: PropTypes.func,
+	onDelete: PropTypes.func,
+	createEvent: PropTypes.func,
+	createError: PropTypes.string,
+	saveDisabled: PropTypes.bool,
+	saving: PropTypes.bool,
+};
 
-	state = {};
+function EventOverviewEditor(props) {
+	const {
+		course,
+		createEvent,
+		createError,
+		event,
+		item,
+		onAddToLesson,
+		onCancel,
+		onDelete,
+		overviewGroup,
+		saveDisabled,
+		saving,
+	} = props;
 
-	constructor(props) {
-		super(props);
+	const [state, setState, , change] = useReducerState({
+		selectedSection: null,
+		selectedRank: null,
+		title: null,
+		description: null,
+		location: null,
+		startDate: null,
+		endDate: null,
+		imgBlob: null,
+	});
 
-		const { event, overviewGroup } = props;
-
-		this.state = {
+	useEffect(() => {
+		setState({
 			selectedSection: overviewGroup,
 			selectedRank: (overviewGroup?.Items?.length ?? 0) + 1,
 			...EventEditor.getStateFromEvent(event),
-		};
-	}
-
-	onPositionChange = (selectedSection, selectedRank) => {
-		this.setState({ selectedSection, selectedRank });
-	};
-
-	onDelete = () => {
-		const { onDelete } = this.props;
-
-		Prompt.areYouSure(t('areYouSure')).then(() => {
-			onDelete();
 		});
-	};
+	}, [event, overviewGroup]);
 
-	onCancel = () => {
-		const { onCancel } = this.props;
-
-		if (onCancel) {
-			onCancel();
-		}
-	};
-
-	onSave = async () => {
-		const { onAddToLesson, course, event, createEvent } = this.props;
-		const {
-			selectedSection,
-			selectedRank,
-			title,
-			description,
-			location,
-			startDate,
-			endDate,
-			imgBlob,
-		} = this.state;
-
+	const onSave = async () => {
 		const calendarEvent = await createEvent(
 			course,
 			event,
-			title,
-			description,
-			location,
-			startDate,
-			endDate,
-			imgBlob
+			state.title,
+			state.description,
+			state.location,
+			state.startDate,
+			state.endDate,
+			state.imgBlob
 		);
 
 		if (calendarEvent) {
 			onAddToLesson(
-				selectedSection,
-				selectedRank,
-				imgBlob,
+				state.selectedSection,
+				state.selectedRank,
+				state.imgBlob,
 				calendarEvent
 			);
 		}
 	};
 
-	render() {
-		const { saving, saveDisabled, onDelete, createError } = this.props;
-
-		return (
-			<Frame saving={saving || saveDisabled}>
-				{createError && (
-					<EventEditor.ErrorMessage>
-						{createError}
-					</EventEditor.ErrorMessage>
-				)}
-				{saving && <Loading.Mask />}
-				<Contents>
-					<EventEditor.Header
-						dialog
-						{...this.state}
-						onDescriptionChange={val =>
-							this.setState({ description: val })
-						}
-						onTitleChange={val => this.setState({ title: val })}
-						onImageChange={imgBlob => this.setState({ imgBlob })}
-					/>
-					<Body
-						{...this.props}
-						{...this.state}
-						onCalendarSelect={this.onCalendarSelect}
-						onEndDateChange={x => this.setState({ endDate: x })}
-						onLocationChange={val =>
-							this.setState({ location: val })
-						}
-						onStartDateChange={x => this.setState({ startDate: x })}
-						onDelete={onDelete && this.onDelete}
-					>
-						<PositionEditor
-							{...this.props}
-							{...this.state}
-							onChange={this.onPositionChange}
-						/>
-					</Body>
-				</Contents>
-				<DialogButtons
-					buttons={[
-						{
-							label: t('cancel'),
-							onClick: this.onCancel,
-						},
-						{
-							label: this.props.item
-								? t('save')
-								: t('addToLesson'),
-							disabled: saveDisabled,
-							onClick: this.onSave,
-						},
-					]}
+	return (
+		<Frame saving={saving || saveDisabled}>
+			{createError && (
+				<EventEditor.ErrorMessage>
+					{createError}
+				</EventEditor.ErrorMessage>
+			)}
+			{saving && <Loading.Mask />}
+			<Contents>
+				<EventEditor.Header
+					dialog
+					{...state}
+					onDescriptionChange={change('description')}
+					onTitleChange={change('title')}
+					onImageChange={change('imgBlob')}
 				/>
-			</Frame>
-		);
-	}
+				<Body
+					{...props}
+					{...state}
+					onEndDateChange={change('endDate')}
+					onLocationChange={change('location')}
+					onStartDateChange={change('startDate')}
+					onDelete={() =>
+						Prompt.areYouSure(t('areYouSure')).then(onDelete)
+					}
+				>
+					<PositionEditor
+						{...props}
+						{...state}
+						onChange={change('selectedSection', 'selectedRank')}
+					/>
+				</Body>
+			</Contents>
+			<DialogButtons
+				buttons={[
+					{
+						label: t('cancel'),
+						onClick: onCancel,
+					},
+					{
+						label: item ? t('save') : t('addToLesson'),
+						disabled: saveDisabled,
+						onClick: onSave,
+					},
+				]}
+			/>
+		</Frame>
+	);
 }
 
 function PositionEditor({ item, lessonOverview, selectedSection, onChange }) {
@@ -188,6 +170,6 @@ function PositionEditor({ item, lessonOverview, selectedSection, onChange }) {
 	);
 }
 
-export default decorate(EventOverviewEditor, [
-	Connectors.Any.connect(['createEvent', 'createError', 'saving']),
-]);
+export default Connectors.Any.connect(['createEvent', 'createError', 'saving'])(
+	EventOverviewEditor
+);
