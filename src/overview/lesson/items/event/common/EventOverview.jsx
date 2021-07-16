@@ -80,6 +80,7 @@ function EventOverviewEditor(props) {
 		setState({
 			selectedSection: overviewGroup,
 			selectedRank: (overviewGroup?.Items?.length ?? 0) + 1,
+			mode: 'edit',
 			...EventEditor.getStateFromEvent(event),
 		});
 	}, [event, overviewGroup]);
@@ -158,15 +159,19 @@ function EventOverviewEditor(props) {
 
 function PositionEditor({ item, lessonOverview, selectedSection, onChange }) {
 	return (
-		<div>
-			<EventEditor.SectionTitle>{t('position')}</EventEditor.SectionTitle>
-			<PositionSelect
-				item={item}
-				lessonOverview={lessonOverview}
-				overviewGroup={selectedSection}
-				onChange={onChange}
-			/>
-		</div>
+		selectedSection && (
+			<div>
+				<EventEditor.SectionTitle>
+					{t('position')}
+				</EventEditor.SectionTitle>
+				<PositionSelect
+					item={item}
+					lessonOverview={lessonOverview}
+					overviewGroup={selectedSection}
+					onChange={onChange}
+				/>
+			</div>
+		)
 	);
 }
 
