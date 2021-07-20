@@ -73,7 +73,7 @@ function EventOverviewEditor(props) {
 		location: null,
 		startDate: null,
 		endDate: null,
-		imgBlob: null,
+		imgBlob: undefined,
 	});
 
 	useEffect(() => {
