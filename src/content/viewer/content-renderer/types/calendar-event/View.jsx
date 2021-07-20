@@ -15,6 +15,10 @@ const View = styled(Event.View)`
 	& :global(.calendar-event-editor) {
 		width: auto;
 	}
+
+	[event-details-header] {
+		display: none;
+	}
 `;
 
 //#endregion
