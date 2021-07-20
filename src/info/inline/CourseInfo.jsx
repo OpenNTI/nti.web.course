@@ -33,6 +33,7 @@ import {
 	MeetTimes,
 	Badges,
 	RedemptionCodes,
+	SeatLimit,
 	Prerequisites,
 	Access,
 	Department,
@@ -50,6 +51,7 @@ const EDITORS = {
 	TRANSCRIPT_CREDIT: 'TranscriptCredit',
 	REDEMPTION_CODES: 'RedemptionCodes',
 	COURSE_ACCESS: 'Access',
+	COURSE_SEAT_LIMIT: 'SeatLimit',
 };
 
 /**
@@ -206,6 +208,9 @@ export default class CourseInfo extends React.Component {
 	activateAccessEditor = () => {
 		this.setState({ activeEditor: EDITORS.COURSE_ACCESS });
 	};
+
+	activateSeatLimitEditor = () =>
+		this.setState({ activeEditor: EDITORS.COURSE_SEAT_LIMIT });
 
 	hideFullFacilitatorSet = async () => {
 		this.setState({
@@ -452,6 +457,25 @@ export default class CourseInfo extends React.Component {
 							)
 						}
 						onBeginEditing={this.activateAccessEditor}
+						onEndEditing={this.endEditing}
+						hideDeleteBlock
+					/>
+					<Section
+						className="seat-limit-section"
+						components={[SeatLimit]}
+						catalogEntry={catalogEntry}
+						courseInstance={courseInstance}
+						enrollmentAccess={enrollmentAccess}
+						editable={editable}
+						isEditing={activeEditor === EDITORS.COURSE_SEAT_LIMIT}
+						doSave={pending =>
+							SeatLimit.saveSeatLimit(
+								catalogEntry,
+								courseInstance,
+								pending
+							)
+						}
+						onBeginEditing={this.activateSeatLimitEditor}
 						onEndEditing={this.endEditing}
 						hideDeleteBlock
 					/>
