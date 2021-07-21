@@ -86,7 +86,7 @@ describe('Course enrollment open option test', () => {
 	});
 
 	test('Test getEnrollButtonLabel', () => {
-		let enrollment = new Option({}, null, {
+		let enrollment = new Option({ seatAvailable: true }, null, {
 			getEndDate: () => new Date('10/31/2017'),
 			getStartDate: () => new Date('10/22/2017'),
 		});

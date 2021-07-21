@@ -2,6 +2,7 @@ import Option from '../Option';
 
 const optionWithPurchasables = {
 	available: true,
+	seatAvailable: true,
 	getPurchasable: () => ({ amount: 500 }),
 	getPurchasableForGifting: () => ({ amount: 600 }),
 	getPurchasableForRedeeming: () => ({ amount: 700 }),
@@ -87,7 +88,11 @@ describe('Course enrollment store option test', () => {
 	});
 
 	test('Test getEnrollButtonLabel', async () => {
-		let enrollment = new Option({}, null, basicCatalogEntry);
+		let enrollment = new Option(
+			{ seatAvailable: true },
+			null,
+			basicCatalogEntry
+		);
 		expect(enrollment.getEnrollButtonLabel()).toEqual('Purchase');
 
 		// purchasable case, need to call load to setup purchasable
