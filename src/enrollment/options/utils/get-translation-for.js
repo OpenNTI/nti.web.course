@@ -5,6 +5,8 @@ import hasStarted from './has-started';
 const ATTRIBUTES = [
 	c => (isArchived(c) ? 'archived' : 'notArchived'),
 	(c, o, a, anonymous) => (anonymous ? 'anonymous' : 'notAnonymous'),
+	(c, o, a, anon, seatAvailable) =>
+		seatAvailable ? 'seatAvailable' : 'noSeatAvailable',
 	c => (c.getEndDate() ? 'endDate' : 'noEndDate'),
 	(c, o) => (o && o.isEnrolled ? 'enrolled' : 'notEnrolled'),
 	c => (c.getStartDate() ? 'startDate' : 'noStartDate'),
@@ -49,10 +51,11 @@ export default function getTranslationFor(
 	catalogEntry,
 	option,
 	access,
-	anonymous
+	anonymous,
+	disabled
 ) {
 	const attributes = ATTRIBUTES.map(getKey =>
-		getKey(catalogEntry, option, access, anonymous)
+		getKey(catalogEntry, option, access, anonymous, disabled)
 	).filter(key => key);
 	const keyCombos = combinations(attributes).sort(
 		(a, b) => b.length - a.length

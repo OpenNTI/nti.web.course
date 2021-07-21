@@ -24,9 +24,10 @@ const t = scoped('course.enrollment.types.store', {
 		title: 'Premium',
 		description: 'Complete access to interact with all of the content.',
 		buttonLabel: {
-			anonymous: 'Sign In To Get Started',
-			hasPrice: 'Buy for %(priceDisplay)s',
-			noPrice: 'Purchase',
+			'anonymous-seatAvailable': 'Sign In To Get Started',
+			'seatAvailable-hasPrice': 'Buy for %(priceDisplay)s',
+			'seatAvailable-noPrice': 'Purchase',
+			noSeatAvailable: 'Not Available for Enrollment',
 		},
 	},
 	gifting: {

@@ -4,8 +4,11 @@ import { scoped } from '@nti/lib-locale';
 const t = scoped(
 	'course.info.inline.components.seat-limit.components.Display',
 	{
-		full: "We're sorry, it looks like the course is full.",
-		open: '%(remaining)s of %(max)s seats remaining.',
+		full: {
+			enrollment: "We're sorry, it looks like the course is full.",
+			admin: '%(used)s of %(max)s seats filled.',
+		},
+		remaining: '%(remaining)s of %(max)s seats remaining.',
 		noLimit: 'Unlimited',
 	}
 );
@@ -19,17 +22,30 @@ export default styled(SeatLimitText.Base).attrs(({ catalogEntry, admin }) => {
 	const full = SeatLimit && used >= max;
 	const open = SeatLimit && !full;
 
+	let localeKey = 'noLimit';
+	let localeData = null;
+
+	if (full && admin) {
+		localeKey = 'full.admin';
+		localeData = { used, max };
+	} else if (full) {
+		localeKey = 'full.enrollment';
+	} else if (open) {
+		localeKey = 'remaining';
+		localeData = { remaining: Math.max(0, max - used), max };
+	}
+
 	return {
 		notSet: !full && !open,
 		admin,
 		open,
 		full,
 
-		localeKey: full ? 'full' : open ? 'open' : 'noLimit',
-		with: open ? { remaining: Math.max(0, max - used), max } : null,
+		localeKey,
+		with: localeData,
 	};
 })`
-	font-size: 0.75rem;
+	font-size: 0.875rem;
 	font-style: italic;
 	color: var(--primary-blue);
 

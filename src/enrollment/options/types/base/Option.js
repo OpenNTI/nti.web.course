@@ -7,6 +7,7 @@ import EnrolledTitle from './EnrolledTitle';
 import EnrolledDescription from './EnrolledDescription';
 import ListItem from './ListItem';
 import OpenButton from './OpenButton';
+import SeatLimit from './SeatLimit';
 
 export default class BaseEnrollment {
 	static async load(option, access, catalogEntry) {
@@ -28,6 +29,7 @@ export default class BaseEnrollment {
 	EnrollButton = EnrollButton;
 	DropButton = DropButton;
 	OpenButton = OpenButton;
+	SeatLimit = SeatLimit;
 
 	constructor(option, access, catalogEntry) {
 		this.option = option;
@@ -53,6 +55,10 @@ export default class BaseEnrollment {
 			(this.option.available || this.option.enrolled) &&
 			(!this.access || !this.access.isAdministrative)
 		);
+	}
+
+	hasSeatAvailable() {
+		return this.option && this.option.seatAvailable;
 	}
 
 	shouldOverride() {
@@ -123,7 +129,8 @@ export default class BaseEnrollment {
 			this.catalogEntry,
 			this,
 			this.access,
-			isAnonymous
+			isAnonymous,
+			this.hasSeatAvailable()
 		);
 	}
 

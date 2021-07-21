@@ -17,7 +17,7 @@ const CourseEnrollmentBaseTypeEnrollButton = ({ option }) => {
 		return null;
 	}
 
-	const disabled = option?.isDisabled();
+	const disabled = option?.isDisabled() || !option?.hasSeatAvailable();
 	const alert = e => {
 		if (!disabled) {
 			return;
@@ -34,7 +34,10 @@ const CourseEnrollmentBaseTypeEnrollButton = ({ option }) => {
 
 	return (
 		<EnrollLink option={option} onClick={alert}>
-			<Button {...rawContent(label)} />
+			<Button
+				{...rawContent(label)}
+				disabled={!option?.hasSeatAvailable()}
+			/>
 		</EnrollLink>
 	);
 };
@@ -43,6 +46,7 @@ CourseEnrollmentBaseTypeEnrollButton.propTypes = {
 	option: PropTypes.shape({
 		option: PropTypes.object.isRequired,
 		getEnrollButtonLabel: PropTypes.func,
+		hasSeatAvailable: PropTypes.func,
 		isDisabled: PropTypes.func,
 		getDisabledDescription: PropTypes.func,
 		getDisabledTitle: PropTypes.func,

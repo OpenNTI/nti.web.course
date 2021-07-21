@@ -7,9 +7,10 @@ const MimeType = 'application/vnd.nextthought.courses.seatlimit';
 
 export function saveSeatLimit(course, instance, { PendingSeatLimit }) {
 	const { SeatLimit } = PendingSeatLimit ?? {};
-	const payload = SeatLimit
-		? { seat_limit: { MimeType, max_seats: SeatLimit.MaxSeats } }
-		: { seat_limit: null };
+	const payload =
+		SeatLimit && SeatLimit.MaxSeats
+			? { seat_limit: { MimeType, max_seats: SeatLimit.MaxSeats } }
+			: { seat_limit: null };
 
 	return course.save(payload);
 }

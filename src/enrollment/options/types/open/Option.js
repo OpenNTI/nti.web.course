@@ -29,8 +29,9 @@ const t = scoped('course.enrollment.types.open', {
 		description:
 			'Interact with content and connect with a community of learners.',
 		buttonLabel: {
-			anonymous: 'Sign In To Get Started',
-			notAnonymous: 'Get for Free',
+			'anonymous-seatAvailable': 'Sign In To Get Started',
+			'notAnonymous-seatAvailable': 'Get for Free',
+			noSeatAvailable: 'Not Available for Enrollment',
 		},
 	},
 });

@@ -23,15 +23,17 @@ export default function SeatLimitEditor({
 	const { SeatLimit } = pending ?? catalogEntry;
 	const { MaxSeats: max } = SeatLimit ?? {};
 
-	const limited = max != null;
+	const limited = pending ? pending.selected === 'limited' : max != null;
 
 	const updatePending = useCallback(
-		pending => (setPending(pending), onValueChange('PendingSeatLimit', pending)),
+		pending => (
+			setPending(pending), onValueChange('PendingSeatLimit', pending)
+		),
 		[setPending, onValueChange]
 	);
 
 	const setUnlimited = useCallback(
-		() => updatePending({ SeatLimit: null }),
+		() => updatePending({ SeatLimit: null, selected: 'unlimited' }),
 		[updatePending]
 	);
 
@@ -41,12 +43,16 @@ export default function SeatLimitEditor({
 				SeatLimit: {
 					MaxSeats: catalogEntry?.SeatLimit?.MaxSeats ?? 100,
 				},
+				selected: 'limited',
 			}),
 		[updatePending, catalogEntry]
 	);
 
 	const setSeatLimit = useCallback(
-		max => updatePending({ SeatLimit: { MaxSeats: max } }),
+		max =>
+			updatePending({
+				SeatLimit: { MaxSeats: max, selected: 'limited' },
+			}),
 		[updatePending]
 	);
 

@@ -11,4 +11,9 @@
 	&.caution {
 		background-color: var(--primary-red);
 	}
+
+	&.disabled {
+		background-color: var(--tertiary-grey);
+		pointer-events: none;
+	}
 }

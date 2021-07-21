@@ -65,7 +65,7 @@ export default class CourseEnrollmentOptionsNotEnrolled extends React.Component 
 			return null;
 		}
 
-		const { Description, EnrollButton } = selected || {};
+		const { Description, EnrollButton, SeatLimit } = selected || {};
 
 		return (
 			<React.Fragment>
@@ -76,6 +76,7 @@ export default class CourseEnrollmentOptionsNotEnrolled extends React.Component 
 					selectOption={this.selectOption}
 				/>
 				{Description && <Description option={selected} />}
+				{SeatLimit && <SeatLimit option={selected} />}
 				{EnrollButton && <EnrollButton option={selected} />}
 			</React.Fragment>
 		);
