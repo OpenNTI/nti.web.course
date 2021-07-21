@@ -51,7 +51,8 @@ export default function SeatLimitEditor({
 	const setSeatLimit = useCallback(
 		max =>
 			updatePending({
-				SeatLimit: { MaxSeats: max, selected: 'limited' },
+				SeatLimit: { MaxSeats: max },
+				selected: 'limited',
 			}),
 		[updatePending]
 	);
