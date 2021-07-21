@@ -60,7 +60,7 @@ function useAdminProgress(course) {
 		})();
 
 		return () => (cancelled = true);
-	}, [global.location.toString()]);
+	}, [course, global.location.toString()]);
 
 	return progress;
 }
