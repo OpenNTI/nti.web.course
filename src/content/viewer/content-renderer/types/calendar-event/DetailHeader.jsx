@@ -12,7 +12,7 @@ import { Registry } from '../../../parts/Header';
 Registry.register(
 	item =>
 		Models.calendar.CalendarEventRef.MimeType === item.MimeType &&
-		item.CalendarEvent?.hasLink('list-attendance') &&
+		// item.CalendarEvent?.hasLink('list-attendance') &&
 		isFlag('event-check-ins'),
 	Header
 );
