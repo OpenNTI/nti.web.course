@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { Models } from '@nti/lib-interfaces';
 import { Event } from '@nti/web-calendar';
-import { isFlag } from '@nti/web-client';
 
 import { Registry } from '../../../parts/Header';
 
@@ -11,9 +10,8 @@ import { Registry } from '../../../parts/Header';
 
 Registry.register(
 	item =>
-		Models.calendar.CalendarEventRef.MimeType === item.MimeType &&
-		// item.CalendarEvent?.hasLink('list-attendance') &&
-		isFlag('event-check-ins'),
+		Models.calendar.CalendarEventRef.MimeType ===
+		item.MimeType /*&& item.CalendarEvent?.hasLink('list-attendance')*/,
 	Header
 );
 
