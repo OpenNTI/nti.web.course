@@ -63,6 +63,7 @@ export default class CalendarEventSidebar extends React.Component {
 					<Event.View
 						event={viewEvent}
 						onDismiss={this.dismissViewer}
+						controls={false}
 					/>
 				)}
 			</Router.RouteForProvider>
