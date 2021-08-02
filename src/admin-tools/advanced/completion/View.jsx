@@ -213,8 +213,8 @@ class CourseAdminCompletion extends React.Component {
 		});
 
 		return (
-			<>
-				<div className={className} key={label}>
+			<React.Fragment key={label}>
+				<div className={className}>
 					<div className="label">{text}</div>
 					<div className="control">
 						<Input.Toggle
@@ -229,7 +229,7 @@ class CourseAdminCompletion extends React.Component {
 				{description && (
 					<Paragraph className="description">{description}</Paragraph>
 				)}
-			</>
+			</React.Fragment>
 		);
 	};
 
