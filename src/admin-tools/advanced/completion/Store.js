@@ -191,16 +191,12 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 					)
 				);
 
-				let defaultRequirables = [];
-
-				for (let k of Object.keys(MIME_TYPES_MAP)) {
-					defaultRequirables.push({
-						label: k,
-						isDefault: this.isTypeDefault(policy, k),
-					});
-				}
-
-				state.defaultRequirables = defaultRequirables;
+				state.defaultRequirables = Object.keys(MIME_TYPES_MAP).map(
+					label => ({
+						label,
+						isDefault: this.isTypeDefault(policy, label),
+					})
+				);
 			}
 
 			if (
