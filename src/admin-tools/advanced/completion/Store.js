@@ -139,17 +139,12 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 	}
 
 	isTypeDefault(obj, type) {
-		let isDefault = true;
-
 		const mimeTypes = obj.mimeTypes || obj['mime_types'];
 
-		for (let t of MIME_TYPES_MAP[type]) {
-			if (type) {
-				isDefault = isDefault && mimeTypes.includes(t);
-			}
-		}
-
-		return isDefault;
+		return (
+			!type ||
+			(MIME_TYPES_MAP[type] || []).some(t => mimeTypes.includes(t))
+		);
 	}
 
 	async load(course, skipLoad) {
