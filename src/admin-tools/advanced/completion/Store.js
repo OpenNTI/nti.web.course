@@ -163,6 +163,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		let state = {
 			completable: false,
 			certificationPolicy: false,
+			certificateTemplates: [...course.CertificateTemplates],
 			percentage: 0.0,
 			disabled: !CatalogEntry || !CatalogEntry.hasLink('edit'),
 			defaultRequiredDisabled: false,
