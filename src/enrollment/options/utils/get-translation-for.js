@@ -3,8 +3,8 @@ import isArchived from './is-archived';
 import hasStarted from './has-started';
 
 const ATTRIBUTES = [
-	c => (isArchived(c) ? 'archived' : 'notArchived'),
 	(c, o, a, anonymous) => (anonymous ? 'anonymous' : 'notAnonymous'),
+	c => (isArchived(c) ? 'archived' : 'notArchived'),
 	(c, o, a, anon, seatAvailable) =>
 		seatAvailable ? 'seatAvailable' : 'noSeatAvailable',
 	c => (c.getEndDate() ? 'endDate' : 'noEndDate'),
