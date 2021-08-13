@@ -25,8 +25,7 @@ const Container = styled.div`
 	display: grid;
 	grid-template-columns: 100px 1fr;
 	grid-template-rows: auto auto;
-	column-gap: 0.5rem;
-	row-gap: 1.75rem;
+	gap: 0.5rem;
 	padding: 3.5rem 2rem;
 
 	&.small {
@@ -57,17 +56,7 @@ const Container = styled.div`
 		width: 100px;
 		height: 125px;
 		grid-column: 1 / 1;
-		grid-row: 1 / 1;
-	}
-
-	& ${Title} {
-		grid-column: 2 / 2;
-		grid-row: 1 / 1;
-	}
-
-	& ${Description} {
-		grid-column: 1 / 2;
-		grid-row: 2 / 2;
+		grid-row: 1 / span 2;
 	}
 `;
 
