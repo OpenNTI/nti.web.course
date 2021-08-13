@@ -31,18 +31,26 @@ CourseContentViewerRendererScorm.propTypes = {
 		item: PropTypes.object,
 	}),
 	course: PropTypes.object,
+	activeHash: PropTypes.string,
 };
-export default function CourseContentViewerRendererScorm({ course, location }) {
+export default function CourseContentViewerRendererScorm({
+	course,
+	location,
+	activeHash,
+}) {
 	const { item } = location || {};
+	const autoLaunch = activeHash === 'launch';
 
-	const [expanded, setExpanded] = React.useState();
+	const inlineContent = isFlag('inline-scorm-content');
+	const [expanded, setExpanded] = React.useState(inlineContent && autoLaunch);
+	const showInfo = !inlineContent || !expanded;
 
 	return (
 		<div>
 			<CompletionHeader item={item} />
 			<section>
-				<Info item={item} small={expanded} />
-				{isFlag('inline-scorm-content') && (
+				{showInfo && <Info item={item} small={expanded} />}
+				{inlineContent && (
 					<Content
 						item={item}
 						expanded={expanded}
