@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { scoped } from '@nti/lib-locale';
 import { Button } from '@nti/web-commons';
@@ -56,11 +56,30 @@ function getEmbedLink(item) {
  * @param {{item: {}, expanded: boolean, onExpand: () => {}}} props
  * @returns {JSX.Element}
  */
-export default function ScormContent({ item, expanded, onExpand }) {
+export default function ScormContent({ item, expanded, onExpand, onError }) {
+	const iframe = useRef();
+	useEffect(() => {
+		const onMessage = m => {
+			const { source, origin, data: d, data: { data = d } = {} } = m;
+			if (
+				origin === global.origin &&
+				source === iframe.current?.contentWindow
+			) {
+				if (data.params?.error) {
+					onError?.(data.params.error);
+				}
+			}
+		};
+		if (expanded) {
+			window?.addEventListener?.('message', onMessage);
+			return () => window?.removeEventListener?.('message', onMessage);
+		}
+	});
+
 	return (
 		<Container>
 			{!expanded && <Launch onClick={onExpand}>{t('launch')}</Launch>}
-			{expanded && <Iframe src={getEmbedLink(item)} />}
+			{expanded && <Iframe src={getEmbedLink(item)} ref={iframe} />}
 		</Container>
 	);
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { isFlag } from '@nti/web-client';
-import { Layouts } from '@nti/web-commons';
+import { Layouts, useReducerState } from '@nti/web-commons';
 
 import TypeRegistry from '../Registry';
 
@@ -42,7 +42,16 @@ export default function CourseContentViewerRendererScorm({
 	const autoLaunch = activeHash === 'launch';
 
 	const inlineContent = isFlag('inline-scorm-content');
-	const [expanded, setExpanded] = React.useState(inlineContent && autoLaunch);
+	const [{ expanded, error }, dispatch] = useReducerState({
+		expanded: inlineContent && autoLaunch,
+	});
+
+	const onError = e => {
+		dispatch({
+			expanded: false,
+			error: e,
+		});
+	};
 	const showInfo = !inlineContent || !expanded;
 
 	return (
@@ -54,9 +63,11 @@ export default function CourseContentViewerRendererScorm({
 					<Content
 						item={item}
 						expanded={expanded}
-						onExpand={() => setExpanded(true)}
+						onExpand={() => dispatch({ expanded: true })}
+						onError={onError}
 					/>
 				)}
+				{error && <div>Error: {error}</div>}
 				<Responsive.Item
 					query={Responsive.isMobileContext}
 					component={Action}
