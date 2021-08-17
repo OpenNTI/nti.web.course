@@ -63,7 +63,9 @@ export default function CourseContentViewerRendererScorm({
 					<Content
 						item={item}
 						expanded={expanded}
-						onExpand={() => dispatch({ expanded: true })}
+						onExpand={() =>
+							dispatch({ expanded: true, error: null })
+						}
 						onError={onError}
 					/>
 				)}
