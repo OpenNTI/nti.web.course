@@ -52,6 +52,14 @@ export default function CourseContentViewerRendererScorm({
 			error: e,
 		});
 	};
+
+	const onClose = () => {
+		item?.ScormContentInfo?.refresh?.();
+		dispatch({
+			expanded: false,
+		});
+	};
+
 	const showInfo = !inlineContent || !expanded;
 
 	return (
@@ -66,6 +74,7 @@ export default function CourseContentViewerRendererScorm({
 						onExpand={() =>
 							dispatch({ expanded: true, error: null })
 						}
+						onClose={onClose}
 						onError={onError}
 					/>
 				)}

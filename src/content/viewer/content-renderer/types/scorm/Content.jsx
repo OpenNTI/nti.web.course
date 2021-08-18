@@ -56,11 +56,22 @@ function getEmbedLink(item) {
  * @param {{item: {}, expanded: boolean, onExpand: () => {}}} props
  * @returns {JSX.Element}
  */
-export default function ScormContent({ item, expanded, onExpand, onError }) {
+export default function ScormContent({
+	item,
+	expanded,
+	onExpand,
+	onClose,
+	onError,
+}) {
 	const iframe = useRef();
 	useEffect(() => {
 		const onMessage = m => {
-			const { source, origin, data: d, data: { data = d } = {} } = m;
+			const {
+				source,
+				origin,
+				data: d,
+				data: { data = d, close } = {},
+			} = m;
 			if (
 				origin === global.origin &&
 				source === iframe.current?.contentWindow
@@ -68,7 +79,9 @@ export default function ScormContent({ item, expanded, onExpand, onError }) {
 				if (data.params?.error) {
 					onError?.(data.params.error);
 				}
-				item?.ScormContentInfo?.refresh?.();
+				if (close) {
+					onClose?.();
+				}
 			}
 		};
 		if (expanded) {
