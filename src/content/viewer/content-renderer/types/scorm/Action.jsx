@@ -9,7 +9,7 @@ import Styles from './Action.css';
 
 const cx = classnames.bind(Styles);
 const t = scoped('course.content.viewer.content-renderer.types.scorm.Action', {
-	message: 'To access our content, click the link below.',
+	message: 'To open this content in a new window, click the button below.',
 	open: 'Open',
 });
 
