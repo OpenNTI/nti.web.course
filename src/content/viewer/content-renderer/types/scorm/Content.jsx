@@ -65,10 +65,10 @@ export default function ScormContent({ item, expanded, onExpand, onError }) {
 				origin === global.origin &&
 				source === iframe.current?.contentWindow
 			) {
-				console.log(data);
 				if (data.params?.error) {
 					onError?.(data.params.error);
 				}
+				item?.ScormContentInfo?.refresh?.();
 			}
 		};
 		if (expanded) {
