@@ -155,9 +155,10 @@ export default class WebinarBaseItem extends React.Component {
 	};
 
 	render() {
-		const { item, isMinimal, onRequirementChange, editMode } = this.props;
+		const { className, item, isMinimal, onRequirementChange, editMode } =
+			this.props;
 
-		const cls = cx('webinar-base-item', {
+		const cls = cx('webinar-base-item', className, {
 			expired: item.webinar.isExpired(),
 			minimal: isMinimal,
 			unavailable: !item || !item.webinar,
