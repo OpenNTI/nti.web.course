@@ -47,7 +47,7 @@ const startsFrom = f =>
 	});
 
 const EventBaseItem = React.forwardRef(
-	({ item, isMinimal, editMode, ...props }, ref) => {
+	({ className, item, isMinimal, editMode, ...props }, ref) => {
 		const forceUpdate = useForceUpdate();
 		useImperativeHandle(
 			ref,
@@ -68,7 +68,7 @@ const EventBaseItem = React.forwardRef(
 			? 'div'
 			: props => <LinkTo.Object object={item} {...props} />;
 
-		const cls = cx('event-base-item', {
+		const cls = cx('event-base-item', className, {
 			minimal: isMinimal,
 			unavailable: !item || !item.event,
 		});

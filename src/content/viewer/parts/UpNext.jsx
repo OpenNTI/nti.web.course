@@ -162,6 +162,7 @@ export default class UpNext extends React.Component {
 						layout={Constants.List}
 						items={[next.item]}
 						course={course}
+						itemClassName="next-item"
 					/>
 				</div>
 			</LinkTo.Object>

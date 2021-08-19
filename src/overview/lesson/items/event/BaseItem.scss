@@ -330,4 +330,9 @@ $header-ranges: (
 			}
 		}
 	}
+
+	&.next-item {
+		background: inherit;
+		box-shadow: none;
+	}
 }
