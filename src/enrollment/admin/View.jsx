@@ -97,7 +97,7 @@ export default class CourseEnrollmentAdmin extends React.Component {
 					user={user}
 					userLocked={userLocked}
 					course={course}
-					courseLocked={courseLocked}
+					courseLocked={!!courseLocked}
 					onCourseSelected={this.onCourseSelected}
 					onUserSelected={this.onUserSelected}
 				/>
