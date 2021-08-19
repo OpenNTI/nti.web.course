@@ -1,4 +1,4 @@
-import { Text } from '@nti/web-commons';
+import { Text, useChanges } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped(
@@ -16,6 +16,7 @@ const t = scoped(
 const SeatLimitText = Text.Translator(t);
 
 export default styled(SeatLimitText.Base).attrs(({ catalogEntry, admin }) => {
+	useChanges(catalogEntry);
 	const { SeatLimit } = catalogEntry;
 	const { UsedSeats: used, MaxSeats: max } = SeatLimit ?? {};
 

@@ -91,15 +91,20 @@ export default class CourseInfo extends React.Component {
 		}
 	}
 
-	getCourseInstance(service, catalogEntry) {
-		return service
-			.getObject(catalogEntry.CourseNTIID)
-			.then(courseInstance => {
-				return courseInstance;
-			})
-			.catch(() => {
-				return null;
-			});
+	async getCourseInstance(service, catalogEntry) {
+		try {
+			const courseInstance = await service.getObject(
+				catalogEntry.CourseNTIID
+			);
+
+			if (catalogEntry !== courseInstance.CatalogEntry) {
+				await catalogEntry.refresh(courseInstance.CatalogEntry);
+			}
+
+			return courseInstance;
+		} catch {
+			return null;
+		}
 	}
 
 	async initializeCourseData(catalogEntry) {
