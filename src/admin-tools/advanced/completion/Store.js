@@ -116,7 +116,12 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 					MimeType:
 						'application/vnd.nextthought.completion.aggregatecompletionpolicy',
 					percentage: percentage ? percentage / 100.0 : 0,
-					offers_completion_certificate: Boolean(certificationPolicy),
+					offers_completion_certificate: Boolean(
+						certificationPolicy?.offersCompletionCertificate
+					),
+					certificate_renderer_name:
+						certificationPolicy?.certificateRendererName ??
+						'default',
 				});
 			} else {
 				// delete from CompletionPolicy?
@@ -159,11 +164,16 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		const service = await getService();
 
 		const { CatalogEntry } = course;
+		const certificateRenderers = (
+			await CatalogEntry.fetchLink('CertificateRenderers')
+		).terms.map(({ value }) => value);
 
 		let state = {
 			completable: false,
-			certificationPolicy: false,
-			certificateTemplates: [...course.CertificateTemplates],
+			certificationPolicy: {
+				offersCompletionPolicy: false,
+			},
+			certificateRenderers,
 			percentage: 0.0,
 			disabled: !CatalogEntry || !CatalogEntry.hasLink('edit'),
 			defaultRequiredDisabled: false,
@@ -204,9 +214,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			}
 
 			state.completable = true;
-			state.certificationPolicy = Boolean(
-				this.course.CompletionPolicy.offersCompletionCertificate
-			);
+			state.certificationPolicy = this.course.CompletionPolicy;
 			state.percentage =
 				(this.course.CompletionPolicy.percentage || 0) * 100;
 		} else {

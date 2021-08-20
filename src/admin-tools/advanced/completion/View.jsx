@@ -66,7 +66,10 @@ class CourseAdminCompletion extends React.Component {
 		store: PropTypes.object.isRequired,
 		loading: PropTypes.bool,
 		completable: PropTypes.bool,
-		certificationPolicy: PropTypes.bool,
+		certificationPolicy: PropTypes.shape({
+			offersCompletionCertificate: PropTypes.bool,
+			certificateRendererName: PropTypes.string,
+		}),
 		percentage: PropTypes.number,
 		disabled: PropTypes.bool,
 		defaultRequiredDisabled: PropTypes.bool,
@@ -144,12 +147,10 @@ class CourseAdminCompletion extends React.Component {
 		);
 	}
 
-	onCertificationChange = () => {
-		this.onSave(
-			this.props.completable,
-			this.props.percentage,
-			!this.props.certificationPolicy
-		);
+	onCertificationChange = newValues => {
+		this.onSave(this.props.completable, this.props.percentage, {
+			...newValues,
+		});
 	};
 
 	onPercentageChange = percentage => {
@@ -285,7 +286,10 @@ class CourseAdminCompletion extends React.Component {
 			course,
 			completable,
 			disabled: nonEditor,
-			certificationPolicy,
+			certificationPolicy: {
+				offersCompletionCertificate,
+				certificateRendererName,
+			} = {},
 			updateDisabled,
 		} = this.props;
 		const disabled = !completable || nonEditor || updateDisabled;
@@ -317,7 +321,12 @@ class CourseAdminCompletion extends React.Component {
 										? undefined
 										: this.onCertificationChange
 								}
-								policy={certificationPolicy}
+								offersCompletionCertificate={
+									offersCompletionCertificate
+								}
+								certificateRendererName={
+									certificateRendererName
+								}
 							/>
 							<Badges course={course} disabled={disabled} />
 						</div>

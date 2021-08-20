@@ -9,11 +9,13 @@ const t = scoped('course.admin-tools.advanced.completion.Certificates', {
 	none: 'None',
 });
 
-const Thumbnail = styled('img')`
-	width: 140px;
-	aspect-ratio: 1.29;
-	object-fit: cover;
-`;
+// const Thumbnail = styled('img')`
+// 	width: 140px;
+// 	aspect-ratio: 1.29;
+// 	object-fit: cover;
+// `;
+
+const NO_RENDERER = undefined;
 
 const Radio = styled('input').attrs({
 	type: 'radio',
@@ -29,35 +31,34 @@ const CertList = styled(List.Unadorned)`
 	grid-auto-flow: column;
 `;
 
-const TemplateItem = styled('label')`
+const CertificateRendererItem = styled('label')`
 	display: flex;
 	flex-direction: column-reverse;
 `;
 
-function Template({
-	item: { Title = t('none'), NTIID, thumbnailUrl } = {},
-	onChange,
-}) {
+function CertificateRenderer({ item, onChange, selected }) {
 	return (
-		<TemplateItem>
-			<Radio value={NTIID} onChange={onChange} />
-			<span>{Title}</span>
-			<Thumbnail src={thumbnailUrl} />
-		</TemplateItem>
+		<CertificateRendererItem>
+			<Radio
+				checked={selected}
+				value={item}
+				onChange={() => onChange(item)}
+			/>
+			<span>{item || t('none')}</span>
+		</CertificateRendererItem>
 	);
 }
 
-function Templates({ onChange }) {
-	const { certificateTemplates: items } = Store.useValue();
-
+function CertificateRenderers({ items, onChange, value }) {
 	return !items?.length ? null : (
 		<CertList>
-			<li>
-				<Template onChange={onChange} />
-			</li>
-			{items.map(item => (
-				<li key={item.NTIID}>
-					<Template item={item} onChange={onChange} />
+			{[NO_RENDERER, ...items].map(item => (
+				<li key={item || 'none'}>
+					<CertificateRenderer
+						item={item}
+						onChange={onChange}
+						selected={value === item}
+					/>
 				</li>
 			))}
 		</CertList>
@@ -75,22 +76,52 @@ const Container = styled('div').attrs(props => ({
 	}
 `;
 
-export function CompletionCertificates({ onChange, policy, label }) {
+export function CompletionCertificates({
+	onChange,
+	certificateRendererName,
+	offersCompletionCertificate,
+	label,
+}) {
 	const disabled = !onChange;
+	const { certificateRenderers } = Store.useValue();
+
+	const useRendererSelect = true; //certificateRenderers?.length > 1;
+	const onCertRendererChange = renderer => {
+		onChange({
+			offersCompletionCertificate: !!renderer,
+			certificateRendererName: renderer,
+		});
+	};
 
 	return (
 		<Container disabled={disabled}>
 			<div>
 				<div className="label">{label}</div>
 				<div className="control">
-					<Input.Toggle
-						disabled={disabled}
-						value={policy}
-						onChange={onChange}
-					/>
+					{useRendererSelect ? (
+						<CertificateRenderers
+							value={
+								offersCompletionCertificate
+									? certificateRendererName
+									: NO_RENDERER
+							}
+							items={certificateRenderers}
+							onChange={onCertRendererChange}
+						/>
+					) : (
+						<Input.Toggle
+							disabled={disabled}
+							value={offersCompletionCertificate}
+							onChange={() =>
+								onChange({
+									offersCompletionCertificate:
+										!offersCompletionCertificate,
+								})
+							}
+						/>
+					)}
 				</div>
 			</div>
-			<Templates onChange={e => console.log(e.target.value)} />
 		</Container>
 	);
 }
