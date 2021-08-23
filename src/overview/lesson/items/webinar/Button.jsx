@@ -53,24 +53,18 @@ export default class Button extends React.Component {
 	}
 
 	componentDidMount() {
-		this.unsubscribe = () => {};
 		this.stateManager.calculateState();
 
-		if (
-			typeof document !== 'undefined' &&
-			isFlag('webinar-unregister-shiftkey')
-		) {
-			document.addEventListener('keydown', this.onGlobalKeyPress);
-			document.addEventListener('keyup', this.onGlobalKeyPress);
-			this.unsubscribe = () => {
-				document.removeEventListener('keydown', this.onGlobalKeyPress);
-				document.removeEventListener('keyup', this.onGlobalKeyPress);
-			};
-		}
+		document?.addEventListener('keydown', this.onGlobalKeyPress);
+		document?.addEventListener('keyup', this.onGlobalKeyPress);
+		this.unsubscribe = () => {
+			document?.removeEventListener('keydown', this.onGlobalKeyPress);
+			document?.removeEventListener('keyup', this.onGlobalKeyPress);
+		};
 	}
 
 	componentWillUnmount() {
-		this.unsubscribe();
+		this.unsubscribe?.();
 	}
 
 	onGlobalKeyPress = ({ type, key }) => {
