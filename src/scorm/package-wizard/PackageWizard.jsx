@@ -37,6 +37,7 @@ class PackageWizard extends React.Component {
 
 	/**
 	 * Constructor
+	 *
 	 * @param {Object} props - contains bundle
 	 */
 	constructor(props) {
@@ -146,6 +147,7 @@ class PackageWizard extends React.Component {
 
 	/**
 	 * Render
+	 *
 	 * @returns {JSX} - Renders the switch chooser
 	 * @description Mode Chooser is hidden for courses with no content package. This is driven of of hasScormPackage property.
 	 */

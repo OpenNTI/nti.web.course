@@ -36,7 +36,8 @@ function isEmpty(value) {
  * to provide values to this component that are to be saved to the catalogEntry.  In order for "Delete Block"
  * to work on a section, the underlying components should have a static FIELD_NAME defined on the
  * Edit version of the component.
- * @extends React.Component
+ *
+ * @augments React.Component
  */
 
 export default class Section extends React.Component {

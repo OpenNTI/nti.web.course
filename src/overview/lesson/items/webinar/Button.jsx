@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
-import { isFlag } from '@nti/web-client';
 import { Timer, DateTime, Layouts, HOC } from '@nti/web-commons';
 import { GotoWebinar } from '@nti/web-integrations';
 import { scoped } from '@nti/lib-locale';
