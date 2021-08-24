@@ -342,7 +342,6 @@ export default decorate(CourseAdminCompletion, [
 		'loading',
 		'completable',
 		'certificationPolicy',
-		'certificateTemplates',
 		'percentage',
 		'disabled',
 		'defaultRequiredDisabled',
