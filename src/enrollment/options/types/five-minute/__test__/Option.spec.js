@@ -1,3 +1,5 @@
+import * as TestUtils from '@nti/web-client/test-utils';
+
 import Option from '../Option';
 
 const basicCatalogEntry = {
@@ -7,6 +9,12 @@ const basicCatalogEntry = {
 
 /* eslint-env jest */
 describe('Course enrollment open option test', () => {
+	beforeEach(() => {
+		TestUtils.setupTestClient();
+	});
+	afterEach(() => {
+		TestUtils.tearDownTestClient();
+	});
 	test('Test getTitle', () => {
 		let enrollment = new Option(
 			{ enrolled: false },
