@@ -537,6 +537,7 @@ exports[`Course admin advanced completion test (no requirables) renders completa
         >
           <div
             className="nti-toggle-input"
+            data-testid="certificate-policy-switch"
           >
             <div
               className="toggler-container"
@@ -977,21 +978,21 @@ exports[`Course admin advanced completion test (with requirables) renders comple
                   className="toggler-container"
                 >
                   <div
-                    className="toggle-label off"
+                    className="toggle-label on"
                   >
-                    Off
+                    On
                   </div>
                   <div
-                    className="toggler off"
+                    className="toggler on"
                   >
                     <input
-                      checked={false}
+                      checked={true}
                       disabled={false}
                       onChange={[Function]}
                       type="checkbox"
                     />
                     <div
-                      className="toggle-button off"
+                      className="toggle-button on"
                     />
                   </div>
                 </div>
@@ -1105,6 +1106,7 @@ exports[`Course admin advanced completion test (with requirables) renders comple
         >
           <div
             className="nti-toggle-input"
+            data-testid="certificate-policy-switch"
           >
             <div
               className="toggler-container"
@@ -1545,21 +1547,21 @@ exports[`Course admin advanced completion test (with requirables) renders comple
                   className="toggler-container"
                 >
                   <div
-                    className="toggle-label off"
+                    className="toggle-label on"
                   >
-                    Off
+                    On
                   </div>
                   <div
-                    className="toggler off"
+                    className="toggler on"
                   >
                     <input
-                      checked={false}
+                      checked={true}
                       disabled={false}
                       onChange={[Function]}
                       type="checkbox"
                     />
                     <div
-                      className="toggle-button off"
+                      className="toggle-button on"
                     />
                   </div>
                 </div>
@@ -1673,6 +1675,7 @@ exports[`Course admin advanced completion test (with requirables) renders comple
         >
           <div
             className="nti-toggle-input"
+            data-testid="certificate-policy-switch"
           >
             <div
               className="toggler-container"
@@ -2113,21 +2116,21 @@ exports[`Course admin advanced completion test (with requirables) renders comple
                   className="toggler-container"
                 >
                   <div
-                    className="toggle-label off"
+                    className="toggle-label on"
                   >
-                    Off
+                    On
                   </div>
                   <div
-                    className="toggler off disabled"
+                    className="toggler on disabled"
                   >
                     <input
-                      checked={false}
+                      checked={true}
                       disabled={true}
                       onChange={[Function]}
                       type="checkbox"
                     />
                     <div
-                      className="toggle-button off"
+                      className="toggle-button on"
                     />
                   </div>
                 </div>
@@ -2241,6 +2244,7 @@ exports[`Course admin advanced completion test (with requirables) renders comple
         >
           <div
             className="nti-toggle-input"
+            data-testid="certificate-policy-switch"
           >
             <div
               className="toggler-container"
@@ -2809,6 +2813,7 @@ exports[`Course admin advanced completion test (with requirables) renders not co
         >
           <div
             className="nti-toggle-input"
+            data-testid="certificate-policy-switch"
           >
             <div
               className="toggler-container"
@@ -2822,7 +2827,6 @@ exports[`Course admin advanced completion test (with requirables) renders not co
                 className="toggler off disabled"
               >
                 <input
-                  checked={false}
                   disabled={true}
                   onChange={[Function]}
                   type="checkbox"

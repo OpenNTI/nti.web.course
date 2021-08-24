@@ -48,6 +48,13 @@ describe('Course admin advanced completion test (with requirables)', () => {
 	test('renders completable, certificate, percentage, default required', async () => {
 		const course = {
 			CatalogEntry: {
+				fetchLink: rel => {
+					if (rel === 'CertificateRenderers') {
+						return {
+							terms: [{ value: 'wut' }],
+						};
+					}
+				},
 				hasLink: () => true,
 			},
 			CompletionPolicy: {
@@ -74,6 +81,13 @@ describe('Course admin advanced completion test (with requirables)', () => {
 	test('renders not completable', async () => {
 		const course = {
 			CatalogEntry: {
+				fetchLink: rel => {
+					if (rel === 'CertificateRenderers') {
+						return {
+							terms: [{ value: 'wut' }],
+						};
+					}
+				},
 				hasLink: () => false,
 			},
 			getID: () => 'testCourse',
@@ -94,6 +108,13 @@ describe('Course admin advanced completion test (with requirables)', () => {
 	test('renders completable, no certificate, no percentage', async () => {
 		const course = {
 			CatalogEntry: {
+				fetchLink: rel => {
+					if (rel === 'CertificateRenderers') {
+						return {
+							terms: [{ value: 'wut' }],
+						};
+					}
+				},
 				hasLink: () => true,
 			},
 			CompletionPolicy: {
@@ -119,6 +140,13 @@ describe('Course admin advanced completion test (with requirables)', () => {
 	test('renders completable, no certificate, no percentage, default required disabled', async () => {
 		const course = {
 			CatalogEntry: {
+				fetchLink: rel => {
+					if (rel === 'CertificateRenderers') {
+						return {
+							terms: [{ value: 'wut' }],
+						};
+					}
+				},
 				hasLink: () => true,
 			},
 			CompletionPolicy: {
@@ -149,6 +177,13 @@ describe('Course admin advanced completion test (no requirables)', () => {
 	test('renders completable, certificate, percentage, default required', async () => {
 		const course = {
 			CatalogEntry: {
+				fetchLink: rel => {
+					if (rel === 'CertificateRenderers') {
+						return {
+							terms: [{ value: 'wut' }],
+						};
+					}
+				},
 				hasLink: () => true,
 			},
 			CompletionPolicy: {
