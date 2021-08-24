@@ -1,513 +1,480 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Course admin advanced completion test (no requirables) renders completable, certificate, percentage, default required 1`] = `
-<div
-  className="course-admin-completion"
->
+<DocumentFragment>
   <div
-    className="content"
+    class="course-admin-completion"
   >
     <div
-      className="error"
-    >
-      
-    </div>
-    <div
-      className="group"
+      class="content"
     >
       <div
-        className="completion-control no-border"
+        class="error"
+      />
+      <div
+        class="group"
       >
         <div
-          className="label"
-        >
-          <h1
-            className="title ntiText"
-          >
-            Completion Requirements
-          </h1>
-        </div>
-        <div
-          className="control"
+          class="completion-control no-border"
         >
           <div
-            className="nti-toggle-input"
+            class="label"
+          >
+            <h1
+              class="title ntiText"
+            >
+              Completion Requirements
+            </h1>
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
             >
               <div
-                className="toggle-label on"
+                class="toggler-container"
               >
-                On
-              </div>
-              <div
-                className="toggler on"
-              >
-                <input
-                  checked={true}
-                  disabled={false}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button on"
-                />
+                  class="toggle-label on"
+                >
+                  On
+                </div>
+                <div
+                  class="toggler on"
+                >
+                  <input
+                    checked=""
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button on"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="completion-control no-border"
-      >
         <div
-          className="label"
+          class="completion-control no-border"
         >
-          <span
-            className="ntiText"
+          <div
+            class="label"
           >
-            Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
-          </span>
-          <div>
-            <svg
-              className="svg-icon nt-icon"
+            <span
+              class="ntiText"
             >
-              <g
-                fill="none"
-                fillRule="evenodd"
-                stroke="none"
-                strokeWidth="1"
+              Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
+            </span>
+            <div>
+              <svg
+                class="svg-icon nt-icon"
               >
                 <g
-                  transform="translate(-411.000000, -187.000000)"
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke="none"
+                  stroke-width="1"
                 >
                   <g
-                    transform="translate(411.000000, 187.000000)"
+                    transform="translate(-411.000000, -187.000000)"
                   >
-                    <circle
-                      cx="20"
-                      cy="20"
-                      r="18.5"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                    />
-                    <text
-                      fill="currentColor"
-                      fontFamily="OpenSans-Bold, Open Sans"
-                      fontSize="25"
-                      fontWeight="bold"
+                    <g
+                      transform="translate(411.000000, 187.000000)"
                     >
-                      <tspan
-                        x="16.4233398"
-                        y="29"
+                      <circle
+                        cx="20"
+                        cy="20"
+                        r="18.5"
+                        stroke="currentColor"
+                        stroke-width="3"
+                      />
+                      <text
+                        fill="currentColor"
+                        font-family="OpenSans-Bold, Open Sans"
+                        font-size="25"
+                        font-weight="bold"
                       >
-                        !
-                      </tspan>
-                    </text>
+                        <tspan
+                          x="16.4233398"
+                          y="29"
+                        >
+                          !
+                        </tspan>
+                      </text>
+                    </g>
                   </g>
                 </g>
-              </g>
-            </svg>
-            <span
-              className="ntiText"
-            >
-              Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
-            </span>
+              </svg>
+              <span
+                class="ntiText"
+              >
+                Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
+              </span>
+            </div>
           </div>
-        </div>
-        <div
-          className="control"
-        />
-      </div>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input valid"
-            disabled={false}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value="50"
+          <div
+            class="control"
           />
         </div>
-      </div>
-      <div
-        className="default-required-container"
-      >
         <div
-          className="header"
+          class="completion-control"
         >
-          Required by Default
+          <div
+            class="label"
+          >
+            Percentage (1 to 100)
+          </div>
+          <div
+            class="control"
+          >
+            <input
+              class="number-input-component nti-number-input nti-text-input valid"
+              max="100"
+              min="1"
+              pattern="[0-9]*"
+              step="1"
+              type="text"
+              value="50"
+            />
+          </div>
         </div>
         <div
-          className="items"
+          class="default-required-container"
         >
           <div
-            className="completion-control"
+            class="header"
+          >
+            Required by Default
+          </div>
+          <div
+            class="items"
           >
             <div
-              className="label"
-            >
-              Assignments
-            </div>
-            <div
-              className="control"
+              class="completion-control"
             >
               <div
-                className="nti-toggle-input"
+                class="label"
+              >
+                Assignments
+              </div>
+              <div
+                class="control"
               >
                 <div
-                  className="toggler-container"
+                  class="nti-toggle-input"
                 >
                   <div
-                    className="toggle-label off"
+                    class="toggler-container"
                   >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
                     <div
-                      className="toggle-button off"
-                    />
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="completion-control"
-          >
             <div
-              className="label"
-            >
-              Events
-            </div>
-            <div
-              className="control"
+              class="completion-control"
             >
               <div
-                className="nti-toggle-input"
+                class="label"
+              >
+                Events
+              </div>
+              <div
+                class="control"
               >
                 <div
-                  className="toggler-container"
+                  class="nti-toggle-input"
                 >
                   <div
-                    className="toggle-label off"
+                    class="toggler-container"
                   >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
                     <div
-                      className="toggle-button off"
-                    />
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="completion-control"
-          >
             <div
-              className="label"
-            >
-              External Links and Uploads
-            </div>
-            <div
-              className="control"
+              class="completion-control"
             >
               <div
-                className="nti-toggle-input"
+                class="label"
+              >
+                External Links and Uploads
+              </div>
+              <div
+                class="control"
               >
                 <div
-                  className="toggler-container"
+                  class="nti-toggle-input"
                 >
                   <div
-                    className="toggle-label off"
+                    class="toggler-container"
                   >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
                     <div
-                      className="toggle-button off"
-                    />
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="completion-control"
-          >
             <div
-              className="label"
-            >
-              LTI Tools
-            </div>
-            <div
-              className="control"
+              class="completion-control"
             >
               <div
-                className="nti-toggle-input"
+                class="label"
+              >
+                LTI Tools
+              </div>
+              <div
+                class="control"
               >
                 <div
-                  className="toggler-container"
+                  class="nti-toggle-input"
                 >
                   <div
-                    className="toggle-label off"
+                    class="toggler-container"
                   >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
                     <div
-                      className="toggle-button off"
-                    />
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="completion-control"
-          >
             <div
-              className="label"
-            >
-              Readings
-            </div>
-            <div
-              className="control"
+              class="completion-control"
             >
               <div
-                className="nti-toggle-input"
+                class="label"
+              >
+                Readings
+              </div>
+              <div
+                class="control"
               >
                 <div
-                  className="toggler-container"
+                  class="nti-toggle-input"
                 >
                   <div
-                    className="toggle-label off"
+                    class="toggler-container"
                   >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
                     <div
-                      className="toggle-button off"
-                    />
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="completion-control"
-          >
             <div
-              className="label"
-            >
-              Surveys
-            </div>
-            <div
-              className="control"
+              class="completion-control"
             >
               <div
-                className="nti-toggle-input"
+                class="label"
+              >
+                Surveys
+              </div>
+              <div
+                class="control"
               >
                 <div
-                  className="toggler-container"
+                  class="nti-toggle-input"
                 >
                   <div
-                    className="toggle-label off"
+                    class="toggler-container"
                   >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
                     <div
-                      className="toggle-button off"
-                    />
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="completion-control has-description"
-          >
             <div
-              className="label"
-            >
-              Videos
-            </div>
-            <div
-              className="control"
+              class="completion-control has-description"
             >
               <div
-                className="nti-toggle-input"
+                class="label"
+              >
+                Videos
+              </div>
+              <div
+                class="control"
               >
                 <div
-                  className="toggler-container"
+                  class="nti-toggle-input"
                 >
                   <div
-                    className="toggle-label off"
+                    class="toggler-container"
                   >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
                     <div
-                      className="toggle-button off"
-                    />
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <span
-            className="description ntiText"
-          >
-            Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
-          </span>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
+            <span
+              class="description ntiText"
             >
-              Webinars
-            </div>
+              Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
+            </span>
             <div
-              className="control"
+              class="completion-control"
             >
               <div
-                className="nti-toggle-input"
+                class="label"
+              >
+                Webinars
+              </div>
+              <div
+                class="control"
               >
                 <div
-                  className="toggler-container"
+                  class="nti-toggle-input"
                 >
                   <div
-                    className="toggle-label off"
+                    class="toggler-container"
                   >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
                     <div
-                      className="toggle-button off"
-                    />
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            className="completion-control"
-          >
             <div
-              className="label"
-            >
-              SCORM Packages
-            </div>
-            <div
-              className="control"
+              class="completion-control"
             >
               <div
-                className="nti-toggle-input"
+                class="label"
+              >
+                SCORM Packages
+              </div>
+              <div
+                class="control"
               >
                 <div
-                  className="toggler-container"
+                  class="nti-toggle-input"
                 >
                   <div
-                    className="toggle-label off"
+                    class="toggler-container"
                   >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
                     <div
-                      className="toggle-button off"
-                    />
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -515,50 +482,48 @@ exports[`Course admin advanced completion test (no requirables) renders completa
           </div>
         </div>
       </div>
-    </div>
-    <div
-      className="group"
-    >
-      <span
-        className="title ntiText"
-      >
-        Awards Upon Completion
-      </span>
       <div
-        className="completion-control"
+        class="group"
       >
-        <div
-          className="label"
+        <span
+          class="title ntiText"
         >
-          Award Certificate on Completion
-        </div>
+          Awards Upon Completion
+        </span>
         <div
-          className="control"
+          class="completion-control"
         >
           <div
-            className="nti-toggle-input"
-            data-testid="certificate-policy-switch"
+            class="label"
+          >
+            Award Certificate on Completion
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
+              data-testid="certificate-policy-switch"
             >
               <div
-                className="toggle-label on"
+                class="toggler-container"
               >
-                On
-              </div>
-              <div
-                className="toggler on"
-              >
-                <input
-                  checked={true}
-                  disabled={false}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button on"
-                />
+                  class="toggle-label on"
+                >
+                  On
+                </div>
+                <div
+                  class="toggler on"
+                >
+                  <input
+                    checked=""
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button on"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -566,568 +531,539 @@ exports[`Course admin advanced completion test (no requirables) renders completa
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course admin advanced completion test (with requirables) renders completable, certificate, percentage, default required 1`] = `
-<div
-  className="course-admin-completion"
->
+<DocumentFragment>
   <div
-    className="content"
+    class="course-admin-completion"
   >
     <div
-      className="error"
-    >
-      
-    </div>
-    <div
-      className="group"
+      class="content"
     >
       <div
-        className="completion-control no-border"
+        class="error"
+      />
+      <div
+        class="group"
       >
         <div
-          className="label"
-        >
-          <h1
-            className="title ntiText"
-          >
-            Completion Requirements
-          </h1>
-        </div>
-        <div
-          className="control"
+          class="completion-control no-border"
         >
           <div
-            className="nti-toggle-input"
+            class="label"
+          >
+            <h1
+              class="title ntiText"
+            >
+              Completion Requirements
+            </h1>
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
             >
               <div
-                className="toggle-label on"
+                class="toggler-container"
               >
-                On
-              </div>
-              <div
-                className="toggler on"
-              >
-                <input
-                  checked={true}
-                  disabled={false}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button on"
-                />
+                  class="toggle-label on"
+                >
+                  On
+                </div>
+                <div
+                  class="toggler on"
+                >
+                  <input
+                    checked=""
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button on"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="completion-control no-border"
-      >
         <div
-          className="label"
+          class="completion-control no-border"
         >
-          <span
-            className="ntiText"
+          <div
+            class="label"
           >
-            Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
-          </span>
-          <div>
-            <svg
-              className="svg-icon nt-icon"
+            <span
+              class="ntiText"
             >
-              <g
-                fill="none"
-                fillRule="evenodd"
-                stroke="none"
-                strokeWidth="1"
+              Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
+            </span>
+            <div>
+              <svg
+                class="svg-icon nt-icon"
               >
                 <g
-                  transform="translate(-411.000000, -187.000000)"
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke="none"
+                  stroke-width="1"
                 >
                   <g
-                    transform="translate(411.000000, 187.000000)"
+                    transform="translate(-411.000000, -187.000000)"
                   >
-                    <circle
-                      cx="20"
-                      cy="20"
-                      r="18.5"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                    />
-                    <text
-                      fill="currentColor"
-                      fontFamily="OpenSans-Bold, Open Sans"
-                      fontSize="25"
-                      fontWeight="bold"
+                    <g
+                      transform="translate(411.000000, 187.000000)"
                     >
-                      <tspan
-                        x="16.4233398"
-                        y="29"
+                      <circle
+                        cx="20"
+                        cy="20"
+                        r="18.5"
+                        stroke="currentColor"
+                        stroke-width="3"
+                      />
+                      <text
+                        fill="currentColor"
+                        font-family="OpenSans-Bold, Open Sans"
+                        font-size="25"
+                        font-weight="bold"
                       >
-                        !
-                      </tspan>
-                    </text>
+                        <tspan
+                          x="16.4233398"
+                          y="29"
+                        >
+                          !
+                        </tspan>
+                      </text>
+                    </g>
                   </g>
                 </g>
-              </g>
-            </svg>
-            <span
-              className="ntiText"
-            >
-              Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
-            </span>
+              </svg>
+              <span
+                class="ntiText"
+              >
+                Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
+              </span>
+            </div>
           </div>
-        </div>
-        <div
-          className="control"
-        />
-      </div>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input valid"
-            disabled={false}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value="50"
+          <div
+            class="control"
           />
         </div>
+        <div
+          class="completion-control"
+        >
+          <div
+            class="label"
+          >
+            Percentage (1 to 100)
+          </div>
+          <div
+            class="control"
+          >
+            <input
+              class="number-input-component nti-number-input nti-text-input valid"
+              max="100"
+              min="1"
+              pattern="[0-9]*"
+              step="1"
+              type="text"
+              value="50"
+            />
+          </div>
+        </div>
+        <div
+          class="default-required-container"
+        >
+          <div
+            class="header"
+          >
+            Required by Default
+          </div>
+          <div
+            class="items"
+          >
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Assignments
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Events
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                External Links and Uploads
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                LTI Tools
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Readings
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Surveys
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control has-description"
+            >
+              <div
+                class="label"
+              >
+                Videos
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="description ntiText"
+            >
+              Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
+            </span>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Webinars
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                SCORM Packages
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
-        className="default-required-container"
+        class="group"
       >
-        <div
-          className="header"
+        <span
+          class="title ntiText"
         >
-          Required by Default
-        </div>
+          Awards Upon Completion
+        </span>
         <div
-          className="items"
-        >
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Assignments
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Events
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              External Links and Uploads
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              LTI Tools
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Readings
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Surveys
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control has-description"
-          >
-            <div
-              className="label"
-            >
-              Videos
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <span
-            className="description ntiText"
-          >
-            Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
-          </span>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Webinars
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              SCORM Packages
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      className="group"
-    >
-      <span
-        className="title ntiText"
-      >
-        Awards Upon Completion
-      </span>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Award Certificate on Completion
-        </div>
-        <div
-          className="control"
+          class="completion-control"
         >
           <div
-            className="nti-toggle-input"
-            data-testid="certificate-policy-switch"
+            class="label"
+          >
+            Award Certificate on Completion
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
+              data-testid="certificate-policy-switch"
             >
               <div
-                className="toggle-label on"
+                class="toggler-container"
               >
-                On
-              </div>
-              <div
-                className="toggler on"
-              >
-                <input
-                  checked={true}
-                  disabled={false}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button on"
-                />
+                  class="toggle-label on"
+                >
+                  On
+                </div>
+                <div
+                  class="toggler on"
+                >
+                  <input
+                    checked=""
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button on"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -1135,568 +1071,538 @@ exports[`Course admin advanced completion test (with requirables) renders comple
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course admin advanced completion test (with requirables) renders completable, no certificate, no percentage 1`] = `
-<div
-  className="course-admin-completion"
->
+<DocumentFragment>
   <div
-    className="content"
+    class="course-admin-completion"
   >
     <div
-      className="error"
-    >
-      
-    </div>
-    <div
-      className="group"
+      class="content"
     >
       <div
-        className="completion-control no-border"
+        class="error"
+      />
+      <div
+        class="group"
       >
         <div
-          className="label"
-        >
-          <h1
-            className="title ntiText"
-          >
-            Completion Requirements
-          </h1>
-        </div>
-        <div
-          className="control"
+          class="completion-control no-border"
         >
           <div
-            className="nti-toggle-input"
+            class="label"
+          >
+            <h1
+              class="title ntiText"
+            >
+              Completion Requirements
+            </h1>
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
             >
               <div
-                className="toggle-label on"
+                class="toggler-container"
               >
-                On
-              </div>
-              <div
-                className="toggler on"
-              >
-                <input
-                  checked={true}
-                  disabled={false}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button on"
-                />
+                  class="toggle-label on"
+                >
+                  On
+                </div>
+                <div
+                  class="toggler on"
+                >
+                  <input
+                    checked=""
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button on"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="completion-control no-border"
-      >
         <div
-          className="label"
+          class="completion-control no-border"
         >
-          <span
-            className="ntiText"
+          <div
+            class="label"
           >
-            Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
-          </span>
-          <div>
-            <svg
-              className="svg-icon nt-icon"
+            <span
+              class="ntiText"
             >
-              <g
-                fill="none"
-                fillRule="evenodd"
-                stroke="none"
-                strokeWidth="1"
+              Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
+            </span>
+            <div>
+              <svg
+                class="svg-icon nt-icon"
               >
                 <g
-                  transform="translate(-411.000000, -187.000000)"
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke="none"
+                  stroke-width="1"
                 >
                   <g
-                    transform="translate(411.000000, 187.000000)"
+                    transform="translate(-411.000000, -187.000000)"
                   >
-                    <circle
-                      cx="20"
-                      cy="20"
-                      r="18.5"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                    />
-                    <text
-                      fill="currentColor"
-                      fontFamily="OpenSans-Bold, Open Sans"
-                      fontSize="25"
-                      fontWeight="bold"
+                    <g
+                      transform="translate(411.000000, 187.000000)"
                     >
-                      <tspan
-                        x="16.4233398"
-                        y="29"
+                      <circle
+                        cx="20"
+                        cy="20"
+                        r="18.5"
+                        stroke="currentColor"
+                        stroke-width="3"
+                      />
+                      <text
+                        fill="currentColor"
+                        font-family="OpenSans-Bold, Open Sans"
+                        font-size="25"
+                        font-weight="bold"
                       >
-                        !
-                      </tspan>
-                    </text>
+                        <tspan
+                          x="16.4233398"
+                          y="29"
+                        >
+                          !
+                        </tspan>
+                      </text>
+                    </g>
                   </g>
                 </g>
-              </g>
-            </svg>
-            <span
-              className="ntiText"
-            >
-              Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
-            </span>
+              </svg>
+              <span
+                class="ntiText"
+              >
+                Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
+              </span>
+            </div>
           </div>
-        </div>
-        <div
-          className="control"
-        />
-      </div>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input invalid"
-            disabled={false}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value=""
+          <div
+            class="control"
           />
         </div>
+        <div
+          class="completion-control"
+        >
+          <div
+            class="label"
+          >
+            Percentage (1 to 100)
+          </div>
+          <div
+            class="control"
+          >
+            <input
+              class="number-input-component nti-number-input nti-text-input invalid"
+              max="100"
+              min="1"
+              pattern="[0-9]*"
+              step="1"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="default-required-container"
+        >
+          <div
+            class="header"
+          >
+            Required by Default
+          </div>
+          <div
+            class="items"
+          >
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Assignments
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Events
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                External Links and Uploads
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                LTI Tools
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Readings
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Surveys
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control has-description"
+            >
+              <div
+                class="label"
+              >
+                Videos
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="description ntiText"
+            >
+              Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
+            </span>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                Webinars
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on"
+                    >
+                      <input
+                        checked=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control"
+            >
+              <div
+                class="label"
+              >
+                SCORM Packages
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off"
+                    >
+                      <input
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
-        className="default-required-container"
+        class="group"
       >
-        <div
-          className="header"
+        <span
+          class="title ntiText"
         >
-          Required by Default
-        </div>
+          Awards Upon Completion
+        </span>
         <div
-          className="items"
-        >
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Assignments
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Events
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              External Links and Uploads
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              LTI Tools
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Readings
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Surveys
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control has-description"
-          >
-            <div
-              className="label"
-            >
-              Videos
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <span
-            className="description ntiText"
-          >
-            Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
-          </span>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              Webinars
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on"
-                  >
-                    <input
-                      checked={true}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control"
-          >
-            <div
-              className="label"
-            >
-              SCORM Packages
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off"
-                  >
-                    <input
-                      checked={false}
-                      disabled={false}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      className="group"
-    >
-      <span
-        className="title ntiText"
-      >
-        Awards Upon Completion
-      </span>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Award Certificate on Completion
-        </div>
-        <div
-          className="control"
+          class="completion-control"
         >
           <div
-            className="nti-toggle-input"
-            data-testid="certificate-policy-switch"
+            class="label"
+          >
+            Award Certificate on Completion
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
+              data-testid="certificate-policy-switch"
             >
               <div
-                className="toggle-label off"
+                class="toggler-container"
               >
-                Off
-              </div>
-              <div
-                className="toggler off"
-              >
-                <input
-                  checked={false}
-                  disabled={false}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button off"
-                />
+                  class="toggle-label off"
+                >
+                  Off
+                </div>
+                <div
+                  class="toggler off"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button off"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -1704,568 +1610,547 @@ exports[`Course admin advanced completion test (with requirables) renders comple
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course admin advanced completion test (with requirables) renders completable, no certificate, no percentage, default required disabled 1`] = `
-<div
-  className="course-admin-completion"
->
+<DocumentFragment>
   <div
-    className="content"
+    class="course-admin-completion"
   >
     <div
-      className="error"
-    >
-      
-    </div>
-    <div
-      className="group"
+      class="content"
     >
       <div
-        className="completion-control no-border"
+        class="error"
+      />
+      <div
+        class="group"
       >
         <div
-          className="label"
-        >
-          <h1
-            className="title ntiText"
-          >
-            Completion Requirements
-          </h1>
-        </div>
-        <div
-          className="control"
+          class="completion-control no-border"
         >
           <div
-            className="nti-toggle-input"
+            class="label"
+          >
+            <h1
+              class="title ntiText"
+            >
+              Completion Requirements
+            </h1>
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
             >
               <div
-                className="toggle-label on"
+                class="toggler-container"
               >
-                On
-              </div>
-              <div
-                className="toggler on"
-              >
-                <input
-                  checked={true}
-                  disabled={false}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button on"
-                />
+                  class="toggle-label on"
+                >
+                  On
+                </div>
+                <div
+                  class="toggler on"
+                >
+                  <input
+                    checked=""
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button on"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="completion-control no-border"
-      >
         <div
-          className="label"
+          class="completion-control no-border"
         >
-          <span
-            className="ntiText"
+          <div
+            class="label"
           >
-            Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
-          </span>
-          <div>
-            <svg
-              className="svg-icon nt-icon"
+            <span
+              class="ntiText"
             >
-              <g
-                fill="none"
-                fillRule="evenodd"
-                stroke="none"
-                strokeWidth="1"
+              Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
+            </span>
+            <div>
+              <svg
+                class="svg-icon nt-icon"
               >
                 <g
-                  transform="translate(-411.000000, -187.000000)"
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke="none"
+                  stroke-width="1"
                 >
                   <g
-                    transform="translate(411.000000, 187.000000)"
+                    transform="translate(-411.000000, -187.000000)"
                   >
-                    <circle
-                      cx="20"
-                      cy="20"
-                      r="18.5"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                    />
-                    <text
-                      fill="currentColor"
-                      fontFamily="OpenSans-Bold, Open Sans"
-                      fontSize="25"
-                      fontWeight="bold"
+                    <g
+                      transform="translate(411.000000, 187.000000)"
                     >
-                      <tspan
-                        x="16.4233398"
-                        y="29"
+                      <circle
+                        cx="20"
+                        cy="20"
+                        r="18.5"
+                        stroke="currentColor"
+                        stroke-width="3"
+                      />
+                      <text
+                        fill="currentColor"
+                        font-family="OpenSans-Bold, Open Sans"
+                        font-size="25"
+                        font-weight="bold"
                       >
-                        !
-                      </tspan>
-                    </text>
+                        <tspan
+                          x="16.4233398"
+                          y="29"
+                        >
+                          !
+                        </tspan>
+                      </text>
+                    </g>
                   </g>
                 </g>
-              </g>
-            </svg>
-            <span
-              className="ntiText"
-            >
-              Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
-            </span>
+              </svg>
+              <span
+                class="ntiText"
+              >
+                Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
+              </span>
+            </div>
           </div>
-        </div>
-        <div
-          className="control"
-        />
-      </div>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input invalid"
-            disabled={false}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value=""
+          <div
+            class="control"
           />
         </div>
+        <div
+          class="completion-control"
+        >
+          <div
+            class="label"
+          >
+            Percentage (1 to 100)
+          </div>
+          <div
+            class="control"
+          >
+            <input
+              class="number-input-component nti-number-input nti-text-input invalid"
+              max="100"
+              min="1"
+              pattern="[0-9]*"
+              step="1"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="default-required-container disabled"
+        >
+          <div
+            class="header"
+          >
+            Required by Default
+          </div>
+          <div
+            class="items"
+          >
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Assignments
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on disabled"
+                    >
+                      <input
+                        checked=""
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Events
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                External Links and Uploads
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on disabled"
+                    >
+                      <input
+                        checked=""
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                LTI Tools
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on disabled"
+                    >
+                      <input
+                        checked=""
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Readings
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Surveys
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on disabled"
+                    >
+                      <input
+                        checked=""
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled has-description"
+            >
+              <div
+                class="label"
+              >
+                Videos
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on disabled"
+                    >
+                      <input
+                        checked=""
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="description ntiText"
+            >
+              Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
+            </span>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Webinars
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label on"
+                    >
+                      On
+                    </div>
+                    <div
+                      class="toggler on disabled"
+                    >
+                      <input
+                        checked=""
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button on"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                SCORM Packages
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
-        className="default-required-container disabled"
+        class="group"
       >
-        <div
-          className="header"
+        <span
+          class="title ntiText"
         >
-          Required by Default
-        </div>
+          Awards Upon Completion
+        </span>
         <div
-          className="items"
-        >
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Assignments
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on disabled"
-                  >
-                    <input
-                      checked={true}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Events
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              External Links and Uploads
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on disabled"
-                  >
-                    <input
-                      checked={true}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              LTI Tools
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on disabled"
-                  >
-                    <input
-                      checked={true}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Readings
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Surveys
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on disabled"
-                  >
-                    <input
-                      checked={true}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled has-description"
-          >
-            <div
-              className="label"
-            >
-              Videos
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on disabled"
-                  >
-                    <input
-                      checked={true}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <span
-            className="description ntiText"
-          >
-            Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
-          </span>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Webinars
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label on"
-                  >
-                    On
-                  </div>
-                  <div
-                    className="toggler on disabled"
-                  >
-                    <input
-                      checked={true}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button on"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              SCORM Packages
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      className="group"
-    >
-      <span
-        className="title ntiText"
-      >
-        Awards Upon Completion
-      </span>
-      <div
-        className="completion-control"
-      >
-        <div
-          className="label"
-        >
-          Award Certificate on Completion
-        </div>
-        <div
-          className="control"
+          class="completion-control"
         >
           <div
-            className="nti-toggle-input"
-            data-testid="certificate-policy-switch"
+            class="label"
+          >
+            Award Certificate on Completion
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
+              data-testid="certificate-policy-switch"
             >
               <div
-                className="toggle-label off"
+                class="toggler-container"
               >
-                Off
-              </div>
-              <div
-                className="toggler off"
-              >
-                <input
-                  checked={false}
-                  disabled={false}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button off"
-                />
+                  class="toggle-label off"
+                >
+                  Off
+                </div>
+                <div
+                  class="toggler off"
+                >
+                  <input
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button off"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -2273,567 +2158,543 @@ exports[`Course admin advanced completion test (with requirables) renders comple
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course admin advanced completion test (with requirables) renders not completable 1`] = `
-<div
-  className="course-admin-completion"
->
+<DocumentFragment>
   <div
-    className="content"
+    class="course-admin-completion"
   >
     <div
-      className="error"
-    >
-      
-    </div>
-    <div
-      className="group"
+      class="content"
     >
       <div
-        className="completion-control no-border disabled"
+        class="error"
+      />
+      <div
+        class="group"
       >
         <div
-          className="label"
-        >
-          <h1
-            className="title ntiText"
-          >
-            Completion Requirements
-          </h1>
-        </div>
-        <div
-          className="control"
+          class="completion-control no-border disabled"
         >
           <div
-            className="nti-toggle-input"
+            class="label"
+          >
+            <h1
+              class="title ntiText"
+            >
+              Completion Requirements
+            </h1>
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
             >
               <div
-                className="toggle-label off"
+                class="toggler-container"
               >
-                Off
-              </div>
-              <div
-                className="toggler off disabled"
-              >
-                <input
-                  checked={false}
-                  disabled={true}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button off"
-                />
+                  class="toggle-label off"
+                >
+                  Off
+                </div>
+                <div
+                  class="toggler off disabled"
+                >
+                  <input
+                    disabled=""
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button off"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="completion-control no-border"
-      >
         <div
-          className="label"
+          class="completion-control no-border"
         >
-          <span
-            className="ntiText"
+          <div
+            class="label"
           >
-            Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
-          </span>
-          <div>
-            <svg
-              className="svg-icon nt-icon"
+            <span
+              class="ntiText"
             >
-              <g
-                fill="none"
-                fillRule="evenodd"
-                stroke="none"
-                strokeWidth="1"
+              Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.
+            </span>
+            <div>
+              <svg
+                class="svg-icon nt-icon"
               >
                 <g
-                  transform="translate(-411.000000, -187.000000)"
+                  fill="none"
+                  fill-rule="evenodd"
+                  stroke="none"
+                  stroke-width="1"
                 >
                   <g
-                    transform="translate(411.000000, 187.000000)"
+                    transform="translate(-411.000000, -187.000000)"
                   >
-                    <circle
-                      cx="20"
-                      cy="20"
-                      r="18.5"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                    />
-                    <text
-                      fill="currentColor"
-                      fontFamily="OpenSans-Bold, Open Sans"
-                      fontSize="25"
-                      fontWeight="bold"
+                    <g
+                      transform="translate(411.000000, 187.000000)"
                     >
-                      <tspan
-                        x="16.4233398"
-                        y="29"
+                      <circle
+                        cx="20"
+                        cy="20"
+                        r="18.5"
+                        stroke="currentColor"
+                        stroke-width="3"
+                      />
+                      <text
+                        fill="currentColor"
+                        font-family="OpenSans-Bold, Open Sans"
+                        font-size="25"
+                        font-weight="bold"
                       >
-                        !
-                      </tspan>
-                    </text>
+                        <tspan
+                          x="16.4233398"
+                          y="29"
+                        >
+                          !
+                        </tspan>
+                      </text>
+                    </g>
                   </g>
                 </g>
-              </g>
-            </svg>
-            <span
-              className="ntiText"
-            >
-              Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
-            </span>
+              </svg>
+              <span
+                class="ntiText"
+              >
+                Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.
+              </span>
+            </div>
           </div>
-        </div>
-        <div
-          className="control"
-        />
-      </div>
-      <div
-        className="completion-control disabled"
-      >
-        <div
-          className="label"
-        >
-          Percentage (1 to 100)
-        </div>
-        <div
-          className="control"
-        >
-          <input
-            className="number-input-component nti-number-input nti-text-input invalid"
-            disabled={true}
-            max={100}
-            min={1}
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            onKeyPress={[Function]}
-            pattern="[0-9]*"
-            step={1}
-            type="text"
-            value=""
+          <div
+            class="control"
           />
         </div>
+        <div
+          class="completion-control disabled"
+        >
+          <div
+            class="label"
+          >
+            Percentage (1 to 100)
+          </div>
+          <div
+            class="control"
+          >
+            <input
+              class="number-input-component nti-number-input nti-text-input invalid"
+              disabled=""
+              max="100"
+              min="1"
+              pattern="[0-9]*"
+              step="1"
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="default-required-container disabled"
+        >
+          <div
+            class="header"
+          >
+            Required by Default
+          </div>
+          <div
+            class="items"
+          >
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Assignments
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Events
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                External Links and Uploads
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                LTI Tools
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Readings
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Surveys
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled has-description"
+            >
+              <div
+                class="label"
+              >
+                Videos
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span
+              class="description ntiText"
+            >
+              Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
+            </span>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                Webinars
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="completion-control disabled"
+            >
+              <div
+                class="label"
+              >
+                SCORM Packages
+              </div>
+              <div
+                class="control"
+              >
+                <div
+                  class="nti-toggle-input"
+                >
+                  <div
+                    class="toggler-container"
+                  >
+                    <div
+                      class="toggle-label off"
+                    >
+                      Off
+                    </div>
+                    <div
+                      class="toggler off disabled"
+                    >
+                      <input
+                        disabled=""
+                        type="checkbox"
+                      />
+                      <div
+                        class="toggle-button off"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div
-        className="default-required-container disabled"
+        class="group"
       >
-        <div
-          className="header"
+        <span
+          class="title ntiText"
         >
-          Required by Default
-        </div>
+          Awards Upon Completion
+        </span>
         <div
-          className="items"
-        >
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Assignments
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Events
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              External Links and Uploads
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              LTI Tools
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Readings
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Surveys
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled has-description"
-          >
-            <div
-              className="label"
-            >
-              Videos
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <span
-            className="description ntiText"
-          >
-            Learners must view 95% of the total runtime to complete a required video. A watch history timeline becomes available to learners once they have started a video.
-          </span>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              Webinars
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="completion-control disabled"
-          >
-            <div
-              className="label"
-            >
-              SCORM Packages
-            </div>
-            <div
-              className="control"
-            >
-              <div
-                className="nti-toggle-input"
-              >
-                <div
-                  className="toggler-container"
-                >
-                  <div
-                    className="toggle-label off"
-                  >
-                    Off
-                  </div>
-                  <div
-                    className="toggler off disabled"
-                  >
-                    <input
-                      checked={false}
-                      disabled={true}
-                      onChange={[Function]}
-                      type="checkbox"
-                    />
-                    <div
-                      className="toggle-button off"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      className="group"
-    >
-      <span
-        className="title ntiText"
-      >
-        Awards Upon Completion
-      </span>
-      <div
-        className="completion-control disabled"
-      >
-        <div
-          className="label"
-        >
-          Award Certificate on Completion
-        </div>
-        <div
-          className="control"
+          class="completion-control disabled"
         >
           <div
-            className="nti-toggle-input"
-            data-testid="certificate-policy-switch"
+            class="label"
+          >
+            Award Certificate on Completion
+          </div>
+          <div
+            class="control"
           >
             <div
-              className="toggler-container"
+              class="nti-toggle-input"
+              data-testid="certificate-policy-switch"
             >
               <div
-                className="toggle-label off"
+                class="toggler-container"
               >
-                Off
-              </div>
-              <div
-                className="toggler off disabled"
-              >
-                <input
-                  disabled={true}
-                  onChange={[Function]}
-                  type="checkbox"
-                />
                 <div
-                  className="toggle-button off"
-                />
+                  class="toggle-label off"
+                >
+                  Off
+                </div>
+                <div
+                  class="toggler off disabled"
+                >
+                  <input
+                    disabled=""
+                    type="checkbox"
+                  />
+                  <div
+                    class="toggle-button off"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -2841,5 +2702,5 @@ exports[`Course admin advanced completion test (with requirables) renders not co
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;

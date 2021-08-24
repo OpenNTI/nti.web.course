@@ -1,75 +1,85 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Progress widgets user grade card test With grade 1`] = `
-<div
-  className="user-grade-card"
->
+<DocumentFragment>
   <div
-    className="avatar-container"
+    class="user-grade-card"
   >
-    <img
-      className="avatar avatar avatar-color-6 avatar"
-      src="unresolved-user-avatar.png"
-    />
     <div
-      className="grade-container"
+      class="avatar-container"
     >
+      <img
+        alt="Avatar for Anonymous User"
+        class="avatar avatar avatar-color-6 avatar"
+        src="unresolved-user-avatar.png"
+      />
       <div
-        className="grade"
+        class="grade-container"
       >
-        76
+        <div
+          class="grade"
+        >
+          76
+        </div>
       </div>
     </div>
+    <div
+      class="user-name"
+    >
+      <span
+        class="username"
+        rel="author"
+      >
+        Anonymous User
+      </span>
+    </div>
+    <div
+      class="sub-info"
+    >
+      testuser
+    </div>
   </div>
-  <div
-    className="user-name"
-  >
-    <span
-      className="username"
-      rel="author"
-    />
-  </div>
-  <div
-    className="sub-info"
-  >
-    testuser
-  </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Progress widgets user grade card test Without grade 1`] = `
-<div
-  className="user-grade-card"
->
+<DocumentFragment>
   <div
-    className="avatar-container"
+    class="user-grade-card"
   >
-    <img
-      className="avatar avatar avatar-color-6 avatar"
-      src="unresolved-user-avatar.png"
-    />
     <div
-      className="grade-container"
+      class="avatar-container"
     >
+      <img
+        alt="Avatar for Anonymous User"
+        class="avatar avatar avatar-color-6 avatar"
+        src="unresolved-user-avatar.png"
+      />
       <div
-        className="grade"
+        class="grade-container"
       >
-        -
+        <div
+          class="grade"
+        >
+          -
+        </div>
       </div>
     </div>
+    <div
+      class="user-name"
+    >
+      <span
+        class="username"
+        rel="author"
+      >
+        Anonymous User
+      </span>
+    </div>
+    <div
+      class="sub-info"
+    >
+      testuser
+    </div>
   </div>
-  <div
-    className="user-name"
-  >
-    <span
-      className="username"
-      rel="author"
-    />
-  </div>
-  <div
-    className="sub-info"
-  >
-    testuser
-  </div>
-</div>
+</DocumentFragment>
 `;

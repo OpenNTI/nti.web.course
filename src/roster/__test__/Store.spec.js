@@ -1,7 +1,18 @@
+import {
+	setupTestClient,
+	tearDownTestClient,
+} from '@nti/web-client/test-utils';
+
 import { default as Store, KEYS } from '../Store';
 
 /* eslint-env jest */
 describe('Test roster store', () => {
+	beforeEach(() => {
+		setupTestClient();
+	});
+	afterEach(() => {
+		tearDownTestClient();
+	});
 	test('Test hasCourse/loadCourse', () => {
 		const store = new Store();
 

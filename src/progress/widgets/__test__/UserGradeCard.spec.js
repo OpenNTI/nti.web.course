@@ -1,7 +1,8 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render, act } from '@testing-library/react';
 
 import * as TestUtils from '@nti/web-client/test-utils';
+import { flushPromises } from '@nti/lib-commons/test-utils';
 
 import UserGradeCard from '../UserGradeCard';
 
@@ -26,20 +27,26 @@ describe('Progress widgets user grade card test', () => {
 	afterEach(onAfter);
 
 	test('With grade', async () => {
-		const cmp = renderer.create(
-			<UserGradeCard user="testuser" grade={76} />
-		);
+		const cmp = render(<UserGradeCard user="testuser" grade={76} />);
 
-		const tree = cmp.toJSON();
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
 
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Without grade', async () => {
-		const cmp = renderer.create(<UserGradeCard user="testuser" />);
+		const cmp = render(<UserGradeCard user="testuser" />);
 
-		const tree = cmp.toJSON();
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
 
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import { render, act } from '@testing-library/react';
 
 import * as TestUtils from '@nti/web-client/test-utils';
 import { flushPromises } from '@nti/lib-commons/test-utils';
@@ -67,15 +67,15 @@ describe('Course admin advanced completion test (with requirables)', () => {
 			hasLink: () => true,
 		};
 
-		const cmp = renderer.create(<View course={course} />);
+		const cmp = render(<View course={course} />);
 
-		jest.runAllTimers();
-		await flushPromises();
-		jest.runAllTimers();
-
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
+		// FIXME: assert things about the dom, instead of just matching a snapshot
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('renders not completable', async () => {
@@ -94,15 +94,15 @@ describe('Course admin advanced completion test (with requirables)', () => {
 			hasLink: () => false,
 		};
 
-		const cmp = renderer.create(<View course={course} />);
+		const cmp = render(<View course={course} />);
 
-		jest.runAllTimers();
-		await flushPromises();
-		jest.runAllTimers();
-
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
+		// FIXME: assert things about the dom, instead of just matching a snapshot
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('renders completable, no certificate, no percentage', async () => {
@@ -126,15 +126,15 @@ describe('Course admin advanced completion test (with requirables)', () => {
 			hasLink: () => true,
 		};
 
-		const cmp = renderer.create(<View course={course} />);
+		const cmp = render(<View course={course} />);
 
-		jest.runAllTimers();
-		await flushPromises();
-		jest.runAllTimers();
-
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
+		// FIXME: assert things about the dom, instead of just matching a snapshot
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('renders completable, no certificate, no percentage, default required disabled', async () => {
@@ -158,15 +158,16 @@ describe('Course admin advanced completion test (with requirables)', () => {
 			hasLink: () => true,
 		};
 
-		const cmp = renderer.create(<View course={course} />);
+		const cmp = render(<View course={course} />);
 
-		jest.runAllTimers();
-		await flushPromises();
-		jest.runAllTimers();
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		// FIXME: assert things about the dom, instead of just matching a snapshot
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 });
 
@@ -196,14 +197,15 @@ describe('Course admin advanced completion test (no requirables)', () => {
 			hasLink: () => true,
 		};
 
-		const cmp = renderer.create(<View course={course} />);
+		const cmp = render(<View course={course} />);
 
-		jest.runAllTimers();
-		await flushPromises();
-		jest.runAllTimers();
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		// FIXME: assert things about the dom, instead of just matching a snapshot
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 });

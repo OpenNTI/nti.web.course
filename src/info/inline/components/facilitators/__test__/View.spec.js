@@ -1,10 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 
 import {
 	setupTestClient,
 	tearDownTestClient,
 } from '@nti/web-client/test-utils';
+import { flushPromises } from '@nti/lib-commons/test-utils';
 
 import View from '../View';
 
@@ -13,10 +14,12 @@ const mockService = () => ({
 });
 
 const onBefore = () => {
+	jest.useFakeTimers();
 	setupTestClient(mockService());
 };
 
 const onAfter = () => {
+	jest.useRealTimers();
 	tearDownTestClient();
 };
 
@@ -52,11 +55,15 @@ describe('Facilitators view test', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
-	test('Test non-editor view', () => {
+	test('Test non-editor view', async () => {
 		const x = render(
 			<View facilitators={facilitators} courseInstance={courseInstance} />
 		);
-
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
 		const find = _ => x.container.querySelector(`.facilitator ${_}`);
 
 		expect(find('.name').textContent).toEqual('Visible Assistant');
@@ -64,7 +71,7 @@ describe('Facilitators view test', () => {
 		expect(find('.title').textContent).toEqual('visible');
 	});
 
-	test('Test editor view', () => {
+	test('Test editor view', async () => {
 		const x = render(
 			<View
 				facilitators={facilitators}
@@ -72,7 +79,11 @@ describe('Facilitators view test', () => {
 				editable
 			/>
 		);
-
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
 		const find = _ => x.container.querySelector(`.facilitator ${_}`);
 
 		expect(find('.name').textContent).toEqual('Visible Assistant');

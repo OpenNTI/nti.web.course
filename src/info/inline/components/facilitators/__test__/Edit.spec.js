@@ -1,10 +1,11 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, act } from '@testing-library/react';
 
 import {
 	setupTestClient,
 	tearDownTestClient,
 } from '@nti/web-client/test-utils';
+import { flushPromises } from '@nti/lib-commons/test-utils';
 
 import Edit from '../Edit';
 
@@ -14,10 +15,12 @@ const mockService = () => ({
 
 const onBefore = () => {
 	setupTestClient(mockService());
+	jest.useFakeTimers();
 };
 
 const onAfter = () => {
 	tearDownTestClient();
+	jest.useRealTimers();
 };
 
 const facilitators = [
@@ -48,7 +51,7 @@ describe('Facilitators edit test', () => {
 	beforeEach(onBefore);
 	afterEach(onAfter);
 
-	test('Test editable', () => {
+	test('Test editable', async () => {
 		const courseInstance = {
 			hasLink: l => l === 'Instructors' || l === 'Editors',
 		};
@@ -67,9 +70,14 @@ describe('Facilitators edit test', () => {
 			/>
 		);
 
-		const facilitatorItems = x.container.querySelectorAll(
-			'.facilitator.edit'
-		);
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
+
+		const facilitatorItems =
+			x.container.querySelectorAll('.facilitator.edit');
 
 		expect(facilitatorItems.length).toBe(2);
 
@@ -83,7 +91,7 @@ describe('Facilitators edit test', () => {
 		expect(visibleAssistant.role).toEqual(''); // empty role flags for removal
 	});
 
-	test('Test non-editable (assistant role)', () => {
+	test('Test non-editable (assistant role)', async () => {
 		const courseInstance = {
 			hasLink: l => l === 'Instructors',
 		};
@@ -91,6 +99,12 @@ describe('Facilitators edit test', () => {
 		const x = render(
 			<Edit facilitators={facilitators} courseInstance={courseInstance} />
 		);
+
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
 
 		const editableItems = x.container.querySelectorAll('.facilitator.edit');
 
@@ -102,7 +116,7 @@ describe('Facilitators edit test', () => {
 		expect(facilitatorItems.length).toBe(2);
 	});
 
-	test('Test non-editable (editor role)', () => {
+	test('Test non-editable (editor role)', async () => {
 		const courseInstance = {
 			hasLink: l => l === 'Editors',
 		};
@@ -110,6 +124,12 @@ describe('Facilitators edit test', () => {
 		const x = render(
 			<Edit facilitators={facilitators} courseInstance={courseInstance} />
 		);
+
+		await act(async () => {
+			jest.runAllTimers();
+			await flushPromises();
+			jest.runAllTimers();
+		});
 
 		const editableItems = x.container.querySelectorAll('.facilitator.edit');
 
