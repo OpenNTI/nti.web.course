@@ -10,6 +10,7 @@ import { scoped } from '@nti/lib-locale';
 import Store from './Store';
 // import Credit from './Credit';
 import Badges from './Badges';
+import { CompletionCertificates } from './Certificates';
 
 const t = scoped('course.admin-tools.advanced.completion.View', {
 	title: 'Completion Requirements',
@@ -65,7 +66,10 @@ class CourseAdminCompletion extends React.Component {
 		store: PropTypes.object.isRequired,
 		loading: PropTypes.bool,
 		completable: PropTypes.bool,
-		certificationPolicy: PropTypes.bool,
+		certificationPolicy: PropTypes.shape({
+			offersCompletionCertificate: PropTypes.bool,
+			certificateRendererName: PropTypes.string,
+		}),
 		percentage: PropTypes.number,
 		disabled: PropTypes.bool,
 		defaultRequiredDisabled: PropTypes.bool,
@@ -143,32 +147,11 @@ class CourseAdminCompletion extends React.Component {
 		);
 	}
 
-	onCertificationChange = () => {
-		this.onSave(
-			this.props.completable,
-			this.props.percentage,
-			!this.props.certificationPolicy
-		);
+	onCertificationChange = newValues => {
+		this.onSave(this.props.completable, this.props.percentage, {
+			...newValues,
+		});
 	};
-
-	renderCertificateToggle() {
-		const { completable, disabled: nonEditor, updateDisabled } = this.props;
-		const disabled = !completable || nonEditor || updateDisabled;
-		const className = cx('completion-control', { disabled });
-
-		return (
-			<div className={className}>
-				<div className="label">{t('certificates')}</div>
-				<div className="control">
-					<Input.Toggle
-						disabled={disabled}
-						value={this.props.certificationPolicy}
-						onChange={this.onCertificationChange}
-					/>
-				</div>
-			</div>
-		);
-	}
 
 	onPercentageChange = percentage => {
 		if (this.percentageTimeout) {
@@ -303,6 +286,10 @@ class CourseAdminCompletion extends React.Component {
 			course,
 			completable,
 			disabled: nonEditor,
+			certificationPolicy: {
+				offersCompletionCertificate,
+				certificateRendererName,
+			} = {},
 			updateDisabled,
 		} = this.props;
 		const disabled = !completable || nonEditor || updateDisabled;
@@ -327,7 +314,20 @@ class CourseAdminCompletion extends React.Component {
 								{t('awardTitle')}
 							</Text.Base>
 							{/* <Credit course={course} disabled={disabled} /> */}
-							{this.renderCertificateToggle()}
+							<CompletionCertificates
+								label={t('certificates')}
+								onChange={
+									disabled
+										? undefined
+										: this.onCertificationChange
+								}
+								offersCompletionCertificate={
+									offersCompletionCertificate
+								}
+								certificateRendererName={
+									certificateRendererName
+								}
+							/>
 							<Badges course={course} disabled={disabled} />
 						</div>
 					</div>

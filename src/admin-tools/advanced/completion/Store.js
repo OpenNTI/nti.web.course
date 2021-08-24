@@ -116,7 +116,12 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 					MimeType:
 						'application/vnd.nextthought.completion.aggregatecompletionpolicy',
 					percentage: percentage ? percentage / 100.0 : 0,
-					offers_completion_certificate: Boolean(certificationPolicy),
+					offers_completion_certificate: Boolean(
+						certificationPolicy?.offersCompletionCertificate
+					),
+					certificate_renderer_name:
+						certificationPolicy?.certificateRendererName ??
+						'default',
 				});
 			} else {
 				// delete from CompletionPolicy?
@@ -139,17 +144,12 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 	}
 
 	isTypeDefault(obj, type) {
-		let isDefault = true;
-
 		const mimeTypes = obj.mimeTypes || obj['mime_types'];
 
-		for (let t of MIME_TYPES_MAP[type]) {
-			if (type) {
-				isDefault = isDefault && mimeTypes.includes(t);
-			}
-		}
-
-		return isDefault;
+		return (
+			!type ||
+			(MIME_TYPES_MAP[type] || []).some(t => mimeTypes.includes(t))
+		);
 	}
 
 	async load(course, skipLoad) {
@@ -164,10 +164,16 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 		const service = await getService();
 
 		const { CatalogEntry } = course;
+		const certificateRenderers = (
+			await CatalogEntry.fetchLink('CertificateRenderers')
+		).terms.map(({ value }) => value);
 
 		let state = {
 			completable: false,
-			certificationPolicy: false,
+			certificationPolicy: {
+				offersCompletionPolicy: false,
+			},
+			certificateRenderers,
 			percentage: 0.0,
 			disabled: !CatalogEntry || !CatalogEntry.hasLink('edit'),
 			defaultRequiredDisabled: false,
@@ -191,16 +197,12 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 					)
 				);
 
-				let defaultRequirables = [];
-
-				for (let k of Object.keys(MIME_TYPES_MAP)) {
-					defaultRequirables.push({
-						label: k,
-						isDefault: this.isTypeDefault(policy, k),
-					});
-				}
-
-				state.defaultRequirables = defaultRequirables;
+				state.defaultRequirables = Object.keys(MIME_TYPES_MAP).map(
+					label => ({
+						label,
+						isDefault: this.isTypeDefault(policy, label),
+					})
+				);
 			}
 
 			if (
@@ -212,9 +214,7 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 			}
 
 			state.completable = true;
-			state.certificationPolicy = Boolean(
-				this.course.CompletionPolicy.offersCompletionCertificate
-			);
+			state.certificationPolicy = this.course.CompletionPolicy;
 			state.percentage =
 				(this.course.CompletionPolicy.percentage || 0) * 100;
 		} else {
