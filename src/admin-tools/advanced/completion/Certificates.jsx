@@ -8,6 +8,7 @@ import Store from './Store';
 
 const t = scoped('course.admin-tools.advanced.completion.Certificates', {
 	none: 'None',
+	default: 'Default',
 });
 
 const getText = key => (t.isMissing(key) ? key : t(key));
