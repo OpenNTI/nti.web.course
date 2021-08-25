@@ -44,6 +44,7 @@
     "@nti/web-charts": "NextThought/nti.web.charts",
     "@nti/web-client": "NextThought/nti.web.client",
     "@nti/web-commons": "NextThought/nti.web.commons",
+    "@nti/web-core": "NextThought/nti.web.core",
     "@nti/web-content": "NextThought/nti.web.content",
     "@nti/web-discussions": "NextThought/nti.web.discussions",
     "@nti/web-editor": "NextThought/nti.web.editor",
