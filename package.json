@@ -10,7 +10,6 @@
     "check": "cmp-scripts check",
     "clean": "cmp-scripts clean",
     "fix": "cmp-scripts fix",
-    "legacy-test-app": "cmp-scripts start",
     "release": "cmp-scripts release",
     "start": "start-storybook -p 6006",
     "test": "cmp-scripts test"
@@ -18,9 +17,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/NextThought/nti.web.course.git"
-  ],
-  "publishConfig": {
-    "registry": "https://npm.nextthought.com"
   },
   "dependencies": {
     "@nti/lib-commons": "NextThought/nti.lib.commons",
