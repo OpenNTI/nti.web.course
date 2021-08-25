@@ -2,7 +2,7 @@ import './Grid.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 import { scoped } from '@nti/lib-locale';
 import { CircularProgress } from '@nti/web-charts';
 

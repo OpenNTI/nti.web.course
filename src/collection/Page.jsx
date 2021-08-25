@@ -7,9 +7,9 @@ import {
 	Scroll,
 	Page as CommonsPage,
 	Hooks,
-	Button,
 	Layouts,
 } from '@nti/web-commons';
+import { Button } from '@nti/web-core';
 import { WithSearch } from '@nti/web-search';
 
 import { Store } from './Store';

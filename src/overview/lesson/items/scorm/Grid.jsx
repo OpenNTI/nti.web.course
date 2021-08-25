@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import { scoped } from '@nti/lib-locale';
-import { AssetIcon, Button, List, Text } from '@nti/web-commons';
+import { AssetIcon, List, Text } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 import { LinkTo, Router } from '@nti/web-routing';
 import { isFlag } from '@nti/web-client';
 

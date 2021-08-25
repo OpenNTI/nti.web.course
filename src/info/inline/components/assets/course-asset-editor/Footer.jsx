@@ -2,7 +2,7 @@ import './Footer.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 
 export default class CourseAssetEditorFooter extends React.Component {
 	static propTypes = {

@@ -3,7 +3,8 @@ import './View.scss';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Layouts } from '@nti/web-commons';
+import { Layouts } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 import { scoped } from '@nti/lib-locale';
 
 import Editor from './Editor';

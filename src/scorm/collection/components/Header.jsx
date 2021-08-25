@@ -4,7 +4,8 @@ import classnames from 'classnames/bind';
 
 import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
-import { Input, Button, Search } from '@nti/web-commons';
+import { Input, Search } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 
 import Store from '../Store';
 

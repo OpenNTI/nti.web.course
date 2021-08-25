@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import { scoped } from '@nti/lib-locale';
-import { Button } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 
 const t = scoped('web-course.content.viewer.content-renderer.types.scorm', {
 	launch: 'Launch',

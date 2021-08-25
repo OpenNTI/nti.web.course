@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Input, Button } from '@nti/web-commons';
+import { Input } from '@nti/web-commons';
+import { Button } from "@nti/web-core";
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.enrollment.admin.manage-enrollment.advanced', {
