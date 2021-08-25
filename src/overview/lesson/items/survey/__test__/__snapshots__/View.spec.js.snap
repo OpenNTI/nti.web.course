@@ -75,11 +75,10 @@ exports[`Course overview survey item test Grid item closed 1`] = `
           className="button-container"
         >
           <span
-            className="nti-button button primary rounded"
+            className="roundedSmall button primary medium pv-md ph-lg"
             onClick={[Function]}
             onKeyDown={[Function]}
-            role="button"
-            tabIndex="0"
+            tabIndex={0}
           >
             Closed
           </span>
@@ -168,11 +167,10 @@ exports[`Course overview survey item test Grid item submitted 1`] = `
           className="button-container"
         >
           <span
-            className="nti-button button primary rounded"
+            className="roundedSmall button primary medium pv-md ph-lg"
             onClick={[Function]}
             onKeyDown={[Function]}
-            role="button"
-            tabIndex="0"
+            tabIndex={0}
           >
             Review
           </span>
@@ -261,11 +259,10 @@ exports[`Course overview survey item test Grid item with 3 questions, 4 submissi
           className="button-container"
         >
           <span
-            className="nti-button button primary rounded"
+            className="roundedSmall button primary medium pv-md ph-lg"
             onClick={[Function]}
             onKeyDown={[Function]}
-            role="button"
-            tabIndex="0"
+            tabIndex={0}
           >
             Take
           </span>
@@ -361,11 +358,10 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
           className="button-container"
         >
           <span
-            className="nti-button button primary rounded"
+            className="roundedSmall button primary medium pv-md ph-lg"
             onClick={[Function]}
             onKeyDown={[Function]}
-            role="button"
-            tabIndex="0"
+            tabIndex={0}
           >
             Take
           </span>
@@ -472,11 +468,10 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
           className="button-container"
         >
           <span
-            className="nti-button button primary rounded"
+            className="roundedSmall button primary medium pv-md ph-lg"
             onClick={[Function]}
             onKeyDown={[Function]}
-            role="button"
-            tabIndex="0"
+            tabIndex={0}
           >
             Take
           </span>
