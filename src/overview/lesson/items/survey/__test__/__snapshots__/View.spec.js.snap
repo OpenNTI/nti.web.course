@@ -75,7 +75,7 @@ exports[`Course overview survey item test Grid item closed 1`] = `
           className="button-container"
         >
           <span
-            className="roundedSmall button primary medium pv-md ph-lg"
+            className="roundedSmall nti-button button constructive medium pv-md ph-xl"
             onClick={[Function]}
             onKeyDown={[Function]}
             tabIndex={0}
@@ -167,7 +167,7 @@ exports[`Course overview survey item test Grid item submitted 1`] = `
           className="button-container"
         >
           <span
-            className="roundedSmall button primary medium pv-md ph-lg"
+            className="roundedSmall nti-button button constructive medium pv-md ph-xl"
             onClick={[Function]}
             onKeyDown={[Function]}
             tabIndex={0}
@@ -259,7 +259,7 @@ exports[`Course overview survey item test Grid item with 3 questions, 4 submissi
           className="button-container"
         >
           <span
-            className="roundedSmall button primary medium pv-md ph-lg"
+            className="roundedSmall nti-button button constructive medium pv-md ph-xl"
             onClick={[Function]}
             onKeyDown={[Function]}
             tabIndex={0}
@@ -358,7 +358,7 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
           className="button-container"
         >
           <span
-            className="roundedSmall button primary medium pv-md ph-lg"
+            className="roundedSmall nti-button button constructive medium pv-md ph-xl"
             onClick={[Function]}
             onKeyDown={[Function]}
             tabIndex={0}
@@ -468,7 +468,7 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
           className="button-container"
         >
           <span
-            className="roundedSmall button primary medium pv-md ph-lg"
+            className="roundedSmall nti-button button constructive medium pv-md ph-xl"
             onClick={[Function]}
             onKeyDown={[Function]}
             tabIndex={0}
