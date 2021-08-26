@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import { Timer, DateTime, Layouts, HOC } from '@nti/web-commons';
+import { Button } from '@nti/web-core';
 import { GotoWebinar } from '@nti/web-integrations';
 import { scoped } from '@nti/lib-locale';
 
@@ -33,7 +34,7 @@ const TimedStates = new Set([
 
 const BUTTON_TRANSITION_TIME = 3000;
 
-export default class Button extends React.Component {
+export default class WebinarButton extends React.Component {
 	static propTypes = {
 		webinar: PropTypes.object.isRequired,
 		onStatusChange: PropTypes.func,
@@ -136,14 +137,16 @@ export default class Button extends React.Component {
 		}
 
 		return (
-			<button
+			<Button
+				rounded
+				constructive
 				className={cx('join', additionalCls, {
 					clickable: disabledButNotReally,
 					disabled: !enabled,
 				})}
 			>
 				{buttonContents}
-			</button>
+			</Button>
 		);
 	}
 
@@ -221,9 +224,9 @@ export default class Button extends React.Component {
 		return (
 			<React.Fragment>
 				{this.renderTimerIfNecessary()}
-				<button onClick={open} disabled={register}>
+				<Button onClick={open} disabled={register}>
 					{buttonLabel}
-				</button>
+				</Button>
 				{register && (
 					<GotoWebinar.Registration
 						item={{ webinar }}
