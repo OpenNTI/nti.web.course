@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 import Base from '../../common/BaseAssessmentGridItem';
@@ -223,6 +223,7 @@ export default class LessonOverviewQuestionSetGridItem extends React.Component {
 				as="span"
 				disabled={this.state.inlineEditorExpanded || blockNavigation}
 				rounded
+				constructive
 			>
 				{text}
 			</Button>

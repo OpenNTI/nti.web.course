@@ -2,7 +2,7 @@ import './Grid.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 import { CircularProgress } from '@nti/web-charts';
 
@@ -88,7 +88,7 @@ export default class LessonOverviewSurveyGridItem extends React.Component {
 		}
 
 		return (
-			<Button as="span" rounded>
+			<Button as="span" rounded constructive>
 				{text}
 			</Button>
 		);

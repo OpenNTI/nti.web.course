@@ -4,7 +4,7 @@ import classnames from 'classnames/bind';
 
 import { scoped } from '@nti/lib-locale';
 import { AssetIcon, List, Text } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 import { LinkTo, Router } from '@nti/web-routing';
 import { isFlag } from '@nti/web-client';
 
@@ -101,6 +101,7 @@ export default function LessonOverviewScormGridItem({
 							</List.SeparatedInline>
 							<Button
 								rounded
+								constructive
 								className={cx('open-button')}
 								{...launchButtonProps}
 							>
