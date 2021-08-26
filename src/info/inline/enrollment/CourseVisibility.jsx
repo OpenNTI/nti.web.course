@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { DateTime } from '@nti/web-commons';
+import { Button } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 import PublishCourse from './PublishCourse';
@@ -118,12 +119,14 @@ export default class CourseVisibility extends React.Component {
 				{this.renderPreviewIndicator()}
 				{/*{this.renderAllowingEnrollment()}*/}
 				{this.renderVisibleInCatalog()}
-				<div
+				<Button
 					className="launch-button"
 					onClick={this.launchVisibilityDialog}
+					ph="xxl"
+					rounded
 				>
 					{t('makeChanges')}
-				</div>
+				</Button>
 			</div>
 		);
 	}
