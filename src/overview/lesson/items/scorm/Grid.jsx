@@ -74,7 +74,7 @@ export default function LessonOverviewScormGridItem({
 	return (
 		<Router.RouteForProvider getRouteFor={getRouteFor}>
 			<PaddedContainer>
-				<LinkTo.Object object={item}>
+				<LinkTo.Object object={item} context={inlineContent ? LAUNCH : undefined}>
 					<div
 						className={cx('scorm-grid-card', {
 							completed,
