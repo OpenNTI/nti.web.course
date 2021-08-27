@@ -1,60 +1,80 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames/bind';
+import React, { useCallback } from 'react';
+import cx from 'classnames';
 
-import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 import { Input, Search } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 
 import Store from '../Store';
 
-import Styles from './Header.css';
-
-const cx = classnames.bind(Styles);
 const t = scoped('course.scorm.collection.components.Header', {
 	upload: 'Upload a SCORM Package',
 });
 
-class ScormCollectionHeader extends React.Component {
-	static propTypes = {
-		uploadPackage: PropTypes.func,
-		filter: PropTypes.string,
-		setFilter: PropTypes.func,
-	};
+//#region 🎨
 
-	onFileChanged = files => {
-		const { uploadPackage } = this.props;
+const HeaderContainer = styled('div').attrs({
+	className: 'scorm-collection-header',
+})`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+`;
 
-		if (uploadPackage) {
-			uploadPackage(files[0]);
-		}
-	};
+const FileInputWrapper = styled(Input.FileInputWrapper)`
+	flex: 0 0 auto;
+	cursor: pointer;
+`;
 
-	render() {
-		const { filter, setFilter } = this.props;
+const UploadIcon = styled('i').attrs({ className: 'icon-upload' })`
+	margin-right: 0.3rem;
+`;
 
-		return (
-			<div className={cx('scorm-collection-header')}>
-				<Input.FileInputWrapper
-					className={cx('upload')}
-					onChange={this.onFileChanged}
-				>
-					<Button className={cx('scorm-upload-button')} rounded>
-						<i className="icon-upload" />
-						<span>{t('upload')}</span>
-					</Button>
-				</Input.FileInputWrapper>
-				<Search
-					className={cx('search')}
-					value={filter}
-					onChange={setFilter}
-				/>
-			</div>
-		);
-	}
+const UploadButton = styled(Button).attrs({
+	className: 'scorm-upload-button',
+	rounded: true,
+})`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	cursor: pointer;
+`;
+
+const SearchField = styled(Search)`
+	flex: 0 0 auto;
+	box-shadow: none;
+	background: white;
+	border-bottom: 1px solid var(--border-grey-light);
+	border-radius: 0;
+	width: 350px;
+`;
+
+//#endregion
+
+export default function ScormCollectionHeader() {
+	const { uploadPackage, filter, setFilter } = Store.useValue();
+
+	const onFileChanged = useCallback(
+		files => {
+			uploadPackage?.(files?.[0]);
+		},
+		[uploadPackage]
+	);
+
+	return (
+		<HeaderContainer>
+			<FileInputWrapper className="upload" onChange={onFileChanged}>
+				<UploadButton>
+					<UploadIcon />
+					<span>{t('upload')}</span>
+				</UploadButton>
+			</FileInputWrapper>
+			<SearchField
+				className={cx('search')}
+				value={filter}
+				onChange={setFilter}
+			/>
+		</HeaderContainer>
+	);
 }
-
-export default decorate(ScormCollectionHeader, [
-	Store.monitor(['uploadPackage', 'filter', 'setFilter']),
-]);
