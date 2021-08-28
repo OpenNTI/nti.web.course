@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
 import { Input, Search } from '@nti/web-commons';
@@ -71,7 +70,7 @@ export default function ScormCollectionHeader() {
 				</UploadButton>
 			</FileInputWrapper>
 			<SearchField
-				className={cx('search')}
+				className="search"
 				value={filter}
 				onChange={setFilter}
 			/>
