@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { isFlag } from '@nti/web-client';
-import { Layouts, useReducerState } from '@nti/web-commons';
+import { Layouts } from '@nti/web-commons';
+import { useReducerState } from '@nti/web-core';
 
 import TypeRegistry from '../Registry';
 

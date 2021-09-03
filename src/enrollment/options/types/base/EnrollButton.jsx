@@ -2,7 +2,8 @@ import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 
 import { rawContent } from '@nti/lib-commons';
-import { Prompt, useService } from '@nti/web-commons';
+import { Prompt } from '@nti/web-commons';
+import { useService } from '@nti/web-core';
 
 import Button from '../../common/Button';
 import EnrollLink from '../../common/EnrollmentLink';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
-import { useService } from '@nti/web-commons';
+import { useService } from '@nti/web-core';
 
 import Title from '../../common/Title';
 import Description from '../../common/Description';

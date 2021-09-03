@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { Loading, useService } from '@nti/web-commons';
+import { Loading } from '@nti/web-commons';
+import { useService } from '@nti/web-core';
 
 const Relative = styled('div')`
 	position: relative;

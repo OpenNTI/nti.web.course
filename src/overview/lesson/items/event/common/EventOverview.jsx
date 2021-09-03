@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-	DialogButtons,
-	Prompt,
-	Loading,
-	useReducerState,
-} from '@nti/web-commons';
+import { DialogButtons, Prompt, Loading } from '@nti/web-commons';
+import { useReducerState } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 import { Event } from '@nti/web-calendar';
 import { Connectors } from '@nti/lib-store';
