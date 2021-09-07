@@ -488,15 +488,15 @@ exports[`Course admin advanced completion test (no requirables) renders completa
         <span
           class="title ntiText"
         >
-          Awards Upon Completion
+          Completion Awards
         </span>
         <div
-          class="completion-control"
+          class="completion-control no-border"
         >
           <div
             class="label"
           >
-            Award Certificate on Completion
+            Certificate of Completion
           </div>
           <div
             class="control"
@@ -528,6 +528,9 @@ exports[`Course admin advanced completion test (no requirables) renders completa
             </div>
           </div>
         </div>
+        <div
+          class="certificate-selection"
+        />
       </div>
     </div>
   </div>
@@ -1028,15 +1031,15 @@ exports[`Course admin advanced completion test (with requirables) renders comple
         <span
           class="title ntiText"
         >
-          Awards Upon Completion
+          Completion Awards
         </span>
         <div
-          class="completion-control"
+          class="completion-control no-border"
         >
           <div
             class="label"
           >
-            Award Certificate on Completion
+            Certificate of Completion
           </div>
           <div
             class="control"
@@ -1068,6 +1071,9 @@ exports[`Course admin advanced completion test (with requirables) renders comple
             </div>
           </div>
         </div>
+        <div
+          class="certificate-selection"
+        />
       </div>
     </div>
   </div>
@@ -1568,15 +1574,15 @@ exports[`Course admin advanced completion test (with requirables) renders comple
         <span
           class="title ntiText"
         >
-          Awards Upon Completion
+          Completion Awards
         </span>
         <div
-          class="completion-control"
+          class="completion-control no-border"
         >
           <div
             class="label"
           >
-            Award Certificate on Completion
+            Certificate of Completion
           </div>
           <div
             class="control"
@@ -1607,6 +1613,9 @@ exports[`Course admin advanced completion test (with requirables) renders comple
             </div>
           </div>
         </div>
+        <div
+          class="certificate-selection"
+        />
       </div>
     </div>
   </div>
@@ -2116,15 +2125,15 @@ exports[`Course admin advanced completion test (with requirables) renders comple
         <span
           class="title ntiText"
         >
-          Awards Upon Completion
+          Completion Awards
         </span>
         <div
-          class="completion-control"
+          class="completion-control no-border"
         >
           <div
             class="label"
           >
-            Award Certificate on Completion
+            Certificate of Completion
           </div>
           <div
             class="control"
@@ -2155,6 +2164,9 @@ exports[`Course admin advanced completion test (with requirables) renders comple
             </div>
           </div>
         </div>
+        <div
+          class="certificate-selection"
+        />
       </div>
     </div>
   </div>
@@ -2659,15 +2671,15 @@ exports[`Course admin advanced completion test (with requirables) renders not co
         <span
           class="title ntiText"
         >
-          Awards Upon Completion
+          Completion Awards
         </span>
         <div
-          class="completion-control disabled"
+          class="completion-control no-border disabled"
         >
           <div
             class="label"
           >
-            Award Certificate on Completion
+            Certificate of Completion
           </div>
           <div
             class="control"
@@ -2699,6 +2711,9 @@ exports[`Course admin advanced completion test (with requirables) renders not co
             </div>
           </div>
         </div>
+        <div
+          class="certificate-selection"
+        />
       </div>
     </div>
   </div>
