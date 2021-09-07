@@ -7,7 +7,7 @@ import { Text } from '@nti/web-commons';
 import { Credly } from '@nti/web-integrations';
 
 const t = scoped('nti-course.admin-tools.advanced.completion.Badges', {
-	label: 'Award a Completion Badge',
+	label: 'Completion Badges',
 });
 
 Badges.propTypes = {

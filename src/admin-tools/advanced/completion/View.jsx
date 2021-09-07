@@ -18,11 +18,11 @@ const t = scoped('course.admin-tools.advanced.completion.View', {
 		'Configure the completion criteria your learners need to meet to earn Credit, Certificates, and Badges.',
 	disclaimer:
 		'Be sure to confirm all course content is final before allowing completion tracking, as further edits will impact learner reports.',
-	awardTitle: 'Awards Upon Completion',
+	awardTitle: 'Completion Awards',
 	cancel: 'Cancel',
 	save: 'Save',
 	completable: 'Completable',
-	certificates: 'Award Certificate on Completion',
+	certificates: 'Certificate of Completion',
 	percentage: 'Percentage (1 to 100)',
 	defaultRequired: 'Required by Default',
 	assignments: 'Assignments',
