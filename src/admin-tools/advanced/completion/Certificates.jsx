@@ -1,19 +1,28 @@
+import React, { useCallback } from 'react';
 import cx from 'classnames';
 
 import { Input } from '@nti/web-commons';
-import { scoped } from '@nti/lib-locale';
 import { SelectMenu } from '@nti/web-core';
+import { scoped } from '@nti/lib-locale';
 
 import Store from './Store';
 
 const t = scoped('course.admin-tools.advanced.completion.Certificates', {
 	none: 'None',
-	default: 'Default',
+	default: 'Default Certificate',
 });
 
 const getText = key => (t.isMissing(key) ? key : t(key));
 
-const NO_RENDERER = 'none';
+const CertSelectionContainer = styled.div`
+	box-shadow: inset 0 -1px 0 0 rgba(226, 226, 226, 0.5);
+	padding-bottom: 20px;
+`;
+
+const CertSelect = styled(SelectMenu)`
+	position: relative;
+	right: var(--padding-md);
+`;
 
 export function CompletionCertificates({
 	onChange,
@@ -22,50 +31,58 @@ export function CompletionCertificates({
 	offersCompletionCertificate,
 	label,
 }) {
+	const awards = Boolean(offersCompletionCertificate);
 	const disabled = disabledProp || !onChange;
-	const { certificateRenderers } = Store.useValue();
 
-	const useRendererSelect = certificateRenderers?.length > 1;
-	const onCertRendererChange = renderer => {
-		const value = renderer === NO_RENDERER ? undefined : renderer;
+	const toggle = useCallback(() => {
 		onChange({
-			offersCompletionCertificate: !!value,
-			certificateRendererName: value,
+			offersCompletionCertificate: !awards,
 		});
-	};
+	}, [onChange, offersCompletionCertificate]);
+
+	const { certificateRenderers } = Store.useValue();
+	const multiple = certificateRenderers?.length > 1;
+	const selectedRenderer = certificateRendererName ?? 'default';
+
+	const changeRenderer = useCallback(
+		renderer => {
+			onChange({
+				offersCompletionCertificate: true,
+				certificateRendererName: renderer,
+			});
+		},
+		[onChange]
+	);
 
 	return (
-		<div className={cx('completion-control', { disabled })}>
-			<div className="label">{label}</div>
-			<div className="control">
-				{useRendererSelect ? (
-					<SelectMenu
-						data-testid="certificate-select-menu"
-						variant="medium"
-						value={
-							offersCompletionCertificate
-								? certificateRendererName
-								: NO_RENDERER
-						}
-						disabled={disabled}
-						options={[NO_RENDERER, ...certificateRenderers]}
-						onChange={onCertRendererChange}
-						getText={getText}
-					/>
-				) : (
+		<>
+			<div
+				className={cx('completion-control', 'no-border', { disabled })}
+			>
+				<div className="label">{label}</div>
+				<div className="control">
 					<Input.Toggle
 						disabled={disabled}
-						value={offersCompletionCertificate}
+						value={awards}
 						data-testid="certificate-policy-switch"
-						onChange={() =>
-							onChange({
-								offersCompletionCertificate:
-									!offersCompletionCertificate,
-							})
-						}
+						onChange={toggle}
+					/>
+				</div>
+			</div>
+			<CertSelectionContainer className={cx('certificate-selection')}>
+				{awards && multiple && (
+					<CertSelect
+						data-testid="certificate-select-menu"
+						variant="link"
+						ph="md"
+						disabled={disabled}
+						value={selectedRenderer}
+						options={certificateRenderers}
+						onChange={changeRenderer}
+						getText={getText}
 					/>
 				)}
-			</div>
-		</div>
+			</CertSelectionContainer>
+		</>
 	);
 }
