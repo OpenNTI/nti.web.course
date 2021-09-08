@@ -1,4 +1,5 @@
-/** @typedef { @import("@nti/lib-interfaces").Models.courses.Instance} Instance */
+/** @typedef {import('@nti/lib-interfaces').Models.courses.Instance} Instance */
+
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped('course.utils.Semester.months', {

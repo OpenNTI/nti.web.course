@@ -11,6 +11,8 @@ import Registry from '../Registry';
 import ListCmp from './List';
 import GridCmp from './Grid';
 
+/** @typedef {import('@nti/lib-interfaces').Models.assessment.assignment.Assignment} Assignment */
+
 function isNetworkError(e) {
 	return e && (e.statusCode === 0 || e.statusCode >= 500);
 }

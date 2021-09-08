@@ -16,9 +16,7 @@ const t = scoped('course.roster.EnrollmentCount', {
 });
 
 export default function EnrollmentCount() {
-	const { summary } = Store.useMonitor({
-		[Store.Keys.ROSTER_SUMMARY]: 'summary',
-	});
+	const { [Store.Keys.ROSTER_SUMMARY]: summary } = Store.useValue();
 
 	if (!summary) {
 		return null;

@@ -4,6 +4,8 @@ import { mixin } from '@nti/lib-decorators';
 
 import { stripEmptyProperties } from './util';
 
+/** @typedef {import('@nti/lib-interfaces').Batch} Batch */
+
 const Load = Symbol('load');
 
 const OPTIONS = 'options';
@@ -70,16 +72,19 @@ class StreamedBatchStore extends Stores.BoundStore {
 	}
 
 	batchLinkFor = item => {
-		const batch = (
-			this.get('batches') || []
-		).find(({ Items: items = [] }) => items.includes(item));
+		const batch = (this.get('batches') || []).find(
+			({ Items: items = [] }) => items.includes(item)
+		);
 
 		if (batch) {
 			const { href, Items: items } = batch;
 			const index = items.indexOf(item);
 			const url = URL.parse(href);
 
-			const batchStart = parseInt(url.searchParams.get('batchStart') || 0, 10);
+			const batchStart = parseInt(
+				url.searchParams.get('batchStart') || 0,
+				10
+			);
 
 			url.searchParams.set('batchStart', batchStart + index);
 			url.searchParams.set('batchSize', 1);
@@ -244,10 +249,10 @@ class StreamedBatchStore extends Stores.BoundStore {
 	/**
 	 * Provide a method to load a batch given a href and options
 	 *
-	 * @override
+	 * @abstract
 	 * @param  {string} href    the href of the batch to load
 	 * @param  {Object} options the options to load the batch with
-	 * @returns {Promise}         fulfills with a batch model
+	 * @returns {Promise<Batch>}         fulfills with a batch model
 	 */
 	loadBatch(href, options) {}
 }
