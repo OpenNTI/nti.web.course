@@ -80,7 +80,11 @@ exports[`Course overview survey item test Grid item closed 1`] = `
             onKeyDown={[Function]}
             tabIndex={0}
           >
-            Closed
+            <div
+              data-button-label={true}
+            >
+              Closed
+            </div>
           </span>
         </div>
       </div>
@@ -172,7 +176,11 @@ exports[`Course overview survey item test Grid item submitted 1`] = `
             onKeyDown={[Function]}
             tabIndex={0}
           >
-            Review
+            <div
+              data-button-label={true}
+            >
+              Review
+            </div>
           </span>
         </div>
       </div>
@@ -264,7 +272,11 @@ exports[`Course overview survey item test Grid item with 3 questions, 4 submissi
             onKeyDown={[Function]}
             tabIndex={0}
           >
-            Take
+            <div
+              data-button-label={true}
+            >
+              Take
+            </div>
           </span>
         </div>
       </div>
@@ -363,7 +375,11 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
             onKeyDown={[Function]}
             tabIndex={0}
           >
-            Take
+            <div
+              data-button-label={true}
+            >
+              Take
+            </div>
           </span>
         </div>
       </div>
@@ -473,7 +489,11 @@ exports[`Course overview survey item test Grid item with 5 comments, completable
             onKeyDown={[Function]}
             tabIndex={0}
           >
-            Take
+            <div
+              data-button-label={true}
+            >
+              Take
+            </div>
           </span>
         </div>
       </div>
