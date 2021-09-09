@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { isFlag } from '@nti/web-client';
@@ -11,6 +11,7 @@ import Action from './Action';
 import CompletionHeader from './CompletionHeader';
 import Content from './Content';
 import Info from './Info';
+import { LaunchInfo } from './LaunchInfo';
 
 const { Aside, Responsive } = Layouts;
 
@@ -19,6 +20,7 @@ const MIME_TYPES = {
 };
 
 const ActionAside = styled(Aside).attrs({ component: Action })``;
+const LaunchInfoAside = styled(Aside).attrs({ component: LaunchInfo })``;
 
 const handles = obj => {
 	const { location } = obj || {};
@@ -47,6 +49,12 @@ export default function CourseContentViewerRendererScorm({
 		expanded: inlineContent && autoLaunch,
 	});
 
+	const expand = useCallback(() => {
+		if (!expanded) {
+			dispatch({ expanded: true, error: null });
+		}
+	}, [dispatch]);
+
 	const onError = e => {
 		dispatch({
 			expanded: false,
@@ -72,9 +80,7 @@ export default function CourseContentViewerRendererScorm({
 					<Content
 						item={item}
 						expanded={expanded}
-						onExpand={() =>
-							dispatch({ expanded: true, error: null })
-						}
+						onExpand={expand}
 						onClose={onClose}
 						onError={onError}
 					/>
@@ -82,15 +88,20 @@ export default function CourseContentViewerRendererScorm({
 				{error && <div>Error: {error}</div>}
 				<Responsive.Item
 					query={Responsive.isMobileContext}
-					component={Action}
+					component={inlineContent ? LaunchInfo : Action}
 					course={course}
 					item={item}
+					expanded={expanded}
+					expand={expand}
+					inline
 				/>
 				<Responsive.Item
 					query={Responsive.isWebappContext}
-					component={ActionAside}
+					component={inlineContent ? LaunchInfoAside : ActionAside}
 					course={course}
 					item={item}
+					expanded={expanded}
+					expand={expand}
 				/>
 			</section>
 		</div>
