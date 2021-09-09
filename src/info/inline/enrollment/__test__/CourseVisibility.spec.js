@@ -44,13 +44,12 @@ describe('CourseVisibility test', () => {
 				/>
 			);
 
-			const labeledContentItems = x.container.querySelector(
-				'.labeled-content'
-			);
+			const labeledContentItems =
+				x.container.querySelector('.labeled-content');
 			const previewLabel = labeledContentItems.querySelector('.label');
 			const dateValue = labeledContentItems.querySelector('.content');
 
-			expect(previewLabel.getAttribute('class')).toMatch(/preview/);
+			expect(previewLabel.getAttribute('class')).toMatch(/alt/);
 			expect(dateValue.textContent).toEqual('Starts Oct 31, 2015');
 
 			const launchButton = x.container.querySelector('.launch-button');
@@ -63,13 +62,12 @@ describe('CourseVisibility test', () => {
 				<CourseVisibility catalogEntry={makeCatalogEntry(true, true)} />
 			);
 
-			const labeledContentItems = x.container.querySelector(
-				'.labeled-content'
-			);
+			const labeledContentItems =
+				x.container.querySelector('.labeled-content');
 			const previewLabel = labeledContentItems.querySelector('.label');
 			const dateValue = labeledContentItems.querySelector('.content');
 
-			expect(previewLabel.getAttribute('class')).toMatch(/preview/);
+			expect(previewLabel.getAttribute('class')).toMatch(/alt/);
 			expect(dateValue.textContent).toEqual('No Start Date');
 		});
 
@@ -80,95 +78,15 @@ describe('CourseVisibility test', () => {
 				/>
 			);
 
-			const labeledContentItems = x.container.querySelector(
-				'.labeled-content'
-			);
+			const labeledContentItems =
+				x.container.querySelector('.labeled-content');
 			const firstLabel = labeledContentItems.querySelector('.label');
 
 			// there shouldn't be a preview label so the first label we find should have
 			// nothing to do with preview
-			expect(firstLabel.getAttribute('class')).not.toMatch(/preview/);
+			expect(firstLabel.getAttribute('class')).not.toMatch(/alt/);
 		});
 	});
-
-	// describe('Allowing enrollment tests', () => {
-	// 	test('Test none', () => {
-	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true)}/>);
-
-	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
-
-	// 		expect(enrollmentContent.textContent).toEqual('Invitation Only');
-	// 	});
-
-	// 	test('Test five minute enrollment', () => {
-	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['FiveminuteEnrollment'])}/>);
-
-	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
-
-	// 		expect(enrollmentContent.textContent).toEqual('For-Credit');
-	// 	});
-
-	// 	test('Test IMSEnrollment with SourcedID', () => {
-	// 		const catalogEntry = {
-	// 			getEnrollmentOptions: function () {
-	// 				return {
-	// 					Items: {
-	// 						IMSEnrollment: {
-	// 							SourcedID: '1234'
-	// 						}
-	// 					}
-	// 				};
-	// 			},
-	// 			Preview: true,
-	// 			hasLink: () => true
-	// 		};
-
-	//		const x = render(<CourseVisibility catalogEntry={catalogEntry}/>);
-
-	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
-
-	// 		expect(enrollmentContent.textContent).toEqual('For-Credit');
-	// 	});
-
-	// 	test('Test IMSEnrollment without SourcedID', () => {
-	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, true, null, ['IMSEnrollment'])}/>);
-
-	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
-
-	// 		expect(enrollmentContent.textContent).toEqual('Invitation Only');
-	// 	});
-
-	// 	test('Test StoreEnrollment', () => {
-	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['StoreEnrollment'])}/>);
-
-	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
-
-	// 		expect(enrollmentContent.textContent).toEqual('Public');
-	// 	});
-
-	// 	test('Test OpenEnrollment', () => {
-	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment'])}/>);
-
-	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
-
-	// 		expect(enrollmentContent.textContent).toEqual('Public');
-	// 	});
-
-	// 	test('Test OpenEnrollment and FiveminuteEnrollment', () => {
-	//		const x = render(<CourseVisibility catalogEntry={makeCatalogEntry(true, false, null, ['OpenEnrollment', 'FiveminuteEnrollment'])}/>);
-
-	// 		const labeledContentItems = x.container.querySelectorAll('.labeled-content');
-	// 		const enrollmentContent = labeledContentItems[1].querySelector('.content');
-
-	// 		expect(enrollmentContent.textContent).toEqual('For-Credit, Public');
-	// 	});
-	// });
 
 	describe('Visible in catalog tests', () => {
 		test('Test is visible in catalog', () => {

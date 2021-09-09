@@ -56,11 +56,11 @@ const Content = styled.div`
 `;
 
 const LabeledContent = ({ label, children, alt }) => (
-	<Labeled>
-		<Label data-testid="label" alt={alt}>
+	<Labeled className="labeled-content">
+		<Label className="label" alt={alt}>
 			{label}
 		</Label>
-		<Content data-testid="content">{children}</Content>
+		<Content className="content">{children}</Content>
 	</Labeled>
 );
 
@@ -113,7 +113,7 @@ export default function CourseVisibility({
 			<span style={{ flex: '1 1 auto' }} />
 
 			<Launch
-				data-testid="launch-button"
+				className="launch-button"
 				onClick={launchVisibilityDialog}
 				ph="xxl"
 				rounded
