@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 import { scoped } from '@nti/lib-locale';
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 
 const t = scoped('web-course.content.viewer.content-renderer.types.scorm', {
 	launch: 'Launch',
@@ -29,7 +29,6 @@ const Container = styled.div`
 const Launch = styled(Button).attrs({ rounded: true })`
 	min-width: 200px;
 	text-align: center;
-	background-color: var(--secondary-grey);
 `;
 
 const Iframe = styled('iframe').attrs({ border: 0, frame: 0 })`
