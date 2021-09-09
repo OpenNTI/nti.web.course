@@ -3,7 +3,8 @@ import React, { useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
-import { DateTime, Text, useForceUpdate } from '@nti/web-commons';
+import { DateTime, Text } from '@nti/web-commons';
+import { useForceUpdate } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 import { Hooks, Events } from '@nti/web-session';

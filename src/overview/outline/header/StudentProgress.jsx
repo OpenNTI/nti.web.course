@@ -4,9 +4,10 @@ import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
 import { Hooks as SessionHooks } from '@nti/web-session';
-import { Page, Text, Hooks, Prompt, Iframe } from '@nti/web-commons';
+import { Page, Text, Prompt, Iframe } from '@nti/web-commons';
 import { CircularProgress } from '@nti/web-charts';
 import { useLocation } from '@nti/web-routing';
+import { useForceUpdate } from '@nti/web-core';
 
 import PassFailMessage from '../../../progress/widgets/PassFailMessage';
 import {
@@ -39,7 +40,7 @@ const t = scoped('course.overview.outline.header.StudentProgress', {
 
 function useStudentProgress(course, active) {
 	const wasActive = React.useRef(true);
-	const forceUpdate = Hooks.useForceUpdate();
+	const forceUpdate = useForceUpdate();
 
 	React.useEffect(() => {
 		if (!active) {
