@@ -1,7 +1,4 @@
-import './CourseVisibility.scss';
 import React from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
 
 import { DateTime } from '@nti/web-commons';
 import { Button } from '@nti/web-core';
@@ -26,108 +23,103 @@ const t = scoped('course.info.inline.widgets.CourseVisibility', {
 
 const startsDate = f =>
 	t('startsOn', { date: f(DateTime.MONTH_ABBR_DAY_YEAR) });
-export default class CourseVisibility extends React.Component {
-	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired,
-		courseInstance: PropTypes.object,
-		onVisibilityChanged: PropTypes.func,
-	};
 
-	launchVisibilityDialog = () => {
-		const { catalogEntry, courseInstance } = this.props;
+//#region paint
+const Launch = styled(Button)`
+	background-color: var(--primary-orange);
+`;
 
+const Labeled = styled.div`
+	width: 170px;
+	text-align: left;
+`;
+
+const Label = styled.div`
+	text-transform: uppercase;
+	font-weight: 600;
+	font-size: 10px;
+	color: var(--tertiary-grey);
+
+	&.alt {
+		color: var(--secondary-orange);
+	}
+`;
+
+const Content = styled.div`
+	color: white;
+	font-size: 12px;
+	font-weight: 300;
+	padding-top: 4px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+`;
+
+const LabeledContent = ({ label, children, alt }) => (
+	<Labeled>
+		<Label data-testid="label" alt={alt}>
+			{label}
+		</Label>
+		<Content data-testid="content">{children}</Content>
+	</Labeled>
+);
+
+const Visible = ({ catalogEntry }) => (
+	<LabeledContent label={t('visibleInCatalog')}>
+		{catalogEntry.isHidden ? t('no') : t('yes')}
+	</LabeledContent>
+);
+
+const PreviewStatus = ({ catalogEntry }) =>
+	// what to show if not in preview mode?
+	!catalogEntry.Preview ? null : (
+		<LabeledContent
+			label={catalogEntry.hasLink('edit') ? t('inDraft') : t('inPreview')}
+			alt
+		>
+			{catalogEntry.getStartDate
+				? DateTime.format(catalogEntry.getStartDate(), startsDate)
+				: t('noStartDate')}
+		</LabeledContent>
+	);
+
+const Box = styled.div`
+	display: flex;
+	align-items: center;
+	padding: 12px;
+	gap: 12px;
+	background: rgba(0, 0, 0, 0.5);
+	margin-bottom: 20px;
+`;
+//#endregion
+
+export default function CourseVisibility({
+	catalogEntry,
+	courseInstance,
+	onVisibilityChanged,
+}) {
+	const launchVisibilityDialog = () => {
 		PublishCourse.show(catalogEntry, courseInstance).then(value => {
-			const { onVisibilityChanged } = this.props;
-
-			onVisibilityChanged && onVisibilityChanged(value);
+			onVisibilityChanged?.(value);
 		});
 	};
 
-	renderLabeledContent(label, labelCls, content) {
-		const labelClassName = cx('label', labelCls);
+	return (
+		<Box className="course-visibility">
+			<PreviewStatus catalogEntry={catalogEntry} />
+			<Visible catalogEntry={catalogEntry} />
 
-		return (
-			<div className="labeled-content">
-				<div className={labelClassName}>{label}</div>
-				<div className="content">{content}</div>
-			</div>
-		);
-	}
+			{/* spacer */}
+			<span style={{ flex: '1 1 auto' }} />
 
-	renderPreviewIndicator() {
-		const { catalogEntry } = this.props;
-
-		if (catalogEntry.Preview) {
-			return this.renderLabeledContent(
-				catalogEntry.hasLink('edit') ? t('inDraft') : t('inPreview'),
-				'preview',
-				catalogEntry.getStartDate
-					? DateTime.format(catalogEntry.getStartDate(), startsDate)
-					: t('noStartDate')
-			);
-		} else {
-			// what to show if not in preview mode?
-		}
-	}
-
-	renderAllowingEnrollment() {
-		const { catalogEntry } = this.props;
-		const options = catalogEntry.getEnrollmentOptions();
-
-		const items = (options && options.Items) || {};
-
-		const {
-			OpenEnrollment,
-			IMSEnrollment,
-			FiveminuteEnrollment,
-			StoreEnrollment,
-		} = items;
-
-		const isForCredit =
-			(IMSEnrollment && IMSEnrollment.SourcedID) || FiveminuteEnrollment;
-		const isPublic =
-			(StoreEnrollment || (OpenEnrollment && OpenEnrollment.enabled)) &&
-			!catalogEntry.isHidden;
-
-		let label = t('invitationOnly');
-
-		const parts = [
-			isForCredit ? t('forCredit') : null,
-			isPublic ? t('public') : null,
-		].filter(x => x);
-
-		if (parts.length > 0) {
-			label = parts.join(', ');
-		}
-
-		return this.renderLabeledContent(t('allowingEnrollment'), null, label);
-	}
-
-	renderVisibleInCatalog() {
-		const { catalogEntry } = this.props;
-
-		return this.renderLabeledContent(
-			t('visibleInCatalog'),
-			null,
-			catalogEntry.isHidden ? t('no') : t('yes')
-		);
-	}
-
-	render() {
-		return (
-			<div className="course-visibility">
-				{this.renderPreviewIndicator()}
-				{/*{this.renderAllowingEnrollment()}*/}
-				{this.renderVisibleInCatalog()}
-				<Button
-					className="launch-button"
-					onClick={this.launchVisibilityDialog}
-					ph="xxl"
-					rounded
-				>
-					{t('makeChanges')}
-				</Button>
-			</div>
-		);
-	}
+			<Launch
+				data-testid="launch-button"
+				onClick={launchVisibilityDialog}
+				ph="xxl"
+				rounded
+			>
+				{t('makeChanges')}
+			</Launch>
+		</Box>
+	);
 }
