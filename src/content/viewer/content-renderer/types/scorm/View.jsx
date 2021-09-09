@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { isFlag } from '@nti/web-client';
 import { Layouts } from '@nti/web-commons';
-import { useReducerState } from '@nti/web-core';
+import { useReducerState, useChanges } from '@nti/web-core';
 
 import TypeRegistry from '../Registry';
 
@@ -49,6 +49,8 @@ export default function CourseContentViewerRendererScorm({
 		expanded: inlineContent && autoLaunch,
 	});
 
+	useChanges(item?.ScormContentInfo);
+
 	useEffect(() => {
 		if (global.location.hash === `#${activeHash}`) {
 			global.location.hash = '';
@@ -69,7 +71,7 @@ export default function CourseContentViewerRendererScorm({
 	};
 
 	const onClose = () => {
-		item?.ScormContentInfo?.refresh?.();
+		item?.ScormContentInfo?.updateCompletedState?.();
 		dispatch({
 			expanded: false,
 		});
