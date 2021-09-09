@@ -2,7 +2,8 @@ import React, { useCallback, useReducer } from 'react';
 import PropTypes from 'prop-types';
 
 // import cx from 'classnames';
-import { Prompt, Hooks } from '@nti/web-commons';
+import { Prompt } from '@nti/web-commons';
+import { useChanges } from '@nti/web-core';
 
 import {
 	Frame,
@@ -32,7 +33,7 @@ export default function Notification({
 	viewCertificateAction: viewCertificate,
 }) {
 	const { PreferredAccess: enrollment } = course || {};
-	Hooks.useChanges(enrollment);
+	useChanges(enrollment);
 
 	const [hide, trip] = useReducer(() => true, false);
 

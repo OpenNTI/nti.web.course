@@ -1,4 +1,5 @@
-import { Text, useChanges } from '@nti/web-commons';
+import { Text } from '@nti/web-commons';
+import { useChanges } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 const t = scoped(

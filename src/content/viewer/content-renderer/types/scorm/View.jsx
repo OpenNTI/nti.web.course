@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { isFlag } from '@nti/web-client';
 import { Layouts } from '@nti/web-commons';
-import { useReducerState, useChanges } from '@nti/web-core';
+import { useChanges, useReducerState } from '@nti/web-core';
 
 import TypeRegistry from '../Registry';
 
@@ -19,8 +19,12 @@ const MIME_TYPES = {
 	'application/vnd.nextthought.scormcontentref': true,
 };
 
-const ActionAside = styled(Aside).attrs({ component: Action })``;
-const LaunchInfoAside = styled(Aside).attrs({ component: LaunchInfo })``;
+const ActionAside = styled(Aside).attrs({ component: Action })`
+	/* - */
+`;
+const LaunchInfoAside = styled(Aside).attrs({ component: LaunchInfo })`
+	/* - */
+`;
 
 const handles = obj => {
 	const { location } = obj || {};
