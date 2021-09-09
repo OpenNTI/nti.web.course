@@ -7,7 +7,7 @@ import { Hooks as SessionHooks } from '@nti/web-session';
 import { Page, Text, Prompt, Iframe } from '@nti/web-commons';
 import { CircularProgress } from '@nti/web-charts';
 import { useLocation } from '@nti/web-routing';
-import { useForceUpdate } from '@nti/web-core';
+import { useForceUpdate, useChanges } from '@nti/web-core';
 
 import PassFailMessage from '../../../progress/widgets/PassFailMessage';
 import {
@@ -42,6 +42,8 @@ function useStudentProgress(course, active) {
 	const wasActive = React.useRef(true);
 	const forceUpdate = useForceUpdate();
 
+	useChanges(course, forceUpdate);
+
 	React.useEffect(() => {
 		if (!active) {
 			wasActive.current = active;
@@ -51,7 +53,6 @@ function useStudentProgress(course, active) {
 		const updateProgress = async () => {
 			try {
 				await course.refreshPreferredAccess();
-				forceUpdate();
 			} catch (e) {
 				//swallow
 			}
@@ -62,7 +63,7 @@ function useStudentProgress(course, active) {
 		}
 
 		return SessionHooks.afterBatchEvents.subscribe(updateProgress);
-	}, [active]);
+	}, [active, course]);
 
 	return course.PreferredAccess.CourseProgress;
 }
