@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 
 import { Translate } from './strings.js';
 
@@ -17,6 +17,7 @@ const styles = stylesheet`
 		font-weight: normal;
 		text-align: center;
 		line-height: 2.2rem;
+		padding: 0;
 	}
 `;
 
