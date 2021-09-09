@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { isFlag } from '@nti/web-client';
@@ -48,6 +48,12 @@ export default function CourseContentViewerRendererScorm({
 	const [{ expanded, error }, dispatch] = useReducerState({
 		expanded: inlineContent && autoLaunch,
 	});
+
+	useEffect(() => {
+		if (global.location.hash === `#${activeHash}`) {
+			global.location.hash = '';
+		}
+	}, []);
 
 	const expand = useCallback(() => {
 		if (!expanded) {
