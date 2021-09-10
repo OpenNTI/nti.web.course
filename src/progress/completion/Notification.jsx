@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // import cx from 'classnames';
@@ -35,16 +35,24 @@ export default function Notification({
 	const { PreferredAccess: enrollment } = course || {};
 	useChanges(enrollment);
 
-	const [hide, trip] = useReducer(() => true, false);
+	const [show, setShow] = useState(false);
 
 	const acknowledge = useCallback(() => {
 		enrollment.acknowledgeCourseCompletion();
-		trip();
+		setShow(false);
 	}, [enrollment]);
 
-	const isComplete = enrollment?.hasCompletionAcknowledgmentRequest;
+	const isComplete = enrollment?.hasCompletionAcknowledgmentRequest || true;
 
-	return !isComplete || hide ? null : (
+	useEffect(() => {
+		// Set show only after a delay to let routes settle
+		const timeout = isComplete && setTimeout(() => setShow(true), 500);
+		return () => {
+			clearTimeout(timeout);
+		};
+	}, [isComplete, acknowledge, enrollment]);
+
+	return !show ? null : (
 		<Prompt.Dialog onBeforeDismiss={acknowledge} closeOnMaskClick={false}>
 			<Receiver>
 				{({ onDismiss }) => (
