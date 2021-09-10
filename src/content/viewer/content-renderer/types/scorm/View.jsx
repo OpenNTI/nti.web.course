@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { isFlag } from '@nti/web-client';
-import { Layouts } from '@nti/web-commons';
+import { Layouts, Errors } from '@nti/web-commons';
 import { useChanges, useReducerState } from '@nti/web-core';
 
 import TypeRegistry from '../Registry';
@@ -24,6 +24,10 @@ const ActionAside = styled(Aside).attrs({ component: Action })`
 `;
 const LaunchInfoAside = styled(Aside).attrs({ component: LaunchInfo })`
 	/* - */
+`;
+
+const ErrorContainer = styled.div`
+	margin: 10px;
 `;
 
 const handles = obj => {
@@ -97,7 +101,11 @@ export default function CourseContentViewerRendererScorm({
 						onError={onError}
 					/>
 				)}
-				{error && <div>Error: {error}</div>}
+				{error && (
+					<ErrorContainer>
+						<Errors.Message error={error} />
+					</ErrorContainer>
+				)}
 				<Responsive.Item
 					query={Responsive.isMobileContext}
 					component={inlineContent ? LaunchInfo : Action}
