@@ -42,7 +42,7 @@ export default function Notification({
 		setShow(false);
 	}, [enrollment]);
 
-	const isComplete = enrollment?.hasCompletionAcknowledgmentRequest || true;
+	const isComplete = enrollment?.hasCompletionAcknowledgmentRequest;
 
 	useEffect(() => {
 		// Set show only after a delay to let routes settle
