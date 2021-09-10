@@ -23,6 +23,15 @@ const LAUNCH = 'launch';
 
 function getRouteFor(object, context, router) {
 	if (object?.isScormRef && context === LAUNCH) {
+		const route = router.getRouteFor(object);
+
+		if (route.href) {
+			return {
+				...route,
+				href: `${route.href}#${LAUNCH}`,
+			};
+		}
+
 		return `${router.getRouteFor(object)}#${LAUNCH}`;
 	}
 }
@@ -74,7 +83,10 @@ export default function LessonOverviewScormGridItem({
 	return (
 		<Router.RouteForProvider getRouteFor={getRouteFor}>
 			<PaddedContainer>
-				<LinkTo.Object object={item} context={inlineContent ? LAUNCH : undefined}>
+				<LinkTo.Object
+					object={item}
+					context={inlineContent ? LAUNCH : undefined}
+				>
 					<div
 						className={cx('scorm-grid-card', {
 							completed,
