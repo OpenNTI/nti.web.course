@@ -65,7 +65,7 @@ export default function CourseContentViewerRendererScorm({
 		if (!expanded) {
 			dispatch({ expanded: true, error: null });
 		}
-	}, [dispatch]);
+	}, [expanded, dispatch]);
 
 	const onError = e => {
 		dispatch({
