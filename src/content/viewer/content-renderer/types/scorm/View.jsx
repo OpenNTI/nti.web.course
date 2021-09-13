@@ -75,7 +75,6 @@ export default function CourseContentViewerRendererScorm({
 	};
 
 	const onClose = () => {
-		item?.updateCompletedItem?.();
 		dispatch({
 			expanded: false,
 		});
