@@ -107,13 +107,13 @@ export default function CourseVideo({
 				</Controls>
 			)}
 		</Box>
-	) : (
+	) : editable ? (
 		<VideoPlaceholder
 			className="course-info-video-editor"
 			data-testid="set-course-video"
 			onClick={setVideo}
 		/>
-	);
+	) : null;
 }
 
 //#region placeholder

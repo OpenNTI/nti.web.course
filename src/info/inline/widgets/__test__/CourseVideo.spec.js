@@ -16,11 +16,12 @@ describe('CourseVideo test', () => {
 	test('Test no video - editable', () => {
 		const x = render(<CourseVideo catalogEntry={catalogEntry} editable />);
 
-		expect(x.container.querySelector('.video-button').textContent).toMatch(
+		expect(x.getByTestId('set-course-video').textContent).toMatch(
 			/Cover Video/
 		);
 
-		expect(x.container.querySelector('.buttons')).toBeFalsy();
+		expect(x.queryByTestId('change')).toBeFalsy();
+		expect(x.queryByTestId('remove')).toBeFalsy();
 	});
 
 	test('Test no video - editable', () => {
@@ -34,11 +35,9 @@ describe('CourseVideo test', () => {
 			<CourseVideo catalogEntry={catalogEntryWithVideo} editable />
 		);
 
-		expect(x.container.querySelector('.video-button')).toBeFalsy();
+		expect(x.queryByTestId('set-course-video')).toBeFalsy();
 
-		const buttons = x.container.querySelector('.buttons');
-
-		expect(buttons.querySelector('.change')).toBeTruthy();
-		expect(buttons.querySelector('.remove')).toBeTruthy();
+		expect(x.getByTestId('change')).toBeTruthy();
+		expect(x.getByTestId('remove')).toBeTruthy();
 	});
 });
