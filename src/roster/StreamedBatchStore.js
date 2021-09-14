@@ -1,4 +1,4 @@
-import { decorate, URL } from '@nti/lib-commons';
+import { decorate, url } from '@nti/lib-commons';
 import { Stores, Mixins } from '@nti/lib-store';
 import { mixin } from '@nti/lib-decorators';
 
@@ -79,17 +79,17 @@ class StreamedBatchStore extends Stores.BoundStore {
 		if (batch) {
 			const { href, Items: items } = batch;
 			const index = items.indexOf(item);
-			const url = URL.parse(href);
+			const _url = url.parse(href);
 
 			const batchStart = parseInt(
-				url.searchParams.get('batchStart') || 0,
+				_url.searchParams.get('batchStart') || 0,
 				10
 			);
 
-			url.searchParams.set('batchStart', batchStart + index);
-			url.searchParams.set('batchSize', 1);
+			_url.searchParams.set('batchStart', batchStart + index);
+			_url.searchParams.set('batchSize', 1);
 
-			return `${url.pathname}${url.search}`;
+			return `${_url.pathname}${_url.search}`;
 		}
 	};
 
