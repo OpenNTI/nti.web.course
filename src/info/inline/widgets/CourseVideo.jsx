@@ -19,14 +19,11 @@ export default class CourseVideo extends React.Component {
 		onRemoveVideo: PropTypes.func,
 	};
 
-	launchVideoInput = () => {
-		EmbedInput.show().then(value => {
-			const src = getCanonicalUrlFrom(value);
-
-			const { onSetVideo } = this.props;
-
-			onSetVideo && onSetVideo(src);
-		});
+	launchVideoInput = async () => {
+		const value = await EmbedInput.show();
+		if (value) {
+			this.props.onSetVideo?.(getCanonicalUrlFrom(value));
+		}
 	};
 
 	renderVideoEditor() {
