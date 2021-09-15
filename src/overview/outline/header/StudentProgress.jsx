@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -7,7 +7,7 @@ import { Hooks as SessionHooks } from '@nti/web-session';
 import { Page, Text, Prompt, Iframe } from '@nti/web-commons';
 import { CircularProgress } from '@nti/web-charts';
 import { useLocation } from '@nti/web-routing';
-import { useForceUpdate, useChanges } from '@nti/web-core';
+import { useChanges } from '@nti/web-core';
 
 import PassFailMessage from '../../../progress/widgets/PassFailMessage';
 import {
@@ -39,12 +39,11 @@ const t = scoped('course.overview.outline.header.StudentProgress', {
 });
 
 function useStudentProgress(course, active) {
-	const wasActive = React.useRef(true);
-	const forceUpdate = useForceUpdate();
+	const wasActive = useRef(true);
 
-	useChanges(course, forceUpdate);
+	useChanges(course);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (!active) {
 			wasActive.current = active;
 			return;
@@ -91,10 +90,10 @@ export default function StudentProgress({
 }) {
 	const location = useLocation();
 
-	const [showRemaining, setShowRemaining] = React.useState(false);
-	const [showCert, setShowCert] = React.useState(false);
+	const [showRemaining, setShowRemaining] = useState(false);
+	const [showCert, setShowCert] = useState(false);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (showRemaining) {
 			setShowRemaining(false);
 		}
