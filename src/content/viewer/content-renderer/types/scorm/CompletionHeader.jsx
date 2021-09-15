@@ -48,11 +48,13 @@ export default function SCORMCompletionHeader({ item }) {
 				query={isWide}
 				component={Header}
 				className="wide"
+				item={item}
 			/>
 			<Responsive.Item
 				query={isNarrow}
 				component={Header}
 				className="narrow"
+				item={item}
 			/>
 		</Responsive.Container>
 	);
