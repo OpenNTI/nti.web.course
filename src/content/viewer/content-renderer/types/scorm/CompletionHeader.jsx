@@ -34,8 +34,17 @@ const t = scoped(
 	}
 );
 
+/** @typedef {import('@nti/lib-interfaces').Models.courses.scorm.SCORMReference} SCORMReference */
+
+/**
+ * @param {object} props
+ * @param {SCORMReference} props.item
+ * @returns {JSX.Element}
+ */
 export default function SCORMCompletionHeader({ item }) {
 	useChanges(item);
+	// since the reference forwards to the content info object, we should monitor that too.
+	useChanges(item?.ScormContentInfo);
 	if (!item.hasCompleted || !item.hasCompleted()) {
 		return null;
 	}
