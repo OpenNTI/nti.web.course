@@ -80,13 +80,13 @@ StudentProgress.propTypes = {
 		PreferredAccess: PropTypes.object,
 	}),
 	active: PropTypes.bool,
-	noCertificateFrame: PropTypes.bool,
+	inlineCertificatePreview: PropTypes.bool,
 };
 export default function StudentProgress({
 	className,
 	course,
 	active,
-	noCertificateFrame,
+	inlineCertificatePreview = true,
 }) {
 	const location = useLocation();
 
@@ -107,7 +107,7 @@ export default function StudentProgress({
 	const linkAction = {};
 
 	if (isCompleted && certLink) {
-		if (noCertificateFrame) {
+		if (!inlineCertificatePreview) {
 			linkAction.href = certLink;
 			linkAction.target = '_blank';
 			linkAction.rel = 'noopener';

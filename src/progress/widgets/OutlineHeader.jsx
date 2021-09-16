@@ -34,7 +34,7 @@ const ADMIN = 'Admin';
 class OutlineHeader extends React.Component {
 	static propTypes = {
 		course: PropTypes.object.isRequired,
-		noCertificateFrame: PropTypes.bool,
+		inlineCertificatePreview: PropTypes.bool,
 	};
 
 	state = {};
@@ -206,7 +206,7 @@ class OutlineHeader extends React.Component {
 	};
 
 	renderCertificateLink() {
-		const { course, noCertificateFrame } = this.props;
+		const { course, inlineCertificatePreview = true } = this.props;
 		const { PreferredAccess } = course;
 		const certLink = PreferredAccess.getLink('Certificate');
 
@@ -214,7 +214,7 @@ class OutlineHeader extends React.Component {
 			return <div className="sub-label">{t('completed')}</div>;
 		}
 
-		const linkProps = noCertificateFrame
+		const linkProps = !inlineCertificatePreview
 			? { href: certLink, target: '_blank' }
 			: { onClick: this.showCertificate };
 
