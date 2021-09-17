@@ -74,6 +74,7 @@ export default function LessonOverviewScormGridItem({
 				context: LAUNCH,
 		  }
 		: {
+				as: 'span', // nested in an anchor
 				href: launchLink,
 				rel: 'external',
 				disabled: !launchLink,
