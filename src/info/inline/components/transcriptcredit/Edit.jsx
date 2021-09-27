@@ -10,7 +10,7 @@ import AddButton from '../../widgets/AddButton';
 import CreditViewContents from '../credit/Contents';
 
 import Disclaimer from './Disclaimer';
-import Store from './managetypes/CreditTypesStore';
+import Store from './managetypes/Store';
 import CreditEntry from './CreditEntry';
 import AddCreditType from './AddCreditType';
 

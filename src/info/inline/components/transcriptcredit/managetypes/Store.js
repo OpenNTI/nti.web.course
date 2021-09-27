@@ -5,6 +5,7 @@ import { scoped } from '@nti/lib-locale';
 const t = scoped(
 	'course.info.inline.components.transcriptcredit.managetypes.CreditTypeStore',
 	{
+		tooBigError: '%(field)s is too big',
 		tooShortError: '%(field)s is required',
 		tooLongError: '%(field)s cannot be longer than 16 characters',
 		missingError: '%(field)s is required',
@@ -14,6 +15,7 @@ const t = scoped(
 const FIELD_MAP = {
 	credit_type: 'Type',
 	credit_units: 'Unit',
+	credit_precision: 'Precision',
 };
 
 export default class CreditTypesStore extends Stores.SimpleStore {
@@ -53,20 +55,23 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		} catch (e) {
 			this.set('error', this.makeNiceError(e));
 			this.set('loading', false);
+		} finally {
 			this.emitChange('error', 'loading');
-
-			return;
 		}
 	}
 
 	makeNiceError(e) {
-		if (e.code === 'TooShort') {
+		if (e.code === 'TooShort')
 			return t('tooShortError', { field: FIELD_MAP[e.field] });
-		} else if (e.code === 'TooLong') {
+
+		if (e.code === 'TooBig')
+			return t('tooBigError', { field: FIELD_MAP[e.field] });
+
+		if (e.code === 'TooLong')
 			return t('tooLongError', { field: FIELD_MAP[e.field] });
-		} else if (e.code === 'RequiredMissing') {
+
+		if (e.code === 'RequiredMissing')
 			return t('missingError', { field: FIELD_MAP[e.field] });
-		}
 
 		return e.message || e;
 	}
@@ -112,14 +117,11 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 
 				await Promise.all(requests);
 			}
-
-			return;
 		} catch (e) {
 			this.set('error', this.makeNiceError(e));
+		} finally {
 			this.set('loading', false);
 			this.emitChange('error', 'loading');
-
-			return;
 		}
 	}
 
@@ -128,11 +130,13 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 	}
 
 	buildDefinitions(values) {
+		// FIXME: this is doing it the hard way. Leverage the model and save() or toJSON.
 		const defs =
 			values &&
 			values.map(v => {
 				let def = {
 					Links: v.Links,
+					credit_precision: v.precision,
 					credit_type: v.type,
 					credit_units: v.unit,
 					MimeType:
@@ -159,7 +163,8 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 
 				return (
 					match.type !== def['credit_type'] ||
-					match.unit !== def['credit_units']
+					match.unit !== def['credit_units'] ||
+					match.precision !== def['credit_precision']
 				);
 			});
 

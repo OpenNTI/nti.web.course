@@ -8,7 +8,7 @@ import { scoped } from '@nti/lib-locale';
 import CreditViewContents from '../credit/Contents';
 
 import Dislcaimer from './Disclaimer';
-import Store from './managetypes/CreditTypesStore';
+import Store from './managetypes/Store';
 import CreditEntry from './CreditEntry';
 
 const t = scoped('course.info.inline.components.transcriptcredit.view', {

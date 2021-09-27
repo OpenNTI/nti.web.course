@@ -1,1 +1,1 @@
-export { default } from './Dialog';
+export { ManageCreditTypes as default } from './ManageCreditTypes';

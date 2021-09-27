@@ -1,15 +1,14 @@
-import './ManageCreditTypes.scss';
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
 
-import { decorate } from '@nti/lib-commons';
 import { ConflictResolution } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
-import { Connectors } from '@nti/lib-store';
+import { useStoreValue } from '@nti/lib-store';
+import { useReducerState } from '@nti/web-core';
 
 import AddButton from '../../../widgets/AddButton';
 
-import CreditType from './CreditType';
+import { Controls, CreditType } from './CreditType';
+import Store from './Store';
 
 const t = scoped(
 	'course.info.inline.components.transcriptcredit.managetypes.ManageCreditTypes',
@@ -17,202 +16,171 @@ const t = scoped(
 		addNewType: 'Add New Type',
 		type: 'Type',
 		unit: 'Unit',
+		precision: 'Precision',
 	}
 );
 
-class ManageCreditTypes extends React.Component {
-	static propTypes = {
-		loading: PropTypes.bool,
-		types: PropTypes.arrayOf(PropTypes.object),
-		error: PropTypes.string,
-		store: PropTypes.object,
-		onValuesUpdated: PropTypes.func,
-	};
+//#region Paint
 
-	state = {};
+const Container = styled.div`
+	padding: 2rem;
+	margin: 0 5rem;
+`;
 
-	componentDidMount() {
-		const { store } = this.props;
+const Header = styled.div`
+	display: flex;
+	align-items: flex-start;
+	margin-bottom: 0.3rem;
+	gap: 10px;
+
+	span {
+		flex: 1 1 33%;
+		font-size: 10px;
+		text-transform: uppercase;
+		font-weight: 600;
+		color: var(--tertiary-grey);
+		text-align: left;
+	}
+`;
+
+//#endregion
+
+const getEffectiveId = entry => entry && (entry.NTIID || entry.addID);
+
+const findNewID = types => {
+	const existingIDs = types
+		.filter(x => x.addID)
+		.map(x => parseInt(x.addID, 10))
+		.sort();
+
+	let newID =
+		existingIDs.length === 0 ? 1 : existingIDs[existingIDs.length - 1] + 1;
+	return newID.toString();
+};
+
+function ManageCreditTypes({ onValuesUpdated }) {
+	const { types: _types, loadAllTypes, removeValues } = useStoreValue();
+	const [{ types, typeInEditMode, flaggedForRemoval }, setState] =
+		useReducerState({
+			types: [],
+			typeInEditMode: null,
+			flaggedForRemoval: null,
+		});
+
+	useEffect(() => void loadAllTypes(), []);
+
+	useEffect(() => {
+		const saveConflictHandler = async challenge => {
+			challenge.reject();
+		};
 
 		ConflictResolution.registerHandler(
 			'DuplicateCreditDefinitionError',
-			this.saveConflictHandler
+			saveConflictHandler
 		);
 
-		if (store) {
-			store.loadAllTypes();
-		}
-	}
+		return () => {
+			ConflictResolution.unregisterHandler(
+				'DuplicateCreditDefinitionError',
+				saveConflictHandler
+			);
+		};
+	}, []);
 
-	componentWillUnmount() {
-		ConflictResolution.unregisterHandler(
-			'DuplicateCreditDefinitionError',
-			this.saveConflictHandler
-		);
-	}
-
-	saveConflictHandler = async challenge => {
-		challenge.reject();
-	};
-
-	componentDidUpdate(oldProps) {
-		if (oldProps.types !== this.props.types) {
-			this.setState({
-				types: this.props.types,
-				flaggedForRemoval: null,
-			});
-		}
-	}
-
-	updateValues = () => {
-		const { onValuesUpdated } = this.props;
-
-		if (onValuesUpdated) {
-			onValuesUpdated(this.state.types, this.state.flaggedForRemoval);
-		}
-	};
-
-	onEntryChange = updatedEntry => {
-		const newTypes = this.state.types.map(x => {
-			if (this.getEffectiveId(x) === this.getEffectiveId(updatedEntry)) {
-				return updatedEntry;
-			}
-
-			return x;
+	useEffect(() => {
+		setState({
+			types: _types,
+			flaggedForRemoval: null,
 		});
+	}, [_types]);
 
-		this.setState({ types: newTypes }, this.updateValues);
-	};
+	useEffect(() => {
+		onValuesUpdated?.(types, flaggedForRemoval);
+	}, [types, flaggedForRemoval]);
 
-	addEntry = () => {
+	const addEntry = () => {
 		const newType = {
-			addID: this.findNewID(),
+			addID: findNewID(types),
 			type: '',
 			unit: '',
 			disabled: false,
 			addedRow: true,
 		};
 
-		const newTypes = [...this.state.types, newType];
-
-		this.setState(
-			{ types: newTypes, typeInEditMode: newType },
-			this.updateValues
-		);
+		setState({ types: [...types, newType], typeInEditMode: newType });
 	};
 
-	onEntryRemove = async removedEntry => {
-		await this.props.store.removeValues([removedEntry]);
-
-		await this.props.store.loadAllTypes();
+	const onEntryRemove = async removedEntry => {
+		await removeValues([removedEntry]);
+		await loadAllTypes();
 	};
 
-	onExitEditMode = type => {
-		this.setState({ typeInEditMode: null });
+	const onExitEditMode = type => {
+		setState({ typeInEditMode: null });
 	};
 
-	onEnterEditMode = type => {
-		this.setState({ typeInEditMode: type });
+	const onEnterEditMode = type => {
+		setState({ typeInEditMode: type });
 	};
 
-	onNewEntryCancel = () => {
-		const newTypes = this.state.types.filter(x => !x.addedRow);
-
-		this.setState({ types: newTypes });
+	const onNewEntryCancel = () => {
+		setState({ types: types.filter(x => !x.addedRow) });
 	};
 
-	renderType = type => {
-		const { typeInEditMode } = this.state;
+	return (
+		<Container className="manage-credit-types">
+			{types && (
+				<div className="all-types">
+					{types.length > 0 && (
+						<Header>
+							<span>{t('type')}</span>
+							<span>{t('unit')}</span>
+							<span>{t('precision')}</span>
+							<Controls edit={!!typeInEditMode} />
+						</Header>
+					)}
+					{types.map(type => {
+						let disabled = true;
+						let inEditMode = false;
 
-		let disabled = true;
-		let inEditMode = false;
+						if (typeInEditMode == null) {
+							disabled = false;
+						}
 
-		if (typeInEditMode == null) {
-			disabled = false;
-		}
+						if (
+							getEffectiveId(typeInEditMode) ===
+							getEffectiveId(type)
+						) {
+							disabled = false;
+							inEditMode = true;
+						}
 
-		if (this.getEffectiveId(typeInEditMode) === this.getEffectiveId(type)) {
-			disabled = false;
-			inEditMode = true;
-		}
-
-		return (
-			<CreditType
-				key={this.getEffectiveId(type)}
-				store={this.props.store}
-				type={type}
-				onEnterEditMode={this.onEnterEditMode}
-				onExitEditMode={this.onExitEditMode}
-				onChange={this.onEntryChange}
-				onRemove={this.onEntryRemove}
-				onNewEntryCancel={this.onNewEntryCancel}
-				disabled={disabled}
-				inEditMode={inEditMode}
-			/>
-		);
-	};
-
-	getEffectiveId(entry) {
-		return entry && (entry.NTIID || entry.addID);
-	}
-
-	findNewID() {
-		const existingIDs = this.state.types
-			.filter(x => x.addID)
-			.map(x => parseInt(x.addID, 10))
-			.sort();
-
-		let newID =
-			existingIDs.length === 0
-				? 1
-				: existingIDs[existingIDs.length - 1] + 1;
-		return newID.toString();
-	}
-
-	renderTypesEditor() {
-		const { types, typeInEditMode } = this.state;
-
-		if (!types) {
-			return null;
-		}
-
-		return (
-			<div className="all-types">
-				{types && types.length > 0 && (
-					<div className="header">
-						<span className="header-text">{t('type')}</span>
-						<span className="header-text">{t('unit')}</span>
-					</div>
-				)}
-				{types.map(this.renderType)}
-				{typeInEditMode == null && (
-					<div className="add-type">
-						<AddButton
-							label={t('addNewType')}
-							clickHandler={this.addEntry}
-						/>
-					</div>
-				)}
-			</div>
-		);
-	}
-
-	render() {
-		const { error } = this.state;
-
-		return (
-			<div className="manage-credit-types">
-				{error && <div className="error">{error}</div>}
-				{this.renderTypesEditor()}
-			</div>
-		);
-	}
+						return (
+							<CreditType
+								key={getEffectiveId(type)}
+								type={type}
+								onEnterEditMode={onEnterEditMode}
+								onExitEditMode={onExitEditMode}
+								onRemove={onEntryRemove}
+								onNewEntryCancel={onNewEntryCancel}
+								disabled={disabled}
+								inEditMode={inEditMode}
+							/>
+						);
+					})}
+					{typeInEditMode == null && (
+						<>
+							<AddButton
+								label={t('addNewType')}
+								clickHandler={addEntry}
+							/>
+						</>
+					)}
+				</div>
+			)}
+		</Container>
+	);
 }
 
-export default decorate(ManageCreditTypes, [
-	Connectors.Any.connect({
-		loading: 'loading',
-		types: 'types',
-		error: 'error',
-	}),
-]);
+const composed = Store.compose(ManageCreditTypes);
+export { composed as ManageCreditTypes };
