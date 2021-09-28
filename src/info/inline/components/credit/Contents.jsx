@@ -11,69 +11,50 @@ const t = scoped('course.info.inline.components.credit.contents', {
 	noCredit: '(No Credit)',
 });
 
-export default class CreditViewContents extends React.Component {
-	static propTypes = {
-		catalogEntry: PropTypes.object.isRequired,
-		enrollmentAccess: PropTypes.object,
-	};
+CreditViewContents.propTypes = {
+	catalogEntry: PropTypes.object.isRequired,
+	enrollmentAccess: PropTypes.object,
+};
 
-	static FIELD_NAME = 'Credit';
+const NoCredit = styled('div').attrs({ className: 'no-credit' })`
+	color: red;
+`;
 
-	constructor(props) {
-		super(props);
+const EnrollmentLink = styled('div').attrs({ className: 'enroll-link' })`
+	margin: 6px 0;
+`;
 
-		this.state = {};
-	}
+const Link = styled.a`
+	color: var(--primary-blue);
+	text-decoration: none;
+`;
 
-	renderOpen() {
-		const { enrollmentAccess } = this.props;
+export function CreditViewContents({ catalogEntry, enrollmentAccess }) {
+	const info = catalogEntry?.Credit?.[0];
+	const availableText =
+		info.Hours !== 1 ? t('available') : t('availableSingular');
 
-		if (
-			enrollmentAccess &&
-			enrollmentAccess.LegacyEnrollmentStatus &&
-			enrollmentAccess.LegacyEnrollmentStatus === 'Open'
-		) {
-			return (
-				<div className="open-enrollment">
-					<div className="open-enrolled">{t('openEnrolled')}</div>
-					<div className="no-credit">{t('noCredit')}</div>
-				</div>
-			);
-		}
-	}
-
-	renderEnrollment() {
-		const { catalogEntry } = this.props;
-
-		const info = catalogEntry[CreditViewContents.FIELD_NAME][0];
-
-		if (info.Enrollment) {
-			return (
+	return (
+		<div className="content">
+			<div className="hours">{info.Hours + availableText}</div>
+			{!info?.Enrollment ? null : (
 				<div className="enrollment">
-					<div className="enroll-link">
-						<a href={info.Enrollment.url}>
+					<EnrollmentLink>
+						<Link href={info.Enrollment.url}>
 							{info.Enrollment.label}
-						</a>
-					</div>
-					{this.renderOpen()}
+						</Link>
+					</EnrollmentLink>
+					{enrollmentAccess?.LegacyEnrollmentStatus !==
+					'Open' ? null : (
+						<div className="open-enrollment">
+							<div className="open-enrolled">
+								{t('openEnrolled')}
+							</div>
+							<NoCredit>{t('noCredit')}</NoCredit>
+						</div>
+					)}
 				</div>
-			);
-		}
-	}
-
-	render() {
-		const { catalogEntry } = this.props;
-
-		const info = catalogEntry[CreditViewContents.FIELD_NAME][0];
-
-		const availableText =
-			info.Hours !== 1 ? t('available') : t('availableSingular');
-
-		return (
-			<div className="content">
-				<div className="hours">{info.Hours + availableText}</div>
-				{this.renderEnrollment()}
-			</div>
-		);
-	}
+			)}
+		</div>
+	);
 }

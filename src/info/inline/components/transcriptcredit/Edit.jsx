@@ -1,13 +1,13 @@
 import './Edit.scss';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
-import { getService } from '@nti/web-client';
+import { useStoreValue } from '@nti/lib-store';
+import { Prompt, useToggle } from '@nti/web-commons';
 
 import AddButton from '../../widgets/AddButton';
-import CreditViewContents from '../credit/Contents';
+import { CreditViewContents } from '../credit/Contents';
 
 import Disclaimer from './Disclaimer';
 import Store from './managetypes/Store';
@@ -23,280 +23,181 @@ const t = scoped('course.info.inline.components.transcriptcredit.edit', {
 	noTypesCantAdd: 'There are no credit types defined',
 });
 
-class TranscriptCreditEdit extends React.Component {
-	static propTypes = {
-		store: PropTypes.object.isRequired,
-		catalogEntry: PropTypes.object.isRequired,
-		enrollmentAccess: PropTypes.object,
-		onValueChange: PropTypes.func,
-	};
+TranscriptCreditEdit.propTypes = {
+	catalogEntry: PropTypes.object.isRequired,
+	enrollmentAccess: PropTypes.object,
+	onValueChange: PropTypes.func,
+};
 
-	static FIELD_NAME = 'awardable_credits';
+TranscriptCreditEdit.FIELD_NAME = 'awardable_credits';
 
-	constructor(props) {
-		super(props);
+const EMPTY = Object.freeze([]);
 
-		// in this context, we are using type to indicate the type reference that we change
-		this.state = {
-			entries: props.catalogEntry.credits || [],
-		};
-	}
+function TranscriptCreditEdit({
+	catalogEntry,
+	enrollmentAccess,
+	onValueChange,
+}) {
+	const { canAddTypes, types: creditTypes } = useStoreValue();
+	// in this context, we are using type to indicate the type reference that we change
+	const [entries, setEntries] = useState(catalogEntry?.credits || EMPTY);
+	const [showAddModal, toggleAddModal] = useToggle();
+	const remainingTypes = determineRemainingTypes(creditTypes, entries);
+	const hasLegacyCredit = Boolean(catalogEntry?.Credit?.[0]);
+	const infoText =
+		creditTypes?.length > 0 ? t('noRemainingTypes') : t('noTypes');
 
-	componentDidMount() {
-		this.loadTypes();
+	useEffect(() => {
+		setEntries(catalogEntry?.credits || EMPTY);
+	}, [catalogEntry?.entries]);
+	useEffect(() => {
+		updateValues(onValueChange, entries);
+	}, [onValueChange, entries]);
 
-		getService().then(service => {
-			const creditDefs = service.getCollection(
-				'CreditDefinitions',
-				'Global'
-			);
-
-			this.setState({
-				canAddTypes:
-					creditDefs.accepts && creditDefs.accepts.length > 0,
-			});
-		});
-	}
-
-	async loadTypes() {
-		const { store } = this.props;
-
-		await store.loadAllTypes();
-
-		this.setState({ creditTypes: store.getTypes() }, () => {
-			this.determineRemainingTypes();
-		});
-	}
-
-	determineRemainingTypes() {
-		const allTypes = this.state.creditTypes;
-		const takenTypes = this.state.entries
-			.filter(x => x.creditDefinition)
-			.map(x => x.creditDefinition.type + ' ' + x.creditDefinition.unit);
-		const remainingTypes = allTypes.filter(
-			x => !takenTypes.includes(x.type + ' ' + x.unit)
+	const removeEntry = entry => {
+		setEntries(
+			[...entries].filter(
+				x => getEffectiveId(x) !== getEffectiveId(entry)
+			)
 		);
+	};
 
-		this.setState({
-			remainingTypes,
-		});
-	}
-
-	afterUpdate(error) {
-		this.determineRemainingTypes();
-
-		this.updateValues(error);
-	}
-
-	updateValues(error) {
-		const { onValueChange } = this.props;
-
-		onValueChange &&
-			onValueChange(
-				'awardable_credits',
-				this.state.entries.map(x => {
-					return {
-						amount: x.amount,
-						credit_definition: x.creditDefinition.NTIID,
-						MimeType:
-							'application/vnd.nextthought.credit.courseawardablecredit',
-					};
-				}),
-				error
-			);
-	}
-
-	removeEntry = entry => {
-		const entries = [...this.state.entries].filter(
-			x => this.getEffectiveId(x) !== this.getEffectiveId(entry)
+	const onEntryChange = (entry, error) => {
+		setEntries(
+			entries.map(x =>
+				getEffectiveId(x) === getEffectiveId(entry) ? entry : x
+			)
 		);
-
-		this.setState({ entries }, this.afterUpdate);
 	};
 
-	getEffectiveId(entry) {
-		return entry.NTIID || entry.addID;
-	}
-
-	onEntryChange = (entry, error) => {
-		const entries = this.state.entries.map(x => {
-			if (this.getEffectiveId(x) === this.getEffectiveId(entry)) {
-				return entry;
-			}
-
-			return x;
-		});
-
-		this.setState({ entries }, () => {
-			this.afterUpdate(error);
-		});
+	const addEntry = providedType => {
+		setEntries([
+			...entries,
+			{
+				addID: findNewID(entries),
+				amount: 1,
+				creditDefinition: providedType || remainingTypes[0],
+			},
+		]);
 	};
 
-	findNewID() {
-		const existingIDs = this.state.entries
-			.filter(x => x.addID)
-			.map(x => parseInt(x.addID, 10))
-			.sort();
-
-		let newID =
-			existingIDs.length === 0
-				? 1
-				: existingIDs[existingIDs.length - 1] + 1;
-		return newID.toString();
-	}
-
-	addEntry = providedType => {
-		const entries = [...this.state.entries];
-
-		entries.push({
-			addID: this.findNewID(),
-			amount: 1,
-			creditDefinition: providedType || this.state.remainingTypes[0],
-		});
-
-		this.setState({ entries }, this.afterUpdate);
-	};
-
-	onAddClick = () => {
-		this.addEntry();
-	};
-
-	onNewTypeAdded = async newType => {
-		const { store } = this.props;
-		const { creditTypes } = this.state;
-
-		const newCreditTypes = store.getTypes();
-
-		const newlyAdded = newCreditTypes.filter(
+	const onNewTypeAdded = async newType => {
+		const [newlyAdded] = creditTypes.filter(
 			x => !creditTypes.map(y => y.NTIID).includes(x.NTIID)
-		)[0];
+		);
 
-		this.setState({ creditTypes: store.getTypes() }, () => {
-			this.afterUpdate();
-		});
-
+		addEntry(newlyAdded);
 		return newlyAdded;
 	};
 
-	renderEntry = entry => {
-		return (
-			<CreditEntry
-				key={this.getEffectiveId(entry)}
-				store={this.props.store}
-				entry={entry}
-				onRemove={this.removeEntry}
-				onChange={this.onEntryChange}
-				allTypes={this.state.creditTypes}
-				remainingTypes={this.state.remainingTypes}
-				onNewTypeAdded={this.onNewTypeAdded}
-				removable={this.state.entries && this.state.entries.length > 1}
-				editable
-			/>
-		);
-	};
-
-	hasLegacyCredit() {
-		return Boolean(
-			this.props.catalogEntry[CreditViewContents.FIELD_NAME] &&
-				this.props.catalogEntry[CreditViewContents.FIELD_NAME][0]
-		);
-	}
-
-	renderContent() {
-		return (
-			<div className="credits-container edit">
-				{this.hasLegacyCredit() && (
-					<div className="legacy-credits">
-						<CreditViewContents {...this.props} />
-					</div>
-				)}
-				{this.renderTranscriptCredits()}
-			</div>
-		);
-	}
-
-	launchAddTypeDialog = () => {
-		AddCreditType.show(this.props.store).then(savedType => {
-			this.onNewTypeAdded(savedType).then(newTypeDef => {
-				this.addEntry(newTypeDef);
-			});
-		});
-	};
-
-	renderAddNewType() {
-		const { creditTypes } = this.state;
-
-		let infoText = t('noTypes');
-
-		if (creditTypes && creditTypes.length > 0) {
-			infoText = t('noRemainingTypes');
-
-			if (!this.state.canAddTypes) {
-				return null;
-			}
-		}
-
-		if (!this.state.canAddTypes) {
-			return <div>{t('noTypesCantAdd')}</div>;
-		}
-
-		return (
-			<div className="add-definition">
-				<div className="info-text">{infoText}</div>
-				<div
-					onClick={this.launchAddTypeDialog}
-					className="add-definition-button"
-				>
-					{t('addDefinition')}
-				</div>
-			</div>
-		);
-	}
-
-	renderTranscriptCredits() {
-		const { remainingTypes } = this.state;
-
-		return (
-			<div className="content">
-				<div className="credit-entries">
-					{(this.state.entries || []).map(this.renderEntry)}
-				</div>
-				{remainingTypes && remainingTypes.length > 0 && (
-					<AddButton
-						clickHandler={this.onAddClick}
-						className="add-credit"
-						label={t('addCredit')}
-					/>
-				)}
-				{!remainingTypes ||
-					(remainingTypes.length === 0 && this.renderAddNewType())}
-			</div>
-		);
-	}
-
-	render() {
-		const { creditTypes } = this.state;
-
-		if (!creditTypes) {
-			return null;
-		}
-
-		return (
+	return !creditTypes ? null : (
+		<>
 			<div className="columned transcript-credit-hours edit">
 				<div className="field-info">
 					<div className="date-label">{t('label')}</div>
 					<Disclaimer />
 				</div>
-				<div className="content-column">{this.renderContent()}</div>
+				<div className="content-column">
+					<div className="credits-container edit">
+						{hasLegacyCredit && (
+							<div className="legacy-credits">
+								<CreditViewContents
+									{...{ catalogEntry, enrollmentAccess }}
+								/>
+							</div>
+						)}
+						<div className="content">
+							<div className="credit-entries">
+								{(entries || []).map(entry => (
+									<CreditEntry
+										key={getEffectiveId(entry)}
+										entry={entry}
+										onRemove={removeEntry}
+										onChange={onEntryChange}
+										remainingTypes={remainingTypes}
+										removable={entries?.length > 1}
+										editable
+									/>
+								))}
+							</div>
+							{remainingTypes?.length > 0 ? (
+								<AddButton
+									clickHandler={() => addEntry()}
+									className="add-credit"
+									label={t('addCredit')}
+								/>
+							) : creditTypes?.length > 0 &&
+							  !canAddTypes ? null : !canAddTypes ? (
+								<div>{t('noTypesCantAdd')}</div>
+							) : (
+								<div className="add-definition">
+									<div className="info-text">{infoText}</div>
+									<div
+										onClick={() => toggleAddModal(true)}
+										className="add-definition-button"
+									>
+										{t('addDefinition')}
+									</div>
+								</div>
+							)}
+						</div>
+					</div>
+				</div>
 			</div>
-		);
-	}
+
+			{showAddModal && (
+				<Prompt.Dialog
+					closeOnMaskClick
+					closeOnEscape
+					onBeforeDismiss={() => toggleAddModal(false)}
+				>
+					<AddCreditType
+						existingTypes={creditTypes}
+						onSave={onNewTypeAdded}
+					/>
+				</Prompt.Dialog>
+			)}
+		</>
+	);
 }
 
-export default decorate(TranscriptCreditEdit, [
-	Store.connect({
-		loading: 'loading',
-		types: 'types',
-		error: 'error',
-	}),
-]);
+export const Edit = Store.compose(TranscriptCreditEdit);
+
+function determineRemainingTypes(creditTypes, credits) {
+	const takenTypes = credits
+		.filter(x => x.creditDefinition)
+		.map(x => x.creditDefinition.toString());
+	const remainingTypes = creditTypes?.filter(
+		x => !takenTypes.includes(x.toString())
+	);
+
+	return remainingTypes ?? [];
+}
+
+function getEffectiveId(entry) {
+	return entry.NTIID || entry.addID;
+}
+
+function findNewID(entries) {
+	const existingIDs = entries
+		.filter(x => x.addID)
+		.map(x => parseInt(x.addID, 10))
+		.sort();
+
+	let newID =
+		existingIDs.length === 0 ? 1 : existingIDs[existingIDs.length - 1] + 1;
+	return newID.toString();
+}
+
+function updateValues(onValueChange, entries, error) {
+	onValueChange?.(
+		'awardable_credits',
+		entries.map(x => ({
+			amount: x.amount,
+			credit_definition: x.creditDefinition.NTIID,
+			MimeType:
+				'application/vnd.nextthought.credit.courseawardablecredit',
+		})),
+		error
+	);
+}

@@ -2,12 +2,11 @@ import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { decorate } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
 
-import CreditViewContents from '../credit/Contents';
+import { CreditViewContents } from '../credit/Contents';
 
-import Dislcaimer from './Disclaimer';
+import Disclaimer from './Disclaimer';
 import Store from './managetypes/Store';
 import CreditEntry from './CreditEntry';
 
@@ -19,95 +18,53 @@ const t = scoped('course.info.inline.components.transcriptcredit.view', {
 	noCredit: '(No Credit)',
 });
 
-class TranscriptCreditView extends React.Component {
-	static propTypes = {
-		store: PropTypes.object.isRequired,
-		catalogEntry: PropTypes.object.isRequired,
-		enrollmentAccess: PropTypes.object,
-		editable: PropTypes.bool,
-	};
+TranscriptCreditView.propTypes = {
+	catalogEntry: PropTypes.object.isRequired,
+	enrollmentAccess: PropTypes.object,
+	editable: PropTypes.bool,
+};
 
-	static FIELD_NAME = 'credits';
+TranscriptCreditView.FIELD_NAME = 'credits';
 
-	constructor(props) {
-		super(props);
+function TranscriptCreditView({ catalogEntry, enrollmentAccess, editable }) {
+	const entries = catalogEntry?.credits;
+	const hasLegacyCredit = Boolean(catalogEntry?.Credit?.[0]);
 
-		this.state = {
-			entries: props.catalogEntry.credits,
-		};
-	}
-
-	renderEntry = entry => {
-		return (
-			<CreditEntry
-				store={this.props.store}
-				key={
-					entry.creditDefinition.type +
-					' ' +
-					entry.creditDefinition.unit
-				}
-				entry={entry}
-			/>
-		);
-	};
-
-	renderTranscriptCredits() {
-		if (!this.state.entries || this.state.entries.length === 0) {
-			if (this.hasLegacyCredit()) {
-				return null;
-			}
-
-			return <div className="content">{t('noCredit')}</div>;
-		}
-
-		return (
-			<div className="content">
-				<div className="credit-entries">
-					{this.state.entries.map(this.renderEntry)}
+	return (
+		<div className="columned transcript-credit-hours">
+			<div className="field-info">
+				<div className="date-label">{t('label')}</div>
+				{editable && <Disclaimer />}
+			</div>
+			<div className="content-column">
+				<div className="credits-container">
+					{hasLegacyCredit && (
+						<div className="legacy-credits">
+							<CreditViewContents
+								{...{ catalogEntry, enrollmentAccess }}
+							/>
+						</div>
+					)}
+					{!entries?.length ? (
+						hasLegacyCredit ? null : (
+							<div className="content">{t('noCredit')}</div>
+						)
+					) : (
+						<div className="content">
+							<div className="credit-entries">
+								{entries.map(entry => (
+									<CreditEntry
+										entry={entry}
+										key={entry.creditDefinition.toString()}
+									/>
+								))}
+							</div>
+						</div>
+					)}
 				</div>
 			</div>
-		);
-	}
-
-	hasLegacyCredit() {
-		return Boolean(
-			this.props.catalogEntry[CreditViewContents.FIELD_NAME] &&
-				this.props.catalogEntry[CreditViewContents.FIELD_NAME][0]
-		);
-	}
-
-	renderContent() {
-		return (
-			<div className="credits-container">
-				{this.hasLegacyCredit() && (
-					<div className="legacy-credits">
-						<CreditViewContents {...this.props} />
-					</div>
-				)}
-				{this.renderTranscriptCredits()}
-			</div>
-		);
-	}
-
-	render() {
-		const { editable } = this.props;
-
-		return (
-			<div className="columned transcript-credit-hours">
-				<div className="field-info">
-					<div className="date-label">{t('label')}</div>
-					{editable && <Dislcaimer />}
-				</div>
-				<div className="content-column">{this.renderContent()}</div>
-			</div>
-		);
-	}
+		</div>
+	);
 }
 
-export default decorate(TranscriptCreditView, [
-	Store.connect({
-		loading: 'loading',
-		types: 'types',
-		error: 'error',
-	}),
-]);
+export const View = Store.compose(TranscriptCreditView);

@@ -40,7 +40,6 @@ export const Controls = styled.div`
 	gap: 10px;
 	align-items: center;
 	width: 54px;
-	/* width: 125px; */
 
 	&:empty()::after {
 		content: ' ';
@@ -97,11 +96,10 @@ export function CreditType({
 	disabled,
 	inEditMode,
 }) {
-	const { saveValues, getError, loadAllTypes } = useStoreValue();
-	const [{ definition, error }, setState] = useReducerState(
+	const { saveCreditType, error } = useStoreValue();
+	const [{ definition }, setState] = useReducerState(
 		{
 			definition: { ...type },
-			error: null,
 		},
 		[type]
 	);
@@ -134,20 +132,14 @@ export function CreditType({
 	};
 
 	const onConfirm = async () => {
+		let good = true;
 		if (definition.addedRow || !equals(type, definition)) {
-			await saveValues([definition]);
-
-			const error = getError();
-
-			if (error) {
-				setState({ error });
-				return;
-			}
-
-			await loadAllTypes();
+			good = !!(await saveCreditType(definition));
 		}
 
-		exitEdit();
+		if (good) {
+			exitEdit();
+		}
 	};
 
 	if (!definition) {
@@ -156,7 +148,9 @@ export function CreditType({
 
 	return (
 		<>
-			{error && <ErrorMessage>{error}</ErrorMessage>}
+			{inEditMode && error && (
+				<ErrorMessage>{error.message ?? error}</ErrorMessage>
+			)}
 			<Row className="credit-type" disabled={disabled} edit={inEditMode}>
 				{inEditMode ? (
 					<Input

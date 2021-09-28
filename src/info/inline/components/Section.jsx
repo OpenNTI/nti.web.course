@@ -208,7 +208,7 @@ export default class Section extends React.Component {
 		return (
 			<Cmp
 				{...otherProps}
-				key={cmp.ID}
+				key={cmp.ID + (isEditing ? 'edit' : 'view')}
 				catalogEntry={catalogEntry}
 				courseInstance={courseInstance}
 				redemptionCodes={redemptionCodes}
@@ -228,12 +228,8 @@ export default class Section extends React.Component {
 	};
 
 	isEditable() {
-		const {
-			editable,
-			components,
-			catalogEntry,
-			courseInstance,
-		} = this.props;
+		const { editable, components, catalogEntry, courseInstance } =
+			this.props;
 
 		return (
 			editable &&

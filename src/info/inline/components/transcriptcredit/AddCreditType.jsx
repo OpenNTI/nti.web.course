@@ -2,14 +2,12 @@ import './AddCreditType.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useStoreValue } from '@nti/lib-store';
 import { scoped } from '@nti/lib-locale';
-import {
-	Prompt,
-	Input,
-	DialogButtons,
-	Panels,
-	ConflictResolution,
-} from '@nti/web-commons';
+import { Input, DialogButtons, Panels } from '@nti/web-commons';
+import { useReducerState } from '@nti/web-core';
+
+import { useNoConflictResolver } from './managetypes/ManageCreditTypes';
 
 const t = scoped(
 	'course.info.inline.components.transcriptcredit.AddCreditType',
@@ -21,123 +19,56 @@ const t = scoped(
 	}
 );
 
-export default class AddCreditType extends React.Component {
-	static show(store, existingTypes) {
-		return new Promise((fulfill, reject) => {
-			Prompt.modal(
-				<AddCreditType
-					store={store}
-					existingTypes={existingTypes}
-					onSave={fulfill}
-					onCancel={reject}
-				/>,
-				'add-credit-type-container'
-			);
-		});
-	}
+AddCreditType.propTypes = {
+	onSave: PropTypes.func,
+	onDismiss: PropTypes.func,
+};
+export default function AddCreditType({ onSave: _onSave, onDismiss }) {
+	const [{ unit, type, precision }, setState] = useReducerState({
+		unit: '',
+		type: '',
+		precision: 2,
+	});
+	const { saveCreditType, error } = useStoreValue();
 
-	static propTypes = {
-		store: PropTypes.object.isRequired,
-		existingTypes: PropTypes.arrayOf(PropTypes.object),
-		onSave: PropTypes.func,
-		onDismiss: PropTypes.func,
-	};
+	useNoConflictResolver();
 
-	componentDidMount() {
-		ConflictResolution.registerHandler(
-			'DuplicateCreditDefinitionError',
-			this.saveConflictHandler
-		);
-	}
-
-	componentWillUnmount() {
-		ConflictResolution.unregisterHandler(
-			'DuplicateCreditDefinitionError',
-			this.saveConflictHandler
-		);
-	}
-
-	saveConflictHandler = async challenge => {
-		challenge.reject();
-	};
-
-	state = {};
-
-	onSave = async () => {
-		const { onDismiss, store } = this.props;
-		const { unit, type } = this.state;
-
-		try {
-			await store.saveValues([{ type, unit }]);
-
-			await store.loadAllTypes();
-
-			const error = store.getError();
-
-			if (error) {
-				this.setState({ error });
-			} else {
-				if (this.props.onSave) {
-					this.props.onSave({ type, unit });
-
-					if (onDismiss) {
-						onDismiss();
-					}
-				}
-			}
-		} catch (e) {
-			this.setState({ error: e });
+	const onSave = async () => {
+		const result = await saveCreditType({ type, unit, precision });
+		if (result) {
+			_onSave?.(result);
+			onDismiss?.();
 		}
 	};
 
-	onDismiss = () => {
-		const { onDismiss } = this.props;
-
-		if (onDismiss) {
-			onDismiss();
-		}
-	};
-
-	onUnitChange = value => {
-		this.setState({ unit: value });
-	};
-
-	onTypeChange = value => {
-		this.setState({ type: value });
-	};
-
-	render() {
-		const { type, unit, error } = this.state;
-
-		const buttons = [{ label: t('done'), onClick: this.onSave }];
-
-		return (
-			<div className="add-credit-type">
-				<div className="title">
-					<Panels.TitleBar
-						title={t('title')}
-						iconAction={this.onDismiss}
-					/>
-				</div>
-				<div className="content">
-					{error && <div className="error">{error}</div>}
-					<div className="header-row">
-						<div className="header-text">Type</div>
-						<div className="header-text">Unit</div>
-					</div>
-					<Input.Text
-						value={type}
-						className="type"
-						onChange={this.onTypeChange}
-					/>
-					<Input.Text
-						value={unit}
-						className="unit"
-						onChange={this.onUnitChange}
-					/>
-				</div>
-				<DialogButtons buttons={buttons} />
+	return (
+		<div className="add-credit-type">
+			<div className="title">
+				<Panels.TitleBar title={t('title')} iconAction={onDismiss} />
 			</div>
-		);
-	}
+			<div className="content">
+				{error && <div className="error">{error.message ?? error}</div>}
+				<div className="header-row">
+					<div className="header-text">Type</div>
+					<div className="header-text">Unit</div>
+				</div>
+				<Input.Text
+					value={type}
+					className="type"
+					onChange={v => setState({ type: v })}
+				/>
+				<Input.Text
+					value={unit}
+					className="unit"
+					onChange={v => setState({ unit: v })}
+				/>
+				<Input.Number
+					value={precision}
+					className="precision"
+					onChange={v => setState({ precision: v })}
+				/>
+			</div>
+			<DialogButtons buttons={[{ label: t('done'), onClick: onSave }]} />
+		</div>
+	);
 }

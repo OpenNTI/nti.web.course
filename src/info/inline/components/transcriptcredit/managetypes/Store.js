@@ -1,7 +1,9 @@
 import { Stores } from '@nti/lib-store';
 import { getService } from '@nti/web-client';
 import { scoped } from '@nti/lib-locale';
+import { wait } from '@nti/lib-commons';
 
+const ITEMS = '__items'; //Symbol('');
 const t = scoped(
 	'course.info.inline.components.transcriptcredit.managetypes.CreditTypeStore',
 	{
@@ -18,188 +20,153 @@ const FIELD_MAP = {
 	credit_precision: 'Precision',
 };
 
+function filterError(e) {
+	if (e.code === 'TooShort')
+		return t('tooShortError', { field: FIELD_MAP[e.field] });
+
+	if (e.code === 'TooBig')
+		return t('tooBigError', { field: FIELD_MAP[e.field] });
+
+	if (e.code === 'TooLong')
+		return t('tooLongError', { field: FIELD_MAP[e.field] });
+
+	if (e.code === 'RequiredMissing')
+		return t('missingError', { field: FIELD_MAP[e.field] });
+
+	return e.message || e;
+}
+
 export default class CreditTypesStore extends Stores.SimpleStore {
 	static Singleton = true;
 
 	constructor() {
 		super();
 
-		this.set('types', null);
-		this.set('loading', false);
-		this.set('error', null);
+		this.set({ [ITEMS]: null, error: null });
+
+		(async () => {
+			this.service = await getService();
+			this.emitChange('canAddTypes');
+		})();
 	}
 
-	async removeValues(values) {
-		if (!values || values.length === 0) {
+	get canAddTypes() {
+		return !!this.service?.capabilities.canAddCreditTypes;
+	}
+
+	async removeCreditType(values) {
+		if (!Array.isArray(values)) values = [values].filter(Boolean);
+		if (!values.length) {
 			return;
 		}
 
-		const service = await getService();
-
 		try {
-			const requests = values.map(async d => {
-				const deleteLink = d?.Links?.find(l => l.rel === 'delete');
-
-				if (!deleteLink) {
-					throw new Error('No Link: delete');
-				}
-
-				return service.delete(deleteLink.href);
-			});
-
+			const requests = values.map(async d => d.delete());
 			const results = await Promise.allSettled(requests);
 			const failures = results.filter(x => x.status === 'rejected');
 			if (failures.length > 0) {
 				throw failures[0].reason || new Error('Unknown failure');
 			}
+
+			this._load();
 		} catch (e) {
-			this.set('error', this.makeNiceError(e));
-			this.set('loading', false);
+			this.set({ error: filterError(e) });
 		} finally {
-			this.emitChange('error', 'loading');
+			this.set({ loading: false });
 		}
 	}
 
-	makeNiceError(e) {
-		if (e.code === 'TooShort')
-			return t('tooShortError', { field: FIELD_MAP[e.field] });
-
-		if (e.code === 'TooBig')
-			return t('tooBigError', { field: FIELD_MAP[e.field] });
-
-		if (e.code === 'TooLong')
-			return t('tooLongError', { field: FIELD_MAP[e.field] });
-
-		if (e.code === 'RequiredMissing')
-			return t('missingError', { field: FIELD_MAP[e.field] });
-
-		return e.message || e;
-	}
-
-	async saveValues(values) {
+	async saveCreditType(values) {
 		if (!values) {
 			return;
 		}
 
-		this.set('loading', true);
-		this.set('error', null);
-		this.emitChange('loading');
-
-		const { newDefs, existing } = this.buildDefinitions(values);
-
-		const service = await getService();
-		const defsCollection = service.getCollection(
-			'CreditDefinitions',
-			'Global'
-		);
+		this.setImmediate({ loading: true, error: null });
 
 		try {
-			if (newDefs) {
-				// PUT to collection link
-				const requests = newDefs.map(d => {
-					return service.put(defsCollection.href, d);
-				});
-
-				await Promise.all(requests);
-			}
-
-			if (existing) {
-				// PUT to NTIID of def
-				const requests = existing.map(async d => {
-					const editLink = d?.Links?.find(l => l.rel === 'edit');
-
-					if (!editLink) {
-						throw new Error('No edit link');
-					}
-
-					return service.put(editLink.href, d);
-				});
-
-				await Promise.all(requests);
-			}
+			const def = this.getDefinition(values);
+			const result = await def.save();
+			this._load();
+			return result;
 		} catch (e) {
-			this.set('error', this.makeNiceError(e));
+			this.set('error', filterError(e));
 		} finally {
-			this.set('loading', false);
-			this.emitChange('error', 'loading');
+			this.set({ loading: false });
 		}
 	}
 
-	getError() {
-		return this.get('error');
-	}
+	getDefinition(data) {
+		const items = this.get(ITEMS);
+		const existing =
+			data?.NTIID && items?.find(x => x.NTIID === data.NTIID);
 
-	buildDefinitions(values) {
-		// FIXME: this is doing it the hard way. Leverage the model and save() or toJSON.
-		const defs =
-			values &&
-			values.map(v => {
-				let def = {
-					Links: v.Links,
-					credit_precision: v.precision,
-					credit_type: v.type,
-					credit_units: v.unit,
-					MimeType:
-						'application/vnd.nextthought.credit.creditdefinition',
-				};
+		let definition = existing;
 
-				if (v.NTIID) {
-					def.NTIID = v.NTIID;
-				}
+		if (!definition) {
+			definition = {
+				NTIID: data.NTIID ?? undefined,
+				credit_precision: data.precision,
+				credit_type: data.type,
+				credit_units: data.unit,
+				MimeType: 'application/vnd.nextthought.credit.creditdefinition',
+				save: async () => {
+					await wait.for(() => this.service.isService);
+					const collection = this.service.getCollection(
+						'CreditDefinitions',
+						'Global'
+					);
 
-				return def;
-			});
-
-		if (!defs) {
-			return {};
+					const newGuy = await collection?.putToLink(
+						'self',
+						definition,
+						true
+					);
+					this.set(ITEMS, null);
+					return newGuy;
+				},
+			};
 		}
 
-		const allItems = this.get('types');
+		if (existing && existing !== data) {
+			existing.type = data.type;
+			existing.unit = data.unit;
+			existing.precision = data.precision;
+			// debugger;
+		}
 
-		const existing = defs
-			.filter(x => x.NTIID)
-			.filter(def => {
-				const [match] = allItems.filter(i => i.NTIID === def.NTIID);
-
-				return (
-					match.type !== def['credit_type'] ||
-					match.unit !== def['credit_units'] ||
-					match.precision !== def['credit_precision']
-				);
-			});
-
-		return {
-			newDefs: defs.filter(x => !x.NTIID),
-			existing,
-		};
+		return definition;
 	}
 
-	getTypes() {
-		return this.get('types') || [];
+	get types() {
+		const t = this.get(ITEMS);
+		if (t == null && !this.get('loading')) {
+			this._load();
+		}
+		return t;
 	}
 
-	async loadAllTypes() {
+	/** @private */
+	async _load() {
 		this.set('loading', true);
-		this.emitChange('loading');
+		await wait.for(() => this.service.isService);
 
-		const service = await getService();
-
-		const defsCollection = service.getCollection(
+		const defsCollection = this.service.getCollection(
 			'CreditDefinitions',
 			'Global'
 		);
 
 		if (defsCollection) {
-			const existingTypes = await service.getBatch(defsCollection.href);
-
-			if (existingTypes) {
-				this.set('loading', false);
-				this.set('types', existingTypes.Items);
-				this.emitChange('loading', 'types', 'error');
-			} else {
-				this.set('loading', false);
-				this.set('types', []);
-				this.emitChange('loading', 'types', 'error');
+			try {
+				const existingTypes = await defsCollection.fetchLinkParsed(
+					'self'
+				);
+				this.set({
+					loading: false,
+					[ITEMS]: existingTypes ?? [],
+				});
+				this.emitChange('types');
+			} catch (error) {
+				this.setImmediate({ error });
 			}
 		}
 	}

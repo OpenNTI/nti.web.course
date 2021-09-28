@@ -1,11 +1,17 @@
 import './CreditEntry.scss';
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
-import { Input, Flyout, RemoveButton } from '@nti/web-commons';
-import { getService } from '@nti/web-client';
+import {
+	Input,
+	Flyout,
+	RemoveButton,
+	Prompt,
+	useToggle,
+} from '@nti/web-commons';
+import { useStoreValue } from '@nti/lib-store';
 
 import AddCreditType from './AddCreditType';
 import CreditEntryTypeOption from './CreditEntryTypeOption';
@@ -14,210 +20,164 @@ const t = scoped('course.info.inline.components.transcriptcredit.CreditEntry', {
 	addNewType: 'Add New Type...',
 });
 
-export default class TranscriptCreditEntry extends React.Component {
-	static propTypes = {
-		store: PropTypes.object.isRequired,
-		entry: PropTypes.object.isRequired,
-		allTypes: PropTypes.arrayOf(PropTypes.object),
-		remainingTypes: PropTypes.arrayOf(PropTypes.object),
-		onRemove: PropTypes.func,
-		onChange: PropTypes.func,
-		onNewTypeAdded: PropTypes.func,
-		removable: PropTypes.bool,
-		editable: PropTypes.bool,
-	};
-
-	attachFlyoutRef = x => (this.flyout = x);
-
-	attachInputRef = x => (this.input = x);
-
-	state = {};
-
-	componentDidMount() {
-		getService().then(service => {
-			const creditDefs = service.getCollection(
-				'CreditDefinitions',
-				'Global'
-			);
-
-			this.setState({
-				canAddTypes:
-					creditDefs.accepts && creditDefs.accepts.length > 0,
-			});
-		});
-	}
-
-	valueChanged = val => {
-		const { onChange, entry } = this.props;
-
-		this.setState({ amount: val });
-
-		const valid = this.input.validity;
-
-		let error = null;
-
-		if (valid.patternMismatch) {
-			error = 'Must be a numeric value';
-		}
-
-		if (onChange) {
-			const newEntry = { ...entry, amount: val };
-
-			onChange(newEntry, error);
-		}
-	};
-
-	typeChanged = val => {
-		const { onChange, entry } = this.props;
-
-		this.setState({ creditDefinition: val });
-
-		if (onChange) {
-			const newEntry = { ...entry, creditDefinition: val };
-
-			onChange(newEntry);
-		}
-
-		this.flyout.dismiss();
-	};
-
-	removeEntry = () => {
-		const { onRemove, entry } = this.props;
-
-		if (onRemove) {
-			onRemove(entry);
-		}
-	};
-
-	renderValue() {
-		return (
-			<div className="credit-value">
-				{this.props.entry.amount.toFixed(2)}
-			</div>
-		);
-	}
-
-	renderEditableValue() {
-		return (
-			<Input.Text
-				className="credit-value"
-				maxLength="6"
-				value={(this.props.entry.amount || '').toString()}
-				onChange={this.valueChanged}
-				pattern="[0-9]*[.,]?[0-9]+"
-				ref={this.attachInputRef}
-			/>
-		);
-	}
-
-	renderType() {
-		const { entry } = this.props;
-
-		return (
-			<div className="credit-type">
-				{this.getStringForType(entry.creditDefinition)}
-			</div>
-		);
-	}
-
-	renderTypeTrigger() {
-		const { entry } = this.props;
-
-		return (
-			<div className="credit-type-select">
-				{this.getStringForType(entry.creditDefinition)}
-				<i className="icon-chevron-down" />
-			</div>
-		);
-	}
-
-	getStringForType(type) {
-		return type && type.type + ' ' + type.unit;
-	}
-
-	renderOption = option => {
-		const { entry } = this.props;
-
-		const remainingTypes = this.props.remainingTypes || [];
-
-		const disabled = !remainingTypes
-			.filter(x => x.creditDefinition + ' ' + x.unit)
-			.includes(option);
-
-		const className = cx('credit-type-option', {
-			disabled,
-			selected:
-				this.getStringForType(option) ===
-				this.getStringForType(entry.creditDefinition),
-		});
-
-		return (
-			<div key={this.getStringForType(option)} className={className}>
-				<CreditEntryTypeOption
-					option={option}
-					onClick={disabled ? null : this.typeChanged}
-				/>
-			</div>
-		);
-	};
-
-	launchAddTypeDialog = () => {
-		AddCreditType.show(this.props.store, this.props.allTypes).then(
-			savedType => {
-				const { onNewTypeAdded } = this.props;
-
-				if (onNewTypeAdded) {
-					onNewTypeAdded(savedType).then(newlyAdded => {
-						this.typeChanged(newlyAdded);
-					});
-				}
-			}
-		);
-	};
-
-	renderAddNewType() {
-		return (
-			this.state.canAddTypes && (
-				<div
-					className="credit-type-option add-new"
-					onClick={this.launchAddTypeDialog}
-				>
-					{t('addNewType')}
-				</div>
-			)
-		);
-	}
-
-	renderEditableType() {
-		return (
+function EditableType({ entry, remainingTypes, onChange }) {
+	const [showAddModal, toggleAddModal] = useToggle();
+	const { types: creditTypes } = useStoreValue();
+	const ref = useRef();
+	const dismiss = () => ref.current?.dismiss();
+	return (
+		<>
 			<Flyout.Triggered
+				autoDismissOnAction
 				className="transcript-credit-type-select"
-				trigger={this.renderTypeTrigger()}
+				trigger={
+					<div className="credit-type-select">
+						{entry.creditDefinition.toString()}
+						<i className="icon-chevron-down" />
+					</div>
+				}
 				horizontalAlign={Flyout.ALIGNMENTS.LEFT}
 				sizing={Flyout.SIZES.MATCH_SIDE}
-				ref={this.attachFlyoutRef}
+				ref={ref}
 			>
-				<div>
-					{this.props.allTypes.map(this.renderOption)}
-					{this.renderAddNewType()}
-				</div>
+				<>
+					{creditTypes?.map(option => {
+						const disabled = !remainingTypes
+							.filter(x => x.creditDefinition + ' ' + x.unit)
+							.includes(option);
+
+						return (
+							<div
+								key={option.toString()}
+								className={cx('credit-type-option', {
+									disabled,
+									selected:
+										option.toString() ===
+										entry.creditDefinition.toString(),
+								})}
+							>
+								<CreditEntryTypeOption
+									option={option}
+									onClick={
+										disabled
+											? null
+											: x => (dismiss(), onChange(x))
+									}
+								/>
+							</div>
+						);
+					})}
+					<AddNewType
+						onClick={() => (dismiss(), toggleAddModal(true))}
+					/>
+				</>
 			</Flyout.Triggered>
-		);
-	}
 
-	renderRemoveButton() {
-		return <RemoveButton onRemove={this.removeEntry} />;
-	}
+			{showAddModal && (
+				<Prompt.Dialog
+					closeOnMaskClick
+					closeOnEscape
+					onBeforeDismiss={() => toggleAddModal(false)}
+				>
+					<AddCreditType
+						onSave={newType => {
+							onChange(newType);
+							toggleAddModal(false);
+						}}
+					/>
+				</Prompt.Dialog>
+			)}
+		</>
+	);
+}
 
-	render() {
-		const { editable, removable } = this.props;
-
-		return (
-			<div className="credit-entry">
-				{editable ? this.renderEditableValue() : this.renderValue()}
-				{editable ? this.renderEditableType() : this.renderType()}
-				{editable && removable && this.renderRemoveButton()}
+function AddNewType({ onClick }) {
+	const { canAddTypes } = useStoreValue();
+	return (
+		canAddTypes && (
+			<div className="credit-type-option add-new" onClick={onClick}>
+				{t('addNewType')}
 			</div>
-		);
-	}
+		)
+	);
+}
+
+const EditableValue = React.forwardRef(({ entry, onChange }, ref) => (
+	<Input.Text
+		className="credit-value"
+		maxLength="6"
+		value={(entry.amount || '').toString()}
+		onChange={onChange}
+		pattern="[0-9]*[.,]?[0-9]+"
+		ref={ref}
+	/>
+));
+
+const Value = ({ entry }) => (
+	<div className="credit-value">{entry?.amount?.toFixed(2)}</div>
+);
+
+const Type = ({ entry }) => (
+	<div className="credit-type">{entry.creditDefinition?.toString()}</div>
+);
+
+CreditEntry.propTypes = {
+	entry: PropTypes.object.isRequired,
+	remainingTypes: PropTypes.arrayOf(PropTypes.object),
+	onRemove: PropTypes.func,
+	onChange: PropTypes.func,
+	onNewTypeAdded: PropTypes.func,
+	removable: PropTypes.bool,
+	editable: PropTypes.bool,
+};
+
+export default function CreditEntry({
+	entry,
+	remainingTypes,
+	onRemove,
+	onChange,
+	removable,
+	editable,
+}) {
+	const input = useRef();
+
+	const valueChanged = val => {
+		const error = input.current.validity.patternMismatch
+			? 'Must be a numeric value'
+			: null;
+
+		onChange?.({ ...entry, amount: val }, error);
+	};
+
+	const typeChanged = val => {
+		onChange?.({ ...entry, creditDefinition: val });
+	};
+
+	return (
+		<>
+			<div className="credit-entry">
+				{editable ? (
+					<EditableValue
+						entry={entry}
+						onChange={valueChanged}
+						ref={input}
+					/>
+				) : (
+					<Value entry={entry} />
+				)}
+				{editable ? (
+					<EditableType
+						entry={entry}
+						onChange={typeChanged}
+						remainingTypes={remainingTypes}
+					/>
+				) : (
+					<Type entry={entry} />
+				)}
+				{editable && removable && (
+					<RemoveButton onRemove={() => onRemove?.(entry)} />
+				)}
+			</div>
+		</>
+	);
 }

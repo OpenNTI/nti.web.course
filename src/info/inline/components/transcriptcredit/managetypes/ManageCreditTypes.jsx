@@ -45,6 +45,24 @@ const Header = styled.div`
 
 //#endregion
 
+export const useNoConflictResolver = () => {
+	useEffect(() => {
+		const nope = challenge => challenge.reject();
+
+		ConflictResolution.registerHandler(
+			'DuplicateCreditDefinitionError',
+			nope
+		);
+
+		return () => {
+			ConflictResolution.unregisterHandler(
+				'DuplicateCreditDefinitionError',
+				nope
+			);
+		};
+	}, []);
+};
+
 const getEffectiveId = entry => entry && (entry.NTIID || entry.addID);
 
 const findNewID = types => {
@@ -59,33 +77,15 @@ const findNewID = types => {
 };
 
 function ManageCreditTypes({ onValuesUpdated }) {
-	const { types: _types, loadAllTypes, removeValues } = useStoreValue();
+	const { types: _types, removeCreditType } = useStoreValue();
 	const [{ types, typeInEditMode, flaggedForRemoval }, setState] =
 		useReducerState({
-			types: [],
+			types: null,
 			typeInEditMode: null,
 			flaggedForRemoval: null,
 		});
 
-	useEffect(() => void loadAllTypes(), []);
-
-	useEffect(() => {
-		const saveConflictHandler = async challenge => {
-			challenge.reject();
-		};
-
-		ConflictResolution.registerHandler(
-			'DuplicateCreditDefinitionError',
-			saveConflictHandler
-		);
-
-		return () => {
-			ConflictResolution.unregisterHandler(
-				'DuplicateCreditDefinitionError',
-				saveConflictHandler
-			);
-		};
-	}, []);
+	useNoConflictResolver();
 
 	useEffect(() => {
 		setState({
@@ -111,8 +111,7 @@ function ManageCreditTypes({ onValuesUpdated }) {
 	};
 
 	const onEntryRemove = async removedEntry => {
-		await removeValues([removedEntry]);
-		await loadAllTypes();
+		await removeCreditType(removedEntry);
 	};
 
 	const onExitEditMode = type => {
@@ -129,55 +128,51 @@ function ManageCreditTypes({ onValuesUpdated }) {
 
 	return (
 		<Container className="manage-credit-types">
-			{types && (
-				<div className="all-types">
-					{types.length > 0 && (
-						<Header>
-							<span>{t('type')}</span>
-							<span>{t('unit')}</span>
-							<span>{t('precision')}</span>
-							<Controls edit={!!typeInEditMode} />
-						</Header>
-					)}
-					{types.map(type => {
-						let disabled = true;
-						let inEditMode = false;
+			<div className="all-types">
+				{types?.length > 0 && (
+					<Header>
+						<span>{t('type')}</span>
+						<span>{t('unit')}</span>
+						<span>{t('precision')}</span>
+						<Controls edit={!!typeInEditMode} />
+					</Header>
+				)}
+				{types?.map(type => {
+					let disabled = true;
+					let inEditMode = false;
 
-						if (typeInEditMode == null) {
-							disabled = false;
-						}
+					if (typeInEditMode == null) {
+						disabled = false;
+					}
 
-						if (
-							getEffectiveId(typeInEditMode) ===
-							getEffectiveId(type)
-						) {
-							disabled = false;
-							inEditMode = true;
-						}
+					if (
+						getEffectiveId(typeInEditMode) === getEffectiveId(type)
+					) {
+						disabled = false;
+						inEditMode = true;
+					}
 
-						return (
-							<CreditType
-								key={getEffectiveId(type)}
-								type={type}
-								onEnterEditMode={onEnterEditMode}
-								onExitEditMode={onExitEditMode}
-								onRemove={onEntryRemove}
-								onNewEntryCancel={onNewEntryCancel}
-								disabled={disabled}
-								inEditMode={inEditMode}
-							/>
-						);
-					})}
-					{typeInEditMode == null && (
-						<>
-							<AddButton
-								label={t('addNewType')}
-								clickHandler={addEntry}
-							/>
-						</>
-					)}
-				</div>
-			)}
+					return (
+						<CreditType
+							key={getEffectiveId(type)}
+							type={type}
+							onEnterEditMode={onEnterEditMode}
+							onExitEditMode={onExitEditMode}
+							onRemove={onEntryRemove}
+							onNewEntryCancel={onNewEntryCancel}
+							disabled={disabled}
+							inEditMode={inEditMode}
+						/>
+					);
+				})}
+
+				{typeInEditMode == null && (
+					<AddButton
+						label={t('addNewType')}
+						clickHandler={addEntry}
+					/>
+				)}
+			</div>
 		</Container>
 	);
 }

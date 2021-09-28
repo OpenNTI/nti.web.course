@@ -1,3 +1,3 @@
-export { default as View } from './View';
-export { default as Edit } from './Edit';
+export { View } from './View';
+export { Edit } from './Edit';
 export const ID = 'TRANSCRIPT_CREDIT';
