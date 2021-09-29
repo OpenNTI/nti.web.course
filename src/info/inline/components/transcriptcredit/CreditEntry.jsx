@@ -198,12 +198,6 @@ const EditableValue = React.forwardRef(({ entry, onChange }, ref) => (
 ));
 
 const Value = ({ entry }) => {
-	const { locale } = new Intl.NumberFormat().resolvedOptions();
-	const formatter = new Intl.NumberFormat(locale, {
-		minimumFractionDigits: entry.creditDefinition.precision,
-		maximumFractionDigits: entry.creditDefinition.precision,
-	});
-
 	return (
 		<div
 			className="credit-value"
@@ -211,7 +205,7 @@ const Value = ({ entry }) => {
 				width: 4rem;
 			`}
 		>
-			{formatter.format(entry?.amount)}
+			{entry?.getFormattedAmount()}
 		</div>
 	);
 };
