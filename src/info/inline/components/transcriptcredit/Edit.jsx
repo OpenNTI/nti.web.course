@@ -1,4 +1,3 @@
-import './Edit.scss';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -6,7 +5,7 @@ import { scoped } from '@nti/lib-locale';
 import { useStoreValue } from '@nti/lib-store';
 import { Prompt, useToggle } from '@nti/web-commons';
 
-import AddButton from '../../widgets/AddButton';
+import _AddButton from '../../widgets/AddButton';
 import { CreditViewContents } from '../credit/Contents';
 
 import Disclaimer from './Disclaimer';
@@ -23,6 +22,47 @@ const t = scoped('course.info.inline.components.transcriptcredit.edit', {
 	noTypesCantAdd: 'There are no credit types defined',
 });
 
+//#region paint
+
+const AddButton = styled(_AddButton)`
+	:global {
+		.add-icon {
+			display: none;
+		}
+
+		/* .add-label {
+			margin-left: 15px;
+		} */
+	}
+`;
+
+const Column = styled('div').attrs({ className: 'content-column' })`
+	width: 100%;
+`;
+
+const LegacyCredits = styled('div').attrs({ className: 'legacy-credits' })`
+	padding: 0.5rem;
+	border-radius: 5px;
+	border: solid 1px #ddd;
+	opacity: 0.5;
+	pointer-events: none;
+`;
+
+const InfoText = styled('div').attrs({ className: 'info-text' })`
+	font-size: 12px;
+	margin: 0.5rem 0;
+`;
+
+const AddDefinitionButton = styled('a').attrs({
+	className: 'add-definition-button',
+	href: '#',
+})`
+	color: var(--primary-blue);
+	cursor: pointer;
+`;
+
+//#endregion
+
 TranscriptCreditEdit.propTypes = {
 	catalogEntry: PropTypes.object.isRequired,
 	enrollmentAccess: PropTypes.object,
@@ -38,6 +78,8 @@ function TranscriptCreditEdit({
 	enrollmentAccess,
 	onValueChange,
 }) {
+	//#region hooks
+
 	const { canAddTypes, types: creditTypes } = useStoreValue();
 	// in this context, we are using type to indicate the type reference that we change
 	const [entries, setEntries] = useState(catalogEntry?.credits || EMPTY);
@@ -81,14 +123,7 @@ function TranscriptCreditEdit({
 		]);
 	};
 
-	const onNewTypeAdded = async newType => {
-		const [newlyAdded] = creditTypes.filter(
-			x => !creditTypes.map(y => y.NTIID).includes(x.NTIID)
-		);
-
-		addEntry(newlyAdded);
-		return newlyAdded;
-	};
+	//#endregion
 
 	return !creditTypes ? null : (
 		<>
@@ -97,14 +132,14 @@ function TranscriptCreditEdit({
 					<div className="date-label">{t('label')}</div>
 					<Disclaimer />
 				</div>
-				<div className="content-column">
+				<Column>
 					<div className="credits-container edit">
 						{hasLegacyCredit && (
-							<div className="legacy-credits">
+							<LegacyCredits>
 								<CreditViewContents
 									{...{ catalogEntry, enrollmentAccess }}
 								/>
-							</div>
+							</LegacyCredits>
 						)}
 						<div className="content">
 							<div className="credit-entries">
@@ -131,18 +166,17 @@ function TranscriptCreditEdit({
 								<div>{t('noTypesCantAdd')}</div>
 							) : (
 								<div className="add-definition">
-									<div className="info-text">{infoText}</div>
-									<div
-										onClick={() => toggleAddModal(true)}
-										className="add-definition-button"
+									<InfoText>{infoText}</InfoText>
+									<AddDefinitionButton
+										onClick={toggleAddModal}
 									>
 										{t('addDefinition')}
-									</div>
+									</AddDefinitionButton>
 								</div>
 							)}
 						</div>
 					</div>
-				</div>
+				</Column>
 			</div>
 
 			{showAddModal && (
@@ -153,7 +187,7 @@ function TranscriptCreditEdit({
 				>
 					<AddCreditType
 						existingTypes={creditTypes}
-						onSave={onNewTypeAdded}
+						onSave={addEntry}
 					/>
 				</Prompt.Dialog>
 			)}

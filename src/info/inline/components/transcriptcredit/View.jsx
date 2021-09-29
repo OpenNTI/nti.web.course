@@ -1,4 +1,3 @@
-import './View.scss';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,6 +16,14 @@ const t = scoped('course.info.inline.components.transcriptcredit.view', {
 	openEnrolled: 'You’re registered for the open course.',
 	noCredit: '(No Credit)',
 });
+
+//#region paint
+
+const LegacyCredits = styled('div').attrs({ className: 'legacy-credits' })`
+	margin-bottom: 1rem;
+`;
+
+//#endregion
 
 TranscriptCreditView.propTypes = {
 	catalogEntry: PropTypes.object.isRequired,
@@ -39,11 +46,11 @@ function TranscriptCreditView({ catalogEntry, enrollmentAccess, editable }) {
 			<div className="content-column">
 				<div className="credits-container">
 					{hasLegacyCredit && (
-						<div className="legacy-credits">
+						<LegacyCredits>
 							<CreditViewContents
 								{...{ catalogEntry, enrollmentAccess }}
 							/>
-						</div>
+						</LegacyCredits>
 					)}
 					{!entries?.length ? (
 						hasLegacyCredit ? null : (

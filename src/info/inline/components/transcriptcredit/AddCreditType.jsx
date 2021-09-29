@@ -1,6 +1,4 @@
-import './AddCreditType.scss';
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { useStoreValue } from '@nti/lib-store';
 import { scoped } from '@nti/lib-locale';
@@ -19,10 +17,60 @@ const t = scoped(
 	}
 );
 
-AddCreditType.propTypes = {
-	onSave: PropTypes.func,
-	onDismiss: PropTypes.func,
-};
+//#region paint
+const Box = styled.div`
+	background-color: white;
+`;
+
+const ErrorMessage = styled('div').attrs({ className: 'error' })`
+	color: red;
+	font-size: 14px;
+	margin-bottom: 0.5rem;
+	max-width: 18rem;
+`;
+
+const Title = styled(Panels.TitleBar)`
+	h1 {
+		margin-right: 1rem;
+	}
+`;
+
+const Header = styled('div').attrs({ className: 'header-text' })`
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: var(--tertiary-grey);
+	margin-bottom: 0.3rem;
+`;
+
+const Content = styled.div`
+	padding: 1rem;
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+
+	input {
+		width: 8rem;
+	}
+`;
+
+const InputBox = styled.div`
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: flex-start;
+`;
+
+//#endregion
+
+/**
+ * @param {object} props
+ * @param {(object) => void} props.onSave
+ * @param {() => void} props.onDismiss
+ * @returns {JSX.Element}
+ */
 export default function AddCreditType({ onSave: _onSave, onDismiss }) {
 	const [{ unit, type, precision }, setState] = useReducerState({
 		unit: '',
@@ -42,33 +90,39 @@ export default function AddCreditType({ onSave: _onSave, onDismiss }) {
 	};
 
 	return (
-		<div className="add-credit-type">
-			<div className="title">
-				<Panels.TitleBar title={t('title')} iconAction={onDismiss} />
-			</div>
-			<div className="content">
-				{error && <div className="error">{error.message ?? error}</div>}
-				<div className="header-row">
-					<div className="header-text">Type</div>
-					<div className="header-text">Unit</div>
-				</div>
-				<Input.Text
-					value={type}
-					className="type"
-					onChange={v => setState({ type: v })}
-				/>
-				<Input.Text
-					value={unit}
-					className="unit"
-					onChange={v => setState({ unit: v })}
-				/>
-				<Input.Number
-					value={precision}
-					className="precision"
-					onChange={v => setState({ precision: v })}
-				/>
-			</div>
+		<Box className="add-credit-type">
+			<Title title={t('title')} iconAction={onDismiss} />
+			<Content className="content">
+				{error && <ErrorMessage>{error.message ?? error}</ErrorMessage>}
+
+				<InputBox>
+					<Header>Type</Header>
+					<Input.Text
+						value={type}
+						className="type"
+						onChange={v => setState({ type: v })}
+					/>
+				</InputBox>
+
+				<InputBox>
+					<Header>Unit</Header>
+					<Input.Text
+						value={unit}
+						className="unit"
+						onChange={v => setState({ unit: v })}
+					/>
+				</InputBox>
+
+				<InputBox>
+					<Header>Precision</Header>
+					<Input.Number
+						value={precision}
+						className="precision"
+						onChange={v => setState({ precision: v })}
+					/>
+				</InputBox>
+			</Content>
 			<DialogButtons buttons={[{ label: t('done'), onClick: onSave }]} />
-		</div>
+		</Box>
 	);
 }
