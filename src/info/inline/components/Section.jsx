@@ -215,7 +215,7 @@ export default class Section extends React.Component {
 				enrollmentAccess={enrollmentAccess}
 				facilitators={facilitators}
 				editable={editable}
-				error={error && error.field === cmp.View.FIELD_NAME && error}
+				error={isEditing && error}
 				onValueChange={this.aggregateChanges}
 				onEndEditing={onEndEditing}
 				toggleSaveable={this.toggleSaveable}

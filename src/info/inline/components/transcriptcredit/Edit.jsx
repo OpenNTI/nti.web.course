@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
 import { useStoreValue } from '@nti/lib-store';
 import { Prompt, useToggle } from '@nti/web-commons';
+import { ErrorMessage } from '@nti/web-core';
 
 import _AddButton from '../../widgets/AddButton';
 import { CreditViewContents } from '../credit/Contents';
@@ -63,17 +63,12 @@ const AddDefinitionButton = styled('a').attrs({
 
 //#endregion
 
-TranscriptCreditEdit.propTypes = {
-	catalogEntry: PropTypes.object.isRequired,
-	enrollmentAccess: PropTypes.object,
-	onValueChange: PropTypes.func,
-};
-
 TranscriptCreditEdit.FIELD_NAME = 'awardable_credits';
 
 const EMPTY = Object.freeze([]);
 
 function TranscriptCreditEdit({
+	error,
 	catalogEntry,
 	enrollmentAccess,
 	onValueChange,
@@ -142,6 +137,7 @@ function TranscriptCreditEdit({
 							</LegacyCredits>
 						)}
 						<div className="content">
+							{error && <ErrorMessage error={error} />}
 							<div className="credit-entries">
 								{(entries || []).map(entry => (
 									<CreditEntry
