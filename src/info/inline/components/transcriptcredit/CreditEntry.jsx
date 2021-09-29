@@ -94,7 +94,7 @@ const Box = styled.div`
 	align-items: center;
 
 	input {
-		width: 3rem;
+		width: 4rem;
 		font-size: 14px;
 		color: var(--primary-grey);
 		height: 40px;
@@ -197,9 +197,24 @@ const EditableValue = React.forwardRef(({ entry, onChange }, ref) => (
 	/>
 ));
 
-const Value = ({ entry }) => (
-	<div className="credit-value">{entry?.amount?.toFixed(2)}</div>
-);
+const Value = ({ entry }) => {
+	const { locale } = new Intl.NumberFormat().resolvedOptions();
+	const formatter = new Intl.NumberFormat(locale, {
+		minimumFractionDigits: entry.creditDefinition.precision,
+		maximumFractionDigits: entry.creditDefinition.precision,
+	});
+
+	return (
+		<div
+			className="credit-value"
+			css={css`
+				width: 4rem;
+			`}
+		>
+			{formatter.format(entry?.amount)}
+		</div>
+	);
+};
 
 const Type = ({ entry }) => (
 	<div className="credit-type">{entry.creditDefinition?.toString()}</div>
