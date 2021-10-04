@@ -9,48 +9,34 @@ const t = scoped('course.info.inline.components.redemptioncodes.View', {
 	label: 'Redemption Code',
 });
 
-export default class RedemptionCodesView extends React.Component {
-	static propTypes = {
-		redemptionCodes: PropTypes.arrayOf(PropTypes.object),
-	};
+RedemptionCodesView.propTypes = {
+	redemptionCodes: PropTypes.object,
+};
 
-	// no static FIELD_NAME, codes are pulled through the API, not off the object directly
+// no static FIELD_NAME, codes are pulled through the API, not off the object directly
 
-	constructor(props) {
-		super(props);
-
-		this.state = {};
-	}
-
-	renderCode = code => {
-		return (
-			<div key={code.Code} className="redemption-code">
-				{code.Code}
-			</div>
-		);
-	};
-
-	renderCodes() {
-		const { redemptionCodes } = this.props;
-
-		if (!redemptionCodes || redemptionCodes.length === 0) {
-			return <div>None</div>;
-		}
-
-		return <div>{redemptionCodes.map(this.renderCode)}</div>;
-	}
-
-	render() {
-		return (
-			<div className="columned">
-				<div className="field-info">
-					<div className="date-label">
-						<span>{t('label')}</span>
-					</div>
-					<Disclaimer />
+export default function RedemptionCodesView({ redemptionCodes }) {
+	return (
+		<div className="columned">
+			<div className="field-info">
+				<div className="date-label">
+					<span>{t('label')}</span>
 				</div>
-				<div className="content-column">{this.renderCodes()}</div>
+				<Disclaimer />
 			</div>
-		);
-	}
+			<div className="content-column">
+				{!redemptionCodes?.length ? (
+					<div>None</div>
+				) : (
+					<div>
+						{redemptionCodes.map(code => (
+							<div key={code.Code} className="redemption-code">
+								{code.Code}
+							</div>
+						))}
+					</div>
+				)}
+			</div>
+		</div>
+	);
 }

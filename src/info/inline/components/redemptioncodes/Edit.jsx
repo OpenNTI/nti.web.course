@@ -22,7 +22,7 @@ class RedemptionCodesEdit extends React.Component {
 			hasLink: PropTypes.func.isRequired,
 			postToLink: PropTypes.func.isRequired,
 		}),
-		items: PropTypes.arrayOf(PropTypes.object),
+		items: PropTypes.object,
 		onValueChange: PropTypes.func,
 		store: PropTypes.shape({
 			setCourse: PropTypes.func.isRequired,

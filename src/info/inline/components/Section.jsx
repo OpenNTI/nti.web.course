@@ -55,7 +55,7 @@ export default class Section extends React.Component {
 		inlinePlacement: PropTypes.bool,
 		hideDeleteBlock: PropTypes.bool,
 		className: PropTypes.string,
-		redemptionCodes: PropTypes.arrayOf(PropTypes.object),
+		redemptionCodes: PropTypes.object,
 		title: PropTypes.string,
 		done: PropTypes.bool,
 		hideCancel: PropTypes.bool,
