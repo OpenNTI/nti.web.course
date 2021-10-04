@@ -54,6 +54,10 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 		return !!this.service?.capabilities.canAddCreditTypes;
 	}
 
+	clearError() {
+		this.set({ error: null });
+	}
+
 	async removeCreditType(values) {
 		if (!Array.isArray(values)) values = [values].filter(Boolean);
 		if (!values.length) {

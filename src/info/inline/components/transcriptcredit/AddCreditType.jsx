@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useStoreValue } from '@nti/lib-store';
 import { scoped } from '@nti/lib-locale';
@@ -77,9 +77,12 @@ export default function AddCreditType({ onSave: _onSave, onDismiss }) {
 		type: '',
 		precision: 2,
 	});
-	const { saveCreditType, error } = useStoreValue();
+	const { clearError, error, saveCreditType } = useStoreValue();
 
 	useNoConflictResolver();
+
+	// clear the error on unmount
+	useEffect(() => () => clearError(), []);
 
 	const onSave = async () => {
 		const result = await saveCreditType({ type, unit, precision });

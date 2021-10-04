@@ -77,7 +77,7 @@ const findNewID = types => {
 };
 
 function ManageCreditTypes({ onValuesUpdated }) {
-	const { types: _types, removeCreditType } = useStoreValue();
+	const { types: _types, clearError, removeCreditType } = useStoreValue();
 	const [{ types, typeInEditMode, flaggedForRemoval }, setState] =
 		useReducerState({
 			types: null,
@@ -115,6 +115,7 @@ function ManageCreditTypes({ onValuesUpdated }) {
 	};
 
 	const onExitEditMode = type => {
+		clearError();
 		setState({ typeInEditMode: null });
 	};
 
