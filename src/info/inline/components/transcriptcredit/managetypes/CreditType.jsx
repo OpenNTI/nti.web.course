@@ -154,6 +154,7 @@ export function CreditType({
 			<Row className="credit-type" disabled={disabled} edit={inEditMode}>
 				{inEditMode ? (
 					<Input
+						autoFocus
 						className="type"
 						value={definition.type}
 						onChange={onChange.bind(null, 'type')}

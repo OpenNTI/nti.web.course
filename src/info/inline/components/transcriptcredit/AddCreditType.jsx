@@ -101,6 +101,7 @@ export default function AddCreditType({ onSave: _onSave, onDismiss }) {
 				<InputBox>
 					<Header>Type</Header>
 					<Input.Text
+						autoFocus
 						value={type}
 						className="type"
 						onChange={v => setState({ type: v })}
