@@ -103,6 +103,7 @@ function ManageCreditTypes({ onValuesUpdated }) {
 			addID: findNewID(types),
 			type: '',
 			unit: '',
+			precision: 2,
 			disabled: false,
 			addedRow: true,
 		};
