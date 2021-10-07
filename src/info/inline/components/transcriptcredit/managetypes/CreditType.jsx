@@ -5,6 +5,8 @@ import { Button, useReducerState } from '@nti/web-core';
 import { useStoreValue } from '@nti/lib-store';
 import { equals } from '@nti/lib-commons';
 
+import { PrecisionInput as _PrecisionInput } from './PrecisionInput';
+
 //#region Paint
 
 export const ErrorMessage = styled('div').attrs({ className: 'error' })`
@@ -66,7 +68,7 @@ const Input = styled(_Input.Text)`
 	width: 0;
 `;
 
-const NumberInput = styled(_Input.Number)`
+const PrecisionInput = styled(_PrecisionInput)`
 	flex: 1 1 33%;
 	width: 0;
 `;
@@ -174,7 +176,7 @@ export function CreditType({
 				)}
 
 				{inEditMode ? (
-					<NumberInput
+					<PrecisionInput
 						className="precision"
 						value={definition.precision}
 						onChange={onChange.bind(null, 'precision')}

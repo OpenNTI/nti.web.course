@@ -6,6 +6,7 @@ import { Input, DialogButtons, Panels } from '@nti/web-commons';
 import { useReducerState } from '@nti/web-core';
 
 import { useNoConflictResolver } from './managetypes/ManageCreditTypes';
+import { PrecisionInput } from './managetypes/PrecisionInput';
 
 const t = scoped(
 	'course.info.inline.components.transcriptcredit.AddCreditType',
@@ -119,7 +120,7 @@ export default function AddCreditType({ onSave: _onSave, onDismiss }) {
 
 				<InputBox>
 					<Header>Precision</Header>
-					<Input.Number
+					<PrecisionInput
 						value={precision}
 						className="precision"
 						onChange={v => setState({ precision: v })}
