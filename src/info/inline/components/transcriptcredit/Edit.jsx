@@ -13,6 +13,7 @@ import Disclaimer from './Disclaimer';
 import Store from './managetypes/Store';
 import CreditEntry from './CreditEntry';
 import { AddCreditType } from './AddCreditType';
+import { getError } from './errors';
 
 const t = scoped('course.info.inline.components.transcriptcredit.edit', {
 	label: 'Credits',
@@ -139,7 +140,9 @@ function TranscriptCreditEdit({
 								</LegacyCredits>
 							)}
 							<div className="content">
-								{error && <ErrorMessage error={error} />}
+								{error && (
+									<ErrorMessage error={getError(error)} />
+								)}
 								<div className="credit-entries">
 									{(entries || []).map(entry => (
 										<CreditEntry
