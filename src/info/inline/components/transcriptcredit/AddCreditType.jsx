@@ -27,7 +27,7 @@ const ErrorMessage = styled('div').attrs({ className: 'error' })`
 	color: red;
 	font-size: 14px;
 	margin-bottom: 0.5rem;
-	max-width: 18rem;
+	grid-column: 1 / -1;
 `;
 
 const Title = styled(Panels.TitleBar)`
@@ -47,8 +47,8 @@ const Header = styled('div').attrs({ className: 'header-text' })`
 const Content = styled.div`
 	padding: 1rem;
 	text-align: center;
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: 1fr 1fr 0.5fr;
 	gap: 1rem;
 
 	input {
