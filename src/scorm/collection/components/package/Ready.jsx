@@ -109,15 +109,18 @@ class ReadyPackage extends React.Component {
 					<li onClick={this.deletePackage}>{t('delete')}</li>
 					{pack.hasLink('property-editor') && (
 						<li>
-							<LinkTo.Path
-								component="a"
+							<a
 								href={pack.getLink('property-editor')}
 								target="_blank"
 								rel="noreferrer"
 								onClick={e => e.stopPropagation()}
+								css={css`
+									color: inherit;
+									text-decoration: none;
+								`}
 							>
 								Property Editor
-							</LinkTo.Path>
+							</a>
 						</li>
 					)}
 				</ul>
