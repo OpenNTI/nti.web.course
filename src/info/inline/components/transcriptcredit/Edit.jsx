@@ -3,7 +3,7 @@ import { v4 as newId } from 'uuid';
 
 import { scoped } from '@nti/lib-locale';
 import { useStoreValue } from '@nti/lib-store';
-import { Prompt, useToggle } from '@nti/web-commons';
+import { Prompt } from '@nti/web-commons';
 import { ErrorMessage } from '@nti/web-core';
 
 import _AddButton from '../../widgets/AddButton';
@@ -79,7 +79,7 @@ function TranscriptCreditEdit({
 	const { canAddTypes, types: creditTypes } = useStoreValue();
 	// in this context, we are using type to indicate the type reference that we change
 	const [entries, setEntries] = useState(catalogEntry?.credits || EMPTY);
-	const [showAddModal, toggleAddModal] = useToggle();
+	const [showAddModal, setShowAddModal] = useState();
 	const remainingTypes = determineRemainingTypes(creditTypes, entries);
 	const hasLegacyCredit = Boolean(catalogEntry?.Credit?.[0]);
 	const infoText =
@@ -121,66 +121,70 @@ function TranscriptCreditEdit({
 
 	//#endregion
 
-	return !creditTypes ? null : (
+	return (
 		<>
-			<div className="columned transcript-credit-hours edit">
-				<div className="field-info">
-					<div className="date-label">{t('label')}</div>
-					<Disclaimer />
-				</div>
-				<Column>
-					<div className="credits-container edit">
-						{hasLegacyCredit && (
-							<LegacyCredits>
-								<CreditViewContents
-									{...{ catalogEntry, enrollmentAccess }}
-								/>
-							</LegacyCredits>
-						)}
-						<div className="content">
-							{error && <ErrorMessage error={error} />}
-							<div className="credit-entries">
-								{(entries || []).map(entry => (
-									<CreditEntry
-										key={getEffectiveId(entry)}
-										entry={entry}
-										onRemove={removeEntry}
-										onChange={onEntryChange}
-										remainingTypes={remainingTypes}
-										removable={entries?.length > 1}
-										editable
-									/>
-								))}
-							</div>
-							{remainingTypes?.length > 0 ? (
-								<AddButton
-									clickHandler={() => addEntry()}
-									className="add-credit"
-									label={t('addCredit')}
-								/>
-							) : creditTypes?.length > 0 &&
-							  !canAddTypes ? null : !canAddTypes ? (
-								<div>{t('noTypesCantAdd')}</div>
-							) : (
-								<div className="add-definition">
-									<InfoText>{infoText}</InfoText>
-									<AddDefinitionButton
-										onClick={toggleAddModal}
-									>
-										{t('addDefinition')}
-									</AddDefinitionButton>
-								</div>
-							)}
-						</div>
+			{!creditTypes ? null : (
+				<div className="columned transcript-credit-hours edit">
+					<div className="field-info">
+						<div className="date-label">{t('label')}</div>
+						<Disclaimer />
 					</div>
-				</Column>
-			</div>
+					<Column>
+						<div className="credits-container edit">
+							{hasLegacyCredit && (
+								<LegacyCredits>
+									<CreditViewContents
+										{...{ catalogEntry, enrollmentAccess }}
+									/>
+								</LegacyCredits>
+							)}
+							<div className="content">
+								{error && <ErrorMessage error={error} />}
+								<div className="credit-entries">
+									{(entries || []).map(entry => (
+										<CreditEntry
+											key={getEffectiveId(entry)}
+											entry={entry}
+											onRemove={removeEntry}
+											onChange={onEntryChange}
+											remainingTypes={remainingTypes}
+											removable={entries?.length > 1}
+											editable
+										/>
+									))}
+								</div>
+								{remainingTypes?.length > 0 ? (
+									<AddButton
+										clickHandler={() => addEntry()}
+										className="add-credit"
+										label={t('addCredit')}
+									/>
+								) : creditTypes?.length > 0 &&
+								  !canAddTypes ? null : !canAddTypes ? (
+									<div>{t('noTypesCantAdd')}</div>
+								) : (
+									<div className="add-definition">
+										<InfoText>{infoText}</InfoText>
+										<AddDefinitionButton
+											onClick={() =>
+												setShowAddModal(true)
+											}
+										>
+											{t('addDefinition')}
+										</AddDefinitionButton>
+									</div>
+								)}
+							</div>
+						</div>
+					</Column>
+				</div>
+			)}
 
 			{showAddModal && (
 				<Prompt.Dialog
 					closeOnMaskClick
 					closeOnEscape
-					onBeforeDismiss={() => toggleAddModal(false)}
+					onBeforeDismiss={() => setShowAddModal(false)}
 				>
 					<AddCreditType
 						existingTypes={creditTypes}
