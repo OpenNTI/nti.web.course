@@ -12,7 +12,7 @@ import {
 } from '@nti/web-commons';
 import { useStoreValue } from '@nti/lib-store';
 
-import AddCreditType from './AddCreditType';
+import { AddCreditType } from './AddCreditType';
 
 const t = scoped('course.info.inline.components.transcriptcredit.CreditEntry', {
 	addNewType: 'Add New Type...',

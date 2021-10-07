@@ -72,7 +72,7 @@ const InputBox = styled.div`
  * @param {() => void} props.onDismiss
  * @returns {JSX.Element}
  */
-export default function AddCreditType({ onSave: _onSave, onDismiss }) {
+export function AddCreditType({ onSave: _onSave, onDismiss }) {
 	const [{ unit, type, precision }, setState] = useReducerState({
 		unit: '',
 		type: '',

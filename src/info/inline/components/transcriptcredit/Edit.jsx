@@ -11,7 +11,7 @@ import { CreditViewContents } from '../credit/Contents';
 import Disclaimer from './Disclaimer';
 import Store from './managetypes/Store';
 import CreditEntry from './CreditEntry';
-import AddCreditType from './AddCreditType';
+import { AddCreditType } from './AddCreditType';
 
 const t = scoped('course.info.inline.components.transcriptcredit.edit', {
 	label: 'Credits',
