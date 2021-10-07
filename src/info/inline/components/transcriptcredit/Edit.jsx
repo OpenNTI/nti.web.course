@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { v4 as newId } from 'uuid';
 
 import { scoped } from '@nti/lib-locale';
 import { useStoreValue } from '@nti/lib-store';
@@ -111,7 +112,7 @@ function TranscriptCreditEdit({
 		setEntries([
 			...entries,
 			{
-				addID: findNewID(entries),
+				addID: newId(),
 				amount: 1,
 				creditDefinition: providedType || remainingTypes[0],
 			},
@@ -206,17 +207,6 @@ function determineRemainingTypes(creditTypes, credits) {
 
 function getEffectiveId(entry) {
 	return entry.NTIID || entry.addID;
-}
-
-function findNewID(entries) {
-	const existingIDs = entries
-		.filter(x => x.addID)
-		.map(x => parseInt(x.addID, 10))
-		.sort();
-
-	let newID =
-		existingIDs.length === 0 ? 1 : existingIDs[existingIDs.length - 1] + 1;
-	return newID.toString();
 }
 
 function updateValues(onValueChange, entries, error) {
