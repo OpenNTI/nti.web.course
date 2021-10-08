@@ -101,8 +101,9 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 
 	getDefinition(data) {
 		const items = this.get(ITEMS);
-		const existing =
-			data?.NTIID && items?.find(x => x.NTIID === data.NTIID);
+		const existing = (
+			data?.NTIID && items?.find(x => x.NTIID === data.NTIID)
+		).getStagingInstance();
 
 		let definition = existing;
 

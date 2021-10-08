@@ -126,7 +126,7 @@ export function CreditType({
 	};
 
 	const onCancel = () => {
-		setState({ definition: type });
+		setState({ definition: { ...type } });
 		exitEdit();
 		if (type.addedRow) {
 			onNewEntryCancel?.();
@@ -134,13 +134,8 @@ export function CreditType({
 	};
 
 	const onConfirm = async () => {
-		let good = true;
 		if (definition.addedRow || !equals(type, definition)) {
-			good = !!(await saveCreditType(definition));
-		}
-
-		if (good) {
-			exitEdit();
+			if (await saveCreditType(definition)) exitEdit();
 		}
 	};
 
