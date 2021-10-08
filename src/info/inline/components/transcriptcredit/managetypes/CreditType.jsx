@@ -5,7 +5,7 @@ import { Button, useReducerState } from '@nti/web-core';
 import { useStoreValue } from '@nti/lib-store';
 import { equals } from '@nti/lib-commons';
 
-import { PrecisionInput as _PrecisionInput } from './PrecisionInput';
+import { getLabel, PrecisionInput as _PrecisionInput } from './PrecisionInput';
 
 //#region Paint
 
@@ -70,6 +70,7 @@ const Input = styled(_Input.Text)`
 
 const PrecisionInput = styled(_PrecisionInput)`
 	flex: 1 1 33%;
+	max-width: unset;
 	width: 0;
 `;
 
@@ -177,7 +178,7 @@ export function CreditType({
 						onChange={onChange.bind(null, 'precision')}
 					/>
 				) : (
-					<Value>{definition.precision}</Value>
+					<Value>{getLabel(definition.precision)}</Value>
 				)}
 
 				<Controls edit={inEditMode || disabled}>

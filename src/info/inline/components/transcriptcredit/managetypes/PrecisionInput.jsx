@@ -1,6 +1,6 @@
 import { Input } from '@nti/web-commons';
 
-const getLabel = precision => {
+export const getLabel = precision => {
 	const { locale } = new Intl.NumberFormat().resolvedOptions();
 	const formatter = new Intl.NumberFormat(locale, {
 		minimumFractionDigits: precision,

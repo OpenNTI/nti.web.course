@@ -188,10 +188,15 @@ function AddNewType({ onClick }) {
 
 const EditableValue = React.forwardRef(({ entry, onChange }, ref) => (
 	<Input.Text
+		autoFocus
 		className="credit-value"
 		maxLength="6"
 		value={(entry.amount || '').toString()}
 		onChange={onChange}
+		placeholder={entry?.creditDefinition.format(0)}
+		// pattern={`[0-9]*[.,]?[0-9]{0,${
+		// 	entry?.creditDefinition?.precision ?? 2
+		// }}`}
 		pattern="[0-9]*[.,]?[0-9]+"
 		ref={ref}
 	/>

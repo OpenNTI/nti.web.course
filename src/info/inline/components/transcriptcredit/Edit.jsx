@@ -110,12 +110,13 @@ function TranscriptCreditEdit({
 	};
 
 	const addEntry = providedType => {
+		const creditDefinition = providedType || remainingTypes[0];
 		setEntries([
 			...entries,
 			{
 				addID: newId(),
-				amount: 1,
-				creditDefinition: providedType || remainingTypes[0],
+				amount: creditDefinition?.format(1) ?? 1,
+				creditDefinition,
 			},
 		]);
 	};

@@ -48,7 +48,7 @@ const Content = styled.div`
 	padding: 1rem;
 	text-align: center;
 	display: grid;
-	grid-template-columns: 1fr 1fr 0.5fr;
+	grid-template-columns: 1fr 1fr 0.8fr;
 	gap: 1rem;
 
 	input {
