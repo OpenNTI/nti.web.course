@@ -48,7 +48,10 @@ function useAdminProgress(course) {
 					course,
 				};
 
-				_progress = await course.fetchLink('ProgressStats');
+				_progress = await course.fetchLink({
+					mode: 'raw',
+					rel: 'ProgressStats',
+				});
 			} catch (e) {
 				_progress = e;
 			} finally {

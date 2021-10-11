@@ -74,7 +74,7 @@ export default class ScormCollectionStore extends Stores.BoundStore {
 		});
 
 		try {
-			const packages = await course.fetchLinkParsed('ScormInstances');
+			const packages = await course.fetchLink('ScormInstances');
 			const sorted = packages.sort((a, b) => {
 				if (isPinnedPackage(a) && !isPinnedPackage(b)) {
 					return -1;

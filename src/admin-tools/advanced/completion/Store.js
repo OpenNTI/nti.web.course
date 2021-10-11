@@ -165,7 +165,10 @@ export default class CourseAdminCompletionStore extends Stores.SimpleStore {
 
 		const { CatalogEntry } = course;
 		const certificateRenderers = (
-			await CatalogEntry.fetchLink('CertificateRenderers')
+			await CatalogEntry.fetchLink({
+				mode: 'raw',
+				rel: 'CertificateRenderers',
+			})
 		).terms.map(({ value }) => value);
 
 		let state = {

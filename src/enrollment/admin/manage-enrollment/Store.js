@@ -28,7 +28,7 @@ async function resolveCourse(course) {
 
 async function getUserEnrollment(user, course) {
 	try {
-		const enrollments = await user.fetchLinkParsed('UserEnrollments');
+		const enrollments = await user.fetchLink('UserEnrollments');
 
 		for (let enrollment of enrollments) {
 			if (enrollment.CatalogEntry.getID() === course.getID()) {
@@ -143,7 +143,7 @@ export default class AdminEnrollmentManagementStore extends Stores.BoundStore {
 		this.set({ loading: true, error: null });
 
 		try {
-			await enrollment.requestLink('CourseDrop', 'delete');
+			await enrollment.deleteLink('CourseDrop');
 
 			const options = await getEnrollmentOptions(this.course, null);
 

@@ -107,7 +107,10 @@ export default class TabNameStore extends Stores.BoundStore {
 
 		try {
 			const course = this.binding;
-			const overrides = await course.fetchLink('GetCourseTabPreferences');
+			const overrides = await course.fetchLink({
+				mode: 'raw',
+				rel: 'GetCourseTabPreferences',
+			});
 			const tabs = formatTabs(course, overrides);
 
 			this.set({

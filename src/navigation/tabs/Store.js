@@ -51,7 +51,10 @@ export default class CourseTabStore extends Stores.BoundStore {
 	);
 
 	static async getTabLabelForCourse(course, tabId) {
-		const overrides = await course.fetchLink('GetCourseTabPreferences');
+		const overrides = await course.fetchLink({
+			mode: 'raw',
+			rel: 'GetCourseTabPreferences',
+		});
 		const tabs = formatTabs(course, overrides);
 
 		for (let tab of tabs) {
@@ -79,7 +82,10 @@ export default class CourseTabStore extends Stores.BoundStore {
 		const course = this.binding;
 
 		try {
-			const overrides = await course.fetchLink('GetCourseTabPreferences');
+			const overrides = await course.fetchLink({
+				mode: 'raw',
+				rel: 'GetCourseTabPreferences',
+			});
 
 			this.set({
 				tabs: formatTabs(course, overrides),

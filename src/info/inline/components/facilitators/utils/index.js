@@ -224,7 +224,7 @@ export function getVisibleFacilitators(entry) {
 }
 
 export async function getAllFacalitators(entry, instance) {
-	const roles = await instance.fetchLink('roles');
+	const roles = await instance.fetchLink({ mode: 'raw', rel: 'roles' });
 
 	const instructors = roles?.roles?.instructors?.Items ?? [];
 	const editors = roles?.roles?.editors?.Items ?? [];

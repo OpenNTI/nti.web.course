@@ -84,9 +84,10 @@ export default function RemainingItems({ course, enrollment, readOnly }) {
 		const nodes = await contentWalker.getNodes();
 		const lessons = await Promise.all(nodes.map(n => n.getItem()));
 
-		const summary = await parent.fetchLink(
-			'UserLessonCompletionStatsByOutlineNode'
-		);
+		const summary = await parent.fetchLink({
+			mode: 'raw',
+			rel: 'UserLessonCompletionStatsByOutlineNode',
+		});
 
 		const enrollmentCompletedItems = enrollment
 			? await enrollment.getCompletedItems()

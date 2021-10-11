@@ -49,7 +49,7 @@ describe('Course admin advanced completion test (with requirables)', () => {
 		const course = {
 			CatalogEntry: {
 				fetchLink: rel => {
-					if (rel === 'CertificateRenderers') {
+					if ((rel?.rel || rel) === 'CertificateRenderers') {
 						return {
 							terms: [{ value: 'wut' }],
 						};
@@ -82,7 +82,7 @@ describe('Course admin advanced completion test (with requirables)', () => {
 		const course = {
 			CatalogEntry: {
 				fetchLink: rel => {
-					if (rel === 'CertificateRenderers') {
+					if ((rel?.rel || rel) === 'CertificateRenderers') {
 						return {
 							terms: [{ value: 'wut' }],
 						};
@@ -109,7 +109,7 @@ describe('Course admin advanced completion test (with requirables)', () => {
 		const course = {
 			CatalogEntry: {
 				fetchLink: rel => {
-					if (rel === 'CertificateRenderers') {
+					if ((rel?.rel || rel) === 'CertificateRenderers') {
 						return {
 							terms: [{ value: 'wut' }],
 						};
@@ -141,7 +141,7 @@ describe('Course admin advanced completion test (with requirables)', () => {
 		const course = {
 			CatalogEntry: {
 				fetchLink: rel => {
-					if (rel === 'CertificateRenderers') {
+					if ((rel?.rel || rel) === 'CertificateRenderers') {
 						return {
 							terms: [{ value: 'wut' }],
 						};
@@ -179,7 +179,7 @@ describe('Course admin advanced completion test (no requirables)', () => {
 		const course = {
 			CatalogEntry: {
 				fetchLink: rel => {
-					if (rel === 'CertificateRenderers') {
+					if ((rel?.rel || rel) === 'CertificateRenderers') {
 						return {
 							terms: [{ value: 'wut' }],
 						};

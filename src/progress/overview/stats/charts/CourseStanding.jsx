@@ -61,7 +61,10 @@ export default class CourseStanding extends React.Component {
 				const { course, enrollment, large } = props;
 
 				try {
-					const stats = await course.fetchLink('ProgressStats');
+					const stats = await course.fetchLink({
+						mode: 'raw',
+						rel: 'ProgressStats',
+					});
 
 					this.setState({
 						loading: false,

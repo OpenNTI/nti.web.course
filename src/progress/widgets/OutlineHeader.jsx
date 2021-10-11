@@ -76,7 +76,10 @@ class OutlineHeader extends React.Component {
 
 	async loadAdminProgress(course) {
 		try {
-			const courseProgress = await course.fetchLink('ProgressStats');
+			const courseProgress = await course.fetchLink({
+				mode: 'raw',
+				rel: 'ProgressStats',
+			});
 
 			const studentsFinished = courseProgress.CountCompleted || 0;
 

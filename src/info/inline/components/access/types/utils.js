@@ -19,7 +19,10 @@ export const getPrice = course => {
 };
 
 export const setOpenEnrollment = async (course, allow) => {
-	const vendorInfo = await course.fetchLink('VendorInfo');
+	const vendorInfo = await course.fetchLink({
+		mode: 'raw',
+		rel: 'VendorInfo',
+	});
 
 	const deny = !allow;
 

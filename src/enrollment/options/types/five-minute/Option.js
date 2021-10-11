@@ -126,7 +126,10 @@ export default class FiveMinuteEnrollmentOption extends Base {
 		}
 
 		try {
-			const resp = await this.option.fetchLink('fmaep.course.details');
+			const resp = await this.option.fetchLink({
+				mode: 'raw',
+				rel: 'fmaep.course.details',
+			});
 
 			this.availableSeats = resp.Course.SeatAvailable;
 		} catch (e) {

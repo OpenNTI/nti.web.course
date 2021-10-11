@@ -259,7 +259,7 @@ export default class WebinarButton extends React.Component {
 			const { webinar, onUnregister } = this.props;
 
 			webinar
-				.requestLink('WebinarUnRegister', 'delete')
+				.deleteLink('WebinarUnRegister')
 				.then(() => webinar.refresh())
 				.then(() => onUnregister && onUnregister());
 		};

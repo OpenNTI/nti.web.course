@@ -13,7 +13,7 @@ describe('Scorm progress view test', () => {
 			getID: () => {},
 			getLink: () => {},
 			fetchLink: rel => {
-				if (isInstructor && rel === 'ProgressStats') {
+				if (isInstructor && (rel?.rel || rel) === 'ProgressStats') {
 					return Promise.resolve({
 						PercentageProgress: 0.5,
 					});

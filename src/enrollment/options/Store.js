@@ -5,7 +5,7 @@ import { getTypeFor, Unknown } from './types';
 
 async function getPreferredAccess(catalogEntry) {
 	try {
-		const access = await catalogEntry.fetchLinkParsed(
+		const access = await catalogEntry.fetchLink(
 			'UserCoursePreferredAccess'
 		);
 

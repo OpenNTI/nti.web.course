@@ -2,12 +2,14 @@ const TODAY = new Date();
 const YESTERDAY = TODAY.setDate(TODAY.getDate() - 1);
 const TOMORROW = TODAY.setDate(TODAY.getDate() + 1);
 
-const IMIS = 'application/vnd.nextthought.courseware.ensyncimisexternalenrollmentoption';
-const FIVE_MINUTE = 'application/vnd.nextthought.courseware.fiveminuteenrollmentoption';
+const IMIS =
+	'application/vnd.nextthought.courseware.ensyncimisexternalenrollmentoption';
+const FIVE_MINUTE =
+	'application/vnd.nextthought.courseware.fiveminuteenrollmentoption';
 const OPEN = 'application/vnd.nextthought.courseware.openenrollmentoption';
 const STORE = 'application/vnd.nextthought.courseware.storeenrollmentoption';
 
-function buildOption () {
+function buildOption() {
 	let o = {};
 
 	let mimeType = null;
@@ -24,42 +26,42 @@ function buildOption () {
 	let enrollmentURL = null;
 	let seatAvailable = null;
 
-	o.type = (x) => {
+	o.type = x => {
 		mimeType = x;
 		return o;
 	};
 
-	o.enrolled = (x) => {
+	o.enrolled = x => {
 		isEnrolled = x;
 		return o;
 	};
 
-	o.available = (x) => {
+	o.available = x => {
 		isAvailable = x;
 		return o;
 	};
 
-	o.dropTitle = (x) => {
+	o.dropTitle = x => {
 		dropTitle = x;
 		return o;
 	};
 
-	o.dropDescription = (x) => {
+	o.dropDescription = x => {
 		dropDescription = x;
 		return o;
 	};
 
-	o.enrollmentCutoff = (x) => {
+	o.enrollmentCutoff = x => {
 		enrollCutoff = x;
 		return o;
 	};
 
-	o.dropCutoff = (x) => {
+	o.dropCutoff = x => {
 		dropCutoff = x;
 		return o;
 	};
 
-	o.ouPrice = (x) => {
+	o.ouPrice = x => {
 		ouPrice = x;
 		return o;
 	};
@@ -69,18 +71,17 @@ function buildOption () {
 	// 	return o;
 	// };
 
-	o.purchasables = (x) => {
+	o.purchasables = x => {
 		purchasables = x;
 		return o;
 	};
 
-	o.enrollmentURL = (x) => {
+	o.enrollmentURL = x => {
 		enrollmentURL = x;
 		return o;
 	};
 
-
-	o.seatAvailable = (x) => {
+	o.seatAvailable = x => {
 		seatAvailable = x;
 		return o;
 	};
@@ -92,59 +93,59 @@ function buildOption () {
 			available: isAvailable,
 			description,
 			title,
-			'drop_description': dropDescription,
-			'drop_title': dropTitle,
-			'OU_DropCutOffDate': dropCutoff,
-			'OU_EnrollCutOffDate': enrollCutoff,
-			'OU_Price': ouPrice,
-			'Purchasables': purchasables,
+			drop_description: dropDescription,
+			drop_title: dropTitle,
+			OU_DropCutOffDate: dropCutoff,
+			OU_EnrollCutOffDate: enrollCutoff,
+			OU_Price: ouPrice,
+			Purchasables: purchasables,
 			enrollmentURL,
-			fetchLink: (link) => {
+			fetchLink: link => {
 				if (link === 'fmaep.course.details') {
 					if (seatAvailable) {
-						return {Course: {SeatAvailable: seatAvailable}};
+						return { Course: { SeatAvailable: seatAvailable } };
 					}
 
 					throw new Error('Api Down');
 				}
 			},
-			getPurchasable () {
+			getPurchasable() {
 				return purchasables && purchasables.Items[0];
 			},
-			getPurchasableForGifting () {
+			getPurchasableForGifting() {
 				const item = purchasables && purchasables.Items[0];
 
 				return item && item.Giftable && item;
 			},
-			getPurchasableForRedeeming () {
+			getPurchasableForRedeeming() {
 				const item = purchasables && purchasables.Items[0];
 
 				return item && item.Redeemable && item;
-			}
+			},
 		};
 	};
 
 	return o;
 }
 
-function buildPurchasable () {
+function buildPurchasable() {
 	let price = null;
 	let giftable = false;
 	let redeemable = false;
 
 	let p = {};
 
-	p.price = (x) => {
+	p.price = x => {
 		price = x;
 		return p;
 	};
 
-	p.giftable = (x) => {
+	p.giftable = x => {
 		giftable = x;
 		return p;
 	};
 
-	p.redeemable = (x) => {
+	p.redeemable = x => {
 		redeemable = x;
 		return p;
 	};
@@ -159,16 +160,16 @@ function buildPurchasable () {
 				{
 					Giftable: giftable,
 					Redeemable: redeemable,
-					amount: price
-				}
-			]
+					amount: price,
+				},
+			],
 		};
 	};
 
 	return p;
 }
 
-function buildCourse () {
+function buildCourse() {
 	let enrolled = false;
 	let admin = false;
 	let startDate = null;
@@ -177,62 +178,59 @@ function buildCourse () {
 
 	let c = {};
 
-	c.addOption = (x) => {
+	c.addOption = x => {
 		options.push(x);
 		return c;
 	};
 
-	c.enrolled = (x) => {
+	c.enrolled = x => {
 		enrolled = x;
 		return c;
 	};
 
-	c.admin = (x) => {
+	c.admin = x => {
 		admin = x;
 		return c;
 	};
 
-
-	c.startDate = (x) => {
+	c.startDate = x => {
 		startDate = x;
 		return c;
 	};
 
-	c.endDate = (x) => {
+	c.endDate = x => {
 		endDate = x;
 		return c;
 	};
 
 	c.build = () => {
 		return {
-			getEnrollmentOptions () {
+			getEnrollmentOptions() {
 				return options;
 			},
 
-			async fetchLinkParsed (rel) {
+			async fetchLinkParsed(rel) {
 				if (rel === 'UserCoursePreferredAccess') {
 					if (!enrolled && !admin) {
 						throw new Error('Not Enrolled');
 					} else {
 						return {
 							isAdministrative: admin,
-							getCreatedTime () {
+							getCreatedTime() {
 								return YESTERDAY;
-							}
+							},
 						};
 					}
 				}
 			},
 
-
-			getStartDate () {
+			getStartDate() {
 				return startDate;
 			},
 
-
-			getEndDate () {
+			getEndDate() {
 				return endDate;
-			}
+			},
 		};
 	};
 
@@ -244,13 +242,7 @@ export const course = buildCourse()
 	.admin(false)
 	.startDate(TOMORROW)
 	// .endDate(YESTERDAY)
-	.addOption(
-		buildOption()
-			.type(OPEN)
-			.available(false)
-			.enrolled(true)
-			.build()
-	)
+	.addOption(buildOption().type(OPEN).available(false).enrolled(true).build())
 	.addOption(
 		buildOption()
 			.type(FIVE_MINUTE)

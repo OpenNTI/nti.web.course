@@ -113,11 +113,14 @@ export default class EnrollmentOptionsStore extends Stores.SimpleStore {
 
 		await this.catalogEntry.refresh();
 
-		const vendorInfo = await courseInstance.fetchLink('VendorInfo');
+		const vendorInfo = await courseInstance.fetchLink({
+			mode: 'raw',
+			rel: 'VendorInfo',
+		});
 
 		this.vendorInfo = vendorInfo;
 
-		const optionsContainer = await this.catalogEntry.fetchLinkParsed(
+		const optionsContainer = await this.catalogEntry.fetchLink(
 			'EnrollmentOptions'
 		);
 

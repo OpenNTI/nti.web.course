@@ -138,7 +138,7 @@ describe('OutlineHeader view test', () => {
 				return rel === 'ProgressStats';
 			},
 			fetchLink: rel => {
-				if (rel === 'ProgressStats') {
+				if ((rel?.rel || rel) === 'ProgressStats') {
 					return new Models.courses.CourseProgress(null, null, {
 						CountCompleted: 1,
 						AbsoluteProgress: 2,
@@ -168,7 +168,7 @@ describe('OutlineHeader view test', () => {
 				return rel === 'ProgressStats';
 			},
 			fetchLink: rel => {
-				if (rel === 'ProgressStats') {
+				if ((rel?.rel || rel) === 'ProgressStats') {
 					return new Models.courses.CourseProgress(null, null, {
 						CountCompleted: 2,
 						AbsoluteProgress: 2,
@@ -198,7 +198,7 @@ describe('OutlineHeader view test', () => {
 				return rel === 'ProgressStats';
 			},
 			fetchLink: rel => {
-				if (rel === 'ProgressStats') {
+				if ((rel?.rel || rel) === 'ProgressStats') {
 					return new Models.courses.CourseProgress(null, null, {
 						CountCompleted: 4,
 						AbsoluteProgress: 4,

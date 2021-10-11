@@ -17,7 +17,7 @@ describe('Scorm view test', () => {
 			getID: () => {},
 			getLink: () => {},
 			fetchLink: rel => {
-				if (rel === 'ProgressStats') {
+				if ((rel?.rel || rel) === 'ProgressStats') {
 					return Promise.resolve({
 						PercentageProgress: 0.5,
 					});

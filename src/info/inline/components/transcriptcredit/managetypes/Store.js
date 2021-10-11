@@ -162,9 +162,7 @@ export default class CreditTypesStore extends Stores.SimpleStore {
 
 		if (defsCollection) {
 			try {
-				const existingTypes = await defsCollection.fetchLinkParsed(
-					'self'
-				);
+				const existingTypes = await defsCollection.fetchLink('self');
 				this.set({
 					loading: false,
 					[ITEMS]: existingTypes ?? [],

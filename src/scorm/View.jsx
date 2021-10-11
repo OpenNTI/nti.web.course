@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { Layouts } from '@nti/web-commons';
-import { Button } from "@nti/web-core";
+import { Button } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 import Editor from './Editor';
@@ -29,7 +29,6 @@ class Scorm extends Component {
 			getID: PropTypes.func.isRequired,
 			getLink: PropTypes.func.isRequired,
 			hasLink: PropTypes.func.isRequired,
-			fetchLink: PropTypes.func.isRequired,
 			CompletionPolicy: PropTypes.any,
 			title: PropTypes.string.isRequired,
 			isAdministrative: PropTypes.bool,

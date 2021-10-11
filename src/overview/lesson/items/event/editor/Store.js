@@ -92,7 +92,7 @@ export default class CourseEventsStore extends Stores.BoundStore {
 		});
 
 		try {
-			const calendar = await course.fetchLinkParsed('CourseCalendar');
+			const calendar = await course.fetchLink('CourseCalendar');
 			const service = await getService();
 			const newData = {
 				MimeType: Models.calendar.CourseCalendarEvent.MimeType,
@@ -195,9 +195,12 @@ export default class CourseEventsStore extends Stores.BoundStore {
 
 		try {
 			const { course } = this.binding;
-			const calendar = await course.fetchLinkParsed('CourseCalendar');
-			events = await calendar.fetchLinkParsed('contents', {
-				exclude_dynamic_events: true,
+			const calendar = await course.fetchLink('CourseCalendar');
+			events = await calendar.fetchLink({
+				rel: 'contents',
+				params: {
+					exclude_dynamic_events: true,
+				},
 			});
 
 			if (this.searchTerm) {

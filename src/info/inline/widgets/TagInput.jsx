@@ -58,10 +58,11 @@ export default class CourseTagInput extends React.Component {
 			return null;
 		}
 
-		const suggestions = await collection.fetchLink(
-			SUGGESTED_REL,
-			match ? { filter: match } : null
-		);
+		const suggestions = await collection.fetchLink({
+			mode: 'raw',
+			rel: SUGGESTED_REL,
+			params: match ? { filter: match } : null,
+		});
 
 		return suggestions
 			? suggestions.Items.map(s => s.tag.toUpperCase())
