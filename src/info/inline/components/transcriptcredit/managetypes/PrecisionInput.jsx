@@ -1,4 +1,4 @@
-import { Input } from '@nti/web-commons';
+import { Select } from '@nti/web-commons';
 
 export const getLabel = precision => {
 	const { locale } = new Intl.NumberFormat().resolvedOptions();
@@ -9,17 +9,26 @@ export const getLabel = precision => {
 	return formatter.format(0);
 };
 
-export function PrecisionInput(props) {
+export function PrecisionInput({ onChange, ...props }) {
+	const change = e => {
+		onChange?.(parseInt(e.target.selectedOptions[0]?.value, 10));
+	};
 	return (
-		<Input.Select
+		<Select
 			{...props}
+			onChange={change}
 			css={css`
 				max-width: 75px;
 				text-align: left;
+				line-height: 2rem;
+				border-radius: 2px;
+				box-shadow: 0 0 0 1px var(--border-grey-light);
+				background-color: var(--panel-background);
+				color: var(--secondary-grey);
 			`}
 		>
-			<Input.Select.Option value={1}>{getLabel(1)}</Input.Select.Option>
-			<Input.Select.Option value={2}>{getLabel(2)}</Input.Select.Option>
-		</Input.Select>
+			<option value={1}>{getLabel(1)}</option>
+			<option value={2}>{getLabel(2)}</option>
+		</Select>
 	);
 }
