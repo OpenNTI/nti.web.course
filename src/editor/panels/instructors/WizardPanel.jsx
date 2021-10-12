@@ -124,7 +124,7 @@ export default function InstructorsWizardPanel({
 				/>
 				<div
 					className="course-panel-cancel"
-					secondary
+					// secondary
 					onClick={onCancel}
 				>
 					{t('cancel')}
