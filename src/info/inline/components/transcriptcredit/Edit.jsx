@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as newId } from 'uuid';
 
 import { scoped } from '@nti/lib-locale';

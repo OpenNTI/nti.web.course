@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { Input as _Input, Prompt } from '@nti/web-commons';
 import { Button, useReducerState } from '@nti/web-core';

@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import Completion from '../../../admin-tools/advanced/completion';

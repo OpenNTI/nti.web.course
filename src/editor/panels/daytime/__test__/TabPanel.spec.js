@@ -1,5 +1,4 @@
 /* eslint-env jest */
-import React from 'react';
 import PropTypes from 'prop-types';
 import { render, fireEvent, waitFor } from '@testing-library/react';
 

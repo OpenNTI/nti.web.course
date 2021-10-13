@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { ConflictResolution } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';

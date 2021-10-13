@@ -1,4 +1,3 @@
-import React from 'react';
 
 import {Color} from '@nti/lib-commons';
 import {Input} from '@nti/web-commons';

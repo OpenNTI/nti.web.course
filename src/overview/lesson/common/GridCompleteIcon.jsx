@@ -1,5 +1,4 @@
 import './GridCompleteIcon.scss';
-import React from 'react';
 
 export default function GridCompleteIcon() {
 	return (

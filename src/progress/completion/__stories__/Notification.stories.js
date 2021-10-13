@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import Notification from '../Notification.jsx';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { DateTime } from '@nti/web-commons';
 import { Button } from '@nti/web-core';

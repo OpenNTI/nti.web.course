@@ -1,4 +1,3 @@
-import React from 'react';
 
 import SeatLimitDisplay from '../../../../info/inline/components/seat-limit/components/Display';
 import PaddedContainer from '../../common/PaddedContainer';

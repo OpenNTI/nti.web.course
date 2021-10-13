@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { AssetIcon, Text } from '@nti/web-commons';
 

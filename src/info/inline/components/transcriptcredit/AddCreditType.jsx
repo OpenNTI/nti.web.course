@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useStoreValue } from '@nti/lib-store';
 import { scoped } from '@nti/lib-locale';

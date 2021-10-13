@@ -1,4 +1,3 @@
-import React from 'react';
 import cx from 'classnames';
 
 const cxm = cls => props => ({ ...props, className: cx(cls, props.className) });

@@ -1,5 +1,4 @@
 /* eslint-env jest */
-import React from 'react';
 import TestRenderer from 'react-test-renderer';
 
 import { Input } from '@nti/web-commons';

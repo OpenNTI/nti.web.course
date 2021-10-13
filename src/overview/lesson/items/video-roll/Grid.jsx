@@ -1,4 +1,3 @@
-import React from 'react';
 
 import { Layouts } from '@nti/web-commons';
 
