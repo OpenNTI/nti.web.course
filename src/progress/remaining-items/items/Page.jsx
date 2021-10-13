@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -112,7 +112,7 @@ function RemainingItemsPage({
 	const error = isErrored(resolver) ? resolver : null;
 	const overview = isResolved(resolver) ? resolver : null;
 
-	const items = React.useMemo(
+	const items = useMemo(
 		() =>
 			getItems(
 				overview,
@@ -182,11 +182,11 @@ const MonitorElement = styled('div')`
 `;
 
 export default function RemainingItemsPageContainer(props) {
-	const [onScreen, setOnScreen] = React.useState(false);
-	const tripLikeIDo = React.useCallback(x => setOnScreen(onScreen || x), [
-		setOnScreen,
-		onScreen,
-	]);
+	const [onScreen, setOnScreen] = useState(false);
+	const tripLikeIDo = useCallback(
+		x => setOnScreen(onScreen || x),
+		[setOnScreen, onScreen]
+	);
 	return !onScreen ? (
 		<Monitor.OnScreen onChange={tripLikeIDo} as={MonitorElement} />
 	) : (

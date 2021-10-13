@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
@@ -35,13 +35,13 @@ export default function InstructorsWizardPanel({
 	saveCmp,
 }) {
 	const courseInstance = getCourseInstance(catalogEntry);
-	const [facilitators, setFacilitators] = React.useState(null);
-	const [error, setError] = React.useState(null);
-	const [saving, setSaving] = React.useState(false);
+	const [facilitators, setFacilitators] = useState(null);
+	const [error, setError] = useState(null);
+	const [saving, setSaving] = useState(false);
 
 	const SaveCmp = saveCmp;
 
-	React.useEffect(() => {
+	useEffect(() => {
 		let unmounted = false;
 
 		const loadUser = async () => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
@@ -66,8 +66,8 @@ RemainingItems.propTypes = {
 };
 
 export default function RemainingItems({ course, enrollment, readOnly }) {
-	const [active, setActive] = React.useState(AllItems);
-	const [requiredOnly, setRequiredOnly] = React.useState(true);
+	const [active, setActive] = useState(AllItems);
+	const [requiredOnly, setRequiredOnly] = useState(true);
 
 	const incompleteOnly = active === OnlyRemaining;
 
@@ -114,9 +114,9 @@ export default function RemainingItems({ course, enrollment, readOnly }) {
 		summary,
 	} = isResolved(resolver) ? resolver : {};
 
-	const [loaded, dispatch] = React.useReducer(loadMoreReducer, 0);
-	const next = React.useCallback(() => dispatch({ type: 'increment' }), []);
-	const filteredLessons = React.useMemo(
+	const [loaded, dispatch] = useReducer(loadMoreReducer, 0);
+	const next = useCallback(() => dispatch({ type: 'increment' }), []);
+	const filteredLessons = useMemo(
 		() =>
 			getLessonsToShow(
 				lessons ?? [],

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -16,7 +16,7 @@ RemainingItemsTab.propTypes = {
 	onSelect: PropTypes.func,
 };
 export default function RemainingItemsTab({ label, name, selected, onSelect }) {
-	const onChange = React.useCallback(
+	const onChange = useCallback(
 		e => {
 			if (!selected && e.target.checked) {
 				onSelect?.(name);

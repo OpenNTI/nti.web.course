@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import { scoped } from '@nti/lib-locale';
 import { Radio, Input } from '@nti/web-commons';
@@ -18,7 +18,7 @@ export default function SeatLimitEditor({
 	onValueChange,
 	error,
 }) {
-	const [pending, setPending] = React.useState(null);
+	const [pending, setPending] = useState(null);
 
 	const { SeatLimit } = pending ?? catalogEntry;
 	const { MaxSeats: max } = SeatLimit ?? {};

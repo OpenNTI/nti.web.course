@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Radio } from '@nti/web-commons';
@@ -20,7 +20,7 @@ export default function CourseAccessEditor({
 	onValueChange,
 	error,
 }) {
-	const [pending, setPending] = React.useState({});
+	const [pending, setPending] = useState({});
 
 	const updatePending = update => {
 		const newPending = { ...pending, ...update };
@@ -32,7 +32,7 @@ export default function CourseAccessEditor({
 	const available = getAvailableTypes(catalogEntry);
 	const Editor = available.find(a => a.Name === pending.active)?.Editor;
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const active = available.find(a => a.isActive(catalogEntry));
 
 		updatePending({ active: active.Name });

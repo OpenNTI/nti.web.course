@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
@@ -79,7 +79,7 @@ function CourseCollection({ getSectionTitle, children }) {
 	const empty =
 		!groups?.length || groups?.every(g => g.Items && g.Items.length === 0);
 
-	const scrollerRef = React.useRef();
+	const scrollerRef = useRef();
 
 	// The "load more" button is only here as a fallback for cases where <Scroll.BoundaryMonitor> events
 	// aren't working. This is a mythological occurrence--we've heard tales of it but have never actually
@@ -87,20 +87,17 @@ function CourseCollection({ getSectionTitle, children }) {
 	// when the next load is triggered--this reducer (along with a dispatch in the onBottom handler below)
 	// keeps track of whether the component has received any boundary monitor events. Once it has we assume
 	// it's safe to not show the load more button.
-	const [{ showLoadMoreButton }, dispatch] = React.useReducer(
-		(state, action) => {
-			const updated = { ...state, ...action };
-			return {
-				...updated,
-				showLoadMoreButton:
-					!loading &&
-					hasMore &&
-					updated.canScroll &&
-					!updated.receivingBoundaryEvents,
-			};
-		},
-		{}
-	);
+	const [{ showLoadMoreButton }, dispatch] = useReducer((state, action) => {
+		const updated = { ...state, ...action };
+		return {
+			...updated,
+			showLoadMoreButton:
+				!loading &&
+				hasMore &&
+				updated.canScroll &&
+				!updated.receivingBoundaryEvents,
+		};
+	}, {});
 
 	const onBoundaryBottom = !hasMore
 		? null
@@ -109,7 +106,7 @@ function CourseCollection({ getSectionTitle, children }) {
 				loadMore();
 		  };
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (loading) {
 			return;
 		}

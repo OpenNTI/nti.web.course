@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {getService} from '@nti/web-client';
 import classnames from 'classnames/bind';
 
+import { getService } from '@nti/web-client';
 
 import FacilitatorsView from '../../../src/info/inline/components/facilitators/View';
 import FacilitatorsEdit from '../../../src/info/inline/components/facilitators/Edit';
@@ -12,19 +12,23 @@ import styles from './View.css';
 const cx = classnames.bind(styles);
 import facilitators from './test-data';
 
-const Container = ({className, ...other}) => (
-	<div className={cx('course-info-editor-section', 'facilitators-test-container', className)}>
+const Container = ({ className, ...other }) => (
+	<div
+		className={cx(
+			'course-info-editor-section',
+			'facilitators-test-container',
+			className
+		)}
+	>
 		<div className="content" {...other} />
 	</div>
 );
 
-function FacilitatorsTest ({courseId}) {
+function FacilitatorsTest({ courseId }) {
+	const [courseInstance, setCourse] = useState();
 
-	const [courseInstance, setCourse] = React.useState();
-
-	React.useEffect(() => {
-		
-		async function setUp () {
+	useEffect(() => {
+		async function setUp() {
 			const service = await getService();
 			const instance = await service.getObject(courseId);
 			setCourse(instance);
@@ -33,28 +37,32 @@ function FacilitatorsTest ({courseId}) {
 		if (courseId && !courseInstance) {
 			setUp();
 		}
-
 	}, [courseId]);
 
 	return !courseInstance ? null : (
 		<div className={cx('facilitators-test')}>
 			<Container>
-				<FacilitatorsView courseInstance={courseInstance} facilitators={facilitators} />
+				<FacilitatorsView
+					courseInstance={courseInstance}
+					facilitators={facilitators}
+				/>
 			</Container>
 			<Container className="edit">
-				<FacilitatorsEdit courseInstance={courseInstance} facilitators={facilitators} />
+				<FacilitatorsEdit
+					courseInstance={courseInstance}
+					facilitators={facilitators}
+				/>
 			</Container>
 		</div>
 	);
 }
 
 FacilitatorsTest.propTypes = {
-	courseId: PropTypes.string
+	courseId: PropTypes.string,
 };
 
-
 export default class Test extends React.Component {
-	render () {
+	render() {
 		return (
 			<PickCourse>
 				<FacilitatorsTest />
@@ -62,4 +70,3 @@ export default class Test extends React.Component {
 		);
 	}
 }
-

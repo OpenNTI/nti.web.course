@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Input } from '@nti/web-commons';
@@ -15,10 +15,10 @@ export default function OneTimePurchaseEditor({
 	catalogEntry,
 	onChange: onChangeProp,
 }) {
-	const [amount, setAmount] = React.useState(null);
-	const [currency, setCurrency] = React.useState('USD');
+	const [amount, setAmount] = useState(null);
+	const [currency, setCurrency] = useState('USD');
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const price = getPrice(catalogEntry);
 
 		setAmount(price?.amount);

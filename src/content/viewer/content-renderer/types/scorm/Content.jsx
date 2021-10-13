@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { scoped } from '@nti/lib-locale';
 import { Button } from '@nti/web-core';
@@ -10,7 +10,7 @@ const t = scoped('web-course.content.viewer.content-renderer.types.scorm', {
 const ScormRedirect = 'scorm-redirect';
 
 // function usePostMessage(onMessage) {
-// 	React.useEffect(() => {
+// 	useEffect(() => {
 // 		global.addEventListener?.('message', onMessage);
 
 // 		return () => {

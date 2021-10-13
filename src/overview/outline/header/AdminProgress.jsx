@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -25,10 +25,10 @@ const LOAD_WAIT = 5000;
 const LoadingState = 'loading';
 
 function useAdminProgress(course) {
-	const lastLoad = React.useRef(null);
-	const [progress, setProgress] = React.useState(LoadingState);
+	const lastLoad = useRef(null);
+	const [progress, setProgress] = useState(LoadingState);
 
-	React.useEffect(() => {
+	useEffect(() => {
 		let cancelled = false;
 
 		const { current: last } = lastLoad;
