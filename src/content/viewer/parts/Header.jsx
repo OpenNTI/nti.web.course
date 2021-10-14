@@ -36,7 +36,7 @@ function isConstrained(next) {
 export class Registry extends Base.Handler {
 	/**
 	 * @param {(item: any) => boolean} predicate
-	 * @param {React.Component | () => React.ReactElement} Component
+	 * @param {React.Component | () => JSX.Element} Component
 	 */
 	static register(predicate, Component) {
 		this.getInstance().register(predicate, Component);
@@ -45,7 +45,7 @@ export class Registry extends Base.Handler {
 	/**
 	 *
 	 * @param {any} item
-	 * @returns {React.Component | () => React.ReactElement}
+	 * @returns {React.Component | () => JSX.Element}
 	 */
 	static lookup(item) {
 		const component = item && this.getInstance().getItem(item);

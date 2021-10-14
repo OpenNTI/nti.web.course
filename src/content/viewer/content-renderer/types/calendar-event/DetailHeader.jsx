@@ -26,7 +26,7 @@ Header.propTypes = {
 
 /**
  * @param {HeadingProps} props
- * @returns {React.ReactElement}
+ * @returns {JSX.Element}
  */
 export default function Header({ item, className }) {
 	const { CalendarEvent: event } = item;
