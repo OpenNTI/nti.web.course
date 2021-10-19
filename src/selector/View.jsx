@@ -55,7 +55,9 @@ class CourseSelector extends React.Component {
 			return;
 		}
 
-		return selected.map(c => c === course).length > 0;
+		return (
+			selected.map(c => c === course || course.getID() === c).length > 0
+		);
 	}
 
 	loadMore = () => {
@@ -100,12 +102,14 @@ class CourseSelector extends React.Component {
 
 		return (
 			<div className="search">
-				<Input.Text
-					value={searchTerm || ''}
-					placeholder={t('searchPlaceholder')}
-					onChange={this.onSearchChange}
-				/>
-				<i className="icon-search" />
+				<div className="input">
+					<Input.Text
+						value={searchTerm || ''}
+						placeholder={t('searchPlaceholder')}
+						onChange={this.onSearchChange}
+					/>
+					<i className="icon-search" />
+				</div>
 			</div>
 		);
 	}

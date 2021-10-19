@@ -11,24 +11,27 @@
 	}
 
 	.search {
-		margin: 0 1.25rem 2rem;
+		margin: 1rem 1.25rem 2rem;
 		box-shadow: 0 0 1px 0 var(--border-grey-light);
 		border-radius: 4;
 		background: white;
 		display: flex;
 		flex-direction: row;
+		justify-content: flex-end;
+
+		.input {
+			border-bottom: 1px solid var(--border-grey-light);
+		}
 
 		.nti-text-input {
 			border-radius: 0;
 			border: none;
 			background-color: white;
-			flex: 1 1 auto;
 		}
 
 		.icon-search {
 			display: inline-block;
 			width: 40px;
-			flex: 0 0 auto;
 			text-align: center;
 			line-height: 40px;
 			color: var(--tertiary-grey);
@@ -36,9 +39,15 @@
 	}
 
 	.courses > ul {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 0.625rem;
+
+		max-width: 775px;
 		list-style: none;
-		margin: 0 0 2rem;
-		padding: 0;
+		margin: 0 auto 2rem;
+		padding: 0 0.625rem 0;
 
 		li {
 			box-shadow: 0 1px 0 0 var(--border-grey-light);
