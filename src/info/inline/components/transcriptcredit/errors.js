@@ -10,8 +10,8 @@ const ERROR_MESSAGES = {
 	TooSmall: e => (FIELD_MAP[e.field] || e.field) + ' must be greater than 0.',
 	InvalidFloatLiteral: e =>
 		`${FIELD_MAP[e.field] || e.field} value is invalid.`,
-	ConstraintNotSatisfied: e =>
-		`The ${FIELD_MAP[e.field] || e.field} does not meet constraints.`,
+	// ConstraintNotSatisfied: e =>
+	// 	`The ${FIELD_MAP[e.field] || e.field} does not meet constraints.`,
 };
 
 export function getError(e) {
