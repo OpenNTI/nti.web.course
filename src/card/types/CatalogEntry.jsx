@@ -1,6 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-
 import { scoped } from '@nti/lib-locale';
 import { LinkTo } from '@nti/web-routing';
 import { DateTime } from '@nti/web-commons';
@@ -9,6 +6,8 @@ import Card from '../parts/Card';
 import Badge from '../parts/Badge';
 
 import Registry from './Registry';
+
+/** @typedef {import('@nti/lib-interfaces').Models.courses.CatalogEntry} CatalogEntry */
 
 const DATE_FORMAT = DateTime.MONTH_ABBR_DAY_YEAR;
 
@@ -24,61 +23,63 @@ const Link = styled(LinkTo.Object)`
 	display: block;
 `;
 
-export default class CatalogEntryType extends React.Component {
-	static propTypes = {
-		course: PropTypes.object.isRequired,
-		context: PropTypes.any,
-		onClick: PropTypes.func,
-	};
+/**
+ * @param {object} props
+ * @param {CatalogEntry} props.course
+ * @param {any} props.context
+ * @param {(e: Event) => void} props.onClick
+ * @returns {JSX.Element}
+ */
+export default function CatalogEntryType({
+	course,
+	context,
+	onClick,
+	...otherProps
+}) {
+	const startDate = course.getStartDate();
+	const endDate = course.getEndDate();
+	const now = new Date();
+	const badges = [];
 
-	render() {
-		const { course, context, onClick, ...otherProps } = this.props;
-		const { IsAdmin: isAdmin, IsEnrolled: isEnrolled } = course;
-		const startDate = course.getStartDate();
-		const endDate = course.getEndDate();
-		const now = new Date();
-		const badges = [];
-
-		if (isAdmin) {
-			badges.push(<Badge green>{t('administering')}</Badge>);
-		} else {
-			if (isEnrolled) {
-				badges.push(
-					<Badge green>
-						<i className="icon-check" />
-						<span>{t('enrolled')}</span>
-					</Badge>
-				);
-			}
-
-			const starting = startDate && startDate > now;
-			const finished = endDate && endDate < now;
-
-			if (starting) {
-				badges.push(
-					<Badge blue>
-						{t('starting', {
-							date: DateTime.format(startDate, DATE_FORMAT),
-						})}
-					</Badge>
-				);
-			} else if (finished) {
-				badges.push(
-					<Badge grey>
-						{t('finished', {
-							date: DateTime.format(endDate, DATE_FORMAT),
-						})}
-					</Badge>
-				);
-			}
+	if (course.IsAdmin) {
+		badges.push(<Badge green>{t('administering')}</Badge>);
+	} else {
+		if (course.IsEnrolled) {
+			badges.push(
+				<Badge green>
+					<i className="icon-check" />
+					<span>{t('enrolled')}</span>
+				</Badge>
+			);
 		}
 
-		return (
-			<Link object={course} context={context} onClick={onClick}>
-				<Card {...otherProps} course={course} badges={badges} />
-			</Link>
-		);
+		const starting = startDate && startDate > now;
+		const finished = endDate && endDate < now;
+
+		if (starting) {
+			badges.push(
+				<Badge blue>
+					{t('starting', {
+						date: DateTime.format(startDate, DATE_FORMAT),
+					})}
+				</Badge>
+			);
+		} else if (finished) {
+			badges.push(
+				<Badge grey>
+					{t('finished', {
+						date: DateTime.format(endDate, DATE_FORMAT),
+					})}
+				</Badge>
+			);
+		}
 	}
+
+	return (
+		<Link object={course} context={context} onClick={onClick}>
+			<Card {...otherProps} course={course} badges={badges} />
+		</Link>
+	);
 }
 
 Registry.register([
