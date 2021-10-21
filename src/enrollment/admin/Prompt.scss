@@ -1,7 +1,7 @@
 @import '~@nti/style-common';
 
 .nti-course-enrollment-admin-prompt {
-	width: 750px;
+	width: min(100vw, 781px);
 	max-width: 98vw;
 	background: white;
 
