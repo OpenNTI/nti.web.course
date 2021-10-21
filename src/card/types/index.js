@@ -5,8 +5,6 @@ import './Instance';
 
 import Registry from './Registry';
 
-const registry = Registry.getInstance();
-
-export function getComponentFor(...args) {
-	return registry.getItemFor(...args);
+export function getComponent(...args) {
+	return Registry.getInstance().getItem(...args);
 }
