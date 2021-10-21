@@ -1,4 +1,5 @@
 import './Card.scss';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 
@@ -30,6 +31,9 @@ CourseCard.propTypes = {
 	progress: PropTypes.number,
 	onClick: PropTypes.func,
 };
+
+export const AllowBadges = React.createContext(true);
+
 export default function CourseCard({
 	className,
 	course,
@@ -39,6 +43,7 @@ export default function CourseCard({
 	onClick,
 }) {
 	const variant = useListItemVariant(v);
+	const allowBadges = useContext(AllowBadges);
 
 	return (
 		<div
@@ -51,7 +56,7 @@ export default function CourseCard({
 				<Title course={course} variant={variant} />
 				<Authors course={course} variant={variant} />
 			</div>
-			{badges && (
+			{allowBadges && badges && (
 				<ul className="badges">
 					{badges.map((badge, key) => {
 						return <li key={key}>{badge}</li>;

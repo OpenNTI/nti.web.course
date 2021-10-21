@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import CourseCard from '../card';
+import { AllowBadges } from '../card/parts/Card';
 
 export default class CourseSelectorListItem extends React.Component {
 	static propTypes = {
@@ -26,12 +27,16 @@ export default class CourseSelectorListItem extends React.Component {
 		const { course, selected } = this.props;
 
 		return (
-			<CourseCard
-				className={cx('nti-course-selector-list-item', { selected })}
-				course={course.CatalogEntry || course}
-				onClick={this.onClick}
-				list
-			/>
+			<AllowBadges.Provider value={false}>
+				<CourseCard
+					className={cx('nti-course-selector-list-item', {
+						selected,
+					})}
+					course={course.CatalogEntry || course}
+					onClick={this.onClick}
+					list
+				/>
+			</AllowBadges.Provider>
 		);
 	}
 }
