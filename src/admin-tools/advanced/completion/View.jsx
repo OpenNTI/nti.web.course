@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { decorate } from '@nti/lib-commons';
-import { Input, Loading, Text, Icons } from '@nti/web-commons';
+import { Input, Loading, Text } from '@nti/web-commons';
+import { Icons } from '@nti/web-core';
 import { scoped } from '@nti/lib-locale';
 
 import Store from './Store';

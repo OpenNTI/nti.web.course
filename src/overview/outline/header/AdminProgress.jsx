@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 import { scoped } from '@nti/lib-locale';
-import { Page, Loading, Icons, Text } from '@nti/web-commons';
+import { Page, Loading, Text } from '@nti/web-commons';
+import { Icons } from '@nti/web-core';
 import { CircularProgress } from '@nti/web-charts';
 
 import Styles from './Styles.css';

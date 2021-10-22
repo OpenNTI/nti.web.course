@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Registry as Base } from '@nti/lib-commons';
 import { scoped } from '@nti/lib-locale';
-import { Icons } from '@nti/web-commons';
+import { Icons } from '@nti/web-core';
 import { LinkTo, NavigationStackContext } from '@nti/web-routing';
 
 import styles from './Header.css';
