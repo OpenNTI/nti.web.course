@@ -1,224 +1,238 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Course overview assignment label test Completable, optional, editable 1`] = `
-<ul
-  className="nti-separated-inline-list lesson-overview-assignment-status"
->
-  <li>
-    <div
-      aria-haspopup="dialog"
-      className="flyout-trigger require-control-value require-control flyout-closed"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onKeyPress={[Function]}
-      tabIndex={0}
-    >
-      <span>
-        Optional
+<DocumentFragment>
+  <ul
+    class="nti-separated-inline-list lesson-overview-assignment-status"
+  >
+    <li>
+      <div
+        aria-haspopup="dialog"
+        class="flyout-trigger require-control-value require-control flyout-closed"
+        tabindex="0"
+      >
+        <span>
+          Optional
+        </span>
+        <i
+          class="icon-chevron-down"
+        />
+      </div>
+    </li>
+    <li>
+      <span
+        class="attempts"
+      >
+        1 Attempt
       </span>
-      <i
-        className="icon-chevron-down"
-      />
-    </div>
-  </li>
-  <li>
-    <span
-      className="attempts"
-    >
-      1 Attempt
-    </span>
-  </li>
-  <li>
-    <span
-      className="due late"
-    >
-      Due Monday, October 30, 12:00 AM UTC
-    </span>
-  </li>
-</ul>
+    </li>
+    <li>
+      <span
+        class="due late"
+      >
+        Due Monday, October 30, 12:00 AM UTC
+      </span>
+    </li>
+  </ul>
+</DocumentFragment>
 `;
 
 exports[`Course overview assignment label test Completable, required, not editable 1`] = `
-<ul
-  className="nti-separated-inline-list lesson-overview-assignment-status"
->
-  <li>
-    <div
-      className="lesson-overview-item-required-label"
-    >
-      Required
-    </div>
-  </li>
-  <li>
-    <span
-      className="attempts"
-    >
-      1 Attempt
-    </span>
-  </li>
-  <li>
-    <span
-      className="due late"
-    >
-      Due Monday, October 30, 12:00 AM UTC
-    </span>
-  </li>
-</ul>
+<DocumentFragment>
+  <ul
+    class="nti-separated-inline-list lesson-overview-assignment-status"
+  >
+    <li>
+      <div
+        class="lesson-overview-item-required-label"
+      >
+        Required
+      </div>
+    </li>
+    <li>
+      <span
+        class="attempts"
+      >
+        1 Attempt
+      </span>
+    </li>
+    <li>
+      <span
+        class="due late"
+      >
+        Due Monday, October 30, 12:00 AM UTC
+      </span>
+    </li>
+  </ul>
+</DocumentFragment>
 `;
 
 exports[`Course overview assignment label test Completed but late 1`] = `
-<ul
-  className="nti-separated-inline-list lesson-overview-assignment-status"
->
-  <li>
-    <span
-      className="completed late"
-    >
+<DocumentFragment>
+  <ul
+    class="nti-separated-inline-list lesson-overview-assignment-status"
+  >
+    <li>
       <span
-        className="status-label"
-        data-qtip="Submitted At 12:00 AM 10/25/2017"
+        class="completed late"
       >
-        graded 
+        <span
+          class="status-label"
+          data-qtip="Submitted At 12:00 AM 10/25/2017"
+        >
+          graded 
+        </span>
+        <time
+          class="date ntiText"
+          datetime="2017-10-25T00:00:00Z"
+        >
+          Wednesday, October 25
+        </time>
       </span>
-      <time
-        className="date ntiText"
-        dateTime="2017-10-25T00:00:00Z"
-      >
-        Wednesday, October 25
-      </time>
-    </span>
-  </li>
-</ul>
+    </li>
+  </ul>
+</DocumentFragment>
 `;
 
 exports[`Course overview assignment label test Completed on time 1`] = `
-<ul
-  className="nti-separated-inline-list lesson-overview-assignment-status"
->
-  <li>
-    <span
-      className="completed ontime"
-    >
+<DocumentFragment>
+  <ul
+    class="nti-separated-inline-list lesson-overview-assignment-status"
+  >
+    <li>
       <span
-        className="status-label"
-        data-qtip="Submitted At 12:00 AM 10/25/2017"
+        class="completed ontime"
       >
-        graded 
+        <span
+          class="status-label"
+          data-qtip="Submitted At 12:00 AM 10/25/2017"
+        >
+          graded 
+        </span>
+        <time
+          class="date ntiText"
+          datetime="2017-10-25T00:00:00Z"
+        >
+          Wednesday, October 25
+        </time>
       </span>
-      <time
-        className="date ntiText"
-        dateTime="2017-10-25T00:00:00Z"
-      >
-        Wednesday, October 25
-      </time>
-    </span>
-  </li>
-</ul>
+    </li>
+  </ul>
+</DocumentFragment>
 `;
 
 exports[`Course overview assignment label test Draft 1`] = `
-<ul
-  className="nti-separated-inline-list lesson-overview-assignment-status"
->
-  <li>
-    <span
-      className="draft"
-    >
-      Draft
-    </span>
-  </li>
-</ul>
+<DocumentFragment>
+  <ul
+    class="nti-separated-inline-list lesson-overview-assignment-status"
+  >
+    <li>
+      <span
+        class="draft"
+      >
+        Draft
+      </span>
+    </li>
+  </ul>
+</DocumentFragment>
 `;
 
 exports[`Course overview assignment label test Not completed, but excused 1`] = `
-<ul
-  className="nti-separated-inline-list lesson-overview-assignment-status"
->
-  <li>
-    <span
-      className="attempts"
-    >
-      1 Attempt
-    </span>
-  </li>
-  <li>
-    <span
-      className="due late"
-    >
-      Due Monday, October 30, 12:00 AM UTC
-    </span>
-  </li>
-  <li>
-    <span
-      className="excused"
-      data-qtip="This assignment will NOT count towards your grade"
-    >
-      Excused Grade
-    </span>
-  </li>
-</ul>
+<DocumentFragment>
+  <ul
+    class="nti-separated-inline-list lesson-overview-assignment-status"
+  >
+    <li>
+      <span
+        class="attempts"
+      >
+        1 Attempt
+      </span>
+    </li>
+    <li>
+      <span
+        class="due late"
+      >
+        Due Monday, October 30, 12:00 AM UTC
+      </span>
+    </li>
+    <li>
+      <span
+        class="excused"
+        data-qtip="This assignment will NOT count towards your grade"
+      >
+        Excused Grade
+      </span>
+    </li>
+  </ul>
+</DocumentFragment>
 `;
 
 exports[`Course overview assignment label test Not completed, overdue 1`] = `
-<ul
-  className="nti-separated-inline-list lesson-overview-assignment-status"
->
-  <li>
-    <span
-      className="attempts"
-    >
-      1 Attempt
-    </span>
-  </li>
-  <li>
-    <span
-      className="due late"
-    >
-      Due Monday, October 30, 12:00 AM UTC
-    </span>
-  </li>
-</ul>
+<DocumentFragment>
+  <ul
+    class="nti-separated-inline-list lesson-overview-assignment-status"
+  >
+    <li>
+      <span
+        class="attempts"
+      >
+        1 Attempt
+      </span>
+    </li>
+    <li>
+      <span
+        class="due late"
+      >
+        Due Monday, October 30, 12:00 AM UTC
+      </span>
+    </li>
+  </ul>
+</DocumentFragment>
 `;
 
 exports[`Course overview assignment label test Not completed, overdue, but is no submit assignment 1`] = `
-<ul
-  className="nti-separated-inline-list lesson-overview-assignment-status"
->
-  <li>
-    <span
-      className="attempts"
-    >
-      1 Attempt
-    </span>
-  </li>
-  <li>
-    <span
-      className="due"
-    >
-      Due Monday, October 30, 12:00 AM UTC
-    </span>
-  </li>
-</ul>
+<DocumentFragment>
+  <ul
+    class="nti-separated-inline-list lesson-overview-assignment-status"
+  >
+    <li>
+      <span
+        class="attempts"
+      >
+        1 Attempt
+      </span>
+    </li>
+    <li>
+      <span
+        class="due"
+      >
+        Due Monday, October 30, 12:00 AM UTC
+      </span>
+    </li>
+  </ul>
+</DocumentFragment>
 `;
 
 exports[`Course overview assignment label test With duration 1`] = `
-<ul
-  className="nti-separated-inline-list lesson-overview-assignment-status"
->
-  <li>
-    <span
-      className="duration overtime"
-    >
-      16 Minutes, 40 Seconds
-    </span>
-  </li>
-  <li>
-    <span
-      className="due"
-    >
-      Available Now
-    </span>
-  </li>
-</ul>
+<DocumentFragment>
+  <ul
+    class="nti-separated-inline-list lesson-overview-assignment-status"
+  >
+    <li>
+      <span
+        class="duration overtime"
+      >
+        16 Minutes, 40 Seconds
+      </span>
+    </li>
+    <li>
+      <span
+        class="due"
+      >
+        Available Now
+      </span>
+    </li>
+  </ul>
+</DocumentFragment>
 `;

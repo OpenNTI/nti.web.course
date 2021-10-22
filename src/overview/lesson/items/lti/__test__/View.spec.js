@@ -1,4 +1,4 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import { Summary } from '@nti/lib-interfaces';
 
@@ -76,29 +76,23 @@ describe('Course overview LTI item test', () => {
 			.required()
 			.build();
 
-		const cmp = renderer.create(
-			<View item={item} layout={Grid} course={course} />
-		);
+		const cmp = render(<View item={item} layout={Grid} course={course} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Grid item with no comments, completable, not required', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(
-			<View item={item} layout={Grid} course={course} />
-		);
+		const cmp = render(<View item={item} layout={Grid} course={course} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Grid item with no comments, completable, requirement editable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<View
 				item={item}
 				onRequirementChange={() => {}}
@@ -107,8 +101,7 @@ describe('Course overview LTI item test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item with 5 comments, completable, required', async () => {
@@ -118,29 +111,23 @@ describe('Course overview LTI item test', () => {
 			.required()
 			.build();
 
-		const cmp = renderer.create(
-			<View item={item} layout={List} course={course} />
-		);
+		const cmp = render(<View item={item} layout={List} course={course} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item with no comments, completable, not required', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(
-			<View item={item} layout={List} course={course} />
-		);
+		const cmp = render(<View item={item} layout={List} course={course} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item with no comments, completable, requirement editable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<View
 				item={item}
 				onRequirementChange={() => {}}
@@ -149,7 +136,6 @@ describe('Course overview LTI item test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 });

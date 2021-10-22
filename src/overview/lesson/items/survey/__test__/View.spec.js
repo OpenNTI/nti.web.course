@@ -1,4 +1,4 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import { Summary } from '@nti/lib-interfaces';
 
@@ -123,37 +123,33 @@ describe('Course overview survey item test', () => {
 			.required()
 			.build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid} />);
+		const cmp = render(<View item={item} layout={Grid} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Grid item with 3 questions, 4 submissions', async () => {
 		const item = itemBuilder().questionCount(3).submissions(4).build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid} />);
+		const cmp = render(<View item={item} layout={Grid} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Grid item submitted', async () => {
 		const item = itemBuilder().submitted().build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid} />);
+		const cmp = render(<View item={item} layout={Grid} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Grid item closed', async () => {
 		const item = itemBuilder().closed().build();
 
-		const cmp = renderer.create(<View item={item} layout={Grid} />);
+		const cmp = render(<View item={item} layout={Grid} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Grid item with 5 comments, completable, requirement editable', async () => {
@@ -163,12 +159,11 @@ describe('Course overview survey item test', () => {
 			.required()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<View item={item} onRequirementChange={() => {}} layout={Grid} />
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item with 5 comments, completable, required, no questions or submissions', async () => {
@@ -178,37 +173,33 @@ describe('Course overview survey item test', () => {
 			.required()
 			.build();
 
-		const cmp = renderer.create(<View item={item} layout={List} />);
+		const cmp = render(<View item={item} layout={List} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item with 3 questions, 4 submissions', async () => {
 		const item = itemBuilder().questionCount(3).submissions(4).build();
 
-		const cmp = renderer.create(<View item={item} layout={List} />);
+		const cmp = render(<View item={item} layout={List} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item submitted', async () => {
 		const item = itemBuilder().submitted().build();
 
-		const cmp = renderer.create(<View item={item} layout={List} />);
+		const cmp = render(<View item={item} layout={List} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item closed', async () => {
 		const item = itemBuilder().closed().build();
 
-		const cmp = renderer.create(<View item={item} layout={List} />);
+		const cmp = render(<View item={item} layout={List} />);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item with 5 comments, completable, requirement editable', async () => {
@@ -218,11 +209,10 @@ describe('Course overview survey item test', () => {
 			.required()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<View item={item} onRequirementChange={() => {}} layout={List} />
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 });

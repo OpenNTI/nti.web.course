@@ -1,4 +1,4 @@
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import AssignmentLabel from '../AssignmentLabel';
 
@@ -139,7 +139,7 @@ describe('Course overview assignment label test', () => {
 			.noSubmit()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
@@ -151,9 +151,7 @@ describe('Course overview assignment label test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Draft', async () => {
@@ -161,7 +159,7 @@ describe('Course overview assignment label test', () => {
 			.assignedDate('10/22/2017')
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
@@ -173,9 +171,7 @@ describe('Course overview assignment label test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('With duration', async () => {
@@ -186,7 +182,7 @@ describe('Course overview assignment label test', () => {
 			.duration(1000000)
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
@@ -198,9 +194,7 @@ describe('Course overview assignment label test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Completed on time', async () => {
@@ -212,7 +206,7 @@ describe('Course overview assignment label test', () => {
 			.noSubmit()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
@@ -224,9 +218,7 @@ describe('Course overview assignment label test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Not completed, overdue', async () => {
@@ -236,7 +228,7 @@ describe('Course overview assignment label test', () => {
 			.isPublished()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
@@ -248,9 +240,7 @@ describe('Course overview assignment label test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Not completed, overdue, but is no submit assignment', async () => {
@@ -261,7 +251,7 @@ describe('Course overview assignment label test', () => {
 			.noSubmit()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
@@ -273,9 +263,7 @@ describe('Course overview assignment label test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Not completed, but excused', async () => {
@@ -285,7 +273,7 @@ describe('Course overview assignment label test', () => {
 			.isPublished()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
@@ -297,9 +285,7 @@ describe('Course overview assignment label test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Completable, optional, editable', async () => {
@@ -314,7 +300,7 @@ describe('Course overview assignment label test', () => {
 			isCompletable: () => true,
 		};
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
@@ -328,9 +314,7 @@ describe('Course overview assignment label test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Completable, required, not editable', async () => {
@@ -340,7 +324,7 @@ describe('Course overview assignment label test', () => {
 			.isPublished()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<AssignmentLabel
 				assignment={assignment}
 				assignmentHistory={buildAssignmentHistory(
@@ -353,8 +337,6 @@ describe('Course overview assignment label test', () => {
 			/>
 		);
 
-		const tree = cmp.toJSON();
-
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 });

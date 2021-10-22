@@ -93,7 +93,7 @@ export default function CourseVideo({
 				<Controls>
 					<Pill data-testid="remove" onClick={removeVideo}>
 						<Icon>
-							<Icons.X.Bold />
+							<Icons.X bold />
 						</Icon>
 						{t('remove')}
 					</Pill>

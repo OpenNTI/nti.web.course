@@ -1,561 +1,553 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Course overview related work ref item test Grid item unpublished 1`] = `
-<div
-  className="lesson-overview-padded-container"
->
+<DocumentFragment>
   <div
-    className="nti-link-to-path"
-    onClick={[Function]}
-    to="#"
+    class="lesson-overview-padded-container"
   >
     <div
-      className="card"
+      class="nti-link-to-path"
+      to="#"
     >
       <div
-        className="content-link related-work-ref external"
-        target="_blank"
+        class="card"
       >
         <div
-          className="file-type icon fallback www"
-          style={Object {}}
+          class="content-link related-work-ref external"
+          target="_blank"
         >
           <div
-            className="external"
-          />
-        </div>
-        <h5>
-          work ref 1
-        </h5>
-        <div
-          className="label"
-        >
-          By Ref Creator
-        </div>
-        <div
-          className="description"
-        >
-          this is a test related work ref overview item
-        </div>
-        <ul
-          className="nti-separated-inline-list extra-labels"
-        >
-          <li>
+            class="file-type icon fallback www"
+          >
             <div
-              className="nti-link-to-path comment-count"
-              to="#"
-            >
-              View Comments
-            </div>
-          </li>
-          <li>
-            <div
-              className="publish-state"
-            >
-              Draft
-            </div>
-          </li>
-        </ul>
+              class="external"
+            />
+          </div>
+          <h5>
+            work ref 1
+          </h5>
+          <div
+            class="label"
+          >
+            By Ref Creator
+          </div>
+          <div
+            class="description"
+          >
+            this is a test related work ref overview item
+          </div>
+          <ul
+            class="nti-separated-inline-list extra-labels"
+          >
+            <li>
+              <div
+                class="nti-link-to-path comment-count"
+                to="#"
+              >
+                View Comments
+              </div>
+            </li>
+            <li>
+              <div
+                class="publish-state"
+              >
+                Draft
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview related work ref item test Grid item with 5 comments, completable, required 1`] = `
-<div
-  className="lesson-overview-padded-container"
->
+<DocumentFragment>
   <div
-    className="nti-link-to-path"
-    onClick={[Function]}
-    to="#"
+    class="lesson-overview-padded-container"
   >
     <div
-      className="card"
+      class="nti-link-to-path"
+      to="#"
     >
       <div
-        className="content-link related-work-ref external"
-        target="_blank"
+        class="card"
       >
         <div
-          className="file-type icon fallback www"
-          style={Object {}}
+          class="content-link related-work-ref external"
+          target="_blank"
         >
           <div
-            className="external"
-          />
-        </div>
-        <h5>
-          work ref 1
-        </h5>
-        <div
-          className="label"
-        >
-          By Ref Creator
-        </div>
-        <div
-          className="description"
-        >
-          this is a test related work ref overview item
-        </div>
-        <ul
-          className="nti-separated-inline-list extra-labels"
-        >
-          <li>
+            class="file-type icon fallback www"
+          >
             <div
-              className="lesson-overview-item-required-label"
-            >
-              Required
-            </div>
-          </li>
-          <li>
-            <div
-              className="nti-link-to-path comment-count"
-              to="#"
-            >
-              5 Comments
-            </div>
-          </li>
-        </ul>
+              class="external"
+            />
+          </div>
+          <h5>
+            work ref 1
+          </h5>
+          <div
+            class="label"
+          >
+            By Ref Creator
+          </div>
+          <div
+            class="description"
+          >
+            this is a test related work ref overview item
+          </div>
+          <ul
+            class="nti-separated-inline-list extra-labels"
+          >
+            <li>
+              <div
+                class="lesson-overview-item-required-label"
+              >
+                Required
+              </div>
+            </li>
+            <li>
+              <div
+                class="nti-link-to-path comment-count"
+                to="#"
+              >
+                5 Comments
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview related work ref item test Grid item with no comments, completable, not required 1`] = `
-<div
-  className="lesson-overview-padded-container"
->
+<DocumentFragment>
   <div
-    className="nti-link-to-path"
-    onClick={[Function]}
-    to="#"
+    class="lesson-overview-padded-container"
   >
     <div
-      className="card"
+      class="nti-link-to-path"
+      to="#"
     >
       <div
-        className="content-link related-work-ref external"
-        target="_blank"
+        class="card"
       >
         <div
-          className="file-type icon fallback www"
-          style={Object {}}
+          class="content-link related-work-ref external"
+          target="_blank"
         >
           <div
-            className="external"
-          />
-        </div>
-        <h5>
-          work ref 1
-        </h5>
-        <div
-          className="label"
-        >
-          By Ref Creator
-        </div>
-        <div
-          className="description"
-        >
-          this is a test related work ref overview item
-        </div>
-        <ul
-          className="nti-separated-inline-list extra-labels"
-        >
-          <li>
+            class="file-type icon fallback www"
+          >
             <div
-              className="nti-link-to-path comment-count"
-              to="#"
-            >
-              View Comments
-            </div>
-          </li>
-        </ul>
+              class="external"
+            />
+          </div>
+          <h5>
+            work ref 1
+          </h5>
+          <div
+            class="label"
+          >
+            By Ref Creator
+          </div>
+          <div
+            class="description"
+          >
+            this is a test related work ref overview item
+          </div>
+          <ul
+            class="nti-separated-inline-list extra-labels"
+          >
+            <li>
+              <div
+                class="nti-link-to-path comment-count"
+                to="#"
+              >
+                View Comments
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview related work ref item test Grid item with no comments, completable, requirement editable 1`] = `
-<div
-  className="lesson-overview-padded-container"
->
+<DocumentFragment>
   <div
-    className="nti-link-to-path"
-    onClick={[Function]}
-    to="#"
+    class="lesson-overview-padded-container"
   >
     <div
-      className="card"
+      class="nti-link-to-path"
+      to="#"
     >
       <div
-        className="content-link related-work-ref external"
-        target="_blank"
+        class="card"
       >
         <div
-          className="file-type icon fallback www"
-          style={Object {}}
+          class="content-link related-work-ref external"
+          target="_blank"
         >
           <div
-            className="external"
-          />
-        </div>
-        <h5>
-          work ref 1
-        </h5>
-        <div
-          className="label"
-        >
-          By Ref Creator
-        </div>
-        <div
-          className="description"
-        >
-          this is a test related work ref overview item
-        </div>
-        <ul
-          className="nti-separated-inline-list extra-labels"
-        >
-          <li>
+            class="file-type icon fallback www"
+          >
             <div
-              aria-haspopup="dialog"
-              className="flyout-trigger require-control-value require-control flyout-closed"
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onKeyPress={[Function]}
-              tabIndex={0}
-            >
-              <span>
-                Optional
-              </span>
-              <i
-                className="icon-chevron-down"
-              />
-            </div>
-          </li>
-          <li>
-            <div
-              className="nti-link-to-path comment-count"
-              to="#"
-            >
-              View Comments
-            </div>
-          </li>
-        </ul>
+              class="external"
+            />
+          </div>
+          <h5>
+            work ref 1
+          </h5>
+          <div
+            class="label"
+          >
+            By Ref Creator
+          </div>
+          <div
+            class="description"
+          >
+            this is a test related work ref overview item
+          </div>
+          <ul
+            class="nti-separated-inline-list extra-labels"
+          >
+            <li>
+              <div
+                aria-haspopup="dialog"
+                class="flyout-trigger require-control-value require-control flyout-closed"
+                tabindex="0"
+              >
+                <span>
+                  Optional
+                </span>
+                <i
+                  class="icon-chevron-down"
+                />
+              </div>
+            </li>
+            <li>
+              <div
+                class="nti-link-to-path comment-count"
+                to="#"
+              >
+                View Comments
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview related work ref item test List item unpublished 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
->
+<DocumentFragment>
   <div
-    className="lesson-overview-base-list-item-table-row"
+    class="lesson-overview-padded-container lesson-overview-base-list-item-container"
   >
     <div
-      className="lesson-overview-base-list-item-table-info-cell"
+      class="lesson-overview-base-list-item-table-row"
     >
       <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
-        onClick={[Function]}
-        to="#"
+        class="lesson-overview-base-list-item-table-info-cell"
       >
         <div
-          className="lesson-overview-base-list-item lesson-overview-related-work-list-item"
+          class="nti-link-to-path lesson-overview-base-list-item-link"
+          to="#"
         >
           <div
-            className="icon-container"
+            class="lesson-overview-base-list-item lesson-overview-related-work-list-item"
           >
             <div
-              className="icon"
+              class="icon-container"
             >
               <div
-                className="file-type icon fallback www lesson-overview-base-list-item-icon"
-                style={Object {}}
+                class="icon"
               >
                 <div
-                  className="external"
-                />
+                  class="file-type icon fallback www lesson-overview-base-list-item-icon"
+                >
+                  <div
+                    class="external"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            className="right"
-          >
             <div
-              className="title plain"
+              class="right"
             >
-              work ref 1
-            </div>
-            <div
-              className="labels"
-            >
-              <ul
-                className="nti-separated-inline-list"
+              <div
+                class="title plain"
               >
-                <li>
-                  By Ref Creator
-                </li>
-                <li>
-                  <div
-                    className="nti-link-to-path comment-count"
-                    to="#"
-                  >
-                    View Comments
-                  </div>
-                </li>
-                <li>
-                  <div
-                    className="publish-state"
-                  >
-                    Draft
-                  </div>
-                </li>
-              </ul>
+                work ref 1
+              </div>
+              <div
+                class="labels"
+              >
+                <ul
+                  class="nti-separated-inline-list"
+                >
+                  <li>
+                    By Ref Creator
+                  </li>
+                  <li>
+                    <div
+                      class="nti-link-to-path comment-count"
+                      to="#"
+                    >
+                      View Comments
+                    </div>
+                  </li>
+                  <li>
+                    <div
+                      class="publish-state"
+                    >
+                      Draft
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview related work ref item test List item with 5 comments, completable, required 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
->
+<DocumentFragment>
   <div
-    className="lesson-overview-base-list-item-table-row"
+    class="lesson-overview-padded-container lesson-overview-base-list-item-container"
   >
     <div
-      className="lesson-overview-base-list-item-table-info-cell"
+      class="lesson-overview-base-list-item-table-row"
     >
       <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
-        onClick={[Function]}
-        to="#"
+        class="lesson-overview-base-list-item-table-info-cell"
       >
         <div
-          className="lesson-overview-base-list-item lesson-overview-related-work-list-item"
+          class="nti-link-to-path lesson-overview-base-list-item-link"
+          to="#"
         >
           <div
-            className="icon-container"
+            class="lesson-overview-base-list-item lesson-overview-related-work-list-item"
           >
             <div
-              className="icon"
+              class="icon-container"
             >
               <div
-                className="file-type icon fallback www lesson-overview-base-list-item-icon"
-                style={Object {}}
+                class="icon"
               >
                 <div
-                  className="external"
-                />
+                  class="file-type icon fallback www lesson-overview-base-list-item-icon"
+                >
+                  <div
+                    class="external"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            className="right"
-          >
             <div
-              className="title plain"
+              class="right"
             >
-              work ref 1
-            </div>
-            <div
-              className="labels"
-            >
-              <ul
-                className="nti-separated-inline-list"
+              <div
+                class="title plain"
               >
-                <li>
-                  <div
-                    className="lesson-overview-item-required-label"
-                  >
-                    Required
-                  </div>
-                </li>
-                <li>
-                  By Ref Creator
-                </li>
-                <li>
-                  <div
-                    className="nti-link-to-path comment-count"
-                    to="#"
-                  >
-                    5 Comments
-                  </div>
-                </li>
-              </ul>
+                work ref 1
+              </div>
+              <div
+                class="labels"
+              >
+                <ul
+                  class="nti-separated-inline-list"
+                >
+                  <li>
+                    <div
+                      class="lesson-overview-item-required-label"
+                    >
+                      Required
+                    </div>
+                  </li>
+                  <li>
+                    By Ref Creator
+                  </li>
+                  <li>
+                    <div
+                      class="nti-link-to-path comment-count"
+                      to="#"
+                    >
+                      5 Comments
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview related work ref item test List item with no comments, completable, not required 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
->
+<DocumentFragment>
   <div
-    className="lesson-overview-base-list-item-table-row"
+    class="lesson-overview-padded-container lesson-overview-base-list-item-container"
   >
     <div
-      className="lesson-overview-base-list-item-table-info-cell"
+      class="lesson-overview-base-list-item-table-row"
     >
       <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
-        onClick={[Function]}
-        to="#"
+        class="lesson-overview-base-list-item-table-info-cell"
       >
         <div
-          className="lesson-overview-base-list-item lesson-overview-related-work-list-item"
+          class="nti-link-to-path lesson-overview-base-list-item-link"
+          to="#"
         >
           <div
-            className="icon-container"
+            class="lesson-overview-base-list-item lesson-overview-related-work-list-item"
           >
             <div
-              className="icon"
+              class="icon-container"
             >
               <div
-                className="file-type icon fallback www lesson-overview-base-list-item-icon"
-                style={Object {}}
+                class="icon"
               >
                 <div
-                  className="external"
-                />
+                  class="file-type icon fallback www lesson-overview-base-list-item-icon"
+                >
+                  <div
+                    class="external"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            className="right"
-          >
             <div
-              className="title plain"
+              class="right"
             >
-              work ref 1
-            </div>
-            <div
-              className="labels"
-            >
-              <ul
-                className="nti-separated-inline-list"
+              <div
+                class="title plain"
               >
-                <li>
-                  By Ref Creator
-                </li>
-                <li>
-                  <div
-                    className="nti-link-to-path comment-count"
-                    to="#"
-                  >
-                    View Comments
-                  </div>
-                </li>
-              </ul>
+                work ref 1
+              </div>
+              <div
+                class="labels"
+              >
+                <ul
+                  class="nti-separated-inline-list"
+                >
+                  <li>
+                    By Ref Creator
+                  </li>
+                  <li>
+                    <div
+                      class="nti-link-to-path comment-count"
+                      to="#"
+                    >
+                      View Comments
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview related work ref item test List item with no comments, completable, requirement editable 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
->
+<DocumentFragment>
   <div
-    className="lesson-overview-base-list-item-table-row"
+    class="lesson-overview-padded-container lesson-overview-base-list-item-container"
   >
     <div
-      className="lesson-overview-base-list-item-table-info-cell"
+      class="lesson-overview-base-list-item-table-row"
     >
       <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
-        onClick={[Function]}
-        to="#"
+        class="lesson-overview-base-list-item-table-info-cell"
       >
         <div
-          className="lesson-overview-base-list-item lesson-overview-related-work-list-item"
+          class="nti-link-to-path lesson-overview-base-list-item-link"
+          to="#"
         >
           <div
-            className="icon-container"
+            class="lesson-overview-base-list-item lesson-overview-related-work-list-item"
           >
             <div
-              className="icon"
+              class="icon-container"
             >
               <div
-                className="file-type icon fallback www lesson-overview-base-list-item-icon"
-                style={Object {}}
+                class="icon"
               >
                 <div
-                  className="external"
-                />
+                  class="file-type icon fallback www lesson-overview-base-list-item-icon"
+                >
+                  <div
+                    class="external"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            className="right"
-          >
             <div
-              className="title plain"
+              class="right"
             >
-              work ref 1
-            </div>
-            <div
-              className="labels"
-            >
-              <ul
-                className="nti-separated-inline-list"
+              <div
+                class="title plain"
               >
-                <li>
-                  <div
-                    aria-haspopup="dialog"
-                    className="flyout-trigger require-control-value require-control flyout-closed"
-                    onBlur={[Function]}
-                    onClick={[Function]}
-                    onFocus={[Function]}
-                    onKeyPress={[Function]}
-                    tabIndex={0}
-                  >
-                    <span>
-                      Optional
-                    </span>
-                    <i
-                      className="icon-chevron-down"
-                    />
-                  </div>
-                </li>
-                <li>
-                  By Ref Creator
-                </li>
-                <li>
-                  <div
-                    className="nti-link-to-path comment-count"
-                    to="#"
-                  >
-                    View Comments
-                  </div>
-                </li>
-              </ul>
+                work ref 1
+              </div>
+              <div
+                class="labels"
+              >
+                <ul
+                  class="nti-separated-inline-list"
+                >
+                  <li>
+                    <div
+                      aria-haspopup="dialog"
+                      class="flyout-trigger require-control-value require-control flyout-closed"
+                      tabindex="0"
+                    >
+                      <span>
+                        Optional
+                      </span>
+                      <i
+                        class="icon-chevron-down"
+                      />
+                    </div>
+                  </li>
+                  <li>
+                    By Ref Creator
+                  </li>
+                  <li>
+                    <div
+                      class="nti-link-to-path comment-count"
+                      to="#"
+                    >
+                      View Comments
+                    </div>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;

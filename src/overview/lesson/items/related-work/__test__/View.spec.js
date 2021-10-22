@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import renderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 
 import { Summary } from '@nti/lib-interfaces';
 
@@ -101,33 +101,31 @@ describe('Course overview related work ref item test', () => {
 			.required()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<ContextProvider>
 				<View item={item} layout={Grid} />
 			</ContextProvider>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Grid item with no comments, completable, not required', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<ContextProvider>
 				<View item={item} layout={Grid} />
 			</ContextProvider>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Grid item with no comments, completable, requirement editable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<ContextProvider>
 				<View
 					item={item}
@@ -137,21 +135,19 @@ describe('Course overview related work ref item test', () => {
 			</ContextProvider>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('Grid item unpublished', async () => {
 		const item = itemBuilder().unpublished().build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<ContextProvider>
 				<View item={item} layout={Grid} />
 			</ContextProvider>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item with 5 comments, completable, required', async () => {
@@ -161,46 +157,43 @@ describe('Course overview related work ref item test', () => {
 			.required()
 			.build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<ContextProvider>
 				<View item={item} layout={List} />
 			</ContextProvider>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item with no comments, completable, not required', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<ContextProvider>
 				<View item={item} layout={List} />
 			</ContextProvider>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item unpublished', async () => {
 		const item = itemBuilder().unpublished().build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<ContextProvider>
 				<View item={item} layout={List} />
 			</ContextProvider>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 
 	test('List item with no comments, completable, requirement editable', async () => {
 		const item = itemBuilder().completable().build();
 
-		const cmp = renderer.create(
+		const cmp = render(
 			<ContextProvider>
 				<View
 					item={item}
@@ -210,7 +203,6 @@ describe('Course overview related work ref item test', () => {
 			</ContextProvider>
 		);
 
-		const tree = cmp.toJSON();
-		expect(tree).toMatchSnapshot();
+		expect(cmp.asFragment()).toMatchSnapshot();
 	});
 });

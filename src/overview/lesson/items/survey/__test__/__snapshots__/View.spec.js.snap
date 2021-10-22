@@ -1,715 +1,262 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Course overview survey item test Grid item closed 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
->
+<DocumentFragment>
   <div
-    className="container status-closed"
+    class="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
   >
     <div
-      className="nti-link-to-path"
-      to="#"
+      class="container status-closed"
     >
       <div
-        className="target"
+        class="nti-link-to-path"
+        to="#"
       >
         <div
-          className="icon-container"
+          class="target"
         >
           <div
-            className="icon"
+            class="icon-container"
           >
             <div
-              className="icon"
+              class="icon"
             >
               <div
-                className="lesson-overview-survey-icon"
-              />
+                class="icon"
+              >
+                <div
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          className="info-container"
-        >
           <div
-            className="title-container"
-          >
-            <span
-              className="title"
-            >
-              Survey item 1
-            </span>
-          </div>
-          <div
-            className="labels-container"
-          >
-            <ul
-              className="nti-separated-inline-list lesson-overview-survey-label"
-            >
-              <li>
-                <span
-                  className="question-count"
-                >
-                  0 Questions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="submissions"
-                >
-                  0 Submissions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="due"
-                >
-                  Available Now
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          className="button-container"
-        >
-          <span
-            className="nti-button button constructive medium pv-md ph-xl roundedSmall"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-            tabIndex={0}
+            class="info-container"
           >
             <div
-              data-button-label={true}
+              class="title-container"
             >
-              Closed
+              <span
+                class="title"
+              >
+                Survey item 1
+              </span>
             </div>
-          </span>
+            <div
+              class="labels-container"
+            >
+              <ul
+                class="nti-separated-inline-list lesson-overview-survey-label"
+              >
+                <li>
+                  <span
+                    class="question-count"
+                  >
+                    0 Questions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="submissions"
+                  >
+                    0 Submissions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="due"
+                  >
+                    Available Now
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="button-container"
+          >
+            <span
+              class="nti-button button constructive medium pv-md ph-xl roundedSmall"
+              tabindex="0"
+            >
+              <div
+                data-button-label="true"
+              >
+                Closed
+              </div>
+            </span>
+          </div>
         </div>
       </div>
+      <div
+        class="editor-container"
+      />
     </div>
-    <div
-      className="editor-container"
-    />
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview survey item test Grid item submitted 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
->
+<DocumentFragment>
   <div
-    className="container status-closed"
+    class="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
   >
     <div
-      className="nti-link-to-path"
-      to="#"
+      class="container status-closed"
     >
       <div
-        className="target"
+        class="nti-link-to-path"
+        to="#"
       >
         <div
-          className="icon-container"
+          class="target"
         >
           <div
-            className="icon"
+            class="icon-container"
           >
             <div
-              className="icon"
+              class="icon"
             >
               <div
-                className="lesson-overview-survey-icon"
-              />
+                class="icon"
+              >
+                <div
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          className="info-container"
-        >
           <div
-            className="title-container"
-          >
-            <span
-              className="title"
-            >
-              Survey item 1
-            </span>
-          </div>
-          <div
-            className="labels-container"
-          >
-            <ul
-              className="nti-separated-inline-list lesson-overview-survey-label"
-            >
-              <li>
-                <span
-                  className="question-count"
-                >
-                  0 Questions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="submissions"
-                >
-                  0 Submissions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="due"
-                >
-                  Available Now
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          className="button-container"
-        >
-          <span
-            className="nti-button button constructive medium pv-md ph-xl roundedSmall"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-            tabIndex={0}
+            class="info-container"
           >
             <div
-              data-button-label={true}
+              class="title-container"
             >
-              Review
+              <span
+                class="title"
+              >
+                Survey item 1
+              </span>
             </div>
-          </span>
+            <div
+              class="labels-container"
+            >
+              <ul
+                class="nti-separated-inline-list lesson-overview-survey-label"
+              >
+                <li>
+                  <span
+                    class="question-count"
+                  >
+                    0 Questions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="submissions"
+                  >
+                    0 Submissions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="due"
+                  >
+                    Available Now
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="button-container"
+          >
+            <span
+              class="nti-button button constructive medium pv-md ph-xl roundedSmall"
+              tabindex="0"
+            >
+              <div
+                data-button-label="true"
+              >
+                Review
+              </div>
+            </span>
+          </div>
         </div>
       </div>
+      <div
+        class="editor-container"
+      />
     </div>
-    <div
-      className="editor-container"
-    />
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview survey item test Grid item with 3 questions, 4 submissions 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
->
+<DocumentFragment>
   <div
-    className="container status-closed"
+    class="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
   >
     <div
-      className="nti-link-to-path"
-      to="#"
+      class="container status-closed"
     >
       <div
-        className="target"
+        class="nti-link-to-path"
+        to="#"
       >
         <div
-          className="icon-container"
+          class="target"
         >
           <div
-            className="icon"
+            class="icon-container"
           >
             <div
-              className="icon"
+              class="icon"
             >
               <div
-                className="lesson-overview-survey-icon"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          className="info-container"
-        >
-          <div
-            className="title-container"
-          >
-            <span
-              className="title"
-            >
-              Survey item 1
-            </span>
-          </div>
-          <div
-            className="labels-container"
-          >
-            <ul
-              className="nti-separated-inline-list lesson-overview-survey-label"
-            >
-              <li>
-                <span
-                  className="question-count"
-                >
-                  3 Questions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="submissions"
-                >
-                  4 Submissions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="due"
-                >
-                  Available Now
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          className="button-container"
-        >
-          <span
-            className="nti-button button constructive medium pv-md ph-xl roundedSmall"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-            tabIndex={0}
-          >
-            <div
-              data-button-label={true}
-            >
-              Take
-            </div>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div
-      className="editor-container"
-    />
-  </div>
-</div>
-`;
-
-exports[`Course overview survey item test Grid item with 5 comments, completable, required, no questions or submissions 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
->
-  <div
-    className="container status-closed"
-  >
-    <div
-      className="nti-link-to-path"
-      to="#"
-    >
-      <div
-        className="target"
-      >
-        <div
-          className="icon-container"
-        >
-          <div
-            className="icon"
-          >
-            <div
-              className="icon"
-            >
-              <div
-                className="lesson-overview-survey-icon"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          className="info-container"
-        >
-          <div
-            className="title-container"
-          >
-            <span
-              className="title"
-            >
-              Survey item 1
-            </span>
-          </div>
-          <div
-            className="labels-container"
-          >
-            <ul
-              className="nti-separated-inline-list lesson-overview-survey-label"
-            >
-              <li>
+                class="icon"
+              >
                 <div
-                  className="lesson-overview-item-required-label"
-                >
-                  Required
-                </div>
-              </li>
-              <li>
-                <span
-                  className="question-count"
-                >
-                  0 Questions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="submissions"
-                >
-                  0 Submissions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="due"
-                >
-                  Available Now
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          className="button-container"
-        >
-          <span
-            className="nti-button button constructive medium pv-md ph-xl roundedSmall"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-            tabIndex={0}
-          >
-            <div
-              data-button-label={true}
-            >
-              Take
-            </div>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div
-      className="editor-container"
-    />
-  </div>
-</div>
-`;
-
-exports[`Course overview survey item test Grid item with 5 comments, completable, requirement editable 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
->
-  <div
-    className="container status-closed"
-  >
-    <div
-      className="nti-link-to-path"
-      to="#"
-    >
-      <div
-        className="target"
-      >
-        <div
-          className="icon-container"
-        >
-          <div
-            className="icon"
-          >
-            <div
-              className="icon"
-            >
-              <div
-                className="lesson-overview-survey-icon"
-              />
-            </div>
-          </div>
-        </div>
-        <div
-          className="info-container"
-        >
-          <div
-            className="title-container"
-          >
-            <span
-              className="title"
-            >
-              Survey item 1
-            </span>
-          </div>
-          <div
-            className="labels-container"
-          >
-            <ul
-              className="nti-separated-inline-list lesson-overview-survey-label"
-            >
-              <li>
-                <div
-                  aria-haspopup="dialog"
-                  className="flyout-trigger require-control-value require-control flyout-closed"
-                  onBlur={[Function]}
-                  onClick={[Function]}
-                  onFocus={[Function]}
-                  onKeyPress={[Function]}
-                  tabIndex={0}
-                >
-                  <span>
-                    Required
-                  </span>
-                  <i
-                    className="icon-chevron-down"
-                  />
-                </div>
-              </li>
-              <li>
-                <span
-                  className="question-count"
-                >
-                  0 Questions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="submissions"
-                >
-                  0 Submissions
-                </span>
-              </li>
-              <li>
-                <span
-                  className="due"
-                >
-                  Available Now
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div
-          className="button-container"
-        >
-          <span
-            className="nti-button button constructive medium pv-md ph-xl roundedSmall"
-            onClick={[Function]}
-            onKeyDown={[Function]}
-            tabIndex={0}
-          >
-            <div
-              data-button-label={true}
-            >
-              Take
-            </div>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div
-      className="editor-container"
-    />
-  </div>
-</div>
-`;
-
-exports[`Course overview survey item test List item closed 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
->
-  <div
-    className="lesson-overview-base-list-item-table-row"
-  >
-    <div
-      className="lesson-overview-base-list-item-table-info-cell"
-    >
-      <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
-        to="#"
-      >
-        <div
-          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
-        >
-          <div
-            className="icon-container"
-          >
-            <div
-              className="icon"
-            >
-              <div
-                className="lesson-overview-survey-icon"
-              />
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
             </div>
           </div>
           <div
-            className="right"
+            class="info-container"
           >
             <div
-              className="title plain"
+              class="title-container"
             >
-              Survey item 1
+              <span
+                class="title"
+              >
+                Survey item 1
+              </span>
             </div>
             <div
-              className="labels"
+              class="labels-container"
             >
               <ul
-                className="nti-separated-inline-list lesson-overview-survey-label"
+                class="nti-separated-inline-list lesson-overview-survey-label"
               >
                 <li>
                   <span
-                    className="question-count"
-                  >
-                    0 Questions
-                  </span>
-                </li>
-                <li>
-                  <span
-                    className="submissions"
-                  >
-                    0 Submissions
-                  </span>
-                </li>
-                <li>
-                  <span
-                    className="due"
-                  >
-                    Available Now
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Course overview survey item test List item submitted 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
->
-  <div
-    className="lesson-overview-base-list-item-table-row"
-  >
-    <div
-      className="lesson-overview-base-list-item-table-info-cell"
-    >
-      <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
-        to="#"
-      >
-        <div
-          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
-        >
-          <div
-            className="icon-container"
-          >
-            <div
-              className="icon"
-            >
-              <div
-                className="lesson-overview-survey-icon"
-              />
-            </div>
-          </div>
-          <div
-            className="right"
-          >
-            <div
-              className="title plain"
-            >
-              Survey item 1
-            </div>
-            <div
-              className="labels"
-            >
-              <ul
-                className="nti-separated-inline-list lesson-overview-survey-label"
-              >
-                <li>
-                  <span
-                    className="question-count"
-                  >
-                    0 Questions
-                  </span>
-                </li>
-                <li>
-                  <span
-                    className="submissions"
-                  >
-                    0 Submissions
-                  </span>
-                </li>
-                <li>
-                  <span
-                    className="due"
-                  >
-                    Available Now
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
-exports[`Course overview survey item test List item with 3 questions, 4 submissions 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
->
-  <div
-    className="lesson-overview-base-list-item-table-row"
-  >
-    <div
-      className="lesson-overview-base-list-item-table-info-cell"
-    >
-      <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
-        to="#"
-      >
-        <div
-          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
-        >
-          <div
-            className="icon-container"
-          >
-            <div
-              className="icon"
-            >
-              <div
-                className="lesson-overview-survey-icon"
-              />
-            </div>
-          </div>
-          <div
-            className="right"
-          >
-            <div
-              className="title plain"
-            >
-              Survey item 1
-            </div>
-            <div
-              className="labels"
-            >
-              <ul
-                className="nti-separated-inline-list lesson-overview-survey-label"
-              >
-                <li>
-                  <span
-                    className="question-count"
+                    class="question-count"
                   >
                     3 Questions
                   </span>
                 </li>
                 <li>
                   <span
-                    className="submissions"
+                    class="submissions"
                   >
                     4 Submissions
                   </span>
                 </li>
                 <li>
                   <span
-                    className="due"
+                    class="due"
                   >
                     Available Now
                   </span>
@@ -717,169 +264,628 @@ exports[`Course overview survey item test List item with 3 questions, 4 submissi
               </ul>
             </div>
           </div>
+          <div
+            class="button-container"
+          >
+            <span
+              class="nti-button button constructive medium pv-md ph-xl roundedSmall"
+              tabindex="0"
+            >
+              <div
+                data-button-label="true"
+              >
+                Take
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="editor-container"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Course overview survey item test Grid item with 5 comments, completable, required, no questions or submissions 1`] = `
+<DocumentFragment>
+  <div
+    class="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
+  >
+    <div
+      class="container status-closed"
+    >
+      <div
+        class="nti-link-to-path"
+        to="#"
+      >
+        <div
+          class="target"
+        >
+          <div
+            class="icon-container"
+          >
+            <div
+              class="icon"
+            >
+              <div
+                class="icon"
+              >
+                <div
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="info-container"
+          >
+            <div
+              class="title-container"
+            >
+              <span
+                class="title"
+              >
+                Survey item 1
+              </span>
+            </div>
+            <div
+              class="labels-container"
+            >
+              <ul
+                class="nti-separated-inline-list lesson-overview-survey-label"
+              >
+                <li>
+                  <div
+                    class="lesson-overview-item-required-label"
+                  >
+                    Required
+                  </div>
+                </li>
+                <li>
+                  <span
+                    class="question-count"
+                  >
+                    0 Questions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="submissions"
+                  >
+                    0 Submissions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="due"
+                  >
+                    Available Now
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="button-container"
+          >
+            <span
+              class="nti-button button constructive medium pv-md ph-xl roundedSmall"
+              tabindex="0"
+            >
+              <div
+                data-button-label="true"
+              >
+                Take
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="editor-container"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Course overview survey item test Grid item with 5 comments, completable, requirement editable 1`] = `
+<DocumentFragment>
+  <div
+    class="lesson-overview-padded-container lesson-overview-base-assessment-grid-item"
+  >
+    <div
+      class="container status-closed"
+    >
+      <div
+        class="nti-link-to-path"
+        to="#"
+      >
+        <div
+          class="target"
+        >
+          <div
+            class="icon-container"
+          >
+            <div
+              class="icon"
+            >
+              <div
+                class="icon"
+              >
+                <div
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="info-container"
+          >
+            <div
+              class="title-container"
+            >
+              <span
+                class="title"
+              >
+                Survey item 1
+              </span>
+            </div>
+            <div
+              class="labels-container"
+            >
+              <ul
+                class="nti-separated-inline-list lesson-overview-survey-label"
+              >
+                <li>
+                  <div
+                    aria-haspopup="dialog"
+                    class="flyout-trigger require-control-value require-control flyout-closed"
+                    tabindex="0"
+                  >
+                    <span>
+                      Required
+                    </span>
+                    <i
+                      class="icon-chevron-down"
+                    />
+                  </div>
+                </li>
+                <li>
+                  <span
+                    class="question-count"
+                  >
+                    0 Questions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="submissions"
+                  >
+                    0 Submissions
+                  </span>
+                </li>
+                <li>
+                  <span
+                    class="due"
+                  >
+                    Available Now
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div
+            class="button-container"
+          >
+            <span
+              class="nti-button button constructive medium pv-md ph-xl roundedSmall"
+              tabindex="0"
+            >
+              <div
+                data-button-label="true"
+              >
+                Take
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="editor-container"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Course overview survey item test List item closed 1`] = `
+<DocumentFragment>
+  <div
+    class="lesson-overview-padded-container lesson-overview-base-list-item-container"
+  >
+    <div
+      class="lesson-overview-base-list-item-table-row"
+    >
+      <div
+        class="lesson-overview-base-list-item-table-info-cell"
+      >
+        <div
+          class="nti-link-to-path lesson-overview-base-list-item-link"
+          to="#"
+        >
+          <div
+            class="lesson-overview-base-list-item lesson-overview-survey-list-item"
+          >
+            <div
+              class="icon-container"
+            >
+              <div
+                class="icon"
+              >
+                <div
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
+            </div>
+            <div
+              class="right"
+            >
+              <div
+                class="title plain"
+              >
+                Survey item 1
+              </div>
+              <div
+                class="labels"
+              >
+                <ul
+                  class="nti-separated-inline-list lesson-overview-survey-label"
+                >
+                  <li>
+                    <span
+                      class="question-count"
+                    >
+                      0 Questions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="submissions"
+                    >
+                      0 Submissions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="due"
+                    >
+                      Available Now
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
+`;
+
+exports[`Course overview survey item test List item submitted 1`] = `
+<DocumentFragment>
+  <div
+    class="lesson-overview-padded-container lesson-overview-base-list-item-container"
+  >
+    <div
+      class="lesson-overview-base-list-item-table-row"
+    >
+      <div
+        class="lesson-overview-base-list-item-table-info-cell"
+      >
+        <div
+          class="nti-link-to-path lesson-overview-base-list-item-link"
+          to="#"
+        >
+          <div
+            class="lesson-overview-base-list-item lesson-overview-survey-list-item"
+          >
+            <div
+              class="icon-container"
+            >
+              <div
+                class="icon"
+              >
+                <div
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
+            </div>
+            <div
+              class="right"
+            >
+              <div
+                class="title plain"
+              >
+                Survey item 1
+              </div>
+              <div
+                class="labels"
+              >
+                <ul
+                  class="nti-separated-inline-list lesson-overview-survey-label"
+                >
+                  <li>
+                    <span
+                      class="question-count"
+                    >
+                      0 Questions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="submissions"
+                    >
+                      0 Submissions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="due"
+                    >
+                      Available Now
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Course overview survey item test List item with 3 questions, 4 submissions 1`] = `
+<DocumentFragment>
+  <div
+    class="lesson-overview-padded-container lesson-overview-base-list-item-container"
+  >
+    <div
+      class="lesson-overview-base-list-item-table-row"
+    >
+      <div
+        class="lesson-overview-base-list-item-table-info-cell"
+      >
+        <div
+          class="nti-link-to-path lesson-overview-base-list-item-link"
+          to="#"
+        >
+          <div
+            class="lesson-overview-base-list-item lesson-overview-survey-list-item"
+          >
+            <div
+              class="icon-container"
+            >
+              <div
+                class="icon"
+              >
+                <div
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
+            </div>
+            <div
+              class="right"
+            >
+              <div
+                class="title plain"
+              >
+                Survey item 1
+              </div>
+              <div
+                class="labels"
+              >
+                <ul
+                  class="nti-separated-inline-list lesson-overview-survey-label"
+                >
+                  <li>
+                    <span
+                      class="question-count"
+                    >
+                      3 Questions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="submissions"
+                    >
+                      4 Submissions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="due"
+                    >
+                      Available Now
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
 `;
 
 exports[`Course overview survey item test List item with 5 comments, completable, required, no questions or submissions 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
->
+<DocumentFragment>
   <div
-    className="lesson-overview-base-list-item-table-row"
+    class="lesson-overview-padded-container lesson-overview-base-list-item-container"
   >
     <div
-      className="lesson-overview-base-list-item-table-info-cell"
+      class="lesson-overview-base-list-item-table-row"
     >
       <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
-        to="#"
+        class="lesson-overview-base-list-item-table-info-cell"
       >
         <div
-          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
+          class="nti-link-to-path lesson-overview-base-list-item-link"
+          to="#"
         >
           <div
-            className="icon-container"
+            class="lesson-overview-base-list-item lesson-overview-survey-list-item"
           >
             <div
-              className="icon"
+              class="icon-container"
             >
               <div
-                className="lesson-overview-survey-icon"
-              />
-            </div>
-          </div>
-          <div
-            className="right"
-          >
-            <div
-              className="title plain"
-            >
-              Survey item 1
-            </div>
-            <div
-              className="labels"
-            >
-              <ul
-                className="nti-separated-inline-list lesson-overview-survey-label"
+                class="icon"
               >
-                <li>
-                  <div
-                    className="lesson-overview-item-required-label"
-                  >
-                    Required
-                  </div>
-                </li>
-                <li>
-                  <span
-                    className="question-count"
-                  >
-                    0 Questions
-                  </span>
-                </li>
-                <li>
-                  <span
-                    className="submissions"
-                  >
-                    0 Submissions
-                  </span>
-                </li>
-                <li>
-                  <span
-                    className="due"
-                  >
-                    Available Now
-                  </span>
-                </li>
-              </ul>
+                <div
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
+            </div>
+            <div
+              class="right"
+            >
+              <div
+                class="title plain"
+              >
+                Survey item 1
+              </div>
+              <div
+                class="labels"
+              >
+                <ul
+                  class="nti-separated-inline-list lesson-overview-survey-label"
+                >
+                  <li>
+                    <div
+                      class="lesson-overview-item-required-label"
+                    >
+                      Required
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="question-count"
+                    >
+                      0 Questions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="submissions"
+                    >
+                      0 Submissions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="due"
+                    >
+                      Available Now
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;
 
 exports[`Course overview survey item test List item with 5 comments, completable, requirement editable 1`] = `
-<div
-  className="lesson-overview-padded-container lesson-overview-base-list-item-container"
->
+<DocumentFragment>
   <div
-    className="lesson-overview-base-list-item-table-row"
+    class="lesson-overview-padded-container lesson-overview-base-list-item-container"
   >
     <div
-      className="lesson-overview-base-list-item-table-info-cell"
+      class="lesson-overview-base-list-item-table-row"
     >
       <div
-        className="nti-link-to-path lesson-overview-base-list-item-link"
-        to="#"
+        class="lesson-overview-base-list-item-table-info-cell"
       >
         <div
-          className="lesson-overview-base-list-item lesson-overview-survey-list-item"
+          class="nti-link-to-path lesson-overview-base-list-item-link"
+          to="#"
         >
           <div
-            className="icon-container"
+            class="lesson-overview-base-list-item lesson-overview-survey-list-item"
           >
             <div
-              className="icon"
+              class="icon-container"
             >
               <div
-                className="lesson-overview-survey-icon"
-              />
-            </div>
-          </div>
-          <div
-            className="right"
-          >
-            <div
-              className="title plain"
-            >
-              Survey item 1
-            </div>
-            <div
-              className="labels"
-            >
-              <ul
-                className="nti-separated-inline-list lesson-overview-survey-label"
+                class="icon"
               >
-                <li>
-                  <div
-                    className="lesson-overview-item-required-label"
-                  >
-                    Required
-                  </div>
-                </li>
-                <li>
-                  <span
-                    className="question-count"
-                  >
-                    0 Questions
-                  </span>
-                </li>
-                <li>
-                  <span
-                    className="submissions"
-                  >
-                    0 Submissions
-                  </span>
-                </li>
-                <li>
-                  <span
-                    className="due"
-                  >
-                    Available Now
-                  </span>
-                </li>
-              </ul>
+                <div
+                  class="lesson-overview-survey-icon"
+                />
+              </div>
+            </div>
+            <div
+              class="right"
+            >
+              <div
+                class="title plain"
+              >
+                Survey item 1
+              </div>
+              <div
+                class="labels"
+              >
+                <ul
+                  class="nti-separated-inline-list lesson-overview-survey-label"
+                >
+                  <li>
+                    <div
+                      class="lesson-overview-item-required-label"
+                    >
+                      Required
+                    </div>
+                  </li>
+                  <li>
+                    <span
+                      class="question-count"
+                    >
+                      0 Questions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="submissions"
+                    >
+                      0 Submissions
+                    </span>
+                  </li>
+                  <li>
+                    <span
+                      class="due"
+                    >
+                      Available Now
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</DocumentFragment>
 `;

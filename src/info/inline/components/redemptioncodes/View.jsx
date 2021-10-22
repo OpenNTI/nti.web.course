@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 import { scoped } from '@nti/lib-locale';
 
 import Disclaimer from './Disclaimer';
@@ -7,10 +5,6 @@ import Disclaimer from './Disclaimer';
 const t = scoped('course.info.inline.components.redemptioncodes.View', {
 	label: 'Redemption Code',
 });
-
-RedemptionCodesView.propTypes = {
-	redemptionCodes: PropTypes.object,
-};
 
 // no static FIELD_NAME, codes are pulled through the API, not off the object directly
 
