@@ -30,16 +30,14 @@ function getCompletedDate(item, completed) {
 	if (!item) {
 		return null;
 	}
-	if (!completed || item.CompletedItem) {
-		return item.getCompletedDate?.();
-	}
 
-	return (
-		completed[item.NTIID] ||
-		completed[item.href] ||
-		completed[item['Target-NTIID']] ||
-		completed['target-NTIID']
-	);
+	const override =
+		completed?.[item.NTIID] ||
+		completed?.[item.href] ||
+		completed?.[item['Target-NTIID']] ||
+		completed?.[item['target-NTIID']];
+
+	return override ? override.getCompletedDate() : item.getCompletedDate();
 }
 
 const Statuses = [

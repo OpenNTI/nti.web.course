@@ -14,20 +14,29 @@ import TextPart from './TextPart';
 
 const isExternal = item => /external/i.test(item.type) || !isNTIID(item.href);
 
-function getCompletedDate(item, completed) {
+const Success = 'success';
+const Failed = 'failed';
+const Incomplete = 'incompleted';
+
+function getCompletedStatus(item, completed) {
 	if (!item) {
-		return null;
+		return Incomplete;
 	}
-	if (!completed) {
-		return item.getCompletedDate?.();
+	const override =
+		completed?.[item.NTIID] ||
+		completed?.[item.href] ||
+		completed?.[item['Target-NTIID']] ||
+		completed?.[item['target-NTIID']];
+
+	if (!override) {
+		return item.getCompletedDate?.()
+			? item.completedSuccessfully()
+				? Success
+				: Failed
+			: Incomplete;
 	}
 
-	return (
-		completed[item.NTIID] ||
-		completed[item.href] ||
-		completed[item['Target-NTIID']] ||
-		completed['target-NTIID']
-	);
+	return override ? (override.Success ? Success : Failed) : Incomplete;
 }
 
 class LessonOverviewBaseListItemInfo extends React.Component {
@@ -162,15 +171,14 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 
 	renderCompletedStatus() {
 		const { item, noCompletedStatus, completedItemsOverride } = this.props;
-		const isCompleted = Boolean(
-			getCompletedDate(item, completedItemsOverride)
-		);
 
 		if (noCompletedStatus) {
 			return null;
 		}
 
-		if (isCompleted && item.completedSuccessfully()) {
+		const status = getCompletedStatus(item, completedItemsOverride);
+
+		if (status === Success) {
 			return (
 				<div className="progress-icon">
 					<CircularProgress width={20} height={20} isComplete />
@@ -178,7 +186,7 @@ class LessonOverviewBaseListItemInfo extends React.Component {
 			);
 		}
 
-		if (isCompleted && item.completedUnsuccessfully()) {
+		if (status === Failed) {
 			return (
 				<div className="progress-icon failed">
 					<span>!</span>

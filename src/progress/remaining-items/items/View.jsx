@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useReducer, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { scoped } from '@nti/lib-locale';
+import { getService } from '@nti/web-client';
 import { Hooks, Loading, Errors, Checkbox, EmptyState } from '@nti/web-commons';
 import { Disable } from '@nti/web-routing';
 import Logger from '@nti/util-logger';
@@ -90,7 +91,7 @@ export default function RemainingItems({ course, enrollment, readOnly }) {
 		});
 
 		const enrollmentCompletedItems = enrollment
-			? await enrollment.getCompletedItems()
+			? await getSummaryCompletedItems(summary)
 			: null;
 
 		const itemInclusionFilter = getInclusionFilter(summary);
@@ -202,6 +203,27 @@ function getLessons(o) {
 	}
 
 	return getLessons(Object.values(o));
+}
+
+async function getSummaryCompletedItems(summary) {
+	const { Outline } = summary;
+	const service = await getService();
+
+	const items = {};
+
+	for (let outline of Outline) {
+		const lessons = getLessons(outline).flat();
+
+		for (let lesson of lessons) {
+			const { SuccessfulItems, UnSuccessfulItems } = lesson;
+
+			for (let item of [...SuccessfulItems, ...UnSuccessfulItems]) {
+				items[item.ItemNTIID] = await service.getObject(item);
+			}
+		}
+	}
+
+	return items;
 }
 
 function getSummaryByLesson(summary) {
