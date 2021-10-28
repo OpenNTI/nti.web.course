@@ -37,7 +37,7 @@ function getCompletedDate(item, completed) {
 		completed?.[item['Target-NTIID']] ||
 		completed?.[item['target-NTIID']];
 
-	return override ? override.getCompletedDate() : item.getCompletedDate();
+	return override ? override.getCompletedDate() : item.getCompletedDate?.();
 }
 
 const Statuses = [
