@@ -9,35 +9,12 @@ import { isNTIID } from '@nti/lib-ntiids';
 import { LinkTo } from '@nti/web-routing';
 import { CircularProgress } from '@nti/web-charts';
 
+import { getCompletedStatus, Success, Failed } from '../items/utils';
+
 import PaddedContainer from './PaddedContainer';
 import TextPart from './TextPart';
 
 const isExternal = item => /external/i.test(item.type) || !isNTIID(item.href);
-
-const Success = 'success';
-const Failed = 'failed';
-const Incomplete = 'incompleted';
-
-function getCompletedStatus(item, completed) {
-	if (!item) {
-		return Incomplete;
-	}
-	const override =
-		completed?.[item.NTIID] ||
-		completed?.[item.href] ||
-		completed?.[item['Target-NTIID']] ||
-		completed?.[item['target-NTIID']];
-
-	if (!override) {
-		return item.getCompletedDate?.()
-			? item.completedSuccessfully()
-				? Success
-				: Failed
-			: Incomplete;
-	}
-
-	return override ? (override.Success ? Success : Failed) : Incomplete;
-}
 
 class LessonOverviewBaseListItemInfo extends React.Component {
 	static cssClassName = 'lesson-overview-base-list-item-table-info-cell';

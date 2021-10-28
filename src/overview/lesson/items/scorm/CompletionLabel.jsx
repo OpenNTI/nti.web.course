@@ -4,6 +4,14 @@ import classnames from 'classnames/bind';
 import { DateTime } from '@nti/web-commons';
 import { scoped } from '@nti/lib-locale';
 
+import {
+	getCompletedDate,
+	getCompletedStatus,
+	Success,
+	Failed,
+	Incomplete,
+} from '../utils';
+
 import Styles from './CompletionLabel.css';
 
 const cx = classnames.bind(Styles);
@@ -12,21 +20,28 @@ const t = scoped('course.overview.lesson.items.scorm.CompletionLabel', {
 	success: 'Completed %(date)s',
 });
 
+CompletionLabel.isCompleted = (item, completedItemsOverride) =>
+	getCompletedStatus(item, completedItemsOverride) !== Incomplete;
+
 CompletionLabel.propTypes = {
 	item: PropTypes.object,
+	completedItemsOverride: PropTypes.object,
 };
-export default function CompletionLabel({ item }) {
-	if (!item.isCompletable || !item.isCompletable() || !item.hasCompleted()) {
+export default function CompletionLabel({ item, completedItemsOverride }) {
+	const status = getCompletedStatus(item, completedItemsOverride);
+
+	if (!item.isCompletable || status === Incomplete) {
 		return null;
 	}
 
-	const date = item.getCompletedDate();
+	const date = getCompletedDate(item, completedItemsOverride);
+
 	const formattedDate = date
 		? DateTime.format(date, DateTime.MONTH_NAME_DAY_YEAR_AT_TIME)
 		: '';
 
-	const success = item.completedSuccessfully();
-	const failed = item.completedUnsuccessfully();
+	const success = status === Success;
+	const failed = status === Failed;
 
 	return (
 		<span className={cx('scorm-completion-label', { success, failed })}>

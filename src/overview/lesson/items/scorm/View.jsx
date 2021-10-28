@@ -28,6 +28,7 @@ export default class LessonOverviewScormItem extends React.Component {
 		course: PropTypes.object,
 		editMode: PropTypes.bool,
 		onRequirementChange: PropTypes.func,
+		completedItemsOverride: PropTypes.object,
 	};
 
 	render() {
@@ -36,14 +37,20 @@ export default class LessonOverviewScormItem extends React.Component {
 			item,
 			editMode,
 			onRequirementChange,
+			completedItemsOverride,
 			...otherProps
 		} = this.props;
 		const Cmp = layout === List ? ListCmp : GridCmp;
 
-		const completionLabel =
-			item.hasCompleted && item.hasCompleted() ? (
-				<CompletionLabel item={item} />
-			) : null;
+		const completionLabel = CompletionLabel.isCompleted(
+			item,
+			completedItemsOverride
+		) ? (
+			<CompletionLabel
+				item={item}
+				completedItemsOverride={completedItemsOverride}
+			/>
+		) : null;
 
 		const commentCount = item[Summary] && item[Summary].ItemCount;
 		const commentLabel =
