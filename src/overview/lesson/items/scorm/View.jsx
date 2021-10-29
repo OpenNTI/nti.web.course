@@ -82,6 +82,7 @@ export default class LessonOverviewScormItem extends React.Component {
 				commentLabel={!editMode && commentLabel}
 				requiredLabel={requiredLabel}
 				completionLabel={completionLabel}
+				completedItemsOverride={completedItemsOverride}
 				{...otherProps}
 			/>
 		);
