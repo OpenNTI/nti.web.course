@@ -2,7 +2,7 @@
 
 .meet-times-edit-widget {
 	display: flex;
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.26);
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 26%);
 	border-radius: 3px;
 	padding: 10px 20px;
 	margin-top: 20px;
@@ -38,7 +38,7 @@
 			padding: 0 5px;
 		}
 
-		.TimePicker {
+		.time-picker {
 			.meridiem-select-box.select-box {
 				border: 1px solid #e2e2e2;
 				border-radius: 3px;
