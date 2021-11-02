@@ -20,10 +20,10 @@ export const Close = styled('a').attrs(props => ({
 		color: var(--primary-grey);
 	}
 
-	opacity: 0.2;
+	opacity: 20%;
 
 	&:hover,
 	&:focus {
-		opacity: 1;
+		opacity: 100%;
 	}
 `;
