@@ -128,9 +128,9 @@ class CourseSelector extends React.Component {
 		return (
 			<div className="courses">
 				<ul>
-					{courses.map(course => {
+					{courses.map((course, ix) => {
 						return (
-							<li key={course.getID()}>
+							<li key={ix}>
 								<ListItem
 									course={course}
 									onSelect={this.onSelect}
